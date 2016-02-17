@@ -1,7 +1,7 @@
 ## Streemio - decentralized, P2P communication system for humans and Internet of Things devices.
 
-#### Why Streemo? Why decentralisation? Why peer to peer (P2P)? Why fully open source?
-Our aim is to address several issues with the decentralised, peer to peer, fully open source Streemo communication system. These issues are primarily related to safety, politics, security, privacy, economy, and compliance with standards.
+#### Why Streemio? Why decentralisation? Why peer to peer (P2P)? Why fully open source?
+Our aim is to address several issues with the decentralised, peer to peer, fully open source Streemio communication system. These issues are primarily related to safety, politics, security, privacy, economy, and compliance with standards.
 
 #### Safety
 The developers of this system were born in countries where totalitarian and oppressive governments were prevalent. Jail sentences for breaching the laws of dictators were considered the norm. A decentralised peer to peer system in which the communication is fully encrypted between the users without using any central server preserves privacy and keeps the data safe from oppressive regimes and undemocratic legislation.
@@ -21,5 +21,5 @@ Vulnerability to hacking is another security issue. Over the years, the credit c
 Decentralisation addresses several major system and business requirements. Decentralised systems are scalable - in fact they become more stable if there are more active users. That means no expensive cluster servers are needed to run a decentralised system. The peers make up the system with their home computers, tablets, and mobile devices. Decentralised systems are the composite of their peers, and therefore are always available as long as at least two peers are connected. On the other hand, centralised systems require expensive load balancers and even more costly data centers across geographical regions to provide high availability. A decentralised P2P system makes centralised high-cost server infrastructures obsolete.
 
 #### Standards
-Our system aims to comply with security and communication standards. The compliance is verifiable via the peer review of the open source system. Streemo is built on FIPS, IETF and W3C security, data and communication standards such as JWT, JWS, WebRTC and the latest planned standards from W3C Web of Things initiative. The system uses recommended curves for the ECDSA and ECDH elliptic curve cryptography functions.
+Our system aims to comply with security and communication standards. The compliance is verifiable via the peer review of the open source system. Streemio is built on FIPS, IETF and W3C security, data and communication standards such as JWT, JWS, WebRTC and the latest planned standards from W3C Web of Things initiative. The system uses recommended curves for the ECDSA and ECDH elliptic curve cryptography functions.
 
