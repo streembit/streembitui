@@ -4,7 +4,7 @@
 Our aim is to address several issues with the decentralised, peer to peer, fully open source Streemio communication system. These issues are primarily related to safety, politics, security, privacy, economy, and compliance with standards.
 
 #### Safety
-The developers of this system were born in countries where totalitarian and oppressive governments were prevalent. Jail sentences for breaching the laws of dictators were considered the norm. A decentralised peer to peer system in which the communication is fully encrypted between the users without using any central server preserves privacy and keeps the data safe from oppressive regimes and undemocratic legislation.
+The developers of this system were born in countries where totalitarian and oppressive governments were prevalent. A decentralised peer to peer system - in which the communication is fully encrypted between the users without using any central server - preserves privacy and keeps the data safe from oppressive regimes and undemocratic legislation.
 
 #### Occupations
 There are certain occupations where client confidentiality is of utmost importance. These include, but are not limited to, journalists, lawyers, accountants, and doctors. The clients of these professionals understandably want end-to-end, fully encrypted, and uncompromised security. We believe a decentralised peer-to-peer system is well suited to provide users with this level of security and confidentiality.
