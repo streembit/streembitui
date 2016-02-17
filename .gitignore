@@ -43,7 +43,7 @@ logs/*.log
 *.ldb
 *.dat
 /db
-/build
+/build/buildtools
 *.nw
 /.vs/config/applicationhost.config
 /data
