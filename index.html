@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Streemio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript">
+            try {
+                if (global){
+                    global.appgui = require('nw.gui');
+                }
+            }
+            catch (e) { }
+
+            if (global && global.appgui) {
+                global.cryptolib = "crypto";    //  nodejs app
+            }
+            else {
+                var global = global || {};
+                global.cryptolib = "crypto-browserify";
+            }
+    </script>
+
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/bootstrap/css/bootstrap-dialog.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/webstyle.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="assets/js/jquery/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="assets/js/jquery/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootbox.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-notify.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="assets/js/knockout/knockout-latest.js"></script>
+    <script type="text/javascript" src="assets/js/knockout/knockout.mapping-latest.js"></script>
+
+    <script type="text/javascript" src="assets/js/streemio/filesaver.js"></script>
+
+    <script type="text/javascript" src="assets/js/streemio/node_app_bundle.js"></script>
+
+    <script type="text/javascript" src="assets/js/streemio/appglobals.js"></script>
+
+    <script type="text/javascript" src="assets/js/streemio/bootclient.js"></script>
+    <script type="text/javascript" src="assets/js/streemio/peercomm.js"></script>
+
+    <script type="text/javascript" src="assets/js/streemio/main.js"></script>
+
+    <script type="text/javascript" src="assets/js/streemio/streemiodb.js"></script>
+    <script type="text/javascript" src="assets/js/streemio/peertransport.js"></script>
+    <script type="text/javascript" src="assets/js/socketio/socket.io.js"></script>
+    <script type="text/javascript" src="assets/js/streemio/wstransport.js"></script>
+
+    <script type="text/javascript">
+            global.$ = $;
+
+            function appboot_msg_handler(msg, close) {
+                $("#appboot-msg").text(msg);
+                if (close) {
+                    $(".appboot-screen-content").hide();
+                }
+            }
+
+    </script>
+
+</head>
+<body>
+    <div class="app-select-screen">
+        <div style="text-align:center">
+            <div>
+                <div><button id="btnCreateUser" class="btn btn-info btn-large"><i class="fa fa-user-plus"></i> New Account</button></div>
+            </div>
+            <div style="margin-top:20px">
+                <div><button id="btnInitializeUser" class="btn btn-info btn-large"><i class="fa fa-sign-in"></i> Initialize Existing Account</button></div>
+            </div>
+            <div style="margin-top:20px">
+                <div><button id="btnRestoreUser" class="btn btn-info btn-large"><i class="fa fa-refresh"></i> Restore Account</button></div>
+            </div>
+            <div style="margin-top:20px">
+                <div><button id="btnAppSelectPublic" class="btn btn-info btn-large"><i class="fa fa-group"></i> Connect to Public Streemio Network</button></div>
+            </div>
+            <div style="margin-top:20px">
+                <div><button id="btnAppSelectPrivate" class="btn btn-info btn-large"><i class="fa fa-lock"></i> Connect to Private Streemio Hub</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="appboot-screen">
+        <div class="appboot-screen-content">
+            <div style="color:#222; margin-bottom:30px;font-size:16px">
+                <span id="appboot-msg"></span>
+            </div>
+            <div class="appboot-screen-spinner">
+                <div>
+                    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="streemio-screen" style="display:none">
+        <div id="contacts-container" class="contacts-tab">
+            <div class="input-group sidebar-search" data-bind="visible: issearch">
+                <input type="text" class="form-control" placeholder="Search contacts ..." data-bind="value: contact_lookup">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
+                </span>
+            </div><!-- /input-group -->
+            <div style="border-bottom:1px dotted #ddd;padding-bottom:8px;margin-top:10px">
+                <div class="contacts-title">
+                    Humans / Machines
+                </div>
+                <div style="float:right;margin:6px 10px 0 0">
+                    <a data-bind="click:dosearch"><i class="glyphicon glyphicon-search"></i></a>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div data-bind="template: { name: 'contacts-template', foreach: contacts }">
+            </div>
+
+        </div>
+        <div id="main-container">
+            <div style="position:relative;height:100%;">
+                <div id="app-progress">
+                    <div class="app-error-indicator-panel">
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>&nbsp;&nbsp;<span>Error: </span>&nbsp;&nbsp;<a href="#" id="lnkShowLogs" style="text-decoration:underline">View errors</a>
+                    </div>
+                    <div class="app-progress-panel">
+                        <span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <span class="app-progress-msg"></span>
+                    </div>
+                </div>
+                <div data-bind="template: {name: template_name, data: template_datactx}"></div>
+                <div id="view-container"></div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div id="footer-info">
+            <div class="footer-info-panel" style="display:none" data-bind="visible: isshowpanel">
+                <div data-bind="foreach: tasks" class="taskprogress-list">
+                    <div data-bind="template: {name: template}" class="task-progress-item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="ringsound1" src="assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+
+    <script type="text/javascript" src="assets/js/streemio/viewmodels.js"></script>
+    <script type="text/javascript" src="assets/js/streemio/adapter.js"></script>
+    <script type="text/javascript" src="assets/js/streemio/webrtcconn.js"></script>
+
+    <script type="text/javascript">
+
+        function initViewModels() {
+            // init the view models
+            if (!streemio.Session.contactsvm) {
+                var contacts_div = document.getElementById('contacts-container');
+                var contactsmodel = new streemio.vms.ContactsListViewModel()
+                ko.applyBindings(contactsmodel, contacts_div);
+                streemio.Session.contactsvm = contactsmodel;
+            }
+
+            if (!streemio.Session.tasksvm) {
+                var footer_info_div = document.getElementById('footer-info');
+                var tasksvm = new streemio.vms.TasksViewModel()
+                ko.applyBindings(tasksvm, footer_info_div);
+                streemio.Session.tasksvm = tasksvm;
+            }
+        }
+
+
+        $(document).ready(function () {
+            logger.debug("document.ready");
+
+            streemio.notify.showprogress("Starting the application ... ");
+
+            // initialize the menu
+            debugger;
+            streemio.Main.initMenu();
+
+            // init the main view model
+            var mainview_div = document.getElementById('main-container');
+            var viewcontainer_div = document.getElementById('view-container');
+            var mainvmodel = new streemio.vms.MainViewModel(viewcontainer_div);
+            ko.applyBindings(mainvmodel, mainview_div);
+            streemio.Session.mainvm = mainvmodel;
+
+            var contacts_div = document.getElementById('contacts-container');
+            var contactsmodel = new streemio.vms.ContactsListViewModel()
+            ko.applyBindings(contactsmodel, contacts_div);
+            streemio.Session.contactsvm = contactsmodel;
+
+            var footer_info_div = document.getElementById('footer-info');
+            var tasksvm = new streemio.vms.TasksViewModel()
+            ko.applyBindings(tasksvm, footer_info_div);
+            streemio.Session.tasksvm = tasksvm;
+
+            streemio.Main.start(function () {
+                streemio.notify.hideprogress();
+            });
+
+
+            $("#btnAppSelectPublic").on("click", function () {
+                logger.debug("Connecting to public Streemio network");
+                $(".app-select-screen").hide();
+                streemio.Main.init(streemio.DEFS.CMD_APP_JOINPUBLICNET);
+            });
+
+            $("#btnAppSelectPrivate").on("click", function () {
+                logger.debug("Connecting a private Streemio hub");
+                $(".app-select-screen").hide();
+                streemio.Main.init(streemio.DEFS.CMD_APP_JOINPRIVATENET);
+            });
+
+            $("#btnCreateUser").on("click", function () {
+                logger.debug("Create new account");
+                $(".app-select-screen").hide();
+                streemio.Main.init(streemio.DEFS.CMD_APP_CREATEACCOUNT);
+            });
+
+            $("#btnInitializeUser").on("click", function () {
+                logger.debug("Initialize existing account");
+                $(".app-select-screen").hide();
+                streemio.Main.init(streemio.DEFS.CMD_APP_INITACCOUNT);
+            });
+
+            $("#btnRestoreUser").on("click", function () {
+                logger.debug("Restore account");
+                $(".app-select-screen").hide();
+                streemio.Main.init(streemio.DEFS.CMD_APP_RESTOREACCOUNT);
+            });
+
+            $("#lnkShowLogs").on("click", function () {
+                streemio.UI.showLogs();
+            });
+
+            if (!global.appgui) {
+                $('#web-streemio-navbar').show();
+
+                $('#cmd_backup').on('click', function () {
+                    streemio.User.backup();
+                });
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
+
+
+<script type="text/html" id="empty-template">
+    <div style="padding:0;margin:0;display:none">
+    </div>
+</script>
+
+
+<script type="text/html" id="contacts-template">
+    <div class="contact-item" data-bind="click: $parent.itemSelect">
+        <div style="float:left">
+            <span data-bind="css: usertypeicon" style="font-size:11px;"></span>
+        </div>
+        <div style="float:left;margin-left:8px">
+            <span data-bind="text: name"></span>
+        </div>
+        <div style="float:right;font-size:16px">
+            <div style="float:left;margin-right:14px" class="contact-msg-indicator">
+                <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e0be00"></span>
+            </div>
+            <div style="float:right;font-size:11px;" data-bind="visible: isonline">
+                <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;"></span>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</script>
+
+
+<script type="text/html" id="contact-details-template">
+    <div>
+        <div>
+            <div class="contact-details-buttons">
+                <button type="button" class="btn btn-info btn-circle btn-lg" data-bind="click: chat" title="Chat"><i class="glyphicon glyphicon-comment"></i></button>
+                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sendfile" title="Send file"><i class="glyphicon glyphicon-copy"></i></button>
+                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('audio') }" title="Audio call"><i class="glyphicon glyphicon-earphone"></i></button>
+                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('video') }" title="Video call"><i class="glyphicon glyphicon-facetime-video"></i></button>
+                <button type="button" class="btn btn-danger btn-circle btn-lg" style="margin-left:8px" data-bind="click: remove" title="Delete contact"><i class="glyphicon glyphicon-remove"></i></button>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="contact-details">
+            <div style="margin-bottom:25px">
+                <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
+                    <span style="color:#777">Account:</span> <br />
+                    <span style="font-weight:bold" data-bind="text:name"></span>
+                </div>
+                <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
+                    <span style="color:#777">Public key:</span> <br />
+                    <span style="word-wrap: break-word;font-weight:bold" data-bind="text: public_key"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="app-logs-template">
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#error-tab">Error</a></li>
+            <li><a data-toggle="tab" href="#info-tab">Info</a></li>
+            <li><a data-toggle="tab" href="#debug-tab">Debug</a></li>
+        </ul>
+
+        <div class="tab-content logs-view-container">
+            <div id="error-tab" class="tab-pane fade in active">
+                <div data-bind="foreach: errors">
+                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
+                </div>
+            </div>
+            <div id="info-tab" class="tab-pane fade">
+                <div data-bind="foreach: infos">
+                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
+                </div>
+            </div>
+            <div id="debug-tab" class="tab-pane fade">
+                <div data-bind="foreach: debugs">
+                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="send-file-template">
+    <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
+        <div style="width:450px" data-bind="visible: isinprogress() == false">
+            <input type="file" id="fileInput" name="files" data-bind="event: { change: function() { send_file($element.files[0]) } }" />
+        </div>
+        <div style="width:450px;margin-top:10px;display:none" data-bind="visible: isinprogress">
+            <div style="font-size:12px;color:#666">Send progress: </div>
+            <div>
+                <progress id="fileProgress" value="0" max="100" style="width:400px"></progress>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="contact-files-template">
+    <div id="contact-files-dlg-container" style="width:500px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left;max-height:400px">
+        <div>
+            <div><span class="fileobj-filename"></span></div>
+            <div><a class="fileobj-url" data-bind="attr: { href: objecturl, download: name, textContent: textcontent }"></a></div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="file-progress-template">
+    <div class="pull-right" style="margin-right:5px">
+        <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
+    </div>
+    <div class="task-progress-prog">
+        <div class="file-progress-msg">
+            <div data-bind="if: mode == 'send'"><span>Sending file </span><span data-bind="text:file_name"></span> to <span data-bind="text: contact_name"></span></div>
+            <div data-bind="if: mode == 'receive'"><span>Receiving file </span><span data-bind="text:file_name"></span> from <span data-bind="text: contact_name"></span></div>
+        </div>
+        <div class="file-progress-msg">File hash: <span data-bind="text: hash"></span></div>
+        <div class="file-progress-ctrl">
+            <progress value="0" max="100" style="width:300px" data-bind="progressctrl: progress_val, max: file_size"></progress>
+        </div>
+        <div class="task-progress-cancel">
+            <a data-bind="click: $parent.cancel">Cancel File Transfer</a>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="file-complete-template">
+    <div style="background-color:#555;min-height:55px">
+        <div class="pull-right" style="margin-right:5px">
+            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
+        </div>
+        <div style="padding:10px 30px;margin:0 auto;text-align:center">
+            <div class="file-progress-msg">File <span data-bind="text: file_name"></span> has been saved to <span data-bind="text: savedir"></span></div>
+            <div class="file-progress-msg" data-bind="visible: streemio.Main.is_gui">File hash <span data-bind="text: hash"></span> is verified. File hash is valid.</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="file-send-complete-template">
+    <div style="background-color:#555;min-height:55px">
+        <div class="pull-right" style="margin-right:5px">
+            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
+        </div>
+        <div style="padding:10px 30px;margin:0 auto;text-align:center">
+            <div class="file-progress-msg">File <span data-bind="text: file_name"></span> was sent to peer <span data-bind="text: contact_name"></span></div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="file-error-template">
+    <div style="background-color:#bb2020;min-height:50px">
+        <div class="pull-right" style="margin-right:5px">
+            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
+        </div>
+        <div style="padding:10px 30px;margin:0 auto;text-align:center">
+            <div class="file-progress-msg" style="margin:20px 0;color:#fff">Error in trasfering the file:  <span data-bind="text: error_msg"></span></div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="streemio-view-about">
+    <div>
+        <h4>A real time P2P communication system for humans and IoT devices</h4>
+        <a href="https://github.com/streemio" target="_blank">https://github.com/streemio</a>
+    </div>
+</script>
+
+
+<script type="text/html" id="streemio-view-inituser">
+    <div id="user-container" style="padding-top:0;margin-right:20px">
+
+        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+            <h4 data-bind="text: is_new_account() == true ? 'Create your Streemio user account' : 'Connect to Streemio network' "></h4>
+        </div>
+
+        <div style="display:none" data-bind="visible: is_private_network">
+
+            <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedHost">
+                <label for="text">Private hub seed host:</label>
+                <div style="font-size:11px">(IP address or domain name)</div>
+                <div id="lblSeedHostErrorContainer" class="error-label">
+                    <span id="lblSeedHostError"></span>
+                </div>
+                <input type="text" class="form-control" data-bind="value: private_net_host" style="max-width:300px" id="txtPrivateNetHost" maxlength="40" />
+            </div>
+
+            <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedPort">
+                <label for="text">Private hub seed port:</label>
+                <div id="lblSeedPortErrorContainer" class="error-label">
+                    <span id="lblSeedPortError"></span>
+                </div>
+                <input type="text" class="form-control" data-bind="value: private_net_port" style="max-width:90px" id="txtPrivateNetPort" maxlength="5" />
+            </div>
+
+            <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedAccount">
+                <label for="text">Private hub seed account:</label>
+                <div id="lblSeedAccountErrorContainer" class="error-label">
+                    <span id="lblSeedAccountError"></span>
+                </div>
+                <input type="text" class="form-control" data-bind="value: private_net_account" style="max-width:350px" id="txtPrivateNetAccount" maxlength="32" />
+            </div>
+
+        </div>
+
+
+        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
+            <label for="text">Streemio account:</label>
+            <div id="lblAccountErrorContainer" class="error-label">
+                <span id="lblAccountError"></span>
+            </div>
+            <input type="text" class="form-control" data-bind="value: account, visible: is_new_account() == true || is_account_exists() == false" style="max-width:300px" id="txtAccount" maxlength="20" />
+            <div data-bind="visible: is_new_account() == false && is_account_exists() == true">
+                <select class="form-control" data-bind="options: accounts, optionsText: 'account', value: selected_account, optionsCaption: 'Choose...'" style="max-width:300px"></select>
+            </div>
+        </div>
+
+        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
+            <label for="text">Private key password:</label>
+            <div id="lblPwdErrorContainer" class="error-label">
+                <span id="lblPwdError"></span>
+            </div>
+            <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
+        </div>
+
+        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
+            <label for="text">Confirm private key password:</label>
+            <div id="lblPwdConfErrCont" class="error-label">
+                <span id="lblPwdConfError"></span>
+            </div>
+            <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
+        </div>
+
+        <div style="margin-top:30px">
+            <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px">Connect to network</button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
+        </div>
+        <div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var is_new_account = false;
+        var uioptions = streemio.Session.uioptions;
+        if (uioptions) {
+            is_new_account = uioptions.newuser
+        }
+        var user_div = document.getElementById('user-container');
+        var vm = new streemio.vms.UserViewModel(is_new_account, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount);
+        vm.init(function () {
+            ko.applyBindings(vm, user_div);
+
+            $("#txtAccount").blur(function () {
+                vm.onAccountChange();
+            });
+
+            $("#txtPassword").blur(function () {
+                vm.onPasswordChange();
+            });
+
+            $("#txtPasswordConfirm").blur(function () {
+                vm.onPasswordConfirmChange();
+            });
+
+            $("#txtPrivateNetHost").blur(function () {
+                vm.onPrivateSeedHostChange();
+            });
+
+            $("#txtPrivateNetPort").blur(function () {
+                vm.onPrivateSeedPortChange();
+            });
+
+            $("#txtPrivateNetAccount").blur(function () {
+                vm.onPrivateSeedAccountChange();
+            });
+        });
+
+        function validateAccount(valid, msg) {
+            if (!valid) {
+                $("#grpAccount").addClass("has-error");
+                $("#lblAccountError").text(msg);
+                $("#lblAccountErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpAccount").removeClass("has-error");
+                $("#lblAccountError").text("");
+                $("#lblAccountErrorContainer").hide();
+            }
+        }
+
+        function validatePassword(valid, msg) {
+            if (!valid) {
+                $("#grpPassword").addClass("has-error");
+                $("#lblPwdError").text(msg);
+                $("#lblPwdErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPassword").removeClass("has-error");
+                $("#lblPwdError").text("");
+                $("#lblPwdErrorContainer").hide();
+            }
+        }
+
+        function validatePasswordConfirm(valid, msg) {
+            if (!valid) {
+                $("#grpPasswordConfirm").addClass("has-error");
+                $("#lblPwdConfError").text(msg);
+                $("#lblPwdConfErrCont").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPasswordConfirm").removeClass("has-error");
+                $("#lblPwdConfError").text("");
+                $("#lblPwdConfErrCont").hide();
+            }
+        }
+
+        function validatePrivateSeedHost(valid, msg) {
+            if (!valid) {
+                $("#grpPrivateSeedHost").addClass("has-error");
+                $("#lblSeedHostError").text(msg);
+                $("#lblSeedHostErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPrivateSeedHost").removeClass("has-error");
+                $("#lblSeedHostError").text("");
+                $("#lblSeedHostErrorContainer").hide();
+            }
+        }
+
+        function validatePrivateSeedPort(valid, msg) {
+            if (!valid) {
+                $("#grpPrivateSeedPort").addClass("has-error");
+                $("#lblSeedPortError").text(msg);
+                $("#lblSeedPortErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPrivateSeedPort").removeClass("has-error");
+                $("#lblSeedPortError").text("");
+                $("#lblSeedPortErrorContainer").hide();
+            }
+        }
+
+        function validatePrivateSeedAccount(valid, msg) {
+            if (!valid) {
+                $("#grpPrivateSeedAccount").addClass("has-error");
+                $("#lblSeedAccountError").text(msg);
+                $("#lblSeedAccountErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPrivateSeedAccount").removeClass("has-error");
+                $("#lblSeedAccountError").text("");
+                $("#lblSeedAccountErrorContainer").hide();
+            }
+        }
+
+    });
+    </script>
+</script>
+
+
+<script type="text/html" id="streemio-view-changekey">
+    <div id="user-container" style="padding-top:0;margin-right:20px">
+
+        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+            <h4>Update Private Key Passphrase</h4>
+        </div>
+
+        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
+            <span for="text">Streemio account: </span><span data-bind="text: streemio.User.name"></span>
+        </div>
+
+        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
+            <label for="text">Private key passphrase:</label>
+            <div id="lblPwdErrorContainer" class="error-label">
+                <span id="lblPwdError"></span>
+            </div>
+            <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
+        </div>
+
+        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm">
+            <label for="text">Confirm private key passphrase:</label>
+            <div id="lblPwdConfErrCont" class="error-label">
+                <span id="lblPwdConfError"></span>
+            </div>
+            <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
+        </div>
+
+        <div style="margin-top:30px">
+            <button data-bind="click: update_account" style="margin-right:10px">Update phassprase</button>
+        </div>
+        <div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var is_new_account = false;
+        var uioptions = streemio.Session.uioptions;
+        if (uioptions) {
+            is_new_account = uioptions.newuser
+        }
+        var user_div = document.getElementById('user-container');
+        var vm = new streemio.vms.UpdateKeyViewModel(validatePassword, validatePasswordConfirm);
+        vm.init(function () {
+            ko.applyBindings(vm, user_div);
+        });
+
+        function validateAccount(valid, msg) {
+            if (!valid) {
+                $("#grpAccount").addClass("has-error");
+                $("#lblAccountError").text(msg);
+                $("#lblAccountErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpAccount").removeClass("has-error");
+                $("#lblAccountError").text("");
+                $("#lblAccountErrorContainer").hide();
+            }
+        }
+
+        function validatePassword(valid, msg) {
+            if (!valid) {
+                $("#grpPassword").addClass("has-error");
+                $("#lblPwdError").text(msg);
+                $("#lblPwdErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPassword").removeClass("has-error");
+                $("#lblPwdError").text("");
+                $("#lblPwdErrorContainer").hide();
+            }
+        }
+
+        function validatePasswordConfirm(valid, msg) {
+            if (!valid) {
+                $("#grpPasswordConfirm").addClass("has-error");
+                $("#lblPwdConfError").text(msg);
+                $("#lblPwdConfErrCont").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPasswordConfirm").removeClass("has-error");
+                $("#lblPwdConfError").text("");
+                $("#lblPwdConfErrCont").hide();
+            }
+        }
+
+        $("#txtAccount").blur(function () {
+            vm.onAccountChange();
+        });
+
+        $("#txtPassword").blur(function () {
+            vm.onPasswordChange();
+        });
+
+        $("#txtPasswordConfirm").blur(function () {
+            vm.onPasswordConfirmChange();
+        });
+
+    });
+    </script>
+</script>
+
+
+<script type="text/html" id="contact-offline-template">
+    <div style="padding:0;margin:0 auto">
+        <div style="text-align:center">
+            <textarea id="txtOfflineMsg" style="height:250px;width:550px"></textarea>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="contact-online-template">
+
+    <div class="chat-main-win">
+        <div class="chat-win-header">
+            <div style="float:left;font-size:12px;font-weight:bold;color:#555">
+                Chat with <span data-bind="text: contact_name"></span>
+            </div>
+            <div style="float:right">
+                <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+
+    <div style="position:absolute;top:55px;left:0;right:0;bottom:5px">
+        <div class="chat-window">
+            <div class="chat-text-items">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody data-bind="foreach: chatitems">
+                        <tr>
+                            <td>
+                                <div style="padding:6px 10px 0 0">
+                                    <span data-bind="text: time"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="padding-top:6px">
+                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
+                                </div>
+                            </td>
+                            <td>
+                                <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == streemio.User.name }">
+                                    <span data-bind="text: text"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="chat-controls">
+                <div class="chat-control-ctrls">
+                    <div class="chat-controls-txt">
+                        <textarea data-bind="value: chatmsg"></textarea>
+                    </div>
+                    <div class="chat-controls-btn">
+                        <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>
+
+
+<script type="text/html" id="streemio-view-chat">
+    <div id="chat-container" style="padding-top:5px;height:95vh;margin:0 10px 0 0;position:relative">
+        <div data-bind="template: {name: templateName}"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="sendmsg-modal" tabindex="-1" role="dialog" aria-labelledby="sendmsg-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="sendmsg-label">Send off-line message</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var chat_div = document.getElementById('chat-container');
+            var contact = streemio.Session.uioptions.contact;
+            var issession = streemio.Session.uioptions.issession;
+            var vm = new streemio.vms.ChatViewModel(contact, issession);
+            vm.init(function () {
+                ko.applyBindings(vm, chat_div);
+            });
+
+            streemio.Session.curent_viewmodel = vm;
+        });
+    </script>
+
+</script>
+
+<script type="text/html" id="streemio-view-accountinfo">
+    <div id="user-container" style="padding-top:0;margin-right:20px">
+
+        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+            <h4>Account/Network info</h4>
+        </div>
+
+        <div style="margin-top:20px">
+            <span for="text">Account: </span><span data-bind="text: account" style="font-weight:bold"></span>
+        </div>
+        <div style="margin-top:4px">
+            <span for="text">Public key: </span><span data-bind="text: public_key" style="font-weight:bold"></span>
+        </div>
+        <div style="margin-top:4px">
+            <span for="text">P2P port: </span><span data-bind="text: streemio.User.port" style="font-weight:bold"></span>
+        </div>
+        <div style="margin-top:4px">
+            <span for="text">P2P IP address: </span><span data-bind="text: streemio.User.address" style="font-weight:bold"></span>
+        </div>
+        <div style="margin-top:4px">
+            <span for="text">UPNP gateway: </span><span data-bind="text: streemio.Main.upnp_gateway" style="font-weight:bold"></span>
+        </div>
+        <div style="margin-top:4px">
+            <span for="text">UPNP local address: </span><span data-bind="text: streemio.Main.upnp_local_address" style="font-weight:bold"></span>
+        </div>
+        <div>
+            <div>
+                <span style="font-weight:bold">Seeds</span>
+            </div>
+            <ul data-bind="foreach: streemio.Main.seeds">
+                <li>
+                    <div>account: <span data-bind="text: account"></span></div>
+                    <div>host: <span data-bind="text: address"></span></div>
+                    <div>port: <span data-bind="text: port"></span> </div>                      
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var user_div = document.getElementById('user-container');
+            var vm = new streemio.vms.AccountInfoViewModel();
+            ko.applyBindings(vm, user_div);
+        });
+    </script>
+</script>
+
+<script type="text/html" id="streemio-view-mediacall">
+
+    <div id="media-call-container">
+        <div class="media-call-center">
+
+            <div class="media-call-header">
+                <div style="float:left;" class="callbuttons">
+                    <div style="display:inline-block;margin:0;padding:0;float:left">
+                        <div style="margin-top:10px">
+                            <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
+                                <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Send file" data-bind="click: sendfile">
+                                <i class="fa fa-file fa-stack-2x awesomeEntity" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Chat" data-bind="click: showchat">
+                                <i class="fa fa-commenting fa-stack-2x awesomeEntity" />
+                            </span>
+                        </div>
+                    </div>
+                    <div data-bind="visible: isvideocall" style="display:inline-block;margin:0;padding:0;float:left">
+                        <div style="margin-top:10px">
+                            <span class="fa-stack awesomeBlue" title="Remove video" data-bind="click: remove_video, visible: isvideo">
+                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Add video" data-bind="click: add_video, visible: isvideo() == false">
+                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Mute Audio" data-bind="click: remove_audio, visible: isaudio">
+                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Add audio" data-bind="click: add_audio, visible: isaudio() == false">
+                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
+                            </span>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div style="float:right;font-weight:bold;font-size:12px;padding-right:5px;padding-top:6px">
+                    Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <div class="media-call-controls">
+                <div style="position:relative;width:640px" data-bind="visible: isvideocall">
+                    <div style="text-align:center" class="localvid_parent" data-bind="visible: isvideo">
+                        <video id="localvid" class="video thisuser" autoplay muted></video>
+                    </div>
+                    <div class="remotevid_parent">
+                        <video id="remotevid" class="video contact" autoplay></video>
+                    </div>
+                </div>
+                <div data-bind="visible: isaudiocall" style="margin-top:20px" class="remoteaudio_parent">
+                    <audio id="remote-audio" controls autoplay></audio>
+                </div>
+            </div>
+
+            <div class="media-call-chat">
+                <div class="chat-text-items">
+                    <table cellspacing="0" cellpadding="0" style="max-width:650px">
+                        <tbody data-bind="foreach: chatitems">
+                            <tr>
+                                <td>
+                                    <div style="padding:6px 10px 0 0">
+                                        <span data-bind="text: time"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="padding-top:6px">
+                                        <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == streemio.User.name }">
+                                        <span data-bind="text: text"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chat-controls">
+                    <div class="chat-control-ctrls">
+                        <div class="chat-controls-txt">
+                            <textarea data-bind="value: chatmsg"></textarea>
+                        </div>
+                        <div class="chat-controls-btn">
+                            <button data-bind="click: sendchat" style="padding:2px 5px;font-size:12px">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var mediacall_vm = null;
+
+        function onRemoteVidConn() {
+            var remote_video = document.getElementById("remotevid");
+            remote_video.width = 640;
+            remote_video.height = 480;
+            var remote_parent = $(remote_video).closest(".remotevid_parent");
+            $(remote_parent).css({
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "644px",
+                height: "484px",
+                border: "2px solid #222"
+            })
+
+            var local_video = document.getElementById("localvid");
+            local_video.width = 160;
+            local_video.height = 120;
+            local_video.muted = true;
+            var local_parent = $(local_video).closest(".localvid_parent");
+            $(local_parent).css({
+                position: "absolute",
+                top: 5,
+                right: 5,
+                width: "164px",
+                height: "124px",
+                border: "2px solid #555",
+                'z-index': 9999
+            });
+
+        }
+
+        function showChatControl(callback) {
+            logger.debug("view showChatControl callback");
+            var chatt = 0;
+
+            var winh = $("#view-container").height();
+            var isaudiocall = mediacall_vm.isaudiocall();
+
+            // try to size/place the containers
+            if (isaudiocall) {
+                var audio_parent = $(".remoteaudio_parent");
+                var ap_bottom = audio_parent.offset().top + audio_parent.outerHeight();
+                chatt = ap_bottom + 10;
+            }
+            else {
+                if (winh >= 840) {
+                    var remote_video = document.getElementById("remotevid");
+                    remote_video.width = 640;
+                    remote_video.height = 480;
+                    var remote_parent = $(remote_video).closest(".remotevid_parent");
+                    $(remote_parent).css({
+                        width: "644px",
+                        height: "484px"
+                    })
+
+                    var local_video = document.getElementById("localvid");
+                    local_video.width = 160;
+                    local_video.height = 120;
+                    local_video.muted = true;
+                    var local_parent = $(local_video).closest(".localvid_parent");
+                    $(local_parent).css({
+                        left: 476,
+                        width: "164px",
+                        height: "124px"
+                    });
+
+                    chatt = 540;
+                }
+                else {
+                    var ctrlsh = winh - 50 - 300;
+                    var ctrlsw = parseInt(ctrlsh * 1.3333);
+                    var loc_ctrlsh = ctrlsh / 4;
+                    var loc_ctrlsw = parseInt(loc_ctrlsh * 1.3333);
+
+                    var remote_video = document.getElementById("remotevid");
+                    remote_video.width = ctrlsw;
+                    remote_video.height = ctrlsh;
+                    var remote_parent = $(remote_video).closest(".remotevid_parent");
+                    $(remote_parent).css({
+                        width: (ctrlsw + 4) + "px",
+                        height: (ctrlsh + 4) + "px"
+                    })
+
+                    var local_video = document.getElementById("localvid");
+                    local_video.width = loc_ctrlsw;
+                    local_video.height = loc_ctrlsh;
+                    local_video.muted = true;
+                    var local_parent = $(local_video).closest(".localvid_parent");
+                    $(local_parent).css({
+                        width: (loc_ctrlsw + 4) + "px",
+                        height: (loc_ctrlsh + 4) + "px",
+                        left: ctrlsw - 5 - loc_ctrlsw
+                    });
+
+                    chatt = ctrlsh + 60;
+                }
+            }
+
+            // show the chat window
+            var chath = winh - chatt - 35;
+            var chatContainer = $(".media-call-chat");
+            $(chatContainer).css({
+                top: chatt,
+                height: chath + 'px'
+            });
+            $(chatContainer).show();
+
+            callback();
+        }
+
+        function showLocalVideo() {
+            var local_parent = $(".localvid_parent").show();
+        }
+
+        function hideLocalVideo() {
+            var local_parent = $(".localvid_parent").hide();
+        }
+
+        $(document).ready(function () {
+            var iscaller = streemio.Session.uioptions.iscaller;
+            var contact = streemio.Session.uioptions.contact;
+            var calltype = streemio.Session.uioptions.calltype;
+            var mediacall_div = document.getElementById('media-call-container');
+            mediacall_vm = new streemio.vms.MediaCallViewModel("localvid", "remotevid", iscaller, contact, calltype, onRemoteVidConn, showChatControl);
+            ko.applyBindings(mediacall_vm, mediacall_div);
+            mediacall_vm.init();
+
+            streemio.Session.curent_viewmodel = mediacall_vm;
+        });
+    </script>
+
+</script>
+
+
+<script type="text/html" id="streemio-view-help">
+    <div style="margin:20px 20px 20px 0;text-align:center">
+        <div style="max-width:960px;text-align:left">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                What is Streemio?
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <p>Streemio is a decentralized, peer to peer (P2P) real time communication system for humans and machines. The application aims to implement a system that securely manages humans to machine and machine to machine (M2M) communication without using a central server or client-server infrastructure. The actors of the system are nodes on a peer-to-peer network. Hardware services are manifested in smart contracts that are accessible via messages and transactions. The system uses a distributed hash table (DHT) for contact discovery services. The system ensures data integrity using public-private key cryptography. Messages are signed with the contact’s private key on the client side using ECDSA cryptography. The data is encrypted using ECDH key exchange to exchange the cryptography keys between the contacts and AES symmetric encryption. The video and audio chat feature utilizes the WebRTC the protocol that allows the video and audio communication in a true P2P manner, without routing the conversation through of any central server. </p>
+                            <p>The system is built on FIPS, IETF and W3C security, data and communication standards such as JWT, JWS and WebRTC.</p>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Open source
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            The system is free, fully open source and released under the MIT license. The source code is available at https://github.com/streemiodev. Users can download the source and build the application from directly the source code. We encourage peer review by security experts and software developers to verify there are no security backdoors exist in the system and the application complies with security and communication standards (FIPS, JWT, JWS, JWE, etc).
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                System architecture
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            The system forms a decentralized peer to peer network to manage connections between machines and machines or humans and machines.  The participants in the network are the peer nodes. The peer to peer network is scalable and an unlimited number of nodes can participate in the network.<br /><br />
+                            The system performs public private key infrastructure based authentication and access control functions to securely connect peer nodes. The application generates at least one private/public key pair on each peer node including on the Internet-of-Things devices. The actors of the system publish their public keys to the peer to peer network via a Kademlia distributed hash table (DHT). Each peer node knows the public key of the other connected peer nodes.  The system identifies peer nodes in the peer to peer network by their public key. To ensure data integrity the nodes sign the messages with their private key. The nodes sign all messages -  there are no unsigned messages circulated in the system. (The requirement for signing the messages also help to mitigate the risks of Sybil attacks and DDoS attacks).<br /><br />
+                            <p>Streemio supports two types of network implementations:</p>
+                            <ol type="a">
+                                <li>Public network. Anyone can connect, there is no firewall enabled in the public network. The main Streemio network is public.</li>
+                                <li>Private network, which hides all metada information from the public network. Only certain peer nodes are allowed to connect to the network. The access control is governed by built in authentication functions. Typically, one to one peer connections, communities or businesses would run private Streemio networks to isolate their communication from the public network, to implement and extra layer of security and establish safe and secure communication channel.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingFour">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Internet of Things devices
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                        <div class="panel-body">
+                            <p>Streemio is a unified communication platform for both human users and Internet of Things devices.</p>
+
+                            <p>The developers of this open source system believe that a decentralized, P2P network topology is the most secure, robust, scalable and reliable method of operation for IoT devices. Instead of using expensive corporate owned third party cloud systems, Streemio manages Internet of Things devices without the need of proprietary centralized cloud platforms. Centralized, corporate owned cloud is certainly an easier way to build out IoT platforms. However, the owners and authorities in these topologies all have an influence upon the network and can be exploited. They can ban devices, spy on devices and compromise data integrity of devices. In fact, government can order them to do any or all of those.</p>
+
+                            <p>The primary premise of this system is that all aspects of the IoT device operation must consist of decentralized P2P communication between the device and human user. For example, in the case of a building’s door device: a secure and decentralized P2P system can manage the door (including device configuration, upgrades and provisioning). There is no need to involve a centralized server nor a cloud based solution in order to implement a secure and fully operation Internet of Things system.</p>
+
+                            <p>The Streemio Internet of Things system is based on the latest W3C Web of Things standards. The system incorporates the latest modules from the W3C web-of-things-framework. The devices are defined with JSON-LD and the security uses FIPS standards for cryptography and JWT, JWS and JWE standards to secure data.</p>
+
+                            <p>To integrate devices with Streemio please refer to the IoT section of the Streemio Github repository.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingFive">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                Configure the node
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                        <div class="panel-body">
+                            <p>If you want to use the Streemio network from your desktop computer, tablet or mobile device and communicate with other peers without using a central server you must allow inbound connections.</p>
+                            <p>Home connections are usually filtered by a router or modem. Streemio will request your router automatically configure itself to allow inbound connections to 8905’s port, port 8905. Unfortunately, many routers don’t allow automatic configuration, so you must manually configure your router. You may also need to configure your firewall to allow inbound connections to port 8905. Please see the following subsections for details.</p>
+
+                            <p style="font-weight:bold">Enabling Connections</p>
+
+                            <p>If the Streemio application can’t automatically configure your router to open port 8905, you will need to manually configure your router. We’ve tried to make the following instructions generic enough to cover most router models; if you need specific help with your router, please ask for help on a tech support site such as SuperUser.</p>
+                            
+                            <p>Enabling inbound connections typically requires two steps, plus an extra third step for firewall users:</p>
+                            <ul>                               
+                                <li>Giving your computer a static (unchanging) internal IP address by configuring the Dynamic Host Configuration Protocol (DHCP) on your router.</li>
+                                <li>Forwarding inbound connections from the Internet through your router to your computer where Streemio can process them.</li>
+                                <li>Configuring your firewall to allow inbound connections. This step mainly applies to Windows users, as Mac OS X and most Linuxes do not enable a firewall by default.</li>
+                                <li>Please refer to your router configuration document for port forwarding information.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSix">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                Create account
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                        <div class="panel-body">
+                            <p>Human users and Internet of Things devices are identified by their account name on the Streemio network.</p>
+                            <p>Click on the Streemio/New account menu item or click on the New Account button from the start screen.</p>
+                            <p>Enter the account name. You will receive an error message if the account exists on the network. The account name must be between 6-20 characters and it can only contain alphanumeric characters (letters a-z, A-Z and numbers 0-9)</p>
+                            <p>Enter the password key pair encryption password. The password is used to generate a 256-bit AES key using PBKDF2 with a randomly generated 160-bit salt. The system protects the ECC public key pair with the 256-bit AES key. The password must be at least 8 characters, must not contain empty space, must contain at least one letter, one digit and one special character.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSeven">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                Backup account
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                        <div class="panel-body">
+                            <p>You can perform an account backup to save a local copy of your Streemio account data. If you had to replace your device or erase its data or use another device, you can restore your Streemio account using the account that you backed up. </p>
+                            <p>In order to backup the account the account must be initiated. Click on the Streemio/Backup account menu item to start backup your account.</p>
+                            <p>Your account backup data is never saved on a central server by the Streemio application and the account backup file is saved to your Download directory.</p>
+                            <p>
+                                <span style="font-weight:bold">What is saved in the Backup file?</span><br />
+                                <span>The backup file contains your encrypted Streemio ECC public/private key pair. The backup data is base64 encoded. It starts with “---BEGIN STREEMIO KEY---“, and the file ends with “---END STREEMIO KEY---“</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingEight">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                Restore account from backup file
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+                        <div class="panel-body">
+                            <p>
+                                <span style="font-weight:bold">Why restore your account data? </span><br />
+                                <span>The public/private key pair is created using a random entropy. Your contacts identify your account using your PPK public key. Since the public/private key pair isn’t deterministic, to communicate with your contacts, you must use the public key which was published to the Streemio network and known to your contacts. This can be restored from an account backup file. </span>
+                            </p>
+                            <p>You can restore your Streemio account data on any computer from a backup file.</p>
+                            <p>Click on the Streemio/Restore account menu item or the Restore account to start restoring the account from a backup file.</p>
+                        </div>
+                    </div>
+                </div>                
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading09">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse09" aria-expanded="false" aria-controls="collapse09">
+                                Connect to public network
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse09" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading09">
+                        <div class="panel-body">
+                            <p>Click on the Streemio/Connect to public network menu item or the Connect to Public Streemio Network to connect the public Streemio network.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading10">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                                Connect to private network
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading10">
+                        <div class="panel-body">
+                            <p>Click on the Streemio/Connect to private network menu item or the Connect to Private Streemio Network to connect a private Streemio network.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading11">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                                Delete account
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading11">
+                        <div class="panel-body">
+                            <p>It is a good practice to delete your account from the Streemio network if you don’t use it anymore. Click on the Streemio/Delete account menu item to remove the account from the Streemio network.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading12">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                                Clear database
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading12">
+                        <div class="panel-body">
+                            <p>It is essential to clear the database if you are using Streemio on a public computer such as one in an internet café or airport. </p>
+                            <p>You can remove the all Streemio data from the computer. Click on the Tools/Clear database to remove Streemio related settings and data from the computer. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
