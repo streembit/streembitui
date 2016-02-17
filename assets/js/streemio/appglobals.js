@@ -121,7 +121,7 @@ global.appconfig = streemio.config.data;
 var AppEvents = require("./libs/events/AppEvents");
 global.appevents = new AppEvents();
 
-var logger = require("./logger");
+var logger = require("./libs/logger/logger");
 logger.init(true);
 global.applogger = logger;
 

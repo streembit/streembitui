@@ -67,7 +67,7 @@
 </head>
 <body>
     <div class="app-select-screen">
-        <div style="text-align:center">
+        <!--<div style="text-align:center">
             <div>
                 <div><button id="btnCreateUser" class="btn btn-info btn-large"><i class="fa fa-user-plus"></i> New Account</button></div>
             </div>
@@ -82,6 +82,28 @@
             </div>
             <div style="margin-top:20px">
                 <div><button id="btnAppSelectPrivate" class="btn btn-info btn-large"><i class="fa fa-lock"></i> Connect to Private Streemio Hub</button></div>
+            </div>
+        </div>-->
+        <div class="flex-btncontainer">
+            <div  id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
+                <i class="fa fa-user-plus"></i>
+                <div class="flex-btnitem-text">New Account</div>
+            </div>
+            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#5fb2c4">
+                <i class="fa fa-qrcode"></i>
+                <div class="flex-btnitem-text">Initialize Existing Account</div>
+            </div>
+            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#F9BF3B">
+                <i class="fa fa-cogs"></i>
+                <div class="flex-btnitem-text">Restore Account</div>
+            </div>
+            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#E26A6A;padding-top:16px;">
+                <i class="fa fa-group" style="font-size:100px"></i>
+                <div class="flex-btnitem-text">Connect to Public Streemio</div>
+            </div>
+            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#68C3A3">
+                <i class="fa fa-lock"></i>
+                <div class="flex-btnitem-text">Connect to Private Streemio</div>
             </div>
         </div>
     </div>

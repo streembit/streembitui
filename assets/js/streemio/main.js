@@ -1741,7 +1741,7 @@ streemio.Main = (function (module, logger, events, config) {
         var streemioMenu = new gui.Menu();
         
         streemioMenu.append(new gui.MenuItem({
-            label: 'Initialize Streemio',
+            label: 'Start screen',
             click: function () {
                 $(".appboot-screen").hide();
                 $(".streemio-screen").hide();

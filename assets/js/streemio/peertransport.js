@@ -68,6 +68,12 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         events.emit(events.APPEVENT, events.TYPES.ONPEERERROR, { error: err, contact: contact, data: data });
     }
     
+    function get_account_id() {
+        var id = uuid.v4().toString();
+        var accountId = id.replace(/-/g, '');
+        return accountId;        
+    }
+    
     obj.init = function (bootdata, resultfn) {
         //debugger;
         if (obj.node && obj.is_connected == true) {
@@ -98,7 +104,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
             }
         }
         
-        accountId = streemio.User.name;
+        accountId = streemio.User.name || get_account_id();
         logger.debug("Current peer account is " + accountId);        
 
         for (var i = 0; i < bootdata.seeds.length; i++) {

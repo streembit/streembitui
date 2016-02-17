@@ -9,10 +9,10 @@
   "main": "index.html",
   "window": {
     "toolbar": false,
-    "width": 1024,
-    "height": 640,
+    "width": 1048,
+    "height": 720,
     "frame": true,
-    "min_width": 800,
+    "min_width": 960,
     "min_height": 640,
     "icon": "assets/icons/streemio32.png"
   },
@@ -22,6 +22,18 @@
   "dependencies": {
     "ip": "^1.1.0",
     "request": "^2.69.0",
-    "xml2js": "^0.1.14"
+    "xml2js": "^0.1.14",
+    "async": "^1.5.2",
+    "bigi": "^1.4.1",
+    "clarinet": "^0.11.0",
+    "collections": "^1.2.4",
+    "hat": "0.0.3",
+    "lodash": "^3.10.1",
+    "merge": "^1.2.0",
+    "ms": "^0.7.1",
+    "restify": "^4.0.3",
+    "secure-random": "^1.1.1",
+    "uuid": "^2.0.1",
+    "winston": "^2.1.1"
   }
 }
