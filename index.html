@@ -67,23 +67,6 @@
 </head>
 <body>
     <div class="app-select-screen">
-        <!--<div style="text-align:center">
-            <div>
-                <div><button id="btnCreateUser" class="btn btn-info btn-large"><i class="fa fa-user-plus"></i> New Account</button></div>
-            </div>
-            <div style="margin-top:20px">
-                <div><button id="btnInitializeUser" class="btn btn-info btn-large"><i class="fa fa-sign-in"></i> Initialize Existing Account</button></div>
-            </div>
-            <div style="margin-top:20px">
-                <div><button id="btnRestoreUser" class="btn btn-info btn-large"><i class="fa fa-refresh"></i> Restore Account</button></div>
-            </div>
-            <div style="margin-top:20px">
-                <div><button id="btnAppSelectPublic" class="btn btn-info btn-large"><i class="fa fa-group"></i> Connect to Public Streemio Network</button></div>
-            </div>
-            <div style="margin-top:20px">
-                <div><button id="btnAppSelectPrivate" class="btn btn-info btn-large"><i class="fa fa-lock"></i> Connect to Private Streemio Hub</button></div>
-            </div>
-        </div>-->
         <div class="flex-btncontainer">
             <div  id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
                 <i class="fa fa-user-plus"></i>
@@ -109,12 +92,12 @@
     </div>
     <div class="appboot-screen">
         <div class="appboot-screen-content">
-            <div style="color:#222; margin-bottom:30px;font-size:16px">
+            <div style="color:#fff; margin-bottom:30px;font-size:18px;">
                 <span id="appboot-msg"></span>
             </div>
             <div class="appboot-screen-spinner">
                 <div>
-                    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+                    <i class="fa fa-spinner fa-pulse fa-6x"></i>
                 </div>
             </div>
         </div>
@@ -198,7 +181,6 @@
             streemio.notify.showprogress("Starting the application ... ");
 
             // initialize the menu
-            debugger;
             streemio.Main.initMenu();
 
             // init the main view model
@@ -446,73 +428,74 @@
 
 
 <script type="text/html" id="streemio-view-inituser">
-    <div id="user-container" style="padding-top:0;margin-right:20px">
+    <div id="user-container">
 
-        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-            <h4 data-bind="text: is_new_account() == true ? 'Create your Streemio user account' : 'Connect to Streemio network' "></h4>
-        </div>
+        <div class="user-container-panel">
 
-        <div style="display:none" data-bind="visible: is_private_network">
+            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+                <h4 data-bind="text: is_new_account() == true ? 'Create your Streemio user account' : 'Connect to Streemio network' "></h4>
+            </div>
 
-            <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedHost">
-                <label for="text">Private hub seed host:</label>
-                <div style="font-size:11px">(IP address or domain name)</div>
-                <div id="lblSeedHostErrorContainer" class="error-label">
-                    <span id="lblSeedHostError"></span>
+            <div style="display:none" data-bind="visible: is_private_network">
+
+                <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedHost">
+                    <label for="text">Private hub seed host:</label>
+                    <div style="font-size:11px">(IP address or domain name)</div>
+                    <div id="lblSeedHostErrorContainer" class="error-label">
+                        <span id="lblSeedHostError"></span>
+                    </div>
+                    <input type="text" class="form-control" data-bind="value: private_net_host" style="max-width:300px" id="txtPrivateNetHost" maxlength="40" />
                 </div>
-                <input type="text" class="form-control" data-bind="value: private_net_host" style="max-width:300px" id="txtPrivateNetHost" maxlength="40" />
-            </div>
 
-            <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedPort">
-                <label for="text">Private hub seed port:</label>
-                <div id="lblSeedPortErrorContainer" class="error-label">
-                    <span id="lblSeedPortError"></span>
+                <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedPort">
+                    <label for="text">Private hub seed port:</label>
+                    <div id="lblSeedPortErrorContainer" class="error-label">
+                        <span id="lblSeedPortError"></span>
+                    </div>
+                    <input type="text" class="form-control" data-bind="value: private_net_port" style="max-width:90px" id="txtPrivateNetPort" maxlength="5" />
                 </div>
-                <input type="text" class="form-control" data-bind="value: private_net_port" style="max-width:90px" id="txtPrivateNetPort" maxlength="5" />
-            </div>
 
-            <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedAccount">
-                <label for="text">Private hub seed account:</label>
-                <div id="lblSeedAccountErrorContainer" class="error-label">
-                    <span id="lblSeedAccountError"></span>
+                <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedAccount">
+                    <label for="text">Private hub seed account:</label>
+                    <div id="lblSeedAccountErrorContainer" class="error-label">
+                        <span id="lblSeedAccountError"></span>
+                    </div>
+                    <input type="text" class="form-control" data-bind="value: private_net_account" style="max-width:350px" id="txtPrivateNetAccount" maxlength="32" />
                 </div>
-                <input type="text" class="form-control" data-bind="value: private_net_account" style="max-width:350px" id="txtPrivateNetAccount" maxlength="32" />
+
             </div>
 
-        </div>
 
-
-        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
-            <label for="text">Streemio account:</label>
-            <div id="lblAccountErrorContainer" class="error-label">
-                <span id="lblAccountError"></span>
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
+                <label for="text">Streemio account:</label>
+                <div id="lblAccountErrorContainer" class="error-label">
+                    <span id="lblAccountError"></span>
+                </div>
+                <input type="text" class="form-control" data-bind="value: account, visible: is_new_account() == true || is_account_exists() == false" style="max-width:300px" id="txtAccount" maxlength="20" />
+                <div data-bind="visible: is_new_account() == false && is_account_exists() == true">
+                    <select class="form-control" data-bind="options: accounts, optionsText: 'account', value: selected_account, optionsCaption: 'Choose...'" style="max-width:300px"></select>
+                </div>
             </div>
-            <input type="text" class="form-control" data-bind="value: account, visible: is_new_account() == true || is_account_exists() == false" style="max-width:300px" id="txtAccount" maxlength="20" />
-            <div data-bind="visible: is_new_account() == false && is_account_exists() == true">
-                <select class="form-control" data-bind="options: accounts, optionsText: 'account', value: selected_account, optionsCaption: 'Choose...'" style="max-width:300px"></select>
-            </div>
-        </div>
 
-        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
-            <label for="text">Private key password:</label>
-            <div id="lblPwdErrorContainer" class="error-label">
-                <span id="lblPwdError"></span>
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
+                <label for="text">Private key password:</label>
+                <div id="lblPwdErrorContainer" class="error-label">
+                    <span id="lblPwdError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
             </div>
-            <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
-        </div>
 
-        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
-            <label for="text">Confirm private key password:</label>
-            <div id="lblPwdConfErrCont" class="error-label">
-                <span id="lblPwdConfError"></span>
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
+                <label for="text">Confirm private key password:</label>
+                <div id="lblPwdConfErrCont" class="error-label">
+                    <span id="lblPwdConfError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
             </div>
-            <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
-        </div>
 
-        <div style="margin-top:30px">
-            <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px">Connect to network</button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
-        </div>
-        <div>
+            <div style="margin-top:30px">
+                <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px">Connect to network</button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
+            </div>
 
         </div>
 
@@ -645,38 +628,39 @@
 
 
 <script type="text/html" id="streemio-view-changekey">
-    <div id="user-container" style="padding-top:0;margin-right:20px">
+    <div id="user-container">
 
-        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-            <h4>Update Private Key Passphrase</h4>
-        </div>
+        <div class="user-container-panel">
 
-        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
-            <span for="text">Streemio account: </span><span data-bind="text: streemio.User.name"></span>
-        </div>
-
-        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
-            <label for="text">Private key passphrase:</label>
-            <div id="lblPwdErrorContainer" class="error-label">
-                <span id="lblPwdError"></span>
+            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+                <h4>Update Private Key Passphrase</h4>
             </div>
-            <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
-        </div>
 
-        <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm">
-            <label for="text">Confirm private key passphrase:</label>
-            <div id="lblPwdConfErrCont" class="error-label">
-                <span id="lblPwdConfError"></span>
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
+                <span for="text">Streemio account: </span><span data-bind="text: streemio.User.name"></span>
             </div>
-            <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
-        </div>
 
-        <div style="margin-top:30px">
-            <button data-bind="click: update_account" style="margin-right:10px">Update phassprase</button>
-        </div>
-        <div>
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
+                <label for="text">Private key passphrase:</label>
+                <div id="lblPwdErrorContainer" class="error-label">
+                    <span id="lblPwdError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
+            </div>
 
-        </div>
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm">
+                <label for="text">Confirm private key passphrase:</label>
+                <div id="lblPwdConfErrCont" class="error-label">
+                    <span id="lblPwdConfError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
+            </div>
+
+            <div style="margin-top:30px">
+                <button data-bind="click: update_account" style="margin-right:10px">Update phassprase</button>
+            </div>
+
+        </div>       
 
     </div>
 
@@ -856,42 +840,57 @@
 </script>
 
 <script type="text/html" id="streemio-view-accountinfo">
-    <div id="user-container" style="padding-top:0;margin-right:20px">
+    <div id="user-container">
 
-        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-            <h4>Account/Network info</h4>
-        </div>
+        <div class="user-container-panel" style="min-width:800px;">
 
-        <div style="margin-top:20px">
-            <span for="text">Account: </span><span data-bind="text: account" style="font-weight:bold"></span>
-        </div>
-        <div style="margin-top:4px">
-            <span for="text">Public key: </span><span data-bind="text: public_key" style="font-weight:bold"></span>
-        </div>
-        <div style="margin-top:4px">
-            <span for="text">P2P port: </span><span data-bind="text: streemio.User.port" style="font-weight:bold"></span>
-        </div>
-        <div style="margin-top:4px">
-            <span for="text">P2P IP address: </span><span data-bind="text: streemio.User.address" style="font-weight:bold"></span>
-        </div>
-        <div style="margin-top:4px">
-            <span for="text">UPNP gateway: </span><span data-bind="text: streemio.Main.upnp_gateway" style="font-weight:bold"></span>
-        </div>
-        <div style="margin-top:4px">
-            <span for="text">UPNP local address: </span><span data-bind="text: streemio.Main.upnp_local_address" style="font-weight:bold"></span>
-        </div>
-        <div>
-            <div>
-                <span style="font-weight:bold">Seeds</span>
+            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+                <h4>Account/Network info</h4>
             </div>
-            <ul data-bind="foreach: streemio.Main.seeds">
-                <li>
-                    <div>account: <span data-bind="text: account"></span></div>
-                    <div>host: <span data-bind="text: address"></span></div>
-                    <div>port: <span data-bind="text: port"></span> </div>                      
-                </li>
-            </ul>
+
+            <table style="margin-top:30px;width:100%">
+                <tr>
+                    <td>Account:</td>
+                    <td class="account-info-item"><span data-bind="text: account"></span></td>
+                </tr>
+                <tr>
+                    <td>Public key:</td>
+                    <td class="account-info-item"><span data-bind="text: public_key"></span></td>
+                </tr>
+                <tr>
+                    <td>P2P port:</td>
+                    <td class="account-info-item"><span data-bind="text: streemio.User.port"></span></td>
+                </tr>
+                <tr>
+                    <td>P2P IP address:</td>
+                    <td class="account-info-item"><span data-bind="text: streemio.User.address"></span></td>
+                </tr>
+                <tr>
+                    <td>UPNP gateway:</td>
+                    <td class="account-info-item"><span data-bind="text: streemio.Main.upnp_gateway"></span></td>
+                </tr>
+                <tr>
+                    <td>UPNP local address:</td>
+                    <td class="account-info-item"><span data-bind="text: streemio.Main.upnp_local_address"></span></td>
+                </tr>
+            </table>
+
+            <div style="margin-top:15px">
+                <div>
+                    <span style="font-weight:bold">Seeds</span>
+                </div>
+                <ul data-bind="foreach: streemio.Main.seeds">
+                    <li>
+                        <div>account: <span data-bind="text: account"></span></div>
+                        <div>host: <span data-bind="text: address"></span></div>
+                        <div>port: <span data-bind="text: port"></span> </div>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+
+        
     </div>
 
     <script type="text/javascript">
@@ -1205,7 +1204,7 @@
                         <div class="panel-body">
                             <p>Streemio is a unified communication platform for both human users and Internet of Things devices.</p>
 
-                            <p>The developers of this open source system believe that a decentralized, P2P network topology is the most secure, robust, scalable and reliable method of operation for IoT devices. Instead of using expensive corporate owned third party cloud systems, Streemio manages Internet of Things devices without the need of proprietary centralized cloud platforms. Centralized, corporate owned cloud is certainly an easier way to build out IoT platforms. However, the owners and authorities in these topologies all have an influence upon the network and can be exploited. They can ban devices, spy on devices and compromise data integrity of devices. In fact, government can order them to do any or all of those.</p>
+                            <p>For many IoT use cases a decentralized, P2P network topology is the most secure, robust, scalable and reliable method of operation for IoT devices. Instead of using expensive corporate owned third party cloud systems, Streemio manages Internet of Things devices without the need of proprietary centralized cloud platforms. Centralized, corporate owned cloud is certainly an easier way to build out IoT platforms. However, the owners and authorities in these topologies all have an influence upon the network and can be exploited. They can ban devices, spy on devices and compromise data integrity of devices. In fact, government can order them to do any or all of those.</p>
 
                             <p>The primary premise of this system is that all aspects of the IoT device operation must consist of decentralized P2P communication between the device and human user. For example, in the case of a building’s door device: a secure and decentralized P2P system can manage the door (including device configuration, upgrades and provisioning). There is no need to involve a centralized server nor a cloud based solution in order to implement a secure and fully operation Internet of Things system.</p>
 
@@ -1352,6 +1351,21 @@
                         <div class="panel-body">
                             <p>It is essential to clear the database if you are using Streemio on a public computer such as one in an internet café or airport. </p>
                             <p>You can remove the all Streemio data from the computer. Click on the Tools/Clear database to remove Streemio related settings and data from the computer. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading13">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse13" aria-expanded="false" aria-controls="collapse13">
+                                Share your public key with your private Streemio hub contacts
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse13" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading13">
+                        <div class="panel-body">
+                            <p>Your contacts must know both your account name and public key if you are connecting to a private Streemio hub. Therefore, prior to connecting a private Streemio hub you must share your account details with the seed node of private Streemio hub. Typically, you would do this by configuring the seed node configuration file with the list of contacts. (Please refer to the private network readme document at the Streemio Github repository how to create the configuration file for a private Streemio hub.)</p>
+                            <p>To get your public key either create a new account or initialize an existing account by clicking on the relevant menu item or start screen button. Once your account is initialized click on the Tools/Account security info menu item. Your account name and public key will be displayed on the screen, and you can add your account name and public key data to the configuration file of private Streemio hub seed.</p>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,24 @@
+{
+  "name": "streemio",
+  "description": "P2P real time communication system for humans and IoT devices",
+  "author": {
+    "name": "T Z Pardi",
+    "email": "tzpardi@streemio.org"
+  },
+  "version": "1.0.1",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "width": 1048,
+    "height": 720,
+    "frame": true,
+    "min_width": 960,
+    "min_height": 640,
+    "icon": "assets/icons/streemio32.png"
+  },
+  "scripts": {
+    "start": "nw ."
+  },
+  "dependencies": {
+  }
+}

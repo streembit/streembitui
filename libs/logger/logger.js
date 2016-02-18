@@ -160,6 +160,9 @@ function log_debug(msg, val1, val2, val3, val4) {
 }
 
 exports.init = function (webmode) {
+    
+    console.log("logger init");
+
     var transports = [        
         new winston.transports.Console({
             level: 'debug',
@@ -177,6 +180,7 @@ exports.init = function (webmode) {
     ];
     
     if (webmode) {
+        console.log("set dev console for log");
         transports.push(
             new winston.transports.DevConsole({
                 level: 'debug'

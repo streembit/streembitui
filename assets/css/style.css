@@ -6,7 +6,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 html,body{
     height:100%;
-    background-color:#F8FEFF;
+    background-color:#FFFFFF;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 }
 
 .app-select-screen{
-    background:linear-gradient(to bottom, #bddce9 0%, #F8FEFF 100%) /*rgba(245,252,255,1)*/;
+    background:linear-gradient(to bottom, #a3cadb 0%, #FFFFFF 100%);
     text-align:center;
     height:100%;
 }
@@ -29,7 +29,7 @@ body {
     left:0;
     right:0;
     bottom: 0;
-    background-color:rgba(240,250,255,1);
+    background-color:#3a687e;
     height:100%;
     color:#fff;
     display:none;
@@ -793,4 +793,40 @@ span.awesomeBlue i.addbtn{
     left:0;
     right:0;
     text-align:center;
+}
+
+#user-container{
+    padding-top:30px; 
+    display: flex; 
+    justify-content: center;
+}
+
+.user-container-panel{
+    display:inline-block;
+    min-width:750px;
+    padding:20px; 
+    border:3px solid #ddd; 
+    border-radius:5px;
+    background-color:#fbfbfb;
+}
+
+.user-container-panel table td{
+    border-bottom: 1px solid #ccc;
+    padding-top:6px;
+    padding-bottom:8px;
+}
+
+.account-info-item{
+    font-weight:bold;
+    padding-left:20px;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.alert-danger{
+  color: #fff;
+  background-color: #b24947;
+  border-color: #7e1c18;
 }

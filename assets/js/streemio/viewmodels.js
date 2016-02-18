@@ -87,7 +87,6 @@ var logger = global.applogger;
                                     var dataobj = JSON.parse(plain_text);
                                     var msgobj = { sender: message.iss, time: message.iat, data: dataobj };
                                     viewModel.messages.push(msgobj);
-                                    //console.log("adding message");
                                 }
                             }
                             catch (e) {

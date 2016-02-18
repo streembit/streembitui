@@ -1,11 +1,11 @@
 @echo off
 
 set CUR_DIR="%CD%"
-set BUILD_DIR=%CUR_DIR%\build\win64
-set EXE_PATH=%CUR_DIR%\build\win64\nw.exe
-set ICO_PATH=%CUR_DIR%\assets\icons\streemio32.png
-set NWPACK_PATH=%CUR_DIR%\build\win64\package.nw
-set APPEXE_PATH=%CUR_DIR%\build\win64\streemio.exe
+set BUILD_DIR=%CUR_DIR%\win64
+set EXE_PATH=%CUR_DIR%\win64\nw.exe
+set ICO_PATH=..\assets\icons\streemio32.png
+set NWPACK_PATH=%CUR_DIR%\win64\package.nw
+set APPEXE_PATH=%CUR_DIR%\win64\streemio.exe
 set ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 
 SETLOCAL EnableDelayedExpansion
@@ -27,47 +27,91 @@ REM echo.
 REM call :ColorText 0C "red"
 REM echo.
 
-call :ColorText 0C "delete files from build directory"
+call :ColorText 19 "delete files from build directory"
 echo.
 del %BUILD_DIR%\*.* /S /Q
 
+IF EXIST %BUILD_DIR%\locales (
 rmdir /s /q %BUILD_DIR%\locales
+call :ColorText 0a "locales directory deleted"
+echo.
+)
+
+IF EXIST %BUILD_DIR%\data (
 rmdir /s /q %BUILD_DIR%\data
+call :ColorText 0a "data directory deleted"
+echo.
+)
+
+IF EXIST %BUILD_DIR%\logs (
 rmdir /s /q %BUILD_DIR%\logs
+call :ColorText 0a "logs directory deleted"
+echo.
+)
+
+IF NOT EXIST package.json (
+call :ColorText 0C "package.json not exists"
+echo.
+Exit /b
+) ELSE (
+call :ColorText 0a "package.json was found"
+echo.
+)
+
+IF NOT EXIST streemio.conf (
+call :ColorText 0C "streemio.conf not exists"
+Exit /b
+) ELSE (
+call :ColorText 0a "streemio.conf was found"
+echo.
+)
 
 REM goto :eof
 
-call :ColorText 0C "copy nw files"
+call :ColorText 0a "copy nw files"
 echo.
-xcopy build\buildtools\win64 %BUILD_DIR% /s /e /y
+xcopy buildtools\win64 %BUILD_DIR% /s /e /y
+
+IF NOT EXIST %EXE_PATH% (
+call :ColorText 0C "nw.exe not exists, failed to copy from buildtools\win64"
+echo.
+Exit /b
+) ELSE (
+call :ColorText 0a "nw.exe exists"
+echo.
+)
 
 REM goto :eof
 
 call :ColorText 0C "create package.nw"
 echo.
 
-%ZIP_EXE% a -tzip %NWPACK_PATH% package.json index.html logger.js assets node_modules libs
+%ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html  ..\assets ..\node_modules ..\libs
 
 
-call :ColorText 0C "copy streemio.conf"
+call :ColorText 19 "copy streemio.conf"
 echo.
 
-copy streemio_release.conf %BUILD_DIR%\streemio.conf
+copy streemio.conf %BUILD_DIR%\streemio.conf
 
 REM goto :eof
 
-call :ColorText 0C "setting Streemio icon"
+call :ColorText 19 "setting Streemio icon"
 echo.
-if exist %ICO_PATH% build\buildtools\Resourcer -op:upd -src:%EXE_PATH% -type:14 -name:IDR_MAINFRAME -file:%ICO_PATH%
+IF EXIST %ICO_PATH% (
+	buildtools\Resourcer -op:upd -src:%EXE_PATH% -type:14 -name:IDR_MAINFRAME -file:%ICO_PATH%
+	call :ColorText 0a "icon was set for executable"
+	echo.
+)
 
-call :ColorText 0C "create Streemio executable"
+call :ColorText 19 "create Streemio executable"
 echo.
-copy /b /y %EXE_PATH% + %NWPACK_PATH% %APPEXE_PATH% 
+copy /b /y %EXE_PATH% %APPEXE_PATH% 
 
-del %NWPACK_PATH% /S /Q
+REM del %NWPACK_PATH% /S /Q
 del %EXE_PATH% /S /Q
 
-call :ColorText 0C "create zip file"
+call :ColorText 19 "create zip file"
 echo.
 cd %BUILD_DIR%
 %ZIP_EXE% a -tzip "streemio_win64.zip" %BUILD_DIR%\locales %BUILD_DIR%\*.*

@@ -57,22 +57,18 @@ streemio.util = (function (util) {
             fs.open(datapath, 'r', function (err, fd) {
                 if (err && err.code == 'ENOENT') {
                     /* the directory doesn't exist */
-                    console.log("Creating data directory at " + datapath);
                     fs.mkdir(datapath, function (err) {
                         if (err) {
                             // failed to create the log directory, most likely due to insufficient permission
-                            console.log("Error in creating data directory: " + err.message ? err.message : err);
                             callback(err);
                         }
                         else {
-                            console.log("Data directory created");
                             global.datapath = datapath;
                             callback();
                         }
                     });
                 }
                 else {
-                    console.log("Data directory exists");
                     global.datapath = datapath;
                     callback();
                 }
@@ -813,7 +809,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'danger',
-                delay: time ? time :8000,
+                delay: time ? time :98000,
             }
         );
         
@@ -1751,10 +1747,17 @@ streemio.Main = (function (module, logger, events, config) {
         streemioMenu.append(new gui.MenuItem({
             label: 'Connect to public network',
             click: function () {
-                show_active_app_screen();
-                module.network_type = streemio.DEFS.PUBLIC_NETWORK;
-                module.app_command = streemio.DEFS.CMD_APP_JOINPUBLICNET;
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+                if (!streemio.User.is_user_initialized) {
+                    show_active_app_screen();
+                    module.network_type = streemio.DEFS.PUBLIC_NETWORK;
+                    module.app_command = streemio.DEFS.CMD_APP_JOINPUBLICNET;
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+                }            
+                else {
+                    logger.debug("Publish user to public network");
+                    var seeds = config.bootseeds;
+                    module.join_to_network(seeds);
+                }
             }
         }));
         streemioMenu.append(new gui.MenuItem({
@@ -2075,7 +2078,7 @@ streemio.Main = (function (module, logger, events, config) {
             },    
             function (bootseeds, callback) {
                 if (!bootseeds || !bootseeds.seeds || !bootseeds.seeds.length) {
-                    return callback("Error in populating the seed list. Please make sure the 'bootseeds' configuration is correct and a firewall doesn't block the software!");
+                    return callback("Error in populating the seed list. Please make sure the 'bootseeds' configuration is correct and a firewall doesn't block the Streemio software!");
                 }
                 
                 // initialize the Peer Network
@@ -2152,8 +2155,15 @@ streemio.Main = (function (module, logger, events, config) {
         
         if (app_cmd == streemio.DEFS.CMD_APP_JOINPUBLICNET) {
             module.network_type = streemio.DEFS.PUBLIC_NETWORK;
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
-            $(".streemio-screen").show();
+            if (!streemio.User.is_user_initialized) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+                $(".streemio-screen").show();
+            }            
+            else {
+                logger.debug("Publish user to public network");
+                var seeds = config.bootseeds;
+                module.join_to_network(seeds);
+            }
         }
         else if (app_cmd == streemio.DEFS.CMD_APP_JOINPRIVATENET) {
             module.network_type = streemio.DEFS.PRIVATE_NETWORK;

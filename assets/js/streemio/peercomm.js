@@ -1255,19 +1255,16 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         return wait_peer_reply(jti, 5000, true);
                     },
                     function (err) {
-                        console.log("rejecting from wait_peer_reply");
                         reject(err);
                     }
                 )
                 .then(
                     function (data) {
-                        console.log("resolving after wait_peer_reply");
                         //  must be the data in the session list
                         var session = list_of_sessionkeys[account];
                         resolve(session);
                     },
                     function (err) {
-                        console.log("rejecting");
                         reject(err);
                     }
                 )

@@ -58,6 +58,8 @@ global.appgui = gui;
 var path = require('path');
 var fs = require('fs');
 
+//global.appgui.Window.get().showDevTools();
+
 streemio.config = (function (config) {
     var module = {};
     
@@ -114,7 +116,6 @@ streemio.config = (function (config) {
 
 }(streemio.config || {}));
 
-//global.appgui.Window.get().showDevTools();
 
 global.appconfig = streemio.config.data;
 

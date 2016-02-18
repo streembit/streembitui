@@ -126,7 +126,7 @@ streemio.bootclient = (function (module, logger, config, events) {
                     callback(null, bootresult);
                 }
                 else {
-                    callback("Error in populating the seed list. Please make sure the bootseeds configuration is correct and a firewall doesn't block the software!");
+                    callback("Error in populating the seed list. Please make sure the bootseeds configuration is correct and a firewall doesn't block the Streemio software!");
                 }
             }
         );
