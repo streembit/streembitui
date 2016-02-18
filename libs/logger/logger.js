@@ -17,60 +17,6 @@ DevConsole.prototype.log = function (level, msg, meta, callback) {
     callback(null, true);
 };
 
-
-var logspath = null;
-var logsdir = 'logs';
-
-if (config && config.appexec && config.appexec == 'dev') {
-    var wdir = process.cwd();
-    logspath = path.join(wdir, logsdir);
-}
-else {
-    var nwPath = process.execPath;
-    var nwDir = path.dirname(nwPath);
-    logspath = path.join(nwDir, logsdir);
-}
-
-console.log("logs dir: %s", logspath);
-// set the global log path
-global.logspath = logspath;
-
-
-var logfilePath = path.join(logspath, 'streemio.log');
-var exceptionFileLog = path.join(logspath,'exception.log');
-
-fs.open(logspath, 'r', function (err, fd) {
-    if (err && err.code == 'ENOENT') {
-        /* the directory doesn't exist */
-        console.log("Creating logs directory at " + logspath);
-        fs.mkdir(logspath, function (err) {
-            if (err) {
-                // failed to create the log directory, most likely due to insufficient permission
-                console.log("Error in creating logs directory: " + err.message ? err.message : err);
-            }
-            else {
-                console.log("Logs directory created");
-            }
-        });
-    }
-    else {
-        var logfile_path = path.join(logspath, "streemio.log");
-        console.log("logfile_path: %s", logfile_path);
-        var tmpfilename = "/streemio_" + Date.now() + ".log";
-        var newfile = path.join(logspath, tmpfilename); 
-        console.log("newfile: %s", newfile);
-        fs.rename(logfile_path, newfile, function (err) {
-            if (err) {
-                return console.log("fs.rename error: %j", err);
-            }
-            console.log("log file renamed to: %s", newfile);
-        });
-    }
-});
-
-
-var level = config && config.log && config.log.level ? config.log.level : "error";
-
 var logger = {};
 
 function log_error(err, param) {
@@ -117,7 +63,6 @@ function log_error(err, param) {
     }
 }
 
-
 function level_log(level, msg, val1, val2, val3, val4) {
     try {
         if (msg) {
@@ -150,7 +95,6 @@ function level_log(level, msg, val1, val2, val3, val4) {
     }
 }
 
-
 function log_info(msg, val1, val2, val3, val4) {
     level_log("info", msg, val1, val2, val3, val4);
 }
@@ -159,7 +103,8 @@ function log_debug(msg, val1, val2, val3, val4) {
     level_log("debug", msg, val1, val2, val3, val4);
 }
 
-exports.init = function (webmode) {
+
+exports.init = function (loglevel, logpath, excpath, webmode) {
     
     console.log("logger init");
 
@@ -205,6 +150,111 @@ exports.init = function (webmode) {
     });
 }
 
+function config_log(loglevel, logpath, excpath, webmode) {
+    var transports = [        
+        new winston.transports.Console({
+            level: loglevel,
+            json: false,
+            colorize: true
+        }),
+        new (winston.transports.File)({
+            filename: logpath,
+            level: loglevel,
+            json: true,
+            maxsize: 4096000, //4MB
+            maxFiles: 100,
+            tailable: true,
+            colorize: false
+        })
+    ];
+    
+    if (webmode) {
+        transports.push(
+            new winston.transports.DevConsole({
+                level: loglevel
+            })
+        );
+    }
+    
+    logger = new (winston.Logger)({
+        exitOnError: false,
+        transports: transports,
+        exceptionHandlers: [
+            new winston.transports.File({
+                filename: excpath,
+                json: true
+            }),
+            new winston.transports.Console({
+                level: loglevel,
+                json: false,
+                colorize: true
+            })
+        ]
+    });
+}
+
+function init_log(loglevel, logdir, callback) {
+    
+    var logspath = null;
+    if (logdir) {
+        logspath = logdir;
+    }
+    else {
+        var wdir = process.cwd();
+        logspath = path.join(wdir, logsdir);    
+    }
+
+    console.log("logs dir: %s", logspath);
+    
+    var logfilePath = path.join(logspath, 'streemio.log');
+    var exceptionFileLog = path.join(logspath, 'exception.log');
+    
+    var level = loglevel || "debug";
+    
+    fs.open(logspath, 'r', function (err, fd) {
+        if (err && err.code == 'ENOENT') {
+            /* the directory doesn't exist */
+            console.log("Creating logs directory at " + logspath);
+            fs.mkdir(logspath, function (err) {
+                if (err) {
+                    // failed to create the log directory, most likely due to insufficient permission
+                    if (callback) {
+                        callback("Error in creating logs directory: " + err.message ? err.message : err);
+                    }
+                    else {
+                        console.log("Error in creating logs directory: " + err.message ? err.message : err);
+                    }
+                }
+                else {                    
+                    config_log(level, logfilePath, exceptionFileLog );
+                    log_info("log is initialized");
+                    if (callback) {
+                        callback();
+                    }
+                }
+            });
+        }
+        else {
+            console.log("Logs directory " + logspath + " exists");
+            var tmpfilename = "/streemio_" + Date.now() + ".log";
+            var newfile = path.join(logspath, tmpfilename);
+            console.log("newfile: %s", newfile);
+            fs.rename(logfilePath, newfile, function (err) {
+                if (err) {
+                    return console.log("fs.rename error: %j", err);
+                }
+                console.log("log file renamed to: %s", newfile);
+                config_log(level, logfilePath, exceptionFileLog);
+                log_info("log is initialized");
+                if (callback) {
+                    callback();
+                }
+            });
+        }
+    });
+}
+
 exports.error = log_error;
 exports.info = log_info;
 exports.debug = log_debug;
+exports.init = init_log;

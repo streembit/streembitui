@@ -122,7 +122,24 @@ global.appconfig = streemio.config.data;
 var AppEvents = require("./libs/events/AppEvents");
 global.appevents = new AppEvents();
 
+// initialize the logger
+var logspath = null;
+if (global.appconfig && global.appconfig.appexec && global.appconfig.appexec == 'dev') {
+    var wdir = process.cwd();
+    logspath = path.join(wdir, 'logs');
+}
+else {
+    var nwPath = process.execPath;
+    var nwDir = path.dirname(nwPath);
+    logspath = path.join(nwDir, 'logs');
+}
+
 var logger = require("./libs/logger/logger");
-logger.init(true);
+
+var level = global.appconfig && global.appconfig.log && global.appconfig.log.level ? global.appconfig.log.level : "debug";
+console.log('log level: ' + level);
+console.log('log path: ' + logspath);
+logger.init(level, logspath);
+
 global.applogger = logger;
 

@@ -6,7 +6,8 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 html,body{
     height:100%;
-    background-color:#FFFFFF;
+    background-color:#ffffff;
+    background:linear-gradient(to bottom, #ffffff 0%, #e9f4fc 100%);
 }
 
 body {
@@ -14,7 +15,7 @@ body {
 }
 
 .app-select-screen{
-    background:linear-gradient(to bottom, #a3cadb 0%, #FFFFFF 100%);
+    background:linear-gradient(to bottom, #ffffff 0%, #e9f4fc 100%);
     text-align:center;
     height:100%;
 }
