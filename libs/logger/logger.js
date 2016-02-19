@@ -241,9 +241,14 @@ function init_log(loglevel, logdir, callback) {
             console.log("newfile: %s", newfile);
             fs.rename(logfilePath, newfile, function (err) {
                 if (err) {
-                    return console.log("fs.rename error: %j", err);
+                    if (err.code && err.code != "ENOENT") {
+                        return console.log("fs.rename error: %j", err);
+                    }
+                    // continue if the streemio.log does not exists, that is not an error
                 }
-                console.log("log file renamed to: %s", newfile);
+                if (!err) {
+                    console.log("log file renamed to: %s", newfile);
+                }
                 config_log(level, logfilePath, exceptionFileLog);
                 log_info("log is initialized");
                 if (callback) {
