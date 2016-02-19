@@ -270,6 +270,8 @@ Node.prototype.discovery = function (options, resultfn) {
     );
 };
 
+//  This list to return a set of seed nodes to the client
+//  so include the own account details of this node
 Node.prototype.get_contacts = function () {
     var list_of_contacts = [];
     for (var bname in this._buckets) {
@@ -279,6 +281,9 @@ Node.prototype.get_contacts = function () {
             list_of_contacts.pus( { address: contacts[i].address, port: contacts[i].port, account: contacts[i].account} );  
         }
     }
+
+    // add its own contact details
+    list_of_contacts.push({ address: this._self.address, port: this._self.port, account: this._self.account });
 
     return list_of_contacts;
 }
