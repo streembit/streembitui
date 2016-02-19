@@ -111,6 +111,8 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         
         accountId = streemio.User.name || get_account_id();
         logger.debug("Current peer account is " + accountId);        
+        
+        var seedlist = [];
 
         for (var i = 0; i < bootdata.seeds.length; i++) {
             if (!bootdata.seeds[i].port) {
@@ -130,7 +132,12 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                     bootdata.seeds[i].account = acc;
                 }
             }
-            logger.debug("seed: %j", bootdata.seeds[i]);
+            
+            // remove our own account id in case if it is in the list
+            if (bootdata.seeds[i].account != accountId) {
+                seedlist.push(bootdata.seeds[i]);
+                logger.debug("seed: %j", bootdata.seeds[i]);
+            }
         }        
         
         var options = {
@@ -138,7 +145,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
             log: logger,
             port: config.p2p.settings.port,
             account: accountId,
-            seeds: bootdata.seeds, 
+            seeds: seedlist, 
             peermsgHandler: onPeerMessage,
             storage: db,
             is_private_network: is_private_network,

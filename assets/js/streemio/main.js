@@ -2080,6 +2080,7 @@ streemio.Main = (function (module, logger, events, config) {
 
         $(".streemio-screen").hide();
         $(".appboot-screen").show();
+        $(".appboot-screen-content").show();
         
         async.waterfall([        
             function (callback) {
