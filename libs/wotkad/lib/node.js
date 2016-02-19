@@ -270,6 +270,19 @@ Node.prototype.discovery = function (options, resultfn) {
     );
 };
 
+Node.prototype.get_contacts = function () {
+    var list_of_contacts = [];
+    for (var bname in this._buckets) {
+        var bucket = this._buckets[bname];
+        var contacts = bucket.getContactList();
+        for (var i = 0; i < contacts.length; i++) {
+            list_of_contacts.pus( { address: contacts[i].address, port: contacts[i].port, account: contacts[i].account} );  
+        }
+    }
+
+    return list_of_contacts;
+}
+
 Node.prototype.get_seed_contact = function () {
     var seeds = this._options.seeds;
     for (var bname in this._buckets) {

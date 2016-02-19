@@ -1725,6 +1725,25 @@ streemio.Main = (function (module, logger, events, config) {
         $(".streemio-screen").show();    
     }
     
+    function display_new_account() {
+        show_active_app_screen();
+        module.app_command = streemio.DEFS.CMD_APP_CREATEACCOUNT;
+        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: true });
+    }
+
+    function start_new_account() {
+        debugger
+        if (streemio.Node.is_node_connected() == true) {
+            display_new_account();
+        }
+        else {
+            var seeds = config.bootseeds;
+            module.join_to_network(seeds, true, function () {
+                display_new_account();
+            });
+        }
+    }
+    
     module.initMenu = function () {
         
         if (!module.is_gui) {
@@ -1773,9 +1792,7 @@ streemio.Main = (function (module, logger, events, config) {
         streemioMenu.append(new gui.MenuItem({
             label: 'New account',
             click: function () {
-                show_active_app_screen();
-                module.app_command = streemio.DEFS.CMD_APP_CREATEACCOUNT;
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: true });
+                start_new_account();
             }
         }));
         streemioMenu.append(new gui.MenuItem({
@@ -2057,8 +2074,10 @@ streemio.Main = (function (module, logger, events, config) {
         }
     }
     
-    module.join_to_network = function (seeds) {
+    module.join_to_network = function (seeds, skip_publish, completefn) {
         
+        module.is_app_initialized = false;
+
         $(".streemio-screen").hide();
         $(".appboot-screen").show();
         
@@ -2112,12 +2131,16 @@ streemio.Main = (function (module, logger, events, config) {
                 );
             },
             function (callback) {
-                streemio.PeerNet.publish_user(callback);
+                if (skip_publish) {
+                    callback();
+                }
+                else {
+                    streemio.PeerNet.publish_user(callback);
+                }
             },
         ], 
         function (err, result) {
             if (err) {
-                debugger;
                 appboot_msg_handler("", true);
                 var msg = "Error in initializing the application. "
                 if (config.transport == "tcp") {
@@ -2144,11 +2167,15 @@ streemio.Main = (function (module, logger, events, config) {
             $(".streemio-screen").show();
             
             module.is_app_initialized = true;
+
+            if (completefn) {
+                completefn();
+            }
+
             //
         });
     }
 
-    
     module.init = function (app_cmd) {
         
         module.app_command = app_cmd;
@@ -2171,8 +2198,7 @@ streemio.Main = (function (module, logger, events, config) {
             $(".streemio-screen").show();
         }
         else if (app_cmd == streemio.DEFS.CMD_APP_CREATEACCOUNT) {
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: true });
-            $(".streemio-screen").show();
+            start_new_account();
         }
         else if (app_cmd == streemio.DEFS.CMD_APP_INITACCOUNT) {
             events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });

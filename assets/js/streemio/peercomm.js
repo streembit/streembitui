@@ -144,6 +144,11 @@ streemio.Node = (function (module, logger, events, config) {
         transport.validate_connection(callback);
     }
     
+    module.is_node_connected = function () {
+        var transport = streemio.TransportFactory.transport;
+        return transport.is_node_connected();
+    }
+
     return module;
 
 }(streemio.Node || {}, global.applogger, global.appevents, global.appconfig));

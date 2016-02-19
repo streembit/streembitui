@@ -74,10 +74,15 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         return accountId;        
     }
     
+    obj.is_node_connected = function () {
+        return obj.is_connected;
+    }
+    
     obj.init = function (bootdata, resultfn) {
         //debugger;
         if (obj.node && obj.is_connected == true) {
             obj.node.close();
+            obj.is_connected = false;
         }
         
         if (!config.p2p ) {
@@ -118,10 +123,12 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                 }
             }
             else {
-                var str = "" + bootdata.seeds[i].address + ":" + bootdata.seeds[i].port;
-                var buffer = new Buffer(str);
-                var acc = nodecrypto.createHash('sha1').update(buffer).digest().toString('hex');
-                bootdata.seeds[i].account = acc;
+                if (!bootdata.seeds[i].account) {
+                    var str = "" + bootdata.seeds[i].address + ":" + bootdata.seeds[i].port;
+                    var buffer = new Buffer(str);
+                    var acc = nodecrypto.createHash('sha1').update(buffer).digest().toString('hex');
+                    bootdata.seeds[i].account = acc;
+                }
             }
             logger.debug("seed: %j", bootdata.seeds[i]);
         }        
@@ -196,7 +203,18 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
     
     obj.validate_connection = function (callback) {
         try {
-            obj.node.validate_connection(callback);
+            obj.node.validate_connection(function (err) {
+                if (err) {
+                    //  it was an error
+                    //  close the node connection 
+                    if (obj.node && obj.is_connected == true) {
+                        obj.node.close();
+                        obj.is_connected = false;
+                        obj.node = null;
+                    }
+                }
+                callback(err);
+            });
         }
         catch (e) {
             callback(e);
