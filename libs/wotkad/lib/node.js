@@ -278,7 +278,7 @@ Node.prototype.get_contacts = function () {
         var bucket = this._buckets[bname];
         var contacts = bucket.getContactList();
         for (var i = 0; i < contacts.length; i++) {
-            list_of_contacts.pus( { address: contacts[i].address, port: contacts[i].port, account: contacts[i].account} );  
+            list_of_contacts.push( { address: contacts[i].address, port: contacts[i].port, account: contacts[i].account} );  
         }
     }
 
