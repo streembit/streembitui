@@ -147,6 +147,7 @@ streemio.util = (function (util) {
 
 }(streemio.util || {}));
 
+
 streemio.Fdialog = (function (module) {
     
     var defOprions = {
@@ -358,6 +359,7 @@ streemio.Fdialog = (function (module) {
     return module;
 
 }(streemio.Fdialog || {}));
+
 
 streemio.UI = (function (module, logger, events, config) {
     
@@ -1397,7 +1399,7 @@ streemio.User = (function (usrobj, events) {
 
 streemio.Session = (function (module, logger, events, config) {
     
-    module.uioptions = {};
+    module.settings = {};
     module.current_operation = 0;
     module.selected_contact = 0;
     module.data_context = 0;
@@ -1424,6 +1426,90 @@ streemio.Session = (function (module, logger, events, config) {
         return module.textmessages[contact];
     }
     
+    module.get_settings = function (callback) {
+        streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
+            function (result) {
+                logger.debug("database result populated");
+                if (result && result.data) {
+                    module.settings = result.data;
+                }
+                callback();           
+            },
+            function (err) {
+                logger.error("streemio.DB.get settings error %j", err);
+                callback(err);
+            }
+        );
+    }
+    
+    module.delete_pending_contact(contact_name, callback) = function () {
+        try {
+            if (module.settings.pending_contacts) {
+                var contacts = [];
+                for (var i = 0; i < module.settings.pending_contacts.length; i++) {
+                    if (module.settings.pending_contacts[i] != contact_name) {
+                        contacts.push(contact_name);
+                    }
+                }
+                module.settings.pending_contacts = contacts;
+            }
+            else {
+                module.settings.pending_contacts = [];           
+            }
+
+            streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
+                function () {
+                    logger.debug("updated settings database");
+                    callback(null);
+                },
+                function (err) {
+                    logger.error("add database settings error %j", err);
+                    callback(err);
+                }
+            );
+        }
+        catch (e) {
+            logger.error("add database settings error. Exception %j", e);
+            callback(e);
+        }
+    }
+
+    module.add_pending_contact(contact_name, callback) = function () {
+        if (!module.settings.pending_contacts) {
+            module.settings.pending_contacts = [];           
+        }
+        module.settings.pending_contacts.push(contact_name);
+        
+        streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
+            function () {
+                logger.debug("updated settings database");
+                callback(null);
+            },
+            function (err) {
+                logger.error("add database settings error %j", err);
+                callback(err);
+            }
+        );
+    }
+    
+    module.add_blocked_contact(contact_name, callback) = function () {
+        if (!module.settings.blocked_contacts) {
+            module.settings.blocked_contacts = [];
+        }
+        module.settings.blocked_contacts.push(contact_name);
+        
+        streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
+            function () {
+                logger.debug("updated settings database");
+                callback(null);
+            },
+            function (err) {
+                logger.error("add database settings error %j", err);
+                callback(err);
+            }
+        );
+    }
+    
     return module;
 
 }(streemio.Session || {}, global.applogger, global.appevents));
@@ -1432,6 +1518,7 @@ streemio.Session = (function (module, logger, events, config) {
 streemio.Contacts = (function (module, logger, events, config) {
     
     var contacts = [];
+    var pending_contacts = {};
     
     var Contact = function (param) {
         var contobj = {
@@ -1450,6 +1537,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                         logger.debug("contact " + _self.name + " is online");
                     },
                     function (err) {
+                        _self.lastping(Date.now());
                         _self.isonline(false);
                         //  if the contact is offline then that is not an error 
                         if ((typeof err == 'string' && err.indexOf("TIMEDOUT") > -1) || (err.message && err.message.indexOf("TIMEDOUT") > -1)) {
@@ -1524,6 +1612,42 @@ streemio.Contacts = (function (module, logger, events, config) {
         }
     }
     
+    function pending_contact_handler() {
+        var pcontacts = streemio.Session.settings.pending_contacts;
+        if (!pcontacts || !pcontacts.length) {
+            return;
+        }
+
+        var index = 0;
+        var pctimer = setInterval(
+            function () {
+                var account = pcontacts[index];
+                module.find_and_add_contact(account);      
+                index++;
+                if (index >= pcontacts.length) {
+                    clearTimeout(pctimer);
+                }
+            },
+            2000
+        );
+    }
+    
+    module.handle_addcontact_accepted = function (contact) {
+        
+    }
+    
+    module.handle_addcontact_denied = function (contact) {
+        
+    }
+    
+    module.find_and_add_contact = function (account) {
+        module.search(account, function (contact) {
+            logger.debug("send add contact request to", contact.name);
+            streemio.PeerNet.send_addcontact_request(contact);
+            module.pending_contacts[account] = contact;
+        });
+    }
+    
     module.get_contact = function (account) {
         var contact = null;
         for (var i = 0; i < contacts.length; i++) {
@@ -1582,12 +1706,15 @@ streemio.Contacts = (function (module, logger, events, config) {
                 
                 streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
                     function () {
+                        callback(contact);
+                        /*
+                        streemio.notify.success("Contact %s found, send contact request", account);
                         var contobj = new Contact(contact);
                         contacts.push(contobj);
                         contobj.ping();
                         
-                        callback(contobj);
-                        streemio.notify.success("Contact %s found", account);
+                        callback(contobj);                        
+                        */
                     },
                     function (err) {
                         streemio.notify.error("Database update add contact error %j", err);
@@ -1680,8 +1807,15 @@ streemio.Contacts = (function (module, logger, events, config) {
                             // use the stored contact info
                             logger.error("find_account error: %j", err);
                         }
-                    )                
-
+                    )
+                    
+                    setTimeout(
+                        function () {
+                            // start the pending contact handler
+                            pending_contact_handler();
+                        },
+                        10000
+                    ); 
                 }
                 
                 //
@@ -1896,10 +2030,6 @@ streemio.Main = (function (module, logger, events, config) {
         toolsMenu.append(new gui.MenuItem({
             label: 'Clear database',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
-                }
-
                 bootbox.confirm("All settings and data will be removed from the local database", function (result) {
                     if (result) {
                         streemio.DB.clear().then(
@@ -1998,7 +2128,40 @@ streemio.Main = (function (module, logger, events, config) {
                         callback(err);
                     }
                 );
-            },         
+            },   
+            function (callback) {
+                //  get the settings db
+                streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
+                    function (result) {
+                        logger.debug("database result populated");
+                        callback(null);
+                        if (result && result.data) {
+                            streemio.Session.settings = result.data;
+                            callback();
+                        }
+                        else {
+                            //  add records to the database
+                            logger.debug("add database settings");
+                            var settings = { key: "settings", data: { usewebsocket: false, pending_contacts: [] } };
+                            streemio.DB.update(streemio.DB.SETTINGSDB, settings).then(
+                                function () {
+                                    logger.debug("added database settings");
+                                    streemio.Session.settings = settings;
+                                    callback(null);
+                                },
+                                function (err) {
+                                    logger.error("add database settings error %j", err);
+                                    callback(err);
+                                }
+                            );
+                        }
+                    },
+                    function (err) {
+                        logger.error("streemio.DB.get settings error %j", err);
+                        callback(err);
+                    }
+                );
+            },      
             function (callback) {
                 // make sure the data directory exists
                 appboot_msg_handler("Creating data directory");

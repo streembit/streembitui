@@ -67,7 +67,10 @@ var PEERMSG = {
     DEL: 0xDB5,     //  Delete message
     FILE: 0xDB6,    //  File transfer init
     FREP: 0xDB7,    //  Reply file transfer init
-    HCAL: 0xDB8     //  Close call
+    HCAL: 0xDB8,    //  Close call
+    ACRQ: 0xDB9,    //  Add contact request
+    AACR: 0xDBa,    //  Accept add contact request
+    DACR: 0xDBb     //  Deny add contact request
 };
 
 

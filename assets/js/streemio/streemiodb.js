@@ -10,6 +10,7 @@ const DB_NAME = 'streemio-database';
 const DB_ACCOUNTS_STORE_NAME = 'accounts';
 const DB_CONTACTS_STORE_NAME = 'contacts';
 const DB_STREEMIO_STORE_NAME = 'streemiodb';
+const DB_SETTINGS_STORE_NAME = 'settingsdb';
 
 streemio.DB = (function (module, logger, events){
     
@@ -31,6 +32,7 @@ streemio.DB = (function (module, logger, events){
         var accounts_store = db.createObjectStore(DB_ACCOUNTS_STORE_NAME, { keyPath: 'account' });
         var contacts_store = db.createObjectStore(DB_CONTACTS_STORE_NAME, { keyPath: 'name' });
         var streemio_store = db.createObjectStore(DB_STREEMIO_STORE_NAME, { keyPath: 'key' });
+        var settings_store = db.createObjectStore(DB_SETTINGS_STORE_NAME, { keyPath: 'key' });
     }
     
     module.update = function (dbstore, data) {
@@ -86,8 +88,7 @@ streemio.DB = (function (module, logger, events){
         return objectStore;
     }
     
-    module.getall = function (dbstore, callback) {
-        
+    module.getall = function (dbstore, callback) {        
         var result = [];
         var objectStore = getObjectStore(dbstore);
         var request = objectStore.openCursor();
@@ -154,6 +155,7 @@ streemio.DB = (function (module, logger, events){
     module.ACCOUNTSDB = DB_ACCOUNTS_STORE_NAME;
     module.CONTACTDB = DB_CONTACTS_STORE_NAME;
     module.MAINDB = DB_STREEMIO_STORE_NAME;
+    module.SETTINGSDB = DB_SETTINGS_STORE_NAME;
 
     return module;
 

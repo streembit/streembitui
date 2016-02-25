@@ -585,6 +585,29 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
+    function handleAddContactRequest(sender, payload, msgtext) {
+        try {
+            logger.debug("Add contact request message received");
+            
+            //var session = list_of_sessionkeys[sender];
+            //if (!session) {
+            //    throw new Error("handleCallReply error, session does not exist for " + sender);
+            //}
+            
+            //var data = JSON.parse(msgtext);
+            ////  must have the request_jti field
+            //var jti = data[wotmsg.MSGFIELD.REQJTI];
+            //var result = data[wotmsg.MSGFIELD.RESULT];
+            
+            //// find the wait handler, remove it and return the promise
+            //closeWaithandler(jti, result);
+
+        }
+        catch (e) {
+            streemio.notify.error("handleCallReply error %j", e);
+        }
+    }
+    
     function handleSymmMessage(sender, payload, msgtext) {
         try {
             //logger.debug("handleSymmMessage message received");
@@ -647,7 +670,6 @@ streemio.PeerNet = (function (module, logger, events, config) {
             streemio.notify.error("handleSymmMessage error %j", e);
         }
     }
-    
     
     module.onPeerMessage = function (data, info) {
         try {
@@ -715,6 +737,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     break;
                 case wotmsg.PEERMSG.HCAL:
                     handleHangupCall(sender, payload, message.data);
+                    break;
+                case wotmsg.PEERMSG.ACRQ:
+                    handleAddContactRequest(sender, payload, message.data);
                     break;
 
                 default:
@@ -922,8 +947,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             streemio.notify.error("send_peer_message error %j", e);
         }
     }
-    
-    
+   
     module.ping = function (contact, showprogress, timeout) {
         
         return new Promise(function (resolve, reject) {
@@ -955,12 +979,25 @@ streemio.PeerNet = (function (module, logger, events, config) {
         });
     }
     
+    module.send_addcontact_request = function (contact) {
+        try {                
+            var account = contact.name;
+            var data = { sender: streemio.User.name };
+            data[wotmsg.MSGFIELD.TIMES] = Date.now();
+                
+            var jti = streemio.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.HCAL, jti, streemio.User.private_key, data, streemio.User.name, account);
+            streemio.Node.peer_send(contact, encoded_msgbuffer);
+        }
+        catch (err) {
+            streemio.notify.error("send_addcontact_request error:  %j", err);
+        }        
+    }
     
     module.hangup_call = function (contact) {
         
         return new Promise(function (resolve, reject) {
-            try {
-                
+            try {                
                 var account = contact.name;
                 var data = {}
                 data[wotmsg.MSGFIELD.TIMES] = Date.now();

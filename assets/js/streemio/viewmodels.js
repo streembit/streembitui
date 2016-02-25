@@ -851,7 +851,7 @@ var logger = global.applogger;
                     }
                 }
                 catch (err) {
-                    //TODO
+                    logger.error("contact onTextMessage error %j", err);
                 }
             },
             
@@ -873,7 +873,7 @@ var logger = global.applogger;
                     }
                 }
                 catch (err) {
-                    //TODO
+                    logger.error("contact onFileReceive error %j", err);
                 }
             },
             
@@ -895,7 +895,7 @@ var logger = global.applogger;
                     }
                 }
                 catch (err) {
-                    //TODO
+                    logger.error("contact itemAction error %j", err);
                 }
             },
             
@@ -987,19 +987,25 @@ var logger = global.applogger;
                         return;
                     }
                     
-                    streemio.Contacts.search(account, function (result) {
-                        if (result) {
-                            var contact = Object.create(Contact);
-                            if (result.user_type == "human") {
-                                contact.usertypeicon = "glyphicon glyphicon-user";
-                            }
-                            else if (result.user_type == "device") {
-                                contact.usertypeicon = "glyphicon glyphicon-cog";
-                            }
-                            var contobj = merge(contact, result);
-                            viewModel.contacts.push(contobj);
-                        }
-                    });
+                    streemio.Contacts.find_and_add_contact(account);
+                    
+                    //streemio.Contacts.search(account, function (contact) {
+                    //    if (contact) {
+                    //        logger.debug("Contact %s found, send contact request", contact.name);
+                    //        streemio.PeerNet.send_addcontact_request(contact);
+                    //        /*
+                    //        var contact = Object.create(Contact);
+                    //        if (result.user_type == "human") {
+                    //            contact.usertypeicon = "glyphicon glyphicon-user";
+                    //        }
+                    //        else if (result.user_type == "device") {
+                    //            contact.usertypeicon = "glyphicon glyphicon-cog";
+                    //        }
+                    //        var contobj = merge(contact, result);
+                    //        viewModel.contacts.push(contobj);
+                    //        */
+                    //    }
+                    //});
                     
                 }
                 catch (err) {
@@ -1037,19 +1043,50 @@ var logger = global.applogger;
                     validatePassword(false, "The password must not contain empty space");
                     return false;
                 }
-                var ck_letters = /[A-Za-z]/;
-                if (!ck_letters.test(val)) {
-                    validatePassword(false, "The password must contain at least one letter.");
+
+                var valid = false;
+                for (var i = 0; i < val.length; i++) {
+                    var asciicode = val.charCodeAt(i);
+                    if (asciicode > 96 && asciicode < 123) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if (!valid) {
+                    validatePassword(false, "The password must contain at least one lower case letter.");
                     return false;
                 }
+                
+                valid = false;
+                for (var i = 0; i < val.length; i++) {
+                    var asciicode = val.charCodeAt(i);
+                    if (asciicode > 64 && asciicode < 91) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if (!valid) {
+                    validatePassword(false, "The password must contain at least one upper case letter.");
+                    return false;
+                }
+                
                 var ck_nums = /\d/;
                 if (!ck_nums.test(val)) {
                     validatePassword(false, "The password must contain at least one digit.");
                     return false;
                 }
                 
-                var ck_specchar = /[!@#$£%^&*]/;
-                var valid = ck_specchar.test(val);
+                valid = false;
+                for (var i = 0; i < val.length; i++) {
+                    var asciicode = val.charCodeAt(i);
+                    if ((asciicode > 32 && asciicode < 48) ||
+                        (asciicode > 57 && asciicode < 65) ||
+                        (asciicode > 90 && asciicode < 97) ||
+                        (asciicode > 122 && asciicode < 127)) {
+                        valid = true;
+                        break;
+                    }
+                }
                 if (!valid) {
                     validatePassword(false, "The password must contain at least one special character.");
                     return false;
@@ -1268,24 +1305,55 @@ var logger = global.applogger;
                         validatePassword(false, "The password must not contain empty space");
                         return false;
                     }
-                    var ck_letters = /[A-Za-z]/;
-                    if (!ck_letters.test(val)) {
-                        validatePassword(false, "The password must contain at least one letter.");
+                    
+                    var valid = false;
+                    for (var i = 0; i < val.length; i++) {
+                        var asciicode = val.charCodeAt(i);
+                        if (asciicode > 96 && asciicode < 123) {
+                            valid = true;
+                            break;
+                        }
+                    }
+                    if (!valid) {
+                        validatePassword(false, "The password must contain at least one lower case letter.");
                         return false;
                     }
+                    
+                    valid = false;
+                    for (var i = 0; i < val.length; i++) {
+                        var asciicode = val.charCodeAt(i);
+                        if (asciicode > 64 && asciicode < 91) {
+                            valid = true;
+                            break;
+                        }
+                    }
+                    if (!valid) {
+                        validatePassword(false, "The password must contain at least one upper case letter.");
+                        return false;
+                    }
+                    
                     var ck_nums = /\d/;
                     if (!ck_nums.test(val)) {
                         validatePassword(false, "The password must contain at least one digit.");
                         return false;
                     }
                     
-                    var ck_specchar = /[!@#$£%^&*]/;
-                    var valid = ck_specchar.test(val);
+                    valid = false;
+                    for (var i = 0; i < val.length; i++) {
+                        var asciicode = val.charCodeAt(i);
+                        if ((asciicode > 32 && asciicode < 48) ||
+                        (asciicode > 57 && asciicode < 65) ||
+                        (asciicode > 90 && asciicode < 97) ||
+                        (asciicode > 122 && asciicode < 127)) {
+                            valid = true;
+                            break;
+                        }
+                    }
                     if (!valid) {
                         validatePassword(false, "The password must contain at least one special character.");
                         return false;
                     }
-                    
+   
                     validatePassword(true);
                     return true;
                 }
