@@ -102,7 +102,7 @@
             </div>
         </div>
     </div>
-    <div class="streemio-screen" style="display:none">
+    <div class="streemio-screen" style="display:none;border-top:1px solid #eee">
         <div id="contacts-container" class="contacts-tab">
             <div class="input-group sidebar-search" data-bind="visible: issearch">
                 <input type="text" class="form-control" placeholder="Search contacts ..." data-bind="value: contact_lookup">
@@ -110,18 +110,36 @@
                     <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
                 </span>
             </div><!-- /input-group -->
-            <div style="border-bottom:1px dotted #ddd;padding-bottom:8px;margin-top:10px">
-                <div class="contacts-title">
-                    Humans / Machines
+            <div style="border-bottom:2px solid #ddd;border-top:1px solid #eee">
+                <div>
+                    <div class="contacts-title" data-bind="click: onShowContacts, css: {activetab: active_tab() == 'contacts'}">
+                        CONTACTS
+                    </div>
+                    <div class="contacts-title" style="border-left:1px solid #669ee2" data-bind="click: onShowRecents, css: {activetab: active_tab() == 'recent'}">
+                        RECENT
+                    </div>
+                    <div style="float:left;margin:4px 0 0 10px" data-bind="visible: is_recent_msg">
+                        <span class="glyphicon glyphicon-envelope" style="color:#d3b301"></span>
+                    </div>
+                    <div style="float:right;border-left:1px solid #669ee2">
+                        <div style="padding:6px 6px 2px 6px">
+                            <a data-bind="click:dosearch" style="margin:0;padding:0"><i class="glyphicon glyphicon-search"></i></a>
+                        </div>
+                    </div>
+                    <div style="clear:both">
+                    </div>
                 </div>
-                <div style="float:right;margin:6px 10px 0 0">
-                    <a data-bind="click:dosearch"><i class="glyphicon glyphicon-search"></i></a>
+            </div>
+            <div>
+                <div data-bind="visible: active_tab() == 'contacts'" >
+                    <div data-bind="template: { name: 'contacts-template', foreach: contacts }">                        
+                    </div>
                 </div>
-                <div style="clear:both"></div>
+                <div data-bind="visible: active_tab() == 'recent'">
+                    <div data-bind="template: { name: 'recent-messages-template', foreach: recent_messages }">
+                    </div>
+                </div>
             </div>
-            <div data-bind="template: { name: 'contacts-template', foreach: contacts }">
-            </div>
-
         </div>
         <div id="main-container">
             <div style="position:relative;height:100%;">
@@ -283,6 +301,24 @@
 </script>
 
 
+<script type="text/html" id="recent-messages-template">
+    <div data-bind="template: {name: template_name}">
+    </div>
+</script>
+
+<script type="text/html" id="addcontact-recent-messages">
+    <div style="text-align:center;margin:5px 5px 10px 5px;background-color:#f5f5f5;padding:5px;border:2px solid #ddd;border-radius:5px;font-size:12px;color:#666">
+        <div>Accept add contact request?</div>
+        <div>
+            Contact: <span data-bind="text: contact.name" style="color:#000;font-weight:bold"></span>
+        </div>
+        <div style="margin:8px 30px;border-top:1px solid #ddd;padding-top:8px">
+            <button style="font-size:12px" data-bind="click: $parent.acceptAddContact">Accept</button> <button style="font-size:12px;margin-left:15px" data-bind="click: $parent.declineAddContact">Decline</button>
+        </div>
+    </div>    
+</script>
+
+
 <script type="text/html" id="contact-details-template">
     <div>
         <div>
@@ -309,7 +345,6 @@
         </div>
     </div>
 </script>
-
 
 <script type="text/html" id="app-logs-template">
     <div>
@@ -338,7 +373,6 @@
         </div>
     </div>
 </script>
-
 
 <script type="text/html" id="send-file-template">
     <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">

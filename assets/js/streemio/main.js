@@ -1442,7 +1442,7 @@ streemio.Session = (function (module, logger, events, config) {
         );
     }
     
-    module.delete_pending_contact(contact_name, callback) = function () {
+    module.delete_pending_contact = function (contact_name, callback) {
         try {
             if (module.settings.pending_contacts) {
                 var contacts = [];
@@ -1474,7 +1474,7 @@ streemio.Session = (function (module, logger, events, config) {
         }
     }
 
-    module.add_pending_contact(contact_name, callback) = function () {
+    module.add_pending_contact = function (contact_name, callback)  {
         if (!module.settings.pending_contacts) {
             module.settings.pending_contacts = [];           
         }
@@ -1492,7 +1492,7 @@ streemio.Session = (function (module, logger, events, config) {
         );
     }
     
-    module.add_blocked_contact(contact_name, callback) = function () {
+    module.add_blocked_contact= function (contact_name, callback)  {
         if (!module.settings.blocked_contacts) {
             module.settings.blocked_contacts = [];
         }
@@ -1632,19 +1632,63 @@ streemio.Contacts = (function (module, logger, events, config) {
         );
     }
     
-    module.handle_addcontact_accepted = function (contact) {
+    module.on_receive_addcontact = function (request) {
+        debugger;
+        var account = request.name;
+        module.search(account, function (contact) {
+            debugger;
+            if (contact.public_key != request.public_key || contact.user_type != request.user_type) {
+                return streemio.notify.error("Add contact request from " + account + " recieved with invalid public key");
+            }
+            contact.address = request.address;
+            contact.port = request.port;
+            contact.protocol = request.protocol;
+            streemio.Session.contactsvm.onReceiveAddContact(contact);
+        });
+    }
+    
+    module.contact_accepted_byuser = function (contact) {
+        streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+            function () {
+                var contobj = new Contact(contact);
+                contacts.push(contobj);
+            },
+            function (err) {
+                streemio.notify.error("Database update add contact error %j", err);
+            }                        
+        );
         
+        // send the contact accepted reply
+        streemio.Peernet.send_accept_addcontact_reply(contact);
+    }
+    
+    module.handle_addcontact_accepted = function (account) {
+        var contact = pending_contacts[account];
+        streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+            function () {
+                var contobj = new Contact(contact);
+                contacts.push(contobj);
+
+                // add to the viewmodel
+                streemio.Session.contactsvm.onAddContactAcceptReturned(contact);
+                delete pending_contacts[account];
+            },
+            function (err) {
+                streemio.notify.error("Database update add contact error %j", err);
+            }                        
+        );
     }
     
     module.handle_addcontact_denied = function (contact) {
-        
+        var account = contact.name;
+        delete pending_contacts[account];
     }
     
     module.find_and_add_contact = function (account) {
         module.search(account, function (contact) {
             logger.debug("send add contact request to", contact.name);
             streemio.PeerNet.send_addcontact_request(contact);
-            module.pending_contacts[account] = contact;
+            pending_contacts[account] = contact;
         });
     }
     

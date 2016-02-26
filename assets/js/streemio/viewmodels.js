@@ -459,7 +459,6 @@ var logger = global.applogger;
         return viewModel;
     }
     
-    
     streemio.vms.MediaCallViewModel = function (localvid, remotevid, caller, contobj, calltype, videoconnfn, showchatctrlfn) {
         var viewModel = {
             localVideo: localvid, 
@@ -627,8 +626,7 @@ var logger = global.applogger;
         
         return viewModel;
     }
-    
-    
+       
     streemio.vms.ContactViewModel = function (data) {
         var viewModel = {
             name: ko.observable(data.name),
@@ -778,7 +776,16 @@ var logger = global.applogger;
         return viewModel;
     }
     
-    
+    streemio.vms.RecentListItemViewModel = function (contact, templatename, dataobj) {
+        var viewModel = {
+            contact: contact,
+            template_name: ko.observable(templatename),
+            datactx: dataobj
+        };
+        
+        return viewModel;
+    }
+       
     streemio.vms.ContactsListViewModel = function () {
         
         function merge(contact, param) {
@@ -801,6 +808,9 @@ var logger = global.applogger;
             contacts: ko.observableArray([]),
             contact_lookup: ko.observable(),
             issearch: ko.observable(false),
+            active_tab: ko.observable("contacts"),
+            is_recent_msg: ko.observable(true),
+            recent_messages: ko.observableArray([]),
             
             init: function (list) {
                 if (list && list.length) {
@@ -1011,6 +1021,57 @@ var logger = global.applogger;
                 catch (err) {
                     logger.error("contact search error %j", err)
                 }
+            },
+
+            onShowContacts: function () {
+                viewModel.active_tab("contacts");
+            },
+
+            onShowRecents: function () {
+                viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel({ name: "contact1" }, "addcontact-recent-messages", {}));
+                viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel({ name: "contact2" }, "addcontact-recent-messages", {}));
+                viewModel.active_tab("recent");
+                viewModel.is_recent_msg(false);
+            },
+
+            acceptAddContact: function (obj) {
+                var result = obj.contact;
+                // add the contact to the view model
+                
+                var contact = Object.create(Contact);
+                if (result.user_type == "human") {
+                    contact.usertypeicon = "glyphicon glyphicon-user";
+                }
+                else if (result.user_type == "device") {
+                    contact.usertypeicon = "glyphicon glyphicon-cog";
+                }
+                var contobj = merge(contact, result);
+                viewModel.contacts.push(contobj);
+
+                streemio.Contacts.contact_accepted_byuser(contactobj);                         
+            },
+
+            declineAddContact: function (obj) {
+                var contact = obj.contact;
+
+            },
+
+            onReceiveAddContact: function (contact) {
+                var contact = obj.contact;
+                viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel(contact, "addcontact-recent-messages", {}));
+                viewModel.is_recent_msg(true);
+            },
+
+            onAddContactAcceptReturned: function (result) {
+                var contact = Object.create(Contact);
+                if (result.user_type == "human") {
+                    contact.usertypeicon = "glyphicon glyphicon-user";
+                }
+                else if (result.user_type == "device") {
+                    contact.usertypeicon = "glyphicon glyphicon-cog";
+                }
+                var contobj = merge(contact, result);
+                viewModel.contacts.push(contobj);              
             }
 
         };

@@ -337,7 +337,7 @@ body {
 
 
 .sidebar-search{
-    padding:15px 5px 5px 5px;
+    padding:15px 5px 15px 5px;
 }
 
 .sidebar-search input{
@@ -359,10 +359,19 @@ body {
 .contacts-title{
     float:left;
     text-align:left;
-    margin:5px 10px;
+    padding:5px 10px;
     font-size:12px;
     font-weight:bold;
     color:#888;
+}
+
+.contacts-title:hover{
+    text-decoration:underline;
+    color: #669ee2;
+}
+
+.activetab{
+    color: #669ee2;
 }
 
 .contact-item{

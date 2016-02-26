@@ -589,22 +589,40 @@ streemio.PeerNet = (function (module, logger, events, config) {
         try {
             logger.debug("Add contact request message received");
             
-            //var session = list_of_sessionkeys[sender];
-            //if (!session) {
-            //    throw new Error("handleCallReply error, session does not exist for " + sender);
-            //}
-            
-            //var data = JSON.parse(msgtext);
-            ////  must have the request_jti field
-            //var jti = data[wotmsg.MSGFIELD.REQJTI];
-            //var result = data[wotmsg.MSGFIELD.RESULT];
-            
-            //// find the wait handler, remove it and return the promise
-            //closeWaithandler(jti, result);
+            var data = JSON.parse(msgtext);
+            var contact = {
+                name: sender,
+                protocol: data[wotmsg.MSGFIELD.PROTOCOL],
+                address: data[wotmsg.MSGFIELD.HOST],
+                port: data[wotmsg.MSGFIELD.PORT],
+                public_key: data[wotmsg.MSGFIELD.PUBKEY],
+                user_type: data[wotmsg.MSGFIELD.UTYPE]
+            };
 
+            streemio.Contacts.on_receive_addcontact(contact);
+
+            // close, don't reply here
         }
         catch (e) {
-            streemio.notify.error("handleCallReply error %j", e);
+            streemio.notify.error("handleAddContactRequest error %j", e);
+        }
+    }
+    
+    /*
+     * The contact replied with an accept for the add contact request
+     */
+    function handleAddContactAcceptReply(sender, payload, msgtext) {
+        try {
+            logger.debug("Add contact request message received");
+            
+            var data = JSON.parse(msgtext);
+            var account = data.account;                 
+            streemio.Contacts.handle_addcontact_accepted(account);
+
+            // close, don't reply here
+        }
+        catch (e) {
+            streemio.notify.error("handleAddContactRequest error %j", e);
         }
     }
     
@@ -740,6 +758,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     break;
                 case wotmsg.PEERMSG.ACRQ:
                     handleAddContactRequest(sender, payload, message.data);
+                    break;
+
+                case wotmsg.PEERMSG.AACR:
+                    handleAddContactAcceptReply(sender, payload, message.data);
                     break;
 
                 default:
@@ -983,15 +1005,34 @@ streemio.PeerNet = (function (module, logger, events, config) {
         try {                
             var account = contact.name;
             var data = { sender: streemio.User.name };
-            data[wotmsg.MSGFIELD.TIMES] = Date.now();
+            data[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
+            data[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+            data[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
+            data[wotmsg.MSGFIELD.HOST] = streemio.User.address;
+            data[wotmsg.MSGFIELD.PORT] = streemio.User.port;
+            payload[wotmsg.MSGFIELD.UTYPE] = streemio.DEFS.USER_TYPE_HUMAN;
                 
             var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.HCAL, jti, streemio.User.private_key, data, streemio.User.name, account);
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.ACRQ, jti, streemio.User.private_key, data, streemio.User.name, account);
             streemio.Node.peer_send(contact, encoded_msgbuffer);
         }
         catch (err) {
             streemio.notify.error("send_addcontact_request error:  %j", err);
         }        
+    }
+    
+    module.send_accept_addcontact_reply = function (contact) {
+        try {
+            var account = contact.name;
+            var data = { sender: streemio.User.name };
+
+            var jti = streemio.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.AACR, jti, streemio.User.private_key, data, streemio.User.name, account);
+            streemio.Node.peer_send(contact, encoded_msgbuffer);
+        }
+        catch (err) {
+            streemio.notify.error("send_addcontact_request error:  %j", err);
+        }
     }
     
     module.hangup_call = function (contact) {
@@ -1106,7 +1147,6 @@ streemio.PeerNet = (function (module, logger, events, config) {
             streemio.notify.error("delete_item error:  %j", e);
         }
     }
-    
     
     module.delete_messages = function (callback) {
         try {
