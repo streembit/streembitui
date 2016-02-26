@@ -1710,14 +1710,14 @@ streemio.Contacts = (function (module, logger, events, config) {
             function () {
                 var contobj = new Contact(contact);
                 contacts.push(contobj);
+                streemio.Session.contactsvm.add_contact(contobj);                
+                // send the contact accepted reply
+                streemio.Peernet.send_accept_addcontact_reply(contact);
             },
             function (err) {
                 streemio.notify.error("Database update add contact error %j", err);
             }                        
         );
-        
-        // send the contact accepted reply
-        streemio.Peernet.send_accept_addcontact_reply(contact);
     }
     
     //  Call this when the contact returns via the network an accept add contact reply

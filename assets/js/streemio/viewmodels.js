@@ -982,6 +982,12 @@ var logger = global.applogger;
                     }
                     var contobj = merge(contact, result);
                     viewModel.contacts.push(contobj);
+
+                    // remove it from the recent messages list
+                    var account = contact.name;
+                    viewModel.recent_messages.remove(function (item) {
+                        return item.contact && item.contact.name == account;
+                    }) 
                 }
             },
             
@@ -1015,20 +1021,8 @@ var logger = global.applogger;
             },
 
             acceptAddContact: function (obj) {
-                var result = obj.contact;
-                // add the contact to the view model
-                
-                var contact = Object.create(Contact);
-                if (result.user_type == "human") {
-                    contact.usertypeicon = "glyphicon glyphicon-user";
-                }
-                else if (result.user_type == "device") {
-                    contact.usertypeicon = "glyphicon glyphicon-cog";
-                }
-                var contobj = merge(contact, result);
-                viewModel.contacts.push(contobj);
-
-                streemio.Contacts.accept_contact(contactobj);                         
+                var contact = obj.contact;
+                streemio.Contacts.accept_contact(contact);                         
             },
 
             declineAddContact: function (obj) {
