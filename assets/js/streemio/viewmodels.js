@@ -1028,7 +1028,7 @@ var logger = global.applogger;
                 var contobj = merge(contact, result);
                 viewModel.contacts.push(contobj);
 
-                streemio.Contacts.contact_accepted_byuser(contactobj);                         
+                streemio.Contacts.accept_contact(contactobj);                         
             },
 
             declineAddContact: function (obj) {

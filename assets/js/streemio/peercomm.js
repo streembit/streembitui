@@ -717,28 +717,57 @@ streemio.PeerNet = (function (module, logger, events, config) {
             debugger;
             var public_key = streemio.Contacts.get_public_key(sender);
             if (!public_key) {
-                if (payload.sub != wotmsg.PEERMSG.ACRQ) {
+                if (payload.sub != wotmsg.PEERMSG.ACRQ && payload.sub != wotmsg.PEERMSG.EXCH) {
                     throw new Error("peer message sender '" + sender + "' is not a contact");
                 }
-
-                //  if the message is an add contact request then continue as the contact does not exists yet
-                //  get the public key from the payload
-                try {
-                    var msgdata = JSON.parse(payload.data);
-                    public_key = msgdata.public_key;
-                    if (!public_key) {
-                        throw new Error("no public key exists in request");
+                
+                if (payload.sub == wotmsg.PEERMSG.ACRQ) {
+                    //  if the message is an add contact request then continue as the contact does not exists yet
+                    //  get the public key from the payload
+                    try {
+                        var msgdata = JSON.parse(payload.data);
+                        public_key = msgdata.public_key;
+                        if (!public_key) {
+                            throw new Error("no public key exists in request");
+                        }
+                    }
+                    catch (err) {
+                        throw new Error("Add contact request error: " + err.message + ". Contact: " + sender);
                     }
                 }
-                catch (err) {
-                    throw new Error("Add contact request error: " + err.message  + ". Contact: " + sender );
+                else if (payload.sub == wotmsg.PEERMSG.EXCH) {
+                    //  It is possible that the add contact request of this account was received, but the accept reply
+                    //  was never received by the account. However, the exchange message indicates that the contact 
+                    //  accepted the add contact request.
+                    //  If there is a pending contact request then try processing the message
+                    
+                    // Try to get the public key from the pending contacts list
+                    var pending_contact = streemio.Session.get_pending_contact(sender);
+                    if (pending_contact) {
+                        if (pending_contact.public_key) {
+                            throw new Error("pending contact exists, but no public key exists for it");
+                        }
+                        public_key = pending_contact.public_key;
+                        if (!public_key) {
+                            throw new Error("pending contact exists, but no public key exists for it");
+                        }
+                    }
                 }
             }
             
             var message = wotmsg.decode(data, public_key);
-            if (!message || !message.data)
+            if (!message || !message.data) {
                 throw new Error("invalid JWT message");
+            }
             
+            if (message.sub == wotmsg.PEERMSG.EXCH) {
+                var pending_contact = streemio.Session.get_pending_contact(sender);
+                if (pending_contact) {
+                    // remove from the pending contacts and add to the contacts list
+                    streemio.Contacts.handle_addcontact_accepted(sender);
+                }
+            }            
+
             switch (message.sub) {
                 case wotmsg.PEERMSG.EXCH:
                     handleKeyExchange(sender, public_key, payload, message.data);
