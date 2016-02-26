@@ -10,10 +10,10 @@
   "window": {
     "toolbar": false,
     "width": 1048,
-    "height": 720,
+    "height": 700,
     "frame": true,
     "min_width": 960,
-    "min_height": 640,
+    "min_height": 700,
     "icon": "assets/icons/streemio32.png"
   },
   "scripts": {
