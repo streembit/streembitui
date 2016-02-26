@@ -1671,7 +1671,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     module.on_receive_addcontact = function (request) {
-        debugger;
+        //debugger;
         var account = request.name;
         
         //  if it exists then return the accept add contact
@@ -1691,7 +1691,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         }
         else {
             module.search(account, function (contact) {
-                debugger;
+                //debugger;
                 if (contact.public_key != request.public_key || contact.user_type != request.user_type) {
                     return streemio.notify.error("Add contact request from " + account + " recieved with invalid public key");
                 }

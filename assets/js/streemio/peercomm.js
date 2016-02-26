@@ -714,10 +714,13 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             //  get the public key for the sender only contacts are 
             //  allowed communicate with eachother via peer to peer
-            debugger;
+            //debugger;
             var public_key = streemio.Contacts.get_public_key(sender);
             if (!public_key) {
-                if (payload.sub != wotmsg.PEERMSG.ACRQ && payload.sub != wotmsg.PEERMSG.EXCH) {
+                if (payload.sub != wotmsg.PEERMSG.ACRQ 
+                    && payload.sub != wotmsg.PEERMSG.EXCH 
+                    && payload.sub != wotmsg.PEERMSG.AACR 
+                    && payload.sub != wotmsg.PEERMSG.DACR) {
                     throw new Error("peer message sender '" + sender + "' is not a contact");
                 }
                 
@@ -735,7 +738,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         throw new Error("Add contact request error: " + err.message + ". Contact: " + sender);
                     }
                 }
-                else if (payload.sub == wotmsg.PEERMSG.EXCH) {
+                else if (payload.sub == wotmsg.PEERMSG.EXCH || payload.sub == wotmsg.PEERMSG.AACR || payload.sub == wotmsg.PEERMSG.DACR) {
                     //  It is possible that the add contact request of this account was received, but the accept reply
                     //  was never received by the account. However, the exchange message indicates that the contact 
                     //  accepted the add contact request.
@@ -779,7 +782,6 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     handlePing(sender, payload, message.data);
                     break;
                 case wotmsg.PEERMSG.PREP:
-                    //debugger;
                     handlePingReply(sender, payload, message.data);
                     break;
                 case wotmsg.PEERMSG.SYMD:
