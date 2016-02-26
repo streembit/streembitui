@@ -1445,10 +1445,10 @@ streemio.Session = (function (module, logger, events, config) {
     module.get_pending_contact = function (account) {
         var pending_contact = null;
         try {
-            if (module.settings.pending_contacts) {
-                for (var i = 0; i < module.settings.pending_contacts.length; i++) {
-                    if (module.settings.pending_contacts[i].name == account) {
-                        pending_contact = module.settings.pending_contacts[i];
+            if (module.settings.data.pending_contacts) {
+                for (var i = 0; i < module.settings.data.pending_contacts.length; i++) {
+                    if (module.settings.data.pending_contacts[i].name == account) {
+                        pending_contact = module.settings.data.pending_contacts[i];
                         break;
                     }
                 }
@@ -1464,17 +1464,17 @@ streemio.Session = (function (module, logger, events, config) {
     
     module.delete_pending_contact = function (contact_name, callback) {
         try {
-            if (module.settings.pending_contacts) {
+            if (module.settings.data.pending_contacts) {
                 var contacts = [];
-                for (var i = 0; i < module.settings.pending_contacts.length; i++) {
-                    if (module.settings.pending_contacts[i].name != contact_name) {
-                        contacts.push(module.settings.pending_contacts[i]);
+                for (var i = 0; i < module.settings.data.pending_contacts.length; i++) {
+                    if (module.settings.data.pending_contacts[i].name != contact_name) {
+                        contacts.push(module.settings.data.pending_contacts[i]);
                     }
                 }
-                module.settings.pending_contacts = contacts;
+                module.settings.data.pending_contacts = contacts;
             }
             else {
-                module.settings.pending_contacts = [];           
+                module.settings.data.pending_contacts = [];           
             }
 
             streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
@@ -1501,21 +1501,21 @@ streemio.Session = (function (module, logger, events, config) {
     }
 
     module.add_pending_contact = function (contact, callback)  {
-        if (!module.settings.pending_contacts) {
-            module.settings.pending_contacts = [];           
+        if (!module.settings.data.pending_contacts) {
+            module.settings.data.pending_contacts = [];           
         }
         
         var exists = false;
-        for (var i = 0; i < module.settings.pending_contacts.length; i++) {
-            if (module.settings.pending_contacts[i].name == contact.name) {
-                module.settings.pending_contacts[i] = contact;
+        for (var i = 0; i < module.settings.data.pending_contacts.length; i++) {
+            if (module.settings.data.pending_contacts[i].name == contact.name) {
+                module.settings.data.pending_contacts[i] = contact;
                 exists = true;
                 break;
             }
         }
         
         if (!exists) {
-            module.settings.pending_contacts.push(contact);
+            module.settings.data.pending_contacts.push(contact);
         }
 
         streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
@@ -1651,7 +1651,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     function pending_contact_handler() {
-        var pcontacts = streemio.Session.settings.pending_contacts;
+        var pcontacts = streemio.Session.settings.data.pending_contacts;
         if (!pcontacts || !pcontacts.length) {
             return;
         }
@@ -1909,19 +1909,20 @@ streemio.Contacts = (function (module, logger, events, config) {
                             // use the stored contact info
                             logger.error("find_account error: %j", err);
                         }
-                    )
-                    
-                    setTimeout(
-                        function () {
-                            // start the pending contact handler
-                            pending_contact_handler();
-                        },
-                        10000
-                    ); 
+                    )  
                 }
                 
                 //
                 streemio.Session.contactsvm.init(contacts);
+
+                setTimeout(
+                    function () {
+                        // start the pending contact handler
+                        debugger;
+                        pending_contact_handler();
+                    },
+                    10000
+                ); 
                 
             });
         }
@@ -2237,7 +2238,7 @@ streemio.Main = (function (module, logger, events, config) {
                         logger.debug("database result populated");
                         callback(null);
                         if (result && result.data) {
-                            streemio.Session.settings = result.data;
+                            streemio.Session.settings = result;
                             callback();
                         }
                         else {
