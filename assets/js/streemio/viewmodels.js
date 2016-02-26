@@ -809,7 +809,7 @@ var logger = global.applogger;
             contact_lookup: ko.observable(),
             issearch: ko.observable(false),
             active_tab: ko.observable("contacts"),
-            is_recent_msg: ko.observable(true),
+            is_recent_msg: ko.observable(false),
             recent_messages: ko.observableArray([]),
             
             init: function (list) {
@@ -998,25 +998,7 @@ var logger = global.applogger;
                     }
                     
                     streemio.Contacts.find_and_add_contact(account);
-                    
-                    //streemio.Contacts.search(account, function (contact) {
-                    //    if (contact) {
-                    //        logger.debug("Contact %s found, send contact request", contact.name);
-                    //        streemio.PeerNet.send_addcontact_request(contact);
-                    //        /*
-                    //        var contact = Object.create(Contact);
-                    //        if (result.user_type == "human") {
-                    //            contact.usertypeicon = "glyphicon glyphicon-user";
-                    //        }
-                    //        else if (result.user_type == "device") {
-                    //            contact.usertypeicon = "glyphicon glyphicon-cog";
-                    //        }
-                    //        var contobj = merge(contact, result);
-                    //        viewModel.contacts.push(contobj);
-                    //        */
-                    //    }
-                    //});
-                    
+
                 }
                 catch (err) {
                     logger.error("contact search error %j", err)
@@ -1028,8 +1010,6 @@ var logger = global.applogger;
             },
 
             onShowRecents: function () {
-                viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel({ name: "contact1" }, "addcontact-recent-messages", {}));
-                viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel({ name: "contact2" }, "addcontact-recent-messages", {}));
                 viewModel.active_tab("recent");
                 viewModel.is_recent_msg(false);
             },
