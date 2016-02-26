@@ -205,6 +205,8 @@ function init_log(loglevel, logdir, callback) {
     }
 
     console.log("logs dir: %s", logspath);
+    // set the global logs path
+    global.logspath = logspath;
     
     var logfilePath = path.join(logspath, 'streemio.log');
     var exceptionFileLog = path.join(logspath, 'exception.log');

@@ -1010,7 +1010,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             data[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
             data[wotmsg.MSGFIELD.HOST] = streemio.User.address;
             data[wotmsg.MSGFIELD.PORT] = streemio.User.port;
-            payload[wotmsg.MSGFIELD.UTYPE] = streemio.DEFS.USER_TYPE_HUMAN;
+            data[wotmsg.MSGFIELD.UTYPE] = streemio.DEFS.USER_TYPE_HUMAN;
                 
             var jti = streemio.Message.create_id();
             var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.ACRQ, jti, streemio.User.private_key, data, streemio.User.name, account);

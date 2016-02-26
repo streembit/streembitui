@@ -88,7 +88,7 @@ streemio.util = (function (util) {
         }
         else {
             if (!global.logspath) {
-                return calback("The global logs path does not exists");
+                return callback("The global logs path does not exists");
             }
             var logfile = 'streemio.log';
             var filepath = path.join(global.logspath, logfile)
@@ -1685,10 +1685,13 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     module.find_and_add_contact = function (account) {
+        debugger;
         module.search(account, function (contact) {
             logger.debug("send add contact request to", contact.name);
-            streemio.PeerNet.send_addcontact_request(contact);
-            pending_contacts[account] = contact;
+            streemio.Session.add_pending_contact(account, function () {
+                streemio.PeerNet.send_addcontact_request(contact);
+                pending_contacts[account] = contact; 
+            });
         });
     }
     
@@ -1747,23 +1750,27 @@ streemio.Contacts = (function (module, logger, events, config) {
                 if (err) {
                     return streemio.notify.error_popup("The contact search returned no result");
                 }
+
+                callback(contact);
                 
+                /*
                 streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
                     function () {
                         callback(contact);
-                        /*
+                        
                         streemio.notify.success("Contact %s found, send contact request", account);
                         var contobj = new Contact(contact);
                         contacts.push(contobj);
                         contobj.ping();
                         
                         callback(contobj);                        
-                        */
+                        
                     },
                     function (err) {
                         streemio.notify.error("Database update add contact error %j", err);
                     }                        
                 );
+                 */
             });
         }
         catch (err) {
