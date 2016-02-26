@@ -717,7 +717,22 @@ streemio.PeerNet = (function (module, logger, events, config) {
             debugger;
             var public_key = streemio.Contacts.get_public_key(sender);
             if (!public_key) {
-                throw new Error("peer message sender '" + sender + "' is not a contact");
+                if (payload.sub != wotmsg.PEERMSG.ACRQ) {
+                    throw new Error("peer message sender '" + sender + "' is not a contact");
+                }
+
+                //  if the message is an add contact request then continue as the contact does not exists yet
+                //  get the public key from the payload
+                try {
+                    var msgdata = JSON.parse(payload.data);
+                    public_key = msgdata.public_key;
+                    if (!public_key) {
+                        throw new Error("no public key exists in request");
+                    }
+                }
+                catch (err) {
+                    throw new Error("Add contact request error: " + err.message  + ". Contact: " + sender );
+                }
             }
             
             var message = wotmsg.decode(data, public_key);
