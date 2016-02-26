@@ -1037,7 +1037,6 @@ var logger = global.applogger;
             },
 
             onReceiveAddContact: function (contact) {
-                var contact = obj.contact;
                 viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel(contact, "addcontact-recent-messages", {}));
                 viewModel.is_recent_msg(true);
             },
