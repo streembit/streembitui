@@ -1686,7 +1686,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 existing_contact.port = request.port;
                 existing_contact.protocol = request.protocol;
                 // the contact already exists -> send back an accept contact message
-                streemio.Peernet.send_accept_addcontact_reply(existing_contact);
+                streemio.PeerNet.send_accept_addcontact_reply(existing_contact);
             }
         }
         else {
@@ -1713,7 +1713,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 streemio.Session.contactsvm.add_contact(contobj);                
                 // send the contact accepted reply
                 debugger;
-                streemio.Peernet.send_accept_addcontact_reply(contact);
+                streemio.PeerNet.send_accept_addcontact_reply(contact);
             },
             function (err) {
                 streemio.notify.error("Database update add contact error %j", err);
