@@ -1712,6 +1712,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 contacts.push(contobj);
                 streemio.Session.contactsvm.add_contact(contobj);                
                 // send the contact accepted reply
+                debugger;
                 streemio.Peernet.send_accept_addcontact_reply(contact);
             },
             function (err) {
@@ -1750,7 +1751,6 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     module.find_and_add_contact = function (account) {
-        debugger;
         module.search(account, function (contact) {
             //  refresh the pending contacts database
             streemio.Session.add_pending_contact(contact, function (err) {
@@ -1854,8 +1854,6 @@ streemio.Contacts = (function (module, logger, events, config) {
                     if (exists) {
                         continue;
                     }
-                    
-                    //debugger;
 
                     var contact_name = result[i].name;
                     logger.debug("find contact " + contact_name);
@@ -1905,7 +1903,6 @@ streemio.Contacts = (function (module, logger, events, config) {
                             
                         },
                         function (err) {
-                            debugger;
                             // use the stored contact info
                             logger.error("find_account error: %j", err);
                         }
@@ -1918,7 +1915,6 @@ streemio.Contacts = (function (module, logger, events, config) {
                 setTimeout(
                     function () {
                         // start the pending contact handler
-                        debugger;
                         pending_contact_handler();
                     },
                     10000
