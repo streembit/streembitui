@@ -616,7 +616,11 @@ streemio.PeerNet = (function (module, logger, events, config) {
             logger.debug("Add contact request message received");
             
             var data = JSON.parse(msgtext);
-            var account = data.account;                 
+            var account = data.sender;
+            if (sender != account) {
+                throw new Error("invalid account, the account and sender do not match");
+            }
+                   
             streemio.Contacts.handle_addcontact_accepted(account);
 
             // close, don't reply here
@@ -747,8 +751,8 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     // Try to get the public key from the pending contacts list
                     var pending_contact = streemio.Session.get_pending_contact(sender);
                     if (pending_contact) {
-                        if (pending_contact.public_key) {
-                            throw new Error("pending contact exists, but no public key exists for it");
+                        if (!pending_contact.public_key) {
+                            throw new Error("pending contact exists, but there is no public key in the data");
                         }
                         public_key = pending_contact.public_key;
                         if (!public_key) {
@@ -805,7 +809,6 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 case wotmsg.PEERMSG.ACRQ:
                     handleAddContactRequest(sender, payload, message.data);
                     break;
-
                 case wotmsg.PEERMSG.AACR:
                     handleAddContactAcceptReply(sender, payload, message.data);
                     break;

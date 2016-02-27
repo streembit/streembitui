@@ -1724,15 +1724,16 @@ streemio.Contacts = (function (module, logger, events, config) {
     //  Call this when the contact returns via the network an accept add contact reply
     //  or when the contact sends an exchange key message 
     module.handle_addcontact_accepted = function (account) {
-        debugger;
+        //debugger;
         var contact = pending_contacts[account];
         streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
             function () {
                 var contobj = new Contact(contact);
                 contacts.push(contobj);
-
                 // add to the viewmodel
-                streemio.Session.contactsvm.onAddContactAcceptReturned(contact);
+                streemio.Session.contactsvm.add_contact(contobj);
+                
+                // delete from the database
                 streemio.Session.delete_pending_contact(account, function () {
                     delete pending_contacts[account];
                 });

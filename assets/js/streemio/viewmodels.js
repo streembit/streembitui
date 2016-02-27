@@ -1033,18 +1033,6 @@ var logger = global.applogger;
             onReceiveAddContact: function (contact) {
                 viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel(contact, "addcontact-recent-messages", {}));
                 viewModel.is_recent_msg(true);
-            },
-
-            onAddContactAcceptReturned: function (result) {
-                var contact = Object.create(Contact);
-                if (result.user_type == "human") {
-                    contact.usertypeicon = "glyphicon glyphicon-user";
-                }
-                else if (result.user_type == "device") {
-                    contact.usertypeicon = "glyphicon glyphicon-cog";
-                }
-                var contobj = merge(contact, result);
-                viewModel.contacts.push(contobj);              
             }
 
         };
