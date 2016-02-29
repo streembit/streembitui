@@ -771,7 +771,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("invalid JWT message");
             }
             
-            if (message.sub == wotmsg.PEERMSG.EXCH) {
+            if (message.sub == wotmsg.PEERMSG.EXCH || message.sub == wotmsg.PEERMSG.PING ) {
                 var pending_contact = streemio.Session.get_pending_contact(sender);
                 if (pending_contact) {
                     // remove from the pending contacts and add to the contacts list
