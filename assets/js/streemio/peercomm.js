@@ -724,7 +724,8 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 if (payload.sub != wotmsg.PEERMSG.ACRQ 
                     && payload.sub != wotmsg.PEERMSG.EXCH 
                     && payload.sub != wotmsg.PEERMSG.AACR 
-                    && payload.sub != wotmsg.PEERMSG.DACR) {
+                    && payload.sub != wotmsg.PEERMSG.DACR
+                    && payload.sub != wotmsg.PEERMSG.PING) {
                     throw new Error("peer message sender '" + sender + "' is not a contact");
                 }
                 
@@ -742,7 +743,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         throw new Error("Add contact request error: " + err.message + ". Contact: " + sender);
                     }
                 }
-                else if (payload.sub == wotmsg.PEERMSG.EXCH || payload.sub == wotmsg.PEERMSG.AACR || payload.sub == wotmsg.PEERMSG.DACR) {
+                else if (payload.sub == wotmsg.PEERMSG.EXCH || 
+                            payload.sub == wotmsg.PEERMSG.AACR || 
+                            payload.sub == wotmsg.PEERMSG.DACR ||
+                            payload.sub == wotmsg.PEERMSG.PING ) {
                     //  It is possible that the add contact request of this account was received, but the accept reply
                     //  was never received by the account. However, the exchange message indicates that the contact 
                     //  accepted the add contact request.
