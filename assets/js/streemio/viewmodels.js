@@ -811,6 +811,9 @@ var logger = global.applogger;
             active_tab: ko.observable("contacts"),
             is_recent_msg: ko.observable(false),
             recent_messages: ko.observableArray([]),
+            show_addcontact_panel: ko.observable(false),
+            addcontact_name: ko.observable(""),
+            addcontact_obj: 0,
             
             init: function (list) {
                 if (list && list.length) {
@@ -840,6 +843,10 @@ var logger = global.applogger;
             },          
             
             dosearch: function () {
+                viewModel.addcontact_name("");
+                viewModel.addcontact_obj = 0;
+                viewModel.show_addcontact_panel(false);
+
                 if (!streemio.Main.is_node_initialized) {
                     return streemio.notify.error_popup("The Streemio account is not initialized. First log-in with your Streemio account");
                 }
@@ -993,6 +1000,10 @@ var logger = global.applogger;
             
             search: function () {
                 try {
+                    viewModel.addcontact_name("");
+                    viewModel.addcontact_obj = 0;
+                    viewModel.show_addcontact_panel(false);
+
                     var self = this;
                     var account = $.trim(this.contact_lookup());
                     if (!account) {
@@ -1000,15 +1011,30 @@ var logger = global.applogger;
                     }
                     
                     if (streemio.Contacts.exists(account)) {
-                        return;
+                        return streemio.notify.info("This contact is already exists in the contact list");;
                     }
                     
-                    streemio.Contacts.find_and_add_contact(account);
+                    streemio.Contacts.search(account, function (contact) {
+                        if (contact) {
+                            self.contact_lookup("");
+                            self.addcontact_name(contact.name);
+                            self.addcontact_obj = contact;
+                            self.show_addcontact_panel(true);
+                        }
+                    });
 
                 }
                 catch (err) {
                     logger.error("contact search error %j", err)
                 }
+            },
+            
+            onSendAddContactRequest: function () {
+                streemio.Contacts.send_addcontact_request(viewModel.addcontact_obj, function () {
+                    viewModel.addcontact_name("");
+                    viewModel.addcontact_obj = 0;
+                    viewModel.show_addcontact_panel(false);
+                });
             },
 
             onShowContacts: function () {

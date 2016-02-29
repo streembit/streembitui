@@ -1660,13 +1660,17 @@ streemio.Contacts = (function (module, logger, events, config) {
         var pctimer = setInterval(
             function () {
                 var account = pcontacts[index].name;
-                module.find_and_add_contact(account);      
+                module.search(account, function (contact) {
+                    module.send_addcontact_request(contact, function () {
+                    });
+                });
+
                 index++;
                 if (index >= pcontacts.length) {
                     clearTimeout(pctimer);
                 }
             },
-            2000
+            5000
         );
     }
     
@@ -1751,18 +1755,18 @@ streemio.Contacts = (function (module, logger, events, config) {
         });
     }
     
-    module.find_and_add_contact = function (account) {
-        module.search(account, function (contact) {
-            //  refresh the pending contacts database
-            streemio.Session.add_pending_contact(contact, function (err) {
-                if (err) {
-                    return streemio.notify.error("add_pending_contact() in find_and_add_contact() error: %j", err)    
-                }
-                logger.debug("send add contact request to", contact.name);
-                streemio.PeerNet.send_addcontact_request(contact);
-                pending_contacts[account] = contact; 
-            });
-        });
+    module.send_addcontact_request = function (contact, callback) {
+        //  refresh the pending contacts database
+        streemio.Session.add_pending_contact(contact, function (err) {
+            if (err) {
+                return streemio.notify.error("error in adding contact: %j", err)
+            }
+            var account = contact.name;
+            logger.debug("send add contact request to %s", account);
+            streemio.PeerNet.send_addcontact_request(contact);
+            pending_contacts[account] = contact;
+            callback();
+        });        
     }
     
     module.get_contact = function (account) {

@@ -104,11 +104,19 @@
     </div>
     <div class="streemio-screen" style="display:none;border-top:1px solid #eee">
         <div id="contacts-container" class="contacts-tab">
-            <div class="input-group sidebar-search" data-bind="visible: issearch">
-                <input type="text" class="form-control" placeholder="Search contacts ..." data-bind="value: contact_lookup">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
-                </span>
+            <div class="sidebar-search" data-bind="visible: issearch"> 
+                <div class="input-group" style="margin:0;padding:0">
+                    <input type="text" class="form-control" placeholder="Search contacts ..." data-bind="value: contact_lookup">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
+                    </span>
+                </div>                
+                <div data-bind="visible: show_addcontact_panel" style="margin-top:8px;text-align:center;padding:8px;border-radius:4px;background-color:#f9f9f9;border:1px solid #ddd">
+                    <div style="margin-bottom:8px;font-weight:bold;font-size:11px">
+                        Contact found. Do you want to send contact request to <span data-bind="text: addcontact_name"></span>?
+                    </div>
+                    <button class="btn btn-default" type="button" data-bind="click: onSendAddContactRequest" style="font-size:11px">Send contact request</button>
+                </div>
             </div><!-- /input-group -->
             <div style="border-bottom:2px solid #ddd;border-top:1px solid #eee">
                 <div>
