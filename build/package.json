@@ -14,7 +14,7 @@
     "frame": true,
     "min_width": 960,
     "min_height": 640,
-    "icon": "assets/icons/streemio32.png"
+    "icon": "assets/icons/streemio64.png"
   },
   "scripts": {
     "start": "nw ."

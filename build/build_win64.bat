@@ -3,7 +3,7 @@
 set CUR_DIR="%CD%"
 set BUILD_DIR=%CUR_DIR%\win64
 set EXE_PATH=%CUR_DIR%\win64\nw.exe
-set ICO_PATH=..\assets\icons\streemio32.png
+set ICO_PATH=..\assets\icons\streemio64.png
 set NWPACK_PATH=%CUR_DIR%\win64\package.nw
 set APPEXE_PATH=%CUR_DIR%\win64\streemio.exe
 set ZIP_EXE="C:\Program Files\7-Zip\7z.exe"

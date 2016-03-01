@@ -1759,8 +1759,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         }
     }
     
-    module.handle_addcontact_denied = function (contact) {
-        var account = contact.name;
+    module.handle_addcontact_denied = function (account) {
         streemio.Session.delete_pending_contact(account, function () {
             delete pending_contacts[account];
         });
