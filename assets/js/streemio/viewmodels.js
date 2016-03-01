@@ -1053,7 +1053,11 @@ var logger = global.applogger;
 
             declineAddContact: function (obj) {
                 var contact = obj.contact;
-
+                streemio.Contacts.decline_contact(contact);
+                var account = contact.name;
+                viewModel.recent_messages.remove(function (item) {
+                    return item.contact && item.contact.name == account;
+                })         
             },
 
             onReceiveAddContact: function (contact) {

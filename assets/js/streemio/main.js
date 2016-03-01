@@ -1707,6 +1707,15 @@ streemio.Contacts = (function (module, logger, events, config) {
         }
     }
     
+    module.decline_contact = function (contact) {
+        try {
+            streemio.PeerNet.send_decline_addcontact_reply(contact);
+        }
+        catch (err) {
+            streemio.notify.error("decline_contact() error %j", err);
+        }
+    }
+    
     //  Call this when the UI receives an add contact request 
     //  and the user accept it
     module.accept_contact = function (contact) {

@@ -1117,6 +1117,20 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
+    module.send_decline_addcontact_reply = function (contact) {
+        try {
+            var account = contact.name;
+            var data = { sender: streemio.User.name };
+            
+            var jti = streemio.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.DACR, jti, streemio.User.private_key, data, streemio.User.name, account);
+            streemio.Node.peer_send(contact, encoded_msgbuffer);
+        }
+        catch (err) {
+            streemio.notify.error("send_addcontact_request error:  %j", err);
+        }
+    }
+    
     module.hangup_call = function (contact) {
         
         return new Promise(function (resolve, reject) {
