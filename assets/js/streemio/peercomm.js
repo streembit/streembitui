@@ -634,6 +634,28 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
+    /*
+     * The contact replied with a deny (DACR) for the add contact request
+     */
+    function handleAddContactDenyReply(sender, payload, msgtext) {
+        try {
+            logger.debug("Add contact request message received");
+            
+            var data = JSON.parse(msgtext);
+            var account = data.sender;
+            if (sender != account) {
+                throw new Error("invalid account, the account and sender do not match");
+            }
+            
+            streemio.Contacts.handle_addcontact_denied(account);
+
+            // close, don't reply here
+        }
+        catch (e) {
+            streemio.notify.error("handleAddContactDenyReply error %j", e);
+        }
+    }
+    
     function handleSymmMessage(sender, payload, msgtext) {
         try {
             //logger.debug("handleSymmMessage message received");
@@ -819,6 +841,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     break;
                 case wotmsg.PEERMSG.AACR:
                     handleAddContactAcceptReply(sender, payload, message.data);
+                    break;
+                case wotmsg.PEERMSG.DACR:
+                    handleAddContactDenyReply(sender, payload, message.data);
                     break;
 
                 default:

@@ -1755,6 +1755,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         streemio.Session.delete_pending_contact(account, function () {
             delete pending_contacts[account];
         });
+        streemio.notify.info("Contact " + account + " has denied your add contact request");
     }
     
     module.send_addcontact_request = function (contact, callback) {
