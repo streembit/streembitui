@@ -405,6 +405,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
             data[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
             
             var contact = streemio.Contacts.get_contact(sender);
+            if (!contact) {
+                throw new Error("invalid contact object");    
+            }
+
             var jti = streemio.Message.create_id();
             var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PREP, jti, streemio.User.private_key, data, streemio.User.name, sender);
             streemio.Node.peer_send(contact, encoded_msgbuffer);

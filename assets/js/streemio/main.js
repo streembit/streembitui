@@ -1730,22 +1730,24 @@ streemio.Contacts = (function (module, logger, events, config) {
     module.handle_addcontact_accepted = function (account) {
         //debugger;
         var contact = pending_contacts[account];
-        streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
-            function () {
-                var contobj = new Contact(contact);
-                contacts.push(contobj);
-                // add to the viewmodel
-                streemio.Session.contactsvm.add_contact(contobj);
-                
-                // delete from the database
-                streemio.Session.delete_pending_contact(account, function () {
-                    delete pending_contacts[account];
-                });
-            },
-            function (err) {
-                streemio.notify.error("Database update add contact error %j", err);
-            }                        
-        );
+        if (contact) {
+            var contobj = new Contact(contact);
+            contacts.push(contobj);
+            streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+                function () {                   
+                    // add to the viewmodel
+                    streemio.Session.contactsvm.add_contact(contobj);
+                    
+                    // delete from the database
+                    streemio.Session.delete_pending_contact(account, function () {
+                        delete pending_contacts[account];
+                    });
+                },
+                function (err) {
+                    streemio.notify.error("Database update add contact error %j", err);
+                }                        
+            );
+        }
     }
     
     module.handle_addcontact_denied = function (contact) {
