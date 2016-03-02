@@ -692,8 +692,6 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
     }
     
     function sendData(hash) {
-        //debugger;
-        
         logger.debug('FileTransfer sendData()');
         
         var file = module.list_of_files[hash];

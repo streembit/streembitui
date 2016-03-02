@@ -23,10 +23,10 @@ streemio.TransportFactory = (function (module, logger, events, config) {
             
             var transport;
             switch (config.transport) {
-                case "tcp":
+                case streemio.DEFS.TRANSPORT_TCP:
                     transport = streemio.PeerTransport;
                     break;
-                case "ws":
+                case streemio.DEFS.TRANSPORT_WS:
                     transport = streemio.WebSocketTransport;
                     break;
                 default:
@@ -50,17 +50,17 @@ streemio.TransportFactory = (function (module, logger, events, config) {
             throw new Error("get_contact_transport error: contact.transport value is empty");
         }
         
-        if (config.transport == "ws") {
+        if (config.transport == streemio.DEFS.TRANSPORT_WS) {
             //  whatever transport the contact uses this account can communicate only via WS
             transport = streemio.PeerTransport;
         }
         else {
             var transport;
             switch (contact.protocol) {
-                case "tcp":
+                case streemio.DEFS.TRANSPORT_TCP:
                     transport = streemio.PeerTransport;
                     break;
-                case "ws":
+                case streemio.DEFS.TRANSPORT_WS:
                     transport = streemio.WebSocketTransport;
                     break;
                 default:
@@ -237,7 +237,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var address = decoded.data[wotmsg.MSGFIELD.HOST];
                 var port = decoded.data[wotmsg.MSGFIELD.PORT];
                 var utype = decoded.data[wotmsg.MSGFIELD.UTYPE];
-                var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : "tcp";
+                var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streemio.DEFS.TRANSPORT_TCP;
                 var contact = { public_key: pkey, ecdh_public: ecdhpk, address: address, port: port, name: account, user_type: utype, protocol: protocol };
                 callback(null, contact);
             }
@@ -744,7 +744,6 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             //  get the public key for the sender only contacts are 
             //  allowed communicate with eachother via peer to peer
-            //debugger;
             var public_key = streemio.Contacts.get_public_key(sender);
             if (!public_key) {
                 if (payload.sub != wotmsg.PEERMSG.ACRQ 

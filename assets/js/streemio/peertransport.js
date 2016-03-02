@@ -79,7 +79,6 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
     }
     
     obj.init = function (bootdata, resultfn) {
-        //debugger;
         if (obj.node && obj.is_connected == true) {
             obj.node.close();
             obj.is_connected = false;
@@ -153,7 +152,6 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         };
         
         try {
-            //debugger;
             var peernode = wotkad(options);
             peernode.create(function (err, value) {
                 if (err) {

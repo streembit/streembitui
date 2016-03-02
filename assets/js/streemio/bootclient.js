@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-if (global.appconfig && global.appconfig.transport && global.appconfig.transport == "tcp" && global.appgui) {
+if (global.appconfig && global.appconfig.transport && global.appconfig.transport == streemio.DEFS.TRANSPORT_TCP && global.appgui) {
     var async = require("async");
     var net = require("net");
     var restify = require('restify');
@@ -171,8 +171,8 @@ streemio.bootclient = (function (module, logger, config, events) {
                 return callback("invalid boot discovery services array");
             }
             
-            debugger;
-            callback(null, discovery_srvs);
+            var result = { seeds: discovery_srvs };
+            callback(null, result);
         }
         catch (e) {
             callback("ws_boot error: " + e.message);
@@ -186,10 +186,10 @@ streemio.bootclient = (function (module, logger, config, events) {
         
         var transport;
         switch (config.transport) {
-            case "tcp":
+            case streemio.DEFS.TRANSPORT_TCP:
                 transport = config.transport;
                 break;
-            case "ws":
+            case streemio.DEFS.TRANSPORT_WS:
                 transport = config.transport;
                 break;
             default:

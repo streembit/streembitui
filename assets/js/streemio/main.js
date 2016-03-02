@@ -1014,8 +1014,7 @@ streemio.User = (function (usrobj, events) {
     
     usrobj.create_account = function (account, password, callback) {
         try {
-            //debugger;
-            
+
             if (!account || !password)
                 throw new Error("create_account invalid parameters");
             
@@ -1442,6 +1441,11 @@ streemio.Session = (function (module, logger, events, config) {
         );
     }
     
+    module.get_wsfallback = function () {
+        var iswsfallback = !module.settings.data.wsfallback ? false : true;
+        return iswsfallback;
+    }
+    
     module.get_pending_contact = function (account) {
         var pending_contact = null;
         try {
@@ -1637,7 +1641,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 address: incoming_contact.address, 
                 port: incoming_contact.port, 
                 name: account,
-                protocol: incoming_contact.protocol ? incoming_contact.protocol : "tcp",
+                protocol: incoming_contact.protocol ? incoming_contact.protocol : streemio.DEFS.TRANSPORT_TCP,
                 user_type: contact.user_type
             };
             
@@ -1675,7 +1679,6 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     module.on_receive_addcontact = function (request) {
-        //debugger;
         var account = request.name;
         
         //  if it exists then return the accept add contact
@@ -1695,7 +1698,6 @@ streemio.Contacts = (function (module, logger, events, config) {
         }
         else {
             module.search(account, function (contact) {
-                //debugger;
                 if (contact.public_key != request.public_key || contact.user_type != request.user_type) {
                     return streemio.notify.error("Add contact request from " + account + " recieved with invalid public key");
                 }
@@ -1725,7 +1727,6 @@ streemio.Contacts = (function (module, logger, events, config) {
                 contacts.push(contobj);
                 streemio.Session.contactsvm.add_contact(contobj);                
                 // send the contact accepted reply
-                debugger;
                 streemio.PeerNet.send_accept_addcontact_reply(contact);
             },
             function (err) {
@@ -1737,7 +1738,6 @@ streemio.Contacts = (function (module, logger, events, config) {
     //  Call this when the contact returns via the network an accept add contact reply
     //  or when the contact sends an exchange key message 
     module.handle_addcontact_accepted = function (account) {
-        //debugger;
         var contact = pending_contacts[account];
         if (contact) {
             var contobj = new Contact(contact);
@@ -1980,7 +1980,6 @@ streemio.Main = (function (module, logger, events, config) {
     }
 
     function start_new_account() {
-        debugger
         if (streemio.Node.is_node_connected() == true) {
             display_new_account();
         }
@@ -1992,6 +1991,10 @@ streemio.Main = (function (module, logger, events, config) {
         }
     }
     
+    function onSeedConnect(node) {
+        logger.debug("peer seed is connected %j", node);
+    }
+
     module.initMenu = function () {
         
         if (!module.is_gui) {
@@ -2161,6 +2164,16 @@ streemio.Main = (function (module, logger, events, config) {
         
         var contactMenu = new gui.Menu();
         contactMenu.append(new gui.MenuItem({
+            label: 'Find contact',
+            click: function () {
+                if (!streemio.User.is_user_initialized) {
+                    return streemio.notify.error_popup("The account is not initialized");
+                }
+
+                streemio.Session.contactsvm.dosearch();
+            }
+        }));
+        contactMenu.append(new gui.MenuItem({
             label: 'Backup contacts to file',
             click: function () {
                 if (!streemio.User.is_user_initialized) {
@@ -2222,10 +2235,6 @@ streemio.Main = (function (module, logger, events, config) {
         win.menu = menubar;
     }
     
-    function onSeedConnect(node) {
-        logger.debug("peer seed is connected %j", node);
-    }
-    
     module.start = function (ui_callback) {
         
         async.waterfall([
@@ -2256,7 +2265,15 @@ streemio.Main = (function (module, logger, events, config) {
                         else {
                             //  add records to the database
                             logger.debug("add database settings");
-                            var settings = { key: "settings", data: { usewebsocket: false, pending_contacts: [] } };
+                            
+                            var settings = {
+                                key: "settings", 
+                                data: {
+                                    wsfallback: !config.wsfallback ? false : true, 
+                                    pending_contacts: []
+                                }
+                            };
+                            
                             streemio.DB.update(streemio.DB.SETTINGSDB, settings).then(
                                 function () {
                                     logger.debug("added database settings");
@@ -2311,13 +2328,11 @@ streemio.Main = (function (module, logger, events, config) {
             return callback();
         }
         
-        if (config.transport != "tcp") {
-            //  WS no need a UPNP port
+        if (config.transport == streemio.DEFS.TRANSPORT_WS) {
+            //  Websocket no need a UPNP port
             return callback();
         }
-        
-        //debugger;
-        
+
         try {
             appboot_msg_handler("Configure UPNP port");
 
@@ -2349,12 +2364,11 @@ streemio.Main = (function (module, logger, events, config) {
             logger.error("UPNP portMapping exception: %j", e);
             callback();
         }
-    }
+    }    
     
-    module.join_to_network = function (seeds, skip_publish, completefn) {
-        
+    module.network_init = function (seeds, skip_publish, completefn) {
         module.is_app_initialized = false;
-
+        
         $(".streemio-screen").hide();
         $(".appboot-screen").show();
         $(".appboot-screen-content").show();
@@ -2417,16 +2431,16 @@ streemio.Main = (function (module, logger, events, config) {
                 }
             },
         ], 
-        function (err, result) {
+        function (err, result) {          
             if (err) {
                 appboot_msg_handler("", true);
                 var msg = "Error in initializing the application. "
-                if (config.transport == "tcp") {
+                if (config.transport == streemio.DEFS.TRANSPORT_TCP) {
                     if (!module.upnp_gateway) {
                         msg += "The system was unable to configure your peer listener port via UPnP. Please check you router configuration to allow UPnP port configuration. If UPnP is disabled on your router then you must manually configure the listener port mapping. "
                     }
                 }
-
+                
                 if (err.message) {
                     msg += util.format("%s", err.message);
                 }
@@ -2438,20 +2452,64 @@ streemio.Main = (function (module, logger, events, config) {
                 }
                 
                 $(".appboot-screen").hide();
-                return bootbox.alert(msg);
+                
+                if (completefn) {
+                    return completefn(msg);
+                }
+                else {
+                    return bootbox.alert(msg);
+                }
             }
             
             $(".appboot-screen").hide();
-            $(".streemio-screen").show();
+            $(".streemio-screen").show();    
             
             module.is_app_initialized = true;
-
+            
             if (completefn) {
                 completefn();
             }
 
             //
         });
+    }
+    
+    module.join_to_network = function (seeds, skip_publish, completefn) {
+        
+        if (!skip_publish) {  // undefined will return true as well but nust set to false
+            skip_publish = false;
+        }
+        
+        var retry_with_websocket = false;
+
+        module.network_init(seeds, skip_publish, function (err) {            
+            if (err) {
+                if (!retry_with_websocket && config.transport == streemio.DEFS.TRANSPORT_TCP && streemio.Session.get_wsfallback() == true) {
+                    //  set the config transport to WS                    
+                    config.transport = streemio.DEFS.TRANSPORT_WS;
+                    //  the TCP connection failed, ry with websocket fallback
+                    retry_with_websocket = true;
+                    module.network_init(seeds, skip_publish, function (ret_err) {
+                        if (ret_err) {
+                            return bootbox.alert(ret_err);
+                        }
+                        else {
+                            if (completefn) {
+                                completefn();
+                            }
+                        }
+                    });
+                }
+                else {
+                    return bootbox.alert(err);
+                }
+            }
+            else {
+                if (completefn) {
+                    completefn();
+                }
+            }
+        });        
     }
 
     module.init = function (app_cmd) {

@@ -33,19 +33,27 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                 'reconnectionAttempts': 2
             });
         }
-        catch (err) {
-            logger.error("create socket io error: %j", err);
+        catch (err) {            
+            if (errorfn) {
+                return errorfn("create socket io error: " + err.message);
+            }
+            else {
+                return streemio.notify.error("create socket io error: %j", err);
+            }
         }
         
         if (socket) {
             
             socket.on("connect_error", function (err) {
-                //debugger;
-                logger.error("socket io connect error: %j", err);
+                if (errorfn) {
+                    return errorfn("ws socket connect error: " + err.message);
+                }
+                else {
+                    return streemio.notify.error("ws socket connect error: %j", err);
+                }
             });
             
             socket.on("reconnect_failed", function (err) {
-                //debugger;
                 logger.error("socket io reconnect_failed: %j", err);
             });
             
@@ -61,7 +69,6 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
             
             socket.on('peermsg', function (data) {
                 try {
-                    //debugger;
                     if (!data || !data.contact || !data.contact.name || data.contact.name != streemio.User.name || !data.message) {
                         return logger.error("WS peermsg() error: invalid message context");
                     }
@@ -88,7 +95,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
             
             socket.on('message', function (data) {
                 try {
-                    debugger;
+
                 }
                 catch (e) {
                     logger.error("socket io message error: %j", e)
@@ -96,7 +103,6 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
             });
             
             socket.on('put', function (item) {
-                //debugger;
                 if (!item || !item.key)
                     return;
                 
@@ -165,11 +171,16 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
         
         var host = bootdata.seeds[0].host;
         var port = bootdata.seeds[0].port;
-        create_wssocket(host, port, function () {
-            streemio.User.address = host;
-            streemio.User.port = port;
-            callback();
-        });
+        create_wssocket(host, port, 
+            function () {
+                streemio.User.address = host;
+                streemio.User.port = port;
+                callback();
+            },
+            function (err) {    //  error handler
+                callback(err);
+            }
+        );
     }
     
     module.validate_connection = function (callback) {
@@ -217,8 +228,8 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
     }
     
     function get_socket_forcontact(contact, callback) {
-        if (contact.protocol != "ws") {
-            // try to route the messagfe via the web socket server 
+        if (contact.protocol != streemio.DEFS.TRANSPORT_WS) {
+            //  try to route the messagfe via the web socket server 
             //  since this account is using web socket ws is the only option to reach the contact
             var socket = get_account_socket();
             if (!socket) {

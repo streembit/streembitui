@@ -7,6 +7,9 @@ streemio.DEFS = (function (module) {
         BOOT_PORT: 32319,           //  Discovery port for the Streemio network
         WS_PORT: 32318,             //  Default Web Socket port
         
+        TRANSPORT_TCP: "tcp",       //  TCP/IP
+        TRANSPORT_WS: "ws",         //  websocket
+        
         PRIVATE_NETWORK: "private",
         PUBLIC_NETWORK: "public",
 
