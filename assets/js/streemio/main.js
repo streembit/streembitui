@@ -1442,8 +1442,46 @@ streemio.Session = (function (module, logger, events, config) {
     }
     
     module.get_wsfallback = function () {
+        if (!module.settings || !module.settings.data) {
+            streemio.notify.error("Invalid Streemio session settings.");
+            return;
+        }
+
         var iswsfallback = !module.settings.data.wsfallback ? false : true;
         return iswsfallback;
+    }
+    
+    module.get_bootseeds = function () {
+        if (!module.settings || !module.settings.data) {
+            streemio.notify.error("Invalid Streemio session settings.");
+            return;
+        }
+        
+        if (!module.settings.data.bootseeds || !module.settings.data.bootseeds.length) {
+            module.settings.data.bootseeds = [seed.streemio.org, seed.streemio.net, seed.streemio.biz, seed.streemo.org, seed.streemo.net, seed.streemo.info, seed.streemo.uk];
+        }
+
+        return module.settings.data.bootseeds;
+    }
+    
+    module.get_tcpport = function () {
+        if (!module.settings || !module.settings.data) {
+            streemio.notify.error("Invalid Streemio session settings.");
+            return;
+        }
+        
+        var tcpport = !module.settings.data.tcpport ? streemio.DEFS.APP_PORT : module.settings.data.tcpport;
+        return tcpport;
+    }
+    
+    module.get_transport = function () {
+        if (!module.settings || !module.settings.data) {
+            streemio.notify.error("Invalid Streemio session settings.");
+            return;
+        }
+        
+        var transport = !module.settings.data.transport ? streemio.DEFS.APP_PORT : module.settings.data.transport;
+        return transport;
     }
     
     module.get_pending_contact = function (account) {
@@ -2127,6 +2165,14 @@ streemio.Main = (function (module, logger, events, config) {
         
         var toolsMenu = new gui.Menu();
         toolsMenu.append(new gui.MenuItem({
+            label: 'Settings',
+            click: function () {
+                show_active_app_screen();
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SETTINGS);
+            }
+        }));
+        toolsMenu.append(new gui.MenuItem({ type: 'separator' }));
+        toolsMenu.append(new gui.MenuItem({
             label: 'Account security info',
             click: function () {
                 if (!streemio.User.is_user_initialized) {
@@ -2237,6 +2283,20 @@ streemio.Main = (function (module, logger, events, config) {
     
     module.start = function (ui_callback) {
         
+        function update_settings(settings, callback) {
+            streemio.DB.update(streemio.DB.SETTINGSDB, settings).then(
+                function () {
+                    logger.debug("added database settings");
+                    streemio.Session.settings = settings;
+                    callback(null);
+                },
+                function (err) {
+                    logger.error("add database settings error %j", err);
+                    callback(err);
+                }
+            );
+        }
+        
         async.waterfall([
             function (callback) {
                 // initialize the database
@@ -2270,21 +2330,16 @@ streemio.Main = (function (module, logger, events, config) {
                                 key: "settings", 
                                 data: {
                                     wsfallback: !config.wsfallback ? false : true, 
+                                    tcpport: (config.p2p && config.p2p.settings && config.p2p.settings.port) ?  config.p2p.settings.port : streemio.DEFS.APP_PORT,
+                                    wsport: (config.p2p && config.p2p.settings && config.p2p.settings.wsport) ?  config.p2p.settings.wsport : streemio.DEFS.WS_PORT,
+                                    transport: (config.p2p && config.p2p.settings && config.p2p.settings.transport) ?  config.p2p.settings.transport : streemio.DEFS.TRANSPORT_TCP,
+                                    bootseeds: config.bootseeds || [seed.streemio.org, seed.streemio.net, seed.streemio.biz, seed.streemo.org, seed.streemo.net, seed.streemo.info, seed.streemo.uk],
                                     pending_contacts: []
                                 }
                             };
                             
-                            streemio.DB.update(streemio.DB.SETTINGSDB, settings).then(
-                                function () {
-                                    logger.debug("added database settings");
-                                    streemio.Session.settings = settings;
-                                    callback(null);
-                                },
-                                function (err) {
-                                    logger.error("add database settings error %j", err);
-                                    callback(err);
-                                }
-                            );
+                            update_settings(settings, callback);
+                            //
                         }
                     },
                     function (err) {

@@ -840,3 +840,26 @@ span.awesomeBlue i.addbtn{
   background-color: #b24947;
   border-color: #7e1c18;
 }
+
+
+#settings-container{
+    padding-top:30px; 
+    display: flex; 
+    justify-content: center;
+}
+
+.settings-container-panel{
+    display:inline-block;
+    min-width:750px;
+    padding:20px; 
+    border:3px solid #ddd; 
+    border-radius:5px;
+    background-color:#fbfbfb;
+}
+
+
+.form-section-panel{
+    margin-top:20px;
+    border-bottom:1px solid #ddd;
+    padding-bottom:8px;
+}

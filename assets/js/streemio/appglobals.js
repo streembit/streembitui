@@ -4,6 +4,7 @@ var streemio = streemio || {};
 
 streemio.DEFS = (function (module) {
     return {
+        APP_PORT: 8905,             //  Appliction port
         BOOT_PORT: 32319,           //  Discovery port for the Streemio network
         WS_PORT: 32318,             //  Default Web Socket port
         
@@ -22,7 +23,8 @@ streemio.DEFS = (function (module) {
         CMD_APP_CREATEACCOUNT: "app_create_account",
         CMD_APP_RESTOREACCOUNT: "app_restore_account",
         CMD_APP_INITACCOUNT: "app_init_account",
-
+        
+        CMD_SETTINGS: 'settings',
         CMD_CONTACT_SELECT: 'contact_select',
         CMD_VIDEO_CALL: 'video_call',
         CMD_HANGUP_CALL: 'hangup_call',

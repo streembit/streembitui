@@ -1180,6 +1180,84 @@
 
 </script>
 
+<script type="text/html" id="streemio-view-settings">
+    <div id="settings-container">
+
+        <div class="settings-container-panel">
+
+            <div style="text-align:left;border-bottom:3px solid #ddd;padding-bottom:5px">
+                <h4>Streemio settings</h4>
+            </div>
+
+            <div class="form-group form-section-panel">
+                <div class="checkbox">
+                    <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streemio community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streemio network!"/>
+                </div>
+            </div>
+
+            <div class="form-group form-section-panel">
+                <label for="tcpport">Port:</label><br />
+                <input type="text" class="form-control" id="tcpport" maxlength="5" style="width:80px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Use this TCP port to communicate on the Streemio network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. If the transport is WebSocket (WS) then this settings is not used by the application." />
+            </div>
+
+            <div class="form-group form-section-panel">
+                <label for="transport">Transport:</label><br />
+                <select type="select" class="form-control" id="transport" maxlength="5" style="width:120px;display:inline-block" data-bind="value: selected_transport">
+                    <option value="0">Choose ...</option>
+                    <option value="tcp">TCP</option>
+                    <option value="ws">WebSocket</option>
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Transport protocol. The default is TCP. Use the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall." />                
+            </div>
+
+            <div class="form-group form-section-panel">
+                <div style="font-weight:bold;display:inline-block">Bootstrap seeds</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="List of Streemio seed nodes. The seeds assist in user and device discovery, and stores the users’ public key data in their distributed hash table (DHT) storage. You can define here your seed nodes if you run a private Streemio network." />                      
+                <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
+                </div>     
+                <div style="text-align:left;margin-top:5px">
+                    <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed('');}" title="Add boot seed">Add seed</button>
+                </div>
+                <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
+                    <div class="form-group" style="font-size:12px;margin-bottom:0">
+                        <label for="newseed" style="font-size:12px">Seed:</label>
+                        <input type="text" class="form-control" id="newseed" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_seed"> &nbsp;&nbsp;<button data-bind="click:add_bootseed">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:function() {is_add_bootseed(false);new_seed('');}">Cancel</button>
+                    </div>
+                </div>         
+            </div>
+
+            <div style="margin-top:30px">
+                <button data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            var settings_div = document.getElementById('settings-container');
+            var settings_vm = new streemio.vms.SettingsViewModel();
+            settings_vm.init(function () {
+                ko.applyBindings(settings_vm, settings_div);
+            });
+            
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+</script>
+
+<script type="text/html" id="bootseed-item-template">
+    <div style="background-color:#eee;border-radius:3px;border:1px solid #ccc;padding:3px 8px;margin-bottom:4px;max-width:400px">
+        <div class="pull-left" style="padding-top:2px">
+            <span data-bind="text: $data" style="font-size:11px;font-weight:bold;"></span>
+        </div>
+        <div class="pull-right">
+            <i class="fa fa-remove" style="color:red" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
+        </div>
+        <div style="clear:both"></div>   
+    </div>
+</script>
+
 
 <script type="text/html" id="streemio-view-help">
     <div style="margin:20px 20px 20px 0;text-align:center">

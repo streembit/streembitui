@@ -11,6 +11,58 @@ var logger = global.applogger;
 
 (function ($, ko, events, config) {
     
+    streemio.vms.SettingsViewModel = function () {
+        var viewModel = {
+            iswsfallback: ko.observable(false),
+            bootseeds: ko.observableArray([]),
+            tcpport: ko.observable(false),
+            selected_transport: ko.observable(),
+            is_add_bootseed: ko.observable(false),
+            new_seed: ko.observable(""),
+
+            init: function (callback) {
+                try {
+                    this.iswsfallback(streemio.Session.get_wsfallback());
+
+                    var seeds = [];
+                    var bootsarr = streemio.Session.get_bootseeds();
+                    for (var i = 0; i < bootsarr.length; i++){
+                        seeds.push(bootsarr[i]);
+                    }
+                    this.bootseeds(seeds);                    
+
+                    this.tcpport(streemio.Session.get_tcpport());
+                    this.selected_transport(streemio.Session.get_transport());
+                    callback();
+                }     
+                catch (err) {
+                    streemio.notify.error_popup("Settings init error: %j", err);
+                }
+            },
+
+            save: function () {
+                alert("save settings");
+            },
+
+            delete_bootseed: function (seed) {
+                viewModel.bootseeds.remove(function (item) {
+                    return item == seed;
+                }) 
+            },
+
+            add_bootseed: function () {
+                var seed = $.trim(viewModel.new_seed());
+                if (seed) {
+                    viewModel.bootseeds.push(seed);
+                    viewModel.new_seed("");
+                    viewModel.is_add_bootseed(false);
+                }
+            }
+        };
+        
+        return viewModel;
+    }
+
     streemio.vms.LogsViewModel = function () {
         var viewModel = {
             errors: ko.observableArray([]),
@@ -1666,6 +1718,13 @@ var logger = global.applogger;
                         resetView();
                         streemio.Session.uioptions = options;
                         showView("inituser");
+                        break;
+
+                    case streemio.DEFS.CMD_SETTINGS:
+                        resetTemplate();
+                        resetView();
+                        streemio.Session.uioptions = options;
+                        showView(streemio.DEFS.CMD_SETTINGS);
                         break;
 
                     case streemio.DEFS.CMD_CHANGE_KEY:
