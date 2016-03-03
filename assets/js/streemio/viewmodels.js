@@ -40,8 +40,20 @@ var logger = global.applogger;
                 }
             },
 
-            save: function () {
-                alert("save settings");
+            save: function () {            
+                var settings = streemio.Session.settings
+                settings.data.bootseeds = viewModel.bootseeds();
+                settings.data.transport = viewModel.selected_transport();
+                settings.data.tcpport = viewModel.tcpport();
+                settings.data.wsfallback = viewModel.iswsfallback();
+                streemio.Session.update_settings(settings, function (err) {
+                    if (err) {
+                        return streemio.notify.error_popup("Error in updating the settings database. Error: " + err.message);
+                    }
+
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                    streemio.notify.info("The settings data was updated successfully");
+                });
             },
 
             delete_bootseed: function (seed) {

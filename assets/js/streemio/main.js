@@ -1425,6 +1425,28 @@ streemio.Session = (function (module, logger, events, config) {
         return module.textmessages[contact];
     }
     
+    module.update_settings = function (newsettings, callback) {
+        if (!newsettings || !newsettings.data) {
+            return callback("invalid settings, the data field must exist.");                
+        }
+
+        if (!newsettings.key || newsettings.key != "settings") {
+            newsettings.key = "settings";
+        }
+
+        streemio.DB.update(streemio.DB.SETTINGSDB, newsettings).then(
+            function () {
+                logger.debug("added database settings");
+                module.settings = newsettings;
+                callback(null);
+            },
+            function (err) {
+                logger.error("add database settings error %j", err);
+                callback(err);
+            }
+        );
+    }
+    
     module.get_settings = function (callback) {
         streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
             function (result) {
@@ -2282,21 +2304,7 @@ streemio.Main = (function (module, logger, events, config) {
     }
     
     module.start = function (ui_callback) {
-        
-        function update_settings(settings, callback) {
-            streemio.DB.update(streemio.DB.SETTINGSDB, settings).then(
-                function () {
-                    logger.debug("added database settings");
-                    streemio.Session.settings = settings;
-                    callback(null);
-                },
-                function (err) {
-                    logger.error("add database settings error %j", err);
-                    callback(err);
-                }
-            );
-        }
-        
+
         async.waterfall([
             function (callback) {
                 // initialize the database
@@ -2338,7 +2346,7 @@ streemio.Main = (function (module, logger, events, config) {
                                 }
                             };
                             
-                            update_settings(settings, callback);
+                            streemio.Session.update_settings(settings, callback);
                             //
                         }
                     },
