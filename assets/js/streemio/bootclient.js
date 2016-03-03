@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-if (global.appconfig && global.appconfig.transport && global.appconfig.transport == streemio.DEFS.TRANSPORT_TCP && global.appgui) {
+if (streemio.config.transport == streemio.DEFS.TRANSPORT_TCP && global.appgui) {
     var async = require("async");
     var net = require("net");
     var restify = require('restify');
@@ -201,4 +201,4 @@ streemio.bootclient = (function (module, logger, config, events) {
     }
     
     return module;
-}(streemio.util || {}, global.applogger, global.appconfig, global.appevents));
+}(streemio.util || {}, streemio.logger, streemio.config, global.appevents));

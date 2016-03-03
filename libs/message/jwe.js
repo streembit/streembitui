@@ -30,9 +30,6 @@ var JWEHandler = (function () {
     
     function create_symmetric_key(crypto_system, master_key, other_public_key) {
         if (crypto_system == obj.CRYPTOSYS.ECC) {
-            if (global.applogger) {
-                global.applogger.debug("computeSecret ecdh other_public_key: %s", other_public_key);
-            }
             var symmkey = master_key.computeSecret(other_public_key, 'hex', 'hex');
             return symmkey;
         }
@@ -61,9 +58,6 @@ var JWEHandler = (function () {
     obj.encrypt = function (crypto_system, master_key, other_public_key, data) {
         if (crypto_system == obj.CRYPTOSYS.ECC) {
             var secret = create_symmetric_key(crypto_system, master_key, other_public_key);
-            //if (global.applogger) {
-            //    global.applogger.debug("encrypt ecdh key: %s", secret);
-            //}
             var cipher = crypto.createCipher('aes256', secret);
             var cipher_text = cipher.update(data, 'utf8', 'base64');
             cipher_text += cipher.final('base64');
@@ -114,9 +108,6 @@ var JWEHandler = (function () {
         
         if (header.alg.indexOf("ECDH") > -1) {
             var secret = create_symmetric_key(obj.CRYPTOSYS.ECC, master_key, other_public_key);
-            //if (global.applogger) {
-            //    global.applogger.debug("decrypt ecdh key: %s", secret);
-            //}
             var decipher = crypto.createDecipher('aes256', secret);
             var plain_text = decipher.update(cipher_text, 'base64', 'utf8');
             plain_text += decipher.final();
@@ -177,9 +168,6 @@ var JWEHandler = (function () {
         }
         
         if (header.enc.indexOf("A256KW") > -1) {
-            //if (global.applogger) {
-            //    global.applogger.debug("symm_decrypt using symmetric_key: %s", symmetric_key);
-            //}
             var decipher = crypto.createDecipher('aes256', symmetric_key);
             var plain_text = decipher.update(cipher_text, 'base64', 'utf8');
             plain_text += decipher.final();

@@ -859,7 +859,14 @@ span.awesomeBlue i.addbtn{
 
 
 .form-section-panel{
-    margin-top:20px;
-    border-bottom:1px solid #ddd;
+    margin-top:10px;
+    border-bottom:1px solid #eee;
     padding-bottom:8px;
+}
+
+.settings-tab-panel{
+    padding:10px;
+    border:1px solid #ccc;
+    border-top-width:0;
+    background-color:#fff;
 }

@@ -42,8 +42,6 @@ var webrtcDetectedBrowser = null;
 var webrtcDetectedVersion = null;
 var webrtcMinimumVersion = null;
 
-var logger = global.applogger;
-
 var webrtcUtils = {
     log: function() {
         // suppress console.log output when being included as a module.
@@ -110,156 +108,6 @@ detachMediaStream = function (element) {
 };
 
 
-//if (typeof window === 'undefined' || !window.navigator) {
-//    webrtcUtils.log('This does not appear to be a browser');
-//    webrtcDetectedBrowser = 'not a browser';
-//} 
-//else if (navigator.mozGetUserMedia && window.mozRTCPeerConnection) {
-//  webrtcUtils.log('This appears to be Firefox');
-
-//  webrtcDetectedBrowser = 'firefox';
-
-//  // the detected firefox version.
-//  webrtcDetectedVersion = webrtcUtils.extractVersion(navigator.userAgent,
-//      /Firefox\/([0-9]+)\./, 1);
-
-//  // the minimum firefox version still supported by adapter.
-//  webrtcMinimumVersion = 31;
-
-//  // The RTCPeerConnection object.
-//  window.RTCPeerConnection = function(pcConfig, pcConstraints) {
-//    if (webrtcDetectedVersion < 38) {
-//      // .urls is not supported in FF < 38.
-//      // create RTCIceServers with a single url.
-//      if (pcConfig && pcConfig.iceServers) {
-//        var newIceServers = [];
-//        for (var i = 0; i < pcConfig.iceServers.length; i++) {
-//          var server = pcConfig.iceServers[i];
-//          if (server.hasOwnProperty('urls')) {
-//            for (var j = 0; j < server.urls.length; j++) {
-//              var newServer = {
-//                url: server.urls[j]
-//              };
-//              if (server.urls[j].indexOf('turn') === 0) {
-//                newServer.username = server.username;
-//                newServer.credential = server.credential;
-//              }
-//              newIceServers.push(newServer);
-//            }
-//          } else {
-//            newIceServers.push(pcConfig.iceServers[i]);
-//          }
-//        }
-//        pcConfig.iceServers = newIceServers;
-//      }
-//    }
-//    return new mozRTCPeerConnection(pcConfig, pcConstraints); // jscs:ignore requireCapitalizedConstructors
-//  };
-
-//  // The RTCSessionDescription object.
-//  if (!window.RTCSessionDescription) {
-//    window.RTCSessionDescription = mozRTCSessionDescription;
-//  }
-
-//  // The RTCIceCandidate object.
-//  if (!window.RTCIceCandidate) {
-//    window.RTCIceCandidate = mozRTCIceCandidate;
-//  }
-
-//  // getUserMedia constraints shim.
-//  getUserMedia = function(constraints, onSuccess, onError) {
-//    var constraintsToFF37 = function(c) {
-//      if (typeof c !== 'object' || c.require) {
-//        return c;
-//      }
-//      var require = [];
-//      Object.keys(c).forEach(function(key) {
-//        if (key === 'require' || key === 'advanced' || key === 'mediaSource') {
-//          return;
-//        }
-//        var r = c[key] = (typeof c[key] === 'object') ?
-//            c[key] : {ideal: c[key]};
-//        if (r.min !== undefined ||
-//            r.max !== undefined || r.exact !== undefined) {
-//          require.push(key);
-//        }
-//        if (r.exact !== undefined) {
-//          if (typeof r.exact === 'number') {
-//            r.min = r.max = r.exact;
-//          } else {
-//            c[key] = r.exact;
-//          }
-//          delete r.exact;
-//        }
-//        if (r.ideal !== undefined) {
-//          c.advanced = c.advanced || [];
-//          var oc = {};
-//          if (typeof r.ideal === 'number') {
-//            oc[key] = {min: r.ideal, max: r.ideal};
-//          } else {
-//            oc[key] = r.ideal;
-//          }
-//          c.advanced.push(oc);
-//          delete r.ideal;
-//          if (!Object.keys(r).length) {
-//            delete c[key];
-//          }
-//        }
-//      });
-//      if (require.length) {
-//        c.require = require;
-//      }
-//      return c;
-//    };
-//    if (webrtcDetectedVersion < 38) {
-//      webrtcUtils.log('spec: ' + JSON.stringify(constraints));
-//      if (constraints.audio) {
-//        constraints.audio = constraintsToFF37(constraints.audio);
-//      }
-//      if (constraints.video) {
-//        constraints.video = constraintsToFF37(constraints.video);
-//      }
-//      webrtcUtils.log('ff37: ' + JSON.stringify(constraints));
-//    }
-//    return navigator.mozGetUserMedia(constraints, onSuccess, onError);
-//  };
-
-//  navigator.getUserMedia = getUserMedia;
-
-//  // Shim for mediaDevices on older versions.
-//  if (!navigator.mediaDevices) {
-//    navigator.mediaDevices = {getUserMedia: requestUserMedia,
-//      addEventListener: function() { },
-//      removeEventListener: function() { }
-//    };
-//  }
-//  navigator.mediaDevices.enumerateDevices =
-//      navigator.mediaDevices.enumerateDevices || function() {
-//    return new Promise(function(resolve) {
-//      var infos = [
-//        {kind: 'audioinput', deviceId: 'default', label: '', groupId: ''},
-//        {kind: 'videoinput', deviceId: 'default', label: '', groupId: ''}
-//      ];
-//      resolve(infos);
-//    });
-//  };
-
-//  if (webrtcDetectedVersion < 41) {
-//    // Work around http://bugzil.la/1169665
-//    var orgEnumerateDevices =
-//        navigator.mediaDevices.enumerateDevices.bind(navigator.mediaDevices);
-//    navigator.mediaDevices.enumerateDevices = function() {
-//      return orgEnumerateDevices().then(undefined, function(e) {
-//        if (e.name === 'NotFoundError') {
-//          return [];
-//        }
-//        throw e;
-//      });
-//    };
-//  }
-//} 
-//else
-    
 if (navigator.webkitGetUserMedia && window.webkitRTCPeerConnection) {
     //webrtcUtils.log('This appears to be Chrome');
 
@@ -269,7 +117,7 @@ if (navigator.webkitGetUserMedia && window.webkitRTCPeerConnection) {
     webrtcDetectedVersion = webrtcUtils.extractVersion(navigator.userAgent,
         /Chrom(e|ium)\/([0-9]+)\./, 2);
     
-    logger.debug("chromium webrtcDetectedVersion: " + webrtcDetectedVersion);
+    console.log("chromium webrtcDetectedVersion: " + webrtcDetectedVersion);
 
     // the minimum chrome version still supported by adapter.
     webrtcMinimumVersion = 38;

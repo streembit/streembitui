@@ -73,7 +73,7 @@ streemio.TransportFactory = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.TransportFactory || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.TransportFactory || {}, streemio.logger, global.appevents, streemio.config));
 
 
 
@@ -151,7 +151,7 @@ streemio.Node = (function (module, logger, events, config) {
 
     return module;
 
-}(streemio.Node || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.Node || {}, streemio.logger, global.appevents, streemio.config));
 
 
 
@@ -203,7 +203,7 @@ streemio.Message = (function (module, logger, events) {
     
     return module;
 
-}(streemio.Message || {}, global.applogger, global.appevents));
+}(streemio.Message || {}, streemio.logger, global.appevents));
 
 
 
@@ -1481,4 +1481,4 @@ streemio.PeerNet = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.PeerNet || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.PeerNet || {}, streemio.logger, global.appevents, streemio.config));

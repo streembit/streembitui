@@ -105,7 +105,7 @@ var ThingHandler = (function (config, logger) {
         get_thing_async: get_thing_async
     };
 
-}(global.appconfig, global.applogger));
+}(streemio.config, streemio.logger));
 
 module.exports = ThingHandler;
 

@@ -65,86 +65,149 @@ var fs = require('fs');
 
 //global.appgui.Window.get().showDevTools();
 
-streemio.config = (function (config) {
-    var module = {};
-    
-    var m_config;
-    
-    function dev_load_config() {
-        var wdir = process.cwd();
-        var filepath = path.join(wdir, 'streemio.conf');
-        var data = fs.readFileSync(filepath, 'utf8');
-        var confobj = JSON.parse(data);
-        return confobj;
-    }
+streemio.config = (function (module) {
 
-    function load_config() {
-        var nwPath = process.execPath;
-        var nwDir = path.dirname(nwPath);   
-        var filepath = path.join(nwDir, 'streemio.conf');
-        var data = fs.readFileSync(filepath, 'utf8');
-        var confobj = JSON.parse(data);
-        return confobj;
-    }
+    var config_data = {
+        "isdevmode": true,
+        "loglevel": "debug",
+        "transport": streemio.DEFS.TRANSPORT_TCP,
+        "wsfallback": true,
+        "tcpport": streemio.DEFS.APP_PORT,
+        "wsport": streemio.DEFS.WS_PORT,
+        "bootseeds": [
+            "192.168.1.79"
+            //"seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemo.org", "seed.streemo.net",  "seed.streemo.info"
+        ],
+        "ice_resolvers": [
+            { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
+        ],
+        "private_net_seed": { "account": "", "host": "", "port": 0 },
+        "pending_contacts": []
+    };
 
     Object.defineProperty(module, "data", {
         get: function () {
-            var errinfo = null;
-            try {
-                if (!m_config) {
-                    m_config = load_config();
-                }
-                return m_config;
-            }
-            catch (err) {
-                errinfo = err.message;
-            }
+            return config_data;           
+        },
+        
+        set: function (value) {
+            config_data = value;
+        }
+    });
 
-            try {
-                if (!m_config) {
-                    m_config = dev_load_config();
-                }
-                return m_config;
-            }
-            catch (err) {
-                errinfo = err.message;
-            }
-
-            if (!m_config) {
-                alert("The streemio.conf configuration file must exists in the application root directory")
-            }
+    Object.defineProperty(module, "isdevmode", {
+        get: function () {
+            return config_data.isdevmode;
+        },
+        
+        set: function (value) {
+            config_data.isdevmode = value;
         }
     });
     
+    Object.defineProperty(module, "loglevel", {
+        get: function () {
+            return config_data.loglevel || "debug";
+        },
+        
+        set: function (value) {
+            config_data.loglevel = value;
+        }
+    });
+    
+    Object.defineProperty(module, "transport", {
+        get: function () {
+            return config_data.transport || streemio.DEFS.TRANSPORT_TCP;
+        },
+        
+        set: function (value) {
+            config_data.transport = value;
+        }
+    });
+    
+    Object.defineProperty(module, "wsfallback", {
+        get: function () {
+            return config_data.wsfallback;
+        },
+        
+        set: function (value) {
+            config_data.wsfallback = value;
+        }
+    });
+    
+    Object.defineProperty(module, "tcpport", {
+        get: function () {
+            return config_data.tcpport || streemio.DEFS.APP_PORT;
+        },
+        
+        set: function (value) {
+            config_data.tcpport = value;
+        }
+    });
+    
+    Object.defineProperty(module, "wsport", {
+        get: function () {
+            return config_data.wsport || streemio.DEFS.WS_PORT;
+        },
+        
+        set: function (value) {
+            config_data.wsport = value;
+        }
+    });
+    
+    Object.defineProperty(module, "bootseeds", {
+        get: function () {
+            return config_data.bootseeds;
+        },
+        
+        set: function (value) {
+            config_data.bootseeds = value;
+        }
+    });
+    
+    Object.defineProperty(module, "ice_resolvers", {
+        get: function () {
+            return config_data.ice_resolvers;
+        },
+        
+        set: function (value) {
+            config_data.ice_resolvers = value;
+        }
+    });
+    
+    Object.defineProperty(module, "private_net_seed", {
+        get: function () {
+            return config_data.private_net_seed;
+        },
+        
+        set: function (value) {
+            config_data.private_net_seed = value;
+        }
+    });
+    
+    module.set_config = function(obj) {
+        module.data = obj;
+    }
 
     return module;
 
 }(streemio.config || {}));
 
-
-global.appconfig = streemio.config.data;
+// initialize the event handler
 
 var AppEvents = require("./libs/events/AppEvents");
 global.appevents = new AppEvents();
 
 // initialize the logger
-var logspath = null;
-if (global.appconfig && global.appconfig.appexec && global.appconfig.appexec == 'dev') {
-    var wdir = process.cwd();
-    logspath = path.join(wdir, 'logs');
-}
-else {
-    var nwPath = process.execPath;
-    var nwDir = path.dirname(nwPath);
-    logspath = path.join(nwDir, 'logs');
-}
-
 var logger = require("./libs/logger/logger");
 
-var level = global.appconfig && global.appconfig.log && global.appconfig.log.level ? global.appconfig.log.level : "debug";
-console.log('log level: ' + level);
-console.log('log path: ' + logspath);
-logger.init(level, logspath);
+streemio.logger = (function (module) {
+    var logger = require("./libs/logger/logger");
+    module = logger;
 
-global.applogger = logger;
+    return module;
+
+}(streemio.logger || {}));
+
+
 

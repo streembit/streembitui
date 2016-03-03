@@ -6,10 +6,8 @@ var streemio = streemio || {};
 
 streemio.WebSocketTransport = (function (module, logger, events, config) {
     
-    var port = 32318;
-    if (config && config.p2p && config.p2p.settings && config.p2p.settings.wsport) {
-        port = config.p2p.settings.wsport;
-    }
+    var port = config.wsport || streemio.DEFS.WS_PORT;
+
     module.wsport = port;
     module.list_of_servers = {};
     
@@ -298,5 +296,5 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.WebSocketTransport || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.WebSocketTransport || {}, streemio.logger, global.appevents, streemio.config));
 

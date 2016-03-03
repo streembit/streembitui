@@ -84,10 +84,6 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
             obj.is_connected = false;
         }
         
-        if (!config.p2p ) {
-            return resultfn("Missing p2p config entry");
-        }
-
         if (!bootdata || !bootdata.seeds || !bootdata.seeds.length) {
             return resultfn("Invalid seeds");
         }
@@ -95,7 +91,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         var is_private_network = bootdata.isprivate_network;
         var private_network_accounts = bootdata.private_accounts;
         
-        streemio.User.port = config.p2p.settings.port;
+        streemio.User.port = config.tcpport;
         var accountId;
         if (streemio.Main.network_type == streemio.DEFS.PUBLIC_NETWORK) {
             if (is_private_network && private_network_accounts && private_network_accounts.length) {
@@ -142,7 +138,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         var options = {
             errhandler: onNodeError,
             log: logger,
-            port: config.p2p.settings.port,
+            port: config.tcpport,
             account: accountId,
             seeds: seedlist, 
             peermsgHandler: onPeerMessage,
@@ -315,4 +311,4 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
 
     return obj;
 
-}(streemio.PeerTransport || {}, global.applogger, global.appevents, global.appconfig, streemio.MainDB));
+}(streemio.PeerTransport || {}, streemio.logger, global.appevents, streemio.config, streemio.MainDB));

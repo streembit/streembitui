@@ -159,8 +159,7 @@ streemio.DB = (function (module, logger, events){
 
     return module;
 
-}(streemio.DB || {}, global.applogger, global.appevents));
-
+}(streemio.DB || {}, streemio.logger, global.appevents));
 
 streemio.MainDB = (function (module, db, logger) {
     
@@ -254,7 +253,7 @@ streemio.MainDB = (function (module, db, logger) {
     
     return module;
 
-}(streemio.MainDB || {}, streemio.DB, global.applogger));
+}(streemio.MainDB || {}, streemio.DB, streemio.logger));
 
 streemio.AccountsDB = (function (module, db, logger) {
     
@@ -284,5 +283,5 @@ streemio.AccountsDB = (function (module, db, logger) {
     
     return module;
 
-}(streemio.AccountsDB || {}, streemio.DB, global.applogger));
+}(streemio.AccountsDB || {}, streemio.DB, streemio.logger));
 

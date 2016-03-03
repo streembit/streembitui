@@ -7,32 +7,50 @@ streemio.vms = streemio.vms || {};
 var nodecrypto = require(global.cryptolib);
 var EccKey = require('./libs/crypto/EccKey');
 
-var logger = global.applogger;
-
 (function ($, ko, events, config) {
     
     streemio.vms.SettingsViewModel = function () {
         var viewModel = {
             iswsfallback: ko.observable(false),
             bootseeds: ko.observableArray([]),
-            tcpport: ko.observable(false),
+            iceresolvers: ko.observableArray([]),
+            tcpport: ko.observable(0),
+            wsport: ko.observable(0),
             selected_transport: ko.observable(),
             is_add_bootseed: ko.observable(false),
             new_seed: ko.observable(""),
+            new_iceresolver: ko.observable(""),
+            is_add_iceresolver: ko.observable(false),
+            private_net_account: ko.observable(""),
+            private_net_port: ko.observable(""),
+            private_net_address: ko.observable(""),
+            isdevmode: ko.observable(),
+            selected_loglevel: ko.observable(),
 
             init: function (callback) {
                 try {
-                    this.iswsfallback(streemio.Session.get_wsfallback());
+                    this.iswsfallback(streemio.config.wsfallback);
 
                     var seeds = [];
-                    var bootsarr = streemio.Session.get_bootseeds();
+                    var bootsarr = streemio.config.bootseeds;
                     for (var i = 0; i < bootsarr.length; i++){
                         seeds.push(bootsarr[i]);
                     }
-                    this.bootseeds(seeds);                    
+                    this.bootseeds(seeds);
+                    
+                    var ices = [];
+                    var icesarr = streemio.config.ice_resolvers;
+                    for (var i = 0; i < icesarr.length; i++) {
+                        ices.push(icesarr[i]);
+                    }
+                    this.iceresolvers(ices);                    
 
-                    this.tcpport(streemio.Session.get_tcpport());
-                    this.selected_transport(streemio.Session.get_transport());
+                    this.tcpport(streemio.config.tcpport);
+                    this.wsport(streemio.config.wsport);
+                    this.selected_transport(streemio.config.transport);
+                    this.isdevmode(streemio.config.isdevmode);
+                    this.selected_loglevel(streemio.config.loglevel);
+
                     callback();
                 }     
                 catch (err) {
@@ -40,20 +58,52 @@ var logger = global.applogger;
                 }
             },
 
-            save: function () {            
-                var settings = streemio.Session.settings
-                settings.data.bootseeds = viewModel.bootseeds();
-                settings.data.transport = viewModel.selected_transport();
-                settings.data.tcpport = viewModel.tcpport();
-                settings.data.wsfallback = viewModel.iswsfallback();
-                streemio.Session.update_settings(settings, function (err) {
-                    if (err) {
-                        return streemio.notify.error_popup("Error in updating the settings database. Error: " + err.message);
-                    }
+            save: function () {
+                try {
 
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
-                    streemio.notify.info("The settings data was updated successfully");
-                });
+                    var data = streemio.Session.settings.data
+
+                    data.bootseeds = viewModel.bootseeds();
+                    data.transport = viewModel.selected_transport();
+                    
+                    var num = parseInt($.trim(viewModel.tcpport()));
+                    if (isNaN(num)){
+                        num = streemio.DEFS.APP_PORT
+                    }
+                    data.tcpport = num;
+                    
+                    num = parseInt($.trim(viewModel.wsport()));
+                    if (isNaN(num)) {
+                        num = streemio.DEFS.WS_PORT
+                    }
+                    data.wsport = num;
+
+                    data.wsfallback = viewModel.iswsfallback();
+                    data.ice_resolvers = viewModel.iceresolvers();
+                    data.isdevmode = viewModel.isdevmode();
+                    
+                    data.loglevel = viewModel.selected_loglevel() || "debug";
+
+                    data.private_net_seed = { "account": "", "host": "", "port": 0 };
+                    data.private_net_seed.account = viewModel.private_net_account();
+                    data.private_net_seed.host = viewModel.private_net_address();
+                    
+                    num = parseInt($.trim(viewModel.private_net_port()));
+                    if (isNaN(num)) {
+                        num = 0
+                    }
+                    data.private_net_seed.port = num;           
+
+                    streemio.Session.update_settings(data, function (err) {
+                        if (err) {
+                            return streemio.notify.error_popup("Error in updating the settings database. Error: " + err.message);
+                        }
+                        streemio.notify.success("The settings data was updated successfully");
+                    });
+                }
+                catch (e) {
+                    return streemio.notify.error_popup("Exception occured in updating the settings database. Error: " + e.message);
+                }
             },
 
             delete_bootseed: function (seed) {
@@ -69,7 +119,24 @@ var logger = global.applogger;
                     viewModel.new_seed("");
                     viewModel.is_add_bootseed(false);
                 }
-            }
+            },
+
+            add_iceresolver: function () {
+                var newice = $.trim(viewModel.new_iceresolver());
+                if (newice) {
+                    // validate
+                    var obj = { "url": newice }
+                    viewModel.iceresolvers.push(obj);
+                    viewModel.new_iceresolver("");
+                    viewModel.is_add_iceresolver(false);
+                }
+            },
+
+            delete_iceresolver: function (ice) {
+                viewModel.iceresolvers.remove(function (item) {                    
+                    return item.url == ice.url;
+                })
+            },
         };
         
         return viewModel;
@@ -97,7 +164,7 @@ var logger = global.applogger;
                     this.debugs(debuglist);
                 }     
                 catch (err) {
-                    logger.error("add_message error %j", err);
+                    streemio.logger.error("add_message error %j", err);
                 }
             }
         };
@@ -141,7 +208,7 @@ var logger = global.applogger;
                                 }
                                 
                                 if (!ecdh_public_key || !ecdh_private_key) {
-                                    logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
+                                    streemio.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
                                     return;
                                 }
                                 
@@ -154,16 +221,16 @@ var logger = global.applogger;
                                 }
                             }
                             catch (e) {
-                                logger.error("Get sender data from DB error %j", e);
+                                streemio.logger.error("Get sender data from DB error %j", e);
                             }
                         },
                         function (err) {
-                            logger.error("Get sender data from DB error %j", err);
+                            streemio.logger.error("Get sender data from DB error %j", err);
                         }                        
                     );
                 }     
                 catch (err) {
-                    logger.error("add_message error %j", err);
+                    streemio.logger.error("add_message error %j", err);
                 }
             }
         };
@@ -359,13 +426,13 @@ var logger = global.applogger;
                 
                 try {
                     streemio.util.fileHash(file.path, function (hash1) {
-                        logger.debug("file hash: " + hash1);
+                        streemio.logger.debug("file hash: " + hash1);
                         // ask the contact to accept the file
                         file.hash = hash1;
                         streemio.PeerNet.initfile(viewModel.contact, file, true, 20000)
                         .then(
                             function (isaccepted) {
-                                logger.debug("File transfer init result: " + isaccepted);
+                                streemio.logger.debug("File transfer init result: " + isaccepted);
                                 if (isaccepted == true) {
                                     var options = {
                                         contact: viewModel.contact,
@@ -393,7 +460,7 @@ var logger = global.applogger;
                                     viewModel.onInitEnd();
                                 }
                                 viewModel.isinprogress(false);
-                                logger.error("Error in starting file transfer: %j", err);
+                                streemio.logger.error("Error in starting file transfer: %j", err);
                                 streemio.notify.error("Error in starting file transfer");
                             }
                         )
@@ -404,7 +471,7 @@ var logger = global.applogger;
                     if (viewModel.onInitEnd) {
                         viewModel.onInitEnd();
                     }
-                    logger.error("Error in sending file: %j", err);
+                    streemio.logger.error("Error in sending file: %j", err);
                     streemio.notify.error_popup("Error in sending file: %j", err);
                 }
             }
@@ -647,7 +714,7 @@ var logger = global.applogger;
             
             dispose: function () {
                 try {
-                    logger.debug("MediaCallViewModel dispose");
+                    streemio.logger.debug("MediaCallViewModel dispose");
                     streemio.MediaCall.hangup();
                     if (!viewModel.peerhangup) {
                         streemio.PeerNet.hangup_call(viewModel.contact);
@@ -728,7 +795,7 @@ var logger = global.applogger;
                 )
                 .then(
                     function (isaccepted) {
-                        logger.debug("Call accepted: " + isaccepted);
+                        streemio.logger.debug("Call accepted: " + isaccepted);
                         if (isaccepted == true) {
                             var uioptions = {
                                 contact: viewModel.contact,
@@ -745,7 +812,7 @@ var logger = global.applogger;
                         }
                     },
                     function (err) {
-                        logger.error("Error in starting video call: %j", err);
+                        streemio.logger.error("Error in starting video call: %j", err);
                         streemio.notify.error("Error in starting video call");
                     }
                 );
@@ -770,7 +837,7 @@ var logger = global.applogger;
                         events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
                     },
                     function (err) {
-                        logger.error("Error in creating peer session: %j", err);
+                        streemio.logger.error("Error in creating peer session: %j", err);
                         // still open the view and indicate the contact is offline
                         var options = {
                             contact : viewModel.contact,
@@ -796,7 +863,7 @@ var logger = global.applogger;
                         streemio.UI.showSendFile(viewModel.contact);
                     },
                     function (err) {
-                        logger.error("Error in starting file transfer: %j", err);
+                        streemio.logger.error("Error in starting file transfer: %j", err);
                         streemio.notify.error("Error in starting file transfer");
                     }
                 );
@@ -809,7 +876,7 @@ var logger = global.applogger;
                         streemio.notify.success("Secure session has been created with " + viewModel.contact.name);
                     },
                     function (err) {
-                        logger.error("Error in creating peer session: %j", err);
+                        streemio.logger.error("Error in creating peer session: %j", err);
                         streemio.notify.error("Error in creating peer session");
                     });
             },
@@ -932,7 +999,7 @@ var logger = global.applogger;
                     }
                 }
                 catch (err) {
-                    logger.error("contact onTextMessage error %j", err);
+                    streemio.logger.error("contact onTextMessage error %j", err);
                 }
             },
             
@@ -954,7 +1021,7 @@ var logger = global.applogger;
                     }
                 }
                 catch (err) {
-                    logger.error("contact onFileReceive error %j", err);
+                    streemio.logger.error("contact onFileReceive error %j", err);
                 }
             },
             
@@ -976,7 +1043,7 @@ var logger = global.applogger;
                     }
                 }
                 catch (err) {
-                    logger.error("contact itemAction error %j", err);
+                    streemio.logger.error("contact itemAction error %j", err);
                 }
             },
             
@@ -1089,7 +1156,7 @@ var logger = global.applogger;
 
                 }
                 catch (err) {
-                    logger.error("contact search error %j", err)
+                    streemio.logger.error("contact search error %j", err)
                 }
             },
             
@@ -1767,11 +1834,12 @@ var logger = global.applogger;
                 }
             }
             catch (err) {
-                logger.error("events.on(events.TYPES.ONAPPNAVIGATE error %j", err);
+                streemio.logger.error("events.on(events.TYPES.ONAPPNAVIGATE error %j", err);
             }
         });
         
         return viewModel;
     }
 
-})($, ko, global.appevents, global.appconfig);
+})($, ko, global.appevents, streemio.config);
+

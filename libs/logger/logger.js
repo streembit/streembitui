@@ -3,8 +3,6 @@ var fs = require('fs');
 var winston = require('winston');
 var util = require('util');
 
-var config = global.appconfig;
-
 var DevConsole = winston.transports.DevConsole = function (options) {
     this.name = 'DevConsole';
     this.level = options.level || 'debug';
@@ -65,6 +63,12 @@ function log_error(err, param) {
 
 function level_log(level, msg, val1, val2, val3, val4) {
     try {
+        
+        if (!logger.log) {
+            console.log(msg);
+            return;   
+        }
+
         if (msg) {
             if (val1 != undefined && val2 != undefined && val3 != undefined && val4 != undefined) {
                 var dmsg = util.format(msg, val1, val2, val3, val4);
@@ -102,7 +106,6 @@ function log_info(msg, val1, val2, val3, val4) {
 function log_debug(msg, val1, val2, val3, val4) {
     level_log("debug", msg, val1, val2, val3, val4);
 }
-
 
 exports.init = function (loglevel, logpath, excpath, webmode) {
     
@@ -204,7 +207,7 @@ function init_log(loglevel, logdir, callback) {
         logspath = path.join(wdir, logsdir);    
     }
 
-    console.log("logs dir: %s", logspath);
+    console.log("logger.init logs directory: %s", logspath);
     // set the global logs path
     global.logspath = logspath;
     
@@ -227,9 +230,9 @@ function init_log(loglevel, logdir, callback) {
                         console.log("Error in creating logs directory: " + err.message ? err.message : err);
                     }
                 }
-                else {                    
-                    config_log(level, logfilePath, exceptionFileLog );
-                    log_info("log is initialized");
+                else {
+                    config_log(level, logfilePath, exceptionFileLog);
+
                     if (callback) {
                         callback();
                     }
@@ -237,22 +240,29 @@ function init_log(loglevel, logdir, callback) {
             });
         }
         else {
-            console.log("Logs directory " + logspath + " exists");
+            console.log("logs directory " + logspath + " exists");
             var tmpfilename = "/streemio_" + Date.now() + ".log";
             var newfile = path.join(logspath, tmpfilename);
             console.log("newfile: %s", newfile);
             fs.rename(logfilePath, newfile, function (err) {
                 if (err) {
                     if (err.code && err.code != "ENOENT") {
-                        return console.log("fs.rename error: %j", err);
+                        if (callback) {
+                            callback("Error in creating renaming log file: " + err.message ? err.message : err);
+                        }
+                        else {
+                            return console.log("fs.rename error: %j", err);
+                        }
                     }
                     // continue if the streemio.log does not exists, that is not an error
                 }
+
                 if (!err) {
                     console.log("log file renamed to: %s", newfile);
                 }
+
                 config_log(level, logfilePath, exceptionFileLog);
-                log_info("log is initialized");
+
                 if (callback) {
                     callback();
                 }
@@ -261,7 +271,16 @@ function init_log(loglevel, logdir, callback) {
     });
 }
 
+function set_level(newlevel) {
+    if (logger && logger.transports) {
+        for (var i = 0; i < logger.transports.length; i++) {
+            logger.transports[i].level = newlevel; 
+        }
+    }
+}
+
 exports.error = log_error;
 exports.info = log_info;
 exports.debug = log_debug;
 exports.init = init_log;
+exports.setlevel = set_level;

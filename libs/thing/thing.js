@@ -1,4 +1,4 @@
-﻿var config = global.appconfig;
+﻿var config = streemio.config;
 var logger = require('../../logger');
 var thingevents = require('../events/thingevents');
 //var restify = require('restify');

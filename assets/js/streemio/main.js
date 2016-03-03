@@ -3,11 +3,8 @@
 
 var streemio = streemio || {};
 
-var appconfig = global.appconfig;
 var gui = global.appgui;
-var logger = global.applogger;
 
-logger.info("Start Streemio at %s", new Date().toUTCString());
 if (gui && gui.App && gui.App.dataPath) {
     logger.info("Data path is " + gui.App.dataPath);
 }
@@ -40,11 +37,10 @@ streemio.util = (function (util) {
             callback();
         }
         else {
-            var config = global.appconfig;
             var datapath = null;
             var datadir = 'data';
             
-            if (config && config.appexec && config.appexec == 'dev') {
+            if (streemio.config.isdevmode == true) {
                 var wdir = process.cwd();
                 datapath = path.join(wdir, datadir);
             }
@@ -727,7 +723,7 @@ streemio.UI = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.UI || {}, global.applogger, global.appevents));
+}(streemio.UI || {}, streemio.logger, global.appevents));
 
 
 streemio.notify = (function (module) {
@@ -1425,19 +1421,22 @@ streemio.Session = (function (module, logger, events, config) {
         return module.textmessages[contact];
     }
     
-    module.update_settings = function (newsettings, callback) {
-        if (!newsettings || !newsettings.data) {
+    module.update_settings = function (data, callback) {
+        if (!data) {
             return callback("invalid settings, the data field must exist.");                
         }
 
-        if (!newsettings.key || newsettings.key != "settings") {
-            newsettings.key = "settings";
-        }
+        var newsettings = {
+            key: "settings", 
+            data: data
+        }; 
 
         streemio.DB.update(streemio.DB.SETTINGSDB, newsettings).then(
             function () {
                 logger.debug("added database settings");
                 module.settings = newsettings;
+                // assign the new settings to the global config
+                streemio.config.set_config(module.settings.data);
                 callback(null);
             },
             function (err) {
@@ -1462,50 +1461,7 @@ streemio.Session = (function (module, logger, events, config) {
             }
         );
     }
-    
-    module.get_wsfallback = function () {
-        if (!module.settings || !module.settings.data) {
-            streemio.notify.error("Invalid Streemio session settings.");
-            return;
-        }
 
-        var iswsfallback = !module.settings.data.wsfallback ? false : true;
-        return iswsfallback;
-    }
-    
-    module.get_bootseeds = function () {
-        if (!module.settings || !module.settings.data) {
-            streemio.notify.error("Invalid Streemio session settings.");
-            return;
-        }
-        
-        if (!module.settings.data.bootseeds || !module.settings.data.bootseeds.length) {
-            module.settings.data.bootseeds = [seed.streemio.org, seed.streemio.net, seed.streemio.biz, seed.streemo.org, seed.streemo.net, seed.streemo.info, seed.streemo.uk];
-        }
-
-        return module.settings.data.bootseeds;
-    }
-    
-    module.get_tcpport = function () {
-        if (!module.settings || !module.settings.data) {
-            streemio.notify.error("Invalid Streemio session settings.");
-            return;
-        }
-        
-        var tcpport = !module.settings.data.tcpport ? streemio.DEFS.APP_PORT : module.settings.data.tcpport;
-        return tcpport;
-    }
-    
-    module.get_transport = function () {
-        if (!module.settings || !module.settings.data) {
-            streemio.notify.error("Invalid Streemio session settings.");
-            return;
-        }
-        
-        var transport = !module.settings.data.transport ? streemio.DEFS.APP_PORT : module.settings.data.transport;
-        return transport;
-    }
-    
     module.get_pending_contact = function (account) {
         var pending_contact = null;
         try {
@@ -1614,7 +1570,7 @@ streemio.Session = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.Session || {}, global.applogger, global.appevents));
+}(streemio.Session || {}, streemio.logger, global.appevents, streemio.config));
 
 
 streemio.Contacts = (function (module, logger, events, config) {
@@ -2012,7 +1968,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.Contacts || {}, global.applogger, global.appevents));
+}(streemio.Contacts || {}, streemio.logger, global.appevents, streemio.config));
 
 
 streemio.Main = (function (module, logger, events, config) {
@@ -2305,10 +2261,10 @@ streemio.Main = (function (module, logger, events, config) {
     
     module.start = function (ui_callback) {
 
-        async.waterfall([
+        async.waterfall([  
             function (callback) {
                 // initialize the database
-                appboot_msg_handler("Initializing the database");
+                console.log("Initializing the database");
                 streemio.DB.init().then(
                     function () {
                         logger.debug("database initialized: " + streemio.DB.is_initialized);
@@ -2324,30 +2280,16 @@ streemio.Main = (function (module, logger, events, config) {
                 //  get the settings db
                 streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
                     function (result) {
-                        logger.debug("database result populated");
-                        callback(null);
+                        console.log("settings database populated");
                         if (result && result.data) {
                             streemio.Session.settings = result;
+                            streemio.config.data = result.data;
                             callback();
                         }
                         else {
                             //  add records to the database
-                            logger.debug("add database settings");
-                            
-                            var settings = {
-                                key: "settings", 
-                                data: {
-                                    wsfallback: !config.wsfallback ? false : true, 
-                                    tcpport: (config.p2p && config.p2p.settings && config.p2p.settings.port) ?  config.p2p.settings.port : streemio.DEFS.APP_PORT,
-                                    wsport: (config.p2p && config.p2p.settings && config.p2p.settings.wsport) ?  config.p2p.settings.wsport : streemio.DEFS.WS_PORT,
-                                    transport: (config.p2p && config.p2p.settings && config.p2p.settings.transport) ?  config.p2p.settings.transport : streemio.DEFS.TRANSPORT_TCP,
-                                    bootseeds: config.bootseeds || [seed.streemio.org, seed.streemio.net, seed.streemio.biz, seed.streemo.org, seed.streemo.net, seed.streemo.info, seed.streemo.uk],
-                                    pending_contacts: []
-                                }
-                            };
-                            
-                            streemio.Session.update_settings(settings, callback);
-                            //
+                            logger.debug("update settings database");                                                
+                            streemio.Session.update_settings(streemio.config.data, callback);
                         }
                     },
                     function (err) {
@@ -2355,10 +2297,33 @@ streemio.Main = (function (module, logger, events, config) {
                         callback(err);
                     }
                 );
-            },      
+            },     
+            function (callback) {
+                // set the log level
+                console.log("Creating logger");
+                
+                var logspath = null;
+                if (config.isdevmode == true) {
+                    var wdir = process.cwd();
+                    logspath = path.join(wdir, 'logs');
+                }
+                else {
+                    var nwPath = process.execPath;
+                    var nwDir = path.dirname(nwPath);
+                    logspath = path.join(nwDir, 'logs');
+                }
+                
+                var level = streemio.config.loglevel;
+                console.log('log level: ' + level);
+                console.log('log path: ' + logspath);
+
+                streemio.logger.init(level, logspath, function (err) {
+                    callback(err);
+                });
+            },
             function (callback) {
                 // make sure the data directory exists
-                appboot_msg_handler("Creating data directory");
+                logger.debug("Creating data directory");
                 streemio.util.dataDir(callback);
             }
         ], 
@@ -2379,6 +2344,7 @@ streemio.Main = (function (module, logger, events, config) {
             }
             
             if (ui_callback && typeof ui_callback == 'function') {
+                logger.debug("main start is comepleted at %s", new Date().toUTCString())
                 ui_callback();
             }
             //
@@ -2402,7 +2368,7 @@ streemio.Main = (function (module, logger, events, config) {
             var natUpnp = require('./libs/upnp/nat-upnp');
             var client = natUpnp.createClient(logger);
             
-            var port = config.p2p.settings.port;
+            var port = config.tcpport;
             client.portMapping(
                 {
                     public: port,
@@ -2461,7 +2427,7 @@ streemio.Main = (function (module, logger, events, config) {
                     function () {
                         logger.debug("PeerNet is initialized");
                         module.seeds = bootseeds.seeds;
-                        module.p2p_port = config.p2p.settings.port;
+                        module.p2p_port = config.tcpport;
                         callback(null);
                     },
                     function (err) {
@@ -2547,13 +2513,23 @@ streemio.Main = (function (module, logger, events, config) {
 
         module.network_init(seeds, skip_publish, function (err) {            
             if (err) {
-                if (!retry_with_websocket && config.transport == streemio.DEFS.TRANSPORT_TCP && streemio.Session.get_wsfallback() == true) {
+                if (!retry_with_websocket && config.transport == streemio.DEFS.TRANSPORT_TCP && config.wsfallback == true) {
                     //  set the config transport to WS                    
                     config.transport = streemio.DEFS.TRANSPORT_WS;
                     //  the TCP connection failed, ry with websocket fallback
                     retry_with_websocket = true;
                     module.network_init(seeds, skip_publish, function (ret_err) {
                         if (ret_err) {
+                            if (retry_with_websocket) {
+                                retry_with_websocket = false;
+                                // set back the transport
+                                config.transport = streemio.DEFS.TRANSPORT_TCP;
+                            }
+                            
+                            $(".appboot-screen").hide();
+                            $(".streemio-screen").hide();
+                            $(".app-select-screen").show();
+
                             return bootbox.alert(ret_err);
                         }
                         else {
@@ -2564,6 +2540,16 @@ streemio.Main = (function (module, logger, events, config) {
                     });
                 }
                 else {
+                    if (retry_with_websocket) {
+                        retry_with_websocket = false;
+                        // set back the transport
+                        config.transport = streemio.DEFS.TRANSPORT_TCP;
+                    }
+                    
+                    $(".appboot-screen").hide();
+                    $(".streemio-screen").hide();
+                    $(".app-select-screen").show();
+
                     return bootbox.alert(err);
                 }
             }
@@ -2688,7 +2674,7 @@ streemio.Main = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.Main || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.Main || {}, streemio.logger, global.appevents, streemio.config));
 
 
 /*

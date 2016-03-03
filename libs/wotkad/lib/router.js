@@ -26,7 +26,7 @@ var constants = require('./constants');
 var utils = require('./utils');
 var Message = require('./message');
 var Contact = require('./contact');
-var logger = global.applogger;
+
 
 /**
 * Represents a router for finding nodes and values
@@ -112,25 +112,18 @@ Router.prototype._queryContact = function(contactInfo, callback) {
     
     if (contact.address == address && contact.port == port) {
         try {
-            logger.debug("removing contact with own address and port nodeID: %s", contact.nodeID);
             self._removeFromShortList(contact.nodeID);
         }
         catch (e) { }
         return callback();
     }
     
-    //logger.debug("rpc.send " + contact.address + ":" + contact.port + " message: %j", this.message);
-
     this.node._rpc.send(contact, this.message, function(err, params) {
         if (err) {
-            var msg = util.format("_rpc.send error %s ; contact %j", (err.message ? err.message : err), contact);
-            logger.error(msg);
             self._removeFromShortList(contact.nodeID);
             return callback();
         }
         
-        //logger.debug("rpc.send result: %j", params);
-
         self._handleFindResult(params, contact, callback);
     });
 };

@@ -12,7 +12,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     module.options = {};
     module.is_outgoing_call = false;
     module.connection = 0;
-    module.ice_servers = config.iceservers;
+    module.ice_servers = config.ice_resolvers;
     
     var localVideo;
     var contactVidElement;
@@ -414,7 +414,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     
     return module;
 
-}(streemio.MediaCall || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.MediaCall || {}, streemio.logger, global.appevents, streemio.config));
 
 streemio.FileTransfer = (function (module, logger, app_events, config) {
     
@@ -847,6 +847,6 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
     
     return module;
 
-}(streemio.FileTransfer || {}, global.applogger, global.appevents, global.appconfig));
+}(streemio.FileTransfer || {}, streemio.logger, global.appevents, streemio.config));
 
 
