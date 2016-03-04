@@ -733,23 +733,30 @@ streemio.notify = (function (module) {
     module.taskbar_timer = 0;
     
     function get_err_msg(err, param) {
+        
         var msg = err;
         if (param) {
             if (typeof err == 'string') {
-                if (err.indexOf("%j") > -1) {
-                    //  the Error object is not formated well from the util library
-                    //  send only the message field if that is an Eror object
-                    if (param.message && (typeof param == "Error" || typeof param == "error" || typeof param == "object" || typeof param == "Object")) {
-                        err = err.replace("%j", "%s");
-                        msg = util.format(err, param.message);
-                    }
-                    else if (typeof param == 'string') {
-                        err = err.replace("%j", "%s");
-                        msg = util.format(err, param);
-                    }
+                
+                if (err.indexOf("onPeerError") > -1 && param.code && param.code == "ETIMEDOUT") {
+                    msg = "Peer is not available. Error: " + (param.message || "message timed out");
                 }
                 else {
-                    msg = util.format(err, param);
+                    if (err.indexOf("%j") > -1) {
+                        //  the Error object is not formated well from the util library
+                        //  send only the message field if that is an Eror object
+                        if (param.message && (typeof param == "Error" || typeof param == "error" || typeof param == "object" || typeof param == "Object")) {
+                            err = err.replace("%j", "%s");
+                            msg = util.format(err, param.message);
+                        }
+                        else if (typeof param == 'string') {
+                            err = err.replace("%j", "%s");
+                            msg = util.format(err, param);
+                        }
+                    }
+                    else {
+                        msg = util.format(err, param);
+                    }
                 }
             }
             else {
@@ -2047,7 +2054,7 @@ streemio.Main = (function (module, logger, events, config) {
         var streemioMenu = new gui.Menu();
         
         streemioMenu.append(new gui.MenuItem({
-            label: 'Start screen',
+            label: 'Start Streemio',
             click: function () {
                 $(".appboot-screen").hide();
                 $(".streemio-screen").hide();
@@ -2175,7 +2182,7 @@ streemio.Main = (function (module, logger, events, config) {
         }));
         toolsMenu.append(new gui.MenuItem({ type: 'separator' }));
         toolsMenu.append(new gui.MenuItem({
-            label: 'Account security info',
+            label: 'Account/network info',
             click: function () {
                 if (!streemio.User.is_user_initialized) {
                     streemio.notify.error_popup("The account is not initialized");

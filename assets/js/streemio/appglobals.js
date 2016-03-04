@@ -38,6 +38,7 @@ streemio.DEFS = (function (module) {
         CMD_FILE_INIT: 'file_init',
         CMD_CONTACT_FILERCV: 'contact_filercv',
         CMD_ACCOUNT_INFO: "account_info",
+        CMD_CALL_PROGRESS: "callprogress",
         CMD_HELP: "help",
         
         ERR_CODE_SYSTEMERR: 0x1000,

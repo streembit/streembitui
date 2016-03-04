@@ -291,9 +291,9 @@
 <script type="text/html" id="streemio-view-userstart">
     <div id="user-start-container" class="user-start-view">
         <div style="width:460px;height:460px">
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6" data-bind="click: start_call">
-                <i class="fa fa-video-camera"></i>
-                <div class="flex-btnitem-text">Video/audio call</div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6;padding-top:20px;" data-bind="click: start_call">
+                <i class="fa fa-phone"></i>
+                <div class="flex-btnitem-text">Make a call</div>
             </div>
             <div class="flex-btnitem margin20 pull-left" style="background-color:#F9BF3B" data-bind="click: start_chat">
                 <i class="fa fa-commenting"></i>
@@ -303,7 +303,7 @@
                 <i class="glyphicon glyphicon-copy"></i>
                 <div class="flex-btnitem-text">Send file</div>
             </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#bf5050" data-bind="click: start_iotdevice">
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#dd7474;padding-top:24px;" data-bind="click: start_iotdevice">
                 <i class="fa fa-cogs" style="font-size:100px"></i>
                 <div class="flex-btnitem-text">Connect to IoT Device</div>
             </div>
@@ -320,6 +320,22 @@
     </script>
 </script>
 
+<script type="text/html" id="streemio-view-callprogress">
+    <div style="background:#000;height:100%;width:100%;display:flex;justify-content: center;align-items: center;">
+        <div style="width:600px;height:160px;margin-top:-160px;color:#fff;">
+            <div style="text-align:center">
+                <div style="font-size:28px;">Calling contact <span>zspardi</span></div>
+            </div>
+            <div style="position:relative">
+                <div style="font-size:160px;display:inline-block;position:absolute;left:0;color:#6ca4c4"><i class="fa fa-user"></i></div>
+                <div style="position:relative;display:inline-block;position:absolute;width:260px;top:110px;left:140px">
+                    <img src="assets/images/loading.gif" />
+                </div>
+                <div style="font-size:160px;margin-left:30px;display:inline-block;position:absolute;left:410px;color:#76c8b9"><i class="fa fa-user"></i></div>
+            </div>
+        </div>
+    </div>
+</script>
 
 <script type="text/html" id="contacts-template">
     <div class="contact-item" data-bind="click: $parent.itemSelect">
@@ -341,7 +357,6 @@
         <div style="clear:both"></div>
     </div>
 </script>
-
 
 <script type="text/html" id="recent-messages-template">
     <div data-bind="template: {name: template_name}">
@@ -501,75 +516,77 @@
 
 
 <script type="text/html" id="streemio-view-inituser">
-    <div id="user-container">
+    <div id="uiview-container">
 
-        <div class="user-container-panel">
+        <div class="uiview-container-panel">
 
             <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
                 <h4 data-bind="text: is_new_account() == true ? 'Create your Streemio user account' : 'Connect to Streemio network' "></h4>
             </div>
 
-            <div style="display:none" data-bind="visible: is_private_network">
+            <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
 
-                <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedHost">
-                    <label for="text">Private hub seed host:</label>
-                    <div style="font-size:11px">(IP address or domain name)</div>
-                    <div id="lblSeedHostErrorContainer" class="error-label">
-                        <span id="lblSeedHostError"></span>
+                <div style="display:none" data-bind="visible: is_private_network">
+
+                    <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedHost">
+                        <label for="text">Private hub seed host:</label>
+                        <div style="font-size:11px">(IP address or domain name)</div>
+                        <div id="lblSeedHostErrorContainer" class="error-label">
+                            <span id="lblSeedHostError"></span>
+                        </div>
+                        <input type="text" class="form-control" data-bind="value: private_net_host" style="max-width:300px" id="txtPrivateNetHost" maxlength="40" />
                     </div>
-                    <input type="text" class="form-control" data-bind="value: private_net_host" style="max-width:300px" id="txtPrivateNetHost" maxlength="40" />
-                </div>
 
-                <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedPort">
-                    <label for="text">Private hub seed port:</label>
-                    <div id="lblSeedPortErrorContainer" class="error-label">
-                        <span id="lblSeedPortError"></span>
+                    <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedPort">
+                        <label for="text">Private hub seed port:</label>
+                        <div id="lblSeedPortErrorContainer" class="error-label">
+                            <span id="lblSeedPortError"></span>
+                        </div>
+                        <input type="text" class="form-control" data-bind="value: private_net_port" style="max-width:90px" id="txtPrivateNetPort" maxlength="5" />
                     </div>
-                    <input type="text" class="form-control" data-bind="value: private_net_port" style="max-width:90px" id="txtPrivateNetPort" maxlength="5" />
-                </div>
 
-                <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedAccount">
-                    <label for="text">Private hub seed account:</label>
-                    <div id="lblSeedAccountErrorContainer" class="error-label">
-                        <span id="lblSeedAccountError"></span>
+                    <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedAccount">
+                        <label for="text">Private hub seed account:</label>
+                        <div id="lblSeedAccountErrorContainer" class="error-label">
+                            <span id="lblSeedAccountError"></span>
+                        </div>
+                        <input type="text" class="form-control" data-bind="value: private_net_account" style="max-width:350px" id="txtPrivateNetAccount" maxlength="32" />
                     </div>
-                    <input type="text" class="form-control" data-bind="value: private_net_account" style="max-width:350px" id="txtPrivateNetAccount" maxlength="32" />
+
+                </div>
+
+                <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
+                    <label for="text">Streemio account:</label>
+                    <div id="lblAccountErrorContainer" class="error-label">
+                        <span id="lblAccountError"></span>
+                    </div>
+                    <input type="text" class="form-control" data-bind="value: account, visible: is_new_account() == true || is_account_exists() == false" style="max-width:300px" id="txtAccount" maxlength="20" />
+                    <div data-bind="visible: is_new_account() == false && is_account_exists() == true">
+                        <select class="form-control" data-bind="options: accounts, optionsText: 'account', value: selected_account, optionsCaption: 'Choose...'" style="max-width:300px"></select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
+                    <label for="text">Private key password:</label>
+                    <div id="lblPwdErrorContainer" class="error-label">
+                        <span id="lblPwdError"></span>
+                    </div>
+                    <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
+                </div>
+
+                <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
+                    <label for="text">Confirm private key password:</label>
+                    <div id="lblPwdConfErrCont" class="error-label">
+                        <span id="lblPwdConfError"></span>
+                    </div>
+                    <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
+                </div>
+
+                <div style="margin-top:30px">
+                    <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px">Connect to network</button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
                 </div>
 
             </div>
-
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
-                <label for="text">Streemio account:</label>
-                <div id="lblAccountErrorContainer" class="error-label">
-                    <span id="lblAccountError"></span>
-                </div>
-                <input type="text" class="form-control" data-bind="value: account, visible: is_new_account() == true || is_account_exists() == false" style="max-width:300px" id="txtAccount" maxlength="20" />
-                <div data-bind="visible: is_new_account() == false && is_account_exists() == true">
-                    <select class="form-control" data-bind="options: accounts, optionsText: 'account', value: selected_account, optionsCaption: 'Choose...'" style="max-width:300px"></select>
-                </div>
-            </div>
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
-                <label for="text">Private key password:</label>
-                <div id="lblPwdErrorContainer" class="error-label">
-                    <span id="lblPwdError"></span>
-                </div>
-                <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
-            </div>
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
-                <label for="text">Confirm private key password:</label>
-                <div id="lblPwdConfErrCont" class="error-label">
-                    <span id="lblPwdConfError"></span>
-                </div>
-                <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
-            </div>
-
-            <div style="margin-top:30px">
-                <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px">Connect to network</button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
-            </div>
-
         </div>
 
     </div>
@@ -581,7 +598,7 @@
         if (uioptions) {
             is_new_account = uioptions.newuser
         }
-        var user_div = document.getElementById('user-container');
+        var user_div = document.getElementById('uiview-container');
         var vm = new streemio.vms.UserViewModel(is_new_account, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount);
         vm.init(function () {
             ko.applyBindings(vm, user_div);
@@ -701,9 +718,9 @@
 
 
 <script type="text/html" id="streemio-view-changekey">
-    <div id="user-container">
+    <div id="uiview-container">
 
-        <div class="user-container-panel">
+        <div class="uiview-container-panel">
 
             <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
                 <h4>Update Private Key Passphrase</h4>
@@ -744,7 +761,7 @@
         if (uioptions) {
             is_new_account = uioptions.newuser
         }
-        var user_div = document.getElementById('user-container');
+        var user_div = document.getElementById('uiview-container');
         var vm = new streemio.vms.UpdateKeyViewModel(validatePassword, validatePasswordConfirm);
         vm.init(function () {
             ko.applyBindings(vm, user_div);
@@ -913,9 +930,9 @@
 </script>
 
 <script type="text/html" id="streemio-view-accountinfo">
-    <div id="user-container">
+    <div id="uiview-container">
 
-        <div class="user-container-panel" style="min-width:800px;">
+        <div class="uiview-container-panel" style="min-width:800px;">
 
             <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
                 <h4>Account/Network info</h4>
@@ -968,7 +985,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var user_div = document.getElementById('user-container');
+            var user_div = document.getElementById('uiview-container');
             var vm = new streemio.vms.AccountInfoViewModel();
             ko.applyBindings(vm, user_div);
         });
@@ -1212,9 +1229,9 @@
 </script>
 
 <script type="text/html" id="streemio-view-settings">
-    <div id="settings-container">
+    <div id="uiview-container">
 
-        <div class="settings-container-panel">
+        <div class="uiview-container-panel">
             <div style="text-align:left;border-bottom:3px solid #ddd;padding-bottom:5px">
                 <h4>Streemio settings</h4>
             </div>
@@ -1358,7 +1375,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {            
-            var settings_div = document.getElementById('settings-container');
+            var settings_div = document.getElementById('uiview-container');
             var settings_vm = new streemio.vms.SettingsViewModel();
             settings_vm.init(function () {
                 ko.applyBindings(settings_vm, settings_div);

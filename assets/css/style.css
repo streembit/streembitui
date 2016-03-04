@@ -801,7 +801,7 @@ span.awesomeBlue i.addbtn{
     position:relative;
     opacity:0.9;
     border:1px solid #aaa;
-    box-shadow: 2px 2px 3px #bbb;
+    box-shadow: 4px 4px 5px #bbb;
 }
 
 .flex-btnitem:hover{
@@ -827,23 +827,22 @@ span.awesomeBlue i.addbtn{
     text-align:center;
 }
 
-#user-container{
+#uiview-container{
     padding-top:30px; 
     display: flex; 
     justify-content: center;
 }
 
-.user-container-panel{
+.uiview-container-panel{
     display:inline-block;
     min-width:750px;
     padding:10px 20px 20px 20px; 
     border:3px solid #ddd; 
     border-radius:5px;
-    background-color:#fdfdfd;
-    background:linear-gradient(to bottom, #eee 0%, #fdfdfd 100%);
+    background:linear-gradient(to bottom, #f2f2f2 0%, #fdfdfd 100%);
 }
 
-.user-container-panel table td{
+.uiview-container-panel table td{
     border-bottom: 1px solid #ccc;
     padding-top:6px;
     padding-bottom:8px;
@@ -864,24 +863,6 @@ span.awesomeBlue i.addbtn{
   border-color: #7e1c18;
 }
 
-
-#settings-container{
-    padding-top:30px; 
-    display: flex; 
-    justify-content: center;
-}
-
-.settings-container-panel{
-    display:inline-block;
-    min-width:750px;
-    padding:10px 20px 20px 20px; 
-    border:3px solid #ddd; 
-    border-radius:5px;
-    background-color:#fdfdfd;
-    background:linear-gradient(to bottom, #eee 0%, #fdfdfd 100%);
-}
-
-
 .form-section-panel{
     margin-top:10px;
     border-bottom:1px solid #eee;
@@ -901,7 +882,7 @@ span.awesomeBlue i.addbtn{
     align-items: center;
     width:100%;
     height:100%;
-    background:linear-gradient(to bottom, #e0eeff 0%, #ffffff 100%);
+    background:linear-gradient(to bottom, #ecf1f8 0%, #ffffff 100%);
 }
 
 .margin20{

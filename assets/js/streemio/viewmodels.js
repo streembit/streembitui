@@ -9,6 +9,52 @@ var EccKey = require('./libs/crypto/EccKey');
 
 (function ($, ko, events, config) {
     
+    function call_contact(call_type, contact) {
+        
+
+
+        streemio.PeerNet.ping(contact, true, 5000)
+        .then(
+            function () {
+                return streemio.PeerNet.get_contact_session(contact);
+            },
+            function (err) {
+                throw new Error(err);
+            }
+        )
+        .then(
+            function () {
+                return streemio.PeerNet.call(contact, call_type, true);
+            },
+            function (err) {
+                throw new Error(err);
+            }
+        )
+        .then(
+            function (isaccepted) {
+                streemio.logger.debug("Call accepted: " + isaccepted);
+                if (isaccepted == true) {
+                    var uioptions = {
+                        contact: contact,
+                        calltype: call_type,
+                        iscaller: true
+                    };
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_VIDEO_CALL, null, uioptions);
+                }
+                else if (isaccepted == false) {
+                    streemio.notify.info_panel("Contact " + contact.name + " declined the call");
+                }
+                else {
+                    streemio.notify.error("Unable to establish call with contact " + contact.name);
+                }
+            },
+            function (err) {
+                streemio.logger.error("Error in starting video call: %j", err);
+                streemio.notify.error("Error in starting video call");
+            }
+        );
+    }
+    
     streemio.vms.UserUIStartViewModel = function () {
         
         function show_contacts(callback) {
@@ -81,16 +127,20 @@ var EccKey = require('./libs/crypto/EccKey');
             selectedfunc: "",
 
             start_call: function () {
-                show_contacts(function (name) {
-                    var contact = streemio.Contacts.get_contact(name);
-                    if (contact) {
-                        
-                    }
-                });
+                
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CALL_PROGRESS);
+
+                //show_contacts(function (name) {                    
+                //    var contact = streemio.Contacts.get_contact(name);
+                //    if (contact) {                        
+                //        call_contact(streemio.DEFS.CALLTYPE_AUDIO, contact);
+                //    }
+                //});
             },
             
             start_chat: function () {
                 
+
             },
             
             start_filesend: function () {
@@ -105,7 +155,6 @@ var EccKey = require('./libs/crypto/EccKey');
         return viewModel;
     }
 
-    
     streemio.vms.SettingsViewModel = function () {
         var viewModel = {
             iswsfallback: ko.observable(false),
@@ -1849,6 +1898,12 @@ var EccKey = require('./libs/crypto/EccKey');
                         resetTemplate();
                         resetView();
                         showView(streemio.DEFS.CMD_USERSTART);
+                        break;
+
+                    case streemio.DEFS.CMD_CALL_PROGRESS:
+                        resetTemplate();
+                        resetView();
+                        showView(streemio.DEFS.CMD_CALL_PROGRESS);
                         break;
 
                     case streemio.DEFS.CMD_CONTACT_SELECT:
