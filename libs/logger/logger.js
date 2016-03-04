@@ -71,23 +71,27 @@ function level_log(level, msg, val1, val2, val3, val4) {
 
         if (msg) {
             if (val1 != undefined && val2 != undefined && val3 != undefined && val4 != undefined) {
-                var dmsg = util.format(msg, val1, val2, val3, val4);
-                logger.log(level, dmsg);
+                msg = util.format(msg, val1, val2, val3, val4);
+                logger.log(level, msg);
             }
             else if (val1 != undefined && val2 != undefined && val3 != undefined) {
-                var dmsg = util.format(msg, val1, val2, val3);
-                logger.log(level, dmsg);
+                msg = util.format(msg, val1, val2, val3);
+                logger.log(level, msg);
             }
             else if (val1 != undefined && val2 != undefined) {
-                var dmsg = util.format(msg, val1, val2);
-                logger.log(level, dmsg);
+                msg = util.format(msg, val1, val2);
+                logger.log(level, msg);
             }
             else if (val1 != undefined) {
-                var dmsg = util.format(msg, val1);
-                logger.log(level, dmsg);
+                msg = util.format(msg, val1);
+                logger.log(level, msg);
             }
             else {
                 logger.log(level, msg);
+            }
+
+            if (logger.taskbar_info_proc && level == "info") {
+                logger.taskbar_info_proc(msg);
             }
         }
     }
@@ -153,7 +157,7 @@ exports.init = function (loglevel, logpath, excpath, webmode) {
     });
 }
 
-function config_log(loglevel, logpath, excpath, webmode) {
+function config_log(loglevel, logpath, excpath, taskbar_infofn) {
     var transports = [        
         new winston.transports.Console({
             level: loglevel,
@@ -171,13 +175,6 @@ function config_log(loglevel, logpath, excpath, webmode) {
         })
     ];
     
-    if (webmode) {
-        transports.push(
-            new winston.transports.DevConsole({
-                level: loglevel
-            })
-        );
-    }
     
     logger = new (winston.Logger)({
         exitOnError: false,
@@ -194,9 +191,13 @@ function config_log(loglevel, logpath, excpath, webmode) {
             })
         ]
     });
+
+    if (taskbar_infofn) {
+        logger.taskbar_info_proc = taskbar_infofn;
+    }
 }
 
-function init_log(loglevel, logdir, callback) {
+function init_log(loglevel, logdir, taskbar_infofn, callback) {
     
     var logspath = null;
     if (logdir) {
@@ -231,7 +232,7 @@ function init_log(loglevel, logdir, callback) {
                     }
                 }
                 else {
-                    config_log(level, logfilePath, exceptionFileLog);
+                    config_log(level, logfilePath, exceptionFileLog, taskbar_infofn);
 
                     if (callback) {
                         callback();
@@ -261,7 +262,7 @@ function init_log(loglevel, logdir, callback) {
                     console.log("log file renamed to: %s", newfile);
                 }
 
-                config_log(level, logfilePath, exceptionFileLog);
+                config_log(level, logfilePath, exceptionFileLog, taskbar_infofn);
 
                 if (callback) {
                     callback();

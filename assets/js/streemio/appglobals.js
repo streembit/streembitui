@@ -24,6 +24,7 @@ streemio.DEFS = (function (module) {
         CMD_APP_RESTOREACCOUNT: "app_restore_account",
         CMD_APP_INITACCOUNT: "app_init_account",
         
+        CMD_USERSTART: "userstart",
         CMD_SETTINGS: 'settings',
         CMD_CONTACT_SELECT: 'contact_select',
         CMD_VIDEO_CALL: 'video_call',

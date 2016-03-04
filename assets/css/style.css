@@ -7,7 +7,7 @@
 html,body{
     height:100%;
     background-color:#ffffff;
-    background:linear-gradient(to bottom, #ffffff 0%, #e9f4fc 100%);
+    /*background:linear-gradient(to bottom, #ffffff 0%, #fafbff 100%);*/
 }
 
 body {
@@ -15,7 +15,7 @@ body {
 }
 
 .app-select-screen{
-    background:linear-gradient(to bottom, #ffffff 0%, #e9f4fc 100%);
+    background:linear-gradient(to bottom, #e9f1fa 0%, #ffffff 100%);
     text-align:center;
     height:100%;
 }
@@ -56,10 +56,10 @@ body {
 #main-container{
     position: fixed;
     top: 1px;
-    bottom: 0;
+    bottom: 22px;
     left: 0;
     right:0;
-    padding-left:20px;
+    padding-left:0;
 }
 
 #view-container{
@@ -70,7 +70,7 @@ body {
 .contacts-tab{
     position: fixed;
     top: 1px;
-    bottom: 0;
+    bottom: 22px;
     left: 0;
     width:280px;
     z-index: 1000;
@@ -78,10 +78,32 @@ body {
     padding: 0;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f9feff;
+    background-color: #fff;
     border-right: 3px solid #eee;
     display:none;
 }
+
+.footer-container{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right:0;
+    height:21px;
+    background-color:#fff;
+    border-top:2px solid #f3f3f3;
+}
+
+.foot-textpanel{
+    font-size:11px;
+    font-weight:bold;
+    color:#666;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right:10px;
+    padding-top:3px;
+}
+
 
 .footer-info-panel{
     position:fixed;
@@ -814,10 +836,11 @@ span.awesomeBlue i.addbtn{
 .user-container-panel{
     display:inline-block;
     min-width:750px;
-    padding:20px; 
+    padding:10px 20px 20px 20px; 
     border:3px solid #ddd; 
     border-radius:5px;
-    background-color:#fbfbfb;
+    background-color:#fdfdfd;
+    background:linear-gradient(to bottom, #eee 0%, #fdfdfd 100%);
 }
 
 .user-container-panel table td{
@@ -851,10 +874,11 @@ span.awesomeBlue i.addbtn{
 .settings-container-panel{
     display:inline-block;
     min-width:750px;
-    padding:20px; 
+    padding:10px 20px 20px 20px; 
     border:3px solid #ddd; 
     border-radius:5px;
-    background-color:#fbfbfb;
+    background-color:#fdfdfd;
+    background:linear-gradient(to bottom, #eee 0%, #fdfdfd 100%);
 }
 
 
@@ -869,4 +893,37 @@ span.awesomeBlue i.addbtn{
     border:1px solid #ccc;
     border-top-width:0;
     background-color:#fff;
+}
+
+.user-start-view{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom, #e0eeff 0%, #ffffff 100%);
+}
+
+.margin20{
+    margin: 20px;
+}
+.contacts-dialog-container{
+    padding:10px 20px;
+    max-height:300px;
+    width:100%;
+    overflow-y: auto
+}
+
+.contacts-dialog-item{
+    background-color:#000;
+    border:1px solid #666;
+    padding:8px 15px;
+    border-radius:4px;
+    margin-bottom:7px;
+    box-shadow: 3px 3px 2px #999;
+}
+
+.contacts-dialog-item:hover{
+    background-color:#222;
+    border-color:#888;
 }

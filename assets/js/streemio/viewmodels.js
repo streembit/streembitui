@@ -9,6 +9,110 @@ var EccKey = require('./libs/crypto/EccKey');
 
 (function ($, ko, events, config) {
     
+    streemio.vms.UserUIStartViewModel = function () {
+        
+        function show_contacts(callback) {
+            
+            var contacts = streemio.Contacts.list_of_contacts();            
+            contacts.push({ name: "testcontact01" });
+            contacts.push({ name: "testcontact02" });
+            contacts.push({ name: "testcontact03" });
+            contacts.push({ name: "testcontact04" });
+            contacts.push({ name: "testcontact05" });
+            contacts.push({ name: "testcontact06" });
+            contacts.push({ name: "testcontact07" });
+            contacts.push({ name: "testcontact08" });
+            contacts.push({ name: "testcontact09" });
+            contacts.push({ name: "testcontact10" });
+            contacts.push({ name: "testcontact11" });
+            contacts.push({ name: "testcontact12" });
+            contacts.push({ name: "testcontact13" });
+            contacts.push({ name: "testcontact14" });
+            contacts.push({ name: "testcontact15" });
+            contacts.push({ name: "testcontact16" });
+            contacts.push({ name: "testcontact17" });
+            contacts.push({ name: "testcontact18" });
+            contacts.push({ name: "testcontact19" });
+            contacts.push({ name: "testcontact20" });
+            contacts.push({ name: "testcontact21" });
+            contacts.push({ name: "testcontact22" });
+            contacts.push({ name: "testcontact23" });
+            contacts.push({ name: "testcontact24" });
+            contacts.push({ name: "testcontact25" });
+
+            if (contacts.length == 0) {
+                alert("No contact exists. To make video calls, start chats, send files or connect an IoT deivce first you must add contacts");
+            }
+            else {
+                var dlgbody_div = $('<div class="contacts-dialog-container"></div>');
+                for (var i = 0; i < contacts.length; i++) {
+                    var item = $('<div class="contacts-dialog-item">' + contacts[i].name + '</div>');
+                    $(item).attr("data-contact", contacts[i].name);
+                    dlgbody_div.append(item);
+                }
+
+                var dialog = new BootstrapDialog({
+                    title: 'Select a contact',
+                    message: function (dialogRef) {
+                        //var $message = $('<div>OK, this dialog has no header and footer, but you can close the dialog using this button: </div>');
+                        //var $button = $('<button class="btn btn-primary btn-block">Close the dialog</button>');
+                        //$button.on('click', { dialogRef: dialogRef }, function (event) {
+                        //    event.data.dialogRef.close();
+                        //});
+                        //$message.append($button);
+                        
+                        dlgbody_div.find(".contacts-dialog-item").on("click", { dialogRef: dialogRef }, function (event) {
+                            var contact = $(this).attr("data-contact");
+                            callback(contact);
+                            event.data.dialogRef.close();
+                        });
+                        
+                        return dlgbody_div;
+                    },
+                    closable: false
+                });
+                dialog.realize();
+                dialog.getModalFooter().hide();
+                dialog.getModalBody().css('background-color', '#eee');
+                dialog.getModalBody().css('color', '#fff');
+                dialog.getModalBody().css('padding', '3px 2px 3px 5px');
+                var btnclose = dialog.getModalHeader().find(".bootstrap-dialog-close-button");
+                btnclose.show();
+
+                dialog.setSize(BootstrapDialog.SIZE_NORMAL);
+                dialog.open();
+            }
+        }
+
+        var viewModel ={
+            selectedfunc: "",
+
+            start_call: function () {
+                show_contacts(function (name) {
+                    var contact = streemio.Contacts.get_contact(name);
+                    if (contact) {
+                        alert(contact.name);
+                    }
+                });
+            },
+            
+            start_chat: function () {
+                
+            },
+            
+            start_filesend: function () {
+                
+            },
+            
+            start_iotdevice: function () {
+                
+            }
+        };
+        
+        return viewModel;
+    }
+
+    
     streemio.vms.SettingsViewModel = function () {
         var viewModel = {
             iswsfallback: ko.observable(false),
@@ -805,7 +909,7 @@ var EccKey = require('./libs/crypto/EccKey');
                             events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_VIDEO_CALL, null, uioptions);
                         }
                         else if (isaccepted == false) {
-                            streemio.notify.info("Contact " + viewModel.contact.name + " declined the call");
+                            streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the call");
                         }
                         else {
                             streemio.notify.error("Unable to establish call with contact " + viewModel.contact.name);
@@ -1748,6 +1852,12 @@ var EccKey = require('./libs/crypto/EccKey');
                 var vm;
                 switch (cmd) {
 
+                    case streemio.DEFS.CMD_USERSTART:
+                        resetTemplate();
+                        resetView();
+                        showView(streemio.DEFS.CMD_USERSTART);
+                        break;
+
                     case streemio.DEFS.CMD_CONTACT_SELECT:
                         resetView();
                         var contactvm = new streemio.vms.ContactViewModel(datactx);
@@ -1802,7 +1912,6 @@ var EccKey = require('./libs/crypto/EccKey');
                     case streemio.DEFS.CMD_SETTINGS:
                         resetTemplate();
                         resetView();
-                        streemio.Session.uioptions = options;
                         showView(streemio.DEFS.CMD_SETTINGS);
                         break;
 

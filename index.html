@@ -68,26 +68,26 @@
 <body>
     <div class="app-select-screen">
         <div class="flex-btncontainer">
+            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
+                <i class="fa fa-group" style="font-size:100px"></i>
+                <div class="flex-btnitem-text">Connect to Public Streemio</div>
+            </div>
+            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#5fb2c4">
+                <i class="fa fa-lock"></i>
+                <div class="flex-btnitem-text">Connect to Private Streemio</div>
+            </div>
             <div  id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
                 <i class="fa fa-user-plus"></i>
                 <div class="flex-btnitem-text">New Account</div>
             </div>
-            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#5fb2c4">
+            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#E26A6A">
                 <i class="fa fa-qrcode"></i>
                 <div class="flex-btnitem-text">Initialize Existing Account</div>
             </div>
-            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#F9BF3B">
-                <i class="fa fa-cogs"></i>
+            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3">
+                <i class="fa fa-recycle"></i>
                 <div class="flex-btnitem-text">Restore Account</div>
-            </div>
-            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#E26A6A;padding-top:16px;">
-                <i class="fa fa-group" style="font-size:100px"></i>
-                <div class="flex-btnitem-text">Connect to Public Streemio</div>
-            </div>
-            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#68C3A3">
-                <i class="fa fa-lock"></i>
-                <div class="flex-btnitem-text">Connect to Private Streemio</div>
-            </div>
+            </div>            
         </div>
     </div>
     <div class="appboot-screen">
@@ -164,11 +164,15 @@
             </div>
         </div>
         <div style="clear:both"></div>
+        <div class="footer-container">
+            <div class="foot-textpanel">
+                <span id="txt-taskbar-info"></span>
+            </div>
+        </div>
         <div id="footer-info">
             <div class="footer-info-panel" style="display:none" data-bind="visible: isshowpanel">
                 <div data-bind="foreach: tasks" class="taskprogress-list">
-                    <div data-bind="template: {name: template}" class="task-progress-item">
-
+                    <div data-bind="template: {name: template}" class="task-progress-item">                        
                     </div>
                 </div>
             </div>
@@ -284,6 +288,38 @@
     </div>
 </script>
 
+<script type="text/html" id="streemio-view-userstart">
+    <div id="user-start-container" class="user-start-view">
+        <div style="width:460px;height:460px">
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6" data-bind="click: start_call">
+                <i class="fa fa-video-camera"></i>
+                <div class="flex-btnitem-text">Video/audio call</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9BF3B" data-bind="click: start_chat">
+                <i class="fa fa-commenting"></i>
+                <div class="flex-btnitem-text">Chat</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#68C3A3" data-bind="click: start_filesend">
+                <i class="glyphicon glyphicon-copy"></i>
+                <div class="flex-btnitem-text">Send file</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#bf5050" data-bind="click: start_iotdevice">
+                <i class="fa fa-cogs" style="font-size:100px"></i>
+                <div class="flex-btnitem-text">Connect to IoT Device</div>
+            </div>
+            <div style="clear:both"></div>
+        </div>        
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uistartdiv = document.getElementById('user-start-container');
+            var vm = new streemio.vms.UserUIStartViewModel();
+            ko.applyBindings(vm, uistartdiv);
+        });
+    </script>
+</script>
+
 
 <script type="text/html" id="contacts-template">
     <div class="contact-item" data-bind="click: $parent.itemSelect">
@@ -323,7 +359,6 @@
         </div>
     </div>    
 </script>
-
 
 <script type="text/html" id="contact-details-template">
     <div>
@@ -403,7 +438,6 @@
     </div>
 </script>
 
-
 <script type="text/html" id="file-progress-template">
     <div class="pull-right" style="margin-right:5px">
         <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
@@ -422,7 +456,6 @@
         </div>
     </div>
 </script>
-
 
 <script type="text/html" id="file-complete-template">
     <div style="background-color:#555;min-height:55px">

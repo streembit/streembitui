@@ -534,7 +534,7 @@ streemio.UI = (function (module, logger, events, config) {
                                     debugs.push(line);
                                 }
                             }
-                        catch (e) {
+                            catch (e) {
                                 errcount++
                             }
                         }
@@ -730,6 +730,8 @@ streemio.notify = (function (module) {
     
     var m_notify = 0;
     
+    module.taskbar_timer = 0;
+    
     function get_err_msg(err, param) {
         var msg = err;
         if (param) {
@@ -777,18 +779,9 @@ streemio.notify = (function (module) {
         }
         
         var msg = get_err_msg(err, param);
-        
-        module.hideprogress();
-        $(".app-progress-panel").hide();
-        $('#app-progress').show();
-        $(".app-error-indicator-panel").show();
-        
-        setTimeout(function () {
-            $('#app-progress').hide();
-            $(".app-error-indicator-panel").hide();
-        }, 15000);
-        
         logger.error(msg);
+        
+        module.taskbarmsg(msg);
         
         return msg;
     }
@@ -831,6 +824,20 @@ streemio.notify = (function (module) {
         logger.info(text);
     }
     
+    module.info_panel = function (msg, param, title, time) {
+        var text = get_msg(msg, param);
+        m_notify = $.notify(
+            {
+                title: title ? ("<strong>" + title + "</strong> ") : '',
+                message: text
+            }, 
+            {
+                type: 'info',
+                delay: time ? time : 6000,
+            }
+        );
+    }
+    
     module.success = function (msg, param, title, time) {
         var text = get_msg(msg, param);
         m_notify = $.notify(
@@ -862,6 +869,19 @@ streemio.notify = (function (module) {
             m_notify.close();
         }
         catch (e) { }
+    }
+    
+    module.taskbarmsg = function (msg) {
+        if (module.taskbar_timer) {
+            clearTimeout(module.taskbar_timer);    
+        }
+
+        $("#txt-taskbar-info").text(msg);
+        module.taskbar_timer = setTimeout(function () {
+            $("#txt-taskbar-info").text("");
+            clearTimeout(module.taskbar_timer);
+            module.taskbar_timer = 0;
+        }, 15000);
     }
     
     return module;
@@ -1779,7 +1799,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         streemio.Session.delete_pending_contact(account, function () {
             delete pending_contacts[account];
         });
-        streemio.notify.info("Contact " + account + " has denied your add contact request");
+        streemio.notify.info_panel("Contact " + account + " has denied your add contact request");
     }
     
     module.send_addcontact_request = function (contact, callback) {
@@ -1789,8 +1809,8 @@ streemio.Contacts = (function (module, logger, events, config) {
                 return streemio.notify.error("error in adding contact: %j", err)
             }
             var account = contact.name;
-            logger.debug("send add contact request to %s", account);
             streemio.PeerNet.send_addcontact_request(contact);
+            logger.info("Sending contact request to %s.", account);
             pending_contacts[account] = contact;
             callback();
         });        
@@ -1957,8 +1977,12 @@ streemio.Contacts = (function (module, logger, events, config) {
         catch (err) {
             streemio.notify.error("Error in initializing contacts: %j", err);
         }
-    }    
+    }
     
+    module.list_of_contacts = function () {
+        return contacts;
+    }
+
     events.on(events.CONTACT_ONLINE, function (account, contobj) {
         logger.debug("CONTACT_ONLINE %j", account);
         if (account && contobj) {
@@ -2220,19 +2244,19 @@ streemio.Main = (function (module, logger, events, config) {
         thingsMenu.append(new gui.MenuItem({
             label: 'Create IoT device account',
             click: function () {
-                streemio.notify.info("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                streemio.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
             }
         }));
         thingsMenu.append(new gui.MenuItem({
             label: 'Configure IoT device',
             click: function () {
-                streemio.notify.info("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                streemio.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
             }
         }));
         thingsMenu.append(new gui.MenuItem({
             label: 'Upgrade IoT device',
             click: function () {
-                streemio.notify.info("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                streemio.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
             }
         }));
         menubar.append(new gui.MenuItem({ label: 'Machines', submenu: thingsMenu }));
@@ -2315,9 +2339,9 @@ streemio.Main = (function (module, logger, events, config) {
                 
                 var level = streemio.config.loglevel;
                 console.log('log level: ' + level);
-                console.log('log path: ' + logspath);
-
-                streemio.logger.init(level, logspath, function (err) {
+                console.log('log path: ' + logspath);                
+                
+                streemio.logger.init(level, logspath, streemio.notify.taskbarmsg, function (err) {
                     callback(err);
                 });
             },
@@ -2614,13 +2638,15 @@ streemio.Main = (function (module, logger, events, config) {
             }
         }
         else if (eventcmd == events.TYPES.ONUSERPUBLISH) {
-            streemio.notify.success("The peer info has been published to the network.", null, "Peer network is ready!", 5000);
+            streemio.notify.taskbarmsg("Peer is connected. The peer info has been published to the network.");
             logger.debug("initialize contacts list");
             
             streemio.Contacts.init();
             streemio.UI.showContacts();
             
             module.is_node_initialized = true;
+
+            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
         }
         else if (eventcmd == events.TYPES.ONCALLWEBRTCSIGNAL) {
             streemio.MediaCall.onSignalReceive(payload);
