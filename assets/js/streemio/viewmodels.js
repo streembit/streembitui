@@ -54,13 +54,6 @@ var EccKey = require('./libs/crypto/EccKey');
                 var dialog = new BootstrapDialog({
                     title: 'Select a contact',
                     message: function (dialogRef) {
-                        //var $message = $('<div>OK, this dialog has no header and footer, but you can close the dialog using this button: </div>');
-                        //var $button = $('<button class="btn btn-primary btn-block">Close the dialog</button>');
-                        //$button.on('click', { dialogRef: dialogRef }, function (event) {
-                        //    event.data.dialogRef.close();
-                        //});
-                        //$message.append($button);
-                        
                         dlgbody_div.find(".contacts-dialog-item").on("click", { dialogRef: dialogRef }, function (event) {
                             var contact = $(this).attr("data-contact");
                             callback(contact);
