@@ -138,7 +138,7 @@ body {
     padding:3px 8px 3px 12px;
     /*background: linear-gradient(to bottom, #ffffff 0%,#c6deef 50%,#b0d3ed 52%,#94bfde 100%);*/ 
     background: #f2f2f2;
-    background: linear-gradient(to bottom, #ffffff 0%,#f2f2f2 50%,#e5e5e5 52%,#c5c5c5 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #e2e2e2 50%, #d5d5d5 51%, #b5b5b5 100%);
 }
 
 .modal-header h4{
@@ -915,15 +915,15 @@ span.awesomeBlue i.addbtn{
 }
 
 .contacts-dialog-item{
-    background-color:#000;
-    border:1px solid #666;
+    background-color:#222;
+    border:1px solid #fff;
     padding:8px 15px;
     border-radius:4px;
-    margin-bottom:7px;
-    box-shadow: 3px 3px 2px #999;
+    margin-bottom:5px;
+    box-shadow: 0 0 15px #444; 
 }
 
 .contacts-dialog-item:hover{
-    background-color:#222;
-    border-color:#888;
+    background-color:#000;
+    box-shadow: 0 0 15px #666; 
 }

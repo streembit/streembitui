@@ -84,7 +84,7 @@ var EccKey = require('./libs/crypto/EccKey');
                 show_contacts(function (name) {
                     var contact = streemio.Contacts.get_contact(name);
                     if (contact) {
-                        alert(contact.name);
+                        
                     }
                 });
             },
