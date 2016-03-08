@@ -2311,15 +2311,15 @@ streemio.Main = (function (module, logger, events, config) {
                 //  get the settings db
                 streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
                     function (result) {
-                        console.log("settings database populated");
-                        if (result && result.data) {
+                        if (result && result.data && result.data.loglevel != null && result.data.transport != null && result.data.tcpport != null && result.data.wsport != null && result.data.bootseeds != null && result.data.pending_contacts != null ) {
+                            console.log("settings database is populated");                   
                             streemio.Session.settings = result;
                             streemio.config.data = result.data;
                             callback();
                         }
                         else {
                             //  add records to the database
-                            logger.debug("update settings database");                                                
+                            console.log("update settings database with default data");                                                
                             streemio.Session.update_settings(streemio.config.data, callback);
                         }
                     },
