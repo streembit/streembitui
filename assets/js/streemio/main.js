@@ -1794,6 +1794,9 @@ streemio.Contacts = (function (module, logger, events, config) {
                     streemio.Session.delete_pending_contact(account, function () {
                         delete pending_contacts[account];
                     });
+
+                    // ping to the contact
+                    contobj.ping();
                 },
                 function (err) {
                     streemio.notify.error("Database update add contact error %j", err);
