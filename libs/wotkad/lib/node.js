@@ -79,9 +79,14 @@ function Node(options) {
         this._log.info('join PUBLIC network');
     }
     
-    this.contacts_existsfn = null;
-    if (this._options.contacts_existsfn) {
-        this.contacts_existsfn = this._options.contacts_existsfn;
+    this.contact_existsfn = null;
+    if (this._options.contact_exist_lookupfn) {
+        this.contact_existsfn = this._options.contact_exist_lookupfn;
+    }
+    
+    this.is_gui_node = false;
+    if (this._options.is_gui_node) {
+        this.is_gui_node = true;
     }
     
     this._buckets = {};
@@ -292,6 +297,7 @@ Node.prototype.get_contacts = function () {
 
     return list_of_contacts;
 }
+
 
 Node.prototype.get_seed_contact = function () {
     var seeds = this._options.seeds;
@@ -1288,6 +1294,7 @@ Node.prototype._handlePing = function (params, sockinfo) {
 Node.prototype._handleStore = function (params) {
     var node = this;
     var item;
+    var is_update_key = false, is_system_update_key = false;
     
     //this._log.info('received valid STORE from %s', params.nodeID);
     
@@ -1296,7 +1303,6 @@ Node.prototype._handleStore = function (params) {
         return this._log.error("handleStore error invalid payload");
     }
     
-    var is_update_key = false;
     if (payload.data.type == wotmsg.MSGTYPE.PUBPK || payload.data.type == wotmsg.MSGTYPE.UPDPK || payload.data.type == wotmsg.MSGTYPE.DELPK) {
         if (!payload.data[wotmsg.MSGFIELD.PUBKEY]) {
             return this._log.error("handleStore error invalid public key payload");
@@ -1321,6 +1327,36 @@ Node.prototype._handleStore = function (params) {
         }
     }
     
+    // check if this is a gui node. gui nodes updates only contact messages
+    if (this.is_gui_node) {
+        if (!is_update_key && !is_system_update_key) {
+            // only store the contacts key and system update messages in the gui version
+            return node._log.debug("handleStore is_gui_node = true, no STORE perfomed");
+        }
+        
+        if (is_update_key) {
+            if (!this.contact_existsfn) {
+                return node._log.debug("handleStore cancelled, contact_existsfn not exists");
+            }
+            
+            // check if the contact exists
+            try {
+                var account = params.key;
+                var iscontact = this.contact_existsfn(account);
+                if (!iscontact) {
+                    return node._log.debug("handleStore cancelled, contact_existsfn for " + account + " returned false");
+                }
+            } 
+            catch (err) {
+                return this._log.error("handleStore contact_existsfn call error %j", err);
+            }
+        }
+
+        if (is_system_update_key) {
+            // TODO
+        }
+    }
+    
     try {
         var recipient = null;
         if (payload.data.type == wotmsg.MSGTYPE.OMSG) {
@@ -1329,7 +1365,7 @@ Node.prototype._handleStore = function (params) {
         item = new Item(params.key, params.value, params.nodeID, null, recipient);
     } 
     catch (err) {
-        return this._log.error("handleStore item create error %j  key: %s", err, item.key);
+        return this._log.error("handleStore item create error %j  key: %s", err, (item && item.key) || "unknown");
     }
     
     var account_key;
