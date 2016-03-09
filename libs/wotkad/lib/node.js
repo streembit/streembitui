@@ -79,6 +79,11 @@ function Node(options) {
         this._log.info('join PUBLIC network');
     }
     
+    this.contacts_existsfn = null;
+    if (this._options.contacts_existsfn) {
+        this.contacts_existsfn = this._options.contacts_existsfn;
+    }
+    
     this._buckets = {};
 }
 
