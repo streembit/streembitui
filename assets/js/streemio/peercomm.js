@@ -499,7 +499,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         calltype: calltype,
                         iscaller: false // this is the recepient of the call -> iscaller = false 
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_VIDEO_CALL, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
                 }
             });
         }

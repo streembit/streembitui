@@ -39,13 +39,17 @@ var EccKey = require('./libs/crypto/EccKey');
                         calltype: call_type,
                         iscaller: true
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, call_type, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
                 }
                 else if (isaccepted == false) {
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
                     streemio.notify.info_panel("Contact " + contact.name + " declined the call");
+                    streemio.Session.selected_contact = null;
                 }
                 else {
-                    streemio.notify.error("Unable to establish call with contact " + contact.name);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                    streemio.notify.error_popup("Unable to establish call with contact " + contact.name);
+                    streemio.Session.selected_contact = null;
                 }
             },
             function (err) {
@@ -934,7 +938,7 @@ var EccKey = require('./libs/crypto/EccKey');
                                 calltype: call_type,
                                 iscaller: true
                             };
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_VIDEO_CALL, null, uioptions);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
                         }
                         else if (isaccepted == false) {
                             streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the call");
@@ -1930,7 +1934,7 @@ var EccKey = require('./libs/crypto/EccKey');
                         streemio.notify.info("The call has been terminated by the contact");
                         break;
 
-                    case streemio.DEFS.CMD_VIDEO_CALL:
+                    case streemio.DEFS.CMD_CONTACT_CALL:
                         if (!options || !options.contact) {
                             return streemio.notify.error("Invalid video call UI options");
                         }

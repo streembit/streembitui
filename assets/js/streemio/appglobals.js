@@ -27,7 +27,7 @@ streemio.DEFS = (function (module) {
         CMD_USERSTART: "userstart",
         CMD_SETTINGS: 'settings',
         CMD_CONTACT_SELECT: 'contact_select',
-        CMD_VIDEO_CALL: 'video_call',
+        CMD_CONTACT_CALL: 'contact_call',
         CMD_HANGUP_CALL: 'hangup_call',
         CMD_CONTACT_CHAT: 'contact_chat',
         CMD_INIT_USER: 'init_user',
