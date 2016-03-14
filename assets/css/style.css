@@ -553,6 +553,7 @@ body {
 
 #media-call-container{
     height:100%;
+    padding-left:20px;
 }
 
 .media-call-center{
@@ -896,7 +897,7 @@ span.awesomeBlue i.addbtn{
 }
 
 .contacts-dialog-item{
-    background-color:#222;
+    background-color:#666;
     border:1px solid #fff;
     padding:8px 15px;
     border-radius:4px;

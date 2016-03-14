@@ -83,11 +83,13 @@ function Node(options) {
     if (this._options.contact_exist_lookupfn) {
         this.contact_existsfn = this._options.contact_exist_lookupfn;
     }
+    this._log.debug('contact_existsfn: ' + (this.contact_existsfn ? "defined" : "not defined"));
     
     this.is_gui_node = false;
     if (this._options.is_gui_node) {
         this.is_gui_node = true;
     }
+    this._log.debug('is_gui_node: ' + (this.is_gui_node ? "defined" : "not defined"));
     
     this._buckets = {};
 }

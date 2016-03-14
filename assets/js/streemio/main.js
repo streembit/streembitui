@@ -362,6 +362,9 @@ streemio.UI = (function (module, logger, events, config) {
     var messagesvm = null;
     
     module.showContacts = function () {
+        $(".app-select-screen").hide();
+        $(".appboot-screen").hide();
+        $(".streemio-screen").show();    
         $('.contacts-tab').show();
         $("#main-container").css('left', 281);
     }
@@ -2316,7 +2319,21 @@ streemio.Main = (function (module, logger, events, config) {
         }));
         menubar.append(new gui.MenuItem({ label: 'Tools', submenu: toolsMenu }));
         
-        var contactMenu = new gui.Menu();
+        var contactMenu = new gui.Menu();       
+        contactMenu.append(new gui.MenuItem({
+            label: 'Interact with contact',
+            click: function () {
+                if (!module.is_node_initialized) {
+                    return streemio.notify.error_popup("The account is not initialized");
+                }
+                
+                streemio.UI.showContacts();
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+            }
+        }));
+        
+        contactMenu.append(new gui.MenuItem({ type: 'separator' }));
+        
         contactMenu.append(new gui.MenuItem({
             label: 'Find contact',
             click: function () {

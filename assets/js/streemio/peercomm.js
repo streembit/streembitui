@@ -1419,7 +1419,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
-    module.get_contact_session = function (contact) {
+    module.get_contact_session = function (contact, showprog) {
         
         return new Promise(function (resolve, reject) {
             try {
@@ -1429,7 +1429,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 exchange_session_key(contact)
                 .then(
                     function (jti) {
-                        return wait_peer_reply(jti, 5000, true);
+                        return wait_peer_reply(jti, 5000, showprog || false);
                     },
                     function (err) {
                         reject(err);

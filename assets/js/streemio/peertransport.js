@@ -144,7 +144,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
             is_private_network: is_private_network,
             private_network_accounts: private_network_accounts,
             is_gui_node: true,
-            contact_exist_lookupfn: streemio.Session.contactsvm.exists
+            contact_exist_lookupfn: streemio.Contacts.exists
         };
         
         try {
@@ -162,7 +162,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                     return resultfn("peer connect error: " +  err.message ? err.message : err);
                 }
                 
-                logger.debug("node connected %j", nodeval);                
+                logger.debug("node connected %j", nodeval);               
                 
                 
                 if (result_return_processing == false) {

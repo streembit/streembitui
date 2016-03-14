@@ -291,21 +291,21 @@
 <script type="text/html" id="streemio-view-userstart">
     <div id="user-start-container" class="user-start-view">
         <div style="width:460px;height:460px">
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6;padding-top:20px;" data-bind="click: start_call">
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6;padding-top:20px;" data-bind="click: start_audio_call">
                 <i class="fa fa-phone"></i>
-                <div class="flex-btnitem-text">Make a call</div>
+                <div class="flex-btnitem-text">Audio call</div>
             </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9BF3B" data-bind="click: start_chat">
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9BF3B" data-bind="click: start_video_call">
+                <i class="fa fa-video-camera"></i>
+                <div class="flex-btnitem-text">Video call</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#68C3A3" data-bind="click: start_chat">
                 <i class="fa fa-commenting"></i>
                 <div class="flex-btnitem-text">Chat</div>
             </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#68C3A3" data-bind="click: start_filesend">
-                <i class="glyphicon glyphicon-copy"></i>
-                <div class="flex-btnitem-text">Send file</div>
-            </div>
             <div class="flex-btnitem margin20 pull-left" style="background-color:#dd7474;padding-top:24px;" data-bind="click: start_iotdevice">
                 <i class="fa fa-cogs" style="font-size:100px"></i>
-                <div class="flex-btnitem-text">Connect to IoT Device</div>
+                <div class="flex-btnitem-text">Control Gadget</div>
             </div>
             <div style="clear:both"></div>
         </div>        
@@ -376,7 +376,7 @@
 </script>
 
 <script type="text/html" id="contact-details-template">
-    <div>
+    <div style="padding-left:20px">
         <div>
             <div class="contact-details-buttons">
                 <button type="button" class="btn btn-info btn-circle btn-lg" data-bind="click: chat" title="Chat"><i class="glyphicon glyphicon-comment"></i></button>

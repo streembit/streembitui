@@ -111,51 +111,7 @@ function log_debug(msg, val1, val2, val3, val4) {
     level_log("debug", msg, val1, val2, val3, val4);
 }
 
-exports.init = function (loglevel, logpath, excpath, webmode) {
-    
-    console.log("logger init");
 
-    var transports = [        
-        new winston.transports.Console({
-            level: 'debug',
-            json: false,
-            colorize: true
-        }),
-        new (winston.transports.File)({
-            filename: logfilePath,
-            level: level,
-            json: true,
-            maxsize: 4096000, //4MB
-            maxFiles: 10,
-            colorize: false
-        })
-    ];
-    
-    if (webmode) {
-        console.log("set dev console for log");
-        transports.push(
-            new winston.transports.DevConsole({
-                level: 'debug'
-            })
-        );
-    }
-
-    logger = new (winston.Logger)({
-        exitOnError: false,
-        transports: transports,
-        exceptionHandlers: [
-            new winston.transports.File({
-                filename: exceptionFileLog,
-                json: true
-            }),
-            new winston.transports.Console({
-                level: 'debug',
-                json: false,
-                colorize: true
-            })
-        ]
-    });
-}
 
 function config_log(loglevel, logpath, excpath, taskbar_infofn) {
     var transports = [        
