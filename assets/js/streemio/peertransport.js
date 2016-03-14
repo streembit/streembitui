@@ -48,7 +48,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         if (item && key && item.value ) {
             if ( key.indexOf("/") == -1) {
                 //  this is a contact update
-                events.emit(events.CONTACT_ONLINE, item.key, item);
+                //events.emit(events.CONTACT_ONLINE, item.key, item);
             }
             else {
                 var msgkey = streemio.User.name + "/message/";

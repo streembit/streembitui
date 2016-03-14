@@ -810,7 +810,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'danger',
-                delay: time ? time :98000,
+                delay: time ? time :12000,
             }
         );
         
@@ -828,7 +828,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'info',
-                delay: time ? time : 6000,
+                delay: time ? time : 8000,
             }
         );
         logger.info(text);
@@ -2092,13 +2092,6 @@ streemio.Contacts = (function (module, logger, events, config) {
         return contacts;
     }
 
-    events.on(events.CONTACT_ONLINE, function (account, contobj) {
-        logger.debug("CONTACT_ONLINE %j", account);
-        if (account && contobj) {
-            on_contact_online(account, contobj);
-        }
-    });
-    
     return module;
 
 }(streemio.Contacts || {}, streemio.logger, global.appevents, streemio.config));

@@ -10,7 +10,7 @@ var EccKey = require('./libs/crypto/EccKey');
 (function ($, ko, events, config) {
     
     function call_contact(call_type, contact) {
-        
+        streemio.Session.selected_contact = contact;
         events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CALL_PROGRESS);
         
         streemio.PeerNet.ping(contact, true, 5000)
@@ -49,12 +49,14 @@ var EccKey = require('./libs/crypto/EccKey');
                 }
             },
             function (err) {
-                streemio.logger.error("Error in calling contact: %j", err);
-                streemio.notify.error("Error in calling contact.");
+                streemio.logger.error("Error in calling contact: %j", err);              
                 setTimeout(function () {
+                    var name = streemio.Session.selected_contact.name;
                     //  navigate back to the user start screen
                     events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                }, 2000);
+                    streemio.notify.error_popup("Error in calling " + name + ". Review the log file for more error info!");
+                    streemio.Session.selected_contact = null;
+                }, 3000);
             }
         );
     }
@@ -105,7 +107,8 @@ var EccKey = require('./libs/crypto/EccKey');
         var viewModel ={
             selectedfunc: "",
 
-            start_audio_call: function () {                
+            start_audio_call: function () {
+                streemio.Session.selected_contact = null;      
                 show_contacts(function (name) {                    
                     var contact = streemio.Contacts.get_contact(name);
                     if (contact) {                        
@@ -115,7 +118,7 @@ var EccKey = require('./libs/crypto/EccKey');
             },
             
             start_video_call: function () {
-                //events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CALL_PROGRESS);
+                streemio.Session.selected_contact = null;
                 show_contacts(function (name) {
                     var contact = streemio.Contacts.get_contact(name);
                     if (contact) {
