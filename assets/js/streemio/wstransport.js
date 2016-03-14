@@ -108,8 +108,6 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                 if (item && key && item.value) {
                     if (key.indexOf("/") == -1) {
                         //  this is a contact update
-                        //  send to the VM and update if it is on the contact list
-                        //streemio.Session.contactsvm.update_contact(item.key, item);
                         events.emit(events.CONTACT_ONLINE, item.key, item);
                     }
                     else {

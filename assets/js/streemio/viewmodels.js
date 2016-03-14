@@ -1115,6 +1115,11 @@ var EccKey = require('./libs/crypto/EccKey');
                         }
                         var contobj = merge(contact, list[i]);
                         viewModel.contacts.push(contobj);
+
+                        var account = contact.name;
+                        viewModel.recent_messages.remove(function (item) {
+                            return item.contact && item.contact.name == account;
+                        }) 
                     }
                 }
             },          
@@ -1272,6 +1277,21 @@ var EccKey = require('./libs/crypto/EccKey');
                     viewModel.recent_messages.remove(function (item) {
                         return item.contact && item.contact.name == account;
                     }) 
+                }
+            },
+            
+            update_contact: function (account, obj) {
+                var item = null;
+                for (var i = 0; i < viewModel.contacts().length; i++) {
+                    if (viewModel.contacts()[i].name == account) {
+                        item = viewModel.contacts()[i];
+                        break;
+                    }
+                }
+                if (!item) return;
+
+                for (var prop in obj) {
+                    item[prop] = obj[prop];
                 }
             },
             

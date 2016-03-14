@@ -1346,6 +1346,9 @@ Node.prototype._handleStore = function (params) {
                 if (!iscontact) {
                     return node._log.debug("handleStore cancelled, contact_existsfn for " + account + " returned false");
                 }
+                else {
+                    node._log.debug("handleStore contact_existsfn for " + account + " returned TRUE");
+                }
             } 
             catch (err) {
                 return this._log.error("handleStore contact_existsfn call error %j", err);

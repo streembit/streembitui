@@ -1610,6 +1610,13 @@ streemio.Contacts = (function (module, logger, events, config) {
             isonline: ko.observable(false),
             lastping: ko.observable(0),
             errors: [],
+            public_key: "", 
+            ecdh_public: "", 
+            address: "", 
+            port: 0, 
+            name: "",                    
+            protocol: "",
+            user_type: "",
             
             ping: function () {
                 var _self = this;
@@ -1636,27 +1643,28 @@ streemio.Contacts = (function (module, logger, events, config) {
             }
         };
         
-        for (var prop in param) {
-            contobj[prop] = param[prop];
+        if (param) {
+            for (var prop in param) {
+                contobj[prop] = param[prop];
+            }
         }
         
         return contobj;
     };
     
-    function update_contact(account, contobj) {
-        try {
-            
-            var updateproc = function (contact, callback) {
-                streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
-                    function () {
-                        callback();
-                    },
-                    function (err) {
-                        streemio.notify.error("Populate contact error %j", err);
-                    }                        
-                );
-            };
-            
+    function update_contact_database (contact, callback) {
+        streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+            function () {
+                callback();
+            },
+            function (err) {
+                streemio.notify.error("Populate contact error %j", err);
+            }                        
+        );
+    };
+    
+    function on_contact_online(account, contobj) {
+        try {            
             var contact = module.get_contact(account);
             if (!contact) return;
             
@@ -1688,12 +1696,12 @@ streemio.Contacts = (function (module, logger, events, config) {
                 user_type: contact.user_type
             };
             
-            updateproc(updobj, function () {
+            update_contact_database(updobj, function () {
                 module.on_online(account);
             });
         }
         catch (err) {
-            streemio.notify.error("update_contact error: %j", err);
+            streemio.notify.error("on_contact_online() error: %j", err);
         }
     }
     
@@ -1719,6 +1727,139 @@ streemio.Contacts = (function (module, logger, events, config) {
             },
             5000
         );
+    }
+    
+    function update_contact(account, obj) {
+        if (!account || !obj) {
+            return streemio.notify.error("update_contact error: invalid parameters");
+        }
+
+        var contact = module.get_contact(account);
+        if (!contact) return;
+        
+        if (obj.public_key != contact.public_key) {
+            streemio.notify.error("update_contact error. Invalid contact received from the network. Contact " + account + " will be removed from the contact list");
+            // remove from the list
+            streemio.Session.contactsvm.delete_byname(contact.name);
+            //  remove from the local db
+            return module.remove(account);
+        }
+        
+        contact.address = obj.address;
+        contact.port = obj.port;
+        contact.ecdh_public = obj.ecdh_public;
+        contact.protocol = obj.protocol  ? obj.protocol : streemio.DEFS.TRANSPORT_TCP;
+        contact.user_type = obj.user_type;
+
+        logger.debug("contact " + account + " populated from network and updated");
+    }
+    
+    function find_contact_onnetwork(contact_address, contact_port, contact_name, callback) {
+        streemio.PeerNet.find_contact(contact_name, function (err, contact) {
+            if (err) {
+                streemio.notify.error("Contact search error %j", err);
+                return callback();
+            }
+            if (!contact) {
+                streemio.notify.error("Couldn't find contact " + contact_name + " on the network");
+                return callback();
+            }
+            
+            if (contact_address && contact_port) {
+                //  the NOED_FIND Kademlia call returned a contact which could be more current than 
+                //  the stored contact so use the current address info
+                contact.address = contact_address;
+                contact.port = contact_port;
+            }
+            
+            callback(contact);
+            //
+        });
+    }
+    
+    function ping_contact(account) {
+        if (!account) {
+            return streemio.notify.error("ping_contact error: invalid parameters");
+        }
+        
+        var contact = module.get_contact(account);
+        if (!contact) return;
+        
+        contact.ping();
+        
+        logger.debug("ping contact " + account);
+    }
+
+    function init_contact(param_contact, callback) {
+        var contact_name = param_contact.name;
+        logger.debug("intialzing, find contact " + contact_name);
+        
+        streemio.Node.find_account(contact_name)
+            .then(
+            function (rescontacts) {
+                var contact_address = null;
+                var contact_port = null;
+                if (rescontacts && rescontacts.length > 0) {
+                    for (var i = 0; i < rescontacts.length; i++) {
+                        if (contact_name != rescontacts[i].account) {
+                            continue;
+                        }
+                        
+                        contact_address = rescontacts[i].address;
+                        contact_port = rescontacts[i].port;
+                        break;
+                    }
+                }
+                
+                find_contact_onnetwork(contact_address, contact_port, contact_name, function (contact) {
+                    if (!contact) {
+                        setTimeout(function () {
+                            callback();
+                        }, 3000);
+                        return;
+                    }
+
+                    streemio.notify.taskbarmsg("Found " + contact.name + " contact data on network");
+
+                    streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+                        function () {
+                            update_contact(contact.name, contact);
+                            ping_contact(contact.name);
+                            streemio.Session.contactsvm.update_contact(contact.name, contact);
+                            
+                            setTimeout(function () {
+                                callback();
+                            }, 3000);
+                        },
+                        function (err) {
+                            streemio.notify.error("Database update add contact error %j", err);
+
+                            setTimeout(function () {
+                                callback();
+                            }, 3000);
+                        }                        
+                    );
+                });
+                            
+            },
+            function (err) {
+                // use the stored contact info
+                logger.error("find_account error: %j", err);
+            }
+        )
+    }
+    
+    function init_contacts() {
+        async.eachSeries(contacts, init_contact, function (err) {
+            var msg = "Contacts initialization";
+            if (err) {
+                msg += " error: " + err;
+            }
+            else {
+                msg += " completed.";
+            }
+            streemio.notify.taskbarmsg(msg);
+        });
     }
     
     module.on_receive_addcontact = function (request) {
@@ -1907,8 +2048,9 @@ streemio.Contacts = (function (module, logger, events, config) {
                 
                 for (var i = 0; i < result.length; i++) {
                     var exists = false;
+                    var contact = result[i];
                     for (var j = 0; j < contacts.length; j++) {
-                        if (result[i].name == contacts[j].name) {
+                        if (contact.name == contacts[j].name) {
                             exists = true;
                             break;
                         }
@@ -1916,63 +2058,17 @@ streemio.Contacts = (function (module, logger, events, config) {
                     if (exists) {
                         continue;
                     }
-
-                    var contact_name = result[i].name;
-                    logger.debug("find contact " + contact_name);
                     
-                    streemio.Node.find_account(contact_name)
-                    .then(
-                        function (rescontacts) {
-
-                            var contact_address = null;
-                            var contact_port = null;
-                            if (rescontacts && rescontacts.length > 0) {
-                                for (var i = 0; i < rescontacts.length; i++) {
-                                    if (contact_name != rescontacts[i].account) {
-                                        continue;
-                                    }
-
-                                    contact_address = rescontacts[i].address;
-                                    contact_port = rescontacts[i].port;
-                                    break;
-                                }
-                            }
-
-                            streemio.PeerNet.find_contact(contact_name, function (err, contact) {
-                                if (err) {
-                                    return streemio.notify.error("Contact search  error %j", err);
-                                }
-
-                                if (contact_address && contact_port) {
-                                    //  the NOED_FIND Kademlia call returned a contact which could be more current than 
-                                    //  the stored contact so use the current address info
-                                    contact.address = contact_address;
-                                    contact.port = contact_port;
-                                }
-                                
-                                streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
-                                    function () {
-                                        var contobj = new Contact(contact);
-                                        contacts.push(contobj);
-                                        contobj.ping();
-                                        streemio.Session.contactsvm.add_contact(contobj);
-                                    },
-                                    function (err) {
-                                        streemio.notify.error("Database update add contact error %j", err);
-                                    }                        
-                                );
-                            });
-                            
-                        },
-                        function (err) {
-                            // use the stored contact info
-                            logger.error("find_account error: %j", err);
-                        }
-                    )  
+                    // add to the contacts list
+                    var contobj = new Contact(contact);
+                    contacts.push(contobj);           
                 }
-                
+
                 //
                 streemio.Session.contactsvm.init(contacts);
+                
+                // iterate through the contacts and ping them
+                init_contacts();
 
                 setTimeout(
                     function () {
@@ -1996,7 +2092,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     events.on(events.CONTACT_ONLINE, function (account, contobj) {
         logger.debug("CONTACT_ONLINE %j", account);
         if (account && contobj) {
-            update_contact(account, contobj);
+            on_contact_online(account, contobj);
         }
     });
     
