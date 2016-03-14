@@ -413,11 +413,24 @@ body {
     color:#222;
 }
 
+#chat-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+}
+
 .chat-window {
     display:block;
     height: 100%;
     position: relative;
     margin:20px;
+}
+
+.chatitemswnd{
 }
 
 .chat-text-items {
@@ -434,14 +447,29 @@ body {
     max-width:650px;
 }
 
-.chat-text-items table {
+.chat-fill-area{
+    flex:1;
+    background-color:#fff;
+    overflow-y:auto;
+    font-size: 12px;
+    text-align: left;
+}
+
+.footer-chat-controls{
+    padding: 8px 10px 0 10px;
+    border-top: 3px solid #eee;
+    margin-top:8px;
+}
+
+.chat-text-items table,.chat-fill-area table {
     border-collapse: collapse;
 }
 
-.chat-text-items td{
+.chat-text-items td, .chat-fill-area td{
      padding: 0;
      padding-bottom:10px;
 }
+
 
 .chat-window textarea, .chat-controls-txt textarea  {
     width: 100% !important;
@@ -456,7 +484,7 @@ body {
 }
 .chat-controls {
     position: absolute;
-    bottom: 20px;
+    bottom: 0px;
     left: 0;
     right: 0;
     height:85px;
@@ -489,6 +517,10 @@ body {
     box-shadow: 3px 3px 4px #ddd;
     max-width:530px;
     word-wrap: break-word;
+}
+
+.no-max-width{
+    max-width:unset;
 }
 
 .isContactSender{
@@ -763,14 +795,19 @@ span.awesomeBlue i.addbtn{
 
 .closedlg:hover { background: #00d9ff; }
 
-.chat-main-win{
-    text-align:left;
-    margin:20px;
-}
+
 
 .chat-win-header{
     padding-bottom:8px;
     border-bottom:3px solid #eee;
+}
+
+.fill-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
 }
 
 .panel-group{

@@ -527,7 +527,7 @@
         <div class="uiview-container-panel">
 
             <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-                <h4 data-bind="text: is_new_account() == true ? 'Create your Streemio user account' : 'Connect to Streemio network' "></h4>
+                <h4 data-bind="text: caption_view_title"></h4>
             </div>
 
             <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
@@ -589,7 +589,7 @@
                 </div>
 
                 <div style="margin-top:30px">
-                    <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px">Connect to network</button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
+                    <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px"><span data-bind="text:caption_btninit"></span></button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
                 </div>
 
             </div>
@@ -602,10 +602,11 @@
         var is_new_account = false;
         var uioptions = streemio.Session.uioptions;
         if (uioptions) {
-            is_new_account = uioptions.newuser
+            is_new_account = uioptions.newuser || false;
+            is_init_existing_account = uioptions.initexisting || false;
         }
         var user_div = document.getElementById('uiview-container');
-        var vm = new streemio.vms.UserViewModel(is_new_account, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount);
+        var vm = new streemio.vms.UserViewModel(is_new_account, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount, is_init_existing_account);
         vm.init(function () {
             ko.applyBindings(vm, user_div);
 
@@ -832,16 +833,8 @@
 </script>
 
 
-<script type="text/html" id="contact-offline-template">
-    <div style="padding:0;margin:0 auto">
-        <div style="text-align:center">
-            <textarea id="txtOfflineMsg" style="height:250px;width:550px"></textarea>
-        </div>
-    </div>
-</script>
-
 <script type="text/html" id="contact-online-template">
-
+    <!--
     <div class="chat-main-win">
         <div class="chat-win-header">
             <div style="float:left;font-size:12px;font-weight:bold;color:#555">
@@ -853,8 +846,10 @@
             <div style="clear:both"></div>
         </div>
     </div>
-
-    <div style="position:absolute;top:55px;left:0;right:0;bottom:5px">
+        -->
+    
+    <div style="flex-grow:1;background-color:aqua">
+        <!--
         <div class="chat-window">
             <div class="chat-text-items">
                 <table cellspacing="0" cellpadding="0">
@@ -890,14 +885,58 @@
                 </div>
             </div>
         </div>
+            -->
     </div>
-
+        
 </script>
 
 
 <script type="text/html" id="streemio-view-chat">
-    <div id="chat-container" style="padding-top:5px;height:95vh;margin:0 10px 0 0;position:relative">
-        <div data-bind="template: {name: templateName}"></div>
+    <div id="chat-container">
+        <div style="padding:10px;text-align:left;">
+            <div class="chat-win-header">
+                <div style="float:left;font-size:12px;font-weight:bold;color:#555">
+                    Chat with <span data-bind="text: contact_name"></span>
+                </div>
+                <div style="float:right">
+                    <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+        <div class="fill-area" style="padding:10px;flex:1">
+            <div class="chat-fill-area chatitemswnd">
+                <table cellspacing="0" cellpadding="0">
+                    <tbody data-bind="foreach: chatitems">
+                        <tr>
+                            <td>
+                                <div style="padding:6px 10px 0 0">
+                                    <span data-bind="text: time"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="padding-top:6px">
+                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
+                                </div>
+                            </td>
+                            <td>
+                                <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streemio.User.name }">
+                                    <span data-bind="text: text"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>    
+            <div class="footer-chat-controls">
+                <div>
+                    <textarea data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                </div>
+                <div style="text-align:center;margin-top:5px">
+                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
+                </div>
+            </div>        
+        </div>
     </div>
 
     <!-- Modal -->
@@ -1061,7 +1100,7 @@
             </div>
 
             <div class="media-call-chat">
-                <div class="chat-text-items">
+                <div class="chat-text-items chatitemswnd">
                     <table cellspacing="0" cellpadding="0" style="max-width:650px">
                         <tbody data-bind="foreach: chatitems">
                             <tr>

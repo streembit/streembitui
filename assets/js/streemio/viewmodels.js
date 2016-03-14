@@ -624,52 +624,22 @@ var EccKey = require('./libs/crypto/EccKey');
             chatitems: ko.observableArray([]),
             chatmsg: ko.observable(''),
             issession: ko.observable(issession),
-            templateName: ko.observable('empty-template'),
+            //templateName: ko.observable('empty-template'),
             
             init: function (callback) {
                 try {
-                    if (this.issession() != true) {
-                        //streemio.notify.info(");
-                        BootstrapDialog.show({
-                            title: 'User offline',
-                            message: "It seems the contact is offline.You can send an offline message to the contact.The network will store the message and deliver it once the contact is online.",
-                            onhidden: function (dialogRef) {
-                                var content = $("#contact-offline-template").html();
-                                BootstrapDialog.show({
-                                    title: 'Send offline message to ' + viewModel.contact.name ,
-                                    message: content,
-                                    buttons: [
-                                        {
-                                            label: 'Send Message',
-                                            action: function (dlgwin) {
-                                                var text = $.trim($("#txtOfflineMsg").val());
-                                                viewModel.sendoffline(text);
-                                                dlgwin.close();
-                                                streemio.notify.info("The offline message has been sent to the network. Once the contact is online the message will be delivered", 2000);
-                                            }
-                                        }, 
-                                        {
-                                            label: 'Close',
-                                            action: function (dlgwin) {
-                                                dlgwin.close();
-                                            }
-                                        }]
-                                });
-                            }
-                        });
-                    }
-                    else {
-                        this.templateName("contact-online-template");
-                    }
-                    
                     var items = streemio.Session.get_textmsg(this.contact.name);
                     var new_array = items.slice(0);
                     this.chatitems(new_array);
                     
                     callback();
+
+                    if (this.issession() != true) {
+                        alert("It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.");
+                    }
                 }
                 catch (err) {
-                    streemio.notify.error("Chat view error %j", err);
+                    streemio.notify.error_popup("Chat view error %j", err);
                 }
             },            
             
@@ -681,11 +651,19 @@ var EccKey = require('./libs/crypto/EccKey');
                 try {
                     var msg = $.trim(this.chatmsg());
                     if (msg) {
-                        var message = { cmd: streemio.DEFS.PEERMSG_TXTMSG, sender: streemio.User.name, text: msg };
-                        streemio.PeerNet.send_peer_message(this.contact, message);
-                        //  update the list with the sent message
-                        this.onTextMessage(message);
-                        this.chatmsg('');
+                        if (this.issession() == true) {
+                            var message = { cmd: streemio.DEFS.PEERMSG_TXTMSG, sender: streemio.User.name, text: msg };
+                            streemio.PeerNet.send_peer_message(this.contact, message);
+                            //  update the list with the sent message
+                            this.onTextMessage(message);
+                            this.chatmsg('');
+                        }
+                        else {
+                            alert("It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.");
+                            viewModel.sendoffline(msg);
+                            this.chatmsg('');
+                            streemio.notify.info("The off-line message has been sent to the network. Once the contact is on-line the message will be delivered", 5000);
+                        }
                     }
                 }
                 catch (err) {
@@ -717,7 +695,7 @@ var EccKey = require('./libs/crypto/EccKey');
             onTextMessage: function (msg) {
                 msg.time = streemio.util.timeNow();
                 viewModel.chatitems.push(msg);
-                var $cont = $('.chat-text-items');
+                var $cont = $('.chatitemswnd');
                 $cont[0].scrollTop = $cont[0].scrollHeight;
                 streemio.Session.add_textmsg(viewModel.contact.name, msg);
             }
@@ -882,7 +860,7 @@ var EccKey = require('./libs/crypto/EccKey');
             onTextMessage: function (msg) {
                 msg.time = streemio.util.timeNow();
                 viewModel.chatitems.push(msg);
-                var $cont = $('.chat-text-items');
+                var $cont = $('.chatitemswnd');
                 $cont[0].scrollTop = $cont[0].scrollHeight;
                 streemio.Session.add_textmsg(viewModel.contact.name, msg);
                 if (viewModel.ischatdisplay == false) {
@@ -1064,11 +1042,17 @@ var EccKey = require('./libs/crypto/EccKey');
             return contact;
         }
         
-        var Contact = {
-            actionicon: ko.observable(""),
-            actiontype: "",
-            usertypeicon: "",
-            files: ko.observableArray([])
+        function Contact(user_type) {
+            this.actionicon = ko.observable("")
+            this.actiontype =  "";
+            this.usertypeicon = "";
+            this.files = ko.observableArray([]);
+            if (user_type == "human") {
+                this.usertypeicon = "glyphicon glyphicon-user";
+            }
+            else if (user_type == "device") {
+                this.usertypeicon = "glyphicon glyphicon-cog";
+            }
         };
         
         var viewModel = {
@@ -1096,13 +1080,7 @@ var EccKey = require('./libs/crypto/EccKey');
                             continue;
                         }
                         
-                        var contact = Object.create(Contact);
-                        if (list[i].user_type == "human") {
-                            contact.usertypeicon = "glyphicon glyphicon-user";
-                        }
-                        else if (list[i].user_type == "device") {
-                            contact.usertypeicon = "glyphicon glyphicon-cog";
-                        }
+                        var contact = new Contact(list[i].user_type);
                         var contobj = merge(contact, list[i]);
                         viewModel.contacts.push(contobj);
 
@@ -1128,6 +1106,7 @@ var EccKey = require('./libs/crypto/EccKey');
             
             onTextMessage: function (data) {
                 try {
+                    debugger;
                     var contacts = viewModel.contacts();
                     for (var i = 0; i < contacts.length; i++) {
                         if (contacts[i].name == data.sender) {
@@ -1252,13 +1231,7 @@ var EccKey = require('./libs/crypto/EccKey');
                         return;
                     }
 
-                    var contact = Object.create(Contact);
-                    if (result.user_type == "human") {
-                        contact.usertypeicon = "glyphicon glyphicon-user";
-                    }
-                    else if (result.user_type == "device") {
-                        contact.usertypeicon = "glyphicon glyphicon-cog";
-                    }
+                    var contact = new Contact(result.user_type);
                     var contobj = merge(contact, result);
                     viewModel.contacts.push(contobj);
 
@@ -1486,7 +1459,10 @@ var EccKey = require('./libs/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.UserViewModel = function (newaccount, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount) {
+    streemio.vms.UserViewModel = function (newaccount, validateAccount, validatePassword, 
+                                            validatePasswordConfirm, validatePrivateSeedHost, 
+                                            validatePrivateSeedPort, validatePrivateSeedAccount, 
+                                            is_init_existing_account) {
         var viewModel = {
             account: ko.observable(),
             private_key_pwd: ko.observable(),
@@ -1499,6 +1475,8 @@ var EccKey = require('./libs/crypto/EccKey');
             private_net_host: ko.observable(),
             private_net_account: ko.observable(),
             private_net_port: ko.observable(),
+            caption_btninit: ko.observable("Connect to network"),
+            caption_view_title: ko.observable(""),
             
             init: function (callback) {
                 viewModel.is_private_network(streemio.Main.network_type == streemio.DEFS.PRIVATE_NETWORK);
@@ -1520,11 +1498,20 @@ var EccKey = require('./libs/crypto/EccKey');
                     this.get_accounts(function () {
                         callback(null);
                     });
+
+                    if (is_init_existing_account) {
+                        viewModel.caption_btninit("Initialize");
+                        viewModel.caption_view_title("Initialize existing account");
+                    }
+                    else {
+                        viewModel.caption_view_title("Connect to Streemio network");
+                    }
                 }
                 else {
+                    viewModel.caption_view_title("Create your Streemio user account");
                     viewModel.accounts([]);
                     callback(null);
-                }
+                }                
             },
             
             get_accounts: function (callback) {

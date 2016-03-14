@@ -2723,10 +2723,12 @@ streemio.Main = (function (module, logger, events, config) {
             $(".streemio-screen").show();
         }
         else if (app_cmd == streemio.DEFS.CMD_APP_CREATEACCOUNT) {
+            module.network_type = streemio.DEFS.PUBLIC_NETWORK;
             start_new_account();
         }
         else if (app_cmd == streemio.DEFS.CMD_APP_INITACCOUNT) {
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+            module.network_type = streemio.DEFS.PUBLIC_NETWORK;
+            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false, initexisting: true });
             $(".streemio-screen").show();
         }
         else if (app_cmd == streemio.DEFS.CMD_APP_RESTOREACCOUNT) {
