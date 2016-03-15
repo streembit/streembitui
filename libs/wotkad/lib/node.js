@@ -1365,6 +1365,7 @@ Node.prototype._handleStore = function (params) {
     }
     
     try {
+        // create the message item object
         var recipient = null;
         if (payload.data.type == wotmsg.MSGTYPE.OMSG) {
             recipient = payload.aud;
@@ -1387,7 +1388,7 @@ Node.prototype._handleStore = function (params) {
     }
     
     if (!account_key) {
-        return this._log.error("handleStore error invalid public key account field");
+        return this._log.error("handleStore error: invalid public key account field");
     }
     
     this.get(account_key, function (err, value) {
@@ -1447,7 +1448,10 @@ Node.prototype._handleStore = function (params) {
                 
                 node._log.debug("_handleStore validate account: " + account_key + " public key: " + stored_pkkey);
                 
-                if (payload.data.type == wotmsg.MSGTYPE.PUBPK || payload.data.type == wotmsg.MSGTYPE.UPDPK || payload.data.type == wotmsg.MSGTYPE.DELPK) {
+                if (payload.data.type == wotmsg.MSGTYPE.PUBPK || 
+                    payload.data.type == wotmsg.MSGTYPE.UPDPK || 
+                    payload.data.type == wotmsg.MSGTYPE.DELPK ||
+                    payload.data.type == wotmsg.MSGTYPE.OMSG ) {
                     var decoded_msg = wotmsg.decode(params.value, stored_pkkey);
                     if (!decoded_msg) {
                         node.errorHandler(0x0109);
