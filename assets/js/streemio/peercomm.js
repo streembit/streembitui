@@ -124,9 +124,9 @@ streemio.Node = (function (module, logger, events, config) {
         transport.peer_send(contact, data);
     }
     
-    module.get_account_messages = function (account, callback) {
+    module.get_account_messages = function (account, msgkey, callback) {
         var transport = streemio.TransportFactory.transport;
-        transport.get_account_messages(account, callback);
+        transport.get_account_messages(account, msgkey, callback);
     }
     
     module.delete_item = function (key, request) {
@@ -1221,7 +1221,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
         try {
             logger.debug("get_account_messages");
             
-            streemio.Node.get_account_messages(streemio.User.name, function (err, result) {
+            streemio.Node.get_account_messages(streemio.User.name, msgkey, function (err, result) {
                 if (err) {
                     return streemio.notify.error("get_account_messages error:  %j", err);
                 }

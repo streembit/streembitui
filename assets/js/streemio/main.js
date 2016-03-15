@@ -431,8 +431,9 @@ streemio.UI = (function (module, logger, events, config) {
         });
     }
     
-    module.onOffLineMsg = function (result) {
-        logger.debug("streemio.UI.onOffLineMsg");
+    module.onAccountMsg = function (result) {
+        debugger;
+        logger.debug("streemio.UI.onAccountMsg");
         
         if (!messagesvm) {
             messagesvm = new streemio.vms.MessagesViewModel();
@@ -470,6 +471,7 @@ streemio.UI = (function (module, logger, events, config) {
         
         // delete the message from the network
         streemio.PeerNet.delete_messages(function (err, result) {
+            debugger;
             logger.debug("delete_messages err: " + err + " result: %j", result);
         });
     }
@@ -1862,6 +1864,11 @@ streemio.Contacts = (function (module, logger, events, config) {
                 msg += " completed.";
             }
             streemio.notify.taskbarmsg(msg);
+
+            // get the offline messages
+            var key = streemio.User.name + "/message";
+            streemio.PeerNet.get_account_messages(key);
+
         });
     }
     
@@ -2796,7 +2803,7 @@ streemio.Main = (function (module, logger, events, config) {
             streemio.PeerNet.onPeerMessage(payload, info);
         }
         else if (eventcmd == events.TYPES.ONACCOUNTMSG) {
-            streemio.UI.onOffLineMsg(payload);
+            streemio.UI.onAccountMsg(payload);
         }
         else if (eventcmd == events.TYPES.ONINITPROGRESS) {
             appboot_msg_handler(payload);
