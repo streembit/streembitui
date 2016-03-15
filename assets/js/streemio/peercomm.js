@@ -134,9 +134,9 @@ streemio.Node = (function (module, logger, events, config) {
         transport.delete_item(key, request);
     }
     
-    module.delete_messages = function (request, callback) {
+    module.delete_message = function (request, callback) {
         var transport = streemio.TransportFactory.transport;
-        transport.delete_messages(request, callback);
+        transport.delete_message(request, callback);
     }
     
     module.validate_connection = function (callback) {
@@ -982,7 +982,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
         });
     }
     
-    module.send_offline_message = function (contact, message, callback) {
+    module.send_offline_message = function (contact, message, msgtype, callback) {
         try {
             logger.debug("send_offline_message()");
             
@@ -1007,6 +1007,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             payload[wotmsg.MSGFIELD.REKEY] = rcpt_ecdh_public_key;
             payload[wotmsg.MSGFIELD.TIMES] = timestamp;
             payload[wotmsg.MSGFIELD.CIPHER] = cipher;
+            payload[wotmsg.MSGFIELD.MSGTYPE] = msgtype;
             
             var jti = streemio.Message.create_id();
             var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
@@ -1243,16 +1244,24 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
-    module.delete_messages = function (callback) {
-        try {
-            
+    module.delete_message = function (msgid, callback) {
+        try {            
+            if (!msgid) {
+                return callback("delete_messages error: invalid msgid")    
+            }
+
             var payload = {};
-            payload.type = wotmsg.MSGTYPE.DEL;
-            payload[wotmsg.MSGFIELD.TIMES] = Date.now();
-            
+            payload.type = wotmsg.MSGTYPE.DELMSG;
+            payload[wotmsg.MSGFIELD.MSGID] = msgid
+
             var jti = streemio.Message.create_id();
-            var request = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name);
-            streemio.Node.delete_messages(request, callback);
+            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name);
+
+            var key = streemio.User.name + "/delmsg/" + msgid;
+            // put the message to the network
+            streemio.Node.put(key, value, function (err) {
+                callback(err);
+            });
         }
         catch (e) {
             streemio.notify.error("delete_messages error:  %j", e);

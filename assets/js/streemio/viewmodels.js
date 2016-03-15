@@ -347,61 +347,82 @@ var EccKey = require('./libs/crypto/EccKey');
         var viewModel = {
             messages: ko.observableArray([]),
             
-            add_message: function (data) {
+            add_message: function (key, data) {
                 try {
+                    debugger;
                     var payload = streemio.Message.getpayload(data);
                     var sender = payload.iss;
-                    
-                    streemio.DB.get(streemio.DB.CONTACTDB, sender).then(
-                        function (result) {
-                            try {
-                                var public_key = result.public_key;
-                                if (!public_key)
-                                    return;
+                    var contact = streemio.Contacts.get_contact(sender);
+
+                    var public_key = contact.public_key;
+                    if (!public_key)
+                        return;
                                 
-                                var message = streemio.Message.decode(data, public_key);
-                                //  
-                                var sender_ecdh = message.data.send_ecdh_public;
-                                var rcpt_ecdh = message.data.rcpt_ecdh_public;
-                                if (!sender_ecdh || !rcpt_ecdh)
-                                    return;
+                    var message = streemio.Message.decode(data, public_key);
+                    //  
+                    var sender_ecdh = message.data.send_ecdh_public;
+                    var rcpt_ecdh = message.data.rcpt_ecdh_public;
+                    if (!sender_ecdh || !rcpt_ecdh)
+                        return;
                                 
-                                var ecdhkeys = streemio.User.ecdhkeys;
-                                // get the user ecdh key that was used to encrypt the message
-                                var ecdh_public_key = null;
-                                var ecdh_private_key = null;
-                                for (var i = 0; i < ecdhkeys.length; i++) {
-                                    if (ecdhkeys[i].ecdh_public_key == rcpt_ecdh) {
-                                        ecdh_public_key = ecdhkeys[i].ecdh_public_key;
-                                        ecdh_private_key = ecdhkeys[i].ecdh_private_key;
-                                        break;
-                                    }
-                                }
+                    var ecdhkeys = streemio.User.ecdhkeys;
+                    // get the user ecdh key that was used to encrypt the message
+                    var ecdh_public_key = null;
+                    var ecdh_private_key = null;
+                    for (var i = 0; i < ecdhkeys.length; i++) {
+                        if (ecdhkeys[i].ecdh_public_key == rcpt_ecdh) {
+                            ecdh_public_key = ecdhkeys[i].ecdh_public_key;
+                            ecdh_private_key = ecdhkeys[i].ecdh_private_key;
+                            break;
+                        }
+                    }
                                 
-                                if (!ecdh_public_key || !ecdh_private_key) {
-                                    streemio.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
-                                    return;
-                                }
+                    if (!ecdh_public_key || !ecdh_private_key) {
+                        streemio.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
+                        return;
+                    }
                                 
-                                var jwe_input = message.data.cipher;
-                                var plain_text = streemio.Message.decrypt_ecdh(ecdh_private_key, ecdh_public_key, sender_ecdh, jwe_input);
-                                if (plain_text) {
-                                    var dataobj = JSON.parse(plain_text);
-                                    var msgobj = { sender: message.iss, time: message.iat, data: dataobj };
-                                    viewModel.messages.push(msgobj);
-                                }
+                    var jwe_input = message.data.cipher;
+                    var plain_text = streemio.Message.decrypt_ecdh(ecdh_private_key, ecdh_public_key, sender_ecdh, jwe_input);
+                    if (plain_text) {
+                        var dataobj = JSON.parse(plain_text);
+                        if (dataobj) {
+                            var msgtype = message.data.message_type;
+                            var template_name;
+                            if (msgtype) {
+                                template_name = "account-" + msgtype + "-message";    
                             }
-                            catch (e) {
-                                streemio.logger.error("Get sender data from DB error %j", e);
+                            else {
+                                template_name = "account-text-message";    
                             }
-                        },
-                        function (err) {
-                            streemio.logger.error("Get sender data from DB error %j", err);
-                        }                        
-                    );
+
+                            var msgobj = { template: template_name, key: key, sender: message.iss, time: message.iat, data: dataobj };
+                            viewModel.messages.push(msgobj);
+                        }
+                    }
+                    //
                 }     
                 catch (err) {
                     streemio.logger.error("add_message error %j", err);
+                }
+            },
+
+            deletemsg: function (message) {
+                try {
+                    //var msgid = "";
+                    //streemio.PeerNet.delete_message(msgid, function (err) {
+                    //    if (err) {
+                    //        return streemio.notify.error_popup("Error in deleting message. %j", err)
+                    //    }
+                        
+                        viewModel.messages.remove(function (item) {
+                            return item.key && item.key == message.key;
+                        }) 
+
+                    //});
+                }
+                catch (err) {
+                    streemio.logger.error("deletemsg error %j", err);
                 }
             }
         };
@@ -716,7 +737,7 @@ var EccKey = require('./libs/crypto/EccKey');
                 var self = this;
                 try {
                     if (message) {
-                        streemio.PeerNet.send_offline_message(this.contact, message, function () {});
+                        streemio.PeerNet.send_offline_message(this.contact, message, "text", function () {});
                     }
                 }
                 catch (err) {
@@ -1984,6 +2005,12 @@ var EccKey = require('./libs/crypto/EccKey');
                         resetView();
                         streemio.Session.uioptions = options;
                         showView("inituser");
+                        break;
+
+                    case streemio.DEFS.CMD_ACCOUNT_MESSAGES:
+                        resetTemplate();
+                        resetView();
+                        showView("accountmsgs");
                         break;
 
                     case streemio.DEFS.CMD_SETTINGS:

@@ -30,7 +30,7 @@ var MSGTYPE = {
     DATA: 0x03,     //  Publish data to the network
     OMSG: 0x04,     //  Off-line message
     UPDPK: 0x05,    //  Update public key
-    DEL: 0x06       //  Delete public key message
+    DELMSG: 0x06    //  Delete message
 };
 
 var MSGFIELD = {
@@ -52,7 +52,9 @@ var MSGFIELD = {
     CALLT: "call_type",
     RESULT: "result",
     SEKEY: "send_ecdh_public",
-    REKEY: "rcpt_ecdh_public"
+    REKEY: "rcpt_ecdh_public",
+    MSGID: "msgid",
+    MSGTYPE: "message_type"
 };
 
 var PEERMSG = {

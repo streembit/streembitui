@@ -292,7 +292,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         }
     }
     
-    obj.delete_messages = function (request, callback) {
+    obj.delete_message = function (request, callback) {
         try {
             if (!request) {
                 throw new Error("delete_messages invalid request parameter");

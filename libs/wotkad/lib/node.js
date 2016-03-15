@@ -1029,9 +1029,8 @@ Node.prototype.delete_offlinemsgs = function (request, callback) {
 
 };
 
-Node.prototype.delete_item = function (key, request) {
-    var self = this;
-    
+Node.prototype.delete_item = function (key) {
+    var self = this;    
     this._storage.del(key, function (err) {
         if (err) {
             self._log.error('failed to delete item with key %s', key);
@@ -1299,6 +1298,7 @@ Node.prototype._handleStore = function (params) {
     var node = this;
     var item;
     var is_update_key = false, is_system_update_key = false;
+    var msgid;
     
     //this._log.info('received valid STORE from %s', params.nodeID);
     
@@ -1391,6 +1391,13 @@ Node.prototype._handleStore = function (params) {
         return this._log.error("handleStore error: invalid public key account field");
     }
     
+    if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+        msgid = payload.data[wotmsg.MSGFIELD.MSGID];
+        if (!msgid) {
+            return this._log.error("handleStore error: invalid mssgid for delete message");
+        }
+    }
+    
     this.get(account_key, function (err, value) {
         try {
             if (err) {
@@ -1451,7 +1458,8 @@ Node.prototype._handleStore = function (params) {
                 if (payload.data.type == wotmsg.MSGTYPE.PUBPK || 
                     payload.data.type == wotmsg.MSGTYPE.UPDPK || 
                     payload.data.type == wotmsg.MSGTYPE.DELPK ||
-                    payload.data.type == wotmsg.MSGTYPE.OMSG ) {
+                    payload.data.type == wotmsg.MSGTYPE.OMSG ||
+                    payload.data.type == wotmsg.MSGTYPE.DELMSG ) {
                     var decoded_msg = wotmsg.decode(params.value, stored_pkkey);
                     if (!decoded_msg) {
                         node.errorHandler(0x0109);
@@ -1460,13 +1468,14 @@ Node.prototype._handleStore = function (params) {
                     
                     //  passed the validation -> add to the network
                     node._log.debug('handleStore validation for msgtype: ' + payload.data.type + '  is OK');
+
                     //node._log.debug('data: %j', params);
                     node._storeValue(item, params, function () {
-                        //if (payload.data.type == wotmsg.MSGTYPE.DELPK) {
-                        //    node._log.debug('handleStore DELPK call expire()');
-                        //    node._expire();
-                        //}
-                    });
+                        if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+                            var delkey = account_key + "/message/" + msgid;
+                            node.delete_item(delkey);
+                        }
+                    });                    
                 }
             }
         }

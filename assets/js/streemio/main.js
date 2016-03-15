@@ -359,7 +359,7 @@ streemio.Fdialog = (function (module) {
 
 streemio.UI = (function (module, logger, events, config) {
     
-    var messagesvm = null;
+    module.messagesvm = null;
     
     module.showContacts = function () {
         $(".app-select-screen").hide();
@@ -432,11 +432,9 @@ streemio.UI = (function (module, logger, events, config) {
     }
     
     module.onAccountMsg = function (result) {
-        debugger;
-        logger.debug("streemio.UI.onAccountMsg");
-        
-        if (!messagesvm) {
-            messagesvm = new streemio.vms.MessagesViewModel();
+
+        if (!module.messagesvm) {
+            module.messagesvm = new streemio.vms.MessagesViewModel();
         }
         
         if (!result)
@@ -451,6 +449,8 @@ streemio.UI = (function (module, logger, events, config) {
         if (!messages || !messages.length)
             return;
         
+        var processed = [];
+
         for (var i = 0; i < messages.length; i++) {
             //logger.debug("message: %j", messages[i]);
             var key = messages[i].key;
@@ -466,14 +466,11 @@ streemio.UI = (function (module, logger, events, config) {
             
             var hash = keyarr[keyarr.length - 1];
             var value = messages[i].value;
-            messagesvm.add_message(value);
+            module.messagesvm.add_message(key, value);
         }
         
-        // delete the message from the network
-        streemio.PeerNet.delete_messages(function (err, result) {
-            debugger;
-            logger.debug("delete_messages err: " + err + " result: %j", result);
-        });
+        // navigate the to the messages view
+        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_ACCOUNT_MESSAGES);
     }
     
     module.NavigateInitUser = function () {
@@ -1131,22 +1128,20 @@ streemio.User = (function (usrobj, events) {
             
             // the account exists and the encrypted entropy is correct!
             
-            // create a ECDH key
-            var ecdh_key = nodecrypto.createECDH('secp256k1');
-            ecdh_key.generateKeys();
+            if (!userobj.ecdhkeys) {
+                userobj.ecdhkeys = [];
+            }
             
-            userobj.timestamp = Date.now();
-            userobj.ecdhkeys.push({
-                ecdh_private_key: ecdh_key.getPrivateKey('hex'),
-                ecdh_public_key: ecdh_key.getPublicKey('hex')
-            });
-            
-            if (userobj.ecdhkeys.length > 5) {
-                userobj.ecdhkeys.shift();
-                if (userobj.ecdhkeys.length > 5) {
-                    var removecount = userobj.ecdhkeys.length - 5;
-                    userobj.ecdhkeys.splice(0, removecount);
-                }
+            if ( userobj.ecdhkeys.length == 0) {
+                // create a ECDH key
+                var ecdh_key = nodecrypto.createECDH('secp256k1');
+                ecdh_key.generateKeys();
+                
+                userobj.timestamp = Date.now();
+                userobj.ecdhkeys.push({
+                    ecdh_private_key: ecdh_key.getPrivateKey('hex'),
+                    ecdh_public_key: ecdh_key.getPublicKey('hex')
+                });
             }
             
             var cipher_context = streemio.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
