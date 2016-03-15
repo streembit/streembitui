@@ -2795,7 +2795,7 @@ streemio.Main = (function (module, logger, events, config) {
         else if (eventcmd == events.TYPES.ONPEERMSG) {
             streemio.PeerNet.onPeerMessage(payload, info);
         }
-        else if (eventcmd == events.TYPES.ONOFFLINEMSG) {
+        else if (eventcmd == events.TYPES.ONACCOUNTMSG) {
             streemio.UI.onOffLineMsg(payload);
         }
         else if (eventcmd == events.TYPES.ONINITPROGRESS) {

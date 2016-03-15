@@ -55,7 +55,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                 if (key.indexOf(msgkey) > -1 && item.recipient == streemio.User.name) {
                     //logger.debug("off-line message item: %j", item);
                     var items = [item];
-                    events.emit(events.APPEVENT, events.TYPES.ONOFFLINEMSG, items);
+                    events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, items);
                 }
             }
         }
@@ -279,16 +279,16 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         }
     }
     
-    obj.get_messages = function (account, callback) {
+    obj.get_account_messages = function (account, msgkey, callback) {
         try {
             if (!account ) {
-                throw new Error("get_messages invalid account parameter");
+                throw new Error("get_account_messages invalid account parameter");
             }
 
-            obj.node.msg_request(account, callback);
+            obj.node.get_account_messages(account, msgkey, callback);
         }
         catch (err) {
-            logger.error("get_messages error:  %j", err);
+            logger.error("get_account_messages error:  %j", err);
         }
     }
     

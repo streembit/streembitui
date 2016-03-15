@@ -65,6 +65,36 @@ var EccKey = require('./libs/crypto/EccKey');
         );
     }
     
+    function chat_contact(contact) {
+        streemio.PeerNet.ping(contact, true, 5000)
+        .then(
+            function () {
+                return streemio.PeerNet.get_contact_session(viewModel.contact);
+            },
+            function (err) {
+                throw new Error(err);
+            }
+        )
+        .then(
+            function (session) {
+                var options = {
+                    contact : viewModel.contact,
+                    issession: session ? true : false
+                };
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+            },
+            function (err) {
+                streemio.logger.info("Error in creating peer session: %j", err.message || err);
+                // still open the view and indicate the contact is offline
+                var options = {
+                    contact : contact,
+                    issession: false
+                };
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+            }
+        );
+    }
+    
     streemio.vms.UserUIStartViewModel = function () {
         
         function show_contacts(callback) {
@@ -132,8 +162,13 @@ var EccKey = require('./libs/crypto/EccKey');
             },
             
             start_chat: function () {
-                
-
+                streemio.Session.selected_contact = null;
+                show_contacts(function (name) {
+                    var contact = streemio.Contacts.get_contact(name);
+                    if (contact) {
+                        chat_contact(contact);
+                    }
+                });
             },
             
             
@@ -624,8 +659,7 @@ var EccKey = require('./libs/crypto/EccKey');
             chatitems: ko.observableArray([]),
             chatmsg: ko.observable(''),
             issession: ko.observable(issession),
-            //templateName: ko.observable('empty-template'),
-            
+
             init: function (callback) {
                 try {
                     var items = streemio.Session.get_textmsg(this.contact.name);
@@ -635,7 +669,7 @@ var EccKey = require('./libs/crypto/EccKey');
                     callback();
 
                     if (this.issession() != true) {
-                        alert("It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.");
+                        bootbox.alert("It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.");
                     }
                 }
                 catch (err) {
@@ -658,8 +692,7 @@ var EccKey = require('./libs/crypto/EccKey');
                             this.onTextMessage(message);
                             this.chatmsg('');
                         }
-                        else {
-                            alert("It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.");
+                        else {                            
                             viewModel.sendoffline(msg);
                             this.chatmsg('');
                             streemio.notify.info("The off-line message has been sent to the network. Once the contact is on-line the message will be delivered", 5000);
@@ -683,8 +716,7 @@ var EccKey = require('./libs/crypto/EccKey');
                 var self = this;
                 try {
                     if (message) {
-                        streemio.PeerNet.send_offline_message(this.contact, message, function () {
-                        });
+                        streemio.PeerNet.send_offline_message(this.contact, message, function () {});
                     }
                 }
                 catch (err) {

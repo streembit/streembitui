@@ -316,7 +316,7 @@ Node.prototype.get_seed_contact = function () {
     }
 }
 
-Node.prototype.msg_request = function (account, callback) {
+Node.prototype.get_account_messages = function (account, msgkey, callback) {
     
     var seed = this.get_seed_contact();
     if (!seed) {
@@ -329,7 +329,7 @@ Node.prototype.msg_request = function (account, callback) {
             host: seed.address
         },
         function () {
-            client.write(JSON.stringify({ type: 'MSGREQUEST', account: account }));
+            client.write(JSON.stringify({ type: 'MSGREQUEST', account: account, msgkey: msgkey }));
         }
     );
     
@@ -347,7 +347,7 @@ Node.prototype.msg_request = function (account, callback) {
             callback(null, reply);
         }
         catch (err) {
-            callback("msg_request failed for " + seed.address + ":" + seed.port + " error: " + err.message);
+            callback("get_account_messages failed for " + seed.address + ":" + seed.port + " error: " + err.message);
         }
     });
     
@@ -355,7 +355,7 @@ Node.prototype.msg_request = function (account, callback) {
     });
     
     client.on('error', function (err) {
-        fn("msg_request failed for " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
+        callback("get_account_messages failed for " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
     });
 };
 
@@ -398,7 +398,7 @@ Node.prototype.delete_messages = function (request, callback) {
     });
     
     client.on('error', function (err) {
-        fn("delete_messages failed for " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
+        callback("delete_messages failed for " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
     });
 };
 
@@ -848,7 +848,7 @@ Node.prototype._bindRPCMessageHandlers = function () {
         self._log.debug('node listening on %s:%d', self._self.address, self._self.port);
     });
     
-    this._rpc.on('MSGREQUEST', this.get_offlinemsgs.bind(this));
+    this._rpc.on('MSGREQUEST', this.get_stored_messages.bind(this));
     
     this._rpc.on('DELMSGS', this.delete_offlinemsgs.bind(this));
 
@@ -894,10 +894,9 @@ Node.prototype._replicate = function () {
                     self._log.error('failed to replicate item at key %s', data.key);
                 }
             });
-    
-        // if we are the publisher, then only replicate every T_REPUBLISH
         } 
         else if (Date.now() <= data.value.timestamp + constants.T_REPUBLISH) {
+            // if we are the publisher, then only replicate at every T_REPUBLISH interval
             self.put(data.key, data.value.value, function (err) {
                 if (err) {
                     self._log.error('failed to republish item at key %s', data.key);
@@ -916,7 +915,7 @@ Node.prototype._replicate = function () {
 };
 
 
-Node.prototype.get_offlinemsgs = function (account, callback) {
+Node.prototype.get_stored_messages = function (account, msgkey, callback) {
     var self = this;
     var stream = this._storage.createReadStream();
     
@@ -931,15 +930,18 @@ Node.prototype.get_offlinemsgs = function (account, callback) {
                 data.value = JSON.parse(data.value);
             } 
             catch (err) {
-                return self._log.error('failed to parse value from %s', data.value);
+                return self._log.error('get_stored_messages failed to parse value');
             }
         }
         
-        if (data.value.recipient && data.value.recipient == account) {
-            count++;
-            if (messages.length < 10) {
-                messages.push({ key: data.key, value: data.value.value });
-            }
+        if (data.value.recipient && data.value.recipient == account) {            
+            var keyitems = data.key.split("/");
+            if (keyitems && keyitems.length > 2 && keyitems[1] == "message") {        
+                if (messages.length < 10) {
+                    messages.push({ key: data.key, value: data.value.value });
+                }
+                count++;
+            }            
         }
     });
     

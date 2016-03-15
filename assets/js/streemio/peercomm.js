@@ -124,9 +124,9 @@ streemio.Node = (function (module, logger, events, config) {
         transport.peer_send(contact, data);
     }
     
-    module.get_messages = function (account, callback) {
+    module.get_account_messages = function (account, callback) {
         var transport = streemio.TransportFactory.transport;
-        transport.get_messages(account, callback);
+        transport.get_account_messages(account, callback);
     }
     
     module.delete_item = function (key, request) {
@@ -1217,20 +1217,20 @@ streemio.PeerNet = (function (module, logger, events, config) {
         return val ? true : false;
     }
     
-    module.get_messages = function () {
+    module.get_account_messages = function (msgkey) {
         try {
-            logger.debug("get_messages");
+            logger.debug("get_account_messages");
             
-            streemio.Node.get_messages(streemio.User.name, function (err, result) {
+            streemio.Node.get_account_messages(streemio.User.name, function (err, result) {
                 if (err) {
-                    return streemio.notify.error("get_messages error:  %j", err);
+                    return streemio.notify.error("get_account_messages error:  %j", err);
                 }
                 
-                events.emit(events.APPEVENT, events.TYPES.ONOFFLINEMSG, result);
+                events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, result);
             });
         }
         catch (e) {
-            streemio.notify.error("get_messages error:  %j", e);
+            streemio.notify.error("get_account_messages error:  %j", e);
         }
     }
     

@@ -141,7 +141,9 @@ TCPTransport.prototype._handleConnection = function (socket) {
                         
                         case "MSGREQUEST":
                             var account = msgobj.account;
-                            self.emit('MSGREQUEST', account, function (err, count, msgs) {
+                            var msgkey = msgobj.msgkey;
+
+                            self.emit('MSGREQUEST', account, msgkey, function (err, count, msgs) {
                                 var reply = "";
                                 if (err) {
                                     reply = JSON.stringify({ error: err });

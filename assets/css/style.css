@@ -456,7 +456,7 @@ body {
 }
 
 .footer-chat-controls{
-    padding: 8px 10px 0 10px;
+    padding: 8px 0 0 0;
     border-top: 3px solid #eee;
     margin-top:8px;
 }

@@ -33,10 +33,10 @@ module.exports = {
     K: 20,
     
     // TODO make these configurable
-    T_REFRESH: ms('3600s'),
-    T_REPLICATE: ms('3600s'),  
-    T_REPUBLISH: ms('86400s'),
-    T_EXPIRE: ms('3660s'),   // must be bigger than the replicate so the to be delete keys can be replicated before their delete
+    T_REFRESH: ms('86300s'),
+    T_REPLICATE: ms('86300s'),  
+    T_REPUBLISH: ms('86300s'),
+    T_EXPIRE: ms('86400s'),   // must be bigger than the replicate so the to be delete keys can be replicated before their delete
     
     T_OFFLMSGREP: 5000,
     

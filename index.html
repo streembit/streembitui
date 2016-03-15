@@ -833,64 +833,6 @@
 </script>
 
 
-<script type="text/html" id="contact-online-template">
-    <!--
-    <div class="chat-main-win">
-        <div class="chat-win-header">
-            <div style="float:left;font-size:12px;font-weight:bold;color:#555">
-                Chat with <span data-bind="text: contact_name"></span>
-            </div>
-            <div style="float:right">
-                <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
-            </div>
-            <div style="clear:both"></div>
-        </div>
-    </div>
-        -->
-    
-    <div style="flex-grow:1;background-color:aqua">
-        <!--
-        <div class="chat-window">
-            <div class="chat-text-items">
-                <table cellspacing="0" cellpadding="0">
-                    <tbody data-bind="foreach: chatitems">
-                        <tr>
-                            <td>
-                                <div style="padding:6px 10px 0 0">
-                                    <span data-bind="text: time"></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="padding-top:6px">
-                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
-                                </div>
-                            </td>
-                            <td>
-                                <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == streemio.User.name }">
-                                    <span data-bind="text: text"></span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="chat-controls">
-                <div class="chat-control-ctrls">
-                    <div class="chat-controls-txt">
-                        <textarea data-bind="value: chatmsg"></textarea>
-                    </div>
-                    <div class="chat-controls-btn">
-                        <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-            -->
-    </div>
-        
-</script>
-
-
 <script type="text/html" id="streemio-view-chat">
     <div id="chat-container">
         <div style="padding:10px;text-align:left;">
@@ -898,7 +840,7 @@
                 <div style="float:left;font-size:12px;font-weight:bold;color:#555">
                     Chat with <span data-bind="text: contact_name"></span>
                 </div>
-                <div style="float:right">
+                <div style="float:right" data-bind="visible: issession">
                     <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
                 </div>
                 <div style="clear:both"></div>

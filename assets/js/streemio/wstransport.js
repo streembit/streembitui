@@ -115,7 +115,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                         if (key.indexOf(msgkey) > -1 && item.recipient == streemio.User.name) {
                             //logger.debug("off-line message item: %j", item);
                             var items = [item];
-                            events.emit(events.APPEVENT, events.TYPES.ONOFFLINEMSG, items);
+                            events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, items);
                         }
                     }
                 }

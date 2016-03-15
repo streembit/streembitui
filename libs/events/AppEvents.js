@@ -20,7 +20,7 @@ function AppEvents() {
         ONVIDEOCONNECT: "onVideoConnect",
         ONTEXTMSG: "onTextMsg",
         ONPEERMSG: "onPeerMsg",
-        ONOFFLINEMSG: "onOfflineMsg",
+        ONACCOUNTMSG: "onAccountMsg",
         ONPEERERROR: "onPeerError",
         ONFCHUNKSEND: "onFileChunkSend",
         ONFILECANCEL: "onFileCancel",
