@@ -360,48 +360,6 @@ Node.prototype.get_account_messages = function (account, msgkey, callback) {
 };
 
 
-Node.prototype.delete_messages = function (request, callback) {
-    if (!request)
-        throw new Error("delete_messages invalid request parameter");
-    
-    if (!callback || typeof callback != "function")
-        throw new Error("delete_messages invalid request parameter");
-    
-    //  TODO delete from all seeds with a loop
-    var seed = this.get_seed_contact();
-    if (!seed) {
-        return callback("no seed contact is available");
-    }
-    
-    var client = net.connect( 
-        {
-            port: seed.port, 
-            host: seed.address
-        },
-        function () {
-            client.write(JSON.stringify({ type: 'DELMSGS', request: request }));
-        }
-    );
-    
-    client.on('data', function (data) {
-        client.end();
-        try {
-            var reply = JSON.parse(data.toString());
-            callback(null, reply);
-        }
-        catch (err) {
-            callback("delete_messages failed for " + seed.address + ":" + seed.port + " error: " + err.message);
-        }
-    });
-    
-    client.on('end', function () {
-    });
-    
-    client.on('error', function (err) {
-        callback("delete_messages failed for " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
-    });
-};
-
 Node.prototype.is_seedcontact_exists = function (callback) {
     
     try {
@@ -697,7 +655,7 @@ Node.prototype.put = function (key, value, callback) {
             }, 
             function (err, resultsarr) {
                 callback(err, resultsarr);
-                node._log.debug('resultsarr: %j', resultsarr);
+                //node._log.debug('resultsarr: %j', resultsarr);
             }
         );
 
@@ -893,7 +851,7 @@ Node.prototype.get_stored_messages = function (account, msgkey, callback) {
     var self = this;
     var stream = this._storage.createReadStream();
     
-    this._log.debug('getoff-line messages count for %s', account);
+    //this._log.debug('get_stored_messages for %s', account);
     
     var count = 0;
     var messages = [];

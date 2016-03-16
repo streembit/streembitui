@@ -954,9 +954,28 @@ span.awesomeBlue i.addbtn{
 }
 
 .account-message{
-    margin-bottom:20px;
-    border:1px solid #ddd;
+    margin:0 4px 15px 0;
+    border:1px solid #ccc;
     border-radius:4px;
-    padding:8px 15px;
     background-color:#fafafa;
+    box-shadow: 3px 3px 4px #ddd; 
+    padding:8px 0;
+}
+
+.account-message-from{
+    border-bottom:1px dotted #ccc;
+    padding-bottom:4px;
+    margin:0 10px;
+}
+
+.account-message-time{
+    border-bottom:1px dotted #ccc;
+    padding-bottom:4px;
+    margin-top:5px;
+    margin:5px 10px 0 10px;
+}
+
+.account-message-text{
+    font-weight:bold;
+    margin:5px 10px 0 10px;
 }

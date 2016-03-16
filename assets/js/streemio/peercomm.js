@@ -132,12 +132,7 @@ streemio.Node = (function (module, logger, events, config) {
     module.delete_item = function (key, request) {
         var transport = streemio.TransportFactory.transport;
         transport.delete_item(key, request);
-    }
-    
-    module.delete_message = function (request, callback) {
-        var transport = streemio.TransportFactory.transport;
-        transport.delete_message(request, callback);
-    }
+    }    
     
     module.validate_connection = function (callback) {
         var transport = streemio.TransportFactory.transport;
@@ -1247,7 +1242,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     module.delete_message = function (msgid, callback) {
         try {            
             if (!msgid) {
-                return callback("delete_messages error: invalid msgid")    
+                return callback("delete_message error: invalid msgid")    
             }
 
             var payload = {};
@@ -1264,7 +1259,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             });
         }
         catch (e) {
-            streemio.notify.error("delete_messages error:  %j", e);
+            streemio.notify.error("delete_message error:  %j", e);
         }
     }
     

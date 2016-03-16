@@ -349,6 +349,16 @@ var EccKey = require('./libs/crypto/EccKey');
             
             add_message: function (key, data) {
                 try {
+                    
+                    if (!key || !data) return;
+                    
+                    for (var i = 0; i < viewModel.messages().length; i++) {
+                        if (viewModel.messages()[i].key == key) {
+                            // the message already exists
+                            return;
+                        }
+                    }
+
                     var payload = streemio.Message.getpayload(data);
                     var sender = payload.iss;
                     var contact = streemio.Contacts.get_contact(sender);
@@ -394,8 +404,9 @@ var EccKey = require('./libs/crypto/EccKey');
                             else {
                                 template_name = "account-text-message";    
                             }
-
-                            var msgobj = { template: template_name, key: key, sender: message.iss, time: message.iat, data: dataobj };
+                            
+                            var time = message.iat ? new Date(message.iat * 1000) : "-";
+                            var msgobj = { template: template_name, key: key, sender: message.iss, time: time, data: dataobj };
                             viewModel.messages.push(msgobj);
                         }
                     }
@@ -408,17 +419,22 @@ var EccKey = require('./libs/crypto/EccKey');
 
             deletemsg: function (message) {
                 try {
-                    //var msgid = "";
-                    //streemio.PeerNet.delete_message(msgid, function (err) {
-                    //    if (err) {
-                    //        return streemio.notify.error_popup("Error in deleting message. %j", err)
-                    //    }
+                    debugger;
+                    var key = message.key;
+                    if (!key) return;
+                    var arr = key.split("/");
+                    if (!arr || !arr.length || arr.length < 3) return;
+
+                    var msgid = arr[2];
+                    streemio.PeerNet.delete_message(msgid, function (err) {
+                        if (err) {
+                            return streemio.notify.error_popup("Error in deleting message. %j", err)
+                        }
                         
                         viewModel.messages.remove(function (item) {
                             return item.key && item.key == message.key;
-                        }) 
-
-                    //});
+                        });
+                    });
                 }
                 catch (err) {
                     streemio.logger.error("deletemsg error %j", err);
@@ -1752,8 +1768,7 @@ var EccKey = require('./libs/crypto/EccKey');
                 
                 validatePasswordConfirm(true);
                 return true;
-            },
-            
+            },            
             
             onPrivateSeedHostChange: function () {
                 var val = $.trim(this.private_net_host());
@@ -1894,6 +1909,17 @@ var EccKey = require('./libs/crypto/EccKey');
                     streemio.notify.error("Create account error %j", err);
                 }
             },
+
+            ctrlKeyUp: function (d, e) {
+                if (e.keyCode == 13) {
+                    if (viewModel.is_new_account() == false) {
+                        viewModel.login();
+                    }
+                    else if (viewModel.is_new_account() == true) {
+                        viewModel.create_account();
+                    }
+                }
+            }
 
         };
         

@@ -577,7 +577,7 @@
                     <div id="lblPwdErrorContainer" class="error-label">
                         <span id="lblPwdError"></span>
                     </div>
-                    <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
+                    <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlKeyUp }" style="max-width:400px" id="txtPassword" />
                 </div>
 
                 <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
@@ -585,7 +585,7 @@
                     <div id="lblPwdConfErrCont" class="error-label">
                         <span id="lblPwdConfError"></span>
                     </div>
-                    <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
+                    <input type="password" class="form-control" data-bind="value: private_key_pwd_conf, event: { keyup: ctrlKeyUp }" style="max-width:400px" id="txtPasswordConfirm" />
                 </div>
 
                 <div style="margin-top:30px">
@@ -939,13 +939,15 @@
 
 <script type="text/html" id="account-text-message">
     <div class="account-message">
-        <div>
-            From: <span data-bind="text: sender"></span>
+        <div class="account-message-from">
+            <div class="pull-left">From: <span data-bind="text: sender"></span></div>
+            <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
+            <div style="clear:both"></div>
         </div>
-        <div>
+        <div class="account-message-time">
             Time: <span data-bind="text: time"></span>
         </div>
-        <div>
+        <div class="account-message-text">
             <span data-bind="text: data.message"></span>
         </div>
     </div>

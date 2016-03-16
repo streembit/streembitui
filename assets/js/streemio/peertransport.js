@@ -290,20 +290,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         catch (err) {
             logger.error("get_account_messages error:  %j", err);
         }
-    }
-    
-    obj.delete_message = function (request, callback) {
-        try {
-            if (!request) {
-                throw new Error("delete_messages invalid request parameter");
-            }
-            
-            obj.node.delete_messages(request, callback);
-        }
-        catch (err) {
-            logger.error("delete_messages error:  %j", err);
-        }
-    }
+    }    
     
     obj.delete_item = function (key, request) {
         obj.node.delete_item(key, request);

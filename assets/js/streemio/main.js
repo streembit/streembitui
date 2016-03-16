@@ -473,6 +473,9 @@ streemio.UI = (function (module, logger, events, config) {
             // navigate the to the messages view
             events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_ACCOUNT_MESSAGES);
         }
+        else {
+            logger.info("There are no messages on the network for " + streemio.User.name);
+        }
     }
     
     module.NavigateInitUser = function () {
@@ -2289,6 +2292,19 @@ streemio.Main = (function (module, logger, events, config) {
         menubar.append(new gui.MenuItem({ label: 'Streemio', submenu: streemioMenu }));
         
         var toolsMenu = new gui.Menu();
+        toolsMenu.append(new gui.MenuItem({
+            label: 'Get messages',
+            click: function () {
+                if (!module.is_node_initialized) {
+                    return streemio.notify.error_popup("The account is not initialized");
+                }
+
+                // get the offline messages
+                var key = streemio.User.name + "/message";
+                streemio.PeerNet.get_account_messages(key);
+            }
+        }));
+        toolsMenu.append(new gui.MenuItem({ type: 'separator' }));
         toolsMenu.append(new gui.MenuItem({
             label: 'Settings',
             click: function () {
