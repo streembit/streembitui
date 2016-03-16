@@ -137,6 +137,12 @@ Router.prototype._queryContact = function(contactInfo, callback) {
 */
 Router.prototype._handleFindResult = function (params, contact, callback) {
     var self = this;
+    
+    function rejectContact() {
+        self._removeFromShortList(contact.nodeID);
+        callback();
+    }
+
     var distance = utils.getDistance(this.hashedKey, contact.nodeID);
 
     this.contacted[contact.nodeID] = this.node._updateContact(contact);
@@ -176,23 +182,12 @@ Router.prototype._handleFindResult = function (params, contact, callback) {
         return rejectContact();
     }
 
-    this.node.validateKeyValuePair(this.key, parsedValue, function(isValid) {
-        if(!isValid) {
-            self.node._log.warn('failed to validate key/value pair for %s', self.key);
-            return rejectContact();
-        }
-
-        self.foundValue = true;
-        self.value = parsedValue;
-
-        callback();
-    });
-
+    self.foundValue = true;
+    self.value = parsedValue;
     
-    function rejectContact() {
-        self._removeFromShortList(contact.nodeID);
-        callback();
-    }
+    callback();
+
+    //
 };
 
 /**

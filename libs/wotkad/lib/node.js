@@ -647,20 +647,6 @@ Node.prototype.getNode = function (account, callback) {
 };
 
 
-/**
-* Validate a key/value pair (defaults to always valid).
-* #validateKeyValuePair
-* @param {string} key
-* @param {mixed} value
-* @param {function} callback
-*/
-Node.prototype.validateKeyValuePair = function (key, value, callback) {
-    if (this._options.validateKeyValuePair) {
-        return this._options.validateKeyValuePair.apply(this, arguments);
-    }
-    
-    callback(true);
-};
 
 /**
 * Set a key/value pair in the DHT
@@ -671,25 +657,13 @@ Node.prototype.validateKeyValuePair = function (key, value, callback) {
 */
 Node.prototype.put = function (key, value, callback) {
     var node = this;
-    
-    this._log.debug('attempting to set value for key %s', key);
-    
-    this.validateKeyValuePair(key, value, function (isValid) {
-        if (!isValid) {
-            //node._log.debug('failed to validate key/value pair for %s', key);
-            return callback(new Error('Failed to validate key/value pair'));
-        }
-        
-        node._putValidatedKeyValue(key, value, callback);
-    });
-};
 
-
-Node.prototype._putValidatedKeyValue = function (key, value, callback) {
-    var node = this;
+    this._log.debug('put key %s', key);
+    
     var item = new Item(key, value, this._self.nodeID);
-    var message = new Message('STORE', item, this._self);
 
+    var message = new Message('STORE', item, this._self);
+    
     this._findNode(item.key, function (err, contacts) {
         if (err) {
             node._log.error('failed to find nodes - reason: %s', err.message);
@@ -717,18 +691,18 @@ Node.prototype._putValidatedKeyValue = function (key, value, callback) {
                         fnresult.status = 1;
                         fnresult.error = err;
                     }
-
+                    
                     done(null, fnresult);
                 });
             }, 
             function (err, resultsarr) {
                 callback(err, resultsarr);
+                node._log.debug('resultsarr: %j', resultsarr);
             }
         );
 
     });
 };
-
 
 
 Node.prototype._findValue = function (key, callback) {
