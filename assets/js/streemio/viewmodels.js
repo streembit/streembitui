@@ -349,7 +349,6 @@ var EccKey = require('./libs/crypto/EccKey');
             
             add_message: function (key, data) {
                 try {
-                    debugger;
                     var payload = streemio.Message.getpayload(data);
                     var sender = payload.iss;
                     var contact = streemio.Contacts.get_contact(sender);

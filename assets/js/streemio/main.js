@@ -469,8 +469,10 @@ streemio.UI = (function (module, logger, events, config) {
             module.messagesvm.add_message(key, value);
         }
         
-        // navigate the to the messages view
-        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_ACCOUNT_MESSAGES);
+        if (module.messagesvm.messages().length > 0) {
+            // navigate the to the messages view
+            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_ACCOUNT_MESSAGES);
+        }
     }
     
     module.NavigateInitUser = function () {
@@ -1127,14 +1129,15 @@ streemio.User = (function (usrobj, events) {
             }
             
             // the account exists and the encrypted entropy is correct!
-            
+        
             if (!userobj.ecdhkeys) {
                 userobj.ecdhkeys = [];
             }
-            
-            if ( userobj.ecdhkeys.length == 0) {
+
+            var ecdh_key = nodecrypto.createECDH('secp256k1');
+           
+            if (userobj.ecdhkeys.length == 0) {
                 // create a ECDH key
-                var ecdh_key = nodecrypto.createECDH('secp256k1');
                 ecdh_key.generateKeys();
                 
                 userobj.timestamp = Date.now();
@@ -1142,6 +1145,22 @@ streemio.User = (function (usrobj, events) {
                     ecdh_private_key: ecdh_key.getPrivateKey('hex'),
                     ecdh_public_key: ecdh_key.getPublicKey('hex')
                 });
+            }
+            else {
+                try {
+                    var ecdhprivate = userobj.ecdhkeys[0].ecdh_private_key;
+                    ecdh_key.setPrivateKey(ecdhprivate, 'hex');
+                }
+                catch (e) {
+                    userobj.ecdhkeys = [];
+                    ecdh_key.generateKeys();                    
+                    userobj.timestamp = Date.now();
+                    userobj.ecdhkeys.push({
+                        ecdh_private_key: ecdh_key.getPrivateKey('hex'),
+                        ecdh_public_key: ecdh_key.getPublicKey('hex')
+                    });
+                    streemio.notify.error("ECDH exception occured when setting private key. New ECDH array is created");
+                }
             }
             
             var cipher_context = streemio.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
