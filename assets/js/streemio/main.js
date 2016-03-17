@@ -2691,6 +2691,7 @@ streemio.Main = (function (module, logger, events, config) {
         module.network_init(seeds, skip_publish, function (err) {            
             if (err) {
                 if (!retry_with_websocket && config.transport == streemio.DEFS.TRANSPORT_TCP && config.wsfallback == true) {
+                    logger.info("The TCP connection failed. Retry to connect via WebSockets.")
                     //  set the config transport to WS                    
                     config.transport = streemio.DEFS.TRANSPORT_WS;
                     //  the TCP connection failed, ry with websocket fallback

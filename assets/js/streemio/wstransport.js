@@ -292,6 +292,25 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
         }
     }
     
+    module.get_account_messages = function (account, msgkey, callback) {
+        try {            
+            var socket = get_account_socket();
+            if (!socket) {
+                return callback("web socket does not exists");
+            }
+            
+            socket.emit("get_account_messages", account, msgkey, function (err, data) {
+                if (!err && data && data.error) {
+                    err = data.error;
+                }
+                callback(err, data);
+            });            
+        }
+        catch (err) {
+            logger.error("get_account_messages error:  %j", err);
+        }
+    }    
+    
     return module;
 
 }(streemio.WebSocketTransport || {}, streemio.logger, global.appevents, streemio.config));

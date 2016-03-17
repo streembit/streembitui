@@ -405,8 +405,12 @@ var EccKey = require('./libs/crypto/EccKey');
                                 template_name = "account-text-message";    
                             }
                             
-                            var time = message.iat ? new Date(message.iat * 1000) : "-";
-                            var msgobj = { template: template_name, key: key, sender: message.iss, time: time, data: dataobj };
+                            var fdate = "-";
+                            if (message.iat) {
+                                var date = new Date(message.iat * 1000);
+                                fdate = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                            }
+                            var msgobj = { template: template_name, key: key, sender: message.iss, time: fdate, data: dataobj };
                             viewModel.messages.push(msgobj);
                         }
                     }

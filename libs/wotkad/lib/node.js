@@ -94,37 +94,46 @@ function Node(options) {
     this._buckets = {};
 }
 
-Node.prototype.init = function (options, onConnect) {
-    this._log.debug('node init account %s', this._options.account);
-    this._rpc = new this._options.transport(options);
-    this._self = this._rpc._contact;
-    
-    this._bindRPCMessageHandlers();
-    this._startReplicationInterval();
-    this._startExpirationInterval();
-    
-    this._log.debug('node create nodeID %s account %s', this._self.nodeID, this._options.account);
+Node.prototype.init = function (options, callback) {
     
     var self = this;
-    
-    var maintain_interval = options.maintainfreq ? options.maintainfreq : constants.T_MAINTAIN_INTERVAL;
-    var maintainTimer = setInterval(
-        function () {
-            self.maintain();
-        }, 
-        maintain_interval
-    );
-    
-    if (options.seeds.length == 0) {
-        return onConnect();
-    }
-    
-    async.eachSeries(options.seeds, connectToSeed, onConnect);
     
     function connectToSeed(seed, done) {
         self.connect(seed, done);
     }
+    
+    this._log.debug('node init account %s', this._options.account);
+    
+    this._rpc = new this._options.transport(options);
+    
+    this._rpc.init(function (err) {
+        if (err) {
+            return callback(err);
+        }
+        
+        self._self = self._rpc._contact;
+        
+        self._bindRPCMessageHandlers();
+        self._startReplicationInterval();
+        self._startExpirationInterval();
+        
+        self._log.debug('node create nodeID %s account %s', self._self.nodeID, self._options.account);
+        
+        var maintain_interval = options.maintainfreq ? options.maintainfreq : constants.T_MAINTAIN_INTERVAL;
+        var maintainTimer = setInterval(
+            function () {
+                self.maintain();
+            }, 
+            maintain_interval
+        );
+        
+        if (options.seeds.length == 0) {
+            return callback();
+        }
+        
+        async.eachSeries(options.seeds, connectToSeed, callback);
 
+    });
 }
 
 Node.prototype.create = function (onConnect) {
@@ -290,13 +299,13 @@ Node.prototype.get_contacts = function () {
         var bucket = this._buckets[bname];
         var contacts = bucket.getContactList();
         for (var i = 0; i < contacts.length; i++) {
-            list_of_contacts.push( { address: contacts[i].address, port: contacts[i].port, account: contacts[i].account} );  
+            list_of_contacts.push({ address: contacts[i].address, port: contacts[i].port, account: contacts[i].account });
         }
     }
-
+    
     // add its own contact details
     list_of_contacts.push({ address: this._self.address, port: this._self.port, account: this._self.account });
-
+    
     return list_of_contacts;
 }
 
@@ -317,6 +326,9 @@ Node.prototype.get_seed_contact = function () {
 }
 
 Node.prototype.get_account_messages = function (account, msgkey, callback) {
+    var self = this;
+    
+    var buffers = [];
     
     var seed = this.get_seed_contact();
     if (!seed) {
@@ -334,28 +346,35 @@ Node.prototype.get_account_messages = function (account, msgkey, callback) {
     );
     
     client.on('data', function (data) {
-        client.end();
         try {
-            var reply = "";
-            try {
-                var str = data.toString();
-                reply = JSON.parse(str);
-            }
-            catch (e) {
-                reply = { error: "0x0111" };
-            }
-            callback(null, reply);
+            buffers.push(data);
         }
         catch (err) {
-            callback("get_account_messages failed for " + seed.address + ":" + seed.port + " error: " + err.message);
+            callback("get_account_messages failed from " + seed.address + ":" + seed.port + "; error: " + err.message);
         }
     });
     
     client.on('end', function () {
+        try {
+            var reply = "";
+            var databuffer = Buffer.concat(buffers);
+            //console.log('databuffer length: ' + databuffer.length);
+            try {
+                var str = databuffer.toString();
+                reply = JSON.parse(str);
+            }
+            catch (e) {
+                reply = { error: "0x0111", message: "JSON parse error" };
+            }
+            callback(null, reply);
+        }
+        catch (err) {
+            callback("get_account_messages failed from " + seed.address + ":" + seed.port + "; error: " + err.message);
+        }
     });
     
     client.on('error', function (err) {
-        callback("get_account_messages failed for " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
+        callback("get_account_messages failed for " + seed.address + ":" + seed.port + "; error: " + (err.message ? err.message : err));
     });
 };
 
@@ -615,11 +634,11 @@ Node.prototype.getNode = function (account, callback) {
 */
 Node.prototype.put = function (key, value, callback) {
     var node = this;
-
+    
     this._log.debug('put key %s', key);
     
     var item = new Item(key, value, this._self.nodeID);
-
+    
     var message = new Message('STORE', item, this._self);
     
     this._findNode(item.key, function (err, contacts) {
@@ -866,14 +885,14 @@ Node.prototype.get_stored_messages = function (account, msgkey, callback) {
             }
         }
         
-        if (data.value.recipient && data.value.recipient == account) {            
+        if (data.value.recipient && data.value.recipient == account) {
             var keyitems = data.key.split("/");
-            if (keyitems && keyitems.length > 2 && keyitems[1] == "message") {        
+            if (keyitems && keyitems.length > 2 && keyitems[1] == "message") {
                 if (messages.length < 10) {
                     messages.push({ key: data.key, value: data.value.value });
                 }
                 count++;
-            }            
+            }
         }
     });
     
@@ -962,7 +981,7 @@ Node.prototype.delete_offlinemsgs = function (request, callback) {
 };
 
 Node.prototype.delete_item = function (key) {
-    var self = this;    
+    var self = this;
     this._storage.del(key, function (err) {
         if (err) {
             self._log.error('failed to delete item with key %s', key);
@@ -1290,7 +1309,7 @@ Node.prototype._handleStore = function (params) {
                 return this._log.error("handleStore contact_existsfn call error %j", err);
             }
         }
-
+        
         if (is_system_update_key) {
             // TODO
         }
@@ -1391,7 +1410,7 @@ Node.prototype._handleStore = function (params) {
                     payload.data.type == wotmsg.MSGTYPE.UPDPK || 
                     payload.data.type == wotmsg.MSGTYPE.DELPK ||
                     payload.data.type == wotmsg.MSGTYPE.OMSG ||
-                    payload.data.type == wotmsg.MSGTYPE.DELMSG ) {
+                    payload.data.type == wotmsg.MSGTYPE.DELMSG) {
                     var decoded_msg = wotmsg.decode(params.value, stored_pkkey);
                     if (!decoded_msg) {
                         node.errorHandler(0x0109);
@@ -1400,14 +1419,14 @@ Node.prototype._handleStore = function (params) {
                     
                     //  passed the validation -> add to the network
                     node._log.debug('handleStore validation for msgtype: ' + payload.data.type + '  is OK');
-
+                    
                     //node._log.debug('data: %j', params);
                     node._storeValue(item, params, function () {
                         if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
                             var delkey = account_key + "/message/" + msgid;
                             node.delete_item(delkey);
                         }
-                    });                    
+                    });
                 }
             }
         }
@@ -1437,7 +1456,7 @@ Node.prototype._storeValue = function (item, params, callback) {
             
             // signal an event that the message was stored
             node.emit('msgstored', node._self.nodeID, item);
-
+            
             if (callback) {
                 callback();
             }
