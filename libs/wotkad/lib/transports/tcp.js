@@ -159,14 +159,6 @@ TCPTransport.prototype._handleConnection = function (socket) {
                             });
                             break;
 
-                        case "DELMSGS":
-                            var request = msgobj.request;
-                            self.emit('DELMSGS', request, function (err) {
-                                var reply = JSON.stringify({ result: err || 0 });
-                                socket.write(reply);
-                            });
-                            break;
-
                         default:
                             self._handleMessage(Buffer(buffer), { address: addr, port: port });
                             break

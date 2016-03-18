@@ -78,8 +78,7 @@ streemio.config = (function (module) {
         "tcpport": streemio.DEFS.APP_PORT,
         "wsport": streemio.DEFS.WS_PORT,
         "bootseeds": [
-            "192.168.1.79"
-            //"seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemo.org", "seed.streemo.net",  "seed.streemo.info"
+            "seed.streemio.org", "seed.streemio.net"
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }

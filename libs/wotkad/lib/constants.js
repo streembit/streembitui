@@ -48,8 +48,7 @@ module.exports = {
     
     T_RESPONSETIMEOUT: ms('5s'),
     
-    T_MAINTAIN_INTERVAL: 300000, 
-    
+    T_MAINTAIN_INTERVAL: 120000,     
    
     MESSAGE_TYPES: [
         'PING',

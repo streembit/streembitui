@@ -801,8 +801,6 @@ Node.prototype._bindRPCMessageHandlers = function () {
     
     this._rpc.on('MSGREQUEST', this.get_stored_messages.bind(this));
     
-    this._rpc.on('DELMSGS', this.delete_offlinemsgs.bind(this));
-
 };
 
 
@@ -870,7 +868,7 @@ Node.prototype.get_stored_messages = function (account, msgkey, callback) {
     var self = this;
     var stream = this._storage.createReadStream();
     
-    //this._log.debug('get_stored_messages for %s', account);
+    this._log.debug('get_stored_messages for %s', account);
     
     var count = 0;
     var messages = [];
@@ -906,77 +904,56 @@ Node.prototype.get_stored_messages = function (account, msgkey, callback) {
 };
 
 
-Node.prototype.delete_offlinemsgs = function (request, callback) {
-    var node = this;
-    
-    var payload = wotmsg.getpayload(request);
-    if (!payload || !payload.data || !payload.data.type) {
-        return callback("delete_offlinemsgs error invalid payload");
-    }
-    
-    var account = payload.iss;
-    
-    if (!account) {
-        return callback("delete_offlinemsgs error invalid iss field");
-    }
-    
-    this.get(account, function (err, value) {
-        try {
-            if (err) {
-                return callback('delete_offlinemsgs get existing PK error %j', err);
-            }
-            
-            var stored_payload = wotmsg.getpayload(value);
-            var stored_pkkey = stored_payload.data[wotmsg.MSGFIELD.PUBKEY];
-            if (!stored_pkkey) {
-                return callback('handleStore error: stored public key does not exists');
-            }
-            
-            var decoded_msg = wotmsg.decode(request, stored_pkkey);
-            if (!decoded_msg) {
-                return callback('SIGNFAIL %s', account);
-            }
-            
-            var keys = [];
-            // the request was valid, delete the messages
-            var stream = node._storage.createReadStream();
-            
-            var completeproc = function () {
-                for (var i = 0; i < keys.length; i++) {
-                    node.delete_item(keys[i]);
-                }
-                callback();
-            }
-            
-            stream.on('data', function (data) {
-                var recipient = null;
-                if (typeof data.value === 'string') {
-                    try {
-                        data.value = JSON.parse(data.value);
-                        recipient = data.value.recipient;
-                    } 
-                    catch (err) {
-                        node._log.error('failed to parse value from %s', data.key);
-                    }
+Node.prototype.delete_account_message = function (request, callback) {
+    try {
+        var node = this;
+        
+        var payload = wotmsg.getpayload(request.value);
+        if (!payload || !payload.data || !payload.data.type || payload.data.type != wotmsg.MSGTYPE.DELMSG) {
+            return callback("delete_account_message error invalid payload");
+        }
+        
+        var account = payload.iss;
+        
+        if (!account) {
+            return callback("delete_account_message error i.nvalid iss field");
+        }
+        
+        var msgid = payload.data[wotmsg.MSGFIELD.MSGID];
+        if (!msgid) {
+            return this._log.error("delete_account_message error: invalid mssgid for delete message");
+        }
+        
+        this.get(account, function (err, value) {
+            try {
+                if (err) {
+                    return callback('delete_account_message get existing PK error %j', err);
                 }
                 
-                if (recipient == account) {
-                    keys.push(data.key);
+                var stored_payload = wotmsg.getpayload(value);
+                var stored_pkkey = stored_payload.data[wotmsg.MSGFIELD.PUBKEY];
+                if (!stored_pkkey) {
+                    return callback('delete_account_message error: stored public key does not exists');
                 }
-            });
-            
-            stream.on('error', function (err) {
-                callback(err.message ? err.message : err);
-            });
-            
-            stream.on('end', function () {
-                completeproc();
-            });
-        }
-        catch (val_err) {
-            callback("delete_offlinemsgs error: %j", val_err);
-        }
-    });
+                
+                var decoded_msg = wotmsg.decode(request.value, stored_pkkey);
+                if (!decoded_msg) {
+                    return callback('VERIFYFAIL %s', account);
+                }
+                
+                var delkey = account + "/message/" + msgid;
+                node.delete_item(delkey);
+                
+                node._log.debug("account message: " + delkey + " is deleted");
+            }
+            catch (val_err) {
+                callback(val_err);
+            }
+        });
+    }
+    catch (e) {
+        callback(e);
+    }
 
 };
 
@@ -1414,7 +1391,7 @@ Node.prototype._handleStore = function (params) {
                     var decoded_msg = wotmsg.decode(params.value, stored_pkkey);
                     if (!decoded_msg) {
                         node.errorHandler(0x0109);
-                        return node._log.error('SIGNFAIL %s', account);
+                        return node._log.error('VERIFYFAIL %s', account);
                     }
                     
                     //  passed the validation -> add to the network
@@ -1422,9 +1399,15 @@ Node.prototype._handleStore = function (params) {
                     
                     //node._log.debug('data: %j', params);
                     node._storeValue(item, params, function () {
-                        if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
-                            var delkey = account_key + "/message/" + msgid;
-                            node.delete_item(delkey);
+                        try {
+                            if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+                                var delkey = account_key + "/message/" + msgid;
+                                node.delete_item(delkey);
+                                node._log.debug('handleStore message: ' + delkey + '  is deleted');
+                            }
+                        }
+                        catch (delerr) {
+                            node._log.error("handleStore, delete_item error: %j", delerr);
                         }
                     });
                 }
