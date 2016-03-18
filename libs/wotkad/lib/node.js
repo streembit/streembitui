@@ -94,13 +94,22 @@ function Node(options) {
     this._buckets = {};
 }
 
+Node.prototype.init_maintain_thread = function () {
+    var self = this;
+    
+    var maintain_interval = this._options.maintainfreq ? this._options.maintainfreq : constants.T_MAINTAIN_INTERVAL;
+    var maintainTimer = setInterval(
+        function () {
+            self.maintain();
+        }, 
+        maintain_interval
+    );
+}
+
+
 Node.prototype.init = function (options, callback) {
     
     var self = this;
-    
-    function connectToSeed(seed, done) {
-        self.connect(seed, done);
-    }
     
     this._log.debug('node init account %s', this._options.account);
     
@@ -119,19 +128,41 @@ Node.prototype.init = function (options, callback) {
         
         self._log.debug('node create nodeID %s account %s', self._self.nodeID, self._options.account);
         
-        var maintain_interval = options.maintainfreq ? options.maintainfreq : constants.T_MAINTAIN_INTERVAL;
-        var maintainTimer = setInterval(
-            function () {
-                self.maintain();
-            }, 
-            maintain_interval
-        );
+        
         
         if (options.seeds.length == 0) {
             return callback();
         }
         
-        async.eachSeries(options.seeds, connectToSeed, callback);
+        //var seedresults = [];
+        
+        async.mapSeries(
+            options.seeds,
+            function (seed, done) {
+                self.connect(seed, function (err, node) {
+                    var result = null;
+                    
+                    if (err) {
+                        self._log.error("node connect error: %j", err);
+                    }
+                    else {
+                        result = { seed: seed, error: err }
+                        //seedresults.push(result);
+                    }
+                    
+                    done(null, result);
+                });
+            },
+            function (err, results) {
+                if (err || results.length == 0) {
+                    return callback("Failed to connect to any seed");
+                }
+                
+                // start the maintain function
+                self.init_maintain_thread();
+                
+                callback();
+            });
 
     });
 }

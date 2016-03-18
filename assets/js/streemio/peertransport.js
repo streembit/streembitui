@@ -149,53 +149,41 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         
         try {
             var peernode = wotkad(options);
-            peernode.create(function (err, value) {
+            peernode.create(function (err) {
                 if (err) {
                     return resultfn(err);
-                }                
-            });
-            
-            var result_return_processing = false;
-
-            peernode.on('connect', function (err, nodeval) {
-                if (err) {
-                    return resultfn("peer connect error: " +  err.message ? err.message : err);
                 }
                 
-                logger.debug("node connected %j", nodeval);               
+                logger.debug("peernode.create complete");
                 
+                obj.is_connected = true;
+                obj.node = peernode;
                 
-                if (result_return_processing == false) {
-                    result_return_processing = true;
-                    
-                    logger.debug("--- setting node values");
-
-                    obj.is_connected = true;
-                    obj.node = peernode;
-                    
-                    var address = obj.node.Address;
-                    var port = obj.node.Port;
-                    if (!address || !port) {
-                        return resultfn("Invalid address and port peer data");
+                var address = obj.node.Address;
+                var port = obj.node.Port;
+                if (!address || !port) {
+                    return resultfn("Invalid peer address and port");
+                }
+                
+                streemio.User.address = address;
+                streemio.User.port = port;
+                
+                obj.node.is_seedcontact_exists(function (result) {
+                    if (result) {
+                        logger.debug("seed contact exists in buckets");
+                        resultfn();
                     }
-                    
-                    streemio.User.address = address;
-                    streemio.User.port = port;
-
-                    obj.node.is_seedcontact_exists(function (result) {
-                        if (result) {
-                            logger.debug("seed contact exists in buckets");
-                            resultfn();
-                        }
-                        else {
-                            resultfn("communication with seeds failed");
-                        }  
-                    });
-                    
-                }
+                    else {
+                        resultfn("communication with seeds failed");
+                    }
+                });    
             });
             
+            // handle msgstored event
             peernode.on('msgstored', msg_stored);
+
+            //
+            //
         }
         catch (e) {            
             callback(e);
