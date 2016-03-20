@@ -9,8 +9,8 @@
   "main": "index.html",
   "window": {
     "toolbar": false,
-    "width": 1048,
-    "height": 700,
+    "width": 1140,
+    "height": 750,
     "frame": true,
     "min_width": 960,
     "min_height": 700,

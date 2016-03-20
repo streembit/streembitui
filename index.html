@@ -1003,7 +1003,6 @@
             </div>
 
         </div>
-
         
     </div>
 
@@ -1350,6 +1349,7 @@
                     <div class="form-group form-section-panel">
                         <label for="tcpport">Seed account:</label><br />
                         <input type="text" class="form-control" id="wsport" maxlength="5" style="width:400px;display:inline-block" data-bind="value: private_net_account">
+                        &nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streemio network. " />
                     </div>
 
                     <div class="form-group form-section-panel">
@@ -1377,7 +1377,7 @@
                             <option value="debug">Debug</option>
                             <option value="info">Info</option>
                             <option value="error">Error</option>
-                        </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Defines the log level. Debug: very detailed logging. Info: only important system events logged. Error: only application errors logged. " />
+                        </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
                     </div>
 
                     <div class="form-group form-section-panel">
@@ -1434,238 +1434,356 @@
     </div>
 </script>
 
+<script type="text/html" id="helpitem_overview_what_is_streemio">
+    <div class="help-content-item">
+        <h4>What is Streemio?</h4>
+        <div>
+            <p>Streemio is a decentralized, peer to peer (P2P) real time communication system for humans and machines. The application aims to implement a system that securely manages humans to machine and machine to machine (M2M) communication without using a central server or client-server infrastructure. The actors of the system are nodes on a peer-to-peer network. Hardware services are manifested in smart contracts that are accessible via messages and transactions. The system uses a Kademlia distributed hash table (DHT) discover human and machine nodes on the network. The system ensures data integrity using public-private key cryptography. Messages are signed with the contact’s private key on the client side using ECDSA cryptography. The data is encrypted using ECDH key exchange to exchange the cryptography keys between the contacts and AES symmetric encryption. The video and audio chat feature utilizes the WebRTC the protocol that allows a fully encrypted video and audio communication in a true P2P manner, without routing the conversation through of any central servers. </p>
+            <p>Streemio aims to comply with open security and communication standards. The compliance is verifiable via peer review of the Streemio open source system. Streemio is built on FIPS, IETF and W3C security; data and communication standards such as JWT, JWS, WebRTC, as well as the latest planned and actual standards from W3C Web of Things initiative. The system uses recommended curves for the ECDSA and ECDH elliptic curve cryptography functions.</p>
+            <p>Decentralisation addresses several major system and business requirements. Decentralised systems are scalable; in fact they become more stable if there are more active users. This means that no expensive cluster servers are needed to run a decentralised system. The peers make up the system with their home and office computers, tablets, and mobile devices.
+            <p>Decentralised systems are the composite of their peers, and are always available as long as at least two peers are connected. On the other hand, centralised systems require expensive load balancers, and even more costly data centers across geographical regions to provide high availability. A decentralised P2P system makes centralised high-cost server infrastructures obsolete.</p>
+            <p>Human right activists, dissidents, and citizens who stand up against totalitarian states and undemocratic policies also need a secure communication tool. Oppressive regimes are even cracking down on critics beyond their own borders. A decentralised peer to peer system, in which the communication is fully encrypted between the users, preserves privacy without using a central server, and keeps the data safe from oppressive regimes.</p>
+        </div>
+    </div>
+</script>   
 
-<script type="text/html" id="streemio-view-help">
-    <div style="margin:20px 20px 20px 0;text-align:center">
-        <div style="max-width:960px;text-align:left">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                What is Streemio?
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <p>Streemio is a decentralized, peer to peer (P2P) real time communication system for humans and machines. The application aims to implement a system that securely manages humans to machine and machine to machine (M2M) communication without using a central server or client-server infrastructure. The actors of the system are nodes on a peer-to-peer network. Hardware services are manifested in smart contracts that are accessible via messages and transactions. The system uses a distributed hash table (DHT) for contact discovery services. The system ensures data integrity using public-private key cryptography. Messages are signed with the contact’s private key on the client side using ECDSA cryptography. The data is encrypted using ECDH key exchange to exchange the cryptography keys between the contacts and AES symmetric encryption. The video and audio chat feature utilizes the WebRTC the protocol that allows the video and audio communication in a true P2P manner, without routing the conversation through of any central server. </p>
-                            <p>The system is built on FIPS, IETF and W3C security, data and communication standards such as JWT, JWS and WebRTC.</p>                            
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Open source
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="panel-body">
-                            The system is free, fully open source and released under the MIT license. The source code is available at https://github.com/streemiodev. Users can download the source and build the application from directly the source code. We encourage peer review by security experts and software developers to verify there are no security backdoors exist in the system and the application complies with security and communication standards (FIPS, JWT, JWS, JWE, etc).
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingThree">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                System architecture
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                        <div class="panel-body">
-                            The system forms a decentralized peer to peer network to manage connections between machines and machines or humans and machines.  The participants in the network are the peer nodes. The peer to peer network is scalable and an unlimited number of nodes can participate in the network.<br /><br />
-                            The system performs public private key infrastructure based authentication and access control functions to securely connect peer nodes. The application generates at least one private/public key pair on each peer node including on the Internet-of-Things devices. The actors of the system publish their public keys to the peer to peer network via a Kademlia distributed hash table (DHT). Each peer node knows the public key of the other connected peer nodes.  The system identifies peer nodes in the peer to peer network by their public key. To ensure data integrity the nodes sign the messages with their private key. The nodes sign all messages -  there are no unsigned messages circulated in the system. (The requirement for signing the messages also help to mitigate the risks of Sybil attacks and DDoS attacks).<br /><br />
-                            <p>Streemio supports two types of network implementations:</p>
-                            <ol type="a">
-                                <li>Public network. Anyone can connect, there is no security gate enabled in the public network. The main Streemio network is public.</li>
-                                <li>Private network, which implements a security gate to block communication from the public Streemio network. Only certain peer nodes are allowed to connect to the network. The access control is governed by built in authentication functions. Typically, one to one peer connections, teams, communities or businesses would run private Streemio networks to isolate their communication from the public network, to implement and extra layer of security and establish an even more secure communication system than the public Streemio network.</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingFour">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                Internet of Things devices
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                        <div class="panel-body">
-                            <p>Streemio is a unified communication platform for both human users and Internet of Things devices.</p>
+<script type="text/html" id="helpitem_overview_open_source">
+    <div class="help-content-item">
+        <h4>Open source</h4>
+        <div>
+            <p>The system is free, fully open source and released under the Apache 2.0 license. The source code is available at https://github.com/streemio. Users can download the source and build the application from directly the source code. We encourage peer review by security experts and software developers to verify there are no security backdoors exist in the system and the application complies with security and communication standards (FIPS, JWT, JWS, JWE, etc).</p>
+        </div>
+    </div>
+</script>  
 
-                            <p>For many IoT use cases a decentralized, P2P network topology is the most secure, robust, scalable and reliable method of operation for IoT devices. Instead of using expensive corporate owned third party cloud systems, Streemio manages Internet of Things devices without the need of proprietary centralized cloud platforms. Centralized, corporate owned cloud is certainly an easier way to build out IoT platforms. However, the owners and authorities in these topologies all have an influence upon the network and can be exploited. They can ban devices, spy on devices and compromise data integrity of devices. In fact, government can order them to do any or all of those.</p>
+<script type="text/html" id="helpitem_overview_system_architecture">
+    <div class="help-content-item">
+        <h4>System architecture</h4>
+        <div>
+            <p>The Streemio system forms a decentralized peer to peer network to manage connections between machines and machines or humans and machines.  The participants in the network are the peer nodes. The peer to peer network is scalable and an unlimited number of nodes can participate in the network.</p>
+            <p>The system performs public private key infrastructure based authentication and access control functions to securely connect peer nodes. The application generates at least one private/public key pair on each peer node including on the Internet-of-Things devices. The actors of the system publish their public keys to the peer to peer network via a Kademlia distributed hash table (DHT). Each peer node knows the public key of the other connected peer nodes.  The system identifies peer nodes in the peer to peer network by their public key. To ensure data integrity the nodes sign the messages with their private key. The nodes sign all messages -  there are no unsigned messages circulated in the system. (The requirement for signing the messages also help to mitigate the risks of Sybil attacks and DDoS attacks).</p>
+            
+            <img src="assets/images/streemio_system.png" style="margin:10px 0 30px 0"/>
 
-                            <p>The primary premise of this system is that all aspects of the IoT device operation must consist of decentralized P2P communication between the device and human user. For example, in the case of a building’s door device: a secure and decentralized P2P system can manage the door (including device configuration, upgrades and provisioning). There is no need to involve a centralized server nor a cloud based solution in order to implement a secure and fully operation Internet of Things system.</p>
+            <p>Streemio supports two types of network implementations:</p>
+            <ol type="a">
+                <li>Public network. Anyone can connect, there is no security gate enabled in the public network. The main Streemio network is public.</li>
+                <li>Private network, which implements a security gate to block communication from the public Streemio network. Only certain peer nodes are allowed to connect to the network. The access control is governed by built in authentication functions. Typically, one to one peer connections, teams, communities or businesses would run private Streemio networks to isolate their communication from the public network, to implement and extra layer of security and establish an even more secure communication system than the public Streemio network.</li>
+            </ol>
+        </div>
+    </div>
+</script> 
 
-                            <p>The Streemio Internet of Things system is based on the latest W3C Web of Things standards. The system incorporates the latest modules from the W3C web-of-things-framework. The devices are defined with JSON-LD and the security uses FIPS standards for cryptography and JWT, JWS and JWE standards to secure data.</p>
+<script type="text/html" id="helpitem_overview_security">
+    <div class="help-content-item">
+        <h4>Security</h4>
+        <div>
+            <p>The cornerstone of Streemio security is elliptic curve public/private key cryptography infrastructure (PPKI). PPKI allows the implementation of robust security. We use PPKI to identify the entities of the system (based on their public key and PPKI signature), perform authentication, and ensure data integrity (using cryptography signatures). Using the public/private key cryptography infrastructure paves the way for the deployment of a robust, secure authentication and access control scheme. The parties are identified by their public key. The authenticity of messages and the identities of the actors are then verified using PPKI cryptography routines. Using a PPKI infrastructure based security scheme greatly simplifies the authentication, access control, and identity management aspects of Internet-of-Things security.</p>
+            <p>The elliptic curve cryptography (ECC) scheme is particularly suitable for IoT devices. The small footprint of ECC allows security modules to be implemented on embedded devices. ECDH is a trusted and proven key agreement protocol. Using the ECDSA digital signature algorithm ensures data integrity.</p>
+            <p>The system performs public/private key infrastructure based authentication and access control functions to securely connect machines to machines or machines to humans. The Streemio security module of the IoT device must generate at least one public/private key pair for each connected IoT device. Human users generate their ECC public/private key pair when they create their account. The actors of the system publish their public keys to the network, where each entity knows the public key of the other connected human or machine. The system identifies each of the entities by their ECC public key.</p>
+            <p>The collision resistant SHA-256 hash function is used to create a hash of data which can be signed using the private key to guarantee data integrity, as well as provide information about the originator of the data. To ensure data integrity the messages, control commands, event data, requests, and responses are signed with the ECC private key; the signature can be verified using ECDSA. To ensure integrity of data, each entity must sign all messages with their private key. The messages in the Streemio network are based on the following standards: JSON Web Token (JWT), JSON Web Encryption (JWE), and JSON Web Signature (JWS).</p>
+            
+            <div style="margin-top:30px;font-weight:bold">Streemio security implementation and design summary</div>
+            <ul>
+                <li>Human users and Internet of Things devices use public/private key (PPK) infrastructure and PPK cryptography functions to secure messages</li>
+                <li>Each actor of the system must generate a public/private key pair. (Typically keys are generated prior to configuring the device and will be burned into the devices’ firmware).</li>
+                <li>The device or user publishes the public key to other users of the system.</li>
+                <li>The data integrity and authenticity of the messages is guaranteed with PPK signatures.</li>
+                <li>Each session between users is secured with strong symmetric cryptography keys.</li>
+                <li>All messages between users are secured with 128-bit and 256-bit AES symmetric encryption/decryption.</li>
+                <li>The system uses elliptic curve Diffie Hellman (ECDH) key exchange algorithms to facilitate the exchange of session keys.</li>
+            </ul>
 
-                            <p>To integrate devices with Streemio please refer to the IoT section of the Streemio Github repository.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingFive">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                Configure the node
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-                        <div class="panel-body">
-                            <p>If you want to use the Streemio network from your desktop computer, tablet or mobile device and communicate with other peers without using a central server you must allow inbound connections.</p>
-                            <p>Home connections are usually filtered by a router or modem. Streemio will request your router automatically configure itself to allow inbound connections to 8905’s port, port 8905. Unfortunately, many routers don’t allow automatic configuration, so you must manually configure your router. You may also need to configure your firewall to allow inbound connections to port 8905. Please see the following subsections for details.</p>
+            <div style="margin-top:30px;font-weight:bold">Protecting the ECC public/private key pair</div>
+            <p>The ultimate issue of all applications, systems, and devices that protect data with cryptography is the security of the symmetric key of the encryption or the private key of the public/private key pair. Similarly to the iPhone and PGP, which both use passcode to protect their keys, Streemio requires users have a passcode to protect their PPKI private key. The Streemio passcode that protects the user’s PPK key pair is relatively complex.</p>
+            <p>To protect real time communication, Streemio uses a randomly generated 256-bit AES session key and exchanged between peers with a randomly generated ECDH key pair. This means that real time communication, which is the main functionality of Streemio, is secure even from the brute force attacks of NSA super computers and large zombie computer clusters of cyber criminals.</p>
 
-                            <p style="font-weight:bold">Enabling Connections</p>
+            <div style="margin-top:30px;font-weight:bold">Mitigate the risk of Sybil attacks</div>
+            <p>
+                A known issue with regards to peer-to-peer (P2P) networks and their practical limitation is that they are frequently subject to Sybil attacks. This means that malicious parties can compromise the network by generating and controlling large numbers of shadow identities. A malicious node may present multiple fake identities to a peer-to-peer network in order to appear and function as several distinct nodes.
+            </p>
+            <p>
+                A Sybil attack is most effective on anonymous and reputation systems where if the malicious nodes outnumber the honest nodes the outcome of the application could be compromised. For example, on a file sharing network a successful horizontal Sybil attack allows the attacker to sniff most of the control messages, hijack the system, and deliver bogus content. Contrarily, Streemio facilitates communication between contacts that you know, such as your family members, teammates, and business partners. You are also aware of the location and identity of your Internet of Things device(s) you control via Streemio, lessening the likelihood of a Sybil attack. Malicious nodes, regardless of their weight and presence on the network, are unable to change the public keys of your contacts (as the public key is based on the cryptographically secured PPK infrastructure).
+            </p>
+            <p>
+                Additionally, Streemio introduces another layer of security, private networks. Using private networks, the public keys of the contacts are loaded to the seed nodes manually; mitigating further the risk of a Sybil attack as well as a Man-in-the-middle attack (MITM). A Sybil attack, which generally speaking is a serious security issue for P2P networks such as file sharing applications, is much less of a problem for the Streemio P2P system.
+            </p>
 
-                            <p>If the Streemio application can’t automatically configure your router to open port 8905, you will need to manually configure your router. We’ve tried to make the following instructions generic enough to cover most router models; if you need specific help with your router, please ask for help on a tech support site such as SuperUser.</p>
-                            
-                            <p>Enabling inbound connections typically requires two steps, plus an extra third step for firewall users:</p>
-                            <ul>                               
-                                <li>Giving your computer a static (unchanging) internal IP address by configuring the Dynamic Host Configuration Protocol (DHCP) on your router.</li>
-                                <li>Forwarding inbound connections from the Internet through your router to your computer where Streemio can process them.</li>
-                                <li>Configuring your firewall to allow inbound connections. This step mainly applies to Windows users, as Mac OS X and most Linuxes do not enable a firewall by default.</li>
-                                <li>Please refer to your router configuration document for port forwarding information.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingSix">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                Create account
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
-                        <div class="panel-body">
-                            <p>Human users and Internet of Things devices are identified by their account name on the Streemio network.</p>
-                            <p>Click on the Streemio/New account menu item or click on the New Account button from the start screen.</p>
-                            <p>Enter the account name. You will receive an error message if the account exists on the network. The account name must be between 6-20 characters and it can only contain alphanumeric characters (letters a-z, A-Z and numbers 0-9)</p>
-                            <p>Enter the password key pair encryption password. The password is used to generate a 256-bit AES key using PBKDF2 with a randomly generated 160-bit salt. The system protects the ECC public key pair with the 256-bit AES key. The password must be at least 8 characters, must not contain empty space, must contain at least one letter, one digit and one special character.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingSeven">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                Backup account
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
-                        <div class="panel-body">
-                            <p>You can perform an account backup to save a local copy of your Streemio account data. If you had to replace your device or erase its data or use another device, you can restore your Streemio account using the account that you backed up. </p>
-                            <p>In order to backup the account the account must be initiated. Click on the Streemio/Backup account menu item to start backup your account.</p>
-                            <p>Your account backup data is never saved on a central server by the Streemio application and the account backup file is saved to your Download directory.</p>
-                            <p>
-                                <span style="font-weight:bold">What is saved in the Backup file?</span><br />
-                                <span>The backup file contains your encrypted Streemio ECC public/private key pair. The backup data is base64 encoded. It starts with “---BEGIN STREEMIO KEY---“, and the file ends with “---END STREEMIO KEY---“</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingEight">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                Restore account from backup file
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
-                        <div class="panel-body">
-                            <p>
-                                <span style="font-weight:bold">Why restore your account data? </span><br />
-                                <span>The public/private key pair is created using a random entropy. Your contacts identify your account using your PPK public key. Since the public/private key pair isn’t deterministic, to communicate with your contacts, you must use the public key which was published to the Streemio network and known to your contacts. This can be restored from an account backup file. </span>
-                            </p>
-                            <p>You can restore your Streemio account data on any computer from a backup file.</p>
-                            <p>Click on the Streemio/Restore account menu item or the Restore account to start restoring the account from a backup file.</p>
-                        </div>
-                    </div>
-                </div>                
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading09">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse09" aria-expanded="false" aria-controls="collapse09">
-                                Connect to public network
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse09" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading09">
-                        <div class="panel-body">
-                            <p>Click on the Streemio/Connect to public network menu item or the Connect to Public Streemio Network to connect the public Streemio network.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading10">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse10" aria-expanded="false" aria-controls="collapse10">
-                                Connect to private network
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading10">
-                        <div class="panel-body">
-                            <p>Click on the Streemio/Connect to private network menu item or the Connect to Private Streemio Network to connect a private Streemio network.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading11">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="false" aria-controls="collapse11">
-                                Delete account
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading11">
-                        <div class="panel-body">
-                            <p>It is a good practice to delete your account from the Streemio network if you don’t use it anymore. Click on the Streemio/Delete account menu item to remove the account from the Streemio network.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading12">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse12" aria-expanded="false" aria-controls="collapse12">
-                                Clear database
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading12">
-                        <div class="panel-body">
-                            <p>It is essential to clear the database if you are using Streemio on a public computer such as one in an internet café or airport. </p>
-                            <p>You can remove the all Streemio data from the computer. Click on the Tools/Clear database to remove Streemio related settings and data from the computer. </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading13">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse13" aria-expanded="false" aria-controls="collapse13">
-                                Share your public key with your private Streemio hub contacts
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse13" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading13">
-                        <div class="panel-body">
-                            <p>Your contacts must know both your account name and public key if you are connecting to a private Streemio hub. Therefore, prior to connecting a private Streemio hub you must share your account details with the seed node of private Streemio hub. Typically, you would do this by configuring the seed node configuration file with the list of contacts. (Please refer to the private network readme document at the Streemio Github repository how to create the configuration file for a private Streemio hub.)</p>
-                            <p>To get your public key either create a new account or initialize an existing account by clicking on the relevant menu item or start screen button. Once your account is initialized click on the Tools/Account security info menu item. Your account name and public key will be displayed on the screen, and you can add your account name and public key data to the configuration file of private Streemio hub seed.</p>
-                        </div>
-                    </div>
-                </div>
+            <div style="margin-top:30px;font-weight:bold">How secure the cryptography of Streemio?</div>
+            <p>Both 128-bit and 256-bit AES symmetric encryption, the cryptography schemes of the messages in the Streemio network, are safe from any brute force attacks. The following UML diagram describes the key exchange using ECDH and securing the message with 256-bit AES symmetric key between "User A" and "User B".</p>
+            <img src="assets/images/streemio_key_exchange.png" />
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_overview_iotdevices">
+    <div class="help-content-item">
+        <h4>Internet of Things devices</h4>
+        <div>
+            <p>Streemio is a unified communication platform for both human users and Internet of Things devices.</p>
+
+            <p>Streemio manages device discovery as well as authentication, access control and provisioning of devices without using a centralized authority server. The system facilitates device discovery and device control in a peer to peer manner. For many IoT use cases a decentralized, P2P network topology is the most secure, robust, scalable and reliable method of operation. Instead of using expensive corporate owned third party cloud systems, Streemio manages Internet of Things devices without the need of proprietary centralized cloud platforms. Centralized, corporate owned cloud is certainly an easier way to build out IoT platforms. However, the owners and authorities in these topologies all have an influence upon the network and can be exploited. They can ban devices, spy on devices and compromise data integrity of devices. In fact, government can order them to do any or all of these. In the near future, the doors of your garage and home, air conditioning units and your home security system will be fully internet connected. You will be able to control your home automation system from your mobile phone. It is essential that only you can control your IoT devices. Streemio excludes third party service and cloud providers from the ecosystem to give full control to the end users over the devices.</p>
+
+            <p>The primary premise of this system is that all aspects of the IoT device operation must consist of decentralized P2P communication between the device and human user. For example, in the case of a building’s door device: a secure and decentralized P2P system can manage the door (including device configuration, upgrades and provisioning). There is no need to involve a centralized server nor a cloud based solution in order to implement a secure and fully operation Internet of Things system.</p>
+
+            <div style="margin-top:30px;font-weight:bold">Internet of Things device discovery on Streemio</div>
+            <p>Streemio allows IoT application providers and context producers to register their IoT Objects on the decentralised Streemio network, and in turn allow context consumers to discover them in a secure and peer to peer manner. </p>
+            <img src="assets/images/iot3.png" />
+
+            <div style="margin-top:30px;font-weight:bold">Control Internet of Things devices via Streemio</div>
+            <ul>
+                <li>The Internet of Things devices and human users communicate with each other directly in a peer to peer manner</li>
+                <li>The data is end to end encrypted between the human user and IoT device. The encryption key is shared only between the user and device – never with any third parties.</li>
+                <li>The device exposes functionalities via the Streemio network and user interface using W3C WoT standards</li>
+                <li>The user interacts with the device via the Streemio P2P layer and UI. For example, opening a door, turning ON a light, controlling motor speed, getting temperature data, viewing CCTV pictures etc. all peer to peer, without a centralised solution and via the Streemio user interface.</li>
+            </ul>
+            <img src="assets/images/iot2.png" />
+
+            <div style="margin-top:30px;font-weight:bold">Upgrade and manage Internet of Things devices via Streemio</div>
+            <ul>
+                <li>Hardware and software providers upgrade Internet of Things devices on the always up and running Streemio network.</li>
+                <li>Internet of Things device manufacturers and software designers publishes firmware and software updates via the Streemio network.</li>
+                <li>Internet of Things devices run the Streemio system and ensure the origin and data integrity of the updates by verifying the public key of the publisher.</li>
+            </ul>
+            <img src="assets/images/iot1.png" />
+
+            <div style="margin-top:30px;font-weight:bold">Standards</div>
+            <p>The Streemio Internet of Things system is based on the latest W3C Web of Things standards. The system incorporates the latest modules from the W3C web-of-things-framework. The devices are defined with JSON-LD and the security uses FIPS standards for cryptography and JWT, JWS and JWE standards to secure data.</p>
+
+            <p>To integrate devices with Streemio please refer to the IoT section of the Streemio Github repository.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_settings">
+    <div class="help-content-item">
+        <h4>Streemio settings</h4>
+        <div>
+            <p>Click on the Tools/Settings menu item to open the Settings screen.</p>
+            
+            <div class="settings-helpitem-title">Network tab</div>
+            <div>
+                <span style="font-weight:bold">TCP port:</span> <span>Use this TCP port to communicate on the Streemio network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. If the transport is WebSocket (WS) then this settings is not used by the application.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">WebSocket port:</span> <span>If the TCP port is not available then the connect to the WebSocket listener must listen on this port.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Transport:</span> <span>Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the WebSocket transport then make sure the WebSocket listener seed node is operational.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Use WebSocket fallback:</span> <span>Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streemio community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streemio network!</span>
+            </div>
+
+            <div class="settings-helpitem-title">Seeds tab</div>
+            <div>
+                <span style="font-weight:bold">List of seed nodes:</span> <span>The seed nodes assist in user and device discovery, and stores the users’ public key data in their distributed hash table (DHT) storage. Also, you can define here your seed nodes if you run a private Streemio network.</span>
+            </div>
+
+            <div class="settings-helpitem-title">Ice resolvers tab</div>
+            <div>
+                <span>Complete decentralization is not possible in Internet communication. All decentralized systems like Bitcoin or Telehash must use some internet services for certain tasks. For instance, decentralized systems use DNS servers and services to resolve domain names. WebRTC video and audio chats clients use ICE servers to get information about their own IP address.</span>
+            </div>
+
+            <div class="settings-helpitem-title">Private network tab</div>
+            <div>
+                <span style="font-weight:bold">Seed account, Seed port, Seed IP/domain name:</span> <span>If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streemio network. </span>
+            </div>
+
+            <div class="settings-helpitem-title">System tab</div>
+            <div>
+                <span style="font-weight:bold">Log level:</span> <span>Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Developer mode:</span> <span>Software developers should select this option to resolve directories and develop the software from IDE such as Visual Studio.</span>
             </div>
         </div>
     </div>
+</script> 
+
+<script type="text/html" id="helpitem_configure_node">
+    <div class="help-content-item">
+        <h4>Configure your Streemio</h4>
+        <div>
+            <p>If you want to use the Streemio network from your desktop computer, tablet or mobile device and communicate with other peers without using a central server you must allow inbound connections.</p>
+            <p>Home connections are usually filtered by a router or modem. Streemio will request your router automatically configure itself to allow inbound connections to 8905’s port, port 8905. Unfortunately, many routers don’t allow automatic configuration, so you must manually configure your router. You may also need to configure your firewall to allow inbound connections to port 8905. Please see the following subsections for details.</p>
+
+            <div class="settings-helpitem-title">Enabling Connections</div>
+
+            <p>If the Streemio application can’t automatically configure your router to open port 8905, you will need to manually configure your router. We’ve tried to make the following instructions generic enough to cover most router models; if you need specific help with your router, please ask for help on a tech support site such as SuperUser.</p>
+
+            <p>Enabling inbound connections typically requires two steps, plus an extra third step for firewall users:</p>
+            <ul>
+                <li>Giving your computer a static (unchanging) internal IP address by configuring the Dynamic Host Configuration Protocol (DHCP) on your router.</li>
+                <li>Forwarding inbound connections from the Internet through your router to your computer where Streemio can process them.</li>
+                <li>Configuring your firewall to allow inbound connections. This step mainly applies to Windows users, as Mac OS X and most Linuxes do not enable a firewall by default.</li>
+                <li>Please refer to your router configuration document for port forwarding information.</li>
+            </ul>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_create_account">
+    <div class="help-content-item">
+        <h4>Create account</h4>
+        <div>
+            <p>Human users and Internet of Things devices are identified by their account name on the Streemio network.</p>
+            <p>Click on the Streemio/New account menu item or click on the New Account button from the start screen.</p>
+            <p>Enter the account name. You will receive an error message if the account exists on the network. The account name must be between 6-20 characters and it can only contain alphanumeric characters (letters a-z, A-Z and numbers 0-9)</p>
+            <p>Enter the password key pair encryption password. Based on the password, the system generates a 256-bit AES key using PBKDF2 with a randomly generated 160-bit salt. The system protects the ECC public key pair with the 256-bit AES key. The password must be at least 8 characters, must not contain empty space, must contain at least one letter, one digit and one special character.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_backup_account">
+    <div class="help-content-item">
+        <h4>Backup account</h4>
+        <div>
+            <p>You can perform an account backup to save a local copy of your Streemio account data. The Streemio account can be restored from a backup using the “Restore account” function.</p>
+            <p>In order to backup the account the account must be intialized. Click on the Streemio/Backup account menu item to start backup your account.</p>
+            <p>Your account backup data is never saved on a central server by the Streemio application and the account backup file is saved to your Download directory.</p>
+    
+            <div class="settings-helpitem-title">What is saved in the Backup file?</div>
+            <p>The backup file contains your encrypted Streemio ECC public/private key pair. The backup data is base64 encoded. It starts with “---BEGIN STREEMIO KEY---“, and the file ends with “---END STREEMIO KEY---“</p>
+        </div>
+    </div>
+</script> 
+
+
+<script type="text/html" id="helpitem_restore_account">
+    <div class="help-content-item">
+        <h4>Restore account from backup file</h4>
+        <div>
+            <p>
+                <span style="font-weight:bold">Why restore your account data? </span><br />
+                <span>Your contacts identify your account and validate your identity using your PPK public key. The public/private key pair is created using a random entropy - once it is created then it cannot be changed. The public/private key pair isn’t deterministic and in order to communicate with your contacts, you must use the same public key which was published to the Streemio network and known to your contacts. The published public key can be restored from an account backup file.</span>
+            </p>
+            <p>You can restore your Streemio account data on any computer from a backup file.</p>
+            <p>Click on the Streemio/Restore account menu item or the Restore account to start restoring the account from a backup file.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_delete_account">
+    <div class="help-content-item">
+        <h4>Delete account</h4>
+        <div>
+            <p>It is a good practice to delete your account from the Streemio network if you don’t use it anymore. Click on the Streemio/Delete account menu item to remove the account from the Streemio network.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_logfiles">
+    <div class="help-content-item">
+        <h4>Log files</h4>
+        <div>
+            <p>Your Streemio system provides vital information using an application log file. The log file is JSON file format, and sits in the application /log directory. You can also open the log file by clicking on the Tools/View logs menu item. Configure the log to “Debug” log level to populate detailed debug messages from the application.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_network_connect_public">
+    <div class="help-content-item">
+        <h4>Connect to the public Streemio network</h4>
+        <div>
+            <p>Click on the “CONNECT TO PUBLIC STREEMIO” button from the start screen or click on the Streemio/Connect to public network menu item to connect the public Streemio network. The user information view will be initialized. Enter your password and then the application will try to connect to the public Streemio network.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_network_connect_private">
+    <div class="help-content-item">
+        <h4>Connect to a private network</h4>
+        <div>
+            <p>Click on the “CONNECT TO PRIVATE STREEMIO” button from the start screen or click on the Streemio/Connect to private network menu item to connect the a private Streemio hub. The user information view will be initialized. Enter your password and then the application will try to connect to the private Streemio hub.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_network_share_keys">
+    <div class="help-content-item">
+        <h4>Share your public key with your Streemio hub contacts</h4>
+        <div>
+            <p>The seed nodes and client nodes of a private Streemio hub identify users by a) validating their PPK signature, b) looking up the account name from a configuration list. That means seeds and clients must know about the public keys and account names of the participants on a the private Streemio hub. Therefore, prior to connecting a private Streemio hub you must share your account details with at least the seed node of private Streemio hub. Typically, you would do this by configuring the seed node configuration file with the list of contacts. (Please refer to the private network readme document at the Streemio Github repository how to create the configuration file for a private Streemio hub.)</p>
+            <p>To get your public key either create a new account or initialize an existing account. Click on the Streemio/New account menu item to create a new account or click on the Streemio/Initialize existing account to use an existing account. Once your account is initialized click on the Tools/Account security info menu item. Your account name and public key will be displayed on the screen. Add this  account name and public key data to the configuration file of private Streemio hub seed.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="helpitem_system_clear_database">
+    <div class="help-content-item">
+        <h4>Clear database</h4>
+        <div>
+            <p>It is essential to clear the database if you are using Streemio on a public computer, for example in an internet café or airport.</p>
+            <p>You can remove all Streemio data from the computer by clicking on the Tools/Clear database menu item. Once the deletion is confirmed the application will erase all configuration, account and contacts data from the computer.</p>
+        </div>
+    </div>
+</script> 
+
+<script type="text/html" id="streemio-view-help">
+    <div class="help-view">
+        <!--<div class="help-container">-->
+            <div class="help-titles">
+                <ul id="helptree">
+                    <li>
+                        <a href="#">Overview</a>
+                        <ul>
+                            <li data-link="helpitem_overview_what_is_streemio">What is Streemio?</li>
+                            <li data-link="helpitem_overview_open_source">Open source</li>
+                            <li data-link="helpitem_overview_system_architecture">System architecture</li>
+                            <li data-link="helpitem_overview_security">Security</li>
+                            <li data-link="helpitem_overview_iotdevices">Internet of Things devices</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Settings, configuration</a>
+                        <ul>
+                            <li data-link="helpitem_settings">Settings</li>
+                            <li data-link="helpitem_configure_node">Configure your Streemio</li>
+                            <li data-link="helpitem_create_account">Create account</li>
+                            <li data-link="helpitem_backup_account">Backup account</li>
+                            <li data-link="helpitem_restore_account">Restore account</li>
+                            <li data-link="helpitem_delete_account">Delete account</li>
+                            <li data-link="helpitem_logfiles">Log files</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Streemio network</a>
+                        <ul>
+                            <li data-link="helpitem_network_connect_public">Connect to public network</li>
+                            <li data-link="helpitem_network_connect_private">Connect to private network</li>     
+                            <li data-link="helpitem_network_share_keys">Share your keys</li>                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">System</a>
+                        <ul>
+                            <li data-link="helpitem_system_clear_database">Clear database</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="help-content">
+            </div>
+        <!--</div>-->
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#helptree').treed();
+
+            $('#helptree li').on("click", function () {
+                var datalink = $(this).attr("data-link");
+                if (datalink) {
+                    debugger;
+                    $(".help-content").empty();
+                    var html = $('#' + datalink).html();
+                    $(".help-content").append(html);
+                }                
+            });
+        });
+    </script>
+
+
+
 </script>

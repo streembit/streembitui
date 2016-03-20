@@ -58,14 +58,6 @@ call :ColorText 0a "package.json was found"
 echo.
 )
 
-IF NOT EXIST streemio.conf (
-call :ColorText 0C "streemio.conf not exists"
-Exit /b
-) ELSE (
-call :ColorText 0a "streemio.conf was found"
-echo.
-)
-
 REM goto :eof
 
 call :ColorText 0a "copy nw files"
@@ -88,13 +80,6 @@ echo.
 
 %ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html  ..\assets ..\node_modules ..\libs
 
-
-call :ColorText 19 "copy streemio.conf"
-echo.
-
-copy streemio.conf %BUILD_DIR%\streemio.conf
-
-REM goto :eof
 
 call :ColorText 19 "setting Streemio icon"
 echo.

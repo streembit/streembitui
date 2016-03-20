@@ -9,11 +9,11 @@
   "main": "index.html",
   "window": {
     "toolbar": false,
-    "width": 1048,
-    "height": 720,
+    "width": 1140,
+    "height": 750,
     "frame": true,
-    "min_width": 960,
-    "min_height": 640,
+    "min_width": 980,
+    "min_height": 700,
     "icon": "assets/icons/streemio64.png"
   },
   "scripts": {
