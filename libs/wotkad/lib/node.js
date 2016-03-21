@@ -534,18 +534,21 @@ Node.prototype.maintain = function () {
             async.each(
                 contacts, 
                 function (contact, callback) {
-
-                    self._log.debug('maintain PING to %s', contact.account);
-
-                    var pingMessage = new Message('PING', { recipient: contact.account }, self._self);
-                    self._rpc.send(contact, pingMessage, function (err) {
-                        if (err) {
-                            self._log.debug('PING failed. maintain thread removes inactive contact %s from bucket', contact.account);
-                            bucket.removeContact(contact);
-                        }
+                    try {
+                        self._log.debug('maintain PING to %s', contact.account);
                         
-                        callback();
-                    });
+                        var pingMessage = new Message('PING', { recipient: contact.account }, self._self);
+                        self._rpc.send(contact, pingMessage, function (err) {
+                            if (err) {
+                                self._log.debug('PING failed. maintain thread removes inactive contact %s from bucket', contact.account);
+                                bucket.removeContact(contact);
+                            }
+                            
+                            callback();
+                        });
+                    }
+                    catch (e) {
+                    }
                 }, 
                 function (err) {
                     if (err) {

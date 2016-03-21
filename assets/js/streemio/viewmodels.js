@@ -69,7 +69,7 @@ var EccKey = require('./libs/crypto/EccKey');
         streemio.PeerNet.ping(contact, true, 5000)
         .then(
             function () {
-                return streemio.PeerNet.get_contact_session(viewModel.contact);
+                return streemio.PeerNet.get_contact_session(contact);
             },
             function (err) {
                 throw new Error(err);
@@ -78,7 +78,7 @@ var EccKey = require('./libs/crypto/EccKey');
         .then(
             function (session) {
                 var options = {
-                    contact : viewModel.contact,
+                    contact : contact,
                     issession: session ? true : false
                 };
                 events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
