@@ -52,7 +52,7 @@ streemio.TransportFactory = (function (module, logger, events, config) {
         
         if (config.transport == streemio.DEFS.TRANSPORT_WS) {
             //  whatever transport the contact uses this account can communicate only via WS
-            transport = streemio.PeerTransport;
+            transport = streemio.WebSocketTransport;
         }
         else {
             var transport;

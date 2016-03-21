@@ -548,6 +548,7 @@ Node.prototype.maintain = function () {
                         });
                     }
                     catch (e) {
+                        self._log.error('maintain PING error: %j', e);
                     }
                 }, 
                 function (err) {
