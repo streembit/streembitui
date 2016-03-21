@@ -534,6 +534,9 @@ Node.prototype.maintain = function () {
             async.each(
                 contacts, 
                 function (contact, callback) {
+
+                    self._log.debug('maintain PING to %s', contact.account);
+
                     var pingMessage = new Message('PING', { recipient: contact.account }, self._self);
                     self._rpc.send(contact, pingMessage, function (err) {
                         if (err) {
