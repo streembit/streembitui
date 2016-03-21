@@ -525,8 +525,10 @@ Node.prototype.validate_connection = function (resultfn) {
 
 
 Node.prototype.maintain = function () {
-    self._log.debug('maintain contacts thread ...');
+    this._log.debug('maintain contacts thread ...');
+
     var self = this;
+
     try {
         var pingProc = function (bucket, contacts) {
             async.each(
