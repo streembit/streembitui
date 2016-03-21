@@ -54,3 +54,4 @@ build/win64
 
 # Optional REPL history
 .node_repl_history
+build_win64_ok.bat
