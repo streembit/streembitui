@@ -95,6 +95,9 @@ function Node(options) {
 }
 
 Node.prototype.init_maintain_thread = function () {
+    
+    this._log.debug('starting maintain thread');
+
     var self = this;
     
     var maintain_interval = this._options.maintainfreq ? this._options.maintainfreq : constants.T_MAINTAIN_INTERVAL;
@@ -522,6 +525,7 @@ Node.prototype.validate_connection = function (resultfn) {
 
 
 Node.prototype.maintain = function () {
+    self._log.debug('maintain contacts thread ...');
     var self = this;
     try {
         var pingProc = function (bucket, contacts) {
@@ -531,7 +535,7 @@ Node.prototype.maintain = function () {
                     var pingMessage = new Message('PING', { recipient: contact.account }, self._self);
                     self._rpc.send(contact, pingMessage, function (err) {
                         if (err) {
-                            self._log.debug('maintain removes inactive contact %s from bucket', contact.account);
+                            self._log.debug('PING failed. maintain thread removes inactive contact %s from bucket', contact.account);
                             bucket.removeContact(contact);
                         }
                         

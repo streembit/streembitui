@@ -193,6 +193,7 @@ function init_log(loglevel, logdir, taskbar_infofn, callback) {
                     if (callback) {
                         callback();
                     }
+                    logger.info("logspath: " + logspath);
                 }
             });
         }
@@ -223,6 +224,7 @@ function init_log(loglevel, logdir, taskbar_infofn, callback) {
                 if (callback) {
                     callback();
                 }
+                logger.info("logspath: " + logspath);
             });
         }
     });
