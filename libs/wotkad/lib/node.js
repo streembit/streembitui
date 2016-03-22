@@ -525,7 +525,7 @@ Node.prototype.validate_connection = function (resultfn) {
 
 
 Node.prototype.maintain = function () {
-    this._log.debug('maintain contacts thread ...');
+    //this._log.debug('maintain contacts thread ...');
 
     var self = this;
 
@@ -535,12 +535,12 @@ Node.prototype.maintain = function () {
                 contacts, 
                 function (contact, callback) {
                     try {
-                        self._log.debug('maintain PING to %s', contact.account);
+                        //self._log.debug('maintain PING to %s', contact.account);
                         
                         var pingMessage = new Message('PING', { recipient: contact.account }, self._self);
                         self._rpc.send(contact, pingMessage, function (err) {
                             if (err) {
-                                self._log.debug('PING failed. maintain thread removes inactive contact %s from bucket', contact.account);
+                                //self._log.debug('PING failed. maintain thread removes inactive contact %s from bucket', contact.account);
                                 bucket.removeContact(contact);
                             }
                             
@@ -562,6 +562,7 @@ Node.prototype.maintain = function () {
         for (var prop in this._buckets) {
             var bucket = this._buckets[prop];
             var contacts = bucket.getContactList();
+
             //this._log.debug('bucket[' + prop + '] contacts: %j', contacts);
             // ping to the contact to check if it is online
             pingProc(bucket, contacts);
