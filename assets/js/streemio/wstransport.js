@@ -19,7 +19,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
     
     function create_wssocket(host, port, connectfn, errorfn) {
         var server = "http://" + host + ":" + (port || module.wsport);
-        logger.debug("create web socket: " + server);
+        logger.info("create web socket: " + server);
         
         var socket = 0;
         
@@ -44,15 +44,15 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
             
             socket.on("connect_error", function (err) {
                 if (errorfn) {
-                    return errorfn("ws socket connect error: " + err.message);
+                    errorfn("WebSocket connect error: " + err.message);
                 }
                 else {
-                    return streemio.notify.error("ws socket connect error: %j", err);
+                    streemio.notify.error("ws socket connect error: %j", err);
                 }
             });
             
             socket.on("reconnect_failed", function (err) {
-                logger.error("socket io reconnect_failed: %j", err);
+                streemio.notify.error("socket io reconnect_failed: %j", err);
             });
             
             socket.on('connect', function () {

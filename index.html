@@ -1016,10 +1016,8 @@
 </script>
 
 <script type="text/html" id="streemio-view-mediacall">
-
     <div id="media-call-container">
         <div class="media-call-center">
-
             <div class="media-call-header">
                 <div style="float:left;" class="callbuttons">
                     <div style="display:inline-block;margin:0;padding:0;float:left">
@@ -1057,57 +1055,59 @@
                     </div>
                     <div style="clear:both"></div>
                 </div>
-                <div style="float:right;font-weight:bold;font-size:12px;padding-right:5px;padding-top:6px">
+                <div style="float:right;font-weight:bold;font-size:12px;padding-right:5px;padding-top:14px">
                     Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
                 </div>
                 <div style="clear:both"></div>
             </div>
 
-            <div class="media-call-controls">
-                <div style="position:relative;width:640px" data-bind="visible: isvideocall">
-                    <div style="text-align:center" class="localvid_parent" data-bind="visible: isvideo">
-                        <video id="localvid" class="video thisuser" autoplay muted></video>
-                    </div>
-                    <div class="remotevid_parent">
-                        <video id="remotevid" class="video contact" autoplay></video>
-                    </div>
-                </div>
-                <div data-bind="visible: isaudiocall" style="margin-top:20px" class="remoteaudio_parent">
-                    <audio id="remote-audio" controls autoplay></audio>
-                </div>
-            </div>
-
-            <div class="media-call-chat">
-                <div class="chat-text-items chatitemswnd">
-                    <table cellspacing="0" cellpadding="0" style="max-width:650px">
-                        <tbody data-bind="foreach: chatitems">
-                            <tr>
-                                <td>
-                                    <div style="padding:6px 10px 0 0">
-                                        <span data-bind="text: time"></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style="padding-top:6px">
-                                        <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == streemio.User.name }">
-                                        <span data-bind="text: text"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="chat-controls">
-                    <div class="chat-control-ctrls">
-                        <div class="chat-controls-txt">
-                            <textarea data-bind="value: chatmsg"></textarea>
+            <div class="media-call-content">
+                <div class="media-call-controls">
+                    <div style="position:relative;width:100%" data-bind="visible: isvideocall">
+                        <div class="localvid_parent" data-bind="visible: isvideo">
+                            <video id="localvid" class="video thisuser" autoplay muted></video>
                         </div>
-                        <div class="chat-controls-btn">
-                            <button data-bind="click: sendchat" style="padding:2px 5px;font-size:12px">Send Message</button>
+                        <div class="remotevid_parent">
+                            <video id="remotevid" class="video contact" autoplay></video>
+                        </div>
+                    </div>
+                    <div data-bind="visible: isaudiocall" style="margin-top:40px" class="remoteaudio_parent">
+                        <audio id="remote-audio" controls autoplay></audio>
+                    </div>
+                </div>
+
+                <div class="media-call-chat">
+                    <div class="chat-text-items chatitemswnd">
+                        <table cellspacing="0" cellpadding="0" style="max-width:650px">
+                            <tbody data-bind="foreach: chatitems">
+                                <tr>
+                                    <td>
+                                        <div style="padding:6px 10px 0 0">
+                                            <span data-bind="text: time"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="padding-top:6px">
+                                            <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == streemio.User.name }">
+                                            <span data-bind="text: text"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="chat-controls">
+                        <div class="chat-control-ctrls">
+                            <div class="chat-controls-txt">
+                                <textarea data-bind="value: chatmsg"></textarea>
+                            </div>
+                            <div class="chat-controls-btn">
+                                <button data-bind="click: sendchat" style="padding:2px 5px;font-size:12px">Send Message</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1119,18 +1119,18 @@
         var mediacall_vm = null;
 
         function onRemoteVidConn() {
-            var remote_video = document.getElementById("remotevid");
-            remote_video.width = 640;
-            remote_video.height = 480;
-            var remote_parent = $(remote_video).closest(".remotevid_parent");
-            $(remote_parent).css({
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "644px",
-                height: "484px",
-                border: "2px solid #222"
-            })
+            //var remote_video = document.getElementById("remotevid");
+            //remote_video.width = 640;
+            //remote_video.height = 480;
+            //var remote_parent = $(remote_video).closest(".remotevid_parent");
+            //$(remote_parent).css({
+            //    position: "absolute",
+            //    top: 0,
+            //    left: 0,
+            //    width: "644px",
+            //    height: "484px",
+            //    border: "2px solid #222"
+            //})
 
             var local_video = document.getElementById("localvid");
             local_video.width = 160;

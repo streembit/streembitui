@@ -585,53 +585,51 @@ body {
 
 #media-call-container{
     height:100%;
-    padding-left:20px;
+    width:100%;
+    padding:0 10px;
 }
 
-.media-call-center{
-    position:relative;
-    margin:0 auto;
-    display:inline-block;
-    min-height:550px;
+.media-call-center{ 
+    display: flex;
     height:100%;
-    min-width:660px;
+    width:100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
 }
 
 .media-call-header{
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    width:644px;
+    width:100%;
     padding:0 0 10px 0;
-    border-bottom:2px solid #ddd;
+    border-bottom:3px solid #eee;
+}
+
+.media-call-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:100%;
 }
 
 .media-call-controls{
-    position:absolute;
-    top:55px;
-    left:0;
-    right:0;
-    height:490px;
-    width:640px;
+    flex:1;
+    height: 100%;
+    width: 100%;
 }
 
-.media-call-footer{
-    position:absolute;
-    bottom:20px;
-    left:0;
-    right:0;
-    width:644px;
-    border-top:2px solid #ddd;
-    padding-top:10px;
-    padding-bottom:20px;
+.remotevid_parent{
+    height: 100%;
+    width: 100%;
+}
+
+#remotevid{
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .media-call-chat{
-    position:absolute;
-    height:300px;
-    width:644px;
-    left: 0;
+    width:100%;
     display:none;
 }
 
