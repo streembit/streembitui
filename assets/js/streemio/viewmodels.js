@@ -955,6 +955,8 @@ var EccKey = require('./libs/crypto/EccKey');
             contact: data,
             
             call: function (type) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CALL_PROGRESS);
+
                 var call_type;
                 if (type == 'video') {
                     call_type = streemio.DEFS.CALLTYPE_VIDEO;
@@ -992,10 +994,16 @@ var EccKey = require('./libs/crypto/EccKey');
                             events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
                         }
                         else if (isaccepted == false) {
-                            streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the call");
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                            setTimeout(function () {
+                                streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the call");
+                            }, 500);                            
                         }
                         else {
-                            streemio.notify.error("Unable to establish call with contact " + viewModel.contact.name);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                            setTimeout(function () {
+                                streemio.notify.error("Unable to establish call with contact " + viewModel.contact.name);
+                            }, 500);                            
                         }
                     },
                     function (err) {
