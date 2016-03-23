@@ -14,9 +14,9 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
 )
 
 echo.
-call :ColorText 0C "Streemio v0.1.1"
+call :ColorText 19 "Streemio v0.1.1"
 echo.
-call :ColorText 0C "---"
+call :ColorText 19 "---"
 echo.
 echo.
 
