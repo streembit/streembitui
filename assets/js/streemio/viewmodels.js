@@ -743,7 +743,7 @@ var EccKey = require('./libs/crypto/EccKey');
                     streemio.notify.error("Send chat error %j", err);
                 }
             },
-            
+
             sendfile: function () {
                 if (!streemio.PeerNet.is_peer_session(viewModel.contact.name)) {
                     return streemio.notify.error_popup("Invalid contact session");
@@ -928,7 +928,8 @@ var EccKey = require('./libs/crypto/EccKey');
                 catch (err) {
                     streemio.notify.error("Send chat error %j", err);
                 }
-            },
+            },           
+
             onTextMessage: function (msg) {
                 msg.time = streemio.util.timeNow();
                 viewModel.chatitems.push(msg);

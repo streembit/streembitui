@@ -414,8 +414,6 @@ body {
 }
 
 #chat-container{
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -590,9 +588,9 @@ body {
 }
 
 .media-call-center{ 
-    display: flex;
     height:100%;
     width:100%;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
@@ -601,31 +599,81 @@ body {
 
 .media-call-header{
     width:100%;
-    padding:0 0 10px 0;
+    padding:0 0 10px 0; 
     border-bottom:3px solid #eee;
+    min-height: 3.6em;
+    max-height: 4em;
 }
 
 .media-call-content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height:100%;
+    margin-top:5px;
+    flex:1;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
 }
 
-.media-call-controls{
+.video_ctrls_items{
     flex:1;
-    height: 100%;
-    width: 100%;
+    display:flex;
+    justify-content: center;
+}
+
+.chat_items{
+    min-height:300px;
+    display:none;
+    margin-bottom:20px
+}
+
+.video_ctrls_parent{
+    position:relative;
+    border: 5px solid #444;
+}
+
+.localvid_parent{
+    border: 2px solid #555;
+    z-index: 9999;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 164px;
+    height: 124px;
+}
+
+#localvid{
+    width: 160px;
+    height: 120px;
 }
 
 .remotevid_parent{
-    height: 100%;
-    width: 100%;
+    position: absolute;
+    /*top: 1px;
+    right: 1px;
+    bottom: 1px;
+    border: 2px solid #222;*/
+    /*border: 3px solid #222;*/
+    /*display:flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;*/
+    /*position:relative;*/
 }
 
 #remotevid{
     min-width: 100%;
     min-height: 100%;
+    /*position:absolute;*/
+    /*width: 100%;
+    height: 100%;*/
+    /*top:3px;
+    left:3px;
+    bottom:3px;
+    right:3px;*/
+    /*flex:1;*/
+    /*top:3px;
+    left:3px;*/
 }
 
 .media-call-chat{

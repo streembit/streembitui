@@ -834,7 +834,7 @@
 
 
 <script type="text/html" id="streemio-view-chat">
-    <div id="chat-container">
+    <div id="chat-container" style="width:100%; height:100%">
         <div style="padding:10px;text-align:left;">
             <div class="chat-win-header">
                 <div style="float:left;font-size:12px;font-weight:bold;color:#555">
@@ -872,7 +872,7 @@
             </div>    
             <div class="footer-chat-controls">
                 <div>
-                    <textarea data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                    <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
                 </div>
                 <div style="text-align:center;margin-top:5px">
                     <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
@@ -911,6 +911,18 @@
             });
 
             streemio.Session.curent_viewmodel = vm;
+
+            $("#txtChatCtrl").keyup(function (e) {
+                var code = e.which;
+                if (code == 13) {
+                    e.preventDefault();
+                    var text = $.trim($("#txtChatCtrl").val());
+                    if (text) {
+                        vm.chatmsg(text);
+                        vm.sendchat();
+                    }
+                }
+            });
         });
     </script>
 
@@ -1055,62 +1067,66 @@
                     </div>
                     <div style="clear:both"></div>
                 </div>
-                <div style="float:right;font-weight:bold;font-size:12px;padding-right:5px;padding-top:14px">
+                <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
                     Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
                 </div>
                 <div style="clear:both"></div>
             </div>
 
             <div class="media-call-content">
-                <div class="media-call-controls">
-                    <div style="position:relative;width:100%" data-bind="visible: isvideocall">
-                        <div class="localvid_parent" data-bind="visible: isvideo">
-                            <video id="localvid" class="video thisuser" autoplay muted></video>
-                        </div>
+
+                <div class="video_ctrls_items">
+                    <div class="video_ctrls_parent" data-bind="visible: isvideocall">
                         <div class="remotevid_parent">
                             <video id="remotevid" class="video contact" autoplay></video>
+                        </div>
+                        <div class="localvid_parent" data-bind="visible: isvideo">
+                            <video id="localvid" class="video thisuser" autoplay muted></video>
                         </div>
                     </div>
                     <div data-bind="visible: isaudiocall" style="margin-top:40px" class="remoteaudio_parent">
                         <audio id="remote-audio" controls autoplay></audio>
-                    </div>
-                </div>
+                    </div>      
+                </div>   
 
-                <div class="media-call-chat">
-                    <div class="chat-text-items chatitemswnd">
-                        <table cellspacing="0" cellpadding="0" style="max-width:650px">
-                            <tbody data-bind="foreach: chatitems">
-                                <tr>
-                                    <td>
-                                        <div style="padding:6px 10px 0 0">
-                                            <span data-bind="text: time"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div style="padding-top:6px">
-                                            <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == streemio.User.name }">
-                                            <span data-bind="text: text"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="chat-controls">
-                        <div class="chat-control-ctrls">
-                            <div class="chat-controls-txt">
-                                <textarea data-bind="value: chatmsg"></textarea>
+                <div class="chat_items">
+                    <div id="chat-container" style="flex:1">
+                        <div class="fill-area" style="padding:10px;flex:1">
+                            <div class="chat-fill-area chatitemswnd">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tbody data-bind="foreach: chatitems">
+                                        <tr>
+                                            <td>
+                                                <div style="padding:6px 10px 0 0">
+                                                    <span data-bind="text: time"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="padding-top:6px">
+                                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streemio.User.name }"></span>:
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streemio.User.name }">
+                                                    <span data-bind="text: text"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="chat-controls-btn">
-                                <button data-bind="click: sendchat" style="padding:2px 5px;font-size:12px">Send Message</button>
+                            <div class="footer-chat-controls">
+                                <div>
+                                    <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                                </div>
+                                <div style="text-align:center;margin-top:5px">
+                                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -1118,114 +1134,73 @@
     <script type="text/javascript">
         var mediacall_vm = null;
 
+        function resize_video_controls() {
+            var viditems_parent_width = $('.video_ctrls_items').width();
+            var viditems_parent_height = $('.video_ctrls_items').height();
+            //console.log('viditems_parent_width: ' + viditems_parent_width + ', viditems_parent_height: ' + viditems_parent_height);
+
+            var ctrls_parent = $('.video_ctrls_parent');
+            var h = viditems_parent_height - 10;
+            var w = parseInt(h * 1.3333);
+
+            ctrls_parent.width(w);
+            ctrls_parent.height(h);
+
+            var remote_vid_parent = $(".remotevid_parent");
+            remote_vid_parent.width(w);
+            remote_vid_parent.height(h);
+        }
+
         function onRemoteVidConn() {
-            //var remote_video = document.getElementById("remotevid");
-            //remote_video.width = 640;
-            //remote_video.height = 480;
-            //var remote_parent = $(remote_video).closest(".remotevid_parent");
-            //$(remote_parent).css({
-            //    position: "absolute",
-            //    top: 0,
-            //    left: 0,
-            //    width: "644px",
-            //    height: "484px",
-            //    border: "2px solid #222"
-            //})
+            resize_video_controls();
 
             var local_video = document.getElementById("localvid");
-            local_video.width = 160;
-            local_video.height = 120;
+            //!important
             local_video.muted = true;
-            var local_parent = $(local_video).closest(".localvid_parent");
-            $(local_parent).css({
-                position: "absolute",
-                top: 5,
-                right: 5,
-                width: "164px",
-                height: "124px",
-                border: "2px solid #555",
-                'z-index': 9999
-            });
+            //local_video.width = 160;
+            //local_video.height = 120;            
+        }
 
+        function onWindowResize() {
+            resize_video_controls();
         }
 
         function showChatControl(callback) {
-            logger.debug("view showChatControl callback");
-            var chatt = 0;
-
-            var winh = $("#view-container").height();
-            var isaudiocall = mediacall_vm.isaudiocall();
-
-            // try to size/place the containers
-            if (isaudiocall) {
-                var audio_parent = $(".remoteaudio_parent");
-                var ap_bottom = audio_parent.offset().top + audio_parent.outerHeight();
-                chatt = ap_bottom + 10;
-            }
-            else {
-                if (winh >= 840) {
-                    var remote_video = document.getElementById("remotevid");
-                    remote_video.width = 640;
-                    remote_video.height = 480;
-                    var remote_parent = $(remote_video).closest(".remotevid_parent");
-                    $(remote_parent).css({
-                        width: "644px",
-                        height: "484px"
-                    })
-
-                    var local_video = document.getElementById("localvid");
-                    local_video.width = 160;
-                    local_video.height = 120;
-                    local_video.muted = true;
-                    var local_parent = $(local_video).closest(".localvid_parent");
-                    $(local_parent).css({
-                        left: 476,
-                        width: "164px",
-                        height: "124px"
-                    });
-
-                    chatt = 540;
-                }
-                else {
-                    var ctrlsh = winh - 50 - 300;
-                    var ctrlsw = parseInt(ctrlsh * 1.3333);
-                    var loc_ctrlsh = ctrlsh / 4;
-                    var loc_ctrlsw = parseInt(loc_ctrlsh * 1.3333);
-
-                    var remote_video = document.getElementById("remotevid");
-                    remote_video.width = ctrlsw;
-                    remote_video.height = ctrlsh;
-                    var remote_parent = $(remote_video).closest(".remotevid_parent");
-                    $(remote_parent).css({
-                        width: (ctrlsw + 4) + "px",
-                        height: (ctrlsh + 4) + "px"
-                    })
-
-                    var local_video = document.getElementById("localvid");
-                    local_video.width = loc_ctrlsw;
-                    local_video.height = loc_ctrlsh;
-                    local_video.muted = true;
-                    var local_parent = $(local_video).closest(".localvid_parent");
-                    $(local_parent).css({
-                        width: (loc_ctrlsw + 4) + "px",
-                        height: (loc_ctrlsh + 4) + "px",
-                        left: ctrlsw - 5 - loc_ctrlsw
-                    });
-
-                    chatt = ctrlsh + 60;
-                }
-            }
 
             // show the chat window
-            var chath = winh - chatt - 35;
-            var chatContainer = $(".media-call-chat");
+            var chatContainer = $(".chat_items");          
+            //$(chatContainer).show();
             $(chatContainer).css({
-                top: chatt,
-                height: chath + 'px'
+                flex: 1,
+                display: 'flex',
             });
-            $(chatContainer).show();
+
+            resize_video_controls();
+
+            var parent_div_width = $('.media-call-content').width();
+            var parent_div_height = $('.media-call-content').height();
+
+            var video_h = parent_div_height - 300;
+            if (video_h < 500) {
+                video_h = 500;
+            }
+            //$('.video_ctrls_items').height(video_h);
+            $('.video_ctrls_items').css({
+                'min-height': video_h + 'px'
+            });
+            //console.log('video_ctrls_items.height: ' + video_h);
+
+            resize_video_controls();
+
+            //$(chatContainer).show();
+            $(chatContainer).css({
+                flex: 1,
+                display: 'flex',
+            });
 
             callback();
+
+            resize_video_controls();
         }
 
         function showLocalVideo() {
@@ -1246,6 +1221,20 @@
             mediacall_vm.init();
 
             streemio.Session.curent_viewmodel = mediacall_vm;
+
+            $(window).resize(onWindowResize);
+
+            $("#txtChatCtrl").keyup(function (e) {
+                var code = e.which; 
+                if (code == 13) {
+                    e.preventDefault();
+                    var text = $.trim($("#txtChatCtrl").val());
+                    if(text){
+                        mediacall_vm.chatmsg(text);
+                        mediacall_vm.sendchat();
+                    }
+                }
+            });
         });
     </script>
 
