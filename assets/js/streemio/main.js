@@ -2067,7 +2067,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             logger.debug("search " + account);
             streemio.PeerNet.find_contact(account, function (err, contact) {
                 if (err) {
-                    return streemio.notify.error_popup("The contact search returned no result");
+                    return streemio.notify.error_popup('The contact search for account "' + account + '" returned no result');
                 }
 
                 callback(contact);

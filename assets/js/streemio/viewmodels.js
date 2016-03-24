@@ -208,8 +208,6 @@ var EccKey = require('./libs/crypto/EccKey');
             iceresolvers: ko.observableArray([]),
             tcpport: ko.observable(0),
             wsport: ko.observable(0),
-            wslistenport: ko.observable(0),
-            iswslistener: ko.observable(false),
             selected_transport: ko.observable(),
             is_add_bootseed: ko.observable(false),
             new_seed: ko.observable(""),
@@ -241,8 +239,6 @@ var EccKey = require('./libs/crypto/EccKey');
 
                     this.tcpport(streemio.config.tcpport);
                     this.wsport(streemio.config.wsport);
-                    this.iswslistener(streemio.config.iswslistener);
-                    this.wslistenport(streemio.config.wslistenport);
                     this.selected_transport(streemio.config.transport);
                     this.isdevmode(streemio.config.isdevmode);
                     this.selected_loglevel(streemio.config.loglevel);
@@ -274,14 +270,7 @@ var EccKey = require('./libs/crypto/EccKey');
                     }
                     data.wsport = num;
 
-                    num = parseInt($.trim(viewModel.wslistenport()));
-                    if (isNaN(num)) {
-                        num = streemio.DEFS.WS_PORT
-                    }
-                    data.wslistenport = num;
-
                     data.wsfallback = viewModel.iswsfallback();
-                    data.iswslistener = viewModel.iswslistener();
 
                     data.ice_resolvers = viewModel.iceresolvers();
                     data.isdevmode = viewModel.isdevmode();
