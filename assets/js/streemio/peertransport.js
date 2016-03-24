@@ -87,6 +87,10 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         events.emit(events.APPEVENT, events.TYPES.ONPEERERROR, { error: err, contact: contact, data: data });
     }
     
+    function onNetworkError(errcode, msg) {
+        logger.error("Network handler error code: " + errcode + ", error message: " + (msg || "NA"));     
+    }
+    
     function get_account_id() {
         var id = uuid.v4().toString();
         var accountId = id.replace(/-/g, '');
@@ -155,7 +159,8 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         }        
         
         var options = {
-            errhandler: onNodeError,
+            onnodeerror: onNodeError,
+            onnetworkerror: onNetworkError,
             log: logger,
             port: config.tcpport,
             account: accountId,
@@ -164,8 +169,8 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
             storage: db,
             is_private_network: is_private_network,
             private_network_accounts: private_network_accounts,
-            is_gui_node: true,
-            contact_exist_lookupfn: streemio.Contacts.exists
+            is_gui_node: false,
+            contact_exist_lookupfn: null
         };
         
         try {

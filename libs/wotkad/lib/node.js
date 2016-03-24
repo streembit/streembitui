@@ -93,6 +93,10 @@ function Node(options) {
     }
     this._log.debug('is_gui_node: ' + (this.is_gui_node ? "defined" : "not defined"));
     
+    if (this._options.onnetworkerror && typeof this._options.onnetworkerror == "function") {
+        this.errorFn = this._options.onnetworkerror;
+    }
+    
     this._buckets = {};
 }
 
@@ -829,8 +833,8 @@ Node.prototype._bindRPCMessageHandlers = function () {
     this._rpc.on('FIND_VALUE', this._handleFindValue.bind(this));
     this._rpc.on('CONTACT_SEEN', this._updateContact.bind(this));
     
-    if (this._options.errhandler && (typeof this._options.errhandler == "function")) {
-        this._rpc.on('NODE_ERROR', this._options.errhandler.bind(this));
+    if (this._options.onnodeerror && (typeof this._options.onnodeerror == "function")) {
+        this._rpc.on('NODE_ERROR', this._options.onnodeerror.bind(this));
     }
     
     if (this._options.peermsgHandler && (typeof this._options.peermsgHandler == "function")) {
@@ -932,7 +936,8 @@ Node.prototype.get_stored_messages = function (account, msgkey, callback) {
         if (data.value.recipient && data.value.recipient == account) {
             var keyitems = data.key.split("/");
             if (keyitems && keyitems.length > 2 && keyitems[1] == "message") {
-                if (messages.length < 10) {
+                // send only 50 messages
+                if (messages.length < 50) {
                     messages.push({ key: data.key, value: data.value.value });
                 }
                 count++;
