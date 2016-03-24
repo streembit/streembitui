@@ -1315,8 +1315,8 @@ Copyright (C) 2016 The Streemio software development team
                     </div>
 
                     <div class="form-group form-section-panel">
-                        <label for="tcpport">WebSocket port:</label><br />
-                        <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket port settings. The WebSocket listener must listen on this port to communicate with this client." />
+                        <label for="wsport">WebSocket port:</label><br />
+                        <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket outbound port. The application sends data on this port via WebSocket to the seed nodes in case if the transport is WebSocket." />
                     </div>
 
                     <div class="form-group form-section-panel">
@@ -1332,6 +1332,17 @@ Copyright (C) 2016 The Streemio software development team
                         <div class="checkbox">
                             <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streemio community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streemio network!" />
                         </div>
+                    </div>
+
+                    <div class="form-group form-section-panel">
+                        <div class="checkbox">
+                            <label> <input type="checkbox" data-bind="checked:iswslistener"> <span style="font-weight:bold">Enable WebSocket listener</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Accept WebSocket requests from contacts. Select this option to increase the reliability of the communcation with your contacts." />
+                        </div>
+                    </div>
+
+                    <div class="form-group form-section-panel">
+                        <label for="wslistenport">WebSocket listener port:</label><br />
+                        <input type="number" class="form-control" id="wslistenport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wslistenport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket inbound port settings. The WebSocket module listens and receives request from contacts on this port." />
                     </div>
 
                     <div style="margin-top:30px">

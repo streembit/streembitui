@@ -99,6 +99,8 @@ streemio.config = (function (module) {
         "wsfallback": true,
         "tcpport": streemio.DEFS.APP_PORT,
         "wsport": streemio.DEFS.WS_PORT,
+        "iswslistener": true,
+        "wslistenport": streemio.DEFS.WS_PORT,
         "bootseeds": [
             "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
         ],
@@ -176,6 +178,26 @@ streemio.config = (function (module) {
         
         set: function (value) {
             config_data.wsport = value;
+        }
+    });
+
+    Object.defineProperty(module, "iswslistener", {
+        get: function () {
+            return config_data.iswslistener;
+        },
+        
+        set: function (value) {
+            config_data.iswslistener = value;
+        }
+    });
+
+    Object.defineProperty(module, "wslistenport", {
+        get: function () {
+            return config_data.wslistenport || streemio.DEFS.WS_PORT;
+        },
+        
+        set: function (value) {
+            config_data.wslistenport = value;
         }
     });
     

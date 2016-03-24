@@ -834,7 +834,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'danger',
-                delay: time ? time :12000,
+                delay: time ? time :12000
             }
         );
         
@@ -852,7 +852,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'info',
-                delay: time ? time : 8000,
+                delay: time ? time : 8000
             }
         );
         logger.info(text);
@@ -867,7 +867,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'info',
-                delay: time ? time : 6000,
+                delay: time ? time : 6000
             }
         );
     }
@@ -881,7 +881,7 @@ streemio.notify = (function (module) {
             }, 
             {
                 type: 'success',
-                delay: time ? time : 7000,
+                delay: time ? time : 7000
             }
         );
         logger.debug(text);
