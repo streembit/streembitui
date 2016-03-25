@@ -76,7 +76,10 @@ streemio.DEFS = (function (module) {
         PEERMSG_TXTMSG: "TXTMSG",
         PEERMSG_FSEND: "FSEND",
         PEERMSG_FRECV: "FRECV",
-        PEERMSG_FEXIT: "FEXIT"
+        PEERMSG_FEXIT: "FEXIT",
+        
+        MSG_TEXT: "text",
+        MSG_ADDCONTACT_REQUEST: "add_contact_request"
     }
 
 }(streemio.DEFS || {}))
@@ -100,7 +103,8 @@ streemio.config = (function (module) {
         "tcpport": streemio.DEFS.APP_PORT,
         "wsport": streemio.DEFS.WS_PORT,
         "bootseeds": [
-            "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
+            //"seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
+            "192.168.1.79"
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }

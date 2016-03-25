@@ -1597,6 +1597,9 @@ streemio.Session = (function (module, logger, events, config) {
         var exists = false;
         for (var i = 0; i < module.settings.data.pending_contacts.length; i++) {
             if (module.settings.data.pending_contacts[i].name == contact.name) {
+                //update the timestamps of the add contact request
+                contact.addrequest_create = module.settings.data.pending_contacts[i].addrequest_create;
+                contact.addrequest_update = new Date().getTime();
                 module.settings.data.pending_contacts[i] = contact;
                 exists = true;
                 break;
@@ -1604,6 +1607,7 @@ streemio.Session = (function (module, logger, events, config) {
         }
         
         if (!exists) {
+            contact.addrequest_create = new Date().getTime();
             module.settings.data.pending_contacts.push(contact);
         }
 
@@ -2006,11 +2010,24 @@ streemio.Contacts = (function (module, logger, events, config) {
             if (err) {
                 return streemio.notify.error("error in adding contact: %j", err)
             }
+
             var account = contact.name;
             streemio.PeerNet.send_addcontact_request(contact);
             logger.info("Sending contact request to %s.", account);
             pending_contacts[account] = contact;
             callback();
+
+            //  check here if the contact request was accepted
+            //  put a persistent message if the contact request was still pending 
+            setInterval(
+                function () {
+                    var pendingc = pending_contacts[account];
+                    if (pendingc) {
+                        streemio.PeerNet.send_offline_message(pendingc, function () { });
+                    }
+                },
+                30000
+            );
         });        
     }
     

@@ -256,6 +256,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var utype = decoded.data[wotmsg.MSGFIELD.UTYPE];
                 var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streemio.DEFS.TRANSPORT_TCP;
                 var contact = { public_key: pkey, ecdh_public: ecdhpk, address: address, port: port, name: account, user_type: utype, protocol: protocol };
+
                 callback(null, contact);
             }
             catch (e) {
@@ -1035,6 +1036,41 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     return streemio.notify.error("Send off-line message error %j", err);
                 }
                 logger.debug("sent off-line message " + key);
+                callback();
+            });
+        }
+        catch (e) {
+            streemio.notify.error("send_offline_message error %j", e);
+        }
+    }
+    
+    module.persistent_addcontact_request = function (contact, callback) {
+        try {
+            logger.debug("send_offline_message()");
+            
+            if (!contact) {
+                throw new Error("invalid contact parameter");
+            }
+
+            var account = contact.name;
+
+            var timestamp = Date.now();
+            var payload = {};
+            payload.type = wotmsg.MSGTYPE.OMSG;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
+            payload[wotmsg.MSGFIELD.SEKEY] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.TIMES] = contact.addrequest_create || Date.now();
+            payload[wotmsg.MSGFIELD.MSGTYPE] = streemio.DEFS.MSG_ADDCONTACT_REQUEST;
+            
+            var jti = streemio.Message.create_id();
+            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
+            var key = account + "/message/addcontact/" + jti;
+            // put the message to the network
+            streemio.Node.put(key, value, function (err) {
+                if (err) {
+                    return streemio.notify.error("Send off-line message error %j", err);
+                }
+                logger.debug("sent persistent addcontact request " + key);
                 callback();
             });
         }
