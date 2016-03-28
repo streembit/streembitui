@@ -11,7 +11,7 @@ To build Chromium please refer to the Chromium project web site.
  
 [Get the Chromium code](http://www.chromium.org/developers/how-tos/get-the-code)
  
-[Windows build instructions](https://www.chromium.org/developers/how-tos/build-instructions-windows)
+[Windows build instructions](https://chromium.googlesource.com/chromium/src/+/master/docs/windows_build_instructions.md)
 
 To build NW.js please refer to the NW.js [build documentation](http://docs.nwjs.io/en/latest/For%20Developers/Building%20NW.js/).
 
