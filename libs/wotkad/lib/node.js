@@ -685,7 +685,7 @@ Node.prototype.getNode = function (account, callback) {
 * @param {mixed} value
 * @param {function} callback
 */
-Node.prototype.put = function (key, value, callback) {
+Node.prototype.put = function (key, value, is_store_locally, callback) {
     var node = this;
     
     this._log.debug('put key %s', key);
@@ -732,6 +732,10 @@ Node.prototype.put = function (key, value, callback) {
         );
 
     });
+
+    if (is_store_locally) {
+        this._handleStore(item);
+    }
 };
 
 
@@ -891,7 +895,7 @@ Node.prototype._replicate = function () {
         
         // if we are not the publisher, then replicate the item
         if (data.value.publisher !== self._self.nodeID) {
-            self.put(data.key, data.value.value, function (err) {
+            self.put(data.key, data.value.value, false, function (err) {
                 if (err) {
                     self._log.error('failed to replicate item at key %s', data.key);
                 }
@@ -899,7 +903,7 @@ Node.prototype._replicate = function () {
         } 
         else if (Date.now() <= data.value.timestamp + constants.T_REPUBLISH) {
             // if we are the publisher, then only replicate at every T_REPUBLISH interval
-            self.put(data.key, data.value.value, function (err) {
+            self.put(data.key, data.value.value, false, function (err) {
                 if (err) {
                     self._log.error('failed to republish item at key %s', data.key);
                 }

@@ -238,7 +238,8 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
 
     obj.put = function (key, value, callback) {
         //  For this public key upload message the key is the device name
-        obj.node.put(key, value, function (err, results) {
+        //  false == don't store locally
+        obj.node.put(key, value, false, function (err, results) {
             if (callback) {
                 callback(err, results);
             }
