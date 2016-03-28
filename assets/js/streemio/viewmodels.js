@@ -457,7 +457,7 @@ var EccKey = require('./libs/crypto/EccKey');
                     var sender = payload.iss;
                     var contact = streemio.Contacts.get_contact(sender);
 
-                    var public_key = contact.public_key;
+                    var public_key = contact ? contact.public_key : null;
                     if (!public_key) {
                         //  try to get it from the message 
                         public_key = payload.data.public_key;
