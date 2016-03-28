@@ -462,8 +462,6 @@ var EccKey = require('./libs/crypto/EccKey');
                         //  try to get it from the message 
                         public_key = payload.data.public_key;
                         if (!public_key) {
-                            //  try to get it from the message 
-                            _message
                             return;
                         }
                     }
@@ -484,7 +482,6 @@ var EccKey = require('./libs/crypto/EccKey');
 
             deletemsg: function (message) {
                 try {
-                    debugger;
                     var key = message.key;
                     if (!key) return;
                     var arr = key.split("/");
@@ -1248,7 +1245,6 @@ var EccKey = require('./libs/crypto/EccKey');
             
             onTextMessage: function (data) {
                 try {
-                    debugger;
                     var contacts = viewModel.contacts();
                     for (var i = 0; i < contacts.length; i++) {
                         if (contacts[i].name == data.sender) {

@@ -2023,7 +2023,6 @@ streemio.Contacts = (function (module, logger, events, config) {
                 function () {
                     var pendingc = pending_contacts[account];
                     if (pendingc) {
-                        debugger;
                         streemio.PeerNet.addcontact_message(pendingc, function () { });
                     }
                 },
