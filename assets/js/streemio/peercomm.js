@@ -30,6 +30,7 @@ var wotmsg = require("./libs/message/wotmsg");
 var uuid = require("uuid");
 var Map = require("collections/map");
 var secrand = require('secure-random');
+var nodecrypto = require(global.cryptolib);
 
 
 streemio.TransportFactory = (function (module, logger, events, config) {
@@ -216,6 +217,11 @@ streemio.Message = (function (module, logger, events) {
         var temp = uuid.v4().toString();
         var id = temp.replace(/-/g, '');
         return id;
+    }
+    
+    module.create_hash_id = function (data) {
+        var hashid = nodecrypto.createHash('sha1').update(data).digest().toString('hex');
+        return hashid;
     }
     
     return module;
@@ -1044,7 +1050,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
-    module.persistent_addcontact_request = function (contact, callback) {
+    module.addcontact_message = function (contact, callback) {
         try {
             logger.debug("send_offline_message()");
             
@@ -1060,11 +1066,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
             payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
             payload[wotmsg.MSGFIELD.SEKEY] = streemio.User.ecdh_public_key;
             payload[wotmsg.MSGFIELD.TIMES] = contact.addrequest_create || Date.now();
-            payload[wotmsg.MSGFIELD.MSGTYPE] = streemio.DEFS.MSG_ADDCONTACT_REQUEST;
+            payload[wotmsg.MSGFIELD.MSGTYPE] = streemio.DEFS.MSG_ADDCONTACT;
             
-            var jti = streemio.Message.create_id();
+            var hashdata = account + "/message/" + streemio.DEFS.MSG_ADDCONTACT + "/" + streemio.User.name;
+            var jti = streemio.Message.create_hash_id(hashdata);
             var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
-            var key = account + "/message/addcontact/" + jti;
+            var key = account + "/message/" + jti;
             // put the message to the network
             streemio.Node.put(key, value, function (err) {
                 if (err) {

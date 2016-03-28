@@ -79,7 +79,8 @@ streemio.DEFS = (function (module) {
         PEERMSG_FEXIT: "FEXIT",
         
         MSG_TEXT: "text",
-        MSG_ADDCONTACT_REQUEST: "add_contact_request"
+        MSG_ADDCONTACT: "addcontact",
+        MSG_ACCEPTCONTACT: "acceptcontact"
     }
 
 }(streemio.DEFS || {}))

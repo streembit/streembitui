@@ -2019,11 +2019,12 @@ streemio.Contacts = (function (module, logger, events, config) {
 
             //  check here if the contact request was accepted
             //  put a persistent message if the contact request was still pending 
-            setInterval(
+            setTimeout(
                 function () {
                     var pendingc = pending_contacts[account];
                     if (pendingc) {
-                        streemio.PeerNet.send_offline_message(pendingc, function () { });
+                        debugger;
+                        streemio.PeerNet.addcontact_message(pendingc, function () { });
                     }
                 },
                 30000

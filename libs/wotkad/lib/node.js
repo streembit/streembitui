@@ -131,9 +131,12 @@ Node.prototype.init = function (options, callback) {
         
         self._self = self._rpc._contact;
         
-        self._bindRPCMessageHandlers();        
+        self._bindRPCMessageHandlers();
+          
         //  comment ou this and don't start the replication now
+        //  TODO review this whether the replication needs to be started or not
         //  self._startReplicationInterval();
+
         self._startExpirationInterval();
         
         self._log.debug('node create nodeID %s account %s', self._self.nodeID, self._options.account);

@@ -986,6 +986,22 @@ Copyright (C) 2016 The Streemio software development team
     </div>
 </script>
 
+<script type="text/html" id="account-addcontact-message">
+    <div class="addcontact-message">
+        <div class="account-message-from">
+            <div class="pull-left">Add contact request from  <span data-bind="text: sender"></span></div>
+            <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="account-message-time">
+            Request sent: <span data-bind="text: time"></span>
+        </div>
+        <div>
+            <button>Accept Contact</button>&nbsp;&nbsp;&nbsp;&nbsp;<button>Decline Contact</button>
+        </div>
+    </div>
+</script>
+
 <script type="text/html" id="streemio-view-accountinfo">
     <div id="uiview-container">
 

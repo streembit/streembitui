@@ -421,6 +421,14 @@ var EccKey = require('./libs/crypto/EccKey');
                             var msgtype = message.data.message_type;
                             var template_name;
                             if (msgtype) {
+                                if (msgtype == streemio.DEFS.MSG_ADDCONTACT) {
+                                    //  check if the contact exists already, don't show 
+                                    //  the message if thecontact is alredy accepted
+                                    if (streemio.Contacts.exists(message.iss)) {
+                                        return;
+                                    }
+                                }
+
                                 template_name = "account-" + msgtype + "-message";    
                             }
                             else {
