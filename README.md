@@ -20,6 +20,13 @@ License
 Streemio is a completely free and open source software. Streemio is released under the terms of the GNU General Public License. See [COPYING](COPYING) for more
 information or see http://www.gnu.org/licenses/.
 
+
+Building Streemio
+-----------------
+
+The build workflow is described in [BUILD.md](BUILD.md).
+
+
 Development Process
 -------------------
 
@@ -32,12 +39,6 @@ The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 The developer [forum](https://gitter.im/streemio/Streemio)
 should be used to discuss complicated or controversial changes before working
 on a patch set.
-
-
-Building Streemio
------------------
-
-The build workflow is described in [BUILD.md](BUILD.md).
 
 
 Testing
