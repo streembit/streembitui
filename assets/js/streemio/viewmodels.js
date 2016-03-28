@@ -369,6 +369,78 @@ var EccKey = require('./libs/crypto/EccKey');
         var viewModel = {
             messages: ko.observableArray([]),
             
+            handle_addcontact_message: function (key, message) {
+                var msgtype = message.data.message_type;
+                if (msgtype != streemio.DEFS.MSG_ADDCONTACT)
+                    return;
+                
+                //  check if the contact exists already, don't show 
+                //  the message if thecontact is alredy accepted
+                if (streemio.Contacts.exists(message.iss)) {
+                    return;
+                }
+
+                var template_name = "account-" + msgtype + "-message";
+                var fdate = "-";
+                if (message.iat) {
+                    var date = new Date(message.iat * 1000);
+                    fdate = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                }
+                var msgobj = { template: template_name, key: key, sender: message.iss, time: fdate, data: {} };
+                viewModel.messages.push(msgobj);
+            },
+            
+            handle_text_message: function (key, message) {
+                var msgtype = message.data.message_type;
+                if (msgtype != streemio.DEFS.MSG_TEXT)
+                    return;
+                
+                var sender_ecdh = message.data.send_ecdh_public;
+                var rcpt_ecdh = message.data.rcpt_ecdh_public;
+                if (!sender_ecdh || !rcpt_ecdh)
+                    return;
+                
+                var ecdhkeys = streemio.User.ecdhkeys;
+                // get the user ecdh key that was used to encrypt the message
+                var ecdh_public_key = null;
+                var ecdh_private_key = null;
+                for (var i = 0; i < ecdhkeys.length; i++) {
+                    if (ecdhkeys[i].ecdh_public_key == rcpt_ecdh) {
+                        ecdh_public_key = ecdhkeys[i].ecdh_public_key;
+                        ecdh_private_key = ecdhkeys[i].ecdh_private_key;
+                        break;
+                    }
+                }
+                
+                if (!ecdh_public_key || !ecdh_private_key) {
+                    streemio.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
+                    return;
+                }
+                
+                var jwe_input = message.data.cipher;
+                var plain_text = streemio.Message.decrypt_ecdh(ecdh_private_key, ecdh_public_key, sender_ecdh, jwe_input);
+                if (!plain_text) {
+                    //TODO report
+                    return;
+                }
+
+                    var dataobj = JSON.parse(plain_text);
+                if (!dataobj) {
+                    //TODO report
+                    return;
+                }
+
+                var template_name = "account-text-message";
+                 
+                var fdate = "-";
+                if (message.iat) {
+                    var date = new Date(message.iat * 1000);
+                    fdate = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                }
+                var msgobj = { template: template_name, key: key, sender: message.iss, time: fdate, data: dataobj };
+                viewModel.messages.push(msgobj); 
+            },
+            
             add_message: function (key, data) {
                 try {
                     
@@ -386,64 +458,23 @@ var EccKey = require('./libs/crypto/EccKey');
                     var contact = streemio.Contacts.get_contact(sender);
 
                     var public_key = contact.public_key;
-                    if (!public_key)
-                        return;
-                                
-                    var message = streemio.Message.decode(data, public_key);
-                    //  
-                    var sender_ecdh = message.data.send_ecdh_public;
-                    var rcpt_ecdh = message.data.rcpt_ecdh_public;
-                    if (!sender_ecdh || !rcpt_ecdh)
-                        return;
-                                
-                    var ecdhkeys = streemio.User.ecdhkeys;
-                    // get the user ecdh key that was used to encrypt the message
-                    var ecdh_public_key = null;
-                    var ecdh_private_key = null;
-                    for (var i = 0; i < ecdhkeys.length; i++) {
-                        if (ecdhkeys[i].ecdh_public_key == rcpt_ecdh) {
-                            ecdh_public_key = ecdhkeys[i].ecdh_public_key;
-                            ecdh_private_key = ecdhkeys[i].ecdh_private_key;
-                            break;
+                    if (!public_key) {
+                        //  try to get it from the message 
+                        public_key = payload.data.public_key;
+                        if (!public_key) {
+                            //  try to get it from the message 
+                            _message
+                            return;
                         }
                     }
-                                
-                    if (!ecdh_public_key || !ecdh_private_key) {
-                        streemio.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
-                        return;
-                    }
-                                
-                    var jwe_input = message.data.cipher;
-                    var plain_text = streemio.Message.decrypt_ecdh(ecdh_private_key, ecdh_public_key, sender_ecdh, jwe_input);
-                    if (plain_text) {
-                        var dataobj = JSON.parse(plain_text);
-                        if (dataobj) {
-                            var msgtype = message.data.message_type;
-                            var template_name;
-                            if (msgtype) {
-                                if (msgtype == streemio.DEFS.MSG_ADDCONTACT) {
-                                    //  check if the contact exists already, don't show 
-                                    //  the message if thecontact is alredy accepted
-                                    if (streemio.Contacts.exists(message.iss)) {
-                                        return;
-                                    }
-                                }
-
-                                template_name = "account-" + msgtype + "-message";    
-                            }
-                            else {
-                                template_name = "account-text-message";    
-                            }
                             
-                            var fdate = "-";
-                            if (message.iat) {
-                                var date = new Date(message.iat * 1000);
-                                fdate = date.toLocaleDateString() + " " + date.toLocaleTimeString();
-                            }
-                            var msgobj = { template: template_name, key: key, sender: message.iss, time: fdate, data: dataobj };
-                            viewModel.messages.push(msgobj);
-                        }
-                    }
+                    var message = streemio.Message.decode(data, public_key);
+                    if (!message)
+                        return
+                    
+                    var proc = "handle_" + message.data.message_type + "_message";
+                    viewModel[proc](key, message);
+
                     //
                 }     
                 catch (err) {
@@ -786,7 +817,7 @@ var EccKey = require('./libs/crypto/EccKey');
                 var self = this;
                 try {
                     if (message) {
-                        streemio.PeerNet.send_offline_message(this.contact, message, "text", function () {});
+                        streemio.PeerNet.send_offline_message(this.contact, message, streemio.DEFS.MSG_TEXT, function () {});
                     }
                 }
                 catch (err) {
