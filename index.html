@@ -993,11 +993,11 @@ Copyright (C) 2016 The Streemio software development team
             <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
             <div style="clear:both"></div>
         </div>
-        <div class="account-message-time" style="border-bottom:none">
+        <div class="account-message-time">
             Request sent: <span data-bind="text: time"></span>
         </div>
-        <div>
-            <button>Accept Contact</button>&nbsp;&nbsp;&nbsp;&nbsp;<button>Decline Contact</button>
+        <div class="account-message-controls">
+            <button data-bind="click:$parent.accept_addcontact">Accept Contact</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:$parent.decline_addcontact">Decline Contact</button>
         </div>
     </div>
 </script>

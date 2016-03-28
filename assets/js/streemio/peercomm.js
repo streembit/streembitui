@@ -1007,9 +1007,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     }
     
     module.send_offline_message = function (contact, message, msgtype, callback) {
-        try {
-            logger.debug("send_offline_message()");
-            
+        try {            
             if (!contact) {
                 throw new Error("invalid contact parameter");
             }
@@ -1052,8 +1050,6 @@ streemio.PeerNet = (function (module, logger, events, config) {
     
     module.addcontact_message = function (contact, callback) {
         try {
-            logger.debug("send_offline_message()");
-            
             if (!contact) {
                 throw new Error("invalid contact parameter");
             }
@@ -1083,6 +1079,40 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
         catch (e) {
             streemio.notify.error("send_offline_message error %j", e);
+        }
+    }
+    
+    module.declinecontact_message = function (contact, callback) {
+        try {            
+            if (!contact) {
+                throw new Error("invalid contact parameter");
+            }
+            
+            var account = contact.name;
+            
+            var timestamp = Date.now();
+            var payload = {};
+            payload.type = wotmsg.MSGTYPE.OMSG;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
+            payload[wotmsg.MSGFIELD.SEKEY] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.TIMES] = contact.addrequest_create || Date.now();
+            payload[wotmsg.MSGFIELD.MSGTYPE] = streemio.DEFS.MSG_DECLINECONTACT;
+            
+            var hashdata = account + "/message/" + streemio.DEFS.MSG_DECLINECONTACT + "/" + streemio.User.name;
+            var jti = streemio.Message.create_hash_id(hashdata);
+            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
+            var key = account + "/message/" + jti;
+            // put the message to the network
+            streemio.Node.put(key, value, function (err) {
+                if (err) {
+                    return streemio.notify.error("declinecontact_message error %j", err);
+                }
+                logger.debug("sent persistent declinecontact_message request " + key);
+                callback();
+            });
+        }
+        catch (e) {
+            streemio.notify.error("declinecontact_message error %j", e);
         }
     }
     

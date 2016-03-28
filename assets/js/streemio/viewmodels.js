@@ -369,6 +369,15 @@ var EccKey = require('./libs/crypto/EccKey');
         var viewModel = {
             messages: ko.observableArray([]),
             
+            handle_declinecontact_message: function (key, message) {
+                var msgtype = message.data.message_type;
+                if (msgtype != streemio.DEFS.MSG_DECLINECONTACT)
+                    return;
+                
+                var sender = message.iss;
+                streemio.Contacts.handle_addcontact_denied(sender);                
+            },
+
             handle_addcontact_message: function (key, message) {
                 var msgtype = message.data.message_type;
                 if (msgtype != streemio.DEFS.MSG_ADDCONTACT)
@@ -501,6 +510,20 @@ var EccKey = require('./libs/crypto/EccKey');
                 catch (err) {
                     streemio.logger.error("deletemsg error %j", err);
                 }
+            },
+
+            accept_addcontact: function (message) {
+                debugger;
+                var account = message.sender;
+                streemio.Contacts.offline_addcontact_accepted(account);
+                viewModel.deletemsg(message);
+            },
+
+            decline_addcontact: function (message) {
+                debugger;
+                var account = message.sender;
+                streemio.Contacts.offline_addcontact_declined(account);
+                viewModel.deletemsg(message);
             }
         };
         

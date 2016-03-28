@@ -1018,13 +1018,20 @@ span.awesomeBlue i.addbtn{
 .account-message-time{
     border-bottom:1px dotted #ccc;
     padding-bottom:4px;
-    margin-top:5px;
     margin:5px 10px 0 10px;
 }
 
 .account-message-text{
     font-weight:bold;
     margin:5px 10px 0 10px;
+}
+
+.account-message-controls{
+    margin:15px 10px 0 10px;
+}
+
+.account-message-controls button{
+    font-size:12px;
 }
 
 .help-view{

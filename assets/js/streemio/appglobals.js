@@ -80,7 +80,8 @@ streemio.DEFS = (function (module) {
         
         MSG_TEXT: "text",
         MSG_ADDCONTACT: "addcontact",
-        MSG_ACCEPTCONTACT: "acceptcontact"
+        MSG_ACCEPTCONTACT: "acceptcontact",
+        MSG_DECLINECONTACT: "declinecontact"
     }
 
 }(streemio.DEFS || {}))

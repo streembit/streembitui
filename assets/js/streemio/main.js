@@ -1944,6 +1944,25 @@ streemio.Contacts = (function (module, logger, events, config) {
         }
     }
     
+    module.offline_addcontact_accepted = function (account) {
+        module.search(account, function (contact) {
+            if (!contact) {
+                return streemio.notify.error("Error in populating contact '" + account + "' data");
+            }
+            module.accept_contact(contact);
+        });
+    }
+    
+    module.offline_addcontact_declined = function (account) {
+        module.search(account, function (contact) {
+            if (!contact) {
+                return streemio.notify.error("Error in populating contact '" + account + "' data");
+            }
+            streemio.PeerNet.declinecontact_message(contact, function () {
+            });
+        });
+    }
+    
     module.decline_contact = function (contact) {
         try {
             streemio.PeerNet.send_decline_addcontact_reply(contact);
