@@ -1,11 +1,6 @@
 ## Streemio - decentralized, P2P communication system for humans and Internet of Things devices.
 
-Bitcoin Core integration/staging tree
-=====================================
-
-[![Build Status](https://travis-ci.org/bitcoin/bitcoin.svg?branch=master)](https://travis-ci.org/bitcoin/bitcoin)
-
-https://bitcoincore.org
+http://streemio.github.io/
 
 What is Streemio?
 -----------------
@@ -13,7 +8,7 @@ What is Streemio?
 Streemio is an experimental decentralised communication system for humans and 
 Internet of Things devices. Streemio uses peer-to-peer technology to operate
 with no central authority: discovering contacts, persisting the data and routing 
-messeges are carried out collectively by the network. Streemio Core is the name 
+messages are carried out collectively by the network. Streemio Core is the name 
 of open source software which enables the use of this P2P network.
 
 For more information, as well as an immediately useable, binary version of
@@ -22,8 +17,15 @@ the Streemio Core software, see http://streemio.github.io/download.
 License
 -------
 
-Streemio is released under the terms of the GNU General Public License. See [COPYING](COPYING) for more
+Streemio is a completely free and open source software. Streemio is released under the terms of the GNU General Public License. See [COPYING](COPYING) for more
 information or see http://www.gnu.org/licenses/.
+
+
+Building Streemio
+-----------------
+
+The build workflow is described in [BUILD.md](BUILD.md).
+
 
 Development Process
 -------------------
@@ -60,6 +62,7 @@ Changes should be tested by somebody other than the developer who wrote the
 code. This is especially important for large or high-risk changes. It is useful
 to add a test plan to the pull request description if testing the changes is
 not straightforward.
+
 
 Translations
 ------------
