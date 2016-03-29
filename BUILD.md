@@ -39,6 +39,7 @@ $ /path/to/nw .
 (The package.json file must exists in the Streemio directory)
 
 
+
 Create the Streemio package
 ---------------------------
 
@@ -49,3 +50,11 @@ Windows 64-bit build: execute the build/build_win64.bat file from the windows co
 Linux 64-bit build: execute the build/build_linux64.sh file from the Linux terminal.
 
 MacOS build: execute the build/build_macos64.sh file from the terminal.
+
+
+
+Build the streemio-seed application
+-----------------------------------
+
+To run your own Streemio network you must run your own streemio-seed nodes. streemio-seed is a Node.js application based on the Streemio Core software, but without the Chromium/NW.js UI components. To build streemio-seed from source clone the [streemio-seed source]( https://github.com/streemio-org/streemio-seed.git) and follow the instructions of to the [build readme](https://github.com/streemio-org/streemio-seed/blob/master/BUILD.md).
+
