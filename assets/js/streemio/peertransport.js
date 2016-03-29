@@ -25,8 +25,8 @@ Copyright (C) 2016 The Streemio software development team
 var streemio = streemio || {};
 
 var assert = require('assert');
-var wotmsg = require("./libs/message/wotmsg");
-var wotkad = require('./libs/wotkad/kaddht'); 
+var wotmsg = require("streemiolib/message/wotmsg");
+var streemiokad = require('streemiolib/streemiokad/kaddht'); 
 var uuid = require("uuid");
 var nodecrypto = require("crypto");
 
@@ -174,7 +174,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         };
         
         try {
-            var peernode = wotkad(options);
+            var peernode = streemiokad(options);
             peernode.create(function (err) {
                 if (err) {
                     return resultfn(err);

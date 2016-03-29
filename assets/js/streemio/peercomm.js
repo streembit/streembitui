@@ -26,7 +26,7 @@ var streemio = streemio || {};
 
 var util = require('util');
 var assert = require('assert');
-var wotmsg = require("./libs/message/wotmsg");
+var wotmsg = require("streemiolib/message/wotmsg");
 var uuid = require("uuid");
 var Map = require("collections/map");
 var secrand = require('secure-random');

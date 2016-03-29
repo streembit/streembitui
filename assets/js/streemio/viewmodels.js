@@ -26,7 +26,7 @@ var streemio = streemio || {};
 streemio.vms = streemio.vms || {};
 
 var nodecrypto = require(global.cryptolib);
-var EccKey = require('./libs/crypto/EccKey');
+var EccKey = require('streemiolib/crypto/EccKey');
 
 (function ($, ko, events, config) {
     

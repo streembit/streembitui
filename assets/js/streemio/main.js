@@ -33,7 +33,7 @@ var util = require('util');
 var async = require("async");
 // use the global.cryptolib so the browserify version can configure the browser crypto library
 var nodecrypto = require(global.cryptolib);
-var EccKey = require('./libs/crypto/EccKey');
+var EccKey = require('streemiolib/crypto/EccKey');
 var secrand = require('secure-random');
 
 if (gui) {
@@ -2578,7 +2578,7 @@ streemio.Main = (function (module, logger, events, config) {
             }
             
             if (ui_callback && typeof ui_callback == 'function') {
-                logger.debug("main start is comepleted at %s", new Date().toUTCString())
+                logger.debug("main start is completed at %s", new Date().toUTCString())
                 ui_callback();
             }
             //
@@ -2599,7 +2599,7 @@ streemio.Main = (function (module, logger, events, config) {
         try {
             appboot_msg_handler("Configure UPNP port");
 
-            var natUpnp = require('./libs/upnp/nat-upnp');
+            var natUpnp = require('streemiolib/upnp/nat-upnp');
             var client = natUpnp.createClient(logger);
             
             var port = config.tcpport;

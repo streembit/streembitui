@@ -105,8 +105,7 @@ streemio.config = (function (module) {
         "tcpport": streemio.DEFS.APP_PORT,
         "wsport": streemio.DEFS.WS_PORT,
         "bootseeds": [
-            //"seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
-            "192.168.1.79"
+            "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
@@ -225,14 +224,14 @@ streemio.config = (function (module) {
 
 // initialize the event handler
 
-var AppEvents = require("./libs/events/AppEvents");
+var AppEvents = require("streemiolib/events/AppEvents");
 global.appevents = new AppEvents();
 
 // initialize the logger
-var logger = require("./libs/logger/logger");
+var logger = require("streemiolib/logger/logger");
 
 streemio.logger = (function (module) {
-    var logger = require("./libs/logger/logger");
+    var logger = require("streemiolib/logger/logger");
     module = logger;
 
     return module;

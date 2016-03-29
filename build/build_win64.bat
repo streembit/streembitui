@@ -78,7 +78,7 @@ REM goto :eof
 call :ColorText 0C "create package.nw"
 echo.
 
-%ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html  ..\assets ..\node_modules ..\libs
+%ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html  ..\assets ..\node_modules
 
 
 call :ColorText 19 "setting Streemio icon"
