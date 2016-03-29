@@ -1,4 +1,5 @@
-﻿### Build Streemio
+Build Streemio
+--------------
 
 The Streemio Core software is a Node.js application which uses the node-webkit (NW.js) library. NW.js is an app runtime based on Chromium. 
 In order to build Streemio from source you must be familiar with Node.js, the Chromium project and NW.js (node-webkit).
