@@ -98,7 +98,7 @@ var fs = require('fs');
 streemio.config = (function (module) {
 
     var config_data = {
-        "isdevmode": true,
+        "isdevmode": false, //  set this to true when run the software with "\path\to\nw\nw.exe ." so in development mode 
         "loglevel": "debug",
         "transport": streemio.DEFS.TRANSPORT_TCP,
         "wsfallback": true,

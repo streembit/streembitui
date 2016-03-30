@@ -1667,7 +1667,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             ping: function () {
                 var _self = this;
                
-                streemio.PeerNet.ping(this, false, 45000)    
+                streemio.PeerNet.ping(this, false, 30000)    
                 .then(
                     function () {
                         _self.lastping(Date.now());
@@ -1698,16 +1698,6 @@ streemio.Contacts = (function (module, logger, events, config) {
         return contobj;
     };
     
-    function update_contact_database (contact, callback) {
-        streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
-            function () {
-                callback();
-            },
-            function (err) {
-                streemio.notify.error("Populate contact error %j", err);
-            }                        
-        );
-    };
     
     function on_contact_online(account, contobj) {
         try {            
@@ -1715,7 +1705,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             if (!contact) return;
             
             //  parse the message
-            //  mus use the existing public key which guarantees data integrity and that the 
+            //  must use the existing public key which guarantees data integrity and that the 
             //  contact is indeed the sender
             var public_key = module.get_public_key(account);
             var payload = streemio.Message.decode(contobj.value, contact.public_key);
@@ -1742,7 +1732,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 user_type: contact.user_type
             };
             
-            update_contact_database(updobj, function () {
+            module.update_contact_database(updobj, function () {
                 module.on_online(account);
             });
         }
@@ -1797,7 +1787,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         contact.protocol = obj.protocol  ? obj.protocol : streemio.DEFS.TRANSPORT_TCP;
         contact.user_type = obj.user_type;
 
-        logger.debug("contact " + account + " populated from network and updated");
+        logger.debug("contact " + account + " populated from network and updated. address: " + contact.address + ". port: " + contact.port);
     }
     
     function find_contact_onnetwork(contact_address, contact_port, contact_name, callback) {
@@ -1838,7 +1828,7 @@ streemio.Contacts = (function (module, logger, events, config) {
 
     function init_contact(param_contact, callback) {
         var contact_name = param_contact.name;
-        logger.debug("intialzing, find contact " + contact_name);
+        logger.debug("initialzing, find contact " + contact_name);
         
         streemio.Node.find_account(contact_name)
             .then(
@@ -1867,10 +1857,12 @@ streemio.Contacts = (function (module, logger, events, config) {
 
                     streemio.notify.taskbarmsg("Found " + contact.name + " contact data on network");
 
-                    streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+                    streemio.ContactsDB.update_contact(streemio.User.name, contact).then(
                         function () {
                             update_contact(contact.name, contact);
-                            ping_contact(contact.name);
+                            
+                            //ping_contact(contact.name);
+                            
                             streemio.Session.contactsvm.update_contact(contact.name, contact);
                             
                             setTimeout(function () {
@@ -1912,6 +1904,26 @@ streemio.Contacts = (function (module, logger, events, config) {
 
         });
     }
+    
+    module.update_contact_database = function (contact, callback) {
+        var updobj = {
+            public_key: contact.public_key, 
+            ecdh_public: contact.ecdh_public, 
+            address: contact.address, 
+            port: contact.port, 
+            name: contact.name,
+            protocol: contact.protocol,
+            user_type: contact.user_type
+        };
+        streemio.ContactsDB.update_contact(streemio.User.name, updobj).then(
+            function () {
+                callback();
+            },
+            function (err) {
+                streemio.notify.error("Update contact database error: %j", err);
+            }                        
+        );
+    };
     
     module.on_receive_addcontact = function (request) {
         var account = request.name;
@@ -1975,7 +1987,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     //  Call this when the UI receives an add contact request 
     //  and the user accept it
     module.accept_contact = function (contact) {
-        streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+        streemio.ContactsDB.update_contact(streemio.User.name, contact).then(
             function () {
                 var contobj = new Contact(contact);
                 contacts.push(contobj);
@@ -1996,7 +2008,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         if (contact) {
             var contobj = new Contact(contact);
             contacts.push(contobj);
-            streemio.DB.update(streemio.DB.CONTACTDB, contact).then(
+            streemio.ContactsDB.update_contact(streemio.User.name, contact).then(
                 function () {                   
                     // add to the viewmodel
                     streemio.Session.contactsvm.add_contact(contobj);
@@ -2084,18 +2096,17 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     module.remove = function (name, callback) {
-        streemio.DB.del(streemio.DB.CONTACTDB, name).then(
-            function () {
-                var pos = contacts.map(function (e) { return e.name; }).indexOf(name);
-                contacts.splice(pos, 1);
-                if (callback) {
-                    callback();
-                }
-            },
-            function (err) {
-                streemio.notify.error("streemio.DB.clear error %j", err);
+        streemio.ContactsDB.delete_contact(streemio.User.name, name, function (err) {
+            if (err) {
+                return streemio.notify.error_popup("Delete contact error %j", err);    
             }
-        );
+
+            var pos = contacts.map(function (e) { return e.name; }).indexOf(name);
+            contacts.splice(pos, 1);
+            if (callback) {
+                callback();
+            }            
+        });
     }
     
     module.search = function (account, callback) {
@@ -2124,9 +2135,9 @@ streemio.Contacts = (function (module, logger, events, config) {
     
     module.init = function () {
         try {
-            streemio.DB.getall(streemio.DB.CONTACTDB, function (err, result) {
+            streemio.ContactsDB.get_contacts(streemio.User.name, function (err, result) {
                 if (err) {
-                    return streemio.notify.error("streemio.DB.getall CONTACT error %j", err);
+                    return streemio.notify.error("ContactsDB.get_contacts error %j", err);
                 }
                 
                 for (var i = 0; i < result.length; i++) {

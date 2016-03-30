@@ -1088,6 +1088,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         }
                     },
                     function (err) {
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
                         streemio.logger.error("Error in starting video call: %j", err);
                         streemio.notify.error("Error in starting video call");
                     }

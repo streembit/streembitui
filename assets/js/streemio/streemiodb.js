@@ -25,10 +25,10 @@ var streemio = streemio || {};
 
 const DB_VERSION = 1;
 
-const DB_NAME = 'streemio-database';
+const DB_NAME = 'streemionetdb';
 
-const DB_ACCOUNTS_STORE_NAME = 'accounts';
-const DB_CONTACTS_STORE_NAME = 'contacts';
+const DB_ACCOUNTS_STORE_NAME = 'accountsdb';
+const DB_CONTACTS_STORE_NAME = 'contactsdb';
 const DB_STREEMIO_STORE_NAME = 'streemiodb';
 const DB_SETTINGS_STORE_NAME = 'settingsdb';
 
@@ -47,10 +47,10 @@ streemio.DB = (function (module, logger, events){
     }
     
     function create_objectstores() {
-        logger.debug("DB create_objectstores");
+        console.log("DB create_objectstores");
 
         var accounts_store = db.createObjectStore(DB_ACCOUNTS_STORE_NAME, { keyPath: 'account' });
-        var contacts_store = db.createObjectStore(DB_CONTACTS_STORE_NAME, { keyPath: 'name' });
+        var contacts_store = db.createObjectStore(DB_CONTACTS_STORE_NAME, { keyPath: 'account' });
         var streemio_store = db.createObjectStore(DB_STREEMIO_STORE_NAME, { keyPath: 'key' });
         var settings_store = db.createObjectStore(DB_SETTINGS_STORE_NAME, { keyPath: 'key' });
     }
@@ -144,18 +144,45 @@ streemio.DB = (function (module, logger, events){
             var request = window.indexedDB.open(DB_NAME, DB_VERSION);
             
             request.onerror = function (error) {
+                console.log("DB init onerror: %j", error);
                 reject(error);
             };
             
             request.onsuccess = function (event) {
-                db = event.target.result;
-                module.is_initialized = true;
-                resolve();
+                try {
+                    console.log("DB init onsuccess");
+                    db = event.target.result;
+                    module.is_initialized = true;
+                    resolve();
+                }
+                catch (err) {
+                    reject(err);
+                }
             };
             
-            request.onupgradeneeded = function (event) {                
-                db = event.target.result;
-                create_objectstores();
+            request.onupgradeneeded = function (event) {
+                try {
+                    console.log("DB init onupgradeneeded");
+
+                    db = event.target.result;
+                    
+                    db.onerror = function (event) {
+                        reject('Error loading database');
+                    };
+                    
+                    //var transaction = event.target.transaction;                                        
+                    //transaction.oncomplete = function (event) {
+                    //    console.log("DB init version change transaction.oncomplete");                        
+                    //}
+
+                    create_objectstores();
+                    
+                    //resolve();
+                }
+                catch (err) {
+                    console.log("onupgradeneeded error: %j", err);
+                    reject(err);
+                }
             };
         });
     }
@@ -168,12 +195,13 @@ streemio.DB = (function (module, logger, events){
             };            
             DBDeleteRequest.onsuccess = function (event) {
                 resolve();
+                console.log("deleteDatabase complete");
             };  
         });        
     }
     
     module.ACCOUNTSDB = DB_ACCOUNTS_STORE_NAME;
-    module.CONTACTDB = DB_CONTACTS_STORE_NAME;
+    module.CONTACTSDB = DB_CONTACTS_STORE_NAME;
     module.MAINDB = DB_STREEMIO_STORE_NAME;
     module.SETTINGSDB = DB_SETTINGS_STORE_NAME;
 
@@ -283,7 +311,7 @@ streemio.AccountsDB = (function (module, db, logger) {
                 cb(null, value);
             },
             function (err) {
-                logger.error("APPDB get error %j", err);
+                logger.error("ACCOUNTSDB get error %j", err);
                 cb(err);
             }
         );
@@ -295,7 +323,7 @@ streemio.AccountsDB = (function (module, db, logger) {
                 cb(null);
             },
             function (err) {
-                logger.error("APPDB put error %j", err);
+                logger.error("ACCOUNTSDB put error %j", err);
                 cb(err);
             }
         );
@@ -304,4 +332,117 @@ streemio.AccountsDB = (function (module, db, logger) {
     return module;
 
 }(streemio.AccountsDB || {}, streemio.DB, streemio.logger));
+
+streemio.ContactsDB = (function (module, db, logger) {
+    
+    module.get_contacts = function (account, cb) {
+        if (!account) {
+            return cb("invalid account parameter");
+        }
+
+        db.get(db.CONTACTSDB, account).then(
+            function (value) {
+                var contacts;
+                if (!value || !value.contacts) {
+                    contacts = [];
+                }
+                else {
+                    contacts = value.contacts;
+                }
+                    
+                cb(null, contacts);
+            },
+            function (err) {
+                logger.error("CONTACTSDB get error %j", err);
+                cb(err);
+            }
+        );
+    }
+    
+    module.update_contact = function (account, contact) {
+        return new Promise(function (resolve, reject) {
+            if (!account) {
+                return reject("invalid account parameter");
+            }
+            if (!contact) {
+                return reject("invalid contact parameter");
+            }
+            
+            module.get_contacts(account, function (err, contacts) {
+                if (err) {
+                    return reject(err);
+                }
+                
+                var data = { account: account, contacts: [] };
+                
+                if (contacts && contacts.length > 0) {
+                    var isupdated = false;
+                    for (var i = 0; i < contacts.length; i++) {
+                        if (contacts[i].name == contact.name) {
+                            data.contacts.push(contact);
+                            isupdated = true;
+                        }
+                        else {
+                            data.contacts.push(contacts[i]);
+                        }
+                    }
+                    
+                    if (!isupdated) {
+                        data.contacts.push(contact);
+                    }
+                }
+                else {
+                    //  the database was empty
+                    data.contacts.push(contact);
+                }
+
+                db.update(db.CONTACTSDB, data).then(
+                    function () {
+                        resolve(null);
+                    },
+                    function (perr) {
+                        logger.error("CONTACTSDB put error %j", perr);
+                        reject(perr);
+                    }
+                );
+            });        
+        });        
+    }
+    
+    module.delete_contact = function (account, name, cb) {
+        if (!account) {
+            return cb("invalid account parameter");
+        }
+        if (!name) {
+            return cb("invalid name parameter");
+        }
+        
+        module.get_contacts(account, function (err, contacts) {
+            if (err) {
+                return cb(err);
+            }
+            
+            var data = { account: account, contacts: [] };
+            
+            if (contacts && contacts.length > 0) {
+                var pos = contacts.map(function (e) { return e.name; }).indexOf(name);
+                contacts.splice(pos, 1);
+                data.contacts = contacts;
+            }
+            
+            db.update(db.CONTACTSDB, data).then(
+                function () {
+                    cb(null);
+                },
+                function (perr) {
+                    logger.error("CONTACTSDB put error %j", perr);
+                    cb(perr);
+                }
+            );
+        });        
+    }
+    
+    return module;
+
+}(streemio.ContactsDB || {}, streemio.DB, streemio.logger));
 

@@ -261,7 +261,15 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var port = decoded.data[wotmsg.MSGFIELD.PORT];
                 var utype = decoded.data[wotmsg.MSGFIELD.UTYPE];
                 var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streemio.DEFS.TRANSPORT_TCP;
-                var contact = { public_key: pkey, ecdh_public: ecdhpk, address: address, port: port, name: account, user_type: utype, protocol: protocol };
+                var contact = {
+                    public_key: pkey, 
+                    ecdh_public: ecdhpk, 
+                    address: address, 
+                    port: port, 
+                    name: account, 
+                    user_type: utype, 
+                    protocol: protocol
+                };
 
                 callback(null, contact);
             }
@@ -415,7 +423,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var message = JSON.parse(msgtext);
             var timestamp = message[wotmsg.MSGFIELD.TIMES];
             var ecdh_public = message[wotmsg.MSGFIELD.ECDHPK];
-            logger.debug("Ping timestamp: " + timestamp + " ecdh_public: " + ecdh_public + " from " + sender);
+            var address = message[wotmsg.MSGFIELD.HOST];
+            var port = message[wotmsg.MSGFIELD.PORT];
+            var protocol = message[wotmsg.MSGFIELD.PROTOCOL];
+            logger.debug("Ping from: " + sender + ", address: " + address + ", port: " + port + ", protocol: " + protocol + ", ecdh_public: " + ecdh_public );
             
             if (!list_of_sessionkeys[sender]) {
                 list_of_sessionkeys[sender] = {};
@@ -430,15 +441,22 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             var contact = streemio.Contacts.get_contact(sender);
             if (!contact) {
-                throw new Error("invalid contact object");    
+                throw new Error("Ping error: contact not exists");    
             }
-
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PREP, jti, streemio.User.private_key, data, streemio.User.name, sender);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
             
-            // update the contact online indicator
-            streemio.Contacts.on_online(sender);
+            contact.address = address;
+            contact.port = port;
+            contact.protocol = protocol;
+            // update the contact with the latest address, port adn protocol data
+            streemio.Contacts.update_contact_database(contact, function () {
+                var jti = streemio.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PREP, jti, streemio.User.private_key, data, streemio.User.name, sender);
+                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                
+                // update the contact online indicator
+                streemio.Contacts.on_online(sender);
+            });
+            
         }
         catch (e) {
             streemio.notify.error("handlePing error %j", e);
@@ -1151,6 +1169,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var data = {}
                 data[wotmsg.MSGFIELD.TIMES] = Date.now();
                 data[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+                data[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
+                data[wotmsg.MSGFIELD.HOST] = streemio.User.address;
+                data[wotmsg.MSGFIELD.PORT] = streemio.User.port;
                 
                 var jti = streemio.Message.create_id();
                 var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PING, jti, streemio.User.private_key, data, streemio.User.name, account);
