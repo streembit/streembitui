@@ -64,7 +64,7 @@ There are three categories of refactoring, code only moves, code style fixes, co
 Project maintainers aim for a quick turnaround on refactoring pull requests, so where possible keep them short, uncomplex and easy to verify. 
 
 
-"Decision Making" Process
+Decision Making Process
 -------------------------
 
 The following applies to code changes to the Streemio project and related projects such as streemio-seed.
