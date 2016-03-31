@@ -1043,7 +1043,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     iscaller: this.iscaller
                 };
                 if (caller) {
-                    streemio.ShareScreenCall.offer_screenshare(screenvideo, options);
+                    streemio.ShareScreenCall.offer_screenshare(options);
                 }
                 else {
                     streemio.ShareScreenCall.accept_screenshare(screenvideo, options);
@@ -1207,7 +1207,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                                 contact: viewModel.contact,
                                 iscaller: true
                             };
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_SHARESCREEN, null, uioptions);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
                         }
                         else if (isaccepted == false) {
                             events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
@@ -2237,13 +2237,22 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         showView("mediacall");
                         break;
 
-                    case streemio.DEFS.CMD_CONTACT_SHARESCREEN:
+                    case streemio.DEFS.CMD_SENDER_SHARESCREEN:
                         if (!options || !options.contact) {
                             return streemio.notify.error_popup("Invalid share screen contact");
                         }
                         resetTemplate();
                         streemio.Session.uioptions = options;
-                        showView("sharescreen");
+                        showView("sendersharescreen");
+                        break;
+
+                    case streemio.DEFS.CMD_RECIPIENT_SHARESCREEN:
+                        if (!options || !options.contact) {
+                            return streemio.notify.error_popup("Invalid share screen contact");
+                        }
+                        resetTemplate();
+                        streemio.Session.uioptions = options;
+                        showView("recipientsharescreen");
                         break;
 
                     case streemio.DEFS.CMD_CONTACT_CHAT:

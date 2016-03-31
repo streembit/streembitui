@@ -1145,7 +1145,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     }
     
     //  public methods
-    module.offer_screenshare = function (screenvideo, options) {
+    module.offer_screenshare = function (options) {
         try {
             module.options = options;
             module.is_outgoing_call = options.iscaller;
@@ -1153,6 +1153,57 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             
             logger.debug("Screen share to %s", options.contact.name);            
 
+            if (!module.scn) {
+                module.scn = nw.Screen.Init();
+            }
+
+            // get video stream, nw.js prompts only "entire screen" available
+            module.scn.chooseDesktopMedia(["screen"], function (streamId, args) {
+                
+                navigator.webkitGetUserMedia({
+                    audio: false,
+                    video: {
+                        mandatory: {
+                            chromeMediaSource: 'desktop',
+                            chromeMediaSourceId: streamId,
+                            maxWidth: 1280,
+                            maxHeight: 720,
+                            minFrameRate: 20,
+                            maxFrameRate: 60
+                        },
+                        optional: []
+                    }
+                },
+                function (stream) {
+                    // set stream of source of video element
+                    //screenVideo.src = window.URL.createObjectURL(stream);
+                    //screenVideo.onloadedmetadata = function (e) {
+                    //    video.play();
+                    //};
+
+                    mediaStream = stream;                    
+                    // create the connection and perform the call
+                    //call_contact();
+
+                },
+                function (err) {
+                    streemio.notify.error_popup("Share screen error: %j", err);
+                });
+            });
+        }
+        catch (err) {
+            streemio.notify.error_popup("Share screen error: %j", err);
+        }
+    }
+    
+    module.accept_screenshare = function (screenvideo, options) {
+        try {
+            module.options = options;
+            module.is_outgoing_call = options.iscaller;
+            module.connection = null;
+            
+            logger.debug("Screen share to %s", options.contact.name);
+            
             screenVideo = document.getElementById(screenvideo);
             
             //var params = {};
@@ -1177,43 +1228,43 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             //    }
             //});
             
-            if (!module.scn) {
-                module.scn = nw.Screen.Init();
-            }
-
-            // get video stream, nw.js prompts only "entire screen" available
-            module.scn.chooseDesktopMedia(["screen"], function (streamId, args) {
+            //if (!module.scn) {
+            //    module.scn = nw.Screen.Init();
+            //}
+            
+            //// get video stream, nw.js prompts only "entire screen" available
+            //module.scn.chooseDesktopMedia(["screen"], function (streamId, args) {
                 
-                navigator.webkitGetUserMedia({
-                    audio: false,
-                    video: {
-                        mandatory: {
-                            chromeMediaSource: 'desktop',
-                            chromeMediaSourceId: streamId,
-                            maxWidth: 1280,
-                            maxHeight: 720,
-                            minFrameRate: 20,
-                            maxFrameRate: 60
-                        },
-                        optional: []
-                    }
-                },
-                function (stream) {
-                    // set stream of source of video element
-                    screenVideo.src = window.URL.createObjectURL(stream);
-                    screenVideo.onloadedmetadata = function (e) {
-                        video.play();
-                    };
+            //    navigator.webkitGetUserMedia({
+            //        audio: false,
+            //        video: {
+            //            mandatory: {
+            //                chromeMediaSource: 'desktop',
+            //                chromeMediaSourceId: streamId,
+            //                maxWidth: 1280,
+            //                maxHeight: 720,
+            //                minFrameRate: 20,
+            //                maxFrameRate: 60
+            //            },
+            //            optional: []
+            //        }
+            //    },
+            //    function (stream) {
+            //        // set stream of source of video element
+            //        screenVideo.src = window.URL.createObjectURL(stream);
+            //        screenVideo.onloadedmetadata = function (e) {
+            //            video.play();
+            //        };
+                    
+            //        mediaStream = stream;
+            //        // create the connection and perform the call
+            //        call_contact();
 
-                    mediaStream = stream;                    
-                    // create the connection and perform the call
-                    call_contact();
-
-                },
-                function (err) {
-                    streemio.notify.error_popup("Share screen error: %j", err);
-                });
-            });
+            //    },
+            //    function (err) {
+            //        streemio.notify.error_popup("Share screen error: %j", err);
+            //    });
+            //});
         }
         catch (err) {
             streemio.notify.error_popup("Share screen error: %j", err);

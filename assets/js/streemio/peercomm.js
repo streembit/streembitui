@@ -532,7 +532,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         contact: contact,
                         iscaller: false // this is the recepient of the call -> iscaller = false 
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_SHARESCREEN, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_RECIPIENT_SHARESCREEN, null, uioptions);
                 }
             });
         }
@@ -555,6 +555,8 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var jti = data[wotmsg.MSGFIELD.REQJTI];
             var result = data[wotmsg.MSGFIELD.RESULT];
             
+            console.log("handleShareScreenReply jti:" + jti);
+
             // find the wait handler, remove it and return the promise
             closeWaithandler(jti, result);
 
@@ -1371,7 +1373,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);
                 streemio.Node.peer_send(contact, encoded_msgbuffer);
                 
-                wait_peer_reply(jti, 10000, showprogress)
+                console.log("sharescreen jti:" + jti);
+
+                wait_peer_reply(jti, 15000, showprogress)
                 .then(
                     function (isaccepted) {
                         resolve(isaccepted);
@@ -1379,9 +1383,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     function (err) {
                         reject(err);
                     }                    
-                );
-                
-                //resolve(true);
+                );                
             }
             catch (err) {
                 reject(err);
