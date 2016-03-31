@@ -255,11 +255,11 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     
     function onReadyForStream(connection) {
         try {
-            if (!mediaStream) {
-                return streemio.notify.error_popup('Invalid media stream');
-            }
+            //if (!mediaStream) {
+            //    return streemio.notify.error_popup('Invalid media stream');
+            //}
             
-            connection.addStream(mediaStream);
+            //connection.addStream(mediaStream);
         }
         catch (err) {
             logger.error("onReadyForStream error " + err.message);
@@ -1001,11 +1001,11 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                                 connection.setLocalDescription(desc, function () {
                                     logger.debug('WebRTC: send sdp connection.localDescription:');
                                     logger.debug('%j', connection.localDescription);
-                                    var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTC, type: "sdp", "sdp": connection.localDescription };
+                                    var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCSS, type: "sdp", "sdp": connection.localDescription };
                                     streemio.PeerNet.send_peer_message(module.options.contact, message);
                                 });
                             },
-                        function (error) {
+                            function (error) {
                                 logger.error('Error creating session description: ' + error);
                             }
                         );
@@ -1027,20 +1027,25 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     // Hand off a new signal from the signaler to the connection
     // listen on the data received event
     module.onSignalReceive = function (data) {
-        //var signal = JSON.parse(data);
-        var connection = getConnection();
-        
-        logger.debug('WebRTC: received signal type: %s', data.type);
-        
-        // Route signal based on type
-        if (data.sdp) {
-            onSdpSignalReceived(connection, data.sdp);
-        } 
-        else if (data.candidate) {
-            onCandidateSignalReceived(connection, data.candidate);
+        try {
+            //var signal = JSON.parse(data);
+            var connection = getConnection();
+            
+            logger.debug('WebRTC: received signal type: %s', data.type);
+            
+            // Route signal based on type
+            if (data.sdp) {
+                onSdpSignalReceived(connection, data.sdp);
+            } 
+            else if (data.candidate) {
+                onCandidateSignalReceived(connection, data.candidate);
+            }
+            else {
+                logger.error('onReceiveSignal error: unknown signal type');
+            }
         }
-        else {
-            logger.error('onReceiveSignal error: unknown signal type');
+        catch (err) {
+            logger.error('WebRTC onReceiveSignal error: %j', err);
         }
     }
     
