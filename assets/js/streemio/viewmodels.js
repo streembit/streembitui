@@ -1180,6 +1180,34 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 );
             },
             
+            on_sharescreen_error: function (err) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                streemio.notify.error_popup("Error in starting share screen. %j", err);
+            },
+            
+            on_sharescreen_reply: function (isaccepted) {
+                if (isaccepted == true) {
+                    streemio.logger.info("Share screen request was accepted by " + viewModel.contact.name);
+                    var uioptions = {
+                        contact: viewModel.contact,
+                        iscaller: true
+                    };
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
+                }
+                else if (isaccepted == false) {
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                    setTimeout(function () {
+                        streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the share screen request");
+                    }, 500);
+                }
+                else {
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                    setTimeout(function () {
+                        streemio.notify.error("Unable to establish share screen with contact " + viewModel.contact.name);
+                    }, 500);
+                }
+            },
+            
             sharescreen: function (){
                 
                 streemio.PeerNet.ping(this.contact, true, 10000)
@@ -1193,41 +1221,42 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 )
                 .then(
                     function () {
-                        streemio.PeerNet.sharescreen(viewModel.contact, true)
-                    },
-                    function (err) {
-                        throw new Error(err);
-                    }
-                )
-                .then(
-                    function (isaccepted) {
-                        streemio.logger.debug("Call accepted: " + isaccepted);
-                        if (isaccepted == true) {
-                            var uioptions = {
-                                contact: viewModel.contact,
-                                iscaller: true
-                            };
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
-                        }
-                        else if (isaccepted == false) {
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                            setTimeout(function () {
-                                streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the share screen request");
-                            }, 500);
-                        }
-                        else {
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                            setTimeout(function () {
-                                streemio.notify.error("Unable to establish share screen with contact " + viewModel.contact.name);
-                            }, 500);
-                        }
+                        streemio.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error)
                     },
                     function (err) {
                         events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                        streemio.logger.error("Error in starting share screen call: %j", err);
-                        streemio.notify.error("Error in starting share screen");
+                        streemio.notify.error_popup("Error in starting share screen. %j", err);
                     }
                 );
+                //.then(
+                //    function (isaccepted) {
+                //        if (isaccepted == true) {
+                //            streemio.logger.info("Share screen request was accepted by " + viewModel.contact.name);
+                //            var uioptions = {
+                //                contact: viewModel.contact,
+                //                iscaller: true
+                //            };
+                //            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
+                //        }
+                //        else if (isaccepted == false) {
+                //            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                //            setTimeout(function () {
+                //                streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the share screen request");
+                //            }, 500);
+                //        }
+                //        else {
+                //            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                //            setTimeout(function () {
+                //                streemio.notify.error("Unable to establish share screen with contact " + viewModel.contact.name);
+                //            }, 500);
+                //        }
+                //    },
+                //    function (err) {
+                //        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                //        streemio.logger.error("Error in starting share screen call: %j", err);
+                //        streemio.notify.error("Error in starting share screen");
+                //    }
+                //);
             },
             
             chat: function () {

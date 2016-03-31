@@ -314,6 +314,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     }
     
     function closeWaithandler(jti, result) {
+        console.log("closeWaithandler jti: " + jti);
         var handler = list_of_waithandlers[jti];
         if (handler) {
             try {
@@ -330,6 +331,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             try {
                 if (handler.resolvefunc) {
+                    console.log("closeWaithandler call resolvefunc jti: " + jti + " result: " + result);
                     handler.resolvefunc(result);
                 }
             }
@@ -339,6 +341,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 delete list_of_waithandlers[jti];
             }
             catch (e) { }
+        }
+        else {
+            console.log("closeWaithandler jti: " + jti + " NO HANDLER");
         }
     }
     
@@ -982,7 +987,8 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var waitproc = null;
             
             try {
-                
+                console.log("wait_peer_reply jti: " + jti);
+
                 var waitForComplete = function (waitms) {
                     var index = 0;
                     var count = parseInt((waitms / 1000)) || 15;
@@ -1361,34 +1367,32 @@ streemio.PeerNet = (function (module, logger, events, config) {
         });
     }
     
-    module.sharescreen = function (contact, showprogress) {
-        
-        return new Promise(function (resolve, reject) {
-            try {                
-                var account = contact.name;
-                var data = {}
-                data[wotmsg.MSGFIELD.TIMES] = Date.now();
+    module.offer_sharescreen = function (contact, resolve, reject) {
+        try {                
+            var account = contact.name;
+            var data = {}
+            data[wotmsg.MSGFIELD.TIMES] = Date.now();
                 
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var jti = streemio.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);
+            streemio.Node.peer_send(contact, encoded_msgbuffer);
                 
-                console.log("sharescreen jti:" + jti);
+            console.log("offer_sharescreen jti:" + jti);
 
-                wait_peer_reply(jti, 15000, showprogress)
-                .then(
-                    function (isaccepted) {
-                        resolve(isaccepted);
-                    },
-                    function (err) {
-                        reject(err);
-                    }                    
-                );                
-            }
-            catch (err) {
-                reject(err);
-            }
-        });
+            wait_peer_reply(jti, 15000, true).then(resolve, reject);
+
+            //    function (isaccepted) {
+            //        console.log("sharescreen resolve accepted: " + isaccepted);
+            //        resolve(isaccepted);
+            //    },
+            //    function (err) {
+            //        reject(err);
+            //    }                    
+            //);                
+        }
+        catch (err) {
+            reject(err);
+        }       
     }
     
     module.initfile = function (contact, file, showprogress, timeout) {
