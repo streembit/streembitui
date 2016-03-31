@@ -450,14 +450,7 @@ streemio.UI = (function (module, logger, events, config) {
             return streemio.notify.error("Invalid call type received from " + sender);
         }
         
-        var ctype;
-        if (type == streemio.DEFS.CALLTYPE_VIDEO) {
-            ctype = "video";
-        }
-        else {
-            ctype = "audio";
-        }
-        var msg = "Incoming " + ctype + " call from " + sender + ". Accept call?";
+        var msg = "Would you like to view the screen of contact " + sender +  "?";
         
         var audioctrl = document.getElementById('ringsound1');
         audioctrl.muted = false;
@@ -467,7 +460,7 @@ streemio.UI = (function (module, logger, events, config) {
             
             bootbox.dialog({
                 message: msg,
-                title: "Incoming call",
+                title: "Screen share offer",
                 closeButton: false,
                 buttons: {
                     danger: {

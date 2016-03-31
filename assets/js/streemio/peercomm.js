@@ -516,7 +516,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("handleCall error, session does not exist for " + sender);
             }            
             
-            streemio.UI.accept_sharescreen(sender, calltype, function (result) {
+            streemio.UI.accept_sharescreen(sender, function (result) {
                 var data = {};
                 data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
                 data[wotmsg.MSGFIELD.RESULT] = result ? true : false;
