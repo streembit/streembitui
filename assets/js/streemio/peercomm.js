@@ -1339,7 +1339,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             try {                
                 var account = contact.name;
                 var data = {}
-                data[wotmsg.MSGFIELD.CALLT] = type;
+                data[wotmsg.MSGFIELD.TIMES] = Date.now();
                 
                 var jti = streemio.Message.create_id();
                 var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);

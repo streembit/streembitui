@@ -445,12 +445,8 @@ streemio.UI = (function (module, logger, events, config) {
     }
     
     module.accept_sharescreen = function (sender, resultfn) {
-        
-        if (type != streemio.DEFS.CALLTYPE_VIDEO && type != streemio.DEFS.CALLTYPE_AUDIO) {
-            return streemio.notify.error("Invalid call type received from " + sender);
-        }
-        
-        var msg = "Would you like to view the screen of contact " + sender +  "?";
+  
+        var msg = "Contact " +  sender + " is offering screen sharing. Would you like to view the screen of contact " + sender +  "? (Your screen won't be shared)";
         
         var audioctrl = document.getElementById('ringsound1');
         audioctrl.muted = false;
