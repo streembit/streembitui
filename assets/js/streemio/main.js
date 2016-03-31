@@ -444,6 +444,53 @@ streemio.UI = (function (module, logger, events, config) {
         });
     }
     
+    module.accept_sharescreen = function (sender, resultfn) {
+        
+        if (type != streemio.DEFS.CALLTYPE_VIDEO && type != streemio.DEFS.CALLTYPE_AUDIO) {
+            return streemio.notify.error("Invalid call type received from " + sender);
+        }
+        
+        var ctype;
+        if (type == streemio.DEFS.CALLTYPE_VIDEO) {
+            ctype = "video";
+        }
+        else {
+            ctype = "audio";
+        }
+        var msg = "Incoming " + ctype + " call from " + sender + ". Accept call?";
+        
+        var audioctrl = document.getElementById('ringsound1');
+        audioctrl.muted = false;
+        audioctrl.play();
+        $(".appboot-screen").hide(100, function () {
+            $(".streemio-screen").show();
+            
+            bootbox.dialog({
+                message: msg,
+                title: "Incoming call",
+                closeButton: false,
+                buttons: {
+                    danger: {
+                        label: "Decline",
+                        callback: function () {
+                            audioctrl.pause();
+                            audioctrl.muted = true;
+                            resultfn(false);
+                        }
+                    },
+                    success: {
+                        label: "Accept",
+                        callback: function () {
+                            audioctrl.pause();
+                            audioctrl.muted = true;
+                            resultfn(true);
+                        }
+                    }
+                }
+            });
+        });
+    }
+
     module.accept_file = function (sender, file_name, file_size, callback) {
         var text = "Incoming file transfer from " + sender + ". File name: " + file_name + ".  File size: " + file_size + " bytes. Accept file?";
         bootbox.confirm(text, function (result) {
@@ -2874,6 +2921,9 @@ streemio.Main = (function (module, logger, events, config) {
         }
         else if (eventcmd == events.TYPES.ONCALLWEBRTCSIGNAL) {
             streemio.MediaCall.onSignalReceive(payload);
+        }
+        else if (eventcmd == events.TYPES.ONCALLWEBRTC_SSCSIG) {
+            streemio.ShareScreenCall.onSignalReceive(payload);
         }
         else if (eventcmd == events.TYPES.ONFILEWEBRTCSIGNAL) {
             streemio.FileTransfer.onSignalReceive(payload);

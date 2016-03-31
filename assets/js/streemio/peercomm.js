@@ -507,6 +507,40 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
+    function handleShareScreenOffer(sender, payload, msgtext) {
+        try {
+            logger.debug("Share screen offer received");
+            
+            var session = list_of_sessionkeys[sender];
+            if (!session) {
+                throw new Error("handleCall error, session does not exist for " + sender);
+            }            
+            
+            streemio.UI.accept_sharescreen(sender, calltype, function (result) {
+                var data = {};
+                data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
+                data[wotmsg.MSGFIELD.RESULT] = result ? true : false;
+                
+                var contact = streemio.Contacts.get_contact(sender);
+                var jti = streemio.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.RSSC, jti, streemio.User.private_key, data, streemio.User.name, sender);
+                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                
+                // if the call was accepted on the UI then navigate to the share screen view and wait for the WebRTC session
+                if (result) {
+                    var uioptions = {
+                        contact: contact,
+                        iscaller: false // this is the recepient of the call -> iscaller = false 
+                    };
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_SHARESCREEN, null, uioptions);
+                }
+            });
+        }
+        catch (e) {
+            streemio.notify.error("handleCall error %j", e);
+        }
+    }
+    
     function handleCall(sender, payload, msgtext) {
         try {
             logger.debug("Call request received");
@@ -737,6 +771,11 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTCSIGNAL, data);
                     break;
 
+                case streemio.DEFS.PEERMSG_CALL_WEBRTCSS:
+                    //logger.debug("WEBRTC peer message received");
+                    events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTC_SSCSIG, data);
+                    break;
+
                 case streemio.DEFS.PEERMSG_FILE_WEBRTC:
                     //logger.debug("WEBRTC peer message received");
                     events.emit(events.APPEVENT, events.TYPES.ONFILEWEBRTCSIGNAL, data);
@@ -864,6 +903,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     break;
                 case wotmsg.PEERMSG.CALL:
                     handleCall(sender, payload, message.data);
+                    break;
+                case wotmsg.PEERMSG.SSCA:
+                    handleShareScreenOffer(sender, payload, message.data);
                     break;
                 case wotmsg.PEERMSG.CREP:
                     handleCallReply(sender, payload, message.data);
@@ -1284,6 +1326,36 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         reject(err);
                     }                    
                 );
+            }
+            catch (err) {
+                reject(err);
+            }
+        });
+    }
+    
+    module.sharescreen = function (contact, showprogress) {
+        
+        return new Promise(function (resolve, reject) {
+            try {                
+                var account = contact.name;
+                var data = {}
+                data[wotmsg.MSGFIELD.CALLT] = type;
+                
+                var jti = streemio.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);
+                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                
+                wait_peer_reply(jti, 10000, showprogress)
+                .then(
+                    function (isaccepted) {
+                        resolve(isaccepted);
+                    },
+                    function (err) {
+                        reject(err);
+                    }                    
+                );
+                
+                //resolve(true);
             }
             catch (err) {
                 reject(err);

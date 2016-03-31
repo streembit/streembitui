@@ -1025,6 +1025,91 @@ var EccKey = require('streemiolib/crypto/EccKey');
         
         return viewModel;
     }
+    
+    streemio.vms.ShareScreenViewModel = function (screenvideo, caller, contobj, videoconnfn) {
+        var viewModel = {
+            screenVideo: screenvideo, 
+            contact: contobj,
+            contact_name: ko.observable(contobj.name),
+            iscaller: caller,
+            peerhangup: false,
+            calltime: ko.observable(0),
+            call_timer_obj: null,
+            videoConnCallback: videoconnfn,
+
+            init: function () {
+                var options = {
+                    contact: this.contact,
+                    iscaller: this.iscaller
+                };
+                if (caller) {
+                    streemio.ShareScreenCall.offer_screenshare(screenvideo, options);
+                }
+                else {
+                    streemio.ShareScreenCall.accept_screenshare(screenvideo, options);
+                }
+            },
+            
+            toHHMMSS: function (value) {
+                var seconds = Math.floor(value),
+                    hours = Math.floor(seconds / 3600);
+                seconds -= hours * 3600;
+                var minutes = Math.floor(seconds / 60);
+                seconds -= minutes * 60;
+                
+                if (hours < 10) { hours = "0" + hours; }
+                if (minutes < 10) { minutes = "0" + minutes; }
+                if (seconds < 10) { seconds = "0" + seconds; }
+                return hours + ':' + minutes + ':' + seconds;
+            },
+            
+            calltimeproc: function () {
+                var value = 0;
+                viewModel.call_timer_obj = setInterval(function () {
+                    value++;
+                    var txt = viewModel.toHHMMSS(value);
+                    viewModel.calltime(txt);
+                }, 1000);
+            },
+            
+            onRemoteVideoConnect: function () {
+                if (viewModel.videoConnCallback) {
+                    viewModel.videoConnCallback();
+                }                
+                
+                viewModel.calltimeproc();
+            },        
+
+            hangup: function () {
+                streemio.MediaCall.hangup();
+                streemio.PeerNet.hangup_call(viewModel.contact);
+                // navigate to empty screen
+                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                if (viewModel.call_timer_obj) {
+                    clearTimeout(viewModel.call_timer_obj);
+                }
+            },
+            
+            dispose: function () {
+                try {
+                    streemio.logger.debug("MediaCallViewModel dispose");
+                    streemio.MediaCall.hangup();
+                    if (!viewModel.peerhangup) {
+                        streemio.PeerNet.hangup_call(viewModel.contact);
+                    }
+                    if (viewModel.call_timer_obj) {
+                        clearTimeout(viewModel.call_timer_obj);
+                    }
+                }
+                catch (err) {
+                    streemio.notify.error("Mediacall dispose %j", err);
+                }
+            }
+
+        };
+        
+        return viewModel;
+    }
        
     streemio.vms.ContactViewModel = function (data) {
         var viewModel = {
@@ -1046,7 +1131,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     call_type = streemio.DEFS.CALLTYPE_AUDIO;
                 }
                 
-                streemio.PeerNet.ping(this.contact, true, 5000)
+                streemio.PeerNet.ping(this.contact, true, 10000)
                 .then(
                     function () {
                         return streemio.PeerNet.get_contact_session(viewModel.contact);
@@ -1091,6 +1176,56 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
                         streemio.logger.error("Error in starting video call: %j", err);
                         streemio.notify.error("Error in starting video call");
+                    }
+                );
+            },
+            
+            sharescreen: function (){
+                
+                streemio.PeerNet.ping(this.contact, true, 10000)
+                .then(
+                    function () {
+                        return streemio.PeerNet.get_contact_session(viewModel.contact);
+                    },
+                    function (err) {
+                        throw new Error(err);
+                    }
+                )
+                .then(
+                    function () {
+                        streemio.PeerNet.sharescreen(viewModel.contact, true)
+                    },
+                    function (err) {
+                        throw new Error(err);
+                    }
+                )
+                .then(
+                    function (isaccepted) {
+                        streemio.logger.debug("Call accepted: " + isaccepted);
+                        if (isaccepted == true) {
+                            var uioptions = {
+                                contact: viewModel.contact,
+                                iscaller: true
+                            };
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_SHARESCREEN, null, uioptions);
+                        }
+                        else if (isaccepted == false) {
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                            setTimeout(function () {
+                                streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the share screen request");
+                            }, 500);
+                        }
+                        else {
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                            setTimeout(function () {
+                                streemio.notify.error("Unable to establish share screen with contact " + viewModel.contact.name);
+                            }, 500);
+                        }
+                    },
+                    function (err) {
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                        streemio.logger.error("Error in starting share screen call: %j", err);
+                        streemio.notify.error("Error in starting share screen");
                     }
                 );
             },
@@ -2100,6 +2235,15 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         resetTemplate();
                         streemio.Session.uioptions = options;
                         showView("mediacall");
+                        break;
+
+                    case streemio.DEFS.CMD_CONTACT_SHARESCREEN:
+                        if (!options || !options.contact) {
+                            return streemio.notify.error_popup("Invalid share screen contact");
+                        }
+                        resetTemplate();
+                        streemio.Session.uioptions = options;
+                        showView("sharescreen");
                         break;
 
                     case streemio.DEFS.CMD_CONTACT_CHAT:

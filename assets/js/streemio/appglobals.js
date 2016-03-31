@@ -50,6 +50,7 @@ streemio.DEFS = (function (module) {
         CMD_SETTINGS: 'settings',
         CMD_CONTACT_SELECT: 'contact_select',
         CMD_CONTACT_CALL: 'contact_call',
+        CMD_CONTACT_SHARESCREEN: 'contact_sharescreen',
         CMD_HANGUP_CALL: 'hangup_call',
         CMD_CONTACT_CHAT: 'contact_chat',
         CMD_INIT_USER: 'init_user',
@@ -72,6 +73,7 @@ streemio.DEFS = (function (module) {
         CALLTYPE_FILET: "filetransfer",
         
         PEERMSG_CALL_WEBRTC: "CALL_WEBRTC",
+        PEERMSG_CALL_WEBRTCSS: "CALL_WEBRTCSS", // offer share screen
         PEERMSG_FILE_WEBRTC: "FILE_WEBRTC",
         PEERMSG_TXTMSG: "TXTMSG",
         PEERMSG_FSEND: "FSEND",
