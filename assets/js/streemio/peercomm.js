@@ -541,6 +541,29 @@ streemio.PeerNet = (function (module, logger, events, config) {
         }
     }
     
+    function handleShareScreenReply(sender, payload, msgtext) {
+        try {
+            logger.debug("Share screen reply (RSSC) message received");
+            
+            var session = list_of_sessionkeys[sender];
+            if (!session) {
+                throw new Error("handleCallReply error, session does not exist for " + sender);
+            }
+            
+            var data = JSON.parse(msgtext);
+            //  must have the request_jti field
+            var jti = data[wotmsg.MSGFIELD.REQJTI];
+            var result = data[wotmsg.MSGFIELD.RESULT];
+            
+            // find the wait handler, remove it and return the promise
+            closeWaithandler(jti, result);
+
+        }
+        catch (e) {
+            streemio.notify.error("handleCallReply error %j", e);
+        }
+    }
+    
     function handleCall(sender, payload, msgtext) {
         try {
             logger.debug("Call request received");
@@ -904,11 +927,14 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 case wotmsg.PEERMSG.CALL:
                     handleCall(sender, payload, message.data);
                     break;
+                case wotmsg.PEERMSG.CREP:
+                    handleCallReply(sender, payload, message.data);
+                    break;
                 case wotmsg.PEERMSG.SSCA:
                     handleShareScreenOffer(sender, payload, message.data);
                     break;
-                case wotmsg.PEERMSG.CREP:
-                    handleCallReply(sender, payload, message.data);
+                case wotmsg.PEERMSG.RSSC:
+                    handleShareScreenReply(sender, payload, message.data);
                     break;
                 case wotmsg.PEERMSG.FILE:
                     handleFileInit(sender, payload, message.data);
