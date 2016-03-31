@@ -1059,11 +1059,13 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     }
     
     //  public methods
-    function call_contact() {
+    function call_contact(stream) {
         try {
-            if (!mediaStream) {
+            if (!stream) {
                 return streemio.notify.error_popup('Invalid media stream');
             }
+            
+            mediaStream = stream;
             
             //  create a connection 
             var connection = getConnection(module.options.contact.name);
@@ -1180,10 +1182,9 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                     //screenVideo.onloadedmetadata = function (e) {
                     //    video.play();
                     //};
-
-                    mediaStream = stream;                    
+             
                     // create the connection and perform the call
-                    //call_contact();
+                    call_contact(stream);
 
                 },
                 function (err) {
