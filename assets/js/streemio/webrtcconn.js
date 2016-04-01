@@ -1233,6 +1233,13 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     
     module.hangup = function () {
         logger.debug("ShareScreenCall hangup()");
+        
+        // hangup the audio connection
+        try {
+            streemio.AutoAudioCall.hangup();            
+        }
+        catch (e) { }
+
         if (module.connection) {
             try {
                 module.connection.close();
@@ -1524,13 +1531,8 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
         try {
             logger.debug('Received local stream');
             
-            //if (module.options.calltype == "videocall") {
-            //    attachMediaStream(localVideo, stream);
-            //}
-            //else {
             var audioTracks = stream.getAudioTracks();
             logger.debug('Using audio device: ' + audioTracks[0].label);
-            //}
             
             mediaStream = stream;
             
@@ -1575,7 +1577,7 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
     }
     
     module.hangup = function () {
-        logger.debug("MediaCall hangup()");
+        logger.debug("AutoAudioCall hangup()");
         if (module.connection) {
             try {
                 module.connection.close();
