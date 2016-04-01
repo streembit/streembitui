@@ -255,11 +255,11 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     
     function onReadyForStream(connection) {
         try {
-            //if (!mediaStream) {
-            //    return streemio.notify.error_popup('Invalid media stream');
-            //}
+            if (!mediaStream) {
+                return streemio.notify.error_popup('Invalid media stream');
+            }
             
-            //connection.addStream(mediaStream);
+            connection.addStream(mediaStream);
         }
         catch (err) {
             logger.error("onReadyForStream error " + err.message);
@@ -1051,16 +1051,6 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     
 
     function onReadyForStream(connection) {
-        try {
-            if (!mediaStream) {
-                return streemio.notify.error_popup('Invalid media stream');
-            }
-            
-            connection.addStream(mediaStream);
-        }
-        catch (err) {
-            logger.error("onReadyForStream error " + err.message);
-        }
     }
     
     //  public methods
