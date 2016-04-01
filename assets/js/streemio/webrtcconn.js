@@ -162,7 +162,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
                                     streemio.PeerNet.send_peer_message(module.options.contact, message);
                                 });
                             },
-                        function (error) {
+                            function (error) {
                                 logger.error('Error creating session description: ' + error);
                             }
                         );
@@ -904,6 +904,11 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                     logger.debug('WebRTC: call onRemoteStreamAdded()');
                     onRemoteStreamAdded(remoteStream);
                 }
+                else {
+                    if (module.videoconnfn_callback) {
+                        module.videoconnfn_callback();
+                    }
+                }
             }
         };
         
@@ -946,10 +951,6 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
         connection.onaddstream = function (evt) {
             logger.debug('WebRTC: connection.onaddstream, set remote stream');
             remoteStream = evt.stream;
-            //if (module.is_outgoing_call) {
-            //    logger.debug('WebRTC: call onRemoteStreamAdded()');
-            //    onRemoteStreamAdded(evt.stream);
-            //}
         };
         
         connection.onremovestream = function (event) {
@@ -1051,6 +1052,9 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     
 
     function onReadyForStream(connection) {
+        if (module.videoconnfn_callback) {
+            module.videoconnfn_callback();
+        }
     }
     
     //  public methods
@@ -1147,6 +1151,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             module.options = options;
             module.is_outgoing_call = options.iscaller;
             module.connection = null;
+            module.videoconnfn_callback = options.videoconnfn
             
             logger.debug("Screen share to %s", options.contact.name);            
 
@@ -1197,70 +1202,12 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             module.options = options;
             module.is_outgoing_call = options.iscaller;
             module.connection = null;
+            module.videoconnfn_callback = options.videoconnfn
             
             logger.debug("Screen share to %s", options.contact.name);
             
             screenVideo = document.getElementById(screenvideo);
             
-            //var params = {};
-            //if (options.calltype == "videocall") {
-            //    params = { audio: true, video: true };
-            //}
-            //else {
-            //    params = { audio: true, video: false };
-            //}
-            
-            //navigator.mediaDevices.getUserMedia(params)
-            //.then(onStreamCreated)
-            //.catch(function (error) {
-            //    if (error.name === 'ConstraintNotSatisfiedError') {
-            //        streemio.notify.error_popup('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
-            //    } else if (error.name === 'PermissionDeniedError') {
-            //        streemio.notify.error_popup('Permissions have not been granted to use your camera and ' +
-            //                                    'microphone, you need to allow the page access to your devices in order for the demo to work.');
-            //    }
-            //    else {
-            //        streemio.notify.error_popup('getUserMedia error: %j', error);
-            //    }
-            //});
-            
-            //if (!module.scn) {
-            //    module.scn = nw.Screen.Init();
-            //}
-            
-            //// get video stream, nw.js prompts only "entire screen" available
-            //module.scn.chooseDesktopMedia(["screen"], function (streamId, args) {
-                
-            //    navigator.webkitGetUserMedia({
-            //        audio: false,
-            //        video: {
-            //            mandatory: {
-            //                chromeMediaSource: 'desktop',
-            //                chromeMediaSourceId: streamId,
-            //                maxWidth: 1280,
-            //                maxHeight: 720,
-            //                minFrameRate: 20,
-            //                maxFrameRate: 60
-            //            },
-            //            optional: []
-            //        }
-            //    },
-            //    function (stream) {
-            //        // set stream of source of video element
-            //        screenVideo.src = window.URL.createObjectURL(stream);
-            //        screenVideo.onloadedmetadata = function (e) {
-            //            video.play();
-            //        };
-                    
-            //        mediaStream = stream;
-            //        // create the connection and perform the call
-            //        call_contact();
-
-            //    },
-            //    function (err) {
-            //        streemio.notify.error_popup("Share screen error: %j", err);
-            //    });
-            //});
         }
         catch (err) {
             streemio.notify.error_popup("Share screen error: %j", err);
@@ -1291,11 +1238,8 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
         catch (e) { }
         
         try {
-            var contactVideo = document.getElementById(contactVidElement);
-            contactVideo.src = '';
-            if (localVideo) {
-                localVideo.pause();
-                localVideo.src = "";
+            if (screenVideo) {
+                screenVideo.src = '';
             }
         }
         catch (e) { }

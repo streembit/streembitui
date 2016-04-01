@@ -1308,89 +1308,50 @@ Copyright (C) 2016 The Streemio software development team
 
 
 <script type="text/html" id="streemio-view-sendersharescreen">
-    <div id="media-call-container">
-        <div class="media-call-center">
-            <!--<div class="media-call-header">
-                <div style="float:left;" class="callbuttons">
-                    <div style="display:inline-block;margin:0;padding:0;text-align:left">
-                        <div style="margin-top:10px">
-                            <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
-                                <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
-                            </span>
-                        </div>
+    <div id="screenshare-container" style="width:100%;height:100%;display:flex;align-items: stretch;align-content: stretch;">
+      
+        <!--<div class="media-call-header">
+            <div style="float:left;" class="callbuttons">
+                <div style="display:inline-block;margin:0;padding:0;text-align:left">
+                    <div style="margin-top:10px">
+                        <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
+                            <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
+                        </span>
                     </div>
                 </div>
-                <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
-                    Screen share to <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
-                </div>
-                <div style="clear:both"></div>
-            </div>-->
+            </div>
+            <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
+                Screen share to <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
+            </div>
+            <div style="clear:both"></div>
+        </div>-->
 
-            <div style="width:100%;height:100%;display:flex;justify-content: flex-start;align-items: stretch;align-content: stretch;">
-                <div style="display: flex; justify-content: center;align-items: center;">
+        <div style="display:flex;align-items: stretch;align-content: stretch;width: 100%;">
+            <div style="display: flex; justify-content: center;align-items: center;width: 100%;">
+                <div style="text-align:center">
                     <div>Share screen to <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span></div>
-                    <div><button data-bind="click: hangup">Cancel</button></div>
+                    <div><button data-bind="click: hangup" style="font-size:20px;padding:5px 30px">Cancel screen share</button></div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script type="text/javascript">
-        var mediacall_vm = null;
-
-        function resize_video_controls() {
-            var viditems_parent_width = $('.video_ctrls_items').width();
-            var viditems_parent_height = $('.video_ctrls_items').height();
-            //console.log('viditems_parent_width: ' + viditems_parent_width + ', viditems_parent_height: ' + viditems_parent_height);
-
-            var ctrls_parent = $('.video_ctrls_parent');
-            var h = viditems_parent_height - 10;
-            var w = parseInt(h * 1.3333);
-
-            ctrls_parent.width(w);
-            ctrls_parent.height(h);
-        }
 
         function onContactConnect() {
-            resize_video_controls();
-
-            var screenvideo = document.getElementById("screenvideo");
-            //!important
-            screenvideo.muted = true;
-            //local_video.width = 160;
-            //local_video.height = 120;
-
-            $('#media-call-container').css({
-                visibility: 'visible'
-            });
+            debugger;
         }
-
-        function onWindowResize() {
-            resize_video_controls();
-        }
-
 
         $(document).ready(function () {
             debugger;
             var contact = streemio.Session.uioptions.contact;
-            var mediacall_div = document.getElementById('media-call-container');
+            var screensharediv = document.getElementById('screenshare-container');
             var vm = new streemio.vms.ShareScreenViewModel(null, true, contact, onContactConnect);
-            ko.applyBindings(vm, mediacall_div);
+            ko.applyBindings(vm, screensharediv);
             vm.init();
 
             streemio.Session.curent_viewmodel = vm;
-
-            //$(window).resize(onWindowResize);
-
-            var screenvideo = document.getElementById("screenvideo");
-            //!important
-            screenvideo.muted = true;
-            //local_video.width = 160;
-            //local_video.height = 120;
-
-            $('#media-call-container').css({
-                visibility: 'visible'
-            });
 
         });
     </script>
@@ -1398,7 +1359,7 @@ Copyright (C) 2016 The Streemio software development team
 </script>
 
 <script type="text/html" id="streemio-view-recipientsharescreen">
-    <div id="media-call-container">
+    <div id="screensharercp-container" style="display:none">
         <div class="media-call-center">
             <div class="media-call-header">
                 <div style="float:left;" class="callbuttons">
@@ -1419,78 +1380,36 @@ Copyright (C) 2016 The Streemio software development team
                 <div style="clear:both"></div>
             </div>
 
-            <!--<div class="media-call-content">
-                <div class="video_ctrls_items">
-                    <div class="video_ctrls_parent">
-                        <div class="screenvideo_parent" style="width:1024px;height:720px;">
-                            <video id="screenvideo" class="video" autoplay style="min-height:100%;min-width:100%"></video>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-
             <div style="width:1024px;height:720px;">
                 <video id="screenvideo" class="video" autoplay style="min-height:100%;min-width:100%"></video>
             </div>
         </div>
     </div>
 
+    <div id="screenshare-wait-container" style="width:100%;height:100%;display:flex;align-items: stretch;align-content: stretch;">
+        <div style="display: flex; justify-content: center;align-items: center;width: 100%;height:100%;text-align:center">
+            <div style="text-align:center">
+                <i class="fa fa-spinner fa-pulse fa-6x"></i>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
-        var mediacall_vm = null;
-
-        function resize_video_controls() {
-            var viditems_parent_width = $('.video_ctrls_items').width();
-            var viditems_parent_height = $('.video_ctrls_items').height();
-            //console.log('viditems_parent_width: ' + viditems_parent_width + ', viditems_parent_height: ' + viditems_parent_height);
-
-            var ctrls_parent = $('.video_ctrls_parent');
-            var h = viditems_parent_height - 10;
-            var w = parseInt(h * 1.3333);
-
-            ctrls_parent.width(w);
-            ctrls_parent.height(h);
-        }
 
         function onContactConnect() {
-            resize_video_controls();
-
-            var screenvideo = document.getElementById("screenvideo");
-            //!important
-            screenvideo.muted = true;
-            //local_video.width = 160;
-            //local_video.height = 120;
-
-            $('#media-call-container').css({
-                visibility: 'visible'
-            });
+            $('#screenshare-wait-container').hide();
+            $('#screensharercp-container').show();
         }
-
-        function onWindowResize() {
-            resize_video_controls();
-        }
-
 
         $(document).ready(function () {
             debugger;
             var contact = streemio.Session.uioptions.contact;
-            var mediacall_div = document.getElementById('media-call-container');
+            var div = document.getElementById('screensharercp-container');
             var vm = new streemio.vms.ShareScreenViewModel("screenvideo", false, contact, onContactConnect);
-            ko.applyBindings(vm, mediacall_div);
+            ko.applyBindings(vm, div);
             vm.init();
 
             streemio.Session.curent_viewmodel = vm;
-
-            //$(window).resize(onWindowResize);
-
-            var screenvideo = document.getElementById("screenvideo");
-            //!important
-            screenvideo.muted = true;
-            //local_video.width = 160;
-            //local_video.height = 120;
-
-            $('#media-call-container').css({
-                visibility: 'visible'
-            });
 
         });
     </script>

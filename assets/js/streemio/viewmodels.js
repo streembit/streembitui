@@ -1040,7 +1040,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
             init: function () {
                 var options = {
                     contact: this.contact,
-                    iscaller: this.iscaller
+                    iscaller: this.iscaller,
+                    videoconnfn: viewModel.onRemoteVideoConnect
                 };
                 if (caller) {
                     streemio.ShareScreenCall.offer_screenshare(options);
@@ -1077,11 +1078,13 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     viewModel.videoConnCallback();
                 }                
                 
-                viewModel.calltimeproc();
+                if (viewModel.iscaller()) {
+                    viewModel.calltimeproc();
+                }
             },        
 
             hangup: function () {
-                streemio.MediaCall.hangup();
+                streemio.ShareScreenCall.hangup();
                 streemio.PeerNet.hangup_call(viewModel.contact);
                 // navigate to empty screen
                 events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
@@ -1093,7 +1096,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
             dispose: function () {
                 try {
                     streemio.logger.debug("MediaCallViewModel dispose");
-                    streemio.MediaCall.hangup();
+                    streemio.ShareScreenCall.hangup();
                     if (!viewModel.peerhangup) {
                         streemio.PeerNet.hangup_call(viewModel.contact);
                     }
