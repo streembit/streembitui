@@ -1078,7 +1078,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     viewModel.videoConnCallback();
                 }                
                 
-                if (viewModel.iscaller()) {
+                if (viewModel.iscaller) {
                     viewModel.calltimeproc();
                 }
             },        
