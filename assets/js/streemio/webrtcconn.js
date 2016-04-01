@@ -906,8 +906,22 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                     onRemoteStreamAdded(remoteStream);
                 }
                 else {
-                    if (module.videoconnfn_callback) {
-                        module.videoconnfn_callback();
+                    try {
+                        logger.debug('WebRTC: call videoconnfn_callback()');
+                        if (module.videoconnfn_callback) {
+                            module.videoconnfn_callback();
+                        }
+                        
+                        logger.debug("calling contact with auto audio");
+                        // initialize the audio call module
+                        var options = {
+                            contact: module.options.contact,
+                            iscaller: true
+                        };                       
+                        streemio.AutoAudioCall.init(options);
+                    }
+                    catch (err) {
+
                     }
                 }
             }
@@ -921,7 +935,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                 'signalingState': connection.signalingState
             };
             
-            logger.debug(JSON.stringify(states));
+            logger.debug("WebRTC: connection.onstatechange");
         };
         
         connection.onnegotiationneeded = function () {
@@ -1013,7 +1027,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                         );
                     } 
                     else if (connection.remoteDescription.type == "answer") {
-                        logger.info('WebRTC: caller setRemoteDescription success');
+                        logger.debug('WebRTC: caller setRemoteDescription success');
                     }
                 },
                 function (error) {
@@ -1056,14 +1070,6 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
         if (module.videoconnfn_callback) {
             module.videoconnfn_callback();
         }
-        
-        logger.debug("calling contact");
-        // initialize the audio call module
-        var options = {
-            contact: module.options.contact,
-            iscaller: true
-        };
-        //streemio.AutoAudioCall.init(options);
     }
     
     //  public methods
@@ -1503,24 +1509,10 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
     
     function onRemoteStreamAdded(eventStream) {
         try {
-            //if (module.options.calltype == "videocall") {
-                
-            //    logger.debug('Bind remote stream to contact video element');
-            //    // Bind the remote stream to the contact video control
-            //    var contactVideo = document.getElementById(contactVidElement);
-            //    attachMediaStream(contactVideo, eventStream);
-                
-            //    //TODO this changed with Chromium 45
-            //    eventStream.onended = onRemoteStreamEnded;
-            //    eventStream.onremovetrack = onRemoteStreamRemoveTrack;
-            //}
-            //else {
-                logger.debug('Bind remote stream to audio element');
-                var audio = document.querySelector('contactaudio');
-                audio.srcObject = eventStream; //event.stream;
-            //}
-            
-            //app_events.emit(app_events.APPEVENT, app_events.TYPES.ONVIDEOCONNECT);
+            logger.debug('Bind remote stream to audio element');
+            var audio = document.getElementById('contactaudio');
+            audio.srcObject = eventStream; //event.stream;
+            logger.debug('Remote stream binded to audio element');
         }
         catch (err) {
             logger.error("onRemoteStreamAdded error: %j", err);
@@ -1560,11 +1552,6 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
             module.connection = null;
             
             logger.debug("auto audio call with %s", options.contact.name);
-            
-            //if (options.calltype == "videocall") {
-            //    localVideo = document.getElementById(localvideo);
-            //    contactVidElement = contactvideo;
-            //}
             
             var params = { audio: true, video: false };
 
