@@ -513,14 +513,12 @@ var EccKey = require('streemiolib/crypto/EccKey');
             },
 
             accept_addcontact: function (message) {
-                debugger;
                 var account = message.sender;
                 streemio.Contacts.offline_addcontact_accepted(account);
                 viewModel.deletemsg(message);
             },
 
             decline_addcontact: function (message) {
-                debugger;
                 var account = message.sender;
                 streemio.Contacts.offline_addcontact_declined(account);
                 viewModel.deletemsg(message);
@@ -1033,8 +1031,6 @@ var EccKey = require('streemiolib/crypto/EccKey');
             contact_name: ko.observable(contobj.name),
             iscaller: caller,
             peerhangup: false,
-            calltime: ko.observable(''),
-            call_timer_obj: null,
             videoConnCallback: videoconnfn,
 
             init: function () {
@@ -1050,37 +1046,11 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     streemio.ShareScreenCall.accept_screenshare(screenvideo, options);
                 }
             },
-            
-            toHHMMSS: function (value) {
-                var seconds = Math.floor(value),
-                    hours = Math.floor(seconds / 3600);
-                seconds -= hours * 3600;
-                var minutes = Math.floor(seconds / 60);
-                seconds -= minutes * 60;
-                
-                if (hours < 10) { hours = "0" + hours; }
-                if (minutes < 10) { minutes = "0" + minutes; }
-                if (seconds < 10) { seconds = "0" + seconds; }
-                return hours + ':' + minutes + ':' + seconds;
-            },
-            
-            calltimeproc: function () {
-                var value = 0;
-                viewModel.call_timer_obj = setInterval(function () {
-                    value++;
-                    var txt = viewModel.toHHMMSS(value);
-                    viewModel.calltime(txt);
-                }, 1000);
-            },
-            
+
             onRemoteVideoConnect: function () {
                 if (viewModel.videoConnCallback) {
                     viewModel.videoConnCallback();
                 }                
-                
-                if (viewModel.iscaller) {
-                    viewModel.calltimeproc();
-                }
             },        
 
             hangup: function () {

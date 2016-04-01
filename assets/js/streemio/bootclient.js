@@ -82,6 +82,33 @@ streemio.bootclient = (function (module, logger, config, events) {
         }
     };
     
+    function normalize_seeds(list) {
+        
+        var seeds = [];
+
+        if (list || list.length > 0) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].account == streemio.User.name) {
+                    continue;
+                }
+                
+                var exists = false;
+                for (var j = 0; j < seeds.length; j++) {
+                    if (seeds[j].account == list[i].account) {
+                        exists = true;
+                        break;
+                    }
+                }
+                
+                if (!exists) {
+                    seeds.push(list[i]);
+                }
+            }
+        }      
+
+        return seeds;
+    }
+    
     module.tcp_boot = function (bootseeds, callback) {
         logger.debug("bootclient tcp_boot()");
         var discovery_srvs = [];
@@ -143,7 +170,10 @@ streemio.bootclient = (function (module, logger, config, events) {
                 });
             },
             function (err, result) {
+                // normalize the seed list by removing the duplicates
                 if (bootresult && bootresult.seeds && bootresult.seeds.length > 0) {
+                    var seeds = normalize_seeds(bootresult.seeds);
+                    bootresult.seeds = seeds;
                     callback(null, bootresult);
                 }
                 else {
