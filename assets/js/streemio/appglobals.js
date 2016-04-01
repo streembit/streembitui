@@ -75,6 +75,7 @@ streemio.DEFS = (function (module) {
         
         PEERMSG_CALL_WEBRTC: "CALL_WEBRTC",
         PEERMSG_CALL_WEBRTCSS: "CALL_WEBRTCSS", // offer share screen
+        PEERMSG_CALL_WEBRTCAA: "CALL_WEBRTCAA", // auto audio call (audio call with screen sharing without prompting the user)
         PEERMSG_FILE_WEBRTC: "FILE_WEBRTC",
         PEERMSG_TXTMSG: "TXTMSG",
         PEERMSG_FSEND: "FSEND",

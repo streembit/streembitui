@@ -2914,6 +2914,9 @@ streemio.Main = (function (module, logger, events, config) {
         else if (eventcmd == events.TYPES.ONCALLWEBRTC_SSCSIG) {
             streemio.ShareScreenCall.onSignalReceive(payload);
         }
+        else if (eventcmd == events.TYPES.ONCALLWEBRTC_SSAUDIOSIG) {
+            streemio.AutoAudioCall.onSignalReceive(payload);
+        }
         else if (eventcmd == events.TYPES.ONFILEWEBRTCSIGNAL) {
             streemio.FileTransfer.onSignalReceive(payload);
         }

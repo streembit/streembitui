@@ -437,6 +437,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
 
 }(streemio.MediaCall || {}, streemio.logger, global.appevents, streemio.config));
 
+
 streemio.FileTransfer = (function (module, logger, app_events, config) {
     
     module.options = {};
@@ -1055,6 +1056,10 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
         if (module.videoconnfn_callback) {
             module.videoconnfn_callback();
         }
+        
+        logger.debug("calling contact");
+        // initialize the audio call module
+        //streemio.AutoAudioCall.init(true);
     }
     
     //  public methods
@@ -1208,6 +1213,8 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             
             screenVideo = document.getElementById(screenvideo);
             
+            // initialize the audio call module
+            streemio.AutoAudioCall.init(false);
         }
         catch (err) {
             streemio.notify.error_popup("Share screen error: %j", err);
@@ -1248,5 +1255,355 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     return module;
 
 }(streemio.ShareScreenCall || {}, streemio.logger, global.appevents, streemio.config));
+
+
+streemio.AutoAudioCall = (function (module, logger, app_events, config) {
+    
+    module.options = {};
+    module.is_outgoing_call = false;
+    module.connection = 0;
+    module.ice_servers = config.ice_resolvers;
+    
+    //var localVideo;
+    //var contactVidElement;
+    var mediaStream;
+    var remoteStream;
+    
+    function create_connection() {
+        logger.debug('WebRTC: creating connection for ' + module.options.contact.name);
+        
+        // Create a new PeerConnection
+        var servers = { iceServers: module.ice_servers };
+        var connection = new RTCPeerConnection(servers);
+        
+        // ICE Candidate Callback
+        connection.onicecandidate = function (event) {
+            if (event.candidate) {
+                // Found a new candidate
+                logger.debug('WebRTC: onicecandidate, candidate: %j', event.candidate);
+                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCAA, type: "candidate", "candidate": event.candidate };
+                streemio.PeerNet.send_peer_message(module.options.contact, message);
+            } 
+            else {
+                logger.debug('WebRTC: ICE candidate gathering is completed');
+                if (remoteStream) {
+                    logger.debug('WebRTC: call onRemoteStreamAdded()');
+                    onRemoteStreamAdded(remoteStream);
+                }
+            }
+        };
+        
+        connection.onstatechange = function () {
+            var states = {
+                'iceConnectionState': connection.iceConnectionState,
+                'iceGatheringState': connection.iceGatheringState,
+                'readyState': connection.readyState,
+                'signalingState': connection.signalingState
+            };
+            
+            logger.debug(JSON.stringify(states));
+        };
+        
+        connection.onnegotiationneeded = function () {
+            if (module.is_outgoing_call) {
+                logger.debug('WebRTC: connection.onnegotiationneeded -> create offer');
+                
+                // Send an offer for a connection
+                connection.createOffer(
+                    function (desc) {
+                        try {
+                            connection.setLocalDescription(desc, function () {
+                                logger.debug("WebRTC: createOffer() callback. Send sdp localDescription");
+                                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCAA, type: "sdp", "sdp": connection.localDescription };
+                                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                            });
+                        }
+                        catch (err) {
+                            streemio.notify.error("setLocalDescription error: %j", err);
+                        }
+                    }, 
+                    function (error) {
+                        logger.error('connection createOffer error: ' + error);
+                    }
+                );
+            }
+        }
+        
+        connection.onaddstream = function (evt) {
+            logger.debug('WebRTC: connection.onaddstream, set remote stream');
+            remoteStream = evt.stream;
+            if (module.is_outgoing_call) {
+                logger.debug('WebRTC: call onRemoteStreamAdded()');
+                onRemoteStreamAdded(evt.stream);
+            }
+        };
+        
+        connection.onremovestream = function (event) {
+            logger.debug('WebRTC: connection.onremovestream');
+            // A stream was removed
+            onStreamRemoved(event.stream.id);
+        };
+        
+        // And return it
+        return connection;
+    }
+    
+    function getConnection() {
+        if (!module.connection) {
+            module.connection = create_connection();
+        }
+        return module.connection;
+    }
+    
+    // Process a newly received Candidate signal
+    function onCandidateSignalReceived(connection, candidate) {
+        logger.debug('WebRTC: candidate %j', candidate);
+        try {
+            connection.addIceCandidate(new RTCIceCandidate(candidate));
+        }
+        catch (err) {
+            streemio.notify.error("addIceCandidate error: %j", err);
+        }
+    }
+    
+    // Process a newly received SDP signal
+    function onSdpSignalReceived(connection, sdp) {
+        
+        logger.debug('WebRTC: processing sdp signal');
+        
+        var tdesc = new RTCSessionDescription(sdp);
+        //logger.debug('sdp desc %j', tdesc);
+        logger.debug('desc.type == ' + tdesc.type);
+        
+        try {
+            connection.setRemoteDescription(
+                tdesc, 
+                function () {
+                    if (connection.remoteDescription.type == "offer" && !module.is_outgoing_call) { //  only the callee creates an answer
+                        logger.info('WebRTC: received offer, sending response');
+                        onReadyForStream(connection);
+                        connection.createAnswer(
+                            function (desc) {
+                                connection.setLocalDescription(desc, function () {
+                                    logger.debug('WebRTC: send sdp connection.localDescription:');
+                                    logger.debug('%j', connection.localDescription);
+                                    var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCAA, type: "sdp", "sdp": connection.localDescription };
+                                    streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                });
+                            },
+                            function (error) {
+                                logger.error('Error creating session description: ' + error);
+                            }
+                        );
+                    } 
+                    else if (connection.remoteDescription.type == "answer") {
+                        logger.info('WebRTC: caller setRemoteDescription success');
+                    }
+                },
+                function (error) {
+                    logger.error('setRemoteDescription error: %j', error);
+                }
+            );
+        }
+        catch (err) {
+            streemio.notify.error("setRemoteDescription error: %j", err);
+        }
+    }
+    
+    // Hand off a new signal from the signaler to the connection
+    // listen on the data received event
+    module.onSignalReceive = function (data) {
+        //var signal = JSON.parse(data);
+        var connection = getConnection();
+        
+        logger.debug('WebRTC: received signal type: %s', data.type);
+        
+        // Route signal based on type
+        if (data.sdp) {
+            onSdpSignalReceived(connection, data.sdp);
+        } 
+        else if (data.candidate) {
+            onCandidateSignalReceived(connection, data.candidate);
+        }
+        else {
+            logger.error('onReceiveSignal error: unknown signal type');
+        }
+    }
+    
+    module.toggle_audio = function (ismute, callback) {
+        var audioTracks = mediaStream.getAudioTracks();
+        if (audioTracks.length === 0) {
+            logger.debug('toggle_audio() No local audio available.');
+            return;
+        }
+        
+        logger.debug('Toggling audio mute state.');
+        for (var i = 0; i < audioTracks.length; ++i) {
+            audioTracks[i].enabled = !audioTracks[i].enabled;
+        }
+        
+        logger.debug('Audio ' + (audioTracks[0].enabled ? 'unmuted.' : 'muted.'));
+        callback();
+    }
+    
+    function onReadyForStream(connection) {
+        try {
+            if (!mediaStream) {
+                return streemio.notify.error_popup('Invalid media stream');
+            }
+            
+            connection.addStream(mediaStream);
+        }
+        catch (err) {
+            logger.error("onReadyForStream error " + err.message);
+        }
+    }
+    
+    //  public methods
+    function call_contact() {
+        try {
+            if (!mediaStream) {
+                return streemio.notify.error_popup('Invalid media stream');
+            }
+            
+            //  create a connection 
+            var connection = getConnection(module.options.contact.name);
+            // Add our audio/video stream
+            connection.addStream(mediaStream);
+            logger.debug('stream added to connection at the caller end');
+        }
+        catch (err) {
+            streemio.notify.error_popup("call_contact error %j", err);
+        }
+    }
+    
+    
+    function onStreamRemoved(streamId) {
+        try {
+            logger.debug('Remove remote stream from contact video element');
+            
+            module.hangup();
+        }
+        catch (err) {
+            logger.error("onStreamRemoved error " + err.message);
+        }
+    }    
+    
+    function onRemoteStreamEnded(event) {        
+        logger.debug('onRemoteStreamEnded()');
+    }
+    
+    function onRemoteStreamRemoveTrack(event) {        
+        logger.debug('onRemoteStreamRemoveTrack()');
+    }
+    
+    function onRemoteStreamAdded(eventStream) {
+        try {
+            //if (module.options.calltype == "videocall") {
+                
+            //    logger.debug('Bind remote stream to contact video element');
+            //    // Bind the remote stream to the contact video control
+            //    var contactVideo = document.getElementById(contactVidElement);
+            //    attachMediaStream(contactVideo, eventStream);
+                
+            //    //TODO this changed with Chromium 45
+            //    eventStream.onended = onRemoteStreamEnded;
+            //    eventStream.onremovetrack = onRemoteStreamRemoveTrack;
+            //}
+            //else {
+                logger.debug('Bind remote stream to audio element');
+                var audio = document.querySelector('contactaudio');
+                audio.srcObject = eventStream; //event.stream;
+            //}
+            
+            //app_events.emit(app_events.APPEVENT, app_events.TYPES.ONVIDEOCONNECT);
+        }
+        catch (err) {
+            logger.error("onRemoteStreamAdded error: %j", err);
+        }
+    }
+    
+    // private variables and methods
+    function onStreamCreated(stream) {
+        try {
+            logger.debug('Received local stream');
+            
+            //if (module.options.calltype == "videocall") {
+            //    attachMediaStream(localVideo, stream);
+            //}
+            //else {
+            var audioTracks = stream.getAudioTracks();
+            logger.debug('Using audio device: ' + audioTracks[0].label);
+            //}
+            
+            mediaStream = stream;
+            
+            // create the connection and perform the call
+            if (module.is_outgoing_call) {
+                call_contact();
+            }
+        }
+        catch (err) {
+            logger.error("onStreamCreated error " + err.message);
+        }
+    }
+    
+    //  public methods
+    module.init = function (iscaller) {
+        try {
+            module.is_outgoing_call = iscaller;
+            module.connection = null;
+            
+            logger.debug("auto audio call with %s", options.contact.name);
+            
+            //if (options.calltype == "videocall") {
+            //    localVideo = document.getElementById(localvideo);
+            //    contactVidElement = contactvideo;
+            //}
+            
+            var params = { audio: true, video: false };
+
+            navigator.mediaDevices.getUserMedia(params)
+            .then(onStreamCreated)
+            .catch(function (error) {
+                if (error.name === 'ConstraintNotSatisfiedError') {
+                    streemio.notify.error_popup('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
+                } 
+                else if (error.name === 'PermissionDeniedError') {
+                    streemio.notify.error_popup('Permissions have not been granted to use your camera and microphone, you need to allow the page access to your devices in order for the demo to work.');
+                }
+                else {
+                    streemio.notify.error_popup('getUserMedia error: %j', error);
+                }
+            });
+        }
+        catch (err) {
+            streemio.notify.error_popup("Media call init error %j", err);
+        }
+    }
+    
+    module.hangup = function () {
+        logger.debug("MediaCall hangup()");
+        if (module.connection) {
+            try {
+                module.connection.close();
+                module.connection = null;
+            }
+            catch (e) { }
+        }
+        
+        try {
+            if (mediaStream) {
+                mediaStream.getAudioTracks().forEach(function (track) {
+                    track.stop();
+                });
+            }
+        }
+        catch (e) { }        
+    }
+    
+    return module;
+
+}(streemio.AutoAudioCall || {}, streemio.logger, global.appevents, streemio.config));
 
 

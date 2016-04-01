@@ -1199,8 +1199,7 @@ Copyright (C) 2016 The Streemio software development team
         function resize_video_controls() {
             var viditems_parent_width = $('.video_ctrls_items').width();
             var viditems_parent_height = $('.video_ctrls_items').height();
-            //console.log('viditems_parent_width: ' + viditems_parent_width + ', viditems_parent_height: ' + viditems_parent_height);
-
+  
             var ctrls_parent = $('.video_ctrls_parent');
             var h = viditems_parent_height - 10;
             var w = parseInt(h * 1.3333);
@@ -1254,7 +1253,6 @@ Copyright (C) 2016 The Streemio software development team
             $('.video_ctrls_items').css({
                 'min-height': video_h + 'px'
             });
-            //console.log('video_ctrls_items.height: ' + video_h);
 
             resize_video_controls();
 
@@ -1311,7 +1309,10 @@ Copyright (C) 2016 The Streemio software development team
     <div id="screenshare-container" style="width:100%;height:100%;display:flex;align-items:stretch;align-content: stretch;">      
         <div style="flex:1;display:flex;justify-content: center;align-items: center;">
             <div style="text-align:center">
-                <div style="font-size:26px">Share screen to <span data-bind="text: contact_name"></span>&nbsp;<span data-bind="text: calltime"></span></div>
+                <div style="font-weight:bold;font-size:12px;padding:0">
+                    <audio id="contactaudio" controls autoplay></audio>
+                </div>
+                <div style="margin-top:20px;font-size:26px">Share screen to <span data-bind="text: contact_name"></span>&nbsp;<span data-bind="text: calltime"></span></div>
                 <div><button data-bind="click: hangup" style="font-size:20px;padding:5px 30px;margin-top:20px">Cancel screen share</button></div>
             </div>       
         </div>
@@ -1342,13 +1343,13 @@ Copyright (C) 2016 The Streemio software development team
         <div class="media-call-center">
             <div class="media-call-header">
                 <div style="float:left;font-weight:bold;font-size:12px;padding:8px 0 0 20px">
-                    <audio id="remote-audio" controls autoplay></audio>
+                    <audio id="contactaudio" controls autoplay></audio>
                 </div>
                 <div style="float:left;font-weight:bold;font-size:12px;padding-left:30px;padding-top:18px">
                     Screen share from <span data-bind="text: contact_name"></span>
                 </div>
                 <div style="float:right;" class="callbuttons">
-                    <div style="display:inline-block;margin:0;padding:0 20px 0 0;text-align:right">
+                    <div style="display:inline-block;margin:0;padding:0;text-align:right">
                         <div style="margin-top:10px">
                             <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
                                 <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />

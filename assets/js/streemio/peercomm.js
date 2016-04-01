@@ -314,7 +314,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     }
     
     function closeWaithandler(jti, result) {
-        console.log("closeWaithandler jti: " + jti);
+        //console.log("closeWaithandler jti: " + jti);
         var handler = list_of_waithandlers[jti];
         if (handler) {
             try {
@@ -331,7 +331,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             try {
                 if (handler.resolvefunc) {
-                    console.log("closeWaithandler call resolvefunc jti: " + jti + " result: " + result);
+                    //console.log("closeWaithandler call resolvefunc jti: " + jti + " result: " + result);
                     handler.resolvefunc(result);
                 }
             }
@@ -343,7 +343,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             catch (e) { }
         }
         else {
-            console.log("closeWaithandler jti: " + jti + " NO HANDLER");
+            //console.log("closeWaithandler jti: " + jti + " NO HANDLER");
         }
     }
     
@@ -560,7 +560,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var jti = data[wotmsg.MSGFIELD.REQJTI];
             var result = data[wotmsg.MSGFIELD.RESULT];
             
-            console.log("handleShareScreenReply jti:" + jti);
+            //console.log("handleShareScreenReply jti:" + jti);
 
             // find the wait handler, remove it and return the promise
             closeWaithandler(jti, result);
@@ -804,6 +804,11 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 case streemio.DEFS.PEERMSG_CALL_WEBRTCSS:
                     //logger.debug("WEBRTC peer message received");
                     events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTC_SSCSIG, data);
+                    break;
+
+                case streemio.DEFS.PEERMSG_CALL_WEBRTCAA:
+                    //logger.debug("WEBRTC peer message received");
+                    events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTC_SSAUDIOSIG, data);
                     break;
 
                 case streemio.DEFS.PEERMSG_FILE_WEBRTC:
@@ -1377,18 +1382,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);
             streemio.Node.peer_send(contact, encoded_msgbuffer);
                 
-            console.log("offer_sharescreen jti:" + jti);
+            //console.log("offer_sharescreen jti:" + jti);
 
             wait_peer_reply(jti, 15000, true).then(resolve, reject);
-
-            //    function (isaccepted) {
-            //        console.log("sharescreen resolve accepted: " + isaccepted);
-            //        resolve(isaccepted);
-            //    },
-            //    function (err) {
-            //        reject(err);
-            //    }                    
-            //);                
+                          
         }
         catch (err) {
             reject(err);
