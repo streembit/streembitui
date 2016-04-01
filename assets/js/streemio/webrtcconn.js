@@ -1059,7 +1059,11 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
         
         logger.debug("calling contact");
         // initialize the audio call module
-        //streemio.AutoAudioCall.init(true);
+        var options = {
+            contact: module.options.contact,
+            iscaller: true
+        };
+        //streemio.AutoAudioCall.init(options);
     }
     
     //  public methods
@@ -1214,7 +1218,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             screenVideo = document.getElementById(screenvideo);
             
             // initialize the audio call module
-            streemio.AutoAudioCall.init(false);
+            streemio.AutoAudioCall.init(options);
         }
         catch (err) {
             streemio.notify.error_popup("Share screen error: %j", err);
@@ -1549,9 +1553,10 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
     }
     
     //  public methods
-    module.init = function (iscaller) {
+    module.init = function (options) {
         try {
-            module.is_outgoing_call = iscaller;
+            module.options = options;
+            module.is_outgoing_call = options.iscaller;
             module.connection = null;
             
             logger.debug("auto audio call with %s", options.contact.name);
