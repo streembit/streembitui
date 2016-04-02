@@ -1805,25 +1805,29 @@ streemio.Contacts = (function (module, logger, events, config) {
         if (!account || !obj) {
             return streemio.notify.error("update_contact error: invalid parameters");
         }
+        
+        for (var i = 0; i < contacts.length; i++) {
+            if (contacts[i].name == account) {
+                if (obj.public_key != contacts[i].public_key) {
+                    streemio.notify.error("update_contact error. Invalid contact received from the network. Contact " + account + " will be removed from the contact list");
+                    // remove from the list
+                    streemio.Session.contactsvm.delete_byname(contacts[i].name);
+                    //  remove from the local db
+                    return module.remove(account);
+                }
+                
+                contacts[i].address = obj.address;
+                contacts[i].port = obj.port;
+                contacts[i].ecdh_public = obj.ecdh_public;
+                contacts[i].protocol = obj.protocol  ? obj.protocol : streemio.DEFS.TRANSPORT_TCP;
+                contacts[i].user_type = obj.user_type;
+            }
+        }
 
         var contact = module.get_contact(account);
         if (!contact) return;
-        
-        if (obj.public_key != contact.public_key) {
-            streemio.notify.error("update_contact error. Invalid contact received from the network. Contact " + account + " will be removed from the contact list");
-            // remove from the list
-            streemio.Session.contactsvm.delete_byname(contact.name);
-            //  remove from the local db
-            return module.remove(account);
-        }
-        
-        contact.address = obj.address;
-        contact.port = obj.port;
-        contact.ecdh_public = obj.ecdh_public;
-        contact.protocol = obj.protocol  ? obj.protocol : streemio.DEFS.TRANSPORT_TCP;
-        contact.user_type = obj.user_type;
 
-        logger.debug("contact " + account + " populated from network and updated. address: " + contact.address + ". port: " + contact.port);
+        logger.debug("contact " + account + " populated from network and updated. address: " + contact.address + ". port: " + contact.port + ". protocol: " + contact.protocol);
     }
     
     function find_contact_onnetwork(contact_address, contact_port, contact_name, callback) {
