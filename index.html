@@ -139,18 +139,18 @@ Copyright (C) 2016 The Streemio software development team
                     <button class="btn btn-default" type="button" data-bind="click: onSendAddContactRequest" style="font-size:11px">Send contact request</button>
                 </div>
             </div><!-- /input-group -->
-            <div style="border-bottom:2px solid #ddd;border-top:1px solid #eee">
+            <div style="border-bottom:1px solid #7dace1;border-top:1px solid #eee">
                 <div>
                     <div class="contacts-title" data-bind="click: onShowContacts, css: {activetab: active_tab() == 'contacts'}">
                         CONTACTS
                     </div>
-                    <div class="contacts-title" style="border-left:1px solid #669ee2" data-bind="click: onShowRecents, css: {activetab: active_tab() == 'recent'}">
+                    <div class="contacts-title" data-bind="click: onShowRecents, css: {activetab: active_tab() == 'recent'}">
                         RECENT
                     </div>
                     <div style="float:left;margin:4px 0 0 10px" data-bind="visible: is_recent_msg">
                         <span class="glyphicon glyphicon-envelope" style="color:#d3b301" data-bind="click: onShowRecents"></span>
                     </div>
-                    <div style="float:right;border-left:1px solid #669ee2">
+                    <div style="float:right;">
                         <div style="padding:6px 6px 2px 6px">
                             <a data-bind="click:dosearch" style="margin:0;padding:0"><i class="glyphicon glyphicon-search"></i></a>
                         </div>

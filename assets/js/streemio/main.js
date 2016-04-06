@@ -1830,7 +1830,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         logger.debug("contact " + account + " populated from network and updated. address: " + contact.address + ". port: " + contact.port + ". protocol: " + contact.protocol);
     }
     
-    function find_contact_onnetwork(contact_address, contact_port, contact_name, callback) {
+    function find_contact_onnetwork(contact_address, contact_port, contact_protocol, contact_name, callback) {
         streemio.PeerNet.find_contact(contact_name, function (err, contact) {
             if (err) {
                 streemio.notify.error("Contact search error %j", err);
@@ -1841,11 +1841,12 @@ streemio.Contacts = (function (module, logger, events, config) {
                 return callback();
             }
             
-            if (contact_address && contact_port) {
+            if (contact_address && contact_port && contact_protocol) {
                 //  the NOED_FIND Kademlia call returned a contact which could be more current than 
                 //  the stored contact so use the current address info
                 contact.address = contact_address;
                 contact.port = contact_port;
+                contact.protocol = contact_protocol;
             }
             
             callback(contact);
@@ -1875,6 +1876,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             function (rescontacts) {
                 var contact_address = null;
                 var contact_port = null;
+                var contact_protocol = null;
                 if (rescontacts && rescontacts.length > 0) {
                     for (var i = 0; i < rescontacts.length; i++) {
                         if (contact_name != rescontacts[i].account) {
@@ -1883,11 +1885,12 @@ streemio.Contacts = (function (module, logger, events, config) {
                         
                         contact_address = rescontacts[i].address;
                         contact_port = rescontacts[i].port;
+                        contact_protocol = rescontacts[i].protocol;
                         break;
                     }
                 }
                 
-                find_contact_onnetwork(contact_address, contact_port, contact_name, function (contact) {
+                find_contact_onnetwork(contact_address, contact_port, contact_protocol, contact_name, function (contact) {
                     if (!contact) {
                         setTimeout(function () {
                             callback();

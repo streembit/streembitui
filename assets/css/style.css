@@ -382,18 +382,23 @@ body {
     float:left;
     text-align:left;
     padding:5px 10px;
+    height: 28px;
     font-size:12px;
     font-weight:bold;
-    color:#888;
+    color:#7dace1;
+    background-position: center bottom;
+    background-position-y: 22px;
 }
 
 .contacts-title:hover{
-    text-decoration:underline;
-    color: #669ee2;
+    color: #4a80bd;
+    cursor:pointer;
 }
 
 .activetab{
-    color: #669ee2;
+    color: #4a80bd;
+    background-image:url('../images/tabarrow.png');
+    background-repeat: no-repeat;
 }
 
 .contact-item{
