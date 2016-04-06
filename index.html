@@ -1197,29 +1197,30 @@ Copyright (C) 2016 The Streemio software development team
         var mediacall_vm = null;
 
         function resize_video_controls() {
-            var viditems_parent_width = $('.video_ctrls_items').width();
-            var viditems_parent_height = $('.video_ctrls_items').height();
-  
-            var ctrls_parent = $('.video_ctrls_parent');
-            var h = viditems_parent_height - 10;
-            var w = parseInt(h * 1.3333);
+            if (mediacall_vm.isvideocall()) {
+                var viditems_parent_width = $('.video_ctrls_items').width();
+                var viditems_parent_height = $('.video_ctrls_items').height();
 
-            ctrls_parent.width(w);
-            ctrls_parent.height(h);
+                var ctrls_parent = $('.video_ctrls_parent');
+                var h = viditems_parent_height - 10;
+                var w = parseInt(h * 1.3333);
 
-            var remote_vid_parent = $(".remotevid_parent");
-            remote_vid_parent.width(w);
-            remote_vid_parent.height(h);
+                ctrls_parent.width(w);
+                ctrls_parent.height(h);
+
+                var remote_vid_parent = $(".remotevid_parent");
+                remote_vid_parent.width(w);
+                remote_vid_parent.height(h);
+            }
         }
 
         function onRemoteVidConn() {
-            resize_video_controls();
-
-            var local_video = document.getElementById("localvid");
-            //!important
-            local_video.muted = true;
-            //local_video.width = 160;
-            //local_video.height = 120;       
+            if (mediacall_vm.isvideocall()) {
+                resize_video_controls();
+                var local_video = document.getElementById("localvid");
+                //!important
+                local_video.muted = true;
+            }
 
             $('#media-call-container').css({
                 visibility: 'visible'
@@ -1234,7 +1235,6 @@ Copyright (C) 2016 The Streemio software development team
 
             // show the chat window
             var chatContainer = $(".chat_items");          
-            //$(chatContainer).show();
             $(chatContainer).css({
                 flex: 1,
                 display: 'flex',
@@ -1243,20 +1243,26 @@ Copyright (C) 2016 The Streemio software development team
             resize_video_controls();
 
             var parent_div_width = $('.media-call-content').width();
-            var parent_div_height = $('.media-call-content').height();
+            var parent_div_height = $('.media-call-content').height();            
 
-            var video_h = parent_div_height - 300;
-            if (video_h < 500) {
-                video_h = 500;
+            if (mediacall_vm.isaudiocall()) {
+                $('.video_ctrls_items').css({
+                    'flex': '0.15'
+                });
             }
-            //$('.video_ctrls_items').height(video_h);
-            $('.video_ctrls_items').css({
-                'min-height': video_h + 'px'
-            });
+            if (mediacall_vm.isvideocall()) {
+                var video_h = parent_div_height - 300;
+                if (video_h < 500) {
+                    video_h = 500;
+                }
+            
+                $('.video_ctrls_items').css({
+                    'min-height': video_h + 'px'
+                });
 
-            resize_video_controls();
+                resize_video_controls();
+            }            
 
-            //$(chatContainer).show();
             $(chatContainer).css({
                 flex: 1,
                 display: 'flex',
@@ -1264,7 +1270,12 @@ Copyright (C) 2016 The Streemio software development team
 
             callback();
 
-            resize_video_controls();
+            if (mediacall_vm.isaudiocall()) {
+
+            }
+            else if (mediacall_vm.isvideocall()) {
+                resize_video_controls();
+            }
         }
 
         function showLocalVideo() {

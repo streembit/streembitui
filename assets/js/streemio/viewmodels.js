@@ -915,6 +915,11 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         viewModel.videoConnCallback();
                     }
                 }
+                else if (viewModel.calltype == streemio.DEFS.CALLTYPE_AUDIO) {
+                    if (viewModel.videoConnCallback) {
+                        viewModel.videoConnCallback();
+                    }
+                }
                 
                 viewModel.calltimeproc();
             },          
