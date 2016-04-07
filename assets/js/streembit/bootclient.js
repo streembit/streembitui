@@ -109,12 +109,17 @@ streembit.bootclient = (function (module, logger, config, events) {
         return seeds;
     }
     
-    module.tcp_boot = function (bootseeds, callback) {
+    module.tcp_boot = function (seedsarr, callback) {
         logger.debug("bootclient tcp_boot()");
         var discovery_srvs = [];
+        var bootseeds = [];
         
-        if (!bootseeds || bootseeds.length == 0) {
+        if (!seedsarr || seedsarr.length == 0) {
             return callback("bootseeds configuration is missing");
+        }        
+        
+        for (var i = 0; i < seedsarr.length; i++) {
+            bootseeds.push(seedsarr[i]);
         }
         
         do {

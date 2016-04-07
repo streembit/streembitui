@@ -1004,7 +1004,7 @@ Copyright (C) 2016 The Streembit software development team
 </script>
 
 <script type="text/html" id="streembit-view-accountinfo">
-    <div id="uiview-container">
+    <div id="uiview-container" style="margin:0 20px">
 
         <div class="uiview-container-panel" style="min-width:700px;">
 
@@ -1060,13 +1060,12 @@ Copyright (C) 2016 The Streembit software development team
                 <div>
                     <span style="font-weight:bold">Seeds</span>
                 </div>
-                <ul data-bind="foreach: streembit.Main.seeds">
-                    <li>
-                        <div>account: <span data-bind="text: account"></span></div>
-                        <div>host: <span data-bind="text: address"></span></div>
-                        <div>port: <span data-bind="text: port"></span> </div>
-                    </li>
-                </ul>
+                <div class="accountinfo_seed_list" data-bind="foreach: streembit.Main.seeds">
+                    <div class="seed_list_item">
+                        <div><span data-bind="text: account"></span></div>
+                        <div><span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
+                    </div>
+                </div>
             </div>
             <!-- /ko -->
 

@@ -1154,3 +1154,21 @@ span.awesomeBlue i.addbtn{
     text-decoration:underline;
     color:#666;
 }
+
+
+.accountinfo_seed_list{
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-start;
+    align-items:flex-start;
+    flex-wrap:wrap;
+}
+
+.seed_list_item{
+    border:2px solid #ddd;
+    border-radius:3px;
+    margin:5px 10px;
+    text-align:center;
+    padding:5px 10px;
+    background-color:#fff;
+}

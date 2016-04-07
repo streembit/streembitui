@@ -109,7 +109,7 @@ streembit.config = (function (module) {
         "tcpport": streembit.DEFS.APP_PORT,
         "wsport": streembit.DEFS.WS_PORT,
         "bootseeds": [
-            "seed.streembit.org", "seed.streembit.net", "seed.streembit.biz", "seed.streembit.co"
+            "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
