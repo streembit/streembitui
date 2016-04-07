@@ -3,9 +3,9 @@
 set CUR_DIR="%CD%"
 set BUILD_DIR=%CUR_DIR%\win64
 set EXE_PATH=%CUR_DIR%\win64\nw.exe
-set ICO_PATH=..\assets\icons\streemio64.png
+set ICO_PATH=..\assets\icons\streembit64.png
 set NWPACK_PATH=%CUR_DIR%\win64\package.nw
-set APPEXE_PATH=%CUR_DIR%\win64\streemio.exe
+set APPEXE_PATH=%CUR_DIR%\win64\streembit.exe
 set ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 
 SETLOCAL EnableDelayedExpansion
@@ -14,7 +14,7 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
 )
 
 echo.
-call :ColorText 19 "Streemio v0.1.1"
+call :ColorText 19 "Streembit v0.1.1"
 echo.
 call :ColorText 19 "---"
 echo.
@@ -81,7 +81,7 @@ echo.
 %ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html  ..\assets ..\node_modules
 
 
-call :ColorText 19 "setting Streemio icon"
+call :ColorText 19 "setting Streembit icon"
 echo.
 IF EXIST %ICO_PATH% (
 	buildtools\Resourcer -op:upd -src:%EXE_PATH% -type:14 -name:IDR_MAINFRAME -file:%ICO_PATH%
@@ -89,7 +89,7 @@ IF EXIST %ICO_PATH% (
 	echo.
 )
 
-call :ColorText 19 "create Streemio executable"
+call :ColorText 19 "create Streembit executable"
 echo.
 copy /b /y %EXE_PATH% %APPEXE_PATH% 
 
@@ -99,7 +99,7 @@ del %EXE_PATH% /S /Q
 call :ColorText 19 "create zip file"
 echo.
 cd %BUILD_DIR%
-%ZIP_EXE% a -tzip "streemio_win64.zip" %BUILD_DIR%\locales %BUILD_DIR%\*.*
+%ZIP_EXE% a -tzip "streembit_win64.zip" %BUILD_DIR%\locales %BUILD_DIR%\*.*
 
 goto :eof
 

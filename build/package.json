@@ -1,9 +1,9 @@
 {
-  "name": "streemio",
+  "name": "streembit",
   "description": "P2P real time communication system for humans and IoT devices",
   "author": {
     "name": "T Z Pardi",
-    "email": "tzpardi@streemio.org"
+    "email": "tzpardi@streembit.com"
   },
   "version": "1.0.1",
   "main": "index.html",
@@ -14,7 +14,7 @@
     "frame": true,
     "min_width": 980,
     "min_height": 700,
-    "icon": "assets/icons/streemio64.png"
+    "icon": "assets/icons/streembit64.png"
   },
   "scripts": {
     "start": "nw ."

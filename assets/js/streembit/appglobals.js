@@ -1,20 +1,20 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
@@ -22,12 +22,12 @@ Copyright (C) 2016 The Streemio software development team
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
-streemio.DEFS = (function (module) {
+streembit.DEFS = (function (module) {
     return {
         APP_PORT: 8905,             //  Appliction port
-        BOOT_PORT: 32319,           //  Discovery port for the Streemio network
+        BOOT_PORT: 32319,           //  Discovery port for the Streembit network
         WS_PORT: 32318,             //  Default Web Socket port
         
         TRANSPORT_TCP: "tcp",       //  TCP/IP
@@ -88,7 +88,7 @@ streemio.DEFS = (function (module) {
         MSG_DECLINECONTACT: "declinecontact"
     }
 
-}(streemio.DEFS || {}))
+}(streembit.DEFS || {}))
 
 
 var gui = require('nw.gui');
@@ -99,17 +99,17 @@ var fs = require('fs');
 
 //global.appgui.Window.get().showDevTools();
 
-streemio.config = (function (module) {
+streembit.config = (function (module) {
 
     var config_data = {
         "isdevmode": false, //  set this to true when run the software with "\path\to\nw\nw.exe ." so in development mode 
         "loglevel": "debug",
-        "transport": streemio.DEFS.TRANSPORT_TCP,
+        "transport": streembit.DEFS.TRANSPORT_TCP,
         "wsfallback": true,
-        "tcpport": streemio.DEFS.APP_PORT,
-        "wsport": streemio.DEFS.WS_PORT,
+        "tcpport": streembit.DEFS.APP_PORT,
+        "wsport": streembit.DEFS.WS_PORT,
         "bootseeds": [
-            "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
+            "seed.streembit.org", "seed.streembit.net", "seed.streembit.biz", "seed.streembit.co"
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
@@ -150,7 +150,7 @@ streemio.config = (function (module) {
     
     Object.defineProperty(module, "transport", {
         get: function () {
-            return config_data.transport || streemio.DEFS.TRANSPORT_TCP;
+            return config_data.transport || streembit.DEFS.TRANSPORT_TCP;
         },
         
         set: function (value) {
@@ -170,7 +170,7 @@ streemio.config = (function (module) {
     
     Object.defineProperty(module, "tcpport", {
         get: function () {
-            return config_data.tcpport || streemio.DEFS.APP_PORT;
+            return config_data.tcpport || streembit.DEFS.APP_PORT;
         },
         
         set: function (value) {
@@ -180,7 +180,7 @@ streemio.config = (function (module) {
     
     Object.defineProperty(module, "wsport", {
         get: function () {
-            return config_data.wsport || streemio.DEFS.WS_PORT;
+            return config_data.wsport || streembit.DEFS.WS_PORT;
         },
         
         set: function (value) {
@@ -224,23 +224,23 @@ streemio.config = (function (module) {
 
     return module;
 
-}(streemio.config || {}));
+}(streembit.config || {}));
 
 // initialize the event handler
 
-var AppEvents = require("streemiolib/events/AppEvents");
+var AppEvents = require("streembitlib/events/AppEvents");
 global.appevents = new AppEvents();
 
 // initialize the logger
-var logger = require("streemiolib/logger/logger");
+var logger = require("streembitlib/logger/logger");
 
-streemio.logger = (function (module) {
-    var logger = require("streemiolib/logger/logger");
+streembit.logger = (function (module) {
+    var logger = require("streembitlib/logger/logger");
     module = logger;
 
     return module;
 
-}(streemio.logger || {}));
+}(streembit.logger || {}));
 
 
 

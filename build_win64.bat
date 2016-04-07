@@ -3,9 +3,9 @@
 set CUR_DIR="%CD%"
 set BUILD_DIR=%CUR_DIR%\build\win64
 set EXE_PATH=%CUR_DIR%\build\win64\nw.exe
-set ICO_PATH=%CUR_DIR%\assets\icons\streemio64.png
+set ICO_PATH=%CUR_DIR%\assets\icons\streembit64.png
 set NWPACK_PATH=%CUR_DIR%\build\win64\package.nw
-set APPEXE_PATH=%CUR_DIR%\build\win64\streemio.exe
+set APPEXE_PATH=%CUR_DIR%\build\win64\streembit.exe
 set ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
 
 SETLOCAL EnableDelayedExpansion
@@ -48,18 +48,18 @@ echo.
 
 %ZIP_EXE% a -tzip %NWPACK_PATH% package.json index.html assets node_modules
 
-call :ColorText 0C "copy streemio.conf"
+call :ColorText 0C "copy streembit.conf"
 echo.
 
-copy streemio_release.conf %BUILD_DIR%\streemio.conf
+copy streembit_release.conf %BUILD_DIR%\streembit.conf
 
 REM goto :eof
 
-call :ColorText 0C "setting Streemio icon"
+call :ColorText 0C "setting Streembit icon"
 echo.
 if exist %ICO_PATH% build\buildtools\Resourcer -op:upd -src:%EXE_PATH% -type:14 -name:IDR_MAINFRAME -file:%ICO_PATH%
 
-call :ColorText 0C "create Streemio executable"
+call :ColorText 0C "create Streembit executable"
 echo.
 copy /b /y %EXE_PATH% + %NWPACK_PATH% %APPEXE_PATH% 
 

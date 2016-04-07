@@ -1,27 +1,27 @@
-## Streemio - decentralized, P2P communication system for humans and Internet of Things devices.
+## Streembit - decentralized, P2P communication system for humans and Internet of Things devices.
 
-http://streemio.github.io/
+http://streembit.github.io/
 
-What is Streemio?
+What is Streembit?
 -----------------
 
-Streemio is an experimental decentralised communication system for humans and 
-Internet of Things devices. Streemio uses peer-to-peer technology to operate
+Streembit is an experimental decentralised communication system for humans and 
+Internet of Things devices. Streembit uses peer-to-peer technology to operate
 with no central authority: discovering contacts, persisting the data and routing 
-messages are carried out collectively by the network. Streemio Core is the name 
+messages are carried out collectively by the network. Streembit Core is the name 
 of open source software which enables the use of this P2P network.
 
 For more information, as well as an immediately useable, binary version of
-the Streemio Core software, see http://streemio.github.io/download.
+the Streembit Core software, see http://streembit.github.io/download.
 
 License
 -------
 
-Streemio is a completely free and open source software. Streemio is released under the terms of the GNU General Public License. See [COPYING](COPYING) for more
+Streembit is a completely free and open source software. Streembit is released under the terms of the GNU General Public License. See [COPYING](COPYING) for more
 information or see http://www.gnu.org/licenses/.
 
 
-Building Streemio
+Building Streembit
 -----------------
 
 The build workflow is described in [BUILD.md](BUILD.md).
@@ -31,12 +31,12 @@ Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/streemio-org/streemio/tags) are created
-regularly to indicate new official, stable release versions of Streemio Core.
+completely stable. [Tags](https://github.com/streembit/streembit/tags) are created
+regularly to indicate new official, stable release versions of Streembit Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The developer [forum](https://gitter.im/streemio/Streemio)
+The developer [forum](https://gitter.im/streembit/Streembit)
 should be used to discuss complicated or controversial changes before working
 on a patch set.
 
@@ -68,7 +68,7 @@ Translations
 ------------
 
 Changes to translations as well as new translations can be submitted to
-[Bitcoin Core's Transifex page](https://www.transifex.com/projects/p/streemio/).
+[Bitcoin Core's Transifex page](https://www.transifex.com/projects/p/streembit/).
 
 Translations are periodically pulled from Transifex and merged into the git repository. See the
 [translation process](doc/translation_process.md) for details on how this works.

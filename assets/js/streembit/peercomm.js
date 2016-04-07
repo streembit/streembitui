@@ -1,20 +1,20 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
@@ -22,18 +22,18 @@ Copyright (C) 2016 The Streemio software development team
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
 var util = require('util');
 var assert = require('assert');
-var wotmsg = require("streemiolib/message/wotmsg");
+var wotmsg = require("streembitlib/message/wotmsg");
 var uuid = require("uuid");
 var Map = require("collections/map");
 var secrand = require('secure-random');
 var nodecrypto = require(global.cryptolib);
 
 
-streemio.TransportFactory = (function (module, logger, events, config) {
+streembit.TransportFactory = (function (module, logger, events, config) {
     
     Object.defineProperty(module, "transport", {
         get: function () {
@@ -46,11 +46,11 @@ streemio.TransportFactory = (function (module, logger, events, config) {
             
             var transport;
             switch (config.transport) {
-                case streemio.DEFS.TRANSPORT_TCP:
-                    transport = streemio.PeerTransport;
+                case streembit.DEFS.TRANSPORT_TCP:
+                    transport = streembit.PeerTransport;
                     break;
-                case streemio.DEFS.TRANSPORT_WS:
-                    transport = streemio.WebSocketTransport;
+                case streembit.DEFS.TRANSPORT_WS:
+                    transport = streembit.WebSocketTransport;
                     break;
                 default:
                     throw new Error("Not implemented transport type " + config.transport);
@@ -73,18 +73,18 @@ streemio.TransportFactory = (function (module, logger, events, config) {
             throw new Error("get_contact_transport error: contact.transport value is empty");
         }
         
-        if (config.transport == streemio.DEFS.TRANSPORT_WS) {
+        if (config.transport == streembit.DEFS.TRANSPORT_WS) {
             //  whatever transport the contact uses this account can communicate only via WS
-            transport = streemio.WebSocketTransport;
+            transport = streembit.WebSocketTransport;
         }
         else {
             var transport;
             switch (contact.protocol) {
-                case streemio.DEFS.TRANSPORT_TCP:
-                    transport = streemio.PeerTransport;
+                case streembit.DEFS.TRANSPORT_TCP:
+                    transport = streembit.PeerTransport;
                     break;
-                case streemio.DEFS.TRANSPORT_WS:
-                    transport = streemio.WebSocketTransport;
+                case streembit.DEFS.TRANSPORT_WS:
+                    transport = streembit.WebSocketTransport;
                     break;
                 default:
                     throw new Error("Not implemented transport type " + config.transport);
@@ -96,36 +96,36 @@ streemio.TransportFactory = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.TransportFactory || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.TransportFactory || {}, streembit.logger, global.appevents, streembit.config));
 
 
 
-streemio.Node = (function (module, logger, events, config) {
+streembit.Node = (function (module, logger, events, config) {
     
     module.init = function (seeds, callback) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.init(seeds, callback);
     }
     
     module.put = function (key, value, callback) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.put(key, value, callback);
     }
     
     module.get = function (key, callback) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.get(key, callback);
     }
     
     module.find = function (key, callback) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.find(key, callback);
     }
     
     module.find_account = function (account) {
         return new Promise(function (resolve, reject) {
             try {
-                var transport = streemio.TransportFactory.transport;
+                var transport = streembit.TransportFactory.transport;
                 transport.get_node(account, function (err, contacts) {
                     if (err) {
                         reject(err);
@@ -143,37 +143,37 @@ streemio.Node = (function (module, logger, events, config) {
     
     module.peer_send = function (contact, data) {
         // select a transport based on the contact's protocol
-        var transport = streemio.TransportFactory.get_contact_transport(contact);
+        var transport = streembit.TransportFactory.get_contact_transport(contact);
         transport.peer_send(contact, data);
     }
     
     module.get_account_messages = function (account, msgkey, callback) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.get_account_messages(account, msgkey, callback);
     }
     
     module.delete_item = function (key, request) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.delete_item(key, request);
     }    
     
     module.validate_connection = function (callback) {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         transport.validate_connection(callback);
     }
     
     module.is_node_connected = function () {
-        var transport = streemio.TransportFactory.transport;
+        var transport = streembit.TransportFactory.transport;
         return transport.is_node_connected();
     }
 
     return module;
 
-}(streemio.Node || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.Node || {}, streembit.logger, global.appevents, streembit.config));
 
 
 
-streemio.Message = (function (module, logger, events) {
+streembit.Message = (function (module, logger, events) {
     
     module.getvalue = function (val) {
         return wotmsg.base64decode(val);
@@ -226,18 +226,18 @@ streemio.Message = (function (module, logger, events) {
     
     return module;
 
-}(streemio.Message || {}, streemio.logger, global.appevents));
+}(streembit.Message || {}, streembit.logger, global.appevents));
 
 
 
-streemio.PeerNet = (function (module, logger, events, config) {
+streembit.PeerNet = (function (module, logger, events, config) {
     
     var msgmap = new Map();
     var list_of_sessionkeys = {};
     var list_of_waithandlers = {};
     
     module.find_contact = function (account, callback) {
-        streemio.Node.find(account, function (err, msg) {
+        streembit.Node.find(account, function (err, msg) {
             try {
                 if (err) {
                     return callback(err);
@@ -260,7 +260,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var address = decoded.data[wotmsg.MSGFIELD.HOST];
                 var port = decoded.data[wotmsg.MSGFIELD.PORT];
                 var utype = decoded.data[wotmsg.MSGFIELD.UTYPE];
-                var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streemio.DEFS.TRANSPORT_TCP;
+                var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streembit.DEFS.TRANSPORT_TCP;
                 var contact = {
                     public_key: pkey, 
                     ecdh_public: ecdhpk, 
@@ -293,7 +293,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         var handler = list_of_waithandlers[msg.jti];
                         if (handler && handler.waitfunc && handler.rejectfunc && handler.resolvefunc) {
                             try {
-                                streemio.notify.hideprogress();
+                                streembit.notify.hideprogress();
                                 clearTimeout(handler.waitfunc);
                                 return handler.rejectfunc(err);
                             }
@@ -305,7 +305,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             if (!ishandled) {
                 //TODO don't show all errors
-                streemio.notify.error("onPeerError error %j", err);
+                streembit.notify.error("onPeerError error %j", err);
             }
         }
         catch (e) {
@@ -318,7 +318,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
         var handler = list_of_waithandlers[jti];
         if (handler) {
             try {
-                streemio.notify.hideprogress();
+                streembit.notify.hideprogress();
             }
             catch (e) { }
             
@@ -369,7 +369,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             closeWaithandler(jti);
         }
         catch (e) {
-            streemio.notify.error("handleAcceptKey error %j", e);
+            streembit.notify.error("handleAcceptKey error %j", e);
         }
     }
     
@@ -387,7 +387,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var data = message.data;
             // decrypt the message to get the symmetric key
             var ecdh_public = message.ecdh_public_key;
-            var plaintext = wotmsg.ecdh_decrypt(streemio.User.ecdh_key, ecdh_public, data);
+            var plaintext = wotmsg.ecdh_decrypt(streembit.User.ecdh_key, ecdh_public, data);
             var plain_data = JSON.parse(plaintext);
             if (!plain_data)
                 throw new Error("invalid message data for key exchange contact " + sender);
@@ -401,10 +401,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var data = {};
             data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
             
-            var contact = streemio.Contacts.get_contact(sender);
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_symm_msg(wotmsg.PEERMSG.ACCK, jti, streemio.User.private_key, session_symmkey, data, streemio.User.name, sender);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var contact = streembit.Contacts.get_contact(sender);
+            var jti = streembit.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_symm_msg(wotmsg.PEERMSG.ACCK, jti, streembit.User.private_key, session_symmkey, data, streembit.User.name, sender);
+            streembit.Node.peer_send(contact, encoded_msgbuffer);
             
             logger.debug("received symm key %s from contact %s", session_symmkey, sender);
             
@@ -417,7 +417,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             };
         }
         catch (e) {
-            streemio.notify.error("handleKeyExchange error %j", e);
+            streembit.notify.error("handleKeyExchange error %j", e);
         }
     }
     
@@ -442,9 +442,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
             // send Ping reply message
             var data = {};
             data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
-            data[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+            data[wotmsg.MSGFIELD.ECDHPK] = streembit.User.ecdh_public_key;
             
-            var contact = streemio.Contacts.get_contact(sender);
+            var contact = streembit.Contacts.get_contact(sender);
             if (!contact) {
                 throw new Error("Ping error: contact not exists");    
             }
@@ -453,18 +453,18 @@ streemio.PeerNet = (function (module, logger, events, config) {
             contact.port = port;
             contact.protocol = protocol;
             // update the contact with the latest address, port adn protocol data
-            streemio.Contacts.update_contact_database(contact, function () {
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PREP, jti, streemio.User.private_key, data, streemio.User.name, sender);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+            streembit.Contacts.update_contact_database(contact, function () {
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PREP, jti, streembit.User.private_key, data, streembit.User.name, sender);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 // update the contact online indicator
-                streemio.Contacts.on_online(sender);
+                streembit.Contacts.on_online(sender);
             });
             
         }
         catch (e) {
-            streemio.notify.error("handlePing error %j", e);
+            streembit.notify.error("handlePing error %j", e);
         }
     }
     
@@ -487,10 +487,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
             closeWaithandler(jti);
             
             // update the contact online indicator
-            streemio.Contacts.on_online(sender);
+            streembit.Contacts.on_online(sender);
         }
         catch (e) {
-            streemio.notify.error("handlePingReply error %j", e);
+            streembit.notify.error("handlePingReply error %j", e);
         }
     }
     
@@ -504,11 +504,11 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("handleHangupCall error, session does not exist for " + sender);
             }
             
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_HANGUP_CALL, sender);
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_HANGUP_CALL, sender);
 
         }
         catch (e) {
-            streemio.notify.error("handleCallReply error %j", e);
+            streembit.notify.error("handleCallReply error %j", e);
         }
     }
     
@@ -521,15 +521,15 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("handleCall error, session does not exist for " + sender);
             }            
             
-            streemio.UI.accept_sharescreen(sender, function (result) {
+            streembit.UI.accept_sharescreen(sender, function (result) {
                 var data = {};
                 data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
                 data[wotmsg.MSGFIELD.RESULT] = result ? true : false;
                 
-                var contact = streemio.Contacts.get_contact(sender);
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.RSSC, jti, streemio.User.private_key, data, streemio.User.name, sender);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var contact = streembit.Contacts.get_contact(sender);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.RSSC, jti, streembit.User.private_key, data, streembit.User.name, sender);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 // if the call was accepted on the UI then navigate to the share screen view and wait for the WebRTC session
                 if (result) {
@@ -537,12 +537,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         contact: contact,
                         iscaller: false // this is the recepient of the call -> iscaller = false 
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_RECIPIENT_SHARESCREEN, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_RECIPIENT_SHARESCREEN, null, uioptions);
                 }
             });
         }
         catch (e) {
-            streemio.notify.error("handleCall error %j", e);
+            streembit.notify.error("handleCall error %j", e);
         }
     }
     
@@ -567,7 +567,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
 
         }
         catch (e) {
-            streemio.notify.error("handleCallReply error %j", e);
+            streembit.notify.error("handleCallReply error %j", e);
         }
     }
     
@@ -587,16 +587,16 @@ streemio.PeerNet = (function (module, logger, events, config) {
             }
             logger.debug("call type: " + calltype);
             
-            streemio.UI.accept_call(sender, calltype, function (result) {
+            streembit.UI.accept_call(sender, calltype, function (result) {
                 var data = {};
                 data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
                 data[wotmsg.MSGFIELD.CALLT] = calltype;
                 data[wotmsg.MSGFIELD.RESULT] = result ? true : false;
                 
-                var contact = streemio.Contacts.get_contact(sender);
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.CREP, jti, streemio.User.private_key, data, streemio.User.name, sender);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var contact = streembit.Contacts.get_contact(sender);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.CREP, jti, streembit.User.private_key, data, streembit.User.name, sender);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 // if the call was accepted on the UI then navigate to the video call view and wait for the WebRTC session
                 if (result) {
@@ -605,12 +605,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
                         calltype: calltype,
                         iscaller: false // this is the recepient of the call -> iscaller = false 
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CALL, null, uioptions);
                 }
             });
         }
         catch (e) {
-            streemio.notify.error("handleCall error %j", e);
+            streembit.notify.error("handleCall error %j", e);
         }
     }
     
@@ -634,7 +634,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
 
         }
         catch (e) {
-            streemio.notify.error("handleCallReply error %j", e);
+            streembit.notify.error("handleCallReply error %j", e);
         }
     }
     
@@ -651,24 +651,24 @@ streemio.PeerNet = (function (module, logger, events, config) {
             if (!obj || !obj.file_name || !obj.file_size)
                 throw new Error("handleFileInit error, invalid file data from " + sender);
             
-            streemio.UI.accept_file(sender, obj.file_name, obj.file_size, function (result) {
+            streembit.UI.accept_file(sender, obj.file_name, obj.file_size, function (result) {
                 var data = {};
                 data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
                 data[wotmsg.MSGFIELD.RESULT] = result ? true : false;
                 
-                var contact = streemio.Contacts.get_contact(sender);
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.CREP, jti, streemio.User.private_key, data, streemio.User.name, sender);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var contact = streembit.Contacts.get_contact(sender);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.CREP, jti, streembit.User.private_key, data, streembit.User.name, sender);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 if (result) {
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_FILE_INIT, sender, obj);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_FILE_INIT, sender, obj);
                 }
             });
 
         }
         catch (e) {
-            streemio.notify.error("handleFileInit error %j", e);
+            streembit.notify.error("handleFileInit error %j", e);
         }
     }
     
@@ -691,7 +691,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
 
         }
         catch (e) {
-            streemio.notify.error("handleCallReply error %j", e);
+            streembit.notify.error("handleCallReply error %j", e);
         }
     }
     
@@ -709,12 +709,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 user_type: data[wotmsg.MSGFIELD.UTYPE]
             };
 
-            streemio.Contacts.on_receive_addcontact(contact);
+            streembit.Contacts.on_receive_addcontact(contact);
 
             // close, don't reply here
         }
         catch (e) {
-            streemio.notify.error("handleAddContactRequest error %j", e);
+            streembit.notify.error("handleAddContactRequest error %j", e);
         }
     }
     
@@ -731,12 +731,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("invalid account, the account and sender do not match");
             }
                    
-            streemio.Contacts.handle_addcontact_accepted(account);
+            streembit.Contacts.handle_addcontact_accepted(account);
 
             // close, don't reply here
         }
         catch (e) {
-            streemio.notify.error("handleAddContactRequest error %j", e);
+            streembit.notify.error("handleAddContactRequest error %j", e);
         }
     }
     
@@ -753,12 +753,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("invalid account, the account and sender do not match");
             }
             
-            streemio.Contacts.handle_addcontact_denied(account);
+            streembit.Contacts.handle_addcontact_denied(account);
 
             // close, don't reply here
         }
         catch (e) {
-            streemio.notify.error("handleAddContactDenyReply error %j", e);
+            streembit.notify.error("handleAddContactDenyReply error %j", e);
         }
     }
     
@@ -781,47 +781,47 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 return;
             
             switch (data.cmd) {
-                case streemio.DEFS.PEERMSG_TXTMSG:
+                case streembit.DEFS.PEERMSG_TXTMSG:
                     try {
-                        if (streemio.Session.curent_viewmodel && streemio.Session.curent_viewmodel.onTextMessage) {
-                            streemio.Session.curent_viewmodel.onTextMessage(data);
+                        if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.onTextMessage) {
+                            streembit.Session.curent_viewmodel.onTextMessage(data);
                         }
                         else {
                             // signal the contact list about the message
-                            streemio.Session.contactsvm.onTextMessage(data);
+                            streembit.Session.contactsvm.onTextMessage(data);
                         }
                     }
                     catch (e) {
-                        streemio.notify.error("Error in handling chat message %j", e);
+                        streembit.notify.error("Error in handling chat message %j", e);
                     }
                     break;
 
-                case streemio.DEFS.PEERMSG_CALL_WEBRTC:
+                case streembit.DEFS.PEERMSG_CALL_WEBRTC:
                     //logger.debug("WEBRTC peer message received");
                     events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTCSIGNAL, data);
                     break;
 
-                case streemio.DEFS.PEERMSG_CALL_WEBRTCSS:
+                case streembit.DEFS.PEERMSG_CALL_WEBRTCSS:
                     //logger.debug("WEBRTC peer message received");
                     events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTC_SSCSIG, data);
                     break;
 
-                case streemio.DEFS.PEERMSG_CALL_WEBRTCAA:
+                case streembit.DEFS.PEERMSG_CALL_WEBRTCAA:
                     //logger.debug("WEBRTC peer message received");
                     events.emit(events.APPEVENT, events.TYPES.ONCALLWEBRTC_SSAUDIOSIG, data);
                     break;
 
-                case streemio.DEFS.PEERMSG_FILE_WEBRTC:
+                case streembit.DEFS.PEERMSG_FILE_WEBRTC:
                     //logger.debug("WEBRTC peer message received");
                     events.emit(events.APPEVENT, events.TYPES.ONFILEWEBRTCSIGNAL, data);
                     break;
 
-                case streemio.DEFS.PEERMSG_FSEND:
+                case streembit.DEFS.PEERMSG_FSEND:
                     //logger.debug("PEERMSG_FSEND message received");
                     events.emit(events.APPEVENT, events.TYPES.ONFCHUNKSEND, data);
                     break;
 
-                case streemio.DEFS.PEERMSG_FEXIT:
+                case streembit.DEFS.PEERMSG_FEXIT:
                     //logger.debug("PEERMSG_FSEND message received");
                     events.emit(events.APPEVENT, events.TYPES.ONFILECANCEL, data);
                     break;
@@ -831,13 +831,13 @@ streemio.PeerNet = (function (module, logger, events, config) {
             }
         }
         catch (e) {
-            streemio.notify.error("handleSymmMessage error %j", e);
+            streembit.notify.error("handleSymmMessage error %j", e);
         }
     }
     
     module.onPeerMessage = function (data, info) {
         try {
-            if (!streemio.User.is_user_initialized) {
+            if (!streembit.User.is_user_initialized) {
                 throw new Error("the application user is not yet initialized");
             }
             
@@ -850,8 +850,8 @@ streemio.PeerNet = (function (module, logger, events, config) {
             if (!payload || !payload.aud)
                 throw new Error("invalid aud element");
             
-            if (payload.aud != streemio.User.name) {
-                throw new Error("aud is " + payload.aud + " invalid for user " + streemio.User.name);
+            if (payload.aud != streembit.User.name) {
+                throw new Error("aud is " + payload.aud + " invalid for user " + streembit.User.name);
             }
             
             var sender = payload.iss;
@@ -860,7 +860,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             
             //  get the public key for the sender only contacts are 
             //  allowed communicate with eachother via peer to peer
-            var public_key = streemio.Contacts.get_public_key(sender);
+            var public_key = streembit.Contacts.get_public_key(sender);
             if (!public_key) {
                 if (payload.sub != wotmsg.PEERMSG.ACRQ 
                     && payload.sub != wotmsg.PEERMSG.EXCH 
@@ -894,7 +894,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                     //  If there is a pending contact request then try processing the message
                     
                     // Try to get the public key from the pending contacts list
-                    var pending_contact = streemio.Session.get_pending_contact(sender);
+                    var pending_contact = streembit.Session.get_pending_contact(sender);
                     if (pending_contact) {
                         if (!pending_contact.public_key) {
                             throw new Error("pending contact exists, but there is no public key in the data");
@@ -913,10 +913,10 @@ streemio.PeerNet = (function (module, logger, events, config) {
             }
             
             if (message.sub == wotmsg.PEERMSG.EXCH || message.sub == wotmsg.PEERMSG.PING ) {
-                var pending_contact = streemio.Session.get_pending_contact(sender);
+                var pending_contact = streembit.Session.get_pending_contact(sender);
                 if (pending_contact) {
                     // remove from the pending contacts and add to the contacts list
-                    streemio.Contacts.handle_addcontact_accepted(sender);
+                    streembit.Contacts.handle_addcontact_accepted(sender);
                 }
             }            
 
@@ -972,7 +972,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
             }
         }
         catch (err) {
-            streemio.notify.error("onPeerMessage error %j", err);
+            streembit.notify.error("onPeerMessage error %j", err);
         }
     }
     
@@ -1012,7 +1012,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                             
                             try {
                                 if (showprog) {
-                                    streemio.notify.hideprogress();
+                                    streembit.notify.hideprogress();
                                 }
                                 reject("TIMEDOUT");
                                 delete list_of_waithandlers[jti];
@@ -1035,7 +1035,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 list_of_waithandlers[jti] = waithandler;
                 
                 if (showprog) {
-                    streemio.notify.showprogress("Waiting reply from peer ... ");
+                    streembit.notify.showprogress("Waiting reply from peer ... ");
                 }
                 
                 logger.debug("wait peer complete jti: " + jti);
@@ -1073,20 +1073,20 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 logger.debug("using ecdh public key %s", ecdh_public);
                 
                 var plaindata = { symmetric_key: session_symmkey };
-                var cipher = wotmsg.ecdh_encypt(streemio.User.ecdh_key, ecdh_public, plaindata);
+                var cipher = wotmsg.ecdh_encypt(streembit.User.ecdh_key, ecdh_public, plaindata);
                 
                 var data = {
-                    account: streemio.User.name, 
-                    public_key: streemio.User.public_key,
-                    ecdh_public_key: streemio.User.ecdh_public_key, 
-                    address: streemio.User.address, 
-                    port: streemio.User.port
+                    account: streembit.User.name, 
+                    public_key: streembit.User.public_key,
+                    ecdh_public_key: streembit.User.ecdh_public_key, 
+                    address: streembit.User.address, 
+                    port: streembit.User.port
                 };
                 data[wotmsg.MSGFIELD.DATA] = cipher;
                 
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.EXCH, jti, streemio.User.private_key, data, streemio.User.name, account);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.EXCH, jti, streembit.User.private_key, data, streembit.User.name, account);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 //  insert the session key into the list
                 list_of_sessionkeys[account] = {
@@ -1118,32 +1118,32 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var rcpt_ecdh_public_key = contact.ecdh_public;
             
             var plaindata = { message: message };
-            var cipher = wotmsg.ecdh_encypt(streemio.User.ecdh_key, rcpt_ecdh_public_key, plaindata);
+            var cipher = wotmsg.ecdh_encypt(streembit.User.ecdh_key, rcpt_ecdh_public_key, plaindata);
             
             var timestamp = Date.now();
             var payload = {};
             payload.type = wotmsg.MSGTYPE.OMSG;
-            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
-            payload[wotmsg.MSGFIELD.SEKEY] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streembit.User.public_key;
+            payload[wotmsg.MSGFIELD.SEKEY] = streembit.User.ecdh_public_key;
             payload[wotmsg.MSGFIELD.REKEY] = rcpt_ecdh_public_key;
             payload[wotmsg.MSGFIELD.TIMES] = timestamp;
             payload[wotmsg.MSGFIELD.CIPHER] = cipher;
             payload[wotmsg.MSGFIELD.MSGTYPE] = msgtype;
             
-            var jti = streemio.Message.create_id();
-            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
+            var jti = streembit.Message.create_id();
+            var value = wotmsg.create(streembit.User.private_key, jti, payload, null, null, streembit.User.name, null, account);
             var key = account + "/message/" + jti;
             // put the message to the network
-            streemio.Node.put(key, value, function (err) {
+            streembit.Node.put(key, value, function (err) {
                 if (err) {
-                    return streemio.notify.error("Send off-line message error %j", err);
+                    return streembit.notify.error("Send off-line message error %j", err);
                 }
                 logger.debug("sent off-line message " + key);
                 callback();
             });
         }
         catch (e) {
-            streemio.notify.error("send_offline_message error %j", e);
+            streembit.notify.error("send_offline_message error %j", e);
         }
     }
     
@@ -1158,26 +1158,26 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var timestamp = Date.now();
             var payload = {};
             payload.type = wotmsg.MSGTYPE.OMSG;
-            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
-            payload[wotmsg.MSGFIELD.SEKEY] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streembit.User.public_key;
+            payload[wotmsg.MSGFIELD.SEKEY] = streembit.User.ecdh_public_key;
             payload[wotmsg.MSGFIELD.TIMES] = contact.addrequest_create || Date.now();
-            payload[wotmsg.MSGFIELD.MSGTYPE] = streemio.DEFS.MSG_ADDCONTACT;
+            payload[wotmsg.MSGFIELD.MSGTYPE] = streembit.DEFS.MSG_ADDCONTACT;
             
-            var hashdata = account + "/message/" + streemio.DEFS.MSG_ADDCONTACT + "/" + streemio.User.name;
-            var jti = streemio.Message.create_hash_id(hashdata);
-            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
+            var hashdata = account + "/message/" + streembit.DEFS.MSG_ADDCONTACT + "/" + streembit.User.name;
+            var jti = streembit.Message.create_hash_id(hashdata);
+            var value = wotmsg.create(streembit.User.private_key, jti, payload, null, null, streembit.User.name, null, account);
             var key = account + "/message/" + jti;
             // put the message to the network
-            streemio.Node.put(key, value, function (err) {
+            streembit.Node.put(key, value, function (err) {
                 if (err) {
-                    return streemio.notify.error("Send off-line message error %j", err);
+                    return streembit.notify.error("Send off-line message error %j", err);
                 }
                 logger.debug("sent persistent addcontact request " + key);
                 callback();
             });
         }
         catch (e) {
-            streemio.notify.error("send_offline_message error %j", e);
+            streembit.notify.error("send_offline_message error %j", e);
         }
     }
     
@@ -1192,26 +1192,26 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var timestamp = Date.now();
             var payload = {};
             payload.type = wotmsg.MSGTYPE.OMSG;
-            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
-            payload[wotmsg.MSGFIELD.SEKEY] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streembit.User.public_key;
+            payload[wotmsg.MSGFIELD.SEKEY] = streembit.User.ecdh_public_key;
             payload[wotmsg.MSGFIELD.TIMES] = contact.addrequest_create || Date.now();
-            payload[wotmsg.MSGFIELD.MSGTYPE] = streemio.DEFS.MSG_DECLINECONTACT;
+            payload[wotmsg.MSGFIELD.MSGTYPE] = streembit.DEFS.MSG_DECLINECONTACT;
             
-            var hashdata = account + "/message/" + streemio.DEFS.MSG_DECLINECONTACT + "/" + streemio.User.name;
-            var jti = streemio.Message.create_hash_id(hashdata);
-            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name, null, account);
+            var hashdata = account + "/message/" + streembit.DEFS.MSG_DECLINECONTACT + "/" + streembit.User.name;
+            var jti = streembit.Message.create_hash_id(hashdata);
+            var value = wotmsg.create(streembit.User.private_key, jti, payload, null, null, streembit.User.name, null, account);
             var key = account + "/message/" + jti;
             // put the message to the network
-            streemio.Node.put(key, value, function (err) {
+            streembit.Node.put(key, value, function (err) {
                 if (err) {
-                    return streemio.notify.error("declinecontact_message error %j", err);
+                    return streembit.notify.error("declinecontact_message error %j", err);
                 }
                 logger.debug("sent persistent declinecontact_message request " + key);
                 callback();
             });
         }
         catch (e) {
-            streemio.notify.error("declinecontact_message error %j", e);
+            streembit.notify.error("declinecontact_message error %j", e);
         }
     }
     
@@ -1232,12 +1232,12 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 throw new Error("contact session key doesn't exists");
             }
             
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_symm_msg(wotmsg.PEERMSG.SYMD, jti, streemio.User.private_key, session.symmetric_key, message, streemio.User.name, account);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var jti = streembit.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_symm_msg(wotmsg.PEERMSG.SYMD, jti, streembit.User.private_key, session.symmetric_key, message, streembit.User.name, account);
+            streembit.Node.peer_send(contact, encoded_msgbuffer);
         }
         catch (e) {
-            streemio.notify.error("send_peer_message error %j", e);
+            streembit.notify.error("send_peer_message error %j", e);
         }
     }
    
@@ -1249,14 +1249,14 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var account = contact.name;
                 var data = {}
                 data[wotmsg.MSGFIELD.TIMES] = Date.now();
-                data[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+                data[wotmsg.MSGFIELD.ECDHPK] = streembit.User.ecdh_public_key;
                 data[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
-                data[wotmsg.MSGFIELD.HOST] = streemio.User.address;
-                data[wotmsg.MSGFIELD.PORT] = streemio.User.port;
+                data[wotmsg.MSGFIELD.HOST] = streembit.User.address;
+                data[wotmsg.MSGFIELD.PORT] = streembit.User.port;
                 
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PING, jti, streemio.User.private_key, data, streemio.User.name, account);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PING, jti, streembit.User.private_key, data, streembit.User.name, account);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 var timeoutval = timeout || 10000;
                 wait_peer_reply(jti, timeoutval, showprogress)
@@ -1278,48 +1278,48 @@ streemio.PeerNet = (function (module, logger, events, config) {
     module.send_addcontact_request = function (contact) {
         try {                
             var account = contact.name;
-            var data = { sender: streemio.User.name };
-            data[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
-            data[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+            var data = { sender: streembit.User.name };
+            data[wotmsg.MSGFIELD.PUBKEY] = streembit.User.public_key;
+            data[wotmsg.MSGFIELD.ECDHPK] = streembit.User.ecdh_public_key;
             data[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
-            data[wotmsg.MSGFIELD.HOST] = streemio.User.address;
-            data[wotmsg.MSGFIELD.PORT] = streemio.User.port;
-            data[wotmsg.MSGFIELD.UTYPE] = streemio.DEFS.USER_TYPE_HUMAN;
+            data[wotmsg.MSGFIELD.HOST] = streembit.User.address;
+            data[wotmsg.MSGFIELD.PORT] = streembit.User.port;
+            data[wotmsg.MSGFIELD.UTYPE] = streembit.DEFS.USER_TYPE_HUMAN;
                 
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.ACRQ, jti, streemio.User.private_key, data, streemio.User.name, account);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var jti = streembit.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.ACRQ, jti, streembit.User.private_key, data, streembit.User.name, account);
+            streembit.Node.peer_send(contact, encoded_msgbuffer);
         }
         catch (err) {
-            streemio.notify.error("send_addcontact_request error:  %j", err);
+            streembit.notify.error("send_addcontact_request error:  %j", err);
         }        
     }
     
     module.send_accept_addcontact_reply = function (contact) {
         try {
             var account = contact.name;
-            var data = { sender: streemio.User.name };
+            var data = { sender: streembit.User.name };
 
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.AACR, jti, streemio.User.private_key, data, streemio.User.name, account);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var jti = streembit.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.AACR, jti, streembit.User.private_key, data, streembit.User.name, account);
+            streembit.Node.peer_send(contact, encoded_msgbuffer);
         }
         catch (err) {
-            streemio.notify.error("send_addcontact_request error:  %j", err);
+            streembit.notify.error("send_addcontact_request error:  %j", err);
         }
     }
     
     module.send_decline_addcontact_reply = function (contact) {
         try {
             var account = contact.name;
-            var data = { sender: streemio.User.name };
+            var data = { sender: streembit.User.name };
             
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.DACR, jti, streemio.User.private_key, data, streemio.User.name, account);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var jti = streembit.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.DACR, jti, streembit.User.private_key, data, streembit.User.name, account);
+            streembit.Node.peer_send(contact, encoded_msgbuffer);
         }
         catch (err) {
-            streemio.notify.error("send_addcontact_request error:  %j", err);
+            streembit.notify.error("send_addcontact_request error:  %j", err);
         }
     }
     
@@ -1331,9 +1331,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var data = {}
                 data[wotmsg.MSGFIELD.TIMES] = Date.now();
                 
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.HCAL, jti, streemio.User.private_key, data, streemio.User.name, account);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.HCAL, jti, streembit.User.private_key, data, streembit.User.name, account);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 // don't wait for reply
             }
@@ -1352,9 +1352,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 var data = {}
                 data[wotmsg.MSGFIELD.CALLT] = type;
                 
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.CALL, jti, streemio.User.private_key, data, streemio.User.name, account);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.CALL, jti, streembit.User.private_key, data, streembit.User.name, account);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 wait_peer_reply(jti, 10000, showprogress)
                 .then(
@@ -1378,9 +1378,9 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var data = {}
             data[wotmsg.MSGFIELD.TIMES] = Date.now();
                 
-            var jti = streemio.Message.create_id();
-            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streemio.User.private_key, data, streemio.User.name, account);
-            streemio.Node.peer_send(contact, encoded_msgbuffer);
+            var jti = streembit.Message.create_id();
+            var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.SSCA, jti, streembit.User.private_key, data, streembit.User.name, account);
+            streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
             //console.log("offer_sharescreen jti:" + jti);
 
@@ -1399,15 +1399,15 @@ streemio.PeerNet = (function (module, logger, events, config) {
                 
                 var account = contact.name;
                 var data = {}
-                data[wotmsg.MSGFIELD.CALLT] = streemio.DEFS.CALLTYPE_FILET;
+                data[wotmsg.MSGFIELD.CALLT] = streembit.DEFS.CALLTYPE_FILET;
                 data.file_name = file.name;
                 data.file_size = file.size;
                 data.file_hash = file.hash;
                 data.file_type = file.type;
 
-                var jti = streemio.Message.create_id();
-                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.FILE, jti, streemio.User.private_key, data, streemio.User.name, account);
-                streemio.Node.peer_send(contact, encoded_msgbuffer);
+                var jti = streembit.Message.create_id();
+                var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.FILE, jti, streembit.User.private_key, data, streembit.User.name, account);
+                streembit.Node.peer_send(contact, encoded_msgbuffer);
                 
                 wait_peer_reply(jti, timeout || 30000, showprogress)
                 .then(
@@ -1434,25 +1434,25 @@ streemio.PeerNet = (function (module, logger, events, config) {
         try {
             logger.debug("get_account_messages");
             
-            streemio.Node.get_account_messages(streemio.User.name, msgkey, function (err, result) {
+            streembit.Node.get_account_messages(streembit.User.name, msgkey, function (err, result) {
                 if (err) {
-                    return streemio.notify.error("get_account_messages error:  %j", err);
+                    return streembit.notify.error("get_account_messages error:  %j", err);
                 }
                 
                 events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, result);
             });
         }
         catch (e) {
-            streemio.notify.error("get_account_messages error:  %j", e);
+            streembit.notify.error("get_account_messages error:  %j", e);
         }
     }
     
     module.delete_item = function (key, request) {
         try {
-            streemio.Node.delete_item(key, request);
+            streembit.Node.delete_item(key, request);
         }
         catch (e) {
-            streemio.notify.error("delete_item error:  %j", e);
+            streembit.notify.error("delete_item error:  %j", e);
         }
     }
     
@@ -1466,24 +1466,24 @@ streemio.PeerNet = (function (module, logger, events, config) {
             payload.type = wotmsg.MSGTYPE.DELMSG;
             payload[wotmsg.MSGFIELD.MSGID] = msgid
 
-            var jti = streemio.Message.create_id();
-            var value = wotmsg.create(streemio.User.private_key, jti, payload, null, null, streemio.User.name);
+            var jti = streembit.Message.create_id();
+            var value = wotmsg.create(streembit.User.private_key, jti, payload, null, null, streembit.User.name);
 
-            var key = streemio.User.name + "/delmsg/" + msgid;
+            var key = streembit.User.name + "/delmsg/" + msgid;
             // put the message to the network
-            streemio.Node.put(key, value, function (err) {
+            streembit.Node.put(key, value, function (err) {
                 callback(err);
             });
         }
         catch (e) {
-            streemio.notify.error("delete_message error:  %j", e);
+            streembit.notify.error("delete_message error:  %j", e);
         }
     }
     
     module.delete_public_key = function (callback) {
         try {
             //  publishing user data
-            if (!streemio.User.public_key || !streemio.User.ecdh_public_key || !streemio.User.address || !streemio.User.port) {
+            if (!streembit.User.public_key || !streembit.User.ecdh_public_key || !streembit.User.address || !streembit.User.port) {
                 return callback("invalid user context data");
             }
             
@@ -1492,15 +1492,15 @@ streemio.PeerNet = (function (module, logger, events, config) {
             // create the WoT message 
             var payload = {};
             payload.type = wotmsg.MSGTYPE.DELPK;
-            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streembit.User.public_key;
             
             logger.debug("publish delete key: %j", payload);
             
-            var value = wotmsg.create(streemio.User.private_key, streemio.Message.create_id(), payload);
-            var key = streemio.User.name;
+            var value = wotmsg.create(streembit.User.private_key, streembit.Message.create_id(), payload);
+            var key = streembit.User.name;
             
             //  For this public key upload message the key is the device name
-            streemio.Node.put(key, value, function (err) {
+            streembit.Node.put(key, value, function (err) {
                 if (err) {
                     return callback(err);
                 }
@@ -1518,7 +1518,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     module.update_public_key = function (new_public_key, callback) {
         try {
             //  publishing user data
-            if (!streemio.User.public_key || !streemio.User.ecdh_public_key || !streemio.User.address || !streemio.User.port) {
+            if (!streembit.User.public_key || !streembit.User.ecdh_public_key || !streembit.User.address || !streembit.User.port) {
                 return callback("invalid user context data");
             }
             
@@ -1532,20 +1532,20 @@ streemio.PeerNet = (function (module, logger, events, config) {
             var payload = {};
             payload.type = wotmsg.MSGTYPE.UPDPK;
             payload[wotmsg.MSGFIELD.PUBKEY] = new_public_key;
-            payload[wotmsg.MSGFIELD.LASTPKEY] = streemio.User.public_key;
-            payload[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.LASTPKEY] = streembit.User.public_key;
+            payload[wotmsg.MSGFIELD.ECDHPK] = streembit.User.ecdh_public_key;
             payload[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
-            payload[wotmsg.MSGFIELD.HOST] = streemio.User.address;
-            payload[wotmsg.MSGFIELD.PORT] = streemio.User.port;
-            payload[wotmsg.MSGFIELD.UTYPE] = streemio.DEFS.USER_TYPE_HUMAN;
+            payload[wotmsg.MSGFIELD.HOST] = streembit.User.address;
+            payload[wotmsg.MSGFIELD.PORT] = streembit.User.port;
+            payload[wotmsg.MSGFIELD.UTYPE] = streembit.DEFS.USER_TYPE_HUMAN;
             
             logger.debug("publish update key: %j", payload);
             
-            var value = wotmsg.create(streemio.User.private_key, streemio.Message.create_id(), payload);
-            var key = streemio.User.name;
+            var value = wotmsg.create(streembit.User.private_key, streembit.Message.create_id(), payload);
+            var key = streembit.User.name;
             
             //  For this public key upload message the key is the device name
-            streemio.Node.put(key, value, function (err) {
+            streembit.Node.put(key, value, function (err) {
                 if (err) {
                     return callback(err);
                 }
@@ -1563,11 +1563,11 @@ streemio.PeerNet = (function (module, logger, events, config) {
     module.publish_user = function (callback) {
         try {
             if (!callback) {
-                return streemio.notify.error("publish_user error: invalid callback parameter")
+                return streembit.notify.error("publish_user error: invalid callback parameter")
             }
 
             //  publishing user data
-            if (!streemio.User.public_key || !streemio.User.ecdh_public_key || !streemio.User.address || !streemio.User.port) {
+            if (!streembit.User.public_key || !streembit.User.ecdh_public_key || !streembit.User.address || !streembit.User.port) {
                 return callback("invalid user context data");
             }
             
@@ -1576,20 +1576,20 @@ streemio.PeerNet = (function (module, logger, events, config) {
             // create the WoT message 
             var payload = {};
             payload.type = wotmsg.MSGTYPE.PUBPK;
-            payload[wotmsg.MSGFIELD.PUBKEY] = streemio.User.public_key;
-            payload[wotmsg.MSGFIELD.ECDHPK] = streemio.User.ecdh_public_key;
+            payload[wotmsg.MSGFIELD.PUBKEY] = streembit.User.public_key;
+            payload[wotmsg.MSGFIELD.ECDHPK] = streembit.User.ecdh_public_key;
             payload[wotmsg.MSGFIELD.PROTOCOL] = config.transport;
-            payload[wotmsg.MSGFIELD.HOST] = streemio.User.address;
-            payload[wotmsg.MSGFIELD.PORT] = streemio.User.port;
-            payload[wotmsg.MSGFIELD.UTYPE] = streemio.DEFS.USER_TYPE_HUMAN;
+            payload[wotmsg.MSGFIELD.HOST] = streembit.User.address;
+            payload[wotmsg.MSGFIELD.PORT] = streembit.User.port;
+            payload[wotmsg.MSGFIELD.UTYPE] = streembit.DEFS.USER_TYPE_HUMAN;
             
             logger.debug("publish_user: %j", payload);
             
-            var value = wotmsg.create(streemio.User.private_key, streemio.Message.create_id(), payload);
-            var key = streemio.User.name;
+            var value = wotmsg.create(streembit.User.private_key, streembit.Message.create_id(), payload);
+            var key = streembit.User.name;
             
             //  For this public key upload message the key is the device name
-            streemio.Node.put(key, value, function (err, results) {
+            streembit.Node.put(key, value, function (err, results) {
                 if (err) {
                     return callback("Publish user error: " + (err.message ? err.message : err));
                 }                
@@ -1675,7 +1675,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     
     module.validate_connection = function () {
         return new Promise(function (resolve, reject) {
-            streemio.Node.validate_connection(function (err) {
+            streembit.Node.validate_connection(function (err) {
                 if (err) {
                     reject(err);
                 }
@@ -1688,7 +1688,7 @@ streemio.PeerNet = (function (module, logger, events, config) {
     
     module.init = function (seeds) {
         return new Promise(function (resolve, reject) {
-            streemio.Node.init(seeds, function (err, result) {
+            streembit.Node.init(seeds, function (err, result) {
                 if (err) {
                     reject(err);
                 }
@@ -1702,4 +1702,4 @@ streemio.PeerNet = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.PeerNet || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.PeerNet || {}, streembit.logger, global.appevents, streembit.config));

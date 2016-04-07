@@ -1,27 +1,27 @@
 /*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
 var gui = global.appgui;
 
@@ -33,7 +33,7 @@ var util = require('util');
 var async = require("async");
 // use the global.cryptolib so the browserify version can configure the browser crypto library
 var nodecrypto = require(global.cryptolib);
-var EccKey = require('streemiolib/crypto/EccKey');
+var EccKey = require('streembitlib/crypto/EccKey');
 var secrand = require('secure-random');
 
 if (gui) {
@@ -50,7 +50,7 @@ navigator.webkitTemporaryStorage.queryUsageAndQuota(
 );
 
 
-streemio.util = (function (util) {
+streembit.util = (function (util) {
     
     function createDataDir(callback) {
         if (!gui) {
@@ -60,7 +60,7 @@ streemio.util = (function (util) {
             var datapath = null;
             var datadir = 'data';
             
-            if (streemio.config.isdevmode == true) {
+            if (streembit.config.isdevmode == true) {
                 var wdir = process.cwd();
                 datapath = path.join(wdir, datadir);
             }
@@ -93,20 +93,20 @@ streemio.util = (function (util) {
     }
     
     function loadView(view, callback) {
-        var html = $("#streemio-view-" + view).html();
+        var html = $("#streembit-view-" + view).html();
         callback(html);
     }
     
     function loadLogs(callback) {
         if (!gui) {
-            //return callback("The browser version of Streemio does not support this feature. Try the desktop version for maximum security and to access more features!");
-            callback(null, streemio.logger.logs);
+            //return callback("The browser version of Streembit does not support this feature. Try the desktop version for maximum security and to access more features!");
+            callback(null, streembit.logger.logs);
         }
         else {
             if (!global.logspath) {
                 return callback("The global logs path does not exists");
             }
-            var logfile = 'streemio.log';
+            var logfile = 'streembit.log';
             var filepath = path.join(global.logspath, logfile)
             fs.readFile(filepath, 'utf8', function (err, data) {
                 if (err) {
@@ -126,7 +126,7 @@ streemio.util = (function (util) {
     }
     
     function getFileHash(path, callback) {
-        if (streemio.Main.is_gui) {
+        if (streembit.Main.is_gui) {
             // the full nodejs library is available and the file hash can be computed
             var hash = nodecrypto.createHash('sha1');
             var stream = fs.createReadStream(path);
@@ -161,10 +161,10 @@ streemio.util = (function (util) {
         deleteFile: deleteFile
     };
 
-}(streemio.util || {}));
+}(streembit.util || {}));
 
 
-streemio.Fdialog = (function (module) {
+streembit.Fdialog = (function (module) {
     
     var defOprions = {
         type: 'open',
@@ -374,24 +374,24 @@ streemio.Fdialog = (function (module) {
     
     return module;
 
-}(streemio.Fdialog || {}));
+}(streembit.Fdialog || {}));
 
 
-streemio.UI = (function (module, logger, events, config) {
+streembit.UI = (function (module, logger, events, config) {
     
     module.messagesvm = null;
     
     module.showContacts = function () {
         $(".app-select-screen").hide();
         $(".appboot-screen").hide();
-        $(".streemio-screen").show();    
+        $(".streembit-screen").show();    
         $('.contacts-tab').show();
         $("#main-container").css('left', 281);
     }
     
     module.set_account_title = function (account) {
-        document.title = "Streemio - " + account;
-        if (!streemio.Main.is_gui) {
+        document.title = "Streembit - " + account;
+        if (!streembit.Main.is_gui) {
             $(".menu-account-info").text(account);
             $(".nav-account-info").show();
         }
@@ -399,12 +399,12 @@ streemio.UI = (function (module, logger, events, config) {
     
     module.accept_call = function (sender, type, resultfn) {
         
-        if (type != streemio.DEFS.CALLTYPE_VIDEO && type != streemio.DEFS.CALLTYPE_AUDIO) {
-            return streemio.notify.error("Invalid call type received from " + sender);
+        if (type != streembit.DEFS.CALLTYPE_VIDEO && type != streembit.DEFS.CALLTYPE_AUDIO) {
+            return streembit.notify.error("Invalid call type received from " + sender);
         }
         
         var ctype;
-        if (type == streemio.DEFS.CALLTYPE_VIDEO) {
+        if (type == streembit.DEFS.CALLTYPE_VIDEO) {
             ctype = "video";
         }
         else {
@@ -416,7 +416,7 @@ streemio.UI = (function (module, logger, events, config) {
         audioctrl.muted = false;
         audioctrl.play();
         $(".appboot-screen").hide(100, function () {
-            $(".streemio-screen").show();
+            $(".streembit-screen").show();
             
             bootbox.dialog({
                 message: msg,
@@ -452,7 +452,7 @@ streemio.UI = (function (module, logger, events, config) {
         audioctrl.muted = false;
         audioctrl.play();
         $(".appboot-screen").hide(100, function () {
-            $(".streemio-screen").show();
+            $(".streembit-screen").show();
             
             bootbox.dialog({
                 message: msg,
@@ -490,14 +490,14 @@ streemio.UI = (function (module, logger, events, config) {
     module.onAccountMsg = function (result) {
 
         if (!module.messagesvm) {
-            module.messagesvm = new streemio.vms.MessagesViewModel();
+            module.messagesvm = new streembit.vms.MessagesViewModel();
         }
         
         if (!result)
             return;
         
         if (result.error) {
-            return streemio.notify.error("Get offline messages error:  %j", e);
+            return streembit.notify.error("Get offline messages error:  %j", e);
         }
         
         var count = result.count;
@@ -517,7 +517,7 @@ streemio.UI = (function (module, logger, events, config) {
             if (keyarr.length < 3)
                 break;
             
-            if (keyarr[0] != streemio.User.name || keyarr[1] != "message")
+            if (keyarr[0] != streembit.User.name || keyarr[1] != "message")
                 break;
             
             var hash = keyarr[keyarr.length - 1];
@@ -527,24 +527,24 @@ streemio.UI = (function (module, logger, events, config) {
         
         if (module.messagesvm.messages().length > 0) {
             // navigate the to the messages view
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_ACCOUNT_MESSAGES);
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_ACCOUNT_MESSAGES);
         }
         else {
-            logger.info("There are no messages on the network for " + streemio.User.name);
+            logger.info("There are no messages on the network for " + streembit.User.name);
         }
     }
     
     module.NavigateInitUser = function () {
-        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER);
+        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER);
     }
     
     module.showLogs = function () {
         try {
             var content = $("#app-logs-template").html();
-            streemio.util.loadLogs(function (err, result) {
+            streembit.util.loadLogs(function (err, result) {
                 try {
                     if (err) {
-                        return streemio.notify.error_popup(err);
+                        return streembit.notify.error_popup(err);
                     }
                     
                     var istextlines = false;
@@ -606,7 +606,7 @@ streemio.UI = (function (module, logger, events, config) {
                     
                     
                     //
-                    var vm = new streemio.vms.LogsViewModel();
+                    var vm = new streembit.vms.LogsViewModel();
                     vm.init(errors, infos, debugs);
                     
                     var dialog = new BootstrapDialog({
@@ -655,7 +655,7 @@ streemio.UI = (function (module, logger, events, config) {
             var vm = 0;
             var content = $("#send-file-template").html();
             //
-            //var vm = new streemio.vms.LogsViewModel();
+            //var vm = new streembit.vms.LogsViewModel();
             
             dialog = new BootstrapDialog({
                 title: 'Send File',
@@ -669,7 +669,7 @@ streemio.UI = (function (module, logger, events, config) {
                 onshown: function (dlgwin) {
                     var container = document.querySelector("#filesend-dlg-container");
                     if (container) {
-                        vm = new streemio.vms.SendFileViewModel(contact, onInitStart, onInitEnd);
+                        vm = new streembit.vms.SendFileViewModel(contact, onInitStart, onInitEnd);
                         ko.applyBindings(vm, container);
                     }
                 }
@@ -686,7 +686,7 @@ streemio.UI = (function (module, logger, events, config) {
     module.receiveFile = function (sender, file_params) {
         try {
             
-            var contact = streemio.Contacts.get_contact(sender);
+            var contact = streembit.Contacts.get_contact(sender);
             var file = { size: file_params.file_size, name: file_params.file_name, type: file_params.file_type, hash: file_params.file_hash };
             var options = {
                 contact: contact,
@@ -694,9 +694,9 @@ streemio.UI = (function (module, logger, events, config) {
                 is_sender: false
             };
             
-            streemio.FileTransfer.init_receive(options);
+            streembit.FileTransfer.init_receive(options);
             
-            streemio.Session.tasksvm.add({
+            streembit.Session.tasksvm.add({
                 type: "file",
                 mode: "receive",
                 file_name: file.name,
@@ -769,9 +769,9 @@ streemio.UI = (function (module, logger, events, config) {
     }
     
     module.show_about = function (element) {
-        var content = $("#streemio-view-about").html();
+        var content = $("#streembit-view-about").html();
         var box = bootbox.dialog({
-            title: "About Streemio", 
+            title: "About Streembit", 
             message: content,
             buttons: {
                 close: {
@@ -786,10 +786,10 @@ streemio.UI = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.UI || {}, streemio.logger, global.appevents));
+}(streembit.UI || {}, streembit.logger, global.appevents));
 
 
-streemio.notify = (function (module) {
+streembit.notify = (function (module) {
     
     var m_notify = 0;
     
@@ -956,10 +956,10 @@ streemio.notify = (function (module) {
     
     return module;
 
-}(streemio.notify || {}));
+}(streembit.notify || {}));
 
 
-streemio.User = (function (usrobj, events) {
+streembit.User = (function (usrobj, events) {
     
     var m_name = null;
     var key = null;
@@ -1085,9 +1085,9 @@ streemio.User = (function (usrobj, events) {
             "cipher": cipher_context
         };
         
-        streemio.AccountsDB.put(user, function (err) {
+        streembit.AccountsDB.put(user, function (err) {
             if (err) {
-                return streemio.notify.error("Database update error %j", err);
+                return streembit.notify.error("Database update error %j", err);
             }
             
             logger.debug("database user updated");
@@ -1128,7 +1128,7 @@ streemio.User = (function (usrobj, events) {
                 ecdh_public_key: ecdh_key.getPublicKey('hex')
             });
             
-            var cipher_context = streemio.Message.aes256encrypt(pbkdf2, JSON.stringify(user_context));
+            var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(user_context));
             
             addToDB(account, key.publicKeyStr, cipher_context, function () {
                 usrobj.crypto_key = key;
@@ -1138,7 +1138,7 @@ streemio.User = (function (usrobj, events) {
                 
                 events.emit(events.APPEVENT, events.TYPES.ONUSERINIT);
                 
-                streemio.UI.set_account_title(account);
+                streembit.UI.set_account_title(account);
                 
                 callback();
             });
@@ -1152,12 +1152,12 @@ streemio.User = (function (usrobj, events) {
     usrobj.initialize = function (user, password, callback) {
         try {
             if (!user || !password) {
-                return streemio.notify.error_popup("Invalid parameters, the account and passwords are required");
+                return streembit.notify.error_popup("Invalid parameters, the account and passwords are required");
             }
             
             var account_name = user.account;
             if (!account_name) {
-                return streemio.notify.error_popup("Invalid account name");
+                return streembit.notify.error_popup("Invalid account name");
             }
             
             var pbkdf2 = getCryptPassword(password, account_name);
@@ -1165,14 +1165,14 @@ streemio.User = (function (usrobj, events) {
             // decrypt the cipher
             var plain_text;
             try {
-                plain_text = streemio.Message.aes256decrypt(pbkdf2, user.cipher);
+                plain_text = streembit.Message.aes256decrypt(pbkdf2, user.cipher);
             }
             catch (err) {
                 if (err.message && err.message.indexOf("bad decrypt") > -1) {
-                    return streemio.notify.error_popup("User initialize error: incorrect password");
+                    return streembit.notify.error_popup("User initialize error: incorrect password");
                 }
                 else {
-                    return streemio.notify.error_popup("User initialize error: %j", err);
+                    return streembit.notify.error_popup("User initialize error: %j", err);
                 }
             }
             
@@ -1184,7 +1184,7 @@ streemio.User = (function (usrobj, events) {
             var key = new EccKey(entropy);
             
             if (key.publicKeyStr != user.public_key) {
-                return streemio.notify.error_popup("Error in initializing the account, invalid password");
+                return streembit.notify.error_popup("Error in initializing the account, invalid password");
             }
             
             // the account exists and the encrypted entropy is correct!
@@ -1218,11 +1218,11 @@ streemio.User = (function (usrobj, events) {
                         ecdh_private_key: ecdh_key.getPrivateKey('hex'),
                         ecdh_public_key: ecdh_key.getPublicKey('hex')
                     });
-                    streemio.notify.error("ECDH exception occured when setting private key. New ECDH array is created");
+                    streembit.notify.error("ECDH exception occured when setting private key. New ECDH array is created");
                 }
             }
             
-            var cipher_context = streemio.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
+            var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
             
             addToDB(account_name, key.publicKeyStr, cipher_context, function () {
                 
@@ -1233,18 +1233,18 @@ streemio.User = (function (usrobj, events) {
                 
                 events.emit(events.APPEVENT, events.TYPES.ONUSERINIT);
                 
-                streemio.UI.set_account_title(account_name);
+                streembit.UI.set_account_title(account_name);
                 
                 callback();
             });
                 //}
                 //catch (err) {
-                //    streemio.notify.error_popup("User initialize error: %j", err);
+                //    streembit.notify.error_popup("User initialize error: %j", err);
                 //}
           //  });                       
         }
         catch (err) {
-            streemio.notify.error_popup("User initialize error: %j", err);
+            streembit.notify.error_popup("User initialize error: %j", err);
         }
     };
     
@@ -1254,7 +1254,7 @@ streemio.User = (function (usrobj, events) {
                 throw new Error("the account is not initialized");
             }
             
-            streemio.AccountsDB.get(usrobj.name, function (err, user) {
+            streembit.AccountsDB.get(usrobj.name, function (err, user) {
                 if (err) {
                     throw new Error(err);
                 }
@@ -1262,29 +1262,29 @@ streemio.User = (function (usrobj, events) {
                     throw new Error("The account does not exists");
                 }
                 
-                streemio.Fdialog.initialize({
+                streembit.Fdialog.initialize({
                     type: 'save',
-                    accept: ['streemio.dat'],
+                    accept: ['streembit.dat'],
                     path: '~/Documents',
-                    defaultSavePath: 'streemio.dat'
+                    defaultSavePath: 'streembit.dat'
                 });
                 
                 var objext = JSON.stringify(user);
                 var encoded = window.btoa(objext);
                 
-                var text = "---BEGIN STREEMIO KEY---\n";
+                var text = "---BEGIN STREEMBIT KEY---\n";
                 text += encoded;
-                text += "\n---END STREEMIO KEY---";
+                text += "\n---END STREEMBIT KEY---";
                 
-                var file_name = "streemio_" + usrobj.name + ".dat";
-                streemio.Fdialog.saveTextFile(text, file_name, function () {
+                var file_name = "streembit_" + usrobj.name + ".dat";
+                streembit.Fdialog.saveTextFile(text, file_name, function () {
                     logger.debug("File saved in", path);
                 });
                 
             });
         }
         catch (err) {
-            streemio.notify.error_popup("Account backup error: %j", err);
+            streembit.notify.error_popup("Account backup error: %j", err);
         }
     };
     
@@ -1293,13 +1293,13 @@ streemio.User = (function (usrobj, events) {
             var user = null;
             var account = null;
             
-            streemio.Fdialog.initialize({
+            streembit.Fdialog.initialize({
                 type: 'open',
                 accept: ['.dat'],
                 path: '~/Documents'
             });
             
-            streemio.Fdialog.readTextFile(function (err, buffer, path) {
+            streembit.Fdialog.readTextFile(function (err, buffer, path) {
                 var text = null;
                 try {
                     if (!buffer) {
@@ -1307,12 +1307,12 @@ streemio.User = (function (usrobj, events) {
                     }
                     
                     var data = buffer.toString();
-                    var find1 = "---BEGIN STREEMIO KEY---\n";
+                    var find1 = "---BEGIN STREEMBIT KEY---\n";
                     var pos1 = data.indexOf(find1);
                     if (pos1 == -1) {
                         throw new Error("invalid key backup data");
                     }
-                    var pos2 = data.indexOf("\n---END STREEMIO KEY---");
+                    var pos2 = data.indexOf("\n---END STREEMBIT KEY---");
                     if (pos2 == -1) {
                         throw new Error("invalid key backup data");
                     }
@@ -1322,11 +1322,11 @@ streemio.User = (function (usrobj, events) {
                     text = window.atob(decoded);
                 }
                 catch (e) {
-                    return streemio.notify.error_popup("Invalid key backup data. Error: %j", e);
+                    return streembit.notify.error_popup("Invalid key backup data. Error: %j", e);
                 }
                 
                 if (!text) {
-                    return streemio.notify.error_popup("Invalid key backup data");
+                    return streembit.notify.error_popup("Invalid key backup data");
                 }
                 
                 user = JSON.parse(text);
@@ -1359,7 +1359,7 @@ streemio.User = (function (usrobj, events) {
                                     var pbkdf2 = getCryptPassword(result, account);
                                     
                                     // decrypt the cipher
-                                    var plain_text = streemio.Message.aes256decrypt(pbkdf2, user.cipher);
+                                    var plain_text = streembit.Message.aes256decrypt(pbkdf2, user.cipher);
                                     var userobj = JSON.parse(plain_text);
                                     
                                     var entropy = userobj.pk_entropy;
@@ -1391,7 +1391,7 @@ streemio.User = (function (usrobj, events) {
                                         }
                                     }
                                     
-                                    var cipher_context = streemio.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
+                                    var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
                                     
                                     addToDB(account, key.publicKeyStr, cipher_context, function (err) {
                                         
@@ -1402,10 +1402,10 @@ streemio.User = (function (usrobj, events) {
                                         
                                         events.emit(events.APPEVENT, events.TYPES.ONUSERINIT);
                                         
-                                        streemio.UI.set_account_title(account);
+                                        streembit.UI.set_account_title(account);
                                         
-                                        streemio.notify.success("The account has been initialized");
-                                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                                        streembit.notify.success("The account has been initialized");
+                                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
 
                                     });
                                 }
@@ -1422,7 +1422,7 @@ streemio.User = (function (usrobj, events) {
             
         }
         catch (e) {
-            streemio.notify.error_popup("Account restore error: %j", e);
+            streembit.notify.error_popup("Account restore error: %j", e);
         }
     };
     
@@ -1431,21 +1431,21 @@ streemio.User = (function (usrobj, events) {
         
         try {
             if (!usrobj.is_user_initialized) {
-                return streemio.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streemio network.");
+                return streembit.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streembit network.");
             }
             
             if (!new_key_password) {
-                return streemio.notify.error("Invalid parameters, the passphrase is required");
+                return streembit.notify.error("Invalid parameters, the passphrase is required");
             }
             
             var current_public_key = usrobj.public_key;
             if (!current_public_key) {
-                return streemio.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streemio network.");
+                return streembit.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streembit network.");
             }
             
             var account = usrobj.name;
             if (!account) {
-                return streemio.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streemio network.");
+                return streembit.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streembit network.");
             }
             
             var pbkdf2 = getCryptPassword(new_key_password, account);
@@ -1458,9 +1458,9 @@ streemio.User = (function (usrobj, events) {
             var new_public_key = key.publicKeyStr;
             
             logger.debug("Updating public key on the network");
-            streemio.PeerNet.update_public_key(new_public_key, function (err) {
+            streembit.PeerNet.update_public_key(new_public_key, function (err) {
                 if (err) {
-                    return streemio.notify.error_popup("Publish updated public key error %j", err);
+                    return streembit.notify.error_popup("Publish updated public key error %j", err);
                 }
                 
                 //  encrypt this
@@ -1470,18 +1470,18 @@ streemio.User = (function (usrobj, events) {
                     "ecdhkeys": usrobj.ecdhkeys
                 };
                 
-                var cipher_context = streemio.Message.aes256encrypt(pbkdf2, JSON.stringify(user_context));
+                var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(user_context));
                 
                 addToDB(account, new_public_key, cipher_context, function () {
                     usrobj.crypto_key = key;
                     
-                    streemio.notify.success("The public key has been updloaded to the network");
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                    streembit.notify.success("The public key has been updloaded to the network");
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                 });
             });
         }
         catch (err) {
-            streemio.notify.error("User initialize error: %j", err);
+            streembit.notify.error("User initialize error: %j", err);
             callback(err);
         }
     }
@@ -1494,10 +1494,10 @@ streemio.User = (function (usrobj, events) {
     
     return usrobj;
 
-}(streemio.User || {}, global.appevents));
+}(streembit.User || {}, global.appevents));
 
 
-streemio.Session = (function (module, logger, events, config) {
+streembit.Session = (function (module, logger, events, config) {
     
     module.settings = {};
     module.current_operation = 0;
@@ -1536,12 +1536,12 @@ streemio.Session = (function (module, logger, events, config) {
             data: data
         }; 
 
-        streemio.DB.update(streemio.DB.SETTINGSDB, newsettings).then(
+        streembit.DB.update(streembit.DB.SETTINGSDB, newsettings).then(
             function () {
                 logger.debug("added database settings");
                 module.settings = newsettings;
                 // assign the new settings to the global config
-                streemio.config.set_config(module.settings.data);
+                streembit.config.set_config(module.settings.data);
                 callback(null);
             },
             function (err) {
@@ -1552,7 +1552,7 @@ streemio.Session = (function (module, logger, events, config) {
     }
     
     module.get_settings = function (callback) {
-        streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
+        streembit.DB.get(streembit.DB.SETTINGSDB, "settings").then(
             function (result) {
                 logger.debug("database result populated");
                 if (result && result.data) {
@@ -1561,7 +1561,7 @@ streemio.Session = (function (module, logger, events, config) {
                 callback();           
             },
             function (err) {
-                logger.error("streemio.DB.get settings error %j", err);
+                logger.error("streembit.DB.get settings error %j", err);
                 callback(err);
             }
         );
@@ -1602,7 +1602,7 @@ streemio.Session = (function (module, logger, events, config) {
                 module.settings.data.pending_contacts = [];           
             }
 
-            streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
+            streembit.DB.update(streembit.DB.SETTINGSDB, module.settings).then(
                 function () {
                     logger.debug("updated settings database");
                     if (callback) {
@@ -1647,7 +1647,7 @@ streemio.Session = (function (module, logger, events, config) {
             module.settings.data.pending_contacts.push(contact);
         }
 
-        streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
+        streembit.DB.update(streembit.DB.SETTINGSDB, module.settings).then(
             function () {
                 logger.debug("updated settings database");
                 callback(null);
@@ -1665,7 +1665,7 @@ streemio.Session = (function (module, logger, events, config) {
         }
         module.settings.blocked_contacts.push(contact_name);
         
-        streemio.DB.update(streemio.DB.SETTINGSDB, module.settings).then(
+        streembit.DB.update(streembit.DB.SETTINGSDB, module.settings).then(
             function () {
                 logger.debug("updated settings database");
                 callback(null);
@@ -1679,10 +1679,10 @@ streemio.Session = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.Session || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.Session || {}, streembit.logger, global.appevents, streembit.config));
 
 
-streemio.Contacts = (function (module, logger, events, config) {
+streembit.Contacts = (function (module, logger, events, config) {
     
     var contacts = [];
     var pending_contacts = {};
@@ -1703,7 +1703,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             ping: function () {
                 var _self = this;
                
-                streemio.PeerNet.ping(this, false, 30000)    
+                streembit.PeerNet.ping(this, false, 30000)    
                 .then(
                     function () {
                         _self.lastping(Date.now());
@@ -1744,12 +1744,12 @@ streemio.Contacts = (function (module, logger, events, config) {
             //  must use the existing public key which guarantees data integrity and that the 
             //  contact is indeed the sender
             var public_key = module.get_public_key(account);
-            var payload = streemio.Message.decode(contobj.value, contact.public_key);
+            var payload = streembit.Message.decode(contobj.value, contact.public_key);
             var incoming_contact = payload.data;
             if (incoming_contact.public_key != contact.public_key) {
-                streemio.notify.error("Invalid contact received from the network. Contact '" + account + "' will be removed from the contact list");
+                streembit.notify.error("Invalid contact received from the network. Contact '" + account + "' will be removed from the contact list");
                 // remove from the list
-                streemio.Session.contactsvm.delete_byname(contact.name);
+                streembit.Session.contactsvm.delete_byname(contact.name);
                 //  remove from the local db
                 return module.remove(account);
             }
@@ -1764,7 +1764,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 address: incoming_contact.address, 
                 port: incoming_contact.port, 
                 name: account,
-                protocol: incoming_contact.protocol ? incoming_contact.protocol : streemio.DEFS.TRANSPORT_TCP,
+                protocol: incoming_contact.protocol ? incoming_contact.protocol : streembit.DEFS.TRANSPORT_TCP,
                 user_type: contact.user_type
             };
             
@@ -1773,12 +1773,12 @@ streemio.Contacts = (function (module, logger, events, config) {
             });
         }
         catch (err) {
-            streemio.notify.error("on_contact_online() error: %j", err);
+            streembit.notify.error("on_contact_online() error: %j", err);
         }
     }
     
     function pending_contact_handler() {
-        var pcontacts = streemio.Session.settings.data.pending_contacts;
+        var pcontacts = streembit.Session.settings.data.pending_contacts;
         if (!pcontacts || !pcontacts.length) {
             return;
         }
@@ -1803,15 +1803,15 @@ streemio.Contacts = (function (module, logger, events, config) {
     
     function update_contact(account, obj) {
         if (!account || !obj) {
-            return streemio.notify.error("update_contact error: invalid parameters");
+            return streembit.notify.error("update_contact error: invalid parameters");
         }
         
         for (var i = 0; i < contacts.length; i++) {
             if (contacts[i].name == account) {
                 if (obj.public_key != contacts[i].public_key) {
-                    streemio.notify.error("update_contact error. Invalid contact received from the network. Contact " + account + " will be removed from the contact list");
+                    streembit.notify.error("update_contact error. Invalid contact received from the network. Contact " + account + " will be removed from the contact list");
                     // remove from the list
-                    streemio.Session.contactsvm.delete_byname(contacts[i].name);
+                    streembit.Session.contactsvm.delete_byname(contacts[i].name);
                     //  remove from the local db
                     return module.remove(account);
                 }
@@ -1819,7 +1819,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 contacts[i].address = obj.address;
                 contacts[i].port = obj.port;
                 contacts[i].ecdh_public = obj.ecdh_public;
-                contacts[i].protocol = obj.protocol  ? obj.protocol : streemio.DEFS.TRANSPORT_TCP;
+                contacts[i].protocol = obj.protocol  ? obj.protocol : streembit.DEFS.TRANSPORT_TCP;
                 contacts[i].user_type = obj.user_type;
             }
         }
@@ -1831,13 +1831,13 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     function find_contact_onnetwork(contact_address, contact_port, contact_protocol, contact_name, callback) {
-        streemio.PeerNet.find_contact(contact_name, function (err, contact) {
+        streembit.PeerNet.find_contact(contact_name, function (err, contact) {
             if (err) {
-                streemio.notify.error("Contact search error %j", err);
+                streembit.notify.error("Contact search error %j", err);
                 return callback();
             }
             if (!contact) {
-                streemio.notify.error("Couldn't find contact " + contact_name + " on the network");
+                streembit.notify.error("Couldn't find contact " + contact_name + " on the network");
                 return callback();
             }
             
@@ -1856,7 +1856,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     
     function ping_contact(account) {
         if (!account) {
-            return streemio.notify.error("ping_contact error: invalid parameters");
+            return streembit.notify.error("ping_contact error: invalid parameters");
         }
         
         var contact = module.get_contact(account);
@@ -1871,7 +1871,7 @@ streemio.Contacts = (function (module, logger, events, config) {
         var contact_name = param_contact.name;
         logger.debug("initialzing, find contact " + contact_name);
         
-        streemio.Node.find_account(contact_name)
+        streembit.Node.find_account(contact_name)
             .then(
             function (rescontacts) {
                 var contact_address = null;
@@ -1898,22 +1898,22 @@ streemio.Contacts = (function (module, logger, events, config) {
                         return;
                     }
 
-                    streemio.notify.taskbarmsg("Found " + contact.name + " contact data on network");
+                    streembit.notify.taskbarmsg("Found " + contact.name + " contact data on network");
 
-                    streemio.ContactsDB.update_contact(streemio.User.name, contact).then(
+                    streembit.ContactsDB.update_contact(streembit.User.name, contact).then(
                         function () {
                             update_contact(contact.name, contact);
                             
                             //ping_contact(contact.name);
                             
-                            streemio.Session.contactsvm.update_contact(contact.name, contact);
+                            streembit.Session.contactsvm.update_contact(contact.name, contact);
                             
                             setTimeout(function () {
                                 callback();
                             }, 3000);
                         },
                         function (err) {
-                            streemio.notify.error("Database update add contact error %j", err);
+                            streembit.notify.error("Database update add contact error %j", err);
 
                             setTimeout(function () {
                                 callback();
@@ -1939,11 +1939,11 @@ streemio.Contacts = (function (module, logger, events, config) {
             else {
                 msg += " completed.";
             }
-            streemio.notify.taskbarmsg(msg);
+            streembit.notify.taskbarmsg(msg);
 
             // get the offline messages
-            var key = streemio.User.name + "/message";
-            streemio.PeerNet.get_account_messages(key);
+            var key = streembit.User.name + "/message";
+            streembit.PeerNet.get_account_messages(key);
 
         });
     }
@@ -1958,12 +1958,12 @@ streemio.Contacts = (function (module, logger, events, config) {
             protocol: contact.protocol,
             user_type: contact.user_type
         };
-        streemio.ContactsDB.update_contact(streemio.User.name, updobj).then(
+        streembit.ContactsDB.update_contact(streembit.User.name, updobj).then(
             function () {
                 callback();
             },
             function (err) {
-                streemio.notify.error("Update contact database error: %j", err);
+                streembit.notify.error("Update contact database error: %j", err);
             }                        
         );
     };
@@ -1976,25 +1976,25 @@ streemio.Contacts = (function (module, logger, events, config) {
             var existing_contact = module.get_contact(account);
             var existing_publickey = existing_contact.public_key;
             if (existing_publickey != request.public_key) {
-                streemio.notify.error("Add contact request from " + account + " received an invalid public key: " + request.public_key)
+                streembit.notify.error("Add contact request from " + account + " received an invalid public key: " + request.public_key)
             }
             else {
                 existing_contact.address = request.address;
                 existing_contact.port = request.port;
                 existing_contact.protocol = request.protocol;
                 // the contact already exists -> send back an accept contact message
-                streemio.PeerNet.send_accept_addcontact_reply(existing_contact);
+                streembit.PeerNet.send_accept_addcontact_reply(existing_contact);
             }
         }
         else {
             module.search(account, function (contact) {
                 if (contact.public_key != request.public_key || contact.user_type != request.user_type) {
-                    return streemio.notify.error("Add contact request from " + account + " recieved with invalid public key");
+                    return streembit.notify.error("Add contact request from " + account + " recieved with invalid public key");
                 }
                 contact.address = request.address;
                 contact.port = request.port;
                 contact.protocol = request.protocol;
-                streemio.Session.contactsvm.onReceiveAddContact(contact);
+                streembit.Session.contactsvm.onReceiveAddContact(contact);
             });
         }
     }
@@ -2002,7 +2002,7 @@ streemio.Contacts = (function (module, logger, events, config) {
     module.offline_addcontact_accepted = function (account) {
         module.search(account, function (contact) {
             if (!contact) {
-                return streemio.notify.error("Error in populating contact '" + account + "' data");
+                return streembit.notify.error("Error in populating contact '" + account + "' data");
             }
             module.accept_contact(contact);
         });
@@ -2011,35 +2011,35 @@ streemio.Contacts = (function (module, logger, events, config) {
     module.offline_addcontact_declined = function (account) {
         module.search(account, function (contact) {
             if (!contact) {
-                return streemio.notify.error("Error in populating contact '" + account + "' data");
+                return streembit.notify.error("Error in populating contact '" + account + "' data");
             }
-            streemio.PeerNet.declinecontact_message(contact, function () {
+            streembit.PeerNet.declinecontact_message(contact, function () {
             });
         });
     }
     
     module.decline_contact = function (contact) {
         try {
-            streemio.PeerNet.send_decline_addcontact_reply(contact);
+            streembit.PeerNet.send_decline_addcontact_reply(contact);
         }
         catch (err) {
-            streemio.notify.error("decline_contact() error %j", err);
+            streembit.notify.error("decline_contact() error %j", err);
         }
     }
     
     //  Call this when the UI receives an add contact request 
     //  and the user accept it
     module.accept_contact = function (contact) {
-        streemio.ContactsDB.update_contact(streemio.User.name, contact).then(
+        streembit.ContactsDB.update_contact(streembit.User.name, contact).then(
             function () {
                 var contobj = new Contact(contact);
                 contacts.push(contobj);
-                streemio.Session.contactsvm.add_contact(contobj);                
+                streembit.Session.contactsvm.add_contact(contobj);                
                 // send the contact accepted reply
-                streemio.PeerNet.send_accept_addcontact_reply(contact);
+                streembit.PeerNet.send_accept_addcontact_reply(contact);
             },
             function (err) {
-                streemio.notify.error("Database update add contact error %j", err);
+                streembit.notify.error("Database update add contact error %j", err);
             }                        
         );
     }
@@ -2051,13 +2051,13 @@ streemio.Contacts = (function (module, logger, events, config) {
         if (contact) {
             var contobj = new Contact(contact);
             contacts.push(contobj);
-            streemio.ContactsDB.update_contact(streemio.User.name, contact).then(
+            streembit.ContactsDB.update_contact(streembit.User.name, contact).then(
                 function () {                   
                     // add to the viewmodel
-                    streemio.Session.contactsvm.add_contact(contobj);
+                    streembit.Session.contactsvm.add_contact(contobj);
                     
                     // delete from the database
-                    streemio.Session.delete_pending_contact(account, function () {
+                    streembit.Session.delete_pending_contact(account, function () {
                         delete pending_contacts[account];
                     });
 
@@ -2065,28 +2065,28 @@ streemio.Contacts = (function (module, logger, events, config) {
                     contobj.ping();
                 },
                 function (err) {
-                    streemio.notify.error("Database update add contact error %j", err);
+                    streembit.notify.error("Database update add contact error %j", err);
                 }                        
             );
         }
     }
     
     module.handle_addcontact_denied = function (account) {
-        streemio.Session.delete_pending_contact(account, function () {
+        streembit.Session.delete_pending_contact(account, function () {
             delete pending_contacts[account];
         });
-        streemio.notify.info_panel("Contact " + account + " has denied your add contact request");
+        streembit.notify.info_panel("Contact " + account + " has denied your add contact request");
     }
     
     module.send_addcontact_request = function (contact, callback) {
         //  refresh the pending contacts database
-        streemio.Session.add_pending_contact(contact, function (err) {
+        streembit.Session.add_pending_contact(contact, function (err) {
             if (err) {
-                return streemio.notify.error("error in adding contact: %j", err)
+                return streembit.notify.error("error in adding contact: %j", err)
             }
 
             var account = contact.name;
-            streemio.PeerNet.send_addcontact_request(contact);
+            streembit.PeerNet.send_addcontact_request(contact);
             logger.info("Sending contact request to %s.", account);
             pending_contacts[account] = contact;
             callback();
@@ -2097,7 +2097,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 function () {
                     var pendingc = pending_contacts[account];
                     if (pendingc) {
-                        streemio.PeerNet.addcontact_message(pendingc, function () { });
+                        streembit.PeerNet.addcontact_message(pendingc, function () { });
                     }
                 },
                 30000
@@ -2139,9 +2139,9 @@ streemio.Contacts = (function (module, logger, events, config) {
     }
     
     module.remove = function (name, callback) {
-        streemio.ContactsDB.delete_contact(streemio.User.name, name, function (err) {
+        streembit.ContactsDB.delete_contact(streembit.User.name, name, function (err) {
             if (err) {
-                return streemio.notify.error_popup("Delete contact error %j", err);    
+                return streembit.notify.error_popup("Delete contact error %j", err);    
             }
 
             var pos = contacts.map(function (e) { return e.name; }).indexOf(name);
@@ -2155,9 +2155,9 @@ streemio.Contacts = (function (module, logger, events, config) {
     module.search = function (account, callback) {
         try {
             logger.debug("search " + account);
-            streemio.PeerNet.find_contact(account, function (err, contact) {
+            streembit.PeerNet.find_contact(account, function (err, contact) {
                 if (err) {
-                    return streemio.notify.error_popup('The contact search for account "' + account + '" returned no result');
+                    return streembit.notify.error_popup('The contact search for account "' + account + '" returned no result');
                 }
 
                 callback(contact);
@@ -2165,7 +2165,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             });
         }
         catch (err) {
-            streemio.notify.error("Contact search error %j", err)
+            streembit.notify.error("Contact search error %j", err)
         }
     }
     
@@ -2178,9 +2178,9 @@ streemio.Contacts = (function (module, logger, events, config) {
     
     module.init = function () {
         try {
-            streemio.ContactsDB.get_contacts(streemio.User.name, function (err, result) {
+            streembit.ContactsDB.get_contacts(streembit.User.name, function (err, result) {
                 if (err) {
-                    return streemio.notify.error("ContactsDB.get_contacts error %j", err);
+                    return streembit.notify.error("ContactsDB.get_contacts error %j", err);
                 }
                 
                 for (var i = 0; i < result.length; i++) {
@@ -2202,7 +2202,7 @@ streemio.Contacts = (function (module, logger, events, config) {
                 }
 
                 //
-                streemio.Session.contactsvm.init(contacts);
+                streembit.Session.contactsvm.init(contacts);
                 
                 // iterate through the contacts and ping them
                 init_contacts();
@@ -2218,7 +2218,7 @@ streemio.Contacts = (function (module, logger, events, config) {
             });
         }
         catch (err) {
-            streemio.notify.error("Error in initializing contacts: %j", err);
+            streembit.notify.error("Error in initializing contacts: %j", err);
         }
     }
     
@@ -2228,15 +2228,15 @@ streemio.Contacts = (function (module, logger, events, config) {
 
     return module;
 
-}(streemio.Contacts || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.Contacts || {}, streembit.logger, global.appevents, streembit.config));
 
 
-streemio.Main = (function (module, logger, events, config) {
+streembit.Main = (function (module, logger, events, config) {
     
     module.is_gui = global.appgui != null;
     module.is_app_initialized = false;
     module.is_node_initialized = false;
-    module.network_type = streemio.DEFS.PUBLIC_NETWORK;
+    module.network_type = streembit.DEFS.PUBLIC_NETWORK;
     module.private_net_seed = 0;
     module.app_command = 0;
     module.upnp_gateway = "";
@@ -2246,17 +2246,17 @@ streemio.Main = (function (module, logger, events, config) {
     function show_active_app_screen() {
         $(".app-select-screen").hide();
         $(".appboot-screen").hide();
-        $(".streemio-screen").show();    
+        $(".streembit-screen").show();    
     }
     
     function display_new_account() {
         show_active_app_screen();
-        module.app_command = streemio.DEFS.CMD_APP_CREATEACCOUNT;
-        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: true });
+        module.app_command = streembit.DEFS.CMD_APP_CREATEACCOUNT;
+        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: true });
     }
 
     function start_new_account() {
-        if (streemio.Node.is_node_connected() == true) {
+        if (streembit.Node.is_node_connected() == true) {
             display_new_account();
         }
         else {
@@ -2274,30 +2274,30 @@ streemio.Main = (function (module, logger, events, config) {
     module.initMenu = function () {
         
         if (!module.is_gui) {
-            streemio.Menu.initMenu();
+            streembit.Menu.initMenu();
             return;
         }
         
         var win = gui.Window.get();
         var menubar = new gui.Menu({ type: 'menubar' });
-        var streemioMenu = new gui.Menu();
+        var streembitMenu = new gui.Menu();
         
-        streemioMenu.append(new gui.MenuItem({
-            label: 'Start Streemio',
+        streembitMenu.append(new gui.MenuItem({
+            label: 'Start Streembit',
             click: function () {
                 $(".appboot-screen").hide();
-                $(".streemio-screen").hide();
+                $(".streembit-screen").hide();
                 $(".app-select-screen").show();
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Connect to public network',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
+                if (!streembit.User.is_user_initialized) {
                     show_active_app_screen();
-                    module.network_type = streemio.DEFS.PUBLIC_NETWORK;
-                    module.app_command = streemio.DEFS.CMD_APP_JOINPUBLICNET;
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+                    module.network_type = streembit.DEFS.PUBLIC_NETWORK;
+                    module.app_command = streembit.DEFS.CMD_APP_JOINPUBLICNET;
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
                 }            
                 else {
                     logger.debug("Publish user to public network");
@@ -2306,83 +2306,83 @@ streemio.Main = (function (module, logger, events, config) {
                 }
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Connect to private hub',
             click: function () {
                 show_active_app_screen();
-                module.network_type = streemio.DEFS.PRIVATE_NETWORK;
-                module.app_command = streemio.DEFS.CMD_APP_JOINPRIVATENET;
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+                module.network_type = streembit.DEFS.PRIVATE_NETWORK;
+                module.app_command = streembit.DEFS.CMD_APP_JOINPRIVATENET;
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
             }
         }));
-        streemioMenu.append(new gui.MenuItem({ type: 'separator' }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({ type: 'separator' }));
+        streembitMenu.append(new gui.MenuItem({
             label: 'New account',
             click: function () {
                 start_new_account();
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Initialize existing account',
             click: function () {
                 show_active_app_screen();
-                module.app_command = streemio.DEFS.CMD_APP_INITACCOUNT;
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
+                module.app_command = streembit.DEFS.CMD_APP_INITACCOUNT;
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Restore account',
             click: function () {
                 show_active_app_screen();
-                module.app_command = streemio.DEFS.CMD_APP_RESTOREACCOUNT;
-                streemio.User.restore();
+                module.app_command = streembit.DEFS.CMD_APP_RESTOREACCOUNT;
+                streembit.User.restore();
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Backup account',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                if (!streembit.User.is_user_initialized) {
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
 
                 show_active_app_screen();
-                streemio.User.backup();
+                streembit.User.backup();
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Change passphrase',
             click: function () {
                 if (!module.is_node_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
 
                 show_active_app_screen();
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CHANGE_KEY);                
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CHANGE_KEY);                
             }
         }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({
             label: 'Delete account',
             click: function () {
                 if (!module.is_node_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
                 
                 show_active_app_screen();
-                bootbox.confirm("Your account will be removed from the Streemio network. Click on OK to continue!", function (result) {
+                bootbox.confirm("Your account will be removed from the Streembit network. Click on OK to continue!", function (result) {
                     if (result) {
-                        streemio.PeerNet.delete_public_key(function (err) {
+                        streembit.PeerNet.delete_public_key(function (err) {
                             if (err) {
-                                return streemio.notify.error_popup("Delete account error %j", err);
+                                return streembit.notify.error_popup("Delete account error %j", err);
                             }
-                            streemio.DB.del(streemio.DB.ACCOUNTSDB, streemio.User.name).then(
+                            streembit.DB.del(streembit.DB.ACCOUNTSDB, streembit.User.name).then(
                                 function () {
-                                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
-                                    document.title = "Streemio";
+                                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
+                                    document.title = "Streembit";
                                     module.is_node_initialized = false;
-                                    streemio.User.clear();
+                                    streembit.User.clear();
                                 },
                                 function (err) {
-                                    streemio.notify.error_popup("Deleting account from local database error %j", err);
+                                    streembit.notify.error_popup("Deleting account from local database error %j", err);
                                 }
                             );
                         });
@@ -2391,41 +2391,41 @@ streemio.Main = (function (module, logger, events, config) {
 
             }            
         }));
-        streemioMenu.append(new gui.MenuItem({ type: 'separator' }));
-        streemioMenu.append(new gui.MenuItem({
+        streembitMenu.append(new gui.MenuItem({ type: 'separator' }));
+        streembitMenu.append(new gui.MenuItem({
             label: 'Exit',
             click: function () {
                 gui.App.quit();
             }
         }));
         
-        menubar.append(new gui.MenuItem({ label: 'Streemio', submenu: streemioMenu }));
+        menubar.append(new gui.MenuItem({ label: 'Streembit', submenu: streembitMenu }));
         
         var toolsMenu = new gui.Menu();        
         toolsMenu.append(new gui.MenuItem({
             label: 'Settings',
             click: function () {
                 show_active_app_screen();
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SETTINGS);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_SETTINGS);
             }
         }));
         toolsMenu.append(new gui.MenuItem({ type: 'separator' }));
         toolsMenu.append(new gui.MenuItem({
             label: 'Account/network info',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
-                    streemio.notify.error_popup("The account is not initialized");
+                if (!streembit.User.is_user_initialized) {
+                    streembit.notify.error_popup("The account is not initialized");
                 }
                 else {
                     show_active_app_screen();
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_ACCOUNT_INFO);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_ACCOUNT_INFO);
                 }
             }
         }));
         toolsMenu.append(new gui.MenuItem({
             label: 'View logs',
             click: function () {
-                streemio.UI.showLogs();
+                streembit.UI.showLogs();
             }
         }));
         toolsMenu.append(new gui.MenuItem({
@@ -2433,11 +2433,11 @@ streemio.Main = (function (module, logger, events, config) {
             click: function () {
                 bootbox.confirm("All settings and data will be removed from the local database", function (result) {
                     if (result) {
-                        streemio.DB.clear().then(
+                        streembit.DB.clear().then(
                             function () {
                             },
                             function (err) {
-                                streemio.notify.error_popup("Database clear error %j", err);
+                                streembit.notify.error_popup("Database clear error %j", err);
                             }
                         );
                     }
@@ -2451,11 +2451,11 @@ streemio.Main = (function (module, logger, events, config) {
             label: 'Interact with contact',
             click: function () {
                 if (!module.is_node_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
                 
-                streemio.UI.showContacts();
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                streembit.UI.showContacts();
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
             }
         }));
         
@@ -2465,12 +2465,12 @@ streemio.Main = (function (module, logger, events, config) {
             label: 'Get messages',
             click: function () {
                 if (!module.is_node_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
                 
                 // get the offline messages
-                var key = streemio.User.name + "/message";
-                streemio.PeerNet.get_account_messages(key);
+                var key = streembit.User.name + "/message";
+                streembit.PeerNet.get_account_messages(key);
             }
         }));
         contactMenu.append(new gui.MenuItem({ type: 'separator' }));
@@ -2478,18 +2478,18 @@ streemio.Main = (function (module, logger, events, config) {
         contactMenu.append(new gui.MenuItem({
             label: 'Find contact',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                if (!streembit.User.is_user_initialized) {
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
 
-                streemio.Session.contactsvm.dosearch();
+                streembit.Session.contactsvm.dosearch();
             }
         }));
         contactMenu.append(new gui.MenuItem({
             label: 'Backup contacts to file',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                if (!streembit.User.is_user_initialized) {
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
 
             }
@@ -2497,8 +2497,8 @@ streemio.Main = (function (module, logger, events, config) {
         contactMenu.append(new gui.MenuItem({
             label: 'Restore contacts from file',
             click: function () {
-                if (!streemio.User.is_user_initialized) {
-                    return streemio.notify.error_popup("The account is not initialized");
+                if (!streembit.User.is_user_initialized) {
+                    return streembit.notify.error_popup("The account is not initialized");
                 }
             }
         }));
@@ -2508,19 +2508,19 @@ streemio.Main = (function (module, logger, events, config) {
         thingsMenu.append(new gui.MenuItem({
             label: 'Create IoT device account',
             click: function () {
-                streemio.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                streembit.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
             }
         }));
         thingsMenu.append(new gui.MenuItem({
             label: 'Configure IoT device',
             click: function () {
-                streemio.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                streembit.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
             }
         }));
         thingsMenu.append(new gui.MenuItem({
             label: 'Upgrade IoT device',
             click: function () {
-                streemio.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                streembit.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
             }
         }));
         menubar.append(new gui.MenuItem({ label: 'Machines', submenu: thingsMenu }));
@@ -2531,15 +2531,15 @@ streemio.Main = (function (module, logger, events, config) {
             click: function () {
                 $(".app-select-screen").hide();
                 $(".appboot-screen").hide();
-                $(".streemio-screen").show();
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_HELP);
+                $(".streembit-screen").show();
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_HELP);
             }
         }));
         helpMenu.append(new gui.MenuItem({ type: 'separator' }));
         helpMenu.append(new gui.MenuItem({
-            label: 'About Streemio',
+            label: 'About Streembit',
             click: function () {
-                streemio.UI.show_about();
+                streembit.UI.show_about();
             }
         }));
         menubar.append(new gui.MenuItem({ label: 'Help', submenu: helpMenu }));
@@ -2553,35 +2553,35 @@ streemio.Main = (function (module, logger, events, config) {
             function (callback) {
                 // initialize the database
                 console.log("Initializing the database");
-                streemio.DB.init().then(
+                streembit.DB.init().then(
                     function () {
-                        logger.debug("database initialized: " + streemio.DB.is_initialized);
+                        logger.debug("database initialized: " + streembit.DB.is_initialized);
                         callback(null);
                     },
                     function (err) {
-                        logger.error("streemio.DB.init error %j", err);
+                        logger.error("streembit.DB.init error %j", err);
                         callback(err);
                     }
                 );
             },   
             function (callback) {
                 //  get the settings db
-                streemio.DB.get(streemio.DB.SETTINGSDB, "settings").then(
+                streembit.DB.get(streembit.DB.SETTINGSDB, "settings").then(
                     function (result) {
                         if (result && result.data && result.data.loglevel != null && result.data.transport != null && result.data.tcpport != null && result.data.wsport != null && result.data.bootseeds != null && result.data.pending_contacts != null ) {
                             console.log("settings database is populated");                   
-                            streemio.Session.settings = result;
-                            streemio.config.data = result.data;
+                            streembit.Session.settings = result;
+                            streembit.config.data = result.data;
                             callback();
                         }
                         else {
                             //  add records to the database
                             console.log("update settings database with default data");                                                
-                            streemio.Session.update_settings(streemio.config.data, callback);
+                            streembit.Session.update_settings(streembit.config.data, callback);
                         }
                     },
                     function (err) {
-                        logger.error("streemio.DB.get settings error %j", err);
+                        logger.error("streembit.DB.get settings error %j", err);
                         callback(err);
                     }
                 );
@@ -2601,18 +2601,18 @@ streemio.Main = (function (module, logger, events, config) {
                     logspath = path.join(nwDir, 'logs');
                 }
                 
-                var level = streemio.config.loglevel;
+                var level = streembit.config.loglevel;
                 console.log('log level: ' + level);
                 console.log('log path: ' + logspath);                
                 
-                streemio.logger.init(level, logspath, streemio.notify.taskbarmsg, function (err) {
+                streembit.logger.init(level, logspath, streembit.notify.taskbarmsg, function (err) {
                     callback(err);
                 });
             },
             function (callback) {
                 // make sure the data directory exists
                 logger.debug("Creating data directory");
-                streemio.util.dataDir(callback);
+                streembit.util.dataDir(callback);
             }
         ], 
         function (err, result) {
@@ -2645,7 +2645,7 @@ streemio.Main = (function (module, logger, events, config) {
             return callback();
         }
         
-        if (config.transport == streemio.DEFS.TRANSPORT_WS) {
+        if (config.transport == streembit.DEFS.TRANSPORT_WS) {
             //  Websocket no need a UPNP port
             return callback();
         }
@@ -2653,7 +2653,7 @@ streemio.Main = (function (module, logger, events, config) {
         try {
             appboot_msg_handler("Configure UPNP port");
 
-            var natUpnp = require('streemiolib/upnp/nat-upnp');
+            var natUpnp = require('streembitlib/upnp/nat-upnp');
             var client = natUpnp.createClient(logger);
             
             var port = config.tcpport;
@@ -2662,7 +2662,7 @@ streemio.Main = (function (module, logger, events, config) {
                     public: port,
                     private: port,
                     ttl: 0,  //  not renew, keep opened
-                    description: "Streemio UPNP " + streemio.User.name
+                    description: "Streembit UPNP " + streembit.User.name
                 }, 
                 function (err) {
                     if (err) {
@@ -2686,7 +2686,7 @@ streemio.Main = (function (module, logger, events, config) {
     module.network_init = function (seeds, skip_publish, completefn) {
         module.is_app_initialized = false;
         
-        $(".streemio-screen").hide();
+        $(".streembit-screen").hide();
         $(".appboot-screen").show();
         $(".appboot-screen-content").show();
         
@@ -2695,23 +2695,23 @@ streemio.Main = (function (module, logger, events, config) {
                 module.set_upnp_port(callback);
             },
             function (callback) {
-                // bootstrap the app with the streemio network
+                // bootstrap the app with the streembit network
                 appboot_msg_handler("Bootstrap the network");
                 setTimeout(
                     function () {
-                        streemio.bootclient.boot(seeds, callback);
+                        streembit.bootclient.boot(seeds, callback);
                     },
                     100
                 );
             },    
             function (bootseeds, callback) {
                 if (!bootseeds || !bootseeds.seeds || !bootseeds.seeds.length) {
-                    return callback("Error in populating the seed list. Please make sure the 'bootseeds' configuration is correct and a firewall doesn't block the Streemio software!");
+                    return callback("Error in populating the seed list. Please make sure the 'bootseeds' configuration is correct and a firewall doesn't block the Streembit software!");
                 }
                 
                 // initialize the Peer Network
-                appboot_msg_handler("Connecting to Streemio network");
-                streemio.PeerNet.init(bootseeds).then(
+                appboot_msg_handler("Connecting to Streembit network");
+                streembit.PeerNet.init(bootseeds).then(
                     function () {
                         logger.debug("PeerNet is initialized");
                         module.seeds = bootseeds.seeds;
@@ -2726,8 +2726,8 @@ streemio.Main = (function (module, logger, events, config) {
             },
             function (callback) {
                 // validate the connection
-                appboot_msg_handler("Validating Streemio network connection");
-                streemio.PeerNet.validate_connection().then(
+                appboot_msg_handler("Validating Streembit network connection");
+                streembit.PeerNet.validate_connection().then(
                     function () {
                         appboot_msg_handler("PeerNet connection is validated");
                         logger.debug("PeerNet connection is validated");
@@ -2744,7 +2744,7 @@ streemio.Main = (function (module, logger, events, config) {
                     callback();
                 }
                 else {
-                    streemio.PeerNet.publish_user(callback);
+                    streembit.PeerNet.publish_user(callback);
                 }
             },
         ], 
@@ -2752,7 +2752,7 @@ streemio.Main = (function (module, logger, events, config) {
             if (err) {
                 appboot_msg_handler("", true);
                 var msg = "Error in initializing the application. "
-                if (config.transport == streemio.DEFS.TRANSPORT_TCP) {
+                if (config.transport == streembit.DEFS.TRANSPORT_TCP) {
                     if (!module.upnp_gateway) {
                         msg += "The system was unable to configure your peer listener port via UPnP. Please check you router configuration to allow UPnP port configuration. If UPnP is disabled on your router then you must manually configure the listener port mapping. "
                     }
@@ -2779,7 +2779,7 @@ streemio.Main = (function (module, logger, events, config) {
             }
             
             $(".appboot-screen").hide();
-            $(".streemio-screen").show();    
+            $(".streembit-screen").show();    
             
             module.is_app_initialized = true;
             
@@ -2801,10 +2801,10 @@ streemio.Main = (function (module, logger, events, config) {
 
         module.network_init(seeds, skip_publish, function (err) {            
             if (err) {
-                if (!retry_with_websocket && config.transport == streemio.DEFS.TRANSPORT_TCP && config.wsfallback == true) {
+                if (!retry_with_websocket && config.transport == streembit.DEFS.TRANSPORT_TCP && config.wsfallback == true) {
                     logger.info("The TCP connection failed. Retry to connect via WebSockets.")
                     //  set the config transport to WS                    
-                    config.transport = streemio.DEFS.TRANSPORT_WS;
+                    config.transport = streembit.DEFS.TRANSPORT_WS;
                     //  the TCP connection failed, ry with websocket fallback
                     retry_with_websocket = true;
                     module.network_init(seeds, skip_publish, function (ret_err) {
@@ -2812,11 +2812,11 @@ streemio.Main = (function (module, logger, events, config) {
                             if (retry_with_websocket) {
                                 retry_with_websocket = false;
                                 // set back the transport
-                                config.transport = streemio.DEFS.TRANSPORT_TCP;
+                                config.transport = streembit.DEFS.TRANSPORT_TCP;
                             }
                             
                             $(".appboot-screen").hide();
-                            $(".streemio-screen").hide();
+                            $(".streembit-screen").hide();
                             $(".app-select-screen").show();
 
                             return bootbox.alert(ret_err);
@@ -2832,11 +2832,11 @@ streemio.Main = (function (module, logger, events, config) {
                     if (retry_with_websocket) {
                         retry_with_websocket = false;
                         // set back the transport
-                        config.transport = streemio.DEFS.TRANSPORT_TCP;
+                        config.transport = streembit.DEFS.TRANSPORT_TCP;
                     }
                     
                     $(".appboot-screen").hide();
-                    $(".streemio-screen").hide();
+                    $(".streembit-screen").hide();
                     $(".app-select-screen").show();
 
                     return bootbox.alert(err);
@@ -2854,11 +2854,11 @@ streemio.Main = (function (module, logger, events, config) {
         
         module.app_command = app_cmd;
         
-        if (app_cmd == streemio.DEFS.CMD_APP_JOINPUBLICNET) {
-            module.network_type = streemio.DEFS.PUBLIC_NETWORK;
-            if (!streemio.User.is_user_initialized) {
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
-                $(".streemio-screen").show();
+        if (app_cmd == streembit.DEFS.CMD_APP_JOINPUBLICNET) {
+            module.network_type = streembit.DEFS.PUBLIC_NETWORK;
+            if (!streembit.User.is_user_initialized) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
+                $(".streembit-screen").show();
             }            
             else {
                 logger.debug("Publish user to public network");
@@ -2866,23 +2866,23 @@ streemio.Main = (function (module, logger, events, config) {
                 module.join_to_network(seeds);
             }
         }
-        else if (app_cmd == streemio.DEFS.CMD_APP_JOINPRIVATENET) {
-            module.network_type = streemio.DEFS.PRIVATE_NETWORK;
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false });
-            $(".streemio-screen").show();
+        else if (app_cmd == streembit.DEFS.CMD_APP_JOINPRIVATENET) {
+            module.network_type = streembit.DEFS.PRIVATE_NETWORK;
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
+            $(".streembit-screen").show();
         }
-        else if (app_cmd == streemio.DEFS.CMD_APP_CREATEACCOUNT) {
-            module.network_type = streemio.DEFS.PUBLIC_NETWORK;
+        else if (app_cmd == streembit.DEFS.CMD_APP_CREATEACCOUNT) {
+            module.network_type = streembit.DEFS.PUBLIC_NETWORK;
             start_new_account();
         }
-        else if (app_cmd == streemio.DEFS.CMD_APP_INITACCOUNT) {
-            module.network_type = streemio.DEFS.PUBLIC_NETWORK;
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_INIT_USER, null, { newuser: false, initexisting: true });
-            $(".streemio-screen").show();
+        else if (app_cmd == streembit.DEFS.CMD_APP_INITACCOUNT) {
+            module.network_type = streembit.DEFS.PUBLIC_NETWORK;
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false, initexisting: true });
+            $(".streembit-screen").show();
         }
-        else if (app_cmd == streemio.DEFS.CMD_APP_RESTOREACCOUNT) {
-            streemio.User.restore();
-            $(".streemio-screen").show();
+        else if (app_cmd == streembit.DEFS.CMD_APP_RESTOREACCOUNT) {
+            streembit.User.restore();
+            $(".streembit-screen").show();
         }
     }
     
@@ -2890,74 +2890,74 @@ streemio.Main = (function (module, logger, events, config) {
         if (eventcmd == events.TYPES.ONUSERINIT) {
             logger.debug("event ONUSERINIT");
             
-            if (!streemio.User.is_user_initialized) {
-                return streemio.notify.error_popup("ONUSERINIT event error: invalid user context");
+            if (!streembit.User.is_user_initialized) {
+                return streembit.notify.error_popup("ONUSERINIT event error: invalid user context");
             }
             
-            if (module.app_command == streemio.DEFS.CMD_APP_JOINPUBLICNET) {
+            if (module.app_command == streembit.DEFS.CMD_APP_JOINPUBLICNET) {
                 logger.debug("Publish user to public network");
                 var seeds = config.bootseeds;
                 module.join_to_network(seeds);
             }
-            else if (module.app_command == streemio.DEFS.CMD_APP_JOINPRIVATENET) {
+            else if (module.app_command == streembit.DEFS.CMD_APP_JOINPRIVATENET) {
                 var seeds = [module.private_net_seed];
                 module.join_to_network(seeds);
             }
         }
         else if (eventcmd == events.TYPES.ONUSERPUBLISH) {
-            streemio.notify.taskbarmsg("Peer is connected. The peer info has been published to the network.");
+            streembit.notify.taskbarmsg("Peer is connected. The peer info has been published to the network.");
             logger.debug("initialize contacts list");
             
-            streemio.Contacts.init();
-            streemio.UI.showContacts();
+            streembit.Contacts.init();
+            streembit.UI.showContacts();
             
             module.is_node_initialized = true;
 
-            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
         }
         else if (eventcmd == events.TYPES.ONCALLWEBRTCSIGNAL) {
-            streemio.MediaCall.onSignalReceive(payload);
+            streembit.MediaCall.onSignalReceive(payload);
         }
         else if (eventcmd == events.TYPES.ONCALLWEBRTC_SSCSIG) {
-            streemio.ShareScreenCall.onSignalReceive(payload);
+            streembit.ShareScreenCall.onSignalReceive(payload);
         }
         else if (eventcmd == events.TYPES.ONCALLWEBRTC_SSAUDIOSIG) {
-            streemio.AutoAudioCall.onSignalReceive(payload);
+            streembit.AutoAudioCall.onSignalReceive(payload);
         }
         else if (eventcmd == events.TYPES.ONFILEWEBRTCSIGNAL) {
-            streemio.FileTransfer.onSignalReceive(payload);
+            streembit.FileTransfer.onSignalReceive(payload);
         }
         else if (eventcmd == events.TYPES.ONFCHUNKSEND) {
-            streemio.FileTransfer.onFileChunkReceive(payload);
+            streembit.FileTransfer.onFileChunkReceive(payload);
         }
         else if (eventcmd == events.TYPES.ONFILECANCEL) {
-            streemio.FileTransfer.cancel_by_peer(payload);
+            streembit.FileTransfer.cancel_by_peer(payload);
         }
         else if (eventcmd == events.TYPES.ONVIDEOCONNECT) {
-            if (streemio.Session.curent_viewmodel && streemio.Session.curent_viewmodel.onRemoteVideoConnect) {
-                streemio.Session.curent_viewmodel.onRemoteVideoConnect();
+            if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.onRemoteVideoConnect) {
+                streembit.Session.curent_viewmodel.onRemoteVideoConnect();
             }
         }
         else if (eventcmd == events.TYPES.ONTEXTMSG) {
             logger.debug("ONTEXTMSG event %j", payload);
-            if (streemio.Session.curent_viewmodel && streemio.Session.curent_viewmodel.onTextMessage) {
-                streemio.Session.curent_viewmodel.onTextMessage(payload);
+            if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.onTextMessage) {
+                streembit.Session.curent_viewmodel.onTextMessage(payload);
             }
             else {
-                streemio.Session.contactsvm.onTextMessage(payload);
+                streembit.Session.contactsvm.onTextMessage(payload);
             }
         }
         else if (eventcmd == events.TYPES.ONPEERMSG) {
-            streemio.PeerNet.onPeerMessage(payload, info);
+            streembit.PeerNet.onPeerMessage(payload, info);
         }
         else if (eventcmd == events.TYPES.ONACCOUNTMSG) {
-            streemio.UI.onAccountMsg(payload);
+            streembit.UI.onAccountMsg(payload);
         }
         else if (eventcmd == events.TYPES.ONINITPROGRESS) {
             appboot_msg_handler(payload);
         }
         else if (eventcmd == events.TYPES.ONPEERERROR) {
-            if (!module.is_app_initialized || !streemio.User.is_user_initialized) {
+            if (!module.is_app_initialized || !streembit.User.is_user_initialized) {
                 var msg = "Peer communication error";
                 if (payload && payload.error) {
                     msg = payload.error;
@@ -2965,7 +2965,7 @@ streemio.Main = (function (module, logger, events, config) {
                 logger.info("Error in application initialization: %j", msg);
             }
             else {
-                streemio.PeerNet.onPeerError(payload);
+                streembit.PeerNet.onPeerError(payload);
             }
         }
 
@@ -2973,7 +2973,7 @@ streemio.Main = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.Main || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.Main || {}, streembit.logger, global.appevents, streembit.config));
 
 
 /*

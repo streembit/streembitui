@@ -1,20 +1,20 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
@@ -22,17 +22,17 @@ Copyright (C) 2016 The Streemio software development team
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
 var assert = require('assert');
-var wotmsg = require("streemiolib/message/wotmsg");
-var streemiokad = require('streemiolib/streemiokad/kaddht'); 
+var wotmsg = require("streembitlib/message/wotmsg");
+var streembitkad = require('streembitlib/streembitkad/kaddht'); 
 var uuid = require("uuid");
 var nodecrypto = require("crypto");
 
-streemio.PeerTransport = (function (obj, logger, events, config, db) {
+streembit.PeerTransport = (function (obj, logger, events, config, db) {
     
-    var DEFAULT_STREEMIO_PORT = 32320;
+    var DEFAULT_STREEMBIT_PORT = 32320;
 
     obj.node = 0;
     obj.is_publickey_uplodaed = false;
@@ -41,13 +41,13 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
     function onPeerMessage (message, info) {
         try {
             if (!message) {
-                return streemio.notify.error ("Invalid message at onPeerMessage");  
+                return streembit.notify.error ("Invalid message at onPeerMessage");  
             }            
             if (!message.type || message.type != "PEERMSG") {
-                return streemio.notify.error("Invalid message type at onPeerMessage");  
+                return streembit.notify.error("Invalid message type at onPeerMessage");  
             }
             if (!message.data) {
-                return streemio.notify.error("Invalid message data at onPeerMessage");
+                return streembit.notify.error("Invalid message data at onPeerMessage");
             }
             
             //  raise an application event that a peer sent a message
@@ -72,8 +72,8 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                 //events.emit(events.CONTACT_ONLINE, item.key, item);
             }
             else {
-                var msgkey = streemio.User.name + "/message/";
-                if (key.indexOf(msgkey) > -1 && item.recipient == streemio.User.name) {
+                var msgkey = streembit.User.name + "/message/";
+                if (key.indexOf(msgkey) > -1 && item.recipient == streembit.User.name) {
                     //logger.debug("off-line message item: %j", item);
                     var items = [item];
                     events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, items);
@@ -114,9 +114,9 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         var is_private_network = bootdata.isprivate_network;
         var private_network_accounts = bootdata.private_accounts;
         
-        streemio.User.port = config.tcpport;
+        streembit.User.port = config.tcpport;
         var accountId;
-        if (streemio.Main.network_type == streemio.DEFS.PUBLIC_NETWORK) {
+        if (streembit.Main.network_type == streembit.DEFS.PUBLIC_NETWORK) {
             if (is_private_network && private_network_accounts && private_network_accounts.length) {
                 return resultfn("Public network is requested. The seed is a private network.");
             }            
@@ -127,17 +127,17 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
             }
         }
         
-        accountId = streemio.User.name || get_account_id();
+        accountId = streembit.User.name || get_account_id();
         logger.debug("Current peer account is " + accountId);        
         
         var seedlist = [];
 
         for (var i = 0; i < bootdata.seeds.length; i++) {
             if (!bootdata.seeds[i].port) {
-                bootdata.seeds[i].port = DEFAULT_STREEMIO_PORT;
+                bootdata.seeds[i].port = DEFAULT_STREEMBIT_PORT;
             }
 
-            if (streemio.Main.network_type == streemio.DEFS.PRIVATE_NETWORK) {
+            if (streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK) {
                 if (!bootdata.seeds[i].account) {
                     return resultfn("Invalid seed configuration data. The seed must have an account in a private network");
                 }
@@ -174,7 +174,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
         };
         
         try {
-            var peernode = streemiokad(options);
+            var peernode = streembitkad(options);
             peernode.create(function (err) {
                 if (err) {
                     return resultfn(err);
@@ -191,8 +191,8 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                     return resultfn("Invalid peer address and port");
                 }
                 
-                streemio.User.address = address;
-                streemio.User.port = port;
+                streembit.User.address = address;
+                streembit.User.port = port;
                 
                 obj.node.is_seedcontact_exists(function (result) {
                     if (result) {
@@ -285,7 +285,7 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
                 throw new Error("peer_send invalid contact parameter");
             }
             
-            var message = streemio.Message.create_peermsg(data);
+            var message = streembit.Message.create_peermsg(data);
             var options = { address: contact.address, port: contact.port };
             obj.node.peer_send(options, message);
         }
@@ -313,4 +313,4 @@ streemio.PeerTransport = (function (obj, logger, events, config, db) {
 
     return obj;
 
-}(streemio.PeerTransport || {}, streemio.logger, global.appevents, streemio.config, streemio.MainDB));
+}(streembit.PeerTransport || {}, streembit.logger, global.appevents, streembit.config, streembit.MainDB));

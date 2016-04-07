@@ -1,20 +1,20 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
@@ -26,9 +26,9 @@ if (global.appgui) {
     var path = require('path');
 }
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
-streemio.MediaCall = (function (module, logger, app_events, config) {
+streembit.MediaCall = (function (module, logger, app_events, config) {
     
     module.options = {};
     module.is_outgoing_call = false;
@@ -52,8 +52,8 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
             if (event.candidate) {
                 // Found a new candidate
                 logger.debug('WebRTC: onicecandidate, candidate: %j', event.candidate);
-                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTC, type: "candidate", "candidate": event.candidate };
-                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTC, type: "candidate", "candidate": event.candidate };
+                streembit.PeerNet.send_peer_message(module.options.contact, message);
             } 
             else {
                 logger.debug('WebRTC: ICE candidate gathering is completed');
@@ -85,12 +85,12 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
                         try {
                             connection.setLocalDescription(desc, function () {
                                 logger.debug("WebRTC: createOffer() callback. Send sdp localDescription");
-                                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTC, type: "sdp", "sdp": connection.localDescription };
-                                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTC, type: "sdp", "sdp": connection.localDescription };
+                                streembit.PeerNet.send_peer_message(module.options.contact, message);
                             });
                         }
                         catch (err) {
-                            streemio.notify.error("setLocalDescription error: %j", err);
+                            streembit.notify.error("setLocalDescription error: %j", err);
                         }
                     }, 
                     function (error) {
@@ -133,7 +133,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
             connection.addIceCandidate(new RTCIceCandidate(candidate));
         }
         catch (err) {
-            streemio.notify.error("addIceCandidate error: %j", err);
+            streembit.notify.error("addIceCandidate error: %j", err);
         }
     }
     
@@ -158,8 +158,8 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
                                 connection.setLocalDescription(desc, function () {
                                     logger.debug('WebRTC: send sdp connection.localDescription:');
                                     logger.debug('%j', connection.localDescription);
-                                    var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTC, type: "sdp", "sdp": connection.localDescription };
-                                    streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                    var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTC, type: "sdp", "sdp": connection.localDescription };
+                                    streembit.PeerNet.send_peer_message(module.options.contact, message);
                                 });
                             },
                             function (error) {
@@ -177,7 +177,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
             );
         }
         catch (err) {
-            streemio.notify.error("setRemoteDescription error: %j", err);
+            streembit.notify.error("setRemoteDescription error: %j", err);
         }
     }
     
@@ -256,7 +256,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     function onReadyForStream(connection) {
         try {
             if (!mediaStream) {
-                return streemio.notify.error_popup('Invalid media stream');
+                return streembit.notify.error_popup('Invalid media stream');
             }
             
             connection.addStream(mediaStream);
@@ -270,7 +270,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     function call_contact() {
         try {
             if (!mediaStream) {
-                return streemio.notify.error_popup('Invalid media stream');
+                return streembit.notify.error_popup('Invalid media stream');
             }
             
             //  create a connection 
@@ -280,7 +280,7 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
             logger.debug('stream added to connection at the caller end');
         }
         catch (err) {
-            streemio.notify.error_popup("call_contact error %j", err);
+            streembit.notify.error_popup("call_contact error %j", err);
         }
     }
     
@@ -384,18 +384,18 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
             .then(onStreamCreated)
             .catch(function (error) {
                 if (error.name === 'ConstraintNotSatisfiedError') {
-                    streemio.notify.error_popup('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
+                    streembit.notify.error_popup('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
                 } else if (error.name === 'PermissionDeniedError') {
-                    streemio.notify.error_popup('Permissions have not been granted to use your camera and ' +
+                    streembit.notify.error_popup('Permissions have not been granted to use your camera and ' +
                                                 'microphone, you need to allow the page access to your devices in order for the demo to work.');
                 }
                 else {
-                    streemio.notify.error_popup('getUserMedia error: %j', error);
+                    streembit.notify.error_popup('getUserMedia error: %j', error);
                 }
             });
         }
         catch (err) {
-            streemio.notify.error_popup("Media call init error %j", err);
+            streembit.notify.error_popup("Media call init error %j", err);
         }
     }
     
@@ -435,10 +435,10 @@ streemio.MediaCall = (function (module, logger, app_events, config) {
     
     return module;
 
-}(streemio.MediaCall || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.MediaCall || {}, streembit.logger, global.appevents, streembit.config));
 
 
-streemio.FileTransfer = (function (module, logger, app_events, config) {
+streembit.FileTransfer = (function (module, logger, app_events, config) {
     
     module.options = {};
     module.chunksize = 8192;
@@ -447,7 +447,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
     function cancelFile(file) {
         file.iscancelled = true;
         if (file.writepath) {
-            streemio.util.deleteFile(file.writepath, function () { });
+            streembit.util.deleteFile(file.writepath, function () { });
             try {
                 delete module.list_of_files[file.hash];
             }
@@ -479,8 +479,8 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                     logger.debug("file write completed processed length: " + obj.processed + " currpos: " + obj.currpos);
                     if (global.appgui) {
                         //  compute the file hash
-                        streemio.util.fileHash(obj.writepath, function (sha1sum) {
-                            streemio.Session.tasksvm.complete(obj.hash, sha1sum, obj.writepath);
+                        streembit.util.fileHash(obj.writepath, function (sha1sum) {
+                            streembit.Session.tasksvm.complete(obj.hash, sha1sum, obj.writepath);
                             try {
                                 delete module.list_of_files[obj.hash];
                             }
@@ -488,7 +488,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                         });
                     }
                     else {
-                        streemio.Session.tasksvm.complete(obj.hash, obj.hash, null, obj.blobitems);
+                        streembit.Session.tasksvm.complete(obj.hash, obj.hash, null, obj.blobitems);
                         try {
                             delete module.list_of_files[obj.hash];
                         }
@@ -517,7 +517,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                     if (obj.missingpos >= 300) {
                         clearTimeout(obj.qtimer);
                         var msg = "File transfer tmed out. File chunk is not received at position " + obj.currpos;
-                        streemio.Session.tasksvm.error(obj.hash, msg);
+                        streembit.Session.tasksvm.error(obj.hash, msg);
                         cancelFile(obj);
                         return logger.error("file write error: " + msg)
                     }
@@ -536,7 +536,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                 if (!items || !items.length) {
                     clearTimeout(obj.qtimer);
                     var msg = "couldn't get the data chunk from file queue at position " + obj.currpos;
-                    streemio.Session.tasksvm.error(obj.hash, msg);
+                    streembit.Session.tasksvm.error(obj.hash, msg);
                     cancelFile(obj);
                     return logger.error("file write error: " + msg)
                 }
@@ -547,7 +547,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                     if (!chunk || !chunk.length) {
                         clearTimeout(obj.qtimer);
                         var msg = "invalid file data chunk at position " + obj.currpos;
-                        streemio.Session.tasksvm.error(obj.hash, msg);
+                        streembit.Session.tasksvm.error(obj.hash, msg);
                         cancelFile(obj);
                         return logger.error("file write error: " + msg)
                     }
@@ -555,7 +555,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                     fs.appendFile(obj.writepath, chunk, function (err) {
                         if (err) {
                             clearTimeout(obj.qtimer);
-                            streemio.Session.tasksvm.error(obj.hash, err);
+                            streembit.Session.tasksvm.error(obj.hash, err);
                             cancelFile(obj);
                             return logger.error("file open error %j", err)
                         }
@@ -568,7 +568,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                         // update the current position
                         obj.currpos++;
                         
-                        streemio.Session.tasksvm.update(obj.hash, obj.processed);
+                        streembit.Session.tasksvm.update(obj.hash, obj.processed);
                     });
 
                 }
@@ -579,7 +579,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                     obj.processed += items[0].length;
                     // update the current position
                     obj.currpos++;
-                    streemio.Session.tasksvm.update(obj.hash, obj.processed);
+                    streembit.Session.tasksvm.update(obj.hash, obj.processed);
                 }
             }
             catch (err) {
@@ -632,7 +632,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
         }
         
         var hash = payload.hash;
-        streemio.Session.tasksvm.cancel_by_peer(hash);
+        streembit.Session.tasksvm.cancel_by_peer(hash);
         
         var file = module.list_of_files[hash];
         if (file) {
@@ -655,7 +655,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
             var file = module.list_of_files[data.hash];
             if (!file) {
                 var msg = "couldn't find file transfer task by hash: " + data.hash;
-                streemio.Session.tasksvm.error(data.hash, msg);
+                streembit.Session.tasksvm.error(data.hash, msg);
                 return logger.error(msg);
             }
             
@@ -668,7 +668,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
             if (global.appgui) {
                 chunk = new Buffer(data.chunk, 'base64');
                 if (data.length != chunk.length) {
-                    streemio.Session.tasksvm.error(data.hash, "invalid data length for file chunk");
+                    streembit.Session.tasksvm.error(data.hash, "invalid data length for file chunk");
                     logger.error("onFileChunkReceive invalid data length");
                     cancelFile(file);
                     return;
@@ -773,7 +773,7 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
         
         readable.on('error', function (err) {
             logger.error('file read error %j', err);
-            streemio.notify.error_popup("File read error %j", err);
+            streembit.notify.error_popup("File read error %j", err);
         });
         
         file.processed = 0;
@@ -788,20 +788,20 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
                 if (file.processed >= fsize && file.fqueue.length == 0) {
                     clearTimeout(file.qtimer);
                     logger.debug("file transfer fqueue is processed bytes: " + file.processed);
-                    streemio.Session.tasksvm.complete(hash);
+                    streembit.Session.tasksvm.complete(hash);
                     return;
                 }
                 
                 var chunk = file.fqueue.shift();
                 if (chunk) {
                     var data = chunk.toString('base64');
-                    var message = { cmd: streemio.DEFS.PEERMSG_FSEND, hash: hash, pos: file.currpos, offset: file.processed, length: chunk.length, chunk: data };
-                    streemio.PeerNet.send_peer_message(module.options.contact, message);
+                    var message = { cmd: streembit.DEFS.PEERMSG_FSEND, hash: hash, pos: file.currpos, offset: file.processed, length: chunk.length, chunk: data };
+                    streembit.PeerNet.send_peer_message(module.options.contact, message);
                     
                     file.processed += chunk.length;
                     file.currpos++;
                     
-                    streemio.Session.tasksvm.update(hash, file.processed);
+                    streembit.Session.tasksvm.update(hash, file.processed);
                 }
             }
             catch (err) {
@@ -863,16 +863,16 @@ streemio.FileTransfer = (function (module, logger, app_events, config) {
         }
         catch (err) {
             logger.error("FileTransfer init_receive() error %j", err);
-            streemio.notify.error_popup("File receive error %j", err);
+            streembit.notify.error_popup("File receive error %j", err);
         }
     }
     
     return module;
 
-}(streemio.FileTransfer || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.FileTransfer || {}, streembit.logger, global.appevents, streembit.config));
 
 
-streemio.ShareScreenCall = (function (module, logger, app_events, config) {
+streembit.ShareScreenCall = (function (module, logger, app_events, config) {
     
     module.options = {};
     module.is_outgoing_call = false;
@@ -896,8 +896,8 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             if (event.candidate) {
                 // Found a new candidate
                 logger.debug('WebRTC: onicecandidate, candidate: %j', event.candidate);
-                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCSS, type: "candidate", "candidate": event.candidate };
-                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTCSS, type: "candidate", "candidate": event.candidate };
+                streembit.PeerNet.send_peer_message(module.options.contact, message);
             } 
             else {
                 logger.debug('WebRTC: ICE candidate gathering is completed');
@@ -918,7 +918,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                             contact: module.options.contact,
                             iscaller: true
                         };                       
-                        streemio.AutoAudioCall.init(options);
+                        streembit.AutoAudioCall.init(options);
                     }
                     catch (err) {
 
@@ -948,12 +948,12 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                         try {
                             connection.setLocalDescription(desc, function () {
                                 logger.debug("WebRTC: createOffer() callback. Send sdp localDescription");
-                                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCSS, type: "sdp", "sdp": connection.localDescription };
-                                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTCSS, type: "sdp", "sdp": connection.localDescription };
+                                streembit.PeerNet.send_peer_message(module.options.contact, message);
                             });
                         }
                         catch (err) {
-                            streemio.notify.error("setLocalDescription error: %j", err);
+                            streembit.notify.error("setLocalDescription error: %j", err);
                         }
                     }, 
                     function (error) {
@@ -992,7 +992,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             connection.addIceCandidate(new RTCIceCandidate(candidate));
         }
         catch (err) {
-            streemio.notify.error("addIceCandidate error: %j", err);
+            streembit.notify.error("addIceCandidate error: %j", err);
         }
     }
     
@@ -1017,8 +1017,8 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
                                 connection.setLocalDescription(desc, function () {
                                     logger.debug('WebRTC: send sdp connection.localDescription:');
                                     logger.debug('%j', connection.localDescription);
-                                    var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCSS, type: "sdp", "sdp": connection.localDescription };
-                                    streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                    var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTCSS, type: "sdp", "sdp": connection.localDescription };
+                                    streembit.PeerNet.send_peer_message(module.options.contact, message);
                                 });
                             },
                             function (error) {
@@ -1036,7 +1036,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             );
         }
         catch (err) {
-            streemio.notify.error("setRemoteDescription error: %j", err);
+            streembit.notify.error("setRemoteDescription error: %j", err);
         }
     }
     
@@ -1076,7 +1076,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     function call_contact(stream) {
         try {
             if (!stream) {
-                return streemio.notify.error_popup('Invalid media stream');
+                return streembit.notify.error_popup('Invalid media stream');
             }
             
             mediaStream = stream;
@@ -1088,7 +1088,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             logger.debug('stream added to connection at the caller end');
         }
         catch (err) {
-            streemio.notify.error_popup("call_contact error %j", err);
+            streembit.notify.error_popup("call_contact error %j", err);
         }
     }
     
@@ -1203,12 +1203,12 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
 
                 },
                 function (err) {
-                    streemio.notify.error_popup("Share screen error: %j", err);
+                    streembit.notify.error_popup("Share screen error: %j", err);
                 });
             });
         }
         catch (err) {
-            streemio.notify.error_popup("Share screen error: %j", err);
+            streembit.notify.error_popup("Share screen error: %j", err);
         }
     }
     
@@ -1224,10 +1224,10 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
             screenVideo = document.getElementById(screenvideo);
             
             // initialize the audio call module
-            streemio.AutoAudioCall.init(options);
+            streembit.AutoAudioCall.init(options);
         }
         catch (err) {
-            streemio.notify.error_popup("Share screen error: %j", err);
+            streembit.notify.error_popup("Share screen error: %j", err);
         }
     }
     
@@ -1236,7 +1236,7 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
         
         // hangup the audio connection
         try {
-            streemio.AutoAudioCall.hangup();            
+            streembit.AutoAudioCall.hangup();            
         }
         catch (e) { }
 
@@ -1271,10 +1271,10 @@ streemio.ShareScreenCall = (function (module, logger, app_events, config) {
     
     return module;
 
-}(streemio.ShareScreenCall || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.ShareScreenCall || {}, streembit.logger, global.appevents, streembit.config));
 
 
-streemio.AutoAudioCall = (function (module, logger, app_events, config) {
+streembit.AutoAudioCall = (function (module, logger, app_events, config) {
     
     module.options = {};
     module.is_outgoing_call = false;
@@ -1298,8 +1298,8 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
             if (event.candidate) {
                 // Found a new candidate
                 logger.debug('WebRTC: onicecandidate, candidate: %j', event.candidate);
-                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCAA, type: "candidate", "candidate": event.candidate };
-                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTCAA, type: "candidate", "candidate": event.candidate };
+                streembit.PeerNet.send_peer_message(module.options.contact, message);
             } 
             else {
                 logger.debug('WebRTC: ICE candidate gathering is completed');
@@ -1331,12 +1331,12 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
                         try {
                             connection.setLocalDescription(desc, function () {
                                 logger.debug("WebRTC: createOffer() callback. Send sdp localDescription");
-                                var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCAA, type: "sdp", "sdp": connection.localDescription };
-                                streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTCAA, type: "sdp", "sdp": connection.localDescription };
+                                streembit.PeerNet.send_peer_message(module.options.contact, message);
                             });
                         }
                         catch (err) {
-                            streemio.notify.error("setLocalDescription error: %j", err);
+                            streembit.notify.error("setLocalDescription error: %j", err);
                         }
                     }, 
                     function (error) {
@@ -1379,7 +1379,7 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
             connection.addIceCandidate(new RTCIceCandidate(candidate));
         }
         catch (err) {
-            streemio.notify.error("addIceCandidate error: %j", err);
+            streembit.notify.error("addIceCandidate error: %j", err);
         }
     }
     
@@ -1404,8 +1404,8 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
                                 connection.setLocalDescription(desc, function () {
                                     logger.debug('WebRTC: send sdp connection.localDescription:');
                                     logger.debug('%j', connection.localDescription);
-                                    var message = { cmd: streemio.DEFS.PEERMSG_CALL_WEBRTCAA, type: "sdp", "sdp": connection.localDescription };
-                                    streemio.PeerNet.send_peer_message(module.options.contact, message);
+                                    var message = { cmd: streembit.DEFS.PEERMSG_CALL_WEBRTCAA, type: "sdp", "sdp": connection.localDescription };
+                                    streembit.PeerNet.send_peer_message(module.options.contact, message);
                                 });
                             },
                             function (error) {
@@ -1423,7 +1423,7 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
             );
         }
         catch (err) {
-            streemio.notify.error("setRemoteDescription error: %j", err);
+            streembit.notify.error("setRemoteDescription error: %j", err);
         }
     }
     
@@ -1466,7 +1466,7 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
     function onReadyForStream(connection) {
         try {
             if (!mediaStream) {
-                return streemio.notify.error_popup('Invalid media stream');
+                return streembit.notify.error_popup('Invalid media stream');
             }
             
             connection.addStream(mediaStream);
@@ -1480,7 +1480,7 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
     function call_contact() {
         try {
             if (!mediaStream) {
-                return streemio.notify.error_popup('Invalid media stream');
+                return streembit.notify.error_popup('Invalid media stream');
             }
             
             //  create a connection 
@@ -1490,7 +1490,7 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
             logger.debug('stream added to connection at the caller end');
         }
         catch (err) {
-            streemio.notify.error_popup("call_contact error %j", err);
+            streembit.notify.error_popup("call_contact error %j", err);
         }
     }
     
@@ -1561,18 +1561,18 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
             .then(onStreamCreated)
             .catch(function (error) {
                 if (error.name === 'ConstraintNotSatisfiedError') {
-                    streemio.notify.error_popup('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
+                    streembit.notify.error_popup('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
                 } 
                 else if (error.name === 'PermissionDeniedError') {
-                    streemio.notify.error_popup('Permissions have not been granted to use your camera and microphone, you need to allow the page access to your devices in order for the demo to work.');
+                    streembit.notify.error_popup('Permissions have not been granted to use your camera and microphone, you need to allow the page access to your devices in order for the demo to work.');
                 }
                 else {
-                    streemio.notify.error_popup('getUserMedia error: %j', error);
+                    streembit.notify.error_popup('getUserMedia error: %j', error);
                 }
             });
         }
         catch (err) {
-            streemio.notify.error_popup("Media call init error %j", err);
+            streembit.notify.error_popup("Media call init error %j", err);
         }
     }
     
@@ -1598,6 +1598,6 @@ streemio.AutoAudioCall = (function (module, logger, app_events, config) {
     
     return module;
 
-}(streemio.AutoAudioCall || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.AutoAudioCall || {}, streembit.logger, global.appevents, streembit.config));
 
 

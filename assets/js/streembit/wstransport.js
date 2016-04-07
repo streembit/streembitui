@@ -1,38 +1,38 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
 
-streemio.WebSocketTransport = (function (module, logger, events, config) {
+streembit.WebSocketTransport = (function (module, logger, events, config) {
     
-    var port = config.wsport || streemio.DEFS.WS_PORT;
+    var port = config.wsport || streembit.DEFS.WS_PORT;
 
     module.wsport = port;
     module.list_of_servers = {};
     
     function get_account_socket() {
-        var host = streemio.User.address;
+        var host = streembit.User.address;
         var socket = module.list_of_servers[host];
         return socket;
     }
@@ -56,7 +56,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                 return errorfn("create socket io error: " + err.message);
             }
             else {
-                return streemio.notify.error("create socket io error: %j", err);
+                return streembit.notify.error("create socket io error: %j", err);
             }
         }
         
@@ -67,12 +67,12 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                     errorfn("WebSocket connect error: " + err.message);
                 }
                 else {
-                    streemio.notify.error("ws socket connect error: %j", err);
+                    streembit.notify.error("ws socket connect error: %j", err);
                 }
             });
             
             socket.on("reconnect_failed", function (err) {
-                streemio.notify.error("socket io reconnect_failed: %j", err);
+                streembit.notify.error("socket io reconnect_failed: %j", err);
             });
             
             socket.on('connect', function () {
@@ -87,19 +87,19 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
             
             socket.on('peermsg', function (data) {
                 try {
-                    if (!data || !data.contact || !data.contact.name || data.contact.name != streemio.User.name || !data.message) {
+                    if (!data || !data.contact || !data.contact.name || data.contact.name != streembit.User.name || !data.message) {
                         return logger.error("WS peermsg() error: invalid message context");
                     }
                     
                     var message = JSON.parse(data.message);
                     if (!message) {
-                        return streemio.notify.error("Invalid message at web socket peermsg");
+                        return streembit.notify.error("Invalid message at web socket peermsg");
                     }
                     if (!message.type || message.type != "PEERMSG") {
-                        return streemio.notify.error("Invalid message type at web socket peermsg");
+                        return streembit.notify.error("Invalid message type at web socket peermsg");
                     }
                     if (!message.data) {
-                        return streemio.notify.error("Invalid message data at web socket peermsg");
+                        return streembit.notify.error("Invalid message data at web socket peermsg");
                     }
                     
                     //  raise an application event that a peer sent a message
@@ -131,8 +131,8 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                         //events.emit(events.CONTACT_ONLINE, item.key, item);
                     }
                     else {
-                        var msgkey = streemio.User.name + "/message/";
-                        if (key.indexOf(msgkey) > -1 && item.recipient == streemio.User.name) {
+                        var msgkey = streembit.User.name + "/message/";
+                        if (key.indexOf(msgkey) > -1 && item.recipient == streembit.User.name) {
                             //logger.debug("off-line message item: %j", item);
                             var items = [item];
                             events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, items);
@@ -167,7 +167,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
         if (!socket) {
             create_wssocket(host, port, function () {
                 socket = module.list_of_servers[host];
-                var request = { account: streemio.User.name, publickey: streemio.User.public_key };
+                var request = { account: streembit.User.name, publickey: streembit.User.public_key };
                 socket.emit('register_account', request, function (err) {
                     callback(socket);
                 });
@@ -189,8 +189,8 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
         var port = bootdata.seeds[0].port;
         create_wssocket(host, port, 
             function () {
-                streemio.User.address = host;
-                streemio.User.port = port;
+                streembit.User.address = host;
+                streembit.User.port = port;
                 callback();
             },
             function (err) {    //  error handler
@@ -219,12 +219,12 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                 return callback(err);
             }
             
-            if (key != streemio.User.name) {
+            if (key != streembit.User.name) {
                 return callback();
             }
             
-            if (streemio.User.public_key) {
-                request = { account: streemio.User.name, publickey: streemio.User.public_key };
+            if (streembit.User.public_key) {
+                request = { account: streembit.User.name, publickey: streembit.User.public_key };
                 socket.emit('register_account', request, function (err) {
                     callback(err);
                 });
@@ -244,7 +244,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
     }
     
     function get_socket_forcontact(contact, callback) {
-        if (contact.protocol != streemio.DEFS.TRANSPORT_WS) {
+        if (contact.protocol != streembit.DEFS.TRANSPORT_WS) {
             //  try to route the messagfe via the web socket server 
             //  since this account is using web socket ws is the only option to reach the contact
             var socket = get_account_socket();
@@ -286,7 +286,7 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
                     return logger.error("web socket could not create for contact " + contact.name);
                 }
                 
-                var message = streemio.Message.create_peermsg(data, true);
+                var message = streembit.Message.create_peermsg(data, true);
                 var request = {
                     contact: {
                         name: contact.name, 
@@ -333,5 +333,5 @@ streemio.WebSocketTransport = (function (module, logger, events, config) {
     
     return module;
 
-}(streemio.WebSocketTransport || {}, streemio.logger, global.appevents, streemio.config));
+}(streembit.WebSocketTransport || {}, streembit.logger, global.appevents, streembit.config));
 

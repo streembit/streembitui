@@ -1,38 +1,38 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
 const DB_VERSION = 1;
 
-const DB_NAME = 'streemionetdb';
+const DB_NAME = 'streembitdb';
 
 const DB_ACCOUNTS_STORE_NAME = 'accountsdb';
 const DB_CONTACTS_STORE_NAME = 'contactsdb';
-const DB_STREEMIO_STORE_NAME = 'streemiodb';
+const DB_STREEMBIT_STORE_NAME = 'streembitdb';
 const DB_SETTINGS_STORE_NAME = 'settingsdb';
 
-streemio.DB = (function (module, logger, events){
+streembit.DB = (function (module, logger, events){
     
     var db = {};
     
@@ -51,7 +51,7 @@ streemio.DB = (function (module, logger, events){
 
         var accounts_store = db.createObjectStore(DB_ACCOUNTS_STORE_NAME, { keyPath: 'account' });
         var contacts_store = db.createObjectStore(DB_CONTACTS_STORE_NAME, { keyPath: 'account' });
-        var streemio_store = db.createObjectStore(DB_STREEMIO_STORE_NAME, { keyPath: 'key' });
+        var streembit_store = db.createObjectStore(DB_STREEMBIT_STORE_NAME, { keyPath: 'key' });
         var settings_store = db.createObjectStore(DB_SETTINGS_STORE_NAME, { keyPath: 'key' });
     }
     
@@ -71,7 +71,7 @@ streemio.DB = (function (module, logger, events){
     }
     
 
-    // this is kfor the streemiodb stoe
+    // this is kfor the streembitdb stoe
     module.del = function (dbstore, key) {
         return new Promise(function (resolve, reject) {
             var objectStore = getObjectStore(dbstore);
@@ -202,14 +202,14 @@ streemio.DB = (function (module, logger, events){
     
     module.ACCOUNTSDB = DB_ACCOUNTS_STORE_NAME;
     module.CONTACTSDB = DB_CONTACTS_STORE_NAME;
-    module.MAINDB = DB_STREEMIO_STORE_NAME;
+    module.MAINDB = DB_STREEMBIT_STORE_NAME;
     module.SETTINGSDB = DB_SETTINGS_STORE_NAME;
 
     return module;
 
-}(streemio.DB || {}, streemio.logger, global.appevents));
+}(streembit.DB || {}, streembit.logger, global.appevents));
 
-streemio.MainDB = (function (module, db, logger) {
+streembit.MainDB = (function (module, db, logger) {
     
     var EventEmitter = require('events').EventEmitter;
     
@@ -301,9 +301,9 @@ streemio.MainDB = (function (module, db, logger) {
     
     return module;
 
-}(streemio.MainDB || {}, streemio.DB, streemio.logger));
+}(streembit.MainDB || {}, streembit.DB, streembit.logger));
 
-streemio.AccountsDB = (function (module, db, logger) {
+streembit.AccountsDB = (function (module, db, logger) {
     
     module.get = function (key, cb) {
         db.get(db.ACCOUNTSDB, key).then(
@@ -331,9 +331,9 @@ streemio.AccountsDB = (function (module, db, logger) {
     
     return module;
 
-}(streemio.AccountsDB || {}, streemio.DB, streemio.logger));
+}(streembit.AccountsDB || {}, streembit.DB, streembit.logger));
 
-streemio.ContactsDB = (function (module, db, logger) {
+streembit.ContactsDB = (function (module, db, logger) {
     
     module.get_contacts = function (account, cb) {
         if (!account) {
@@ -444,5 +444,5 @@ streemio.ContactsDB = (function (module, db, logger) {
     
     return module;
 
-}(streemio.ContactsDB || {}, streemio.DB, streemio.logger));
+}(streembit.ContactsDB || {}, streembit.DB, streembit.logger));
 

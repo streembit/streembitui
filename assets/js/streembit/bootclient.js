@@ -1,36 +1,36 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
 
 'use strict';
 
-if (streemio.config.transport == streemio.DEFS.TRANSPORT_TCP && global.appgui) {
+if (streembit.config.transport == streembit.DEFS.TRANSPORT_TCP && global.appgui) {
     var async = require("async");
     var net = require("net");
     var restify = require('restify');
 }
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 
 
-streemio.bootclient = (function (module, logger, config, events) {
+streembit.bootclient = (function (module, logger, config, events) {
     
     module.result = [];
 
@@ -50,7 +50,7 @@ streemio.bootclient = (function (module, logger, config, events) {
     
     function get_http_client(remoteuri, port) {
         remoteuri += ":";
-        remoteuri += port || streemio.DEFS.BOOT_PORT;
+        remoteuri += port || streembit.DEFS.BOOT_PORT;
         var client = restify.createJsonClient({
             url: remoteuri,
             version: '*',
@@ -88,7 +88,7 @@ streemio.bootclient = (function (module, logger, config, events) {
 
         if (list || list.length > 0) {
             for (var i = 0; i < list.length; i++) {
-                if (list[i].account == streemio.User.name) {
+                if (list[i].account == streembit.User.name) {
                     continue;
                 }
                 
@@ -124,7 +124,7 @@ streemio.bootclient = (function (module, logger, config, events) {
                     discovery_srvs.push(
                         {
                             host: bootseeds[0].host ? bootseeds[0].host : bootseeds[0], 
-                            port: bootseeds[0].port ? bootseeds[0].port : streemio.DEFS.BOOT_PORT
+                            port: bootseeds[0].port ? bootseeds[0].port : streembit.DEFS.BOOT_PORT
                         });
                 }
                 break;
@@ -134,7 +134,7 @@ streemio.bootclient = (function (module, logger, config, events) {
             discovery_srvs.push(
                 {
                     host: shuffle.result.host ? shuffle.result.host : shuffle.result, 
-                    port: shuffle.result.port ? shuffle.result.port : streemio.DEFS.BOOT_PORT
+                    port: shuffle.result.port ? shuffle.result.port : streembit.DEFS.BOOT_PORT
                 }
             );
             
@@ -177,7 +177,7 @@ streemio.bootclient = (function (module, logger, config, events) {
                     callback(null, bootresult);
                 }
                 else {
-                    callback("Error in populating the seed list. Please make sure the bootseeds configuration is correct and a firewall doesn't block the Streemio software!");
+                    callback("Error in populating the seed list. Please make sure the bootseeds configuration is correct and a firewall doesn't block the Streembit software!");
                 }
             }
         );
@@ -201,7 +201,7 @@ streemio.bootclient = (function (module, logger, config, events) {
                         discovery_srvs.push(
                             {
                                 host: bootseeds[0].host ? bootseeds[0].host : bootseeds[0], 
-                                port: bootseeds[0].port ? bootseeds[0].port : streemio.DEFS.WS_PORT
+                                port: bootseeds[0].port ? bootseeds[0].port : streembit.DEFS.WS_PORT
                             });
                     }
                     break;
@@ -212,7 +212,7 @@ streemio.bootclient = (function (module, logger, config, events) {
                 discovery_srvs.push(
                     {
                         host: shuffle.result.host ? shuffle.result.host : shuffle.result, 
-                        port: shuffle.result.port ? shuffle.result.port : streemio.DEFS.WS_PORT
+                        port: shuffle.result.port ? shuffle.result.port : streembit.DEFS.WS_PORT
                     }
                 );
             
@@ -237,10 +237,10 @@ streemio.bootclient = (function (module, logger, config, events) {
         
         var transport;
         switch (config.transport) {
-            case streemio.DEFS.TRANSPORT_TCP:
+            case streembit.DEFS.TRANSPORT_TCP:
                 transport = config.transport;
                 break;
-            case streemio.DEFS.TRANSPORT_WS:
+            case streembit.DEFS.TRANSPORT_WS:
                 transport = config.transport;
                 break;
             default:
@@ -252,4 +252,4 @@ streemio.bootclient = (function (module, logger, config, events) {
     }
     
     return module;
-}(streemio.util || {}, streemio.logger, streemio.config, global.appevents));
+}(streembit.util || {}, streembit.logger, streembit.config, global.appevents));

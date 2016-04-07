@@ -1,43 +1,43 @@
 ﻿/*
 
-This file is part of Streemio application. 
-Streemio is an open source project to create a real time communication system for humans and machines. 
+This file is part of Streembit application. 
+Streembit is an open source project to create a real time communication system for humans and machines. 
 
-Streemio is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
 as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
 
-Streemio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Streemio software.  
+You should have received a copy of the GNU General Public License along with Streembit software.  
 If not, see http://www.gnu.org/licenses/.
  
 -------------------------------------------------------------------------------------------------------------------------
 Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streemio software development team
+Copyright (C) 2016 The Streembit software development team
 -------------------------------------------------------------------------------------------------------------------------
 
 */
 
 'use strict';
 
-var streemio = streemio || {};
+var streembit = streembit || {};
 // vms refers to ViewModels
-streemio.vms = streemio.vms || {};
+streembit.vms = streembit.vms || {};
 
 var nodecrypto = require(global.cryptolib);
-var EccKey = require('streemiolib/crypto/EccKey');
+var EccKey = require('streembitlib/crypto/EccKey');
 
 (function ($, ko, events, config) {
     
     function call_contact(call_type, contact) {
-        streemio.Session.selected_contact = contact;
-        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CALL_PROGRESS);
+        streembit.Session.selected_contact = contact;
+        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CALL_PROGRESS);
         
-        streemio.PeerNet.ping(contact, true, 5000)
+        streembit.PeerNet.ping(contact, true, 5000)
         .then(
             function () {
-                return streemio.PeerNet.get_contact_session(contact);
+                return streembit.PeerNet.get_contact_session(contact);
             },
             function (err) {
                 throw new Error(err);
@@ -45,7 +45,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         )
         .then(
             function () {
-                return streemio.PeerNet.call(contact, call_type, false);
+                return streembit.PeerNet.call(contact, call_type, false);
             },
             function (err) {
                 throw new Error(err);
@@ -54,43 +54,43 @@ var EccKey = require('streemiolib/crypto/EccKey');
         .then(
             function (isaccepted) {                
                 if (isaccepted == true) {
-                    streemio.logger.info("Call accepted by " + contact.name);
+                    streembit.logger.info("Call accepted by " + contact.name);
                     var uioptions = {
                         contact: contact,
                         calltype: call_type,
                         iscaller: true
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CALL, null, uioptions);
                 }
                 else if (isaccepted == false) {
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                    streemio.notify.info_panel("Contact " + contact.name + " declined the call");
-                    streemio.Session.selected_contact = null;
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                    streembit.notify.info_panel("Contact " + contact.name + " declined the call");
+                    streembit.Session.selected_contact = null;
                 }
                 else {
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                    streemio.notify.error_popup("Unable to establish call with contact " + contact.name);
-                    streemio.Session.selected_contact = null;
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                    streembit.notify.error_popup("Unable to establish call with contact " + contact.name);
+                    streembit.Session.selected_contact = null;
                 }
             },
             function (err) {
-                streemio.logger.error("Error in calling contact: %j", err);              
+                streembit.logger.error("Error in calling contact: %j", err);              
                 setTimeout(function () {
-                    var name = streemio.Session.selected_contact.name;
+                    var name = streembit.Session.selected_contact.name;
                     //  navigate back to the user start screen
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                    streemio.notify.error_popup("Error in calling " + name + ". Review the log file for more error info!");
-                    streemio.Session.selected_contact = null;
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                    streembit.notify.error_popup("Error in calling " + name + ". Review the log file for more error info!");
+                    streembit.Session.selected_contact = null;
                 }, 3000);
             }
         );
     }
     
     function chat_contact(contact) {
-        streemio.PeerNet.ping(contact, true, 5000)
+        streembit.PeerNet.ping(contact, true, 5000)
         .then(
             function () {
-                return streemio.PeerNet.get_contact_session(contact);
+                return streembit.PeerNet.get_contact_session(contact);
             },
             function (err) {
                 throw new Error(err);
@@ -102,25 +102,25 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     contact : contact,
                     issession: session ? true : false
                 };
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
             },
             function (err) {
-                streemio.logger.info("Error in creating peer session: %j", err.message || err);
+                streembit.logger.info("Error in creating peer session: %j", err.message || err);
                 // still open the view and indicate the contact is offline
                 var options = {
                     contact : contact,
                     issession: false
                 };
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
             }
         );
     }
     
-    streemio.vms.UserUIStartViewModel = function () {
+    streembit.vms.UserUIStartViewModel = function () {
         
         function show_contacts(callback) {
             
-            var contacts = streemio.Contacts.list_of_contacts();            
+            var contacts = streembit.Contacts.list_of_contacts();            
 
             if (!contacts || contacts.length == 0) {
                 alert("No contact exists. To make video calls, start chats, send files or connect an IoT deivce first you must add contacts");
@@ -163,29 +163,29 @@ var EccKey = require('streemiolib/crypto/EccKey');
             selectedfunc: "",
 
             start_audio_call: function () {
-                streemio.Session.selected_contact = null;      
+                streembit.Session.selected_contact = null;      
                 show_contacts(function (name) {                    
-                    var contact = streemio.Contacts.get_contact(name);
+                    var contact = streembit.Contacts.get_contact(name);
                     if (contact) {                        
-                        call_contact(streemio.DEFS.CALLTYPE_AUDIO, contact);
+                        call_contact(streembit.DEFS.CALLTYPE_AUDIO, contact);
                     }
                 });
             },
             
             start_video_call: function () {
-                streemio.Session.selected_contact = null;
+                streembit.Session.selected_contact = null;
                 show_contacts(function (name) {
-                    var contact = streemio.Contacts.get_contact(name);
+                    var contact = streembit.Contacts.get_contact(name);
                     if (contact) {
-                        call_contact(streemio.DEFS.CALLTYPE_VIDEO, contact);
+                        call_contact(streembit.DEFS.CALLTYPE_VIDEO, contact);
                     }
                 });
             },
             
             start_chat: function () {
-                streemio.Session.selected_contact = null;
+                streembit.Session.selected_contact = null;
                 show_contacts(function (name) {
-                    var contact = streemio.Contacts.get_contact(name);
+                    var contact = streembit.Contacts.get_contact(name);
                     if (contact) {
                         chat_contact(contact);
                     }
@@ -201,7 +201,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
 
-    streemio.vms.SettingsViewModel = function () {
+    streembit.vms.SettingsViewModel = function () {
         var viewModel = {
             iswsfallback: ko.observable(false),
             bootseeds: ko.observableArray([]),
@@ -221,52 +221,52 @@ var EccKey = require('streemiolib/crypto/EccKey');
 
             init: function (callback) {
                 try {
-                    this.iswsfallback(streemio.config.wsfallback);
+                    this.iswsfallback(streembit.config.wsfallback);
 
                     var seeds = [];
-                    var bootsarr = streemio.config.bootseeds;
+                    var bootsarr = streembit.config.bootseeds;
                     for (var i = 0; i < bootsarr.length; i++){
                         seeds.push(bootsarr[i]);
                     }
                     this.bootseeds(seeds);
                     
                     var ices = [];
-                    var icesarr = streemio.config.ice_resolvers;
+                    var icesarr = streembit.config.ice_resolvers;
                     for (var i = 0; i < icesarr.length; i++) {
                         ices.push(icesarr[i]);
                     }
                     this.iceresolvers(ices);                    
 
-                    this.tcpport(streemio.config.tcpport);
-                    this.wsport(streemio.config.wsport);
-                    this.selected_transport(streemio.config.transport);
-                    this.isdevmode(streemio.config.isdevmode);
-                    this.selected_loglevel(streemio.config.loglevel);
+                    this.tcpport(streembit.config.tcpport);
+                    this.wsport(streembit.config.wsport);
+                    this.selected_transport(streembit.config.transport);
+                    this.isdevmode(streembit.config.isdevmode);
+                    this.selected_loglevel(streembit.config.loglevel);
 
                     callback();
                 }     
                 catch (err) {
-                    streemio.notify.error_popup("Settings init error: %j", err);
+                    streembit.notify.error_popup("Settings init error: %j", err);
                 }
             },
 
             save: function () {
                 try {
 
-                    var data = streemio.Session.settings.data
+                    var data = streembit.Session.settings.data
 
                     data.bootseeds = viewModel.bootseeds();
                     data.transport = viewModel.selected_transport();
                     
                     var num = parseInt($.trim(viewModel.tcpport()));
                     if (isNaN(num)){
-                        num = streemio.DEFS.APP_PORT
+                        num = streembit.DEFS.APP_PORT
                     }
                     data.tcpport = num;
                     
                     num = parseInt($.trim(viewModel.wsport()));
                     if (isNaN(num)) {
-                        num = streemio.DEFS.WS_PORT
+                        num = streembit.DEFS.WS_PORT
                     }
                     data.wsport = num;
 
@@ -287,15 +287,15 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     }
                     data.private_net_seed.port = num;           
 
-                    streemio.Session.update_settings(data, function (err) {
+                    streembit.Session.update_settings(data, function (err) {
                         if (err) {
-                            return streemio.notify.error_popup("Error in updating the settings database. Error: " + err.message);
+                            return streembit.notify.error_popup("Error in updating the settings database. Error: " + err.message);
                         }
-                        streemio.notify.success("The settings data was updated successfully");
+                        streembit.notify.success("The settings data was updated successfully");
                     });
                 }
                 catch (e) {
-                    return streemio.notify.error_popup("Exception occured in updating the settings database. Error: " + e.message);
+                    return streembit.notify.error_popup("Exception occured in updating the settings database. Error: " + e.message);
                 }
             },
 
@@ -335,7 +335,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
 
-    streemio.vms.LogsViewModel = function () {
+    streembit.vms.LogsViewModel = function () {
         var viewModel = {
             errors: ko.observableArray([]),
             infos: ko.observableArray([]),
@@ -357,7 +357,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     this.debugs(debuglist);
                 }     
                 catch (err) {
-                    streemio.logger.error("add_message error %j", err);
+                    streembit.logger.error("add_message error %j", err);
                 }
             }
         };
@@ -365,27 +365,27 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.MessagesViewModel = function () {
+    streembit.vms.MessagesViewModel = function () {
         var viewModel = {
             messages: ko.observableArray([]),
             
             handle_declinecontact_message: function (key, message) {
                 var msgtype = message.data.message_type;
-                if (msgtype != streemio.DEFS.MSG_DECLINECONTACT)
+                if (msgtype != streembit.DEFS.MSG_DECLINECONTACT)
                     return;
                 
                 var sender = message.iss;
-                streemio.Contacts.handle_addcontact_denied(sender);                
+                streembit.Contacts.handle_addcontact_denied(sender);                
             },
 
             handle_addcontact_message: function (key, message) {
                 var msgtype = message.data.message_type;
-                if (msgtype != streemio.DEFS.MSG_ADDCONTACT)
+                if (msgtype != streembit.DEFS.MSG_ADDCONTACT)
                     return;
                 
                 //  check if the contact exists already, don't show 
                 //  the message if thecontact is alredy accepted
-                if (streemio.Contacts.exists(message.iss)) {
+                if (streembit.Contacts.exists(message.iss)) {
                     return;
                 }
 
@@ -401,7 +401,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
             
             handle_text_message: function (key, message) {
                 var msgtype = message.data.message_type;
-                if (msgtype != streemio.DEFS.MSG_TEXT)
+                if (msgtype != streembit.DEFS.MSG_TEXT)
                     return;
                 
                 var sender_ecdh = message.data.send_ecdh_public;
@@ -409,7 +409,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 if (!sender_ecdh || !rcpt_ecdh)
                     return;
                 
-                var ecdhkeys = streemio.User.ecdhkeys;
+                var ecdhkeys = streembit.User.ecdhkeys;
                 // get the user ecdh key that was used to encrypt the message
                 var ecdh_public_key = null;
                 var ecdh_private_key = null;
@@ -422,12 +422,12 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 }
                 
                 if (!ecdh_public_key || !ecdh_private_key) {
-                    streemio.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
+                    streembit.logger.error("couldn't find recepient ecdh keys for a message from %s", sender);
                     return;
                 }
                 
                 var jwe_input = message.data.cipher;
-                var plain_text = streemio.Message.decrypt_ecdh(ecdh_private_key, ecdh_public_key, sender_ecdh, jwe_input);
+                var plain_text = streembit.Message.decrypt_ecdh(ecdh_private_key, ecdh_public_key, sender_ecdh, jwe_input);
                 if (!plain_text) {
                     //TODO report
                     return;
@@ -462,9 +462,9 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         }
                     }
 
-                    var payload = streemio.Message.getpayload(data);
+                    var payload = streembit.Message.getpayload(data);
                     var sender = payload.iss;
-                    var contact = streemio.Contacts.get_contact(sender);
+                    var contact = streembit.Contacts.get_contact(sender);
 
                     var public_key = contact ? contact.public_key : null;
                     if (!public_key) {
@@ -475,7 +475,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         }
                     }
                             
-                    var message = streemio.Message.decode(data, public_key);
+                    var message = streembit.Message.decode(data, public_key);
                     if (!message)
                         return
                     
@@ -485,7 +485,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     //
                 }     
                 catch (err) {
-                    streemio.logger.error("add_message error %j", err);
+                    streembit.logger.error("add_message error %j", err);
                 }
             },
 
@@ -497,9 +497,9 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     if (!arr || !arr.length || arr.length < 3) return;
 
                     var msgid = arr[2];
-                    streemio.PeerNet.delete_message(msgid, function (err) {
+                    streembit.PeerNet.delete_message(msgid, function (err) {
                         if (err) {
-                            return streemio.notify.error_popup("Error in deleting message. %j", err)
+                            return streembit.notify.error_popup("Error in deleting message. %j", err)
                         }
                         
                         viewModel.messages.remove(function (item) {
@@ -508,19 +508,19 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     });
                 }
                 catch (err) {
-                    streemio.logger.error("deletemsg error %j", err);
+                    streembit.logger.error("deletemsg error %j", err);
                 }
             },
 
             accept_addcontact: function (message) {
                 var account = message.sender;
-                streemio.Contacts.offline_addcontact_accepted(account);
+                streembit.Contacts.offline_addcontact_accepted(account);
                 viewModel.deletemsg(message);
             },
 
             decline_addcontact: function (message) {
                 var account = message.sender;
-                streemio.Contacts.offline_addcontact_declined(account);
+                streembit.Contacts.offline_addcontact_declined(account);
                 viewModel.deletemsg(message);
             }
         };
@@ -528,7 +528,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.InfoTaskViewModel = function (task) {
+    streembit.vms.InfoTaskViewModel = function (task) {
         var viewModel = {
             template: ko.observable('empty-template'),
             
@@ -544,7 +544,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         this.template("file-send-complete-template");
                     }
                     else {
-                        if (streemio.Main.is_gui) {
+                        if (streembit.Main.is_gui) {
                             if (verhash == this.hash) {
                                 this.savedir(dir)
                                 this.template("file-complete-template");
@@ -602,20 +602,20 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.TasksViewModel = function () {
+    streembit.vms.TasksViewModel = function () {
         var viewModel = {
             tasks: ko.observableArray([]),
             isshowpanel: ko.observable(false),
             
             add: function (task) {
-                var itemvm = new streemio.vms.InfoTaskViewModel(task);
+                var itemvm = new streembit.vms.InfoTaskViewModel(task);
                 this.tasks.push(itemvm);
                 viewModel.isshowpanel(true);
             },        
             
             close_task: function (item, ev) {
                 try {
-                    streemio.FileTransfer.cancel(item.hash);
+                    streembit.FileTransfer.cancel(item.hash);
                 }
                 catch (e) { }
                 viewModel.tasks.remove(item);
@@ -626,8 +626,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
             
             cancel: function (item) {
                 // the user cancelled it, send cancel info to the peer
-                var message = { cmd: streemio.DEFS.PEERMSG_FEXIT, hash: item.hash };
-                streemio.PeerNet.send_peer_message(item.contact, message);
+                var message = { cmd: streembit.DEFS.PEERMSG_FEXIT, hash: item.hash };
+                streembit.PeerNet.send_peer_message(item.contact, message);
                 viewModel.close_task(item);
             },
             
@@ -687,7 +687,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.SendFileViewModel = function (contact, oninitstart, oninitend) {
+    streembit.vms.SendFileViewModel = function (contact, oninitstart, oninitend) {
         var viewModel = {
             contact: contact,
             contact_name: ko.observable(contact.name),
@@ -715,27 +715,27 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 }
                 
                 try {
-                    streemio.util.fileHash(file.path, function (hash1) {
-                        streemio.logger.debug("file hash: " + hash1);
+                    streembit.util.fileHash(file.path, function (hash1) {
+                        streembit.logger.debug("file hash: " + hash1);
                         // ask the contact to accept the file
                         file.hash = hash1;
-                        streemio.PeerNet.initfile(viewModel.contact, file, true, 20000)
+                        streembit.PeerNet.initfile(viewModel.contact, file, true, 20000)
                         .then(
                             function (isaccepted) {
-                                streemio.logger.debug("File transfer init result: " + isaccepted);
+                                streembit.logger.debug("File transfer init result: " + isaccepted);
                                 if (isaccepted == true) {
                                     var options = {
                                         contact: viewModel.contact,
                                         file: file,
                                         is_sender: true
                                     };
-                                    streemio.FileTransfer.init_send(options);
+                                    streembit.FileTransfer.init_send(options);
                                     
                                     if (viewModel.onInitEnd) {
                                         viewModel.onInitEnd();
                                     }
                                     
-                                    streemio.Session.tasksvm.add({
+                                    streembit.Session.tasksvm.add({
                                         type: "file",
                                         mode: "send",
                                         file_name: file.name,
@@ -750,8 +750,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
                                     viewModel.onInitEnd();
                                 }
                                 viewModel.isinprogress(false);
-                                streemio.logger.error("Error in starting file transfer: %j", err);
-                                streemio.notify.error("Error in starting file transfer");
+                                streembit.logger.error("Error in starting file transfer: %j", err);
+                                streembit.notify.error("Error in starting file transfer");
                             }
                         )
                     });
@@ -761,8 +761,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     if (viewModel.onInitEnd) {
                         viewModel.onInitEnd();
                     }
-                    streemio.logger.error("Error in sending file: %j", err);
-                    streemio.notify.error_popup("Error in sending file: %j", err);
+                    streembit.logger.error("Error in sending file: %j", err);
+                    streembit.notify.error_popup("Error in sending file: %j", err);
                 }
             }
            
@@ -771,7 +771,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.ChatViewModel = function (contact, issession) {
+    streembit.vms.ChatViewModel = function (contact, issession) {
         var viewModel = {
             contact: contact,
             contact_name: ko.observable(contact.name),
@@ -781,7 +781,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
 
             init: function (callback) {
                 try {
-                    var items = streemio.Session.get_textmsg(this.contact.name);
+                    var items = streembit.Session.get_textmsg(this.contact.name);
                     var new_array = items.slice(0);
                     this.chatitems(new_array);
                     
@@ -792,7 +792,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     }
                 }
                 catch (err) {
-                    streemio.notify.error_popup("Chat view error %j", err);
+                    streembit.notify.error_popup("Chat view error %j", err);
                 }
             },            
             
@@ -805,8 +805,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     var msg = $.trim(this.chatmsg());
                     if (msg) {
                         if (this.issession() == true) {
-                            var message = { cmd: streemio.DEFS.PEERMSG_TXTMSG, sender: streemio.User.name, text: msg };
-                            streemio.PeerNet.send_peer_message(this.contact, message);
+                            var message = { cmd: streembit.DEFS.PEERMSG_TXTMSG, sender: streembit.User.name, text: msg };
+                            streembit.PeerNet.send_peer_message(this.contact, message);
                             //  update the list with the sent message
                             this.onTextMessage(message);
                             this.chatmsg('');
@@ -814,48 +814,48 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         else {                            
                             viewModel.sendoffline(msg);
                             this.chatmsg('');
-                            streemio.notify.info("The off-line message has been sent to the network. Once the contact is on-line the message will be delivered", 5000);
+                            streembit.notify.info("The off-line message has been sent to the network. Once the contact is on-line the message will be delivered", 5000);
                         }
                     }
                 }
                 catch (err) {
-                    streemio.notify.error("Send chat error %j", err);
+                    streembit.notify.error("Send chat error %j", err);
                 }
             },
 
             sendfile: function () {
-                if (!streemio.PeerNet.is_peer_session(viewModel.contact.name)) {
-                    return streemio.notify.error_popup("Invalid contact session");
+                if (!streembit.PeerNet.is_peer_session(viewModel.contact.name)) {
+                    return streembit.notify.error_popup("Invalid contact session");
                 }
                 
-                streemio.UI.showSendFile(viewModel.contact);
+                streembit.UI.showSendFile(viewModel.contact);
             },  
             
             sendoffline: function (message) {
                 var self = this;
                 try {
                     if (message) {
-                        streemio.PeerNet.send_offline_message(this.contact, message, streemio.DEFS.MSG_TEXT, function () {});
+                        streembit.PeerNet.send_offline_message(this.contact, message, streembit.DEFS.MSG_TEXT, function () {});
                     }
                 }
                 catch (err) {
-                    streemio.notify.error("Send chat error %j", err);
+                    streembit.notify.error("Send chat error %j", err);
                 }
             },
             
             onTextMessage: function (msg) {
-                msg.time = streemio.util.timeNow();
+                msg.time = streembit.util.timeNow();
                 viewModel.chatitems.push(msg);
                 var $cont = $('.chatitemswnd');
                 $cont[0].scrollTop = $cont[0].scrollHeight;
-                streemio.Session.add_textmsg(viewModel.contact.name, msg);
+                streembit.Session.add_textmsg(viewModel.contact.name, msg);
             }
         };
         
         return viewModel;
     }
     
-    streemio.vms.MediaCallViewModel = function (localvid, remotevid, caller, contobj, calltype, videoconnfn, showchatctrlfn) {
+    streembit.vms.MediaCallViewModel = function (localvid, remotevid, caller, contobj, calltype, videoconnfn, showchatctrlfn) {
         var viewModel = {
             localVideo: localvid, 
             remoteVideo: remotevid,
@@ -877,14 +877,14 @@ var EccKey = require('streemiolib/crypto/EccKey');
             isaudio: ko.observable(true),
             
             init: function () {
-                this.isvideocall(this.calltype == streemio.DEFS.CALLTYPE_VIDEO);
-                this.isaudiocall(this.calltype == streemio.DEFS.CALLTYPE_AUDIO);
+                this.isvideocall(this.calltype == streembit.DEFS.CALLTYPE_VIDEO);
+                this.isaudiocall(this.calltype == streembit.DEFS.CALLTYPE_AUDIO);
                 var options = {
                     contact: this.contact,
                     iscaller: this.iscaller,
                     calltype: this.calltype
                 };
-                streemio.MediaCall.init(localvid, remotevid, options);
+                streembit.MediaCall.init(localvid, remotevid, options);
             },
             
             toHHMMSS: function (value) {
@@ -910,12 +910,12 @@ var EccKey = require('streemiolib/crypto/EccKey');
             },
             
             onRemoteVideoConnect: function () {
-                if (viewModel.calltype == streemio.DEFS.CALLTYPE_VIDEO) {
+                if (viewModel.calltype == streembit.DEFS.CALLTYPE_VIDEO) {
                     if (viewModel.videoConnCallback) {
                         viewModel.videoConnCallback();
                     }
                 }
-                else if (viewModel.calltype == streemio.DEFS.CALLTYPE_AUDIO) {
+                else if (viewModel.calltype == streembit.DEFS.CALLTYPE_AUDIO) {
                     if (viewModel.videoConnCallback) {
                         viewModel.videoConnCallback();
                     }
@@ -925,18 +925,18 @@ var EccKey = require('streemiolib/crypto/EccKey');
             },          
             
             sendfile: function () {
-                if (!streemio.PeerNet.is_peer_session(viewModel.contact.name)) {
-                    return streemio.notify.error_popup("Invalid contact session");
+                if (!streembit.PeerNet.is_peer_session(viewModel.contact.name)) {
+                    return streembit.notify.error_popup("Invalid contact session");
                 }
                 
-                streemio.UI.showSendFile(viewModel.contact);
+                streembit.UI.showSendFile(viewModel.contact);
             },  
             
             showchat: function () {
                 if (viewModel.showChatCallback) {
                     viewModel.showChatCallback(function () {
                         // initialize the chat items
-                        var items = streemio.Session.get_textmsg(viewModel.contact.name);
+                        var items = streembit.Session.get_textmsg(viewModel.contact.name);
                         var new_array = items.slice(0);
                         viewModel.chatitems(new_array);
                         viewModel.ischatdisplay = true;
@@ -945,38 +945,38 @@ var EccKey = require('streemiolib/crypto/EccKey');
             },  
             
             add_video: function () {
-                streemio.MediaCall.show_video(function () {
+                streembit.MediaCall.show_video(function () {
                     viewModel.isvideo(true);
                     // TODO send to the peer
                 });
             },            
             
             remove_video: function () {
-                streemio.MediaCall.hide_video(function () {
+                streembit.MediaCall.hide_video(function () {
                     viewModel.isvideo(false);
                     // TODO send to the peer
                 });
             },
             
             add_audio: function () {
-                streemio.MediaCall.toggle_audio(true, function () {
+                streembit.MediaCall.toggle_audio(true, function () {
                     viewModel.isaudio(true);
                     // TODO send to the peer
                 });
             },
             
             remove_audio: function () {
-                streemio.MediaCall.toggle_audio(false, function () {
+                streembit.MediaCall.toggle_audio(false, function () {
                     viewModel.isaudio(false);
                     // TODO send to the peer
                 });
             },
             
             hangup: function () {
-                streemio.MediaCall.hangup();
-                streemio.PeerNet.hangup_call(viewModel.contact);
+                streembit.MediaCall.hangup();
+                streembit.PeerNet.hangup_call(viewModel.contact);
                 // navigate to empty screen
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                 if (viewModel.call_timer_obj) {
                     clearTimeout(viewModel.call_timer_obj);
                 }
@@ -984,17 +984,17 @@ var EccKey = require('streemiolib/crypto/EccKey');
             
             dispose: function () {
                 try {
-                    streemio.logger.debug("MediaCallViewModel dispose");
-                    streemio.MediaCall.hangup();
+                    streembit.logger.debug("MediaCallViewModel dispose");
+                    streembit.MediaCall.hangup();
                     if (!viewModel.peerhangup) {
-                        streemio.PeerNet.hangup_call(viewModel.contact);
+                        streembit.PeerNet.hangup_call(viewModel.contact);
                     }
                     if (viewModel.call_timer_obj) {
                         clearTimeout(viewModel.call_timer_obj);
                     }
                 }
                 catch (err) {
-                    streemio.notify.error("Mediacall dispose %j", err);
+                    streembit.notify.error("Mediacall dispose %j", err);
                 }
             },
             
@@ -1002,24 +1002,24 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 try {
                     var msg = $.trim(this.chatmsg());
                     if (msg) {
-                        var message = { cmd: streemio.DEFS.PEERMSG_TXTMSG, sender: streemio.User.name, text: msg };
-                        streemio.PeerNet.send_peer_message(this.contact, message);
+                        var message = { cmd: streembit.DEFS.PEERMSG_TXTMSG, sender: streembit.User.name, text: msg };
+                        streembit.PeerNet.send_peer_message(this.contact, message);
                         //  update the list with the sent message
                         this.onTextMessage(message);
                         this.chatmsg('');
                     }
                 }
                 catch (err) {
-                    streemio.notify.error("Send chat error %j", err);
+                    streembit.notify.error("Send chat error %j", err);
                 }
             },           
 
             onTextMessage: function (msg) {
-                msg.time = streemio.util.timeNow();
+                msg.time = streembit.util.timeNow();
                 viewModel.chatitems.push(msg);
                 var $cont = $('.chatitemswnd');
                 $cont[0].scrollTop = $cont[0].scrollHeight;
-                streemio.Session.add_textmsg(viewModel.contact.name, msg);
+                streembit.Session.add_textmsg(viewModel.contact.name, msg);
                 if (viewModel.ischatdisplay == false) {
                     viewModel.showchat();
                 }
@@ -1029,7 +1029,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.ShareScreenViewModel = function (screenvideo, caller, contobj, videoconnfn) {
+    streembit.vms.ShareScreenViewModel = function (screenvideo, caller, contobj, videoconnfn) {
         var viewModel = {
             screenVideo: screenvideo, 
             contact: contobj,
@@ -1045,10 +1045,10 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     videoconnfn: viewModel.onRemoteVideoConnect
                 };
                 if (caller) {
-                    streemio.ShareScreenCall.offer_screenshare(options);
+                    streembit.ShareScreenCall.offer_screenshare(options);
                 }
                 else {
-                    streemio.ShareScreenCall.accept_screenshare(screenvideo, options);
+                    streembit.ShareScreenCall.accept_screenshare(screenvideo, options);
                 }
             },
 
@@ -1059,10 +1059,10 @@ var EccKey = require('streemiolib/crypto/EccKey');
             },        
 
             hangup: function () {
-                streemio.ShareScreenCall.hangup();
-                streemio.PeerNet.hangup_call(viewModel.contact);
+                streembit.ShareScreenCall.hangup();
+                streembit.PeerNet.hangup_call(viewModel.contact);
                 // navigate to empty screen
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                 if (viewModel.call_timer_obj) {
                     clearTimeout(viewModel.call_timer_obj);
                 }
@@ -1070,17 +1070,17 @@ var EccKey = require('streemiolib/crypto/EccKey');
             
             dispose: function () {
                 try {
-                    streemio.logger.debug("MediaCallViewModel dispose");
-                    streemio.ShareScreenCall.hangup();
+                    streembit.logger.debug("MediaCallViewModel dispose");
+                    streembit.ShareScreenCall.hangup();
                     if (!viewModel.peerhangup) {
-                        streemio.PeerNet.hangup_call(viewModel.contact);
+                        streembit.PeerNet.hangup_call(viewModel.contact);
                     }
                     if (viewModel.call_timer_obj) {
                         clearTimeout(viewModel.call_timer_obj);
                     }
                 }
                 catch (err) {
-                    streemio.notify.error("Mediacall dispose %j", err);
+                    streembit.notify.error("Mediacall dispose %j", err);
                 }
             }
 
@@ -1089,7 +1089,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
        
-    streemio.vms.ContactViewModel = function (data) {
+    streembit.vms.ContactViewModel = function (data) {
         var viewModel = {
             name: ko.observable(data.name),
             address: ko.observable(data.address),
@@ -1099,20 +1099,20 @@ var EccKey = require('streemiolib/crypto/EccKey');
             contact: data,
             
             call: function (type) {
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CALL_PROGRESS);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CALL_PROGRESS);
 
                 var call_type;
                 if (type == 'video') {
-                    call_type = streemio.DEFS.CALLTYPE_VIDEO;
+                    call_type = streembit.DEFS.CALLTYPE_VIDEO;
                 }
                 else if (type == 'audio') {
-                    call_type = streemio.DEFS.CALLTYPE_AUDIO;
+                    call_type = streembit.DEFS.CALLTYPE_AUDIO;
                 }
                 
-                streemio.PeerNet.ping(this.contact, true, 10000)
+                streembit.PeerNet.ping(this.contact, true, 10000)
                 .then(
                     function () {
-                        return streemio.PeerNet.get_contact_session(viewModel.contact);
+                        return streembit.PeerNet.get_contact_session(viewModel.contact);
                     },
                     function (err) {
                         throw new Error(err);
@@ -1120,7 +1120,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 )
                 .then(
                     function () {
-                        return streemio.PeerNet.call(viewModel.contact, call_type, true);
+                        return streembit.PeerNet.call(viewModel.contact, call_type, true);
                     },
                     function (err) {
                         throw new Error(err);
@@ -1128,69 +1128,69 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 )
                 .then(
                     function (isaccepted) {
-                        streemio.logger.debug("Call accepted: " + isaccepted);
+                        streembit.logger.debug("Call accepted: " + isaccepted);
                         if (isaccepted == true) {
                             var uioptions = {
                                 contact: viewModel.contact,
                                 calltype: call_type,
                                 iscaller: true
                             };
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CALL, null, uioptions);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CALL, null, uioptions);
                         }
                         else if (isaccepted == false) {
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
                             setTimeout(function () {
-                                streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the call");
+                                streembit.notify.info_panel("Contact " + viewModel.contact.name + " declined the call");
                             }, 500);                            
                         }
                         else {
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
                             setTimeout(function () {
-                                streemio.notify.error("Unable to establish call with contact " + viewModel.contact.name);
+                                streembit.notify.error("Unable to establish call with contact " + viewModel.contact.name);
                             }, 500);                            
                         }
                     },
                     function (err) {
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                        streemio.logger.error("Error in starting video call: %j", err);
-                        streemio.notify.error("Error in starting video call");
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                        streembit.logger.error("Error in starting video call: %j", err);
+                        streembit.notify.error("Error in starting video call");
                     }
                 );
             },
             
             on_sharescreen_error: function (err) {
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                streemio.notify.error_popup("Error in starting share screen. %j", err);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                streembit.notify.error_popup("Error in starting share screen. %j", err);
             },
             
             on_sharescreen_reply: function (isaccepted) {
                 if (isaccepted == true) {
-                    streemio.logger.info("Share screen request was accepted by " + viewModel.contact.name);
+                    streembit.logger.info("Share screen request was accepted by " + viewModel.contact.name);
                     var uioptions = {
                         contact: viewModel.contact,
                         iscaller: true
                     };
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
                 }
                 else if (isaccepted == false) {
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
                     setTimeout(function () {
-                        streemio.notify.info_panel("Contact " + viewModel.contact.name + " declined the share screen request");
+                        streembit.notify.info_panel("Contact " + viewModel.contact.name + " declined the share screen request");
                     }, 500);
                 }
                 else {
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
                     setTimeout(function () {
-                        streemio.notify.error("Unable to establish share screen with contact " + viewModel.contact.name);
+                        streembit.notify.error("Unable to establish share screen with contact " + viewModel.contact.name);
                     }, 500);
                 }
             },
             
             sharescreen: function (){                
-                streemio.PeerNet.ping(this.contact, true, 10000)
+                streembit.PeerNet.ping(this.contact, true, 10000)
                 .then(
                     function () {
-                        return streemio.PeerNet.get_contact_session(viewModel.contact);
+                        return streembit.PeerNet.get_contact_session(viewModel.contact);
                     },
                     function (err) {
                         throw new Error(err);
@@ -1198,20 +1198,20 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 )
                 .then(
                     function () {
-                        streemio.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error)
+                        streembit.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error)
                     },
                     function (err) {
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_USERSTART);
-                        streemio.notify.error_popup("Error in starting share screen. %j", err);
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                        streembit.notify.error_popup("Error in starting share screen. %j", err);
                     }
                 );                
             },
             
             chat: function () {
-                streemio.PeerNet.ping(this.contact, true, 5000)
+                streembit.PeerNet.ping(this.contact, true, 5000)
                 .then(
                     function () {
-                        return streemio.PeerNet.get_contact_session(viewModel.contact);
+                        return streembit.PeerNet.get_contact_session(viewModel.contact);
                     },
                     function (err) {
                         throw new Error(err);
@@ -1223,25 +1223,25 @@ var EccKey = require('streemiolib/crypto/EccKey');
                             contact : viewModel.contact,
                             issession: session ? true : false
                         };
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
                     },
                     function (err) {
-                        streemio.logger.error("Error in creating peer session: %j", err);
+                        streembit.logger.error("Error in creating peer session: %j", err);
                         // still open the view and indicate the contact is offline
                         var options = {
                             contact : viewModel.contact,
                             issession: false
                         };
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
                     }
                 );
             },
             
             sendfile: function () {
-                streemio.PeerNet.ping(this.contact, true, 5000)
+                streembit.PeerNet.ping(this.contact, true, 5000)
                 .then(
                     function () {
-                        return streemio.PeerNet.get_contact_session(viewModel.contact);
+                        return streembit.PeerNet.get_contact_session(viewModel.contact);
                     },
                     function (err) {
                         throw new Error(err);
@@ -1249,30 +1249,30 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 )
                 .then(
                     function (session) {
-                        streemio.UI.showSendFile(viewModel.contact);
+                        streembit.UI.showSendFile(viewModel.contact);
                     },
                     function (err) {
-                        streemio.logger.error("Error in starting file transfer: %j", err);
-                        streemio.notify.error("Error in starting file transfer");
+                        streembit.logger.error("Error in starting file transfer: %j", err);
+                        streembit.notify.error("Error in starting file transfer");
                     }
                 );
             },
             
             keyexch: function () {
-                streemio.PeerNet.get_contact_session(this.contact)
+                streembit.PeerNet.get_contact_session(this.contact)
                 .then(
                     function () {
-                        streemio.notify.success("Secure session has been created with " + viewModel.contact.name);
+                        streembit.notify.success("Secure session has been created with " + viewModel.contact.name);
                     },
                     function (err) {
-                        streemio.logger.error("Error in creating peer session: %j", err);
-                        streemio.notify.error("Error in creating peer session");
+                        streembit.logger.error("Error in creating peer session: %j", err);
+                        streembit.notify.error("Error in creating peer session");
                     });
             },
             
             remove: function () {
-                streemio.Session.contactsvm.remove_byname(this.name(), function () {
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                streembit.Session.contactsvm.remove_byname(this.name(), function () {
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                 });
             }
         };
@@ -1280,7 +1280,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.FileListViewModel = function (files) {
+    streembit.vms.FileListViewModel = function (files) {
         
         var Contact = {
             actionicon: ko.observable(""),
@@ -1296,7 +1296,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.RecentListItemViewModel = function (contact, templatename, dataobj) {
+    streembit.vms.RecentListItemViewModel = function (contact, templatename, dataobj) {
         var viewModel = {
             contact: contact,
             template_name: ko.observable(templatename),
@@ -1306,7 +1306,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
        
-    streemio.vms.ContactsListViewModel = function () {
+    streembit.vms.ContactsListViewModel = function () {
         
         function merge(contact, param) {
             for (var prop in param) {
@@ -1372,8 +1372,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 viewModel.addcontact_obj = 0;
                 viewModel.show_addcontact_panel(false);
 
-                if (!streemio.Main.is_node_initialized) {
-                    return streemio.notify.error_popup("The Streemio account is not initialized. First log-in with your Streemio account");
+                if (!streembit.Main.is_node_initialized) {
+                    return streembit.notify.error_popup("The Streembit account is not initialized. First log-in with your Streembit account");
                 }
                 
                 viewModel.issearch(!viewModel.issearch());
@@ -1386,14 +1386,14 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         if (contacts[i].name == data.sender) {
                             contacts[i].actionicon("glyphicon glyphicon-envelope");
                             contacts[i].actiontype = "textmsg";
-                            data.time = streemio.util.timeNow();
-                            streemio.Session.add_textmsg(data.sender, data);
+                            data.time = streembit.util.timeNow();
+                            streembit.Session.add_textmsg(data.sender, data);
                             break;
                         }
                     }
                 }
                 catch (err) {
-                    streemio.logger.error("contact onTextMessage error %j", err);
+                    streembit.logger.error("contact onTextMessage error %j", err);
                 }
             },
             
@@ -1415,7 +1415,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     }
                 }
                 catch (err) {
-                    streemio.logger.error("contact onFileReceive error %j", err);
+                    streembit.logger.error("contact onFileReceive error %j", err);
                 }
             },
             
@@ -1426,31 +1426,31 @@ var EccKey = require('streemiolib/crypto/EccKey');
                             contact : item,
                             issession: true
                         };
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_CHAT, null, options);
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
                         item.actiontype = "";
                         item.actionicon("");
                     }
                     else if (item.actiontype == "filercv") {
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_FILERCV, item);
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_FILERCV, item);
                         item.actiontype = "";
                         item.actionicon("");
                     }
                 }
                 catch (err) {
-                    streemio.logger.error("contact itemAction error %j", err);
+                    streembit.logger.error("contact itemAction error %j", err);
                 }
             },
             
             itemSelect: function (item) {
-                events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_CONTACT_SELECT, item);
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_SELECT, item);
             },
             
             remove: function (item) {
                 bootbox.confirm("Contact '" + item.name + "' will be removed from the contacts list.", function (result) {
                     if (result) {
-                        streemio.Contacts.remove(item.name, function () {
+                        streembit.Contacts.remove(item.name, function () {
                             viewModel.contacts.remove(item);
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                         });
                     }
                 });
@@ -1470,9 +1470,9 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 bootbox.confirm("Contact '" + item.name + "' will be removed from the contacts list.", function (result) {
                     if (result) {
                         // delete from the local db
-                        streemio.Contacts.remove(item.name, function () {
+                        streembit.Contacts.remove(item.name, function () {
                             viewModel.contacts.remove(item);
-                            events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                         });
                     }
                 });
@@ -1541,14 +1541,14 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     var self = this;
                     var account = $.trim(this.contact_lookup());
                     if (!account) {
-                        return streemio.notify.error_popup("Enter the human or device account name");
+                        return streembit.notify.error_popup("Enter the human or device account name");
                     }
                     
-                    if (streemio.Contacts.exists(account)) {
-                        return streemio.notify.info("This contact is already exists in the contact list");;
+                    if (streembit.Contacts.exists(account)) {
+                        return streembit.notify.info("This contact is already exists in the contact list");;
                     }
                     
-                    streemio.Contacts.search(account, function (contact) {
+                    streembit.Contacts.search(account, function (contact) {
                         if (contact) {
                             self.contact_lookup("");
                             self.addcontact_name(contact.name);
@@ -1559,12 +1559,12 @@ var EccKey = require('streemiolib/crypto/EccKey');
 
                 }
                 catch (err) {
-                    streemio.logger.error("contact search error %j", err)
+                    streembit.logger.error("contact search error %j", err)
                 }
             },
             
             onSendAddContactRequest: function () {
-                streemio.Contacts.send_addcontact_request(viewModel.addcontact_obj, function () {
+                streembit.Contacts.send_addcontact_request(viewModel.addcontact_obj, function () {
                     viewModel.addcontact_name("");
                     viewModel.addcontact_obj = 0;
                     viewModel.show_addcontact_panel(false);
@@ -1582,12 +1582,12 @@ var EccKey = require('streemiolib/crypto/EccKey');
 
             acceptAddContact: function (obj) {
                 var contact = obj.contact;
-                streemio.Contacts.accept_contact(contact);                         
+                streembit.Contacts.accept_contact(contact);                         
             },
 
             declineAddContact: function (obj) {
                 var contact = obj.contact;
-                streemio.Contacts.decline_contact(contact);
+                streembit.Contacts.decline_contact(contact);
                 var account = contact.name;
                 viewModel.recent_messages.remove(function (item) {
                     return item.contact && item.contact.name == account;
@@ -1595,7 +1595,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
             },
 
             onReceiveAddContact: function (contact) {
-                viewModel.recent_messages.push(new streemio.vms.RecentListItemViewModel(contact, "addcontact-recent-messages", {}));
+                viewModel.recent_messages.push(new streembit.vms.RecentListItemViewModel(contact, "addcontact-recent-messages", {}));
                 viewModel.is_recent_msg(true);
             }
 
@@ -1605,7 +1605,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.UpdateKeyViewModel = function (validatePassword, validatePasswordConfirm) {
+    streembit.vms.UpdateKeyViewModel = function (validatePassword, validatePasswordConfirm) {
         var viewModel = {
             private_key_pwd: ko.observable(),
             private_key_pwd_conf: ko.observable(),
@@ -1712,10 +1712,10 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     // call the viewmodel
                     var pwd = this.private_key_pwd();
                     
-                    streemio.User.update_public_key(pwd);
+                    streembit.User.update_public_key(pwd);
                 }
                 catch (err) {
-                    streemio.notify.error("Update passphrase error %j", err);
+                    streembit.notify.error("Update passphrase error %j", err);
                 }
             }
             
@@ -1724,16 +1724,16 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.AccountInfoViewModel = function () {
+    streembit.vms.AccountInfoViewModel = function () {
         var viewModel = {
-            account: ko.observable(streemio.User.name),
-            public_key: ko.observable(streemio.User.public_key)
+            account: ko.observable(streembit.User.name),
+            public_key: ko.observable(streembit.User.public_key)
         };
         
         return viewModel;
     }
     
-    streemio.vms.UserViewModel = function (newaccount, validateAccount, validatePassword, 
+    streembit.vms.UserViewModel = function (newaccount, validateAccount, validatePassword, 
                                             validatePasswordConfirm, validatePrivateSeedHost, 
                                             validatePrivateSeedPort, validatePrivateSeedAccount, 
                                             is_init_existing_account) {
@@ -1753,8 +1753,8 @@ var EccKey = require('streemiolib/crypto/EccKey');
             caption_view_title: ko.observable(""),
             
             init: function (callback) {
-                viewModel.is_private_network(streemio.Main.network_type == streemio.DEFS.PRIVATE_NETWORK);
-                if (streemio.Main.network_type == streemio.DEFS.PRIVATE_NETWORK) {
+                viewModel.is_private_network(streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK);
+                if (streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK) {
                     if (config && config.private_net_seed) {
                         if (config.private_net_seed.account) {
                             viewModel.private_net_account(config.private_net_seed.account);
@@ -1778,20 +1778,20 @@ var EccKey = require('streemiolib/crypto/EccKey');
                         viewModel.caption_view_title("Initialize existing account");
                     }
                     else {
-                        viewModel.caption_view_title("Connect to Streemio network");
+                        viewModel.caption_view_title("Connect to Streembit network");
                     }
                 }
                 else {
-                    viewModel.caption_view_title("Create your Streemio user account");
+                    viewModel.caption_view_title("Create your Streembit user account");
                     viewModel.accounts([]);
                     callback(null);
                 }                
             },
             
             get_accounts: function (callback) {
-                streemio.DB.getall(streemio.DB.ACCOUNTSDB, function (err, result) {
+                streembit.DB.getall(streembit.DB.ACCOUNTSDB, function (err, result) {
                     if (err) {
-                        return streemio.notify.error_popup("streemio.DB.getall accounts error %j", err);
+                        return streembit.notify.error_popup("streembit.DB.getall accounts error %j", err);
                     }
                     
                     if (!result || !result.length) {
@@ -1821,7 +1821,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     return;
                 }
                 
-                streemio.PeerNet.find_contact(account, function (err, contact) {
+                streembit.PeerNet.find_contact(account, function (err, contact) {
                     if (err) {
                         // check the error
                         if (err.message && err.message.indexOf("0x0100") > -1) {
@@ -1867,7 +1867,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     
                     this.check_account_exists(val, function (err, exists) {
                         if (err) {
-                            return streemio.notify.error(err);
+                            return streembit.notify.error(err);
                         }
                         if (exists) {
                             validateAccount(false, "Account '" + val + "' already exists on the network. Please define an other account name");
@@ -1979,13 +1979,13 @@ var EccKey = require('streemiolib/crypto/EccKey');
             onPrivateSeedHostChange: function () {
                 var val = $.trim(this.private_net_host());
                 if (!val) {
-                    validatePrivateSeedHost(false, "Host is required for private Streemio seed");
+                    validatePrivateSeedHost(false, "Host is required for private Streembit seed");
                     return false;
                 }
                 
                 var index = val.indexOf(".");
                 if (index == -1) {
-                    validatePrivateSeedHost(false, "An IP address or domain name is required for private Streemio seed");
+                    validatePrivateSeedHost(false, "An IP address or domain name is required for private Streembit seed");
                     return false;
                 }
                 
@@ -1996,18 +1996,18 @@ var EccKey = require('streemiolib/crypto/EccKey');
             onPrivateSeedPortChange: function () {
                 var val = $.trim(this.private_net_port());
                 if (!val) {
-                    validatePrivateSeedPort(false, "Port is required for private Streemio seed");
+                    validatePrivateSeedPort(false, "Port is required for private Streembit seed");
                     return false;
                 }
                 
                 try {
                     if (isNaN(val)) {
-                        validatePrivateSeedPort(false, "A numeric port value is required for a private Streemio seed");
+                        validatePrivateSeedPort(false, "A numeric port value is required for a private Streembit seed");
                         return false;
                     }
                 }
                 catch (e) {
-                    validatePrivateSeedPort(false, "A numeric port value is required for a private Streemio seed");
+                    validatePrivateSeedPort(false, "A numeric port value is required for a private Streembit seed");
                     return false;
                 }
                 
@@ -2018,7 +2018,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
             onPrivateSeedAccountChange: function () {
                 var val = $.trim(this.private_net_account());
                 if (!val) {
-                    validatePrivateSeedAccount(false, "Account is required for private Streemio seed");
+                    validatePrivateSeedAccount(false, "Account is required for private Streembit seed");
                     return false;
                 }
                 
@@ -2046,7 +2046,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                             port: parseInt($.trim(this.private_net_port()))
                         }
                         
-                        streemio.Main.private_net_seed = seed;
+                        streembit.Main.private_net_seed = seed;
                     }
                     
                     var account = this.validateAccountText();
@@ -2061,13 +2061,13 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     // call the viewmodel
                     var pwd = this.private_key_pwd();
                     
-                    streemio.User.create_account(account, pwd, function () {
-                        streemio.notify.success("The account has been created");
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                    streembit.User.create_account(account, pwd, function () {
+                        streembit.notify.success("The account has been created");
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                     });
                 }
                 catch (err) {
-                    streemio.notify.error("Create account error %j", err);
+                    streembit.notify.error("Create account error %j", err);
                 }
             },
             
@@ -2091,7 +2091,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
                             port: parseInt($.trim(this.private_net_port()))
                         }
                         
-                        streemio.Main.private_net_seed = seed;
+                        streembit.Main.private_net_seed = seed;
                     }
                     
                     var account = this.selected_account();
@@ -2105,14 +2105,14 @@ var EccKey = require('streemiolib/crypto/EccKey');
                     
                     var pwd = this.private_key_pwd();
                     
-                    streemio.User.initialize(account, pwd, function (err) {
-                        streemio.notify.success("The account has been initialized");
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streemio.DEFS.CMD_EMPTY_SCREEN);
+                    streembit.User.initialize(account, pwd, function (err) {
+                        streembit.notify.success("The account has been initialized");
+                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
                     });
 
                 }
                 catch (err) {
-                    streemio.notify.error("Create account error %j", err);
+                    streembit.notify.error("Create account error %j", err);
                 }
             },
 
@@ -2132,7 +2132,7 @@ var EccKey = require('streemiolib/crypto/EccKey');
         return viewModel;
     }
     
-    streemio.vms.MainViewModel = function (container) {
+    streembit.vms.MainViewModel = function (container) {
         var viewModel = {
             container: container,
             template_name: ko.observable('empty-template'),
@@ -2143,11 +2143,11 @@ var EccKey = require('streemiolib/crypto/EccKey');
         };
         
         var resetView = function () {
-            if (streemio.Session.curent_viewmodel && streemio.Session.curent_viewmodel.dispose) {
-                streemio.Session.curent_viewmodel.dispose();
+            if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.dispose) {
+                streembit.Session.curent_viewmodel.dispose();
             }
-            streemio.notify.hide();
-            streemio.Session.curent_viewmodel = 0;
+            streembit.notify.hide();
+            streembit.Session.curent_viewmodel = 0;
             $(container).empty();
             $(container).append('');
         };
@@ -2158,12 +2158,12 @@ var EccKey = require('streemiolib/crypto/EccKey');
         }
         
         var showView = function (view) {
-            streemio.util.loadView(view, function (html) {
+            streembit.util.loadView(view, function (html) {
                 if (!html) {
                     return alert("Error in loading the " + view + " view ");
                 }
                 
-                streemio.Session.curent_viewmodel = 0;
+                streembit.Session.curent_viewmodel = 0;
                 $(container).empty();
                 $(container).append(html);
             });
@@ -2175,118 +2175,118 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 var vm;
                 switch (cmd) {
 
-                    case streemio.DEFS.CMD_USERSTART:
+                    case streembit.DEFS.CMD_USERSTART:
                         resetTemplate();
                         resetView();
-                        showView(streemio.DEFS.CMD_USERSTART);
+                        showView(streembit.DEFS.CMD_USERSTART);
                         break;
 
-                    case streemio.DEFS.CMD_CALL_PROGRESS:
+                    case streembit.DEFS.CMD_CALL_PROGRESS:
                         resetTemplate();
                         resetView();
-                        showView(streemio.DEFS.CMD_CALL_PROGRESS);
+                        showView(streembit.DEFS.CMD_CALL_PROGRESS);
                         break;
 
-                    case streemio.DEFS.CMD_CONTACT_SELECT:
+                    case streembit.DEFS.CMD_CONTACT_SELECT:
                         resetView();
-                        var contactvm = new streemio.vms.ContactViewModel(datactx);
+                        var contactvm = new streembit.vms.ContactViewModel(datactx);
                         viewModel.template_datactx(contactvm);
                         viewModel.template_name("contact-details-template");
                         break;
             
-                    case streemio.DEFS.CMD_HANGUP_CALL:
-                        if (streemio.Session.curent_viewmodel) {
-                            if (streemio.Session.curent_viewmodel.hasOwnProperty('peerhangup')) {
-                                streemio.Session.curent_viewmodel.peerhangup = true;
+                    case streembit.DEFS.CMD_HANGUP_CALL:
+                        if (streembit.Session.curent_viewmodel) {
+                            if (streembit.Session.curent_viewmodel.hasOwnProperty('peerhangup')) {
+                                streembit.Session.curent_viewmodel.peerhangup = true;
                             }
                         }
                         resetTemplate();
                         resetView();
-                        streemio.notify.info("The call has been terminated by the contact");
+                        streembit.notify.info("The call has been terminated by the contact");
                         break;
 
-                    case streemio.DEFS.CMD_CONTACT_CALL:
+                    case streembit.DEFS.CMD_CONTACT_CALL:
                         if (!options || !options.contact) {
-                            return streemio.notify.error("Invalid video call UI options");
+                            return streembit.notify.error("Invalid video call UI options");
                         }
                         resetTemplate();
-                        streemio.Session.uioptions = options;
+                        streembit.Session.uioptions = options;
                         showView("mediacall");
                         break;
 
-                    case streemio.DEFS.CMD_SENDER_SHARESCREEN:
+                    case streembit.DEFS.CMD_SENDER_SHARESCREEN:
                         if (!options || !options.contact) {
-                            return streemio.notify.error_popup("Invalid share screen contact");
+                            return streembit.notify.error_popup("Invalid share screen contact");
                         }
                         resetTemplate();
-                        streemio.Session.uioptions = options;
+                        streembit.Session.uioptions = options;
                         showView("sendersharescreen");
                         break;
 
-                    case streemio.DEFS.CMD_RECIPIENT_SHARESCREEN:
+                    case streembit.DEFS.CMD_RECIPIENT_SHARESCREEN:
                         if (!options || !options.contact) {
-                            return streemio.notify.error_popup("Invalid share screen contact");
+                            return streembit.notify.error_popup("Invalid share screen contact");
                         }
                         resetTemplate();
-                        streemio.Session.uioptions = options;
+                        streembit.Session.uioptions = options;
                         showView("recipientsharescreen");
                         break;
 
-                    case streemio.DEFS.CMD_CONTACT_CHAT:
+                    case streembit.DEFS.CMD_CONTACT_CHAT:
                         resetTemplate();
-                        streemio.Session.uioptions = options;
+                        streembit.Session.uioptions = options;
                         showView("chat");
                         break;
 
-                    case streemio.DEFS.CMD_CONTACT_FILERCV:
+                    case streembit.DEFS.CMD_CONTACT_FILERCV:
                         var file = datactx;
-                        streemio.UI.showContactFile(file);
+                        streembit.UI.showContactFile(file);
                         break;
 
-                    case streemio.DEFS.CMD_FILE_INIT:
+                    case streembit.DEFS.CMD_FILE_INIT:
                         var sender = datactx;
                         var file_params = options;
-                        streemio.UI.receiveFile(sender, file_params);
+                        streembit.UI.receiveFile(sender, file_params);
                         break;
 
-                    case streemio.DEFS.CMD_INIT_USER:
+                    case streembit.DEFS.CMD_INIT_USER:
                         resetTemplate();
                         resetView();
-                        streemio.Session.uioptions = options;
+                        streembit.Session.uioptions = options;
                         showView("inituser");
                         break;
 
-                    case streemio.DEFS.CMD_ACCOUNT_MESSAGES:
+                    case streembit.DEFS.CMD_ACCOUNT_MESSAGES:
                         resetTemplate();
                         resetView();
                         showView("accountmsgs");
                         break;
 
-                    case streemio.DEFS.CMD_SETTINGS:
+                    case streembit.DEFS.CMD_SETTINGS:
                         resetTemplate();
                         resetView();
-                        showView(streemio.DEFS.CMD_SETTINGS);
+                        showView(streembit.DEFS.CMD_SETTINGS);
                         break;
 
-                    case streemio.DEFS.CMD_CHANGE_KEY:
+                    case streembit.DEFS.CMD_CHANGE_KEY:
                         resetTemplate();
                         resetView();
                         showView("changekey");
                         break;
 
-                    case streemio.DEFS.CMD_ACCOUNT_INFO:
+                    case streembit.DEFS.CMD_ACCOUNT_INFO:
                         resetTemplate();
                         resetView();
                         showView("accountinfo");
                         break;
 
-                    case streemio.DEFS.CMD_HELP:
+                    case streembit.DEFS.CMD_HELP:
                         resetTemplate();
                         resetView();
                         showView("help");
                         break;
 
-                    case streemio.DEFS.CMD_EMPTY_SCREEN:
+                    case streembit.DEFS.CMD_EMPTY_SCREEN:
                         resetTemplate();
                         resetView();
                         break
@@ -2296,14 +2296,14 @@ var EccKey = require('streemiolib/crypto/EccKey');
                 }
             }
             catch (err) {
-                streemio.logger.error("events.on(events.TYPES.ONAPPNAVIGATE error %j", err);
+                streembit.logger.error("events.on(events.TYPES.ONAPPNAVIGATE error %j", err);
             }
         });
         
         return viewModel;
     }
 
-})($, ko, global.appevents, streemio.config);
+})($, ko, global.appevents, streembit.config);
 
 
 $.fn.extend({
