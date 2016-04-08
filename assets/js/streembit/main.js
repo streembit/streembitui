@@ -25,6 +25,11 @@ var streembit = streembit || {};
 
 var gui = global.appgui;
 
+if (gui && gui.App) {
+    console.log("vesion: " + gui.App.manifest.version);
+    logger.info("vesion: " + gui.App.manifest.version);
+}
+
 if (gui && gui.App && gui.App.dataPath) {
     logger.info("Data path is " + gui.App.dataPath);
 }
@@ -2233,6 +2238,7 @@ streembit.Contacts = (function (module, logger, events, config) {
 
 streembit.Main = (function (module, logger, events, config) {
     
+    module.version = global.appgui ? global.appgui.App.manifest.version : ".web";
     module.is_gui = global.appgui != null;
     module.is_app_initialized = false;
     module.is_node_initialized = false;
