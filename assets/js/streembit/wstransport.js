@@ -30,7 +30,7 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
 
     module.wsport = port;
     module.list_of_servers = {};
-    
+
     function get_account_socket() {
         var host = streembit.User.address;
         var socket = module.list_of_servers[host];
@@ -178,6 +178,18 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
         }
     }
     
+    module.is_node_connected = function () {
+        var connected = false;
+        var host = streembit.User.address;
+        if (host) {
+            var socket = module.list_of_servers[host];
+            if (socket) {
+                connected = true;
+            }
+        }
+        return connected;
+    }
+
     module.init = function (bootdata, callback) {
         logger.debug("WebSocketTransport init");
         
