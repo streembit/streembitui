@@ -132,7 +132,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
         )
         .then(
             function (session) {
-                streembit.UI.showSendFile(viewModel.contact);
+                streembit.UI.showSendFile(contact);
             },
             function (err) {
 
@@ -157,7 +157,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
             
         function on_sharescreen_reply (isaccepted) {
             if (isaccepted == true) {
-                streembit.logger.info("Share screen request was accepted by " + viewModel.contact.name);
+                streembit.logger.info("Share screen request was accepted by " + contact.name);
                 var uioptions = {
                     contact: contact,
                     iscaller: true
@@ -191,7 +191,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
         )
         .then(
             function (session) {
-                streembit.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error);
+                streembit.PeerNet.offer_sharescreen(contact, on_sharescreen_reply, on_sharescreen_error);
             },
             function (err) {                
                 var name = streembit.Session.selected_contact.name;
