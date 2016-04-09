@@ -114,6 +114,93 @@ var EccKey = require('streembitlib/crypto/EccKey');
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
             }
         );
+    }    
+    
+    function sendfile_to_contact(contact) {
+
+        streembit.Session.selected_contact = contact;
+        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CALL_PROGRESS);
+
+        streembit.PeerNet.ping(contact, true, 5000)
+        .then(
+            function () {
+                return streembit.PeerNet.get_contact_session(contact);
+            },
+            function (err) {
+                throw new Error(err);
+            }
+        )
+        .then(
+            function (session) {
+                streembit.UI.showSendFile(viewModel.contact);
+            },
+            function (err) {
+
+                var name = streembit.Session.selected_contact.name;
+                //  navigate back to the user start screen
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                streembit.notify.error_popup("Error in sending file to " + name + ". Review the log file for more error info!");
+                streembit.Session.selected_contact = null;
+            }          
+        );
+    }
+    
+    function sharescreen_with_contact(contact) {
+                
+        streembit.Session.selected_contact = contact;
+        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CALL_PROGRESS);
+        
+        function on_sharescreen_error(err) {
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+            streembit.notify.error_popup("Error in starting share screen. %j", err);
+        }
+            
+        function on_sharescreen_reply (isaccepted) {
+            if (isaccepted == true) {
+                streembit.logger.info("Share screen request was accepted by " + viewModel.contact.name);
+                var uioptions = {
+                    contact: contact,
+                    iscaller: true
+                };
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_SENDER_SHARESCREEN, null, uioptions);
+            }
+            else if (isaccepted == false) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                setTimeout(function () {
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                    streembit.notify.info_panel("Contact " + contact.name + " declined the share screen request");
+                }, 500);
+            }
+            else {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                setTimeout(function () {
+                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                    streembit.notify.error_popup("Unable to establish share screen with contact " + contact.name);
+                }, 500);
+            }
+        }
+
+        streembit.PeerNet.ping(contact, true, 5000)
+        .then(
+            function () {
+                return streembit.PeerNet.get_contact_session(contact);
+            },
+            function (err) {
+                throw new Error(err);
+            }
+        )
+        .then(
+            function (session) {
+                streembit.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error);
+            },
+            function (err) {                
+                var name = streembit.Session.selected_contact.name;
+                //  navigate back to the user start screen
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
+                streembit.notify.error_popup("Error in sending file to " + name + ". Review the log file for more error info!");
+                streembit.Session.selected_contact = null;
+            }          
+        );
     }
     
     streembit.vms.UserUIStartViewModel = function () {
@@ -192,7 +279,26 @@ var EccKey = require('streembitlib/crypto/EccKey');
                 });
             },
             
+            start_sendfile: function () {
+                streembit.Session.selected_contact = null;
+                show_contacts(function (name) {
+                    var contact = streembit.Contacts.get_contact(name);
+                    if (contact) {
+                        sendfile_to_contact(contact);
+                    }
+                });
+            },
             
+            start_sharescreen: function () {
+                streembit.Session.selected_contact = null;
+                show_contacts(function (name) {
+                    var contact = streembit.Contacts.get_contact(name);
+                    if (contact) {
+                        sharescreen_with_contact(contact);
+                    }
+                });
+            },
+
             start_iotdevice: function () {
                 
             }
@@ -1198,7 +1304,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
                 )
                 .then(
                     function () {
-                        streembit.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error)
+                        streembit.PeerNet.offer_sharescreen(viewModel.contact, viewModel.on_sharescreen_reply, viewModel.on_sharescreen_error);
                     },
                     function (err) {
                         events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
@@ -2062,8 +2168,8 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     var pwd = this.private_key_pwd();
                     
                     streembit.User.create_account(account, pwd, function () {
-                        streembit.notify.success("The account has been created");
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
+                        streembit.notify.success("The account has been created. You can connect to the Streembit network.");
+                        streembit.UI.show_startscreen();
                     });
                 }
                 catch (err) {

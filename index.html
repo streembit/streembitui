@@ -127,7 +127,7 @@ Copyright (C) 2016 The Streembit software development team
         <div id="contacts-container" class="contacts-tab">
             <div class="sidebar-search" data-bind="visible: issearch"> 
                 <div class="input-group" style="margin:0;padding:0">
-                    <input type="text" class="form-control" placeholder="Search contacts ..." data-bind="value: contact_lookup">
+                    <input type="text" class="form-control" placeholder="Find contact on Streembit ..." data-bind="value: contact_lookup">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
                     </span>
@@ -311,7 +311,7 @@ Copyright (C) 2016 The Streembit software development team
 
 <script type="text/html" id="streembit-view-userstart">
     <div id="user-start-container" class="user-start-view">
-        <div style="width:460px;height:460px">
+        <div style="width:640px;height:460px">
             <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6;padding-top:20px;" data-bind="click: start_audio_call">
                 <i class="fa fa-phone"></i>
                 <div class="flex-btnitem-text">Audio call</div>
@@ -323,6 +323,14 @@ Copyright (C) 2016 The Streembit software development team
             <div class="flex-btnitem margin20 pull-left" style="background-color:#68C3A3" data-bind="click: start_chat">
                 <i class="fa fa-commenting"></i>
                 <div class="flex-btnitem-text">Chat</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9690E" data-bind="click: start_sendfile">
+                <i class="glyphicon glyphicon-copy"></i>
+                <div class="flex-btnitem-text">Send File</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#5fb2c4" data-bind="click: start_sharescreen">
+                <i class="glyphicon glyphicon-share"></i>
+                <div class="flex-btnitem-text">Share Screen</div>
             </div>
             <div class="flex-btnitem margin20 pull-left" style="background-color:#dd7474;padding-top:24px;" data-bind="click: start_iotdevice">
                 <i class="fa fa-cogs" style="font-size:100px"></i>
@@ -345,7 +353,7 @@ Copyright (C) 2016 The Streembit software development team
     <div style="background:#000;height:100%;width:100%;display:flex;justify-content: center;align-items: center;">
         <div style="width:540px;height:240px;margin-top:-130px;color:#fff;">
             <div style="text-align:center;margin:0">
-                <div style="font-size:28px;">Calling contact <span id="call_contact_name"></span></div>
+                <div style="font-size:28px;">Contacting <span id="call_contact_name"></span> ... </div>
             </div>
             <div style="position:relative">
                 <div style="font-size:160px;display:inline-block;position:absolute;left:0;color:#6ca4c4"><i class="fa fa-user"></i></div>

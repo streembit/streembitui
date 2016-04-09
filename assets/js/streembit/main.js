@@ -386,13 +386,19 @@ streembit.UI = (function (module, logger, events, config) {
     
     module.messagesvm = null;
     
+    module.show_startscreen = function () {
+        $(".appboot-screen").hide();
+        $(".streembit-screen").hide();
+        $(".app-select-screen").show();
+    };
+
     module.showContacts = function () {
         $(".app-select-screen").hide();
         $(".appboot-screen").hide();
-        $(".streembit-screen").show();    
+        $(".streembit-screen").show();
         $('.contacts-tab').show();
         $("#main-container").css('left', 281);
-    }
+    };
     
     module.set_account_title = function (account) {
         document.title = "Streembit - " + account;
@@ -400,7 +406,7 @@ streembit.UI = (function (module, logger, events, config) {
             $(".menu-account-info").text(account);
             $(".nav-account-info").show();
         }
-    }
+    };
     
     module.accept_call = function (sender, type, resultfn) {
         
@@ -447,7 +453,7 @@ streembit.UI = (function (module, logger, events, config) {
                 }
             });
         });
-    }
+    };
     
     module.accept_sharescreen = function (sender, resultfn) {
   
@@ -2291,9 +2297,7 @@ streembit.Main = (function (module, logger, events, config) {
         streembitMenu.append(new gui.MenuItem({
             label: 'Start Streembit',
             click: function () {
-                $(".appboot-screen").hide();
-                $(".streembit-screen").hide();
-                $(".app-select-screen").show();
+                streembit.UI.show_startscreen();
             }
         }));
         streembitMenu.append(new gui.MenuItem({
