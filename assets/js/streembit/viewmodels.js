@@ -132,6 +132,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
         )
         .then(
             function (session) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_USERSTART);
                 streembit.UI.showSendFile(contact);
             },
             function (err) {
