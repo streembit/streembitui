@@ -1,5 +1,5 @@
 #!/bin/bash
-# My first script
+# Streembit Linux shell script
 
 echo "Start creating Streembit binary"
 
@@ -97,9 +97,9 @@ echo "create zip file"
 cd $BUILD_DIR
 $ZIP_EXE a -tzip "streembit_linux64.zip" $BUILD_DIR/locales $BUILD_DIR/lib $BUILD_DIR/*.* $APPEXE_PATH
 
-
 md5sum $BUILD_DIR/streembit_linux64.zip > $BUILD_DIR/streembit_linux64.md5
 
+echo "creating Streembit binaries completed"
 
 
 
