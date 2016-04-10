@@ -45,6 +45,8 @@ logs/*.log
 /db
 build/buildtools
 build/win64
+build/linux64
+build/macosx64
 *.nw
 /.vs/config/applicationhost.config
 /data
