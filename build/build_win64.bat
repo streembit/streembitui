@@ -4,6 +4,7 @@ set CUR_DIR="%CD%"
 set BUILD_DIR=%CUR_DIR%\win64
 set EXE_PATH=%CUR_DIR%\win64\nw.exe
 set ICO_PATH=..\assets\icons\streembit64.png
+set RESOURCER_PATH=%CUR_DIR%\buildtools\Resourcer.exe
 set NWPACK_PATH=%CUR_DIR%\win64\package.nw
 set APPEXE_PATH=%CUR_DIR%\win64\streembit.exe
 set ZIP_EXE="C:\Program Files\7-Zip\7z.exe"
@@ -80,20 +81,25 @@ echo.
 
 %ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html  ..\assets ..\node_modules
 
-
-call :ColorText 19 "setting Streembit icon"
-echo.
-IF EXIST %ICO_PATH% (
-	buildtools\Resourcer -op:upd -src:%EXE_PATH% -type:14 -name:IDR_MAINFRAME -file:%ICO_PATH%
-	call :ColorText 0a "icon was set for executable"
+IF EXIST %RESOURCER_PATH% (
+	call :ColorText 19 "Resourcer.exe exists, setting Streembit icon"
 	echo.
+	IF EXIST %ICO_PATH% (
+		%RESOURCER_PATH% -op:upd -src:%EXE_PATH% -type:14 -name:IDR_MAINFRAME -file:%ICO_PATH%
+		call :ColorText 0a "icon was set for executable"
+		echo.
+	)
 )
+
+REM call :ColorText 19 "create Streembit executable"
+REM echo.
+REM copy /b /y %EXE_PATH% %APPEXE_PATH% 
 
 call :ColorText 19 "create Streembit executable"
 echo.
-copy /b /y %EXE_PATH% %APPEXE_PATH% 
+copy /b /y %EXE_PATH% + %NWPACK_PATH% %APPEXE_PATH% 
 
-REM del %NWPACK_PATH% /S /Q
+del %NWPACK_PATH% /S /Q
 del %EXE_PATH% /S /Q
 
 call :ColorText 19 "create zip file"
