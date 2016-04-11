@@ -36,7 +36,7 @@ regularly to indicate new official, stable release versions of Streembit Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The developer [forum](https://gitter.im/streembit/Streembit)
+The developer [forum](https://gitter.im/streembit)
 should be used to discuss complicated or controversial changes before working
 on a patch set.
 
