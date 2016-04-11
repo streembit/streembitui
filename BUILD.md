@@ -55,7 +55,7 @@ Execute the build/build_linux64.sh file from the Linux terminal.
 
 MacOS build:  
 Build node-webkit from source or download the latest MAC OS X node-webkit binaries from the node-webkit project site, and copy it to the /build/buildtools/macosx directory.   
-Execute the build/build_macos64.sh file from the terminal.
+Execute the build/build_macosx64.sh file from the terminal.
 
 
 

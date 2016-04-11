@@ -2214,7 +2214,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     
                     streembit.User.initialize(account, pwd, function (err) {
                         streembit.notify.success("The account has been initialized");
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
+                        streembit.UI.show_startscreen();
                     });
 
                 }
