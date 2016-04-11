@@ -8,11 +8,11 @@ What is Streembit?
 Streembit is an experimental decentralised communication system for humans and 
 Internet of Things devices. Streembit uses peer-to-peer technology to operate
 with no central authority: discovering contacts, persisting the data and routing 
-messages are carried out collectively by the network. Streembit Core is the name 
+messages are carried out collectively by the network. Streembit is the name 
 of open source software which enables the use of this P2P network.
 
-For more information, as well as an immediately useable, binary version of
-the Streembit Core software, see http://streembit.github.io/download.
+For more information, as well as an immediately useable, packaged version of
+the Streembit software, see http://streembit.github.io/download.
 
 License
 -------
