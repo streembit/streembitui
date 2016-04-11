@@ -1,11 +1,11 @@
 {
   "name": "streembit",
-  "description": "P2P real time communication system for humans and IoT devices",
+  "description": "P2P real time communication system for humans and machines",
   "author": {
     "name": "T Z Pardi",
     "email": "tzpardi@streembit.com"
   },
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "index.html",
   "window": {
     "toolbar": false,

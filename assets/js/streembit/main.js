@@ -41,6 +41,7 @@ var nodecrypto = require(global.cryptolib);
 var EccKey = require('streembitlib/crypto/EccKey');
 var secrand = require('secure-random');
 
+
 if (gui) {
     //  the desktop version supports these libraries
     var path = require('path');
@@ -157,13 +158,59 @@ streembit.util = (function (util) {
         });
     }
     
+    function getRepoVersion(callback) {
+        
+        const https = require('https');
+        
+        var options = {
+            host: 'api.github.com',
+            path: '/repos/streembit/streembitui/releases',
+            method: 'GET',
+            headers: { 'user-agent': 'node.js' }
+        };
+        
+        var request = https.request(options, function (response) {
+            var body = '';
+            response.on("data", function (chunk) {
+                body += chunk.toString('utf8');
+            });
+            
+            response.on("end", function () {
+                var version = null;
+                try {
+                    var data = JSON.parse(body);
+                    if (Array.isArray(data) && data.length > 0) {
+                        if (data[0].tag_name) {
+                            version = data[0].tag_name;
+                        }
+                    }
+                }
+                catch (e) {
+                    version = null;
+                }
+
+                callback(version);
+
+            });
+        });
+        
+        request.on('error', function (e) {
+            logger.error('getRepoVersion error: %j' + e);
+            callback();
+        });
+        
+        request.end();
+        
+    }
+    
     return {
         loadView: loadView,
         loadLogs: loadLogs,
         timeNow: timeNow,
         fileHash: getFileHash,
         dataDir: createDataDir,
-        deleteFile: deleteFile
+        deleteFile: deleteFile,
+        getVersion: getRepoVersion
     };
 
 }(streembit.util || {}));
@@ -2547,6 +2594,22 @@ streembit.Main = (function (module, logger, events, config) {
         }));
         helpMenu.append(new gui.MenuItem({ type: 'separator' }));
         helpMenu.append(new gui.MenuItem({
+            label: 'Check software updates',
+            click: function () {
+                streembit.util.getVersion(function (version) {
+                    if (version) {
+                        if (streembit.Main.version == version) {
+                            streembit.notify.success("Your Streembit version v" + streembit.Main.version + " is up to date, there is no new version available.");
+                        }
+                        else {
+                            streembit.notify.info("There is a new Streembit version v" + version + " available for download. Your Streembit current version is v" + streembit.Main.version );
+                        }
+                    }
+                });
+            }
+        }));
+        helpMenu.append(new gui.MenuItem({ type: 'separator' }));
+        helpMenu.append(new gui.MenuItem({
             label: 'About Streembit',
             click: function () {
                 streembit.UI.show_about();
@@ -2623,7 +2686,12 @@ streembit.Main = (function (module, logger, events, config) {
                 // make sure the data directory exists
                 logger.debug("Creating data directory");
                 streembit.util.dataDir(callback);
-            }
+            }//,
+            //function (callback) {
+            //    // make sure the data directory exists
+            //    logger.debug("Getting software version");
+            //    streembit.util.getVersion(callback);
+            //}
         ], 
         function (err, result) {
             if (err) {
