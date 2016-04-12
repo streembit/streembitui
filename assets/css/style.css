@@ -14,10 +14,17 @@ body {
   padding-top: 0;
 }
 
-.app-select-screen{
+#app-init-screen{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    height: 100%;
     background:linear-gradient(to bottom, #e9f1fa 0%, #ffffff 100%);
+}
+
+.app-select-screen{    
     text-align:center;
-    height:100%;
+    margin: 0 auto;
 }
 
 .app-select-screen button{
@@ -33,7 +40,6 @@ body {
     background-color:#3a687e;
     height:100%;
     color:#fff;
-    display:none;
 }
 
 .appboot-screen-content {

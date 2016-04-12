@@ -2213,8 +2213,10 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     var pwd = this.private_key_pwd();
                     
                     streembit.User.initialize(account, pwd, function (err) {
-                        streembit.notify.success("The account has been initialized");
-                        streembit.UI.show_startscreen();
+                        streembit.notify.log_info("The account for " + account.account + " has been initialized");
+                        if (is_init_existing_account) {
+                            streembit.UI.show_startscreen();
+                        }
                     });
 
                 }

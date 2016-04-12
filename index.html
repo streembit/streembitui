@@ -79,7 +79,8 @@ Copyright (C) 2016 The Streembit software development team
             function appboot_msg_handler(msg, close) {
                 $("#appboot-msg").text(msg);
                 if (close) {
-                    $(".appboot-screen-content").hide();
+                    debugger;
+                    streembit.UI.hide_netbootscreen();
                 }
             }
 
@@ -87,42 +88,9 @@ Copyright (C) 2016 The Streembit software development team
 
 </head>
 <body>
-    <div class="app-select-screen">
-        <div class="flex-btncontainer">
-            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
-                <i class="fa fa-group" style="font-size:100px"></i>
-                <div class="flex-btnitem-text">Connect to Public Streembit</div>
-            </div>
-            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#5fb2c4">
-                <i class="fa fa-lock"></i>
-                <div class="flex-btnitem-text">Connect to Private Streembit</div>
-            </div>
-            <div  id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
-                <i class="fa fa-user-plus"></i>
-                <div class="flex-btnitem-text">New Account</div>
-            </div>
-            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#E26A6A">
-                <i class="fa fa-folder-open"></i>
-                <div class="flex-btnitem-text">Initialize Existing Account</div>
-            </div>
-            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
-                <i class="fa fa-sign-in"></i>
-                <div class="flex-btnitem-text">Restore Account</div>
-            </div>            
-        </div>
-    </div>
-    <div class="appboot-screen">
-        <div class="appboot-screen-content">
-            <div style="color:#fff; margin-bottom:30px;font-size:18px;">
-                <span id="appboot-msg"></span>
-            </div>
-            <div class="appboot-screen-spinner">
-                <div>
-                    <i class="fa fa-spinner fa-pulse fa-6x"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <div id="app-init-screen"></div>
+   
     <div class="streembit-screen" style="display:none;border-top:1px solid #eee">
         <div id="contacts-container" class="contacts-tab">
             <div class="sidebar-search" data-bind="visible: issearch"> 
@@ -208,29 +176,14 @@ Copyright (C) 2016 The Streembit software development team
 
     <script type="text/javascript">
 
-        function initViewModels() {
-            // init the view models
-            if (!streembit.Session.contactsvm) {
-                var contacts_div = document.getElementById('contacts-container');
-                var contactsmodel = new streembit.vms.ContactsListViewModel()
-                ko.applyBindings(contactsmodel, contacts_div);
-                streembit.Session.contactsvm = contactsmodel;
-            }
-
-            if (!streembit.Session.tasksvm) {
-                var footer_info_div = document.getElementById('footer-info');
-                var tasksvm = new streembit.vms.TasksViewModel()
-                ko.applyBindings(tasksvm, footer_info_div);
-                streembit.Session.tasksvm = tasksvm;
-            }
-        }
-
-
         $(document).ready(function () {
             streembit.notify.showprogress("Starting Streembit... ");
 
             // initialize the menu
             streembit.Main.initMenu();
+
+            // show the start screen
+            streembit.UI.show_startscreen();
 
             // init the main view model
             var mainview_div = document.getElementById('main-container');
@@ -253,37 +206,7 @@ Copyright (C) 2016 The Streembit software development team
                 streembit.notify.hideprogress();
             });
 
-
-            $("#btnAppSelectPublic").on("click", function () {
-                logger.debug("Connecting to public Streembit network");
-                $(".app-select-screen").hide();
-                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPUBLICNET);
-            });
-
-            $("#btnAppSelectPrivate").on("click", function () {
-                logger.debug("Connecting a private Streembit hub");
-                $(".app-select-screen").hide();
-                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPRIVATENET);
-            });
-
-            $("#btnCreateUser").on("click", function () {
-                logger.debug("Create new account");
-                $(".app-select-screen").hide();
-                streembit.Main.init(streembit.DEFS.CMD_APP_CREATEACCOUNT);
-            });
-
-            $("#btnInitializeUser").on("click", function () {
-                logger.debug("Initialize existing account");
-                $(".app-select-screen").hide();
-                streembit.Main.init(streembit.DEFS.CMD_APP_INITACCOUNT);
-            });
-
-            $("#btnRestoreUser").on("click", function () {
-                logger.debug("Restore account");
-                $(".app-select-screen").hide();
-                streembit.Main.init(streembit.DEFS.CMD_APP_RESTOREACCOUNT);
-            });
-
+            //
             $("#lnkShowLogs").on("click", function () {
                 streembit.UI.showLogs();
             });
@@ -306,6 +229,83 @@ Copyright (C) 2016 The Streembit software development team
 
 <script type="text/html" id="empty-template">
     <div style="padding:0;margin:0;display:none">
+    </div>
+</script>
+
+
+<script type="text/html" id="appstart">
+    <div class="app-select-screen">
+        <div class="flex-btncontainer">
+            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
+                <i class="fa fa-group" style="font-size:100px"></i>
+                <div class="flex-btnitem-text">Connect to Public Streembit</div>
+            </div>
+            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#5fb2c4">
+                <i class="fa fa-lock"></i>
+                <div class="flex-btnitem-text">Connect to Private Streembit</div>
+            </div>
+            <div id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
+                <i class="fa fa-user-plus"></i>
+                <div class="flex-btnitem-text">New Account</div>
+            </div>
+            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#E26A6A">
+                <i class="fa fa-folder-open"></i>
+                <div class="flex-btnitem-text">Initialize Existing Account</div>
+            </div>
+            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
+                <i class="fa fa-sign-in"></i>
+                <div class="flex-btnitem-text">Restore Account</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+           
+            $("#btnAppSelectPublic").on("click", function () {
+                logger.debug("Connecting to public Streembit network");
+                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPUBLICNET);
+            });
+
+            $("#btnAppSelectPrivate").on("click", function () {
+                logger.debug("Connecting a private Streembit hub");
+                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPRIVATENET);
+            });
+
+            $("#btnCreateUser").on("click", function () {
+                logger.debug("Create new account");
+                streembit.Main.init(streembit.DEFS.CMD_APP_CREATEACCOUNT);
+            });
+
+            $("#btnInitializeUser").on("click", function () {
+                logger.debug("Initialize existing account");
+                streembit.Main.init(streembit.DEFS.CMD_APP_INITACCOUNT);
+            });
+
+            $("#btnRestoreUser").on("click", function () {
+                logger.debug("Restore account");
+                streembit.Main.init(streembit.DEFS.CMD_APP_RESTOREACCOUNT);
+            });
+
+        });
+
+    </script>
+
+</script>
+
+<script type="text/html" id="netboot">
+    <div class="appboot-screen">
+        <div class="appboot-screen-content">
+            <div style="color:#fff; margin-bottom:30px;font-size:18px;">
+                <span id="appboot-msg"></span>
+            </div>
+            <div class="appboot-screen-spinner">
+                <div>
+                    <i class="fa fa-spinner fa-pulse fa-6x"></i>
+                </div>
+            </div>
+        </div>
     </div>
 </script>
 

@@ -433,18 +433,44 @@ streembit.UI = (function (module, logger, events, config) {
     
     module.messagesvm = null;
     
+    module.streembit_appshow = function () {
+        $("#app-init-screen").empty();
+        $("#app-init-screen").hide();
+        $(".streembit-screen").show();
+    }
+
     module.show_startscreen = function () {
-        $(".appboot-screen").hide();
         $(".streembit-screen").hide();
-        $(".app-select-screen").show();
+        $("#app-init-screen").empty();
+        var html = $("#appstart").html();
+        $("#app-init-screen").append(html);
+        $("#app-init-screen").show();
+    };
+    
+    module.hide_netbootscreen = function () {
+        $("#app-init-screen").empty();
+        $("#app-init-screen").hide();
+    };
+    
+    module.show_netbootscreen = function () {
+        $(".streembit-screen").hide();
+        $("#app-init-screen").empty();
+        var html = $("#netboot").html();
+        $("#app-init-screen").append(html);
+        $("#app-init-screen").show();
     };
 
     module.showContacts = function () {
-        $(".app-select-screen").hide();
-        $(".appboot-screen").hide();
+        $("#app-init-screen").empty();
+        $("#app-init-screen").hide();
         $(".streembit-screen").show();
         $('.contacts-tab').show();
         $("#main-container").css('left', 281);
+    };
+    
+    module.hideContacts = function () {
+        $('.contacts-tab').hide();
+        $("#main-container").css('left', 0);
     };
     
     module.set_account_title = function (account) {
@@ -474,7 +500,8 @@ streembit.UI = (function (module, logger, events, config) {
         audioctrl.muted = false;
         audioctrl.play();
         $(".appboot-screen").hide(100, function () {
-            $(".streembit-screen").show();
+
+            streembit.UI.streembit_appshow();
             
             bootbox.dialog({
                 message: msg,
@@ -510,7 +537,8 @@ streembit.UI = (function (module, logger, events, config) {
         audioctrl.muted = false;
         audioctrl.play();
         $(".appboot-screen").hide(100, function () {
-            $(".streembit-screen").show();
+            
+            streembit.UI.streembit_appshow();
             
             bootbox.dialog({
                 message: msg,
@@ -949,6 +977,11 @@ streembit.notify = (function (module) {
                 delay: time ? time : 8000
             }
         );
+        logger.info(text);
+    }
+    
+    module.log_info = function (msg, param, title, time) {
+        var text = get_msg(msg, param);
         logger.info(text);
     }
     
@@ -1463,7 +1496,8 @@ streembit.User = (function (usrobj, events) {
                                         streembit.UI.set_account_title(account);
                                         
                                         streembit.notify.success("The account has been initialized");
-                                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
+                                        
+                                        streembit.UI.show_startscreen();
 
                                     });
                                 }
@@ -2302,14 +2336,9 @@ streembit.Main = (function (module, logger, events, config) {
     module.upnp_local_address = "";
     module.seeds = [];
     
-    function show_active_app_screen() {
-        $(".app-select-screen").hide();
-        $(".appboot-screen").hide();
-        $(".streembit-screen").show();    
-    }
-    
+
     function display_new_account() {
-        show_active_app_screen();
+        streembit.UI.streembit_appshow();
         module.app_command = streembit.DEFS.CMD_APP_CREATEACCOUNT;
         events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: true });
     }
@@ -2351,7 +2380,7 @@ streembit.Main = (function (module, logger, events, config) {
             label: 'Connect to public network',
             click: function () {
                 if (!streembit.User.is_user_initialized) {
-                    show_active_app_screen();
+                    streembit.UI.streembit_appshow();
                     module.network_type = streembit.DEFS.PUBLIC_NETWORK;
                     module.app_command = streembit.DEFS.CMD_APP_JOINPUBLICNET;
                     events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
@@ -2366,7 +2395,7 @@ streembit.Main = (function (module, logger, events, config) {
         streembitMenu.append(new gui.MenuItem({
             label: 'Connect to private hub',
             click: function () {
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
                 module.network_type = streembit.DEFS.PRIVATE_NETWORK;
                 module.app_command = streembit.DEFS.CMD_APP_JOINPRIVATENET;
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
@@ -2382,7 +2411,7 @@ streembit.Main = (function (module, logger, events, config) {
         streembitMenu.append(new gui.MenuItem({
             label: 'Initialize existing account',
             click: function () {
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
                 module.app_command = streembit.DEFS.CMD_APP_INITACCOUNT;
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
             }
@@ -2390,7 +2419,7 @@ streembit.Main = (function (module, logger, events, config) {
         streembitMenu.append(new gui.MenuItem({
             label: 'Restore account',
             click: function () {
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
                 module.app_command = streembit.DEFS.CMD_APP_RESTOREACCOUNT;
                 streembit.User.restore();
             }
@@ -2402,7 +2431,8 @@ streembit.Main = (function (module, logger, events, config) {
                     return streembit.notify.error_popup("The account is not initialized");
                 }
 
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
+
                 streembit.User.backup();
             }
         }));
@@ -2413,7 +2443,8 @@ streembit.Main = (function (module, logger, events, config) {
                     return streembit.notify.error_popup("The account is not initialized");
                 }
 
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
+
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CHANGE_KEY);                
             }
         }));
@@ -2424,7 +2455,8 @@ streembit.Main = (function (module, logger, events, config) {
                     return streembit.notify.error_popup("The account is not initialized");
                 }
                 
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
+
                 bootbox.confirm("Your account will be removed from the Streembit network. Click on OK to continue!", function (result) {
                     if (result) {
                         streembit.PeerNet.delete_public_key(function (err) {
@@ -2462,7 +2494,7 @@ streembit.Main = (function (module, logger, events, config) {
         toolsMenu.append(new gui.MenuItem({
             label: 'Settings',
             click: function () {
-                show_active_app_screen();
+                streembit.UI.streembit_appshow();
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_SETTINGS);
             }
         }));
@@ -2474,7 +2506,7 @@ streembit.Main = (function (module, logger, events, config) {
                     streembit.notify.error_popup("The account is not initialized");
                 }
                 else {
-                    show_active_app_screen();
+                    streembit.UI.streembit_appshow();
                     events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_ACCOUNT_INFO);
                 }
             }
@@ -2586,9 +2618,7 @@ streembit.Main = (function (module, logger, events, config) {
         helpMenu.append(new gui.MenuItem({
             label: 'Help Content',
             click: function () {
-                $(".app-select-screen").hide();
-                $(".appboot-screen").hide();
-                $(".streembit-screen").show();
+                streembit.UI.streembit_appshow();
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_HELP);
             }
         }));
@@ -2743,10 +2773,21 @@ streembit.Main = (function (module, logger, events, config) {
                     description: "Streembit UPNP " + streembit.User.name
                 }, 
                 function (err) {
+                    
+                    try {
+                        streembit.UI.show_netbootscreen();
+                    }
+                    catch (screenerr) {
+                    }
+
                     if (err) {
                         logger.error("UPNP portMapping error: %j", err);
+                        appboot_msg_handler("UPNP port mapping didn't work.");
                     }
-                    
+                    else {
+                        appboot_msg_handler("UPNP port mapping success.");
+                    }
+
                     module.upnp_gateway = client.upnp_gateway;
                     module.upnp_local_address = client.upnp_local_address;
                     
@@ -2764,9 +2805,7 @@ streembit.Main = (function (module, logger, events, config) {
     module.network_init = function (seeds, skip_publish, completefn) {
         module.is_app_initialized = false;
         
-        $(".streembit-screen").hide();
-        $(".appboot-screen").show();
-        $(".appboot-screen-content").show();
+        streembit.UI.show_netbootscreen();
         
         async.waterfall([        
             function (callback) {
@@ -2856,8 +2895,7 @@ streembit.Main = (function (module, logger, events, config) {
                 }
             }
             
-            $(".appboot-screen").hide();
-            $(".streembit-screen").show();    
+            streembit.UI.streembit_appshow();
             
             module.is_app_initialized = true;
             
@@ -2871,13 +2909,24 @@ streembit.Main = (function (module, logger, events, config) {
     
     module.join_to_network = function (seeds, skip_publish, completefn) {
         
+        if (!seeds || seeds.length == 0) {
+            return streembit.error_popup("Invalid bootseeds parameters. Please check your Settings and provide a valid seed list.");
+        }
+        
+        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
+        
         if (!skip_publish) {  // undefined will return true as well but nust set to false
             skip_publish = false;
         }
         
         var retry_with_websocket = false;
+        
+        var bootseeds = [];
+        for (var i = 0; i < seeds.length; i++) {
+            bootseeds.push(seeds[i]);
+        }
 
-        module.network_init(seeds, skip_publish, function (err) {            
+        module.network_init(bootseeds, skip_publish, function (err) {            
             if (err) {
                 if (!retry_with_websocket && config.transport == streembit.DEFS.TRANSPORT_TCP && config.wsfallback == true) {
                     logger.info("The TCP connection failed. Retry to connect via WebSockets.")
@@ -2885,7 +2934,7 @@ streembit.Main = (function (module, logger, events, config) {
                     config.transport = streembit.DEFS.TRANSPORT_WS;
                     //  the TCP connection failed, ry with websocket fallback
                     retry_with_websocket = true;
-                    module.network_init(seeds, skip_publish, function (ret_err) {
+                    module.network_init(bootseeds, skip_publish, function (ret_err) {
                         if (ret_err) {
                             if (retry_with_websocket) {
                                 retry_with_websocket = false;
@@ -2893,9 +2942,7 @@ streembit.Main = (function (module, logger, events, config) {
                                 config.transport = streembit.DEFS.TRANSPORT_TCP;
                             }
                             
-                            $(".appboot-screen").hide();
-                            $(".streembit-screen").hide();
-                            $(".app-select-screen").show();
+                            streembit.UI.show_startscreen();
 
                             return bootbox.alert(ret_err);
                         }
@@ -2913,9 +2960,7 @@ streembit.Main = (function (module, logger, events, config) {
                         config.transport = streembit.DEFS.TRANSPORT_TCP;
                     }
                     
-                    $(".appboot-screen").hide();
-                    $(".streembit-screen").hide();
-                    $(".app-select-screen").show();
+                    streembit.UI.show_startscreen();
 
                     return bootbox.alert(err);
                 }
@@ -2933,10 +2978,11 @@ streembit.Main = (function (module, logger, events, config) {
         module.app_command = app_cmd;
         
         if (app_cmd == streembit.DEFS.CMD_APP_JOINPUBLICNET) {
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
             module.network_type = streembit.DEFS.PUBLIC_NETWORK;
             if (!streembit.User.is_user_initialized) {
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
-                $(".streembit-screen").show();
+                streembit.UI.streembit_appshow();
             }            
             else {
                 logger.debug("Publish user to public network");
@@ -2945,9 +2991,10 @@ streembit.Main = (function (module, logger, events, config) {
             }
         }
         else if (app_cmd == streembit.DEFS.CMD_APP_JOINPRIVATENET) {
+            events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
             module.network_type = streembit.DEFS.PRIVATE_NETWORK;
             events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false });
-            $(".streembit-screen").show();
+            streembit.UI.streembit_appshow();
         }
         else if (app_cmd == streembit.DEFS.CMD_APP_CREATEACCOUNT) {
             module.network_type = streembit.DEFS.PUBLIC_NETWORK;
@@ -2956,11 +3003,12 @@ streembit.Main = (function (module, logger, events, config) {
         else if (app_cmd == streembit.DEFS.CMD_APP_INITACCOUNT) {
             module.network_type = streembit.DEFS.PUBLIC_NETWORK;
             events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_INIT_USER, null, { newuser: false, initexisting: true });
-            $(".streembit-screen").show();
+            streembit.UI.hideContacts();
+            streembit.UI.streembit_appshow();
         }
         else if (app_cmd == streembit.DEFS.CMD_APP_RESTOREACCOUNT) {
             streembit.User.restore();
-            $(".streembit-screen").show();
+            streembit.UI.streembit_appshow();
         }
     }
     
