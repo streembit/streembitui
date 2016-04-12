@@ -2628,11 +2628,18 @@ streembit.Main = (function (module, logger, events, config) {
             click: function () {
                 streembit.util.getVersion(function (version) {
                     if (version) {
-                        if (streembit.Main.version == version) {
-                            streembit.notify.success("Your Streembit version v" + streembit.Main.version + " is up to date, there is no new version available.");
+                        try {
+                            var numver = parseFloat(streembit.Main.version.replace('.', ''));
+                            var rcvver = parseFloat(version.replace('.', ''));
+                            if (numver >= rcvver) {
+                                streembit.notify.success("Your Streembit version v" + streembit.Main.version + " is up to date, there is no new version available.");
+                            }
+                            else {
+                                streembit.notify.success("There is a new Streembit version v" + version + " available for download. Your Streembit current version is v" + streembit.Main.version);
+                            }
                         }
-                        else {
-                            streembit.notify.info("There is a new Streembit version v" + version + " available for download. Your Streembit current version is v" + streembit.Main.version );
+                        catch (e) {
+                            streembit.notify.error_popup("Error in populating version: %j", e);
                         }
                     }
                 });
