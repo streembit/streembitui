@@ -2870,7 +2870,7 @@ streembit.Main = (function (module, logger, events, config) {
                 else {
                     streembit.PeerNet.publish_user(callback);
                 }
-            },
+            }
         ], 
         function (err, result) {          
             if (err) {

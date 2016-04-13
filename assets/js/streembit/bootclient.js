@@ -23,8 +23,6 @@ Copyright (C) 2016 The Streembit software development team
 
 if (streembit.config.transport == streembit.DEFS.TRANSPORT_TCP && global.appgui) {
     var async = require("async");
-    var net = require("net");
-    var restify = require('restify');
 }
 
 var streembit = streembit || {};
@@ -48,34 +46,46 @@ streembit.bootclient = (function (module, logger, config, events) {
         }
     }
     
-    function get_http_client(remoteuri, port) {
-        remoteuri += ":";
-        remoteuri += port || streembit.DEFS.BOOT_PORT;
-        var client = restify.createJsonClient({
-            url: remoteuri,
-            version: '*',
-            agent: false,
-            connectTimeout: 5000,
-            requestTimeout: 10000
-        });
-        return client;
-    };
-    
     function get_seeds(remoteuri, port, callback) {
         try {
-            var uri = "http://" + remoteuri;
-            var client = get_http_client(uri, port);
-            client.post('/seeds', {}, function (err, req, res, data) {
-                if (err) {
-                    callback("get_seeds() error: " + err);
-                }            
-                else if (!data || !data.result || !data.result.seeds || !data.result.seeds.length) {
-                    callback("get_seeds() error: invalid result");
-                }
-                else {
-                    callback(null, data.result);
-                }
+            
+            const http = require('http');
+            
+            var options = {
+                host: remoteuri,
+                port: port || streembit.DEFS.BOOT_PORT,
+                path: '/seeds',
+                method: 'POST'
+            };
+            
+            var request = http.request(options, function (response) {
+                var body = '';
+                response.on("data", function (chunk) {
+                    body += chunk.toString('utf8');
+                });
+                
+                response.on("end", function () {
+                    try {
+                        var data = JSON.parse(body);
+                        if (!data || !data.result || !data.result.seeds || !data.result.seeds.length) {
+                            callback("get_seeds() error: invalid result");
+                        }
+                        else {
+                            callback(null, data.result);
+                        }
+                    }
+                    catch (err) {
+                        callback("get_seeds response-end parse error: " + err.message);
+                    }
+                });
             });
+            
+            request.on('error', function (e) {
+                callback("get_seeds() error: " + e.message);
+            });
+            
+            request.end();
+
         }
         catch (e) {
             callback("get http client error: " + e.message);
@@ -257,4 +267,5 @@ streembit.bootclient = (function (module, logger, config, events) {
     }
     
     return module;
-}(streembit.util || {}, streembit.logger, streembit.config, global.appevents));
+
+}(streembit.bootclient || {}, streembit.logger, streembit.config, global.appevents));

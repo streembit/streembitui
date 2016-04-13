@@ -212,7 +212,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
             //
         }
         catch (e) {            
-            callback(e);
+            resultfn(e);
         }
     }    
     
