@@ -72,6 +72,7 @@ Copyright (C) 2016 The Streembit software development team
     <script type="text/javascript" src="assets/js/streembit/peertransport.js"></script>
     <script type="text/javascript" src="assets/js/socketio/socket.io.js"></script>
     <script type="text/javascript" src="assets/js/streembit/wstransport.js"></script>
+    <script type="text/javascript" src="assets/js/streembit/device.js"></script>
 
     <script type="text/javascript">
             global.$ = $;
@@ -1970,4 +1971,35 @@ Copyright (C) 2016 The Streembit software development team
     </script>
 
 
+</script>
+
+
+<!-- device handling templates -->
+
+<script type="text/html" id="streembit-view-connectdevice">
+    <div id="device-container">
+
+        <h2>Device: <span data-bind="text:name"></span></h2>
+
+        <div data-bind="foreach: devices">
+            <div>
+                Name: <span data-bind="text: name"></span>
+            </div>
+            <div>
+                Type: <span data-bind="text: model.@device.type"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var datacontext = streembit.Session.uioptions;
+            var div = document.getElementById('device-container');
+            var vm = new streembit.vms.DeviceModel(datacontext);
+            vm.init(function () {
+                ko.applyBindings(vm, div);
+            });
+        });
+    </script>
 </script>

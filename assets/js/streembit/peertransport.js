@@ -168,9 +168,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
             peermsgHandler: onPeerMessage,
             storage: db,
             is_private_network: is_private_network,
-            private_network_accounts: private_network_accounts,
-            is_gui_node: false,
-            contact_exist_lookupfn: null
+            private_network_accounts: private_network_accounts
         };
         
         try {

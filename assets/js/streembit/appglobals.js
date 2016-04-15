@@ -64,6 +64,7 @@ streembit.DEFS = (function (module) {
         CMD_ACCOUNT_INFO: "account_info",
         CMD_ACCOUNT_MESSAGES: "account_messages",
         CMD_CALL_PROGRESS: "callprogress",
+        CMD_CONNECT_DEVICE: "connect_device",
         CMD_HELP: "help",
         
         ERR_CODE_SYSTEMERR: 0x1000,
@@ -81,6 +82,8 @@ streembit.DEFS = (function (module) {
         PEERMSG_FSEND: "FSEND",
         PEERMSG_FRECV: "FRECV",
         PEERMSG_FEXIT: "FEXIT",
+        PEERMSG_DEVDESC_REQ: "DEVDESCREQ",
+        PEERMSG_DEVDESC: "DEVDESC",
         
         MSG_TEXT: "text",
         MSG_ADDCONTACT: "addcontact",

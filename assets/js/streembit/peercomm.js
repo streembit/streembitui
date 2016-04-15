@@ -99,7 +99,6 @@ streembit.TransportFactory = (function (module, logger, events, config) {
 }(streembit.TransportFactory || {}, streembit.logger, global.appevents, streembit.config));
 
 
-
 streembit.Node = (function (module, logger, events, config) {
     
     module.init = function (seeds, callback) {
@@ -172,7 +171,6 @@ streembit.Node = (function (module, logger, events, config) {
 }(streembit.Node || {}, streembit.logger, global.appevents, streembit.config));
 
 
-
 streembit.Message = (function (module, logger, events) {
     
     module.getvalue = function (val) {
@@ -229,7 +227,6 @@ streembit.Message = (function (module, logger, events) {
 }(streembit.Message || {}, streembit.logger, global.appevents));
 
 
-
 streembit.PeerNet = (function (module, logger, events, config) {
     
     var msgmap = new Map();
@@ -256,22 +253,96 @@ streembit.PeerNet = (function (module, logger, events, config) {
                 }
                 
                 var pkey = decoded.data[wotmsg.MSGFIELD.PUBKEY];
+                if (!pkey) {
+                    return callback("find_contact error: no public key was published by contact " + account);
+                }
+                
                 var ecdhpk = decoded.data[wotmsg.MSGFIELD.ECDHPK];
-                var address = decoded.data[wotmsg.MSGFIELD.HOST];
-                var port = decoded.data[wotmsg.MSGFIELD.PORT];
-                var utype = decoded.data[wotmsg.MSGFIELD.UTYPE];
-                var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streembit.DEFS.TRANSPORT_TCP;
-                var contact = {
-                    public_key: pkey, 
-                    ecdh_public: ecdhpk, 
-                    address: address, 
-                    port: port, 
-                    name: account, 
-                    user_type: utype, 
-                    protocol: protocol
-                };
+                if (!ecdhpk) {
+                    return callback("find_contact error: no ecdhpk key was published by contact " + account);
+                }
+                
+                var cipher = decoded.data[wotmsg.MSGFIELD.CIPHER];
+                var contactskeys = decoded.data["contactskeys"];
+                if (cipher && contactskeys && Array.isArray(contactskeys)) {
+                    
+                    var symmkey = null;
+                    for (var i = 0; i < contactskeys.length; i++) {
+                        if (contactskeys[i].account == streembit.User.name) {
+                            symmkey = contactskeys[i].symmkey;
+                            break;
+                        }
+                    }
+                    
+                    if (!symmkey) {
+                        return callback("find_contact error: no symmkey field is published from contact " + account);
+                    }
+                    
+                    // decrypt the symmkey fild
+                    var plaintext = wotmsg.ecdh_decrypt(streembit.User.ecdh_key, ecdhpk, symmkey);
+                    var keydata = JSON.parse(plaintext);
+                    var session_symmkey = keydata.symmetric_key;
+                    if (!session_symmkey) {
+                        return callback("invalid session symmetric key for contact " + sender);
+                    }
+                    
+                    // decrypt the cipher with the session_symmkey
+                    var plaintext = streembit.Message.aes256decrypt(session_symmkey, cipher);
+                    var connection = JSON.parse(plaintext);
+                    if (!connection) {
+                        return callback("find_contact error: no connection details field is published from contact " + account);
+                    }
+                    
+                    if (connection.account != account) {
+                        return callback("find_contact error: account mismatch was published from contact " + account);
+                    }
+                    
+                    var address = connection[wotmsg.MSGFIELD.HOST];
+                    if (!address) {
+                        return callback("find_contact error: no address field is published from contact " + account);
+                    }
+                    
+                    var port = connection[wotmsg.MSGFIELD.PORT];
+                    if (!port) {
+                        return callback("find_contact error: no port field is published from contact " + account);
+                    }
+                    
+                    var protocol = connection[wotmsg.MSGFIELD.PROTOCOL];
+                    if (!protocol) {
+                        return callback("find_contact error: no protocol field is published from contact " + account);
+                    }
+                    
+                    var utype = connection[wotmsg.MSGFIELD.UTYPE];
 
-                callback(null, contact);
+                    var contact = {
+                        public_key: pkey, 
+                        ecdh_public: ecdhpk, 
+                        address: address, 
+                        port: port, 
+                        name: account, 
+                        user_type: utype, 
+                        protocol: protocol
+                    };
+
+                    callback(null, contact);
+                }
+                else {
+                    var address = decoded.data[wotmsg.MSGFIELD.HOST];
+                    var port = decoded.data[wotmsg.MSGFIELD.PORT];
+                    var utype = decoded.data[wotmsg.MSGFIELD.UTYPE];
+                    var protocol = wotmsg.MSGFIELD.PROTOCOL ? decoded.data[wotmsg.MSGFIELD.PROTOCOL] : streembit.DEFS.TRANSPORT_TCP;
+                    var contact = {
+                        public_key: pkey, 
+                        ecdh_public: ecdhpk, 
+                        address: address, 
+                        port: port, 
+                        name: account, 
+                        user_type: utype, 
+                        protocol: protocol
+                    };
+
+                    callback(null, contact);
+                }                
             }
             catch (e) {
                 callback("get_contact error: " + e.message);
@@ -453,7 +524,11 @@ streembit.PeerNet = (function (module, logger, events, config) {
             contact.port = port;
             contact.protocol = protocol;
             // update the contact with the latest address, port adn protocol data
-            streembit.Contacts.update_contact_database(contact, function () {
+            streembit.Contacts.update_contact_database(contact, function (err) {
+                if (err) {
+                    return;    
+                }
+
                 var jti = streembit.Message.create_id();
                 var encoded_msgbuffer = wotmsg.create_msg(wotmsg.PEERMSG.PREP, jti, streembit.User.private_key, data, streembit.User.name, sender);
                 streembit.Node.peer_send(contact, encoded_msgbuffer);
@@ -824,6 +899,11 @@ streembit.PeerNet = (function (module, logger, events, config) {
                 case streembit.DEFS.PEERMSG_FEXIT:
                     //logger.debug("PEERMSG_FSEND message received");
                     events.emit(events.APPEVENT, events.TYPES.ONFILECANCEL, data);
+                    break;
+
+                case streembit.DEFS.PEERMSG_DEVDESC:
+                    //logger.debug("PEERMSG_DEVDESC message received");
+                    events.emit(events.APPEVENT, "peermsg_devdesc", { sender: sender, data: data });
                     break;
 
                 default:
@@ -1586,6 +1666,9 @@ streembit.PeerNet = (function (module, logger, events, config) {
             logger.debug("publish_user: %j", payload);
             
             var value = wotmsg.create(streembit.User.private_key, streembit.Message.create_id(), payload);
+            // crreate hash
+            // var key = nodecrypto.createHash('sha1').update(streembit.User.name).digest('hex'); 
+            
             var key = streembit.User.name;
             
             //  For this public key upload message the key is the device name

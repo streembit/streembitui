@@ -870,6 +870,39 @@ streembit.UI = (function (module, logger, events, config) {
         });
     }
     
+    module.get_device_name = function (callback) {
+        var box = bootbox.dialog({
+            title: "Enter device name", 
+            message: '<div class="row"><div class="col-md-12"><input id="txt_device_name" name="txt_device_name" type="text" class="form-control input-md"></div></div>',
+            buttons: {
+                danger: {
+                    label: "Cancel",
+                    className: 'btn-default',
+                    callback: function () {
+        
+                    }
+                },
+                success: {
+                    label: "Connect",
+                    className: 'btn-default',
+                    callback: function () {
+                        try {
+                            var result = $('#txt_device_name').val();
+                            if (!result) {
+                                return bootbox.alert("he device name was not entered");
+                            }                           
+                            
+                            callback(result);
+                        }
+                        catch (e) {
+                            bootbox.alert("Error in connecting device: " + e.message);
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
     return module;
 
 }(streembit.UI || {}, streembit.logger, global.appevents));
@@ -1860,7 +1893,11 @@ streembit.Contacts = (function (module, logger, events, config) {
                 user_type: contact.user_type
             };
             
-            module.update_contact_database(updobj, function () {
+            module.update_contact_database(updobj, function (err) {
+                if (err) {
+                    return;
+                }
+
                 module.on_online(account);
             });
         }
@@ -2055,6 +2092,7 @@ streembit.Contacts = (function (module, logger, events, config) {
                 callback();
             },
             function (err) {
+                callback(err);
                 streembit.notify.error("Update contact database error: %j", err);
             }                        
         );
@@ -2595,21 +2633,21 @@ streembit.Main = (function (module, logger, events, config) {
         
         var thingsMenu = new gui.Menu();
         thingsMenu.append(new gui.MenuItem({
-            label: 'Create IoT device account',
+            label: 'Connect to Internet of Things device',
             click: function () {
-                streembit.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
-            }
-        }));
-        thingsMenu.append(new gui.MenuItem({
-            label: 'Configure IoT device',
-            click: function () {
-                streembit.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
-            }
-        }));
-        thingsMenu.append(new gui.MenuItem({
-            label: 'Upgrade IoT device',
-            click: function () {
-                streembit.notify.info_panel("IoT device module is not installed. To use the device features first download, install and configure the IoT device module.");
+                if (!module.is_node_initialized) {
+                    return streembit.notify.error_popup("Not connected to the Streembit network");
+                }
+                
+                streembit.UI.get_device_name(function (device_name) {
+                    if (!device_name) {
+                        return;   
+                    }
+                    
+                    streembit.Device.connect(device_name, function (contact) {
+                                                    
+                    }); 
+                });                
             }
         }));
         menubar.append(new gui.MenuItem({ label: 'Machines', submenu: thingsMenu }));
@@ -3099,6 +3137,11 @@ streembit.Main = (function (module, logger, events, config) {
             }
             else {
                 streembit.PeerNet.onPeerError(payload);
+            }
+        }
+        else if (eventcmd == "peermsg_devdesc") {
+            if (streembit.Device.connection_pending()) {
+                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONNECT_DEVICE, payload);
             }
         }
 

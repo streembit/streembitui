@@ -30,6 +30,32 @@ var EccKey = require('streembitlib/crypto/EccKey');
 
 (function ($, ko, events, config) {
     
+    streembit.vms.DeviceModel = function (datacontext) {
+        var viewModel = {
+            name: ko.observable(datacontext.sender),
+            devices: ko.observableArray([]),
+
+            init: function (callback) {
+                try {
+                    callback();
+                }     
+                catch (err) {
+                    streembit.logger.error("DeviceModel init error %j", err);
+                }
+            }
+        };
+        
+        if (datacontext) {
+            viewModel.name(datacontext.sender);
+            if (datacontext.data && datacontext.data.devices) {
+                viewModel.devices(datacontext.data.devices);
+            }
+        }
+
+        return viewModel;
+    }
+
+    
     function call_contact(call_type, contact) {
         streembit.Session.selected_contact = contact;
         events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CALL_PROGRESS);
@@ -2387,6 +2413,13 @@ var EccKey = require('streembitlib/crypto/EccKey');
                         resetTemplate();
                         resetView();
                         showView("accountinfo");
+                        break;
+
+                    case streembit.DEFS.CMD_CONNECT_DEVICE:
+                        streembit.Session.uioptions = datactx;
+                        resetTemplate();
+                        resetView();
+                        showView("connectdevice");
                         break;
 
                     case streembit.DEFS.CMD_HELP:
