@@ -596,7 +596,7 @@ body {
     height:100%;
     width:100%;
     padding:0 10px;
-    visibility:hidden;
+    /*visibility:hidden;*/
 }
 
 .media-call-center{ 
