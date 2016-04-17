@@ -631,6 +631,7 @@ body {
     flex:1;
     display:flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 .chat_items{
@@ -640,52 +641,37 @@ body {
 }
 
 .video_ctrls_parent{
-    position:relative;
-    border: 5px solid #444;
 }
 
 .localvid_parent{
-    border: 2px solid #555;
-    z-index: 9999;
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 164px;
-    height: 124px;
+    display: flex;
+    justify-content:center;
+    align-items:flex-start;
+    margin-bottom:5px;
 }
 
 #localvid{
-    width: 160px;
-    height: 120px;
+    width: 164px;
+    height: 124px;
+    border: 2px solid #555;
 }
 
 .remotevid_parent{
-    position: absolute;
-    /*top: 1px;
-    right: 1px;
-    bottom: 1px;
-    border: 2px solid #222;*/
-    /*border: 3px solid #222;*/
-    /*display:flex;
-    justify-content: flex-start;
-    align-items: stretch;
-    align-content: stretch;*/
-    /*position:relative;*/
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 #remotevid{
-    min-width: 100%;
-    min-height: 100%;
-    /*position:absolute;*/
-    /*width: 100%;
-    height: 100%;*/
-    /*top:3px;
-    left:3px;
-    bottom:3px;
-    right:3px;*/
-    /*flex:1;*/
-    /*top:3px;
-    left:3px;*/
+     border: 5px solid #555;
+}
+
+.remoteaudio_parent{
+    margin-top:40px;
+    margin-bottom:20px;
+    display: flex;
+    justify-content: center;
 }
 
 .media-call-chat{

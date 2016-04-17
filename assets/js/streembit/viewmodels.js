@@ -2524,7 +2524,17 @@ var EccKey = require('streembitlib/crypto/EccKey');
                         }
                         resetTemplate();
                         streembit.Session.uioptions = options;
-                        showView("mediacall");
+                        var viewname;
+                        if (options.calltype == streembit.DEFS.CALLTYPE_VIDEO) {
+                            viewname = "videocall";
+                        }
+                        else if (options.calltype == streembit.DEFS.CALLTYPE_AUDIO) {
+                            viewname = "audiocall";
+                        }
+                        else {
+                            return streembit.notify.error_popup("Uknown media call type");
+                        }
+                        showView(viewname);
                         break;
 
                     case streembit.DEFS.CMD_SENDER_SHARESCREEN:

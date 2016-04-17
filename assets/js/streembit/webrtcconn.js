@@ -104,7 +104,7 @@ streembit.MediaCall = (function (module, logger, app_events, config) {
             logger.debug('WebRTC: connection.onaddstream, set remote stream');
             remoteStream = evt.stream;
             if (module.is_outgoing_call) {
-                logger.debug('WebRTC: call onRemoteStreamAdded()');
+                logger.debug('is_outgoing_call == true, call onRemoteStreamAdded()');
                 onRemoteStreamAdded(evt.stream);
             }
         };
@@ -297,16 +297,6 @@ streembit.MediaCall = (function (module, logger, app_events, config) {
     }
     
     
-    function onRemoteStreamEnded(event) {
-        
-        logger.debug('onRemoteStreamEnded()');
-    }
-    
-    function onRemoteStreamRemoveTrack(event) {
-        
-        logger.debug('onRemoteStreamRemoveTrack()');
-    }
-    
     function onRemoteStreamAdded(eventStream) {
         try {
             if (module.options.calltype == "videocall") {
@@ -315,15 +305,16 @@ streembit.MediaCall = (function (module, logger, app_events, config) {
                 // Bind the remote stream to the contact video control
                 var contactVideo = document.getElementById(contactVidElement);
                 attachMediaStream(contactVideo, eventStream);
-                
-                //TODO this changed with Chromium 45
-                eventStream.onended = onRemoteStreamEnded;
-                eventStream.onremovetrack = onRemoteStreamRemoveTrack;
+
             }
             else {
                 logger.debug('Bind remote stream to audio element');
                 var audio = document.querySelector('audio');
                 audio.srcObject = eventStream; //event.stream;
+            }
+            
+            if (eventStream.active) {
+                logger.debug("onRemoteStreamAdded: eventStream is active");
             }
             
             app_events.emit(app_events.APPEVENT, app_events.TYPES.ONVIDEOCONNECT);
