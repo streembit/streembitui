@@ -84,6 +84,8 @@ streembit.DEFS = (function (module) {
         PEERMSG_FEXIT: "FEXIT",
         PEERMSG_DEVDESC_REQ: "DEVDESCREQ",
         PEERMSG_DEVDESC: "DEVDESC",
+        PEERMSG_DEVREAD_PROP: "DEVREADPROP",
+        PEERMSG_DEVREAD_PROP_REPLY: "DEVREADPROP_REPLY",
         
         MSG_TEXT: "text",
         MSG_ADDCONTACT: "addcontact",

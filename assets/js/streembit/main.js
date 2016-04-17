@@ -875,13 +875,6 @@ streembit.UI = (function (module, logger, events, config) {
             title: "Enter device name", 
             message: '<div class="row"><div class="col-md-12"><input id="txt_device_name" name="txt_device_name" type="text" class="form-control input-md"></div></div>',
             buttons: {
-                danger: {
-                    label: "Cancel",
-                    className: 'btn-default',
-                    callback: function () {
-        
-                    }
-                },
                 success: {
                     label: "Connect",
                     className: 'btn-default',
@@ -3143,6 +3136,14 @@ streembit.Main = (function (module, logger, events, config) {
             if (streembit.Device.connection_pending()) {
                 events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONNECT_DEVICE, payload);
             }
+        }
+        else if (eventcmd == "peermsg_devread_prop_reply") {
+            if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.onpropertyread) {
+                streembit.Session.curent_viewmodel.onpropertyread(payload);
+            }
+            //if (streembit.Device.connection_pending()) {
+            //    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONNECT_DEVICE, payload);
+            //}
         }
 
     });

@@ -30,6 +30,96 @@ var EccKey = require('streembitlib/crypto/EccKey');
 
 (function ($, ko, events, config) {
     
+    streembit.vms.DeviceEvent= function (obj) {
+        var model = {
+            template_name: "device_event_" + obj.name + "_template",
+            is_subscribed: ko.observable(false),
+            threshold: ko.observable(0),
+            onevent_raised: ko.observable(false),
+            event_name: obj.name,
+            
+            subscribe: function () {
+        
+            },
+
+            refresh: function () {
+
+            }
+        }
+        
+        if (!obj.name) {
+            throw new Error("invalid property name")
+        }
+        
+        var html = $("#" + model.template_name).html();
+        if (!html) {
+            throw new Error("property template " + model.template_name + " does not exists")
+        }
+        
+        if (obj.datatype == "xs:decimal" || obj.datatype == "xs:integer" || obj.datatype == "xs:long" || obj.datatype == "xs:short") {
+            //TODO add more validation for other data types e.g. unsignedLong, byte, etc
+            model[obj.name] = ko.observable(0);
+        }
+        else {
+            model[obj.name] = ko.observable("");
+        }
+        
+        return model;
+    };
+
+    streembit.vms.DeviceProperty = function (obj) {
+        var model = {
+            template_name: "device_property_" + obj.name + "_template",
+            refresh_inProgress: ko.observable(false),
+            property_name: obj.name,
+            refresh_in_progress: ko.observable(false),
+            wait_timer: 0,
+            
+            on_wait_complete: function() {
+                this.refresh_in_progress(false);
+                clearTimeout(this.wait_timer);
+                this.wait_timer = 0;
+            },
+
+            refresh: function () {
+                if (this.refresh_in_progress() == true) {
+                    return;            
+                }
+
+                var contact = streembit.Contacts.get_contact(this.contact_name);
+                var message = { cmd: streembit.DEFS.PEERMSG_DEVREAD_PROP, id: this.id, property: model.property_name};
+                streembit.PeerNet.send_peer_message(contact, message);
+                this.refresh_in_progress(true);
+
+                this.wait_timer = setTimeout(function () {
+                    model.refresh_in_progress(false);
+                    clearTimeout(model.wait_timer);
+                    model.wait_timer = 0;
+                },
+                10000);
+            }
+        }
+        
+        if (!obj.name) {
+            throw new Error("invalid property name")   
+        }
+        
+        var html = $("#" + model.template_name).html();
+        if (!html) {
+            throw new Error("property template " + model.template_name + " does not exists")
+        }
+        
+        if (obj.datatype == "xs:decimal" || obj.datatype == "xs:integer" || obj.datatype == "xs:long" || obj.datatype == "xs:short") {
+            //TODO add more validation for other data types e.g. unsignedLong, byte, etc
+            model[obj.name] = ko.observable(0);
+        }
+        else {
+            model[obj.name] = ko.observable("");
+        }
+        
+        return model;
+    };
+    
     streembit.vms.DeviceModel = function (datacontext) {
         var viewModel = {
             name: ko.observable(datacontext.sender),
@@ -42,13 +132,90 @@ var EccKey = require('streembitlib/crypto/EccKey');
                 catch (err) {
                     streembit.logger.error("DeviceModel init error %j", err);
                 }
+            },
+
+            onpropertyread: function (payload) {
+                try {
+                    var sender = payload.sender;
+                    if (this.name() != sender) {
+                        streembit.notify.error_popup("The 'name' field of the property read is incorrect");
+                    }
+                    
+                    var data = payload.data;
+                    for (var i = 0; i < this.devices().length; i++) {
+                        if (this.devices()[i].id == payload.data.device_id) {
+                            var interactions = this.devices()[i].interactions();
+                            for (var j = 0; j < interactions.length; j++) {
+                                if (interactions[j].property_name == payload.data.property) {
+                                    interactions[j][payload.data.property](payload.data.value);
+                                    interactions[j].on_wait_complete();
+                                    console.log("property set to: " + payload.data.value);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (err) {
+                    streembit.notify.error_popup("Read device property error: %j", err);
+                }
             }
         };
         
         if (datacontext) {
             viewModel.name(datacontext.sender);
-            if (datacontext.data && datacontext.data.devices) {
-                viewModel.devices(datacontext.data.devices);
+            if (datacontext.data && datacontext.data.devices && Array.isArray(datacontext.data.devices)) {
+                var objarray = [];
+                for (var i = 0; i < datacontext.data.devices.length; i++) {
+                    try {
+                        var obj = streembit.Device.parse_jsonld(datacontext.data.devices[i]);
+                        if (!obj.device) {
+                            streembit.notify.error_popup("The 'device' field is not defined in the JSON-LD description.");
+                            continue;   
+                        }   
+
+                        obj.template_name = obj.device + "_template";
+                        // is the template exists ?
+                        var html = $("#" + obj.template_name).html();
+                        if (!html) {
+                            streembit.notify.error_popup("Device template '" + obj.template_name + "' doesn't exists. Check the JSON-LD description of the device and make sure the related template exists!")
+                            continue;   
+                        }
+                        
+                        obj.interactions = ko.observableArray([]);
+
+                        obj.interactiondefs.forEach(function(value, index, ar) {
+                            if (value.type == "Property") {
+                                try {
+                                    var objprop = new streembit.vms.DeviceProperty(value);
+                                    objprop.contact_name = datacontext.sender;
+                                    objprop.id = obj.id;
+                                    obj.interactions.push(objprop);
+                                }
+                                catch (err) {
+                                    streembit.notify.error_popup("Device property error: %j", err);
+                                }                                
+                            }
+                            if (value.type == "Event") {
+                                try {
+                                    var objprop = new streembit.vms.DeviceEvent(value);
+                                    objprop.contact_name = datacontext.sender;
+                                    objprop.id = obj.id;
+                                    obj.interactions.push(objprop);
+                                }
+                                catch (err) {
+                                    streembit.notify.error_popup("Device property error: %j", err);
+                                }                                
+                            } 
+                        });
+
+                        objarray.push(obj);
+                    }
+                    catch (err) { 
+                        logger.error("jsonld_parser error for %j", datacontext.data.devices[i]);
+                    }
+                }
+                viewModel.devices(objarray);
             }
         }
 

@@ -1178,3 +1178,59 @@ span.awesomeBlue i.addbtn{
     padding:5px 10px;
     background-color:#fff;
 }
+
+.device-header{
+    text-align:center;
+    padding: 8px 50px;
+    font-size:20px;
+    font-weight:bold;
+    /*background-color:#222;
+    color:#fff;
+    margin:5px;*/
+    display:inline-block;
+}
+
+.devices-list {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-top:50px;
+}
+
+.sensor-container{
+    border-radius:5px;
+    border:4px solid #ddd;
+    background-color:#fbfbfb;
+    display: flex;
+    flex-direction: column;
+}
+
+.sensor-header{
+    padding:5px 10px;
+    border-bottom:2px solid #ddd;
+    background:#f0f0f0;
+    color:#000;
+    font-size:18px;
+}
+
+.interactions-list{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    padding:20px;
+    flex-direction: column;
+}
+
+.device-property{
+    margin:5px auto 20px auto;
+}
+
+.boxed-device-property{
+    border: 2px solid #ddd;
+    background-color:#f0f0f0;
+    border-radius:3px;
+}
+
+.device-property-item{
+    border: 2px solid #ccc;
+}
