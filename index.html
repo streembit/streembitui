@@ -1409,8 +1409,6 @@ Copyright (C) 2016 The Streembit software development team
         var mediacall_vm = null;
 
         function showChatControl(callback) {
-            debugger;
-
             $(".chat_items").css({
                 flex: 1,
                 display: 'flex',
@@ -1442,7 +1440,6 @@ Copyright (C) 2016 The Streembit software development team
                         }
                     }
                 });
-
             }
             catch (err) {
                 streembit.notify.error_popup("Audio call UI error: %j", err)
