@@ -496,37 +496,36 @@ streembit.UI = (function (module, logger, events, config) {
         }
         var msg = "Incoming " + ctype + " call from " + sender + ". Accept call?";
         
+        streembit.UI.streembit_appshow();
+
         var audioctrl = document.getElementById('ringsound1');
         audioctrl.muted = false;
         audioctrl.play();
-        $(".appboot-screen").hide(100, function () {
-
-            streembit.UI.streembit_appshow();
             
-            bootbox.dialog({
-                message: msg,
-                title: "Incoming call",
-                closeButton: false,
-                buttons: {
-                    danger: {
-                        label: "Decline",
-                        callback: function () {
-                            audioctrl.pause();
-                            audioctrl.muted = true;
-                            resultfn(false);
-                        }
-                    },
-                    success: {
-                        label: "Accept",
-                        callback: function () {
-                            audioctrl.pause();
-                            audioctrl.muted = true;
-                            resultfn(true);
-                        }
+        bootbox.dialog({
+            message: msg,
+            title: "Incoming call",
+            closeButton: false,
+            buttons: {
+                danger: {
+                    label: "Decline",
+                    callback: function () {
+                        audioctrl.pause();
+                        audioctrl.muted = true;
+                        resultfn(false);
+                    }
+                },
+                success: {
+                    label: "Accept",
+                    callback: function () {
+                        audioctrl.pause();
+                        audioctrl.muted = true;
+                        resultfn(true);
                     }
                 }
-            });
+            }
         });
+        
     };
     
     module.accept_sharescreen = function (sender, resultfn) {
