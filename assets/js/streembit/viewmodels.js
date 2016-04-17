@@ -133,6 +133,17 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     streembit.logger.error("DeviceModel init error %j", err);
                 }
             },
+            
+            init_properties: function () {
+                for (var i = 0; i < this.devices().length; i++) {     
+                    var interactions = this.devices()[i].interactions();
+                    for (var j = 0; j < interactions.length; j++) {
+                        if (interactions[j].property_name) {
+                            interactions[j].refresh();
+                        }
+                    }                    
+                }
+            },
 
             onpropertyread: function (payload) {
                 try {

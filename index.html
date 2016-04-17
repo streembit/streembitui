@@ -2041,6 +2041,7 @@ Copyright (C) 2016 The Streembit software development team
             vm.init(function () {
                 ko.applyBindings(vm, div);
                 streembit.Session.curent_viewmodel = vm;
+                vm.init_properties();
             });
         });
     </script>
