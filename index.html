@@ -2079,14 +2079,17 @@ Copyright (C) 2016 The Streembit software development team
 <script type="text/html" id="device_event_highTemperature_template">
     <div class="device-property boxed-device-property">
         <div style="text-align:center;padding:10px">
-            <div data-bind="visible: is_subscribed() == false">
+            <div data-bind="visible: is_subscribed() == false && send_in_progress() == false">
                 Receive notification when the temperature is higher than <input type="number" style="width:70px;padding-left:5px" data-bind="value: threshold" /> &#8451; &nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:subscribe">Subscribe</button>
             </div>
-            <div data-bind="visible: is_subscribed">
+            <div data-bind="visible: send_in_progress">
+                Sending subscription ... <i class="fa fa-refresh fa-spin" style="color:#307bae;font-size:16px"></i>
+            </div>
+            <div data-bind="visible: is_subscribed() == true && onevent_raised() == false">
                 Subscribed to receive notification when the temperature is higher than <span data-bind="text: threshold"></span> &#8451;
             </div>
-            <div data-bind="visible: onevent_raised">
-                <i class="fa fa-exclamation-circle" style="color:#c62727;font-size:48px"></i> The temperature is higher than <span data-bind="text: threshold"></span> &#8451;.
+            <div data-bind="visible: is_subscribed && onevent_raised" style="padding: 8px;display: flex;justify-content: center;align-items: center;font-size:14px;color:#c62727;font-weight:bold">
+                <i class="fa fa-exclamation-circle" style="font-size:18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;The temperature is higher than <span data-bind="text: threshold"></span> &#8451;.
             </div>
         </div>  
     </div>

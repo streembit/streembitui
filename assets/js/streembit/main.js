@@ -3140,9 +3140,16 @@ streembit.Main = (function (module, logger, events, config) {
             if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.onpropertyread) {
                 streembit.Session.curent_viewmodel.onpropertyread(payload);
             }
-            //if (streembit.Device.connection_pending()) {
-            //    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONNECT_DEVICE, payload);
-            //}
+        }
+        else if (eventcmd == "peermsg_devsubsc_reply") {
+            if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.oneventsubscribe_reply) {
+                streembit.Session.curent_viewmodel.oneventsubscribe_reply(payload);
+            }
+        }
+        else if (eventcmd == "peermsg_dev_event") {
+            if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.ondevice_event) {
+                streembit.Session.curent_viewmodel.ondevice_event(payload);
+            }
         }
 
     });

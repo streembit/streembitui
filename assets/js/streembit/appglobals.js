@@ -86,6 +86,9 @@ streembit.DEFS = (function (module) {
         PEERMSG_DEVDESC: "DEVDESC",
         PEERMSG_DEVREAD_PROP: "DEVREADPROP",
         PEERMSG_DEVREAD_PROP_REPLY: "DEVREADPROP_REPLY",
+        PEERMSG_DEVSUBSC: "DEVSUBSC",
+        PEERMSG_DEVSUBSC_REPLY: "DEVSUBSC_REPLY",
+        PEERMSG_DEV_EVENT: "DEV_EVENT",
         
         MSG_TEXT: "text",
         MSG_ADDCONTACT: "addcontact",
@@ -94,6 +97,8 @@ streembit.DEFS = (function (module) {
     }
 
 }(streembit.DEFS || {}))
+
+
 
 
 var gui = require('nw.gui');

@@ -907,8 +907,18 @@ streembit.PeerNet = (function (module, logger, events, config) {
                     break;
 
                 case streembit.DEFS.PEERMSG_DEVREAD_PROP_REPLY:
-                    //logger.debug("PEERMSG_DEVDESC message received");
+                    //logger.debug("PEERMSG_DEVREAD_PROP_REPLY message received");
                     events.emit(events.APPEVENT, "peermsg_devread_prop_reply", { sender: sender, data: data.payload });
+                    break;
+
+                case streembit.DEFS.PEERMSG_DEVSUBSC_REPLY:
+                    //logger.debug("PEERMSG_DEVSUBSC_REPLY message received");
+                    events.emit(events.APPEVENT, "peermsg_devsubsc_reply", { sender: sender, data: data.payload });
+                    break;
+
+                case streembit.DEFS.PEERMSG_DEV_EVENT:
+                    //logger.debug("PEERMSG_DEV_EVENT message received");
+                    events.emit(events.APPEVENT, "peermsg_dev_event", { sender: sender, data: data.payload });
                     break;
 
                 default:

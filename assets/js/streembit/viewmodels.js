@@ -37,13 +37,49 @@ var EccKey = require('streembitlib/crypto/EccKey');
             threshold: ko.observable(0),
             onevent_raised: ko.observable(false),
             event_name: obj.name,
+            send_in_progress: ko.observable(false),
+            wait_timer: 0,
+            
+            on_wait_complete: function () {
+                this.send_in_progress(false);
+                clearTimeout(this.wait_timer);
+                this.wait_timer = 0;
+                this.is_subscribed(true);
+            },
             
             subscribe: function () {
-        
+                var value = parseFloat(this.threshold());
+                if (isNaN(value)) {
+                    streembit.notify.error_popup("Invalid event value. A number is required");
+                }
+
+                var contact = streembit.Contacts.get_contact(this.contact_name);
+                var message = { cmd: streembit.DEFS.PEERMSG_DEVSUBSC, id: this.id, event: model.event_name, data: {threshold: value}};
+                streembit.PeerNet.send_peer_message(contact, message);
+                this.send_in_progress(true);
+                
+                this.wait_timer = setTimeout(function () {
+                    model.send_in_progress(false);
+                    clearTimeout(model.wait_timer);
+                    model.wait_timer = 0;
+                    model.is_subscribed(false);
+                    streembit.notify.error_popup("The subscription request has timed out.");
+                },
+                10000);
+
             },
 
             refresh: function () {
 
+            },
+
+            onevent: function (value) {
+                this.onevent_raised(true);
+
+                setTimeout(function () {
+                    model.onevent_raised(false);
+                },
+                15000);
             }
         }
         
@@ -160,10 +196,69 @@ var EccKey = require('streembitlib/crypto/EccKey');
                                 if (interactions[j].property_name == payload.data.property) {
                                     interactions[j][payload.data.property](payload.data.value);
                                     interactions[j].on_wait_complete();
-                                    console.log("property set to: " + payload.data.value);
                                     return;
                                 }
                             }
+                        }
+                    }
+                }
+                catch (err) {
+                    streembit.notify.error_popup("Read device property error: %j", err);
+                }
+            },
+
+            oneventsubscribe_reply: function (payload) {
+                try {
+                    var sender = payload.sender;
+                    if (this.name() != sender) {
+                        streembit.notify.error_popup("The 'name' field of the property read is incorrect");
+                    }
+                    
+                    var data = payload.data;
+                    for (var i = 0; i < this.devices().length; i++) {
+                        if (this.devices()[i].id == payload.data.device_id) {
+                            var interactions = this.devices()[i].interactions();
+                            for (var j = 0; j < interactions.length; j++) {
+                                if (interactions[j].event_name == payload.data.event) {
+                                    interactions[j].on_wait_complete();
+                                    console.log("event " + payload.data.event + " subscribed" );
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (err) {
+                    streembit.notify.error_popup("Read device property error: %j", err);
+                }
+            },
+
+            ondevice_event: function (payload) {
+                try {
+                    var sender = payload.sender;
+                    if (this.name() != sender) {
+                        streembit.notify.error_popup("The 'name' field of the property read is incorrect");
+                    }
+                    
+                    var data = payload.data;
+                    for (var i = 0; i < this.devices().length; i++) {
+                        if (this.devices()[i].id == payload.data.device_id) {
+                            var interactions = this.devices()[i].interactions();
+                            for (var j = 0; j < interactions.length; j++) {
+                                if (interactions[j].event_name == payload.data.event) {
+                                    interactions[j].onevent(payload.data.value);
+                                    //console.log("event " + payload.data.event + " subscribed");                                    
+                                }
+                            }
+                            
+                            // refresh the properties
+                            for (var j = 0; j < interactions.length; j++) {
+                                if (interactions[j].property_name && interactions[j].refresh) {
+                                    interactions[j].refresh();                            
+                                }
+                            }
+
+                            return;
                         }
                     }
                 }
@@ -2501,10 +2596,16 @@ var EccKey = require('streembitlib/crypto/EccKey');
                         break;
 
                     case streembit.DEFS.CMD_CONTACT_SELECT:
-                        resetView();
-                        var contactvm = new streembit.vms.ContactViewModel(datactx);
-                        viewModel.template_datactx(contactvm);
-                        viewModel.template_name("contact-details-template");
+                        if (datactx.user_type == "device") {
+                            streembit.Device.connect(datactx.name, function (contact) {                                                    
+                            }); 
+                        }
+                        else {
+                            resetView();
+                            var contactvm = new streembit.vms.ContactViewModel(datactx);
+                            viewModel.template_datactx(contactvm);
+                            viewModel.template_name("contact-details-template");
+                        }
                         break;
             
                     case streembit.DEFS.CMD_HANGUP_CALL:
