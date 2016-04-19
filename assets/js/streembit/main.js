@@ -501,30 +501,37 @@ streembit.UI = (function (module, logger, events, config) {
         var audioctrl = document.getElementById('ringsound1');
         audioctrl.muted = false;
         audioctrl.play();
-            
-        bootbox.dialog({
-            message: msg,
-            title: "Incoming call",
-            closeButton: false,
-            buttons: {
-                danger: {
-                    label: "Decline",
-                    callback: function () {
-                        audioctrl.pause();
-                        audioctrl.muted = true;
-                        resultfn(false);
-                    }
-                },
-                success: {
-                    label: "Accept",
-                    callback: function () {
-                        audioctrl.pause();
-                        audioctrl.muted = true;
-                        resultfn(true);
+
+        try {
+            bootbox.dialog({
+                message: msg,
+                title: "Incoming call",
+                closeButton: false,
+                buttons: {
+                    danger: {
+                        label: "Decline",
+                        callback: function () {
+                            audioctrl.pause();
+                            audioctrl.muted = true;
+                            resultfn(false);
+                        }
+                    },
+                    success: {
+                        label: "Accept",
+                        callback: function () {
+                            audioctrl.pause();
+                            audioctrl.muted = true;
+                            resultfn(true);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        catch (err) {
+            audioctrl.pause();
+            audioctrl.muted = true;
+            resultfn(false);
+        }
         
     };
     
@@ -532,11 +539,13 @@ streembit.UI = (function (module, logger, events, config) {
   
         var msg = "Contact " +  sender + " is offering screen sharing. Would you like to view the screen of contact " + sender +  "? (Your screen won't be shared)";
         
+        streembit.UI.streembit_appshow();
+
         var audioctrl = document.getElementById('ringsound1');
         audioctrl.muted = false;
         audioctrl.play();
-        $(".appboot-screen").hide(100, function () {
-            
+        
+        try {
             streembit.UI.streembit_appshow();
             
             bootbox.dialog({
@@ -562,7 +571,13 @@ streembit.UI = (function (module, logger, events, config) {
                     }
                 }
             });
-        });
+        }
+        catch (err) {
+            audioctrl.pause();
+            audioctrl.muted = true;
+            resultfn(false);
+        }
+        
     }
 
     module.accept_file = function (sender, file_name, file_size, callback) {
