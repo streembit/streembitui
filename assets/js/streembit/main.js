@@ -2825,13 +2825,6 @@ streembit.Main = (function (module, logger, events, config) {
                     description: "Streembit UPNP " + streembit.User.name
                 }, 
                 function (err) {
-                    
-                    try {
-                        streembit.UI.show_netbootscreen();
-                    }
-                    catch (screenerr) {
-                    }
-
                     if (err) {
                         logger.error("UPNP portMapping error: %j", err);
                         appboot_msg_handler("UPNP port mapping didn't work.");
