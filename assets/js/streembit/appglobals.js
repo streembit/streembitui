@@ -119,7 +119,8 @@ streembit.config = (function (module) {
         "tcpport": streembit.DEFS.APP_PORT,
         "wsport": streembit.DEFS.WS_PORT,
         "bootseeds": [
-            "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
+            { "address": "seed.streemio.net", "port": 32320, "public_key": "0202eb6c6198f22c5fc0d3ebfbc70d545f0c3052e2c7e7bc17f48464b18b6380f9" }
+            //"seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }

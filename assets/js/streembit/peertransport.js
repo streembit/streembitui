@@ -26,7 +26,7 @@ var streembit = streembit || {};
 
 var assert = require('assert');
 var wotmsg = require("streembitlib/message/wotmsg");
-var streembitkad = require('streembitlib/streembitkad/kaddht'); 
+var kad = require('streembitlib/kadlib'); 
 var uuid = require("uuid");
 var nodecrypto = require("crypto");
 
@@ -102,116 +102,180 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
     }
     
     obj.init = function (bootdata, resultfn) {
-        if (obj.node && obj.is_connected == true) {
-            obj.node.close();
-            obj.is_connected = false;
-        }
-        
-        if (!bootdata || !bootdata.seeds || !bootdata.seeds.length) {
-            return resultfn("Invalid seeds");
-        }
-        
-        var is_private_network = bootdata.isprivate_network;
-        var private_network_accounts = bootdata.private_accounts;
-        
-        streembit.User.port = config.tcpport;
-        var accountId;
-        if (streembit.Main.network_type == streembit.DEFS.PUBLIC_NETWORK) {
-            if (is_private_network && private_network_accounts && private_network_accounts.length) {
-                return resultfn("Public network is requested. The seed is a private network.");
-            }            
-        }
-        else {
-            if (!is_private_network || !private_network_accounts || !private_network_accounts.length) {
-                return resultfn("Invalid private network information boot data");
+        try{
+            if (obj.node && obj.is_connected == true) {
+                obj.node.close();
+                obj.is_connected = false;
             }
-        }
         
-        accountId = streembit.User.name || get_account_id();
-        logger.debug("Current peer account is " + accountId);        
-        
-        var seedlist = [];
-
-        for (var i = 0; i < bootdata.seeds.length; i++) {
-            if (!bootdata.seeds[i].port) {
-                bootdata.seeds[i].port = DEFAULT_STREEMBIT_PORT;
+            if (!bootdata || !bootdata.seeds || !bootdata.seeds.length) {
+                return resultfn("Invalid seeds");
             }
-
-            if (streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK) {
-                if (!bootdata.seeds[i].account) {
-                    return resultfn("Invalid seed configuration data. The seed must have an account in a private network");
-                }
+        
+            var is_private_network = bootdata.isprivate_network;
+            var private_network_accounts = bootdata.private_accounts;
+        
+            streembit.User.port = config.tcpport;
+            streembit.User.address = bootdata.address;
+        
+            if (streembit.Main.network_type == streembit.DEFS.PUBLIC_NETWORK) {
+                if (is_private_network && private_network_accounts && private_network_accounts.length) {
+                    return resultfn("Public network is requested. The seed is a private network.");
+                }            
             }
             else {
-                if (!bootdata.seeds[i].account) {
-                    var str = "" + bootdata.seeds[i].address + ":" + bootdata.seeds[i].port;
-                    var buffer = new Buffer(str);
-                    var acc = nodecrypto.createHash('sha1').update(buffer).digest().toString('hex');
-                    bootdata.seeds[i].account = acc;
+                if (!is_private_network || !private_network_accounts || !private_network_accounts.length) {
+                    return resultfn("Invalid private network information boot data");
                 }
-            }
-            
-            // remove our own account id in case if it is in the list
-            if (bootdata.seeds[i].account != accountId) {
+            }        
+        
+            var seedlist = [];
+
+            for (var i = 0; i < bootdata.seeds.length; i++) {
                 seedlist.push(bootdata.seeds[i]);
                 logger.debug("seed: %j", bootdata.seeds[i]);
             }
-        }        
         
-        var options = {
-            onnodeerror: onNodeError,
-            onnetworkerror: onNetworkError,
-            log: logger,
-            port: config.tcpport,
-            account: accountId,
-            seeds: seedlist, 
-            peermsgHandler: onPeerMessage,
-            storage: db,
-            is_private_network: is_private_network,
-            private_network_accounts: private_network_accounts
-        };
+            assert(bootdata.address, "address must be passed to node initialization");
+            assert(config.tcpport, "port must be passed to node initialization");
+            assert(streembit.User.public_key, "account public key must be initialized");
+            assert(streembit.User.name, "account name  key must be initialized");
         
-        try {
-            var peernode = streembitkad(options);
-            peernode.create(function (err) {
+            var param = {
+                address: bootdata.address,
+                port: config.node.port,
+                account: streembit.User.name,
+                public_key: streembit.User.public_key
+            };
+        
+            var contact = wotkad.contacts.StreembitContact(param);
+        
+            var transport_options = {
+                logger: logger
+            };
+            var transport = wotkad.transports.TCP(contact, transport_options);
+        
+            transport.after('open', function (next) {
+                // exit middleware stack if contact is blacklisted
+                logger.info('TCP peer connection is opened');
+            
+                // otherwise pass on
+                next();
+            });
+        
+            // handle errors from RPC
+            transport.on('error', onTransportError);
+        
+            var options = {
+                transport: transport,
+                logger: logger,
+                storage: db,
+                seeds: seedlist,
+                onPeerMessage: onPeerMessage
+            };
+        
+            wotkad.create(options, function (err, peer) {
                 if (err) {
+                    streembit.User.address = "";
+                    streembit.User.port = 0;
                     return resultfn(err);
                 }
-                
+            
                 logger.debug("peernode.create complete");
                 
                 obj.is_connected = true;
-                obj.node = peernode;
-                
-                var address = obj.node.Address;
-                var port = obj.node.Port;
-                if (!address || !port) {
-                    return resultfn("Invalid peer address and port");
-                }
-                
-                streembit.User.address = address;
-                streembit.User.port = port;
-                
-                obj.node.is_seedcontact_exists(function (result) {
-                    if (result) {
-                        logger.debug("seed contact exists in buckets");
-                        resultfn();
-                    }
-                    else {
-                        resultfn("communication with seeds failed");
-                    }
-                });    
+                obj.node = peer;
+
+                resultfn();
             });
+
+        }
+        catch (e) {
+            resultfn(e);
+        }
+
+        //for (var i = 0; i < bootdata.seeds.length; i++) {
+        //    //if (!bootdata.seeds[i].port) {
+        //    //    bootdata.seeds[i].port = DEFAULT_STREEMBIT_PORT;
+        //    //}
+
+        //    //if (streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK) {
+        //    //    if (!bootdata.seeds[i].account) {
+        //    //        return resultfn("Invalid seed configuration data. The seed must have an account in a private network");
+        //    //    }
+        //    //}
+        //    //else {
+        //    //    if (!bootdata.seeds[i].account) {
+        //    //        var str = "" + bootdata.seeds[i].address + ":" + bootdata.seeds[i].port;
+        //    //        var buffer = new Buffer(str);
+        //    //        var acc = nodecrypto.createHash('sha1').update(buffer).digest().toString('hex');
+        //    //        bootdata.seeds[i].account = acc;
+        //    //    }
+        //    //}
             
-            // handle msgstored event
-            peernode.on('msgstored', msg_stored);
+        //    //// remove our own account id in case if it is in the list
+        //    //if (bootdata.seeds[i].account != accountId) {
+        //    //    seedlist.push(bootdata.seeds[i]);
+        //    //    logger.debug("seed: %j", bootdata.seeds[i]);
+        //    //}
+        //    seedlist.push(bootdata.seeds[i]);
+        //    logger.debug("seed: %j", bootdata.seeds[i]);
+        //}        
+        
+        //var options = {
+        //    onnodeerror: onNodeError,
+        //    onnetworkerror: onNetworkError,
+        //    log: logger,
+        //    port: config.tcpport,
+        //    account: accountId,
+        //    seeds: seedlist, 
+        //    peermsgHandler: onPeerMessage,
+        //    storage: db,
+        //    is_private_network: is_private_network,
+        //    private_network_accounts: private_network_accounts
+        //};
+        
+        //try {
+        //    var peernode = streembitkad(options);
+        //    peernode.create(function (err) {
+        //        if (err) {
+        //            return resultfn(err);
+        //        }
+                
+        //        logger.debug("peernode.create complete");
+                
+        //        obj.is_connected = true;
+        //        obj.node = peernode;
+                
+        //        var address = obj.node.Address;
+        //        var port = obj.node.Port;
+        //        if (!address || !port) {
+        //            return resultfn("Invalid peer address and port");
+        //        }
+                
+        //        streembit.User.address = address;
+        //        streembit.User.port = port;
+                
+        //        obj.node.is_seedcontact_exists(function (result) {
+        //            if (result) {
+        //                logger.debug("seed contact exists in buckets");
+        //                resultfn();
+        //            }
+        //            else {
+        //                resultfn("communication with seeds failed");
+        //            }
+        //        });    
+        //    });
+            
+        //    // handle msgstored event
+        //    peernode.on('msgstored', msg_stored);
 
             //
             //
-        }
-        catch (e) {            
-            resultfn(e);
-        }
+        //}
+        //catch (e) {            
+        //    resultfn(e);
+        //}
     }    
     
     obj.validate_connection = function (callback) {

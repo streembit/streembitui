@@ -616,7 +616,9 @@ var EccKey = require('streembitlib/crypto/EccKey');
             wsport: ko.observable(0),
             selected_transport: ko.observable(),
             is_add_bootseed: ko.observable(false),
-            new_seed: ko.observable(""),
+            new_seed_host: ko.observable(""),
+            new_seed_port: ko.observable(""),
+            new_seed_publickey: ko.observable(""),
             new_iceresolver: ko.observable(""),
             is_add_iceresolver: ko.observable(false),
             private_net_account: ko.observable(""),
@@ -655,10 +657,9 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     streembit.notify.error_popup("Settings init error: %j", err);
                 }
             },
-
+            
             save: function () {
                 try {
-
                     var data = streembit.Session.settings.data
 
                     data.bootseeds = viewModel.bootseeds();
@@ -708,16 +709,25 @@ var EccKey = require('streembitlib/crypto/EccKey');
             delete_bootseed: function (seed) {
                 viewModel.bootseeds.remove(function (item) {
                     return item == seed;
-                }) 
+                });
+                viewModel.save();
             },
 
             add_bootseed: function () {
-                var seed = $.trim(viewModel.new_seed());
-                if (seed) {
-                    viewModel.bootseeds.push(seed);
-                    viewModel.new_seed("");
-                    viewModel.is_add_bootseed(false);
+                var seed_host = $.trim(viewModel.new_seed_host());
+                var seed_port = $.trim(viewModel.new_seed_port());
+                var seed_publickey = $.trim(viewModel.new_seed_publickey());
+                if (!seed_host || !seed_port || !seed_publickey || isNaN(parseInt(seed_port))) {
+                    return streembit.notify.error_popup("Invalid seed data. The host IP address or domain name, port and public key are required.");
                 }
+                       
+                var seed = { "address": seed_host, "port": parseInt(seed_port), "public_key": seed_publickey };
+                viewModel.bootseeds.push(seed);                    
+                viewModel.save();
+                viewModel.new_seed_host("");
+                viewModel.new_seed_port("");
+                viewModel.new_seed_publickey("");
+                viewModel.is_add_bootseed(false);                
             },
 
             add_iceresolver: function () {
@@ -732,9 +742,9 @@ var EccKey = require('streembitlib/crypto/EccKey');
             },
 
             delete_iceresolver: function (ice) {
-                viewModel.iceresolvers.remove(function (item) {                    
+                viewModel.iceresolvers.remove(function (item) {
                     return item.url == ice.url;
-                })
+                });
             }
         };
         

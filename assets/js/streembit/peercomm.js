@@ -101,9 +101,9 @@ streembit.TransportFactory = (function (module, logger, events, config) {
 
 streembit.Node = (function (module, logger, events, config) {
     
-    module.init = function (seeds, callback) {
+    module.init = function (nodeconfig, callback) {
         var transport = streembit.TransportFactory.transport;
-        transport.init(seeds, callback);
+        transport.init(nodeconfig, callback);
     }
     
     module.put = function (key, value, callback) {
@@ -1784,9 +1784,9 @@ streembit.PeerNet = (function (module, logger, events, config) {
         });
     }
     
-    module.init = function (seeds) {
+    module.init = function (nodeconfig) {
         return new Promise(function (resolve, reject) {
-            streembit.Node.init(seeds, function (err, result) {
+            streembit.Node.init(nodeconfig, function (err, result) {
                 if (err) {
                     reject(err);
                 }

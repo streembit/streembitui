@@ -2852,28 +2852,61 @@ streembit.Main = (function (module, logger, events, config) {
         
         streembit.UI.show_netbootscreen();
         
+        var node_config = { seeds: null, address: null };
+        
         async.waterfall([        
             function (callback) {
                 module.set_upnp_port(callback);
             },
+            //function (callback) {
+            //    // bootstrap the app with the streembit network
+            //    appboot_msg_handler("Bootstrap the network");
+            //    //setTimeout(
+            //    //    function () {
+            //    //        streembit.bootclient.boot(seeds, callback);
+            //    //    },
+            //    //    100
+            //    //);
+
+            //    streembit.bootclient.discovery(config.node.seeds[0], function (err, address) {
+            //        if (err) {
+            //            callback(err);
+            //        }
+            //        else {
+            //            if (!address) {
+            //                callback("failed to populate discovery address");
+            //            }
+            //            else {
+            //                config.node.address = address;
+            //                callback();
+            //            }
+            //        }
+            //    });
+            //},    
             function (callback) {
-                // bootstrap the app with the streembit network
-                appboot_msg_handler("Bootstrap the network");
-                setTimeout(
-                    function () {
-                        streembit.bootclient.boot(seeds, callback);
-                    },
-                    100
-                );
-            },    
+                appboot_msg_handler("Discovering own public IP address");
+                streembit.bootclient.discovery(null, seeds[0], callback);
+            },
+            function (address, callback) {
+                appboot_msg_handler("Resolving seeds DNS");
+                if (!address && config.transport == streembit.DEFS.TRANSPORT_TCP) {
+                    callback("error in populating discovery address");
+                }
+                else {
+                    node_config.address = address;
+                    streembit.bootclient.resolveseeds(seeds, callback);
+                }
+            },
             function (bootseeds, callback) {
-                if (!bootseeds || !bootseeds.seeds || !bootseeds.seeds.length) {
+                if (!bootseeds || !bootseeds.length) {
                     return callback("Error in populating the seed list. Please make sure the 'bootseeds' configuration is correct and a firewall doesn't block the Streembit software!");
                 }
                 
+                node_config.seeds = bootseeds;
+                
                 // initialize the Peer Network
                 appboot_msg_handler("Connecting to Streembit network");
-                streembit.PeerNet.init(bootseeds).then(
+                streembit.PeerNet.init(node_config).then(
                     function () {
                         logger.debug("PeerNet is initialized");
                         module.seeds = bootseeds.seeds;
