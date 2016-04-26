@@ -215,7 +215,7 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
         callback();
     }
     
-    module.get_node = function (account, callback) {
+    module.find_contact = function (account, public_key, callback) {
         callback();
     }
     

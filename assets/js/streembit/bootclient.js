@@ -71,80 +71,7 @@ streembit.bootclient = (function (module, logger, config, events) {
             
             callback(null, addresses[0]);
         });
-    }
-    
-    //function get_seeds(remoteuri, port, callback) {
-    //    try {
-            
-    //        const http = require('http');
-            
-    //        var options = {
-    //            host: remoteuri,
-    //            port: port || streembit.DEFS.BOOT_PORT,
-    //            path: '/seeds',
-    //            method: 'POST'
-    //        };
-            
-    //        var request = http.request(options, function (response) {
-    //            var body = '';
-    //            response.on("data", function (chunk) {
-    //                body += chunk.toString('utf8');
-    //            });
-                
-    //            response.on("end", function () {
-    //                try {
-    //                    var data = JSON.parse(body);
-    //                    if (!data || !data.result || !data.result.seeds || !data.result.seeds.length) {
-    //                        callback("get_seeds() error: invalid result");
-    //                    }
-    //                    else {
-    //                        callback(null, data.result);
-    //                    }
-    //                }
-    //                catch (err) {
-    //                    callback("get_seeds response-end parse error: " + err.message);
-    //                }
-    //            });
-    //        });
-            
-    //        request.on('error', function (e) {
-    //            callback("get_seeds() error: " + e.message);
-    //        });
-            
-    //        request.end();
-
-    //    }
-    //    catch (e) {
-    //        callback("get http client error: " + e.message);
-    //    }
-    //};
-    
-    //function normalize_seeds(list) {
-        
-    //    var seeds = [];
-
-    //    if (list || list.length > 0) {
-    //        for (var i = 0; i < list.length; i++) {
-    //            if (list[i].account == streembit.User.name) {
-    //                continue;
-    //            }
-                
-    //            var exists = false;
-    //            for (var j = 0; j < seeds.length; j++) {
-    //                if (seeds[j].account == list[i].account) {
-    //                    exists = true;
-    //                    break;
-    //                }
-    //            }
-                
-    //            if (!exists) {
-    //                seeds.push(list[i]);
-    //            }
-    //        }
-    //    }      
-
-    //    return seeds;
-    //}
+    }   
     
     module.tcp_resolve = function (seeds, callback) {
         logger.debug("bootclient tcp_resolve()");
@@ -191,83 +118,6 @@ streembit.bootclient = (function (module, logger, config, events) {
                 callback(null, seedlist);
             }
         );
-
-        //var discovery_srvs = [];
-        //var bootseeds = [];
-        
-        //if (!seedsarr || seedsarr.length == 0) {
-        //    return callback("bootseeds configuration is missing");
-        //}        
-        
-        //for (var i = 0; i < seedsarr.length; i++) {
-        //    bootseeds.push(seedsarr[i]);
-        //}
-        
-        //do {
-
-        //    if (bootseeds.length <= 1) {
-        //        if (bootseeds.length == 1) {
-        //            discovery_srvs.push(
-        //                {
-        //                    host: bootseeds[0].host ? bootseeds[0].host : bootseeds[0], 
-        //                    port: bootseeds[0].port ? bootseeds[0].port : streembit.DEFS.BOOT_PORT
-        //                });
-        //        }
-        //        break;
-        //    }
-
-        //    var shuffle = shuffleItem(bootseeds);
-        //    discovery_srvs.push(
-        //        {
-        //            host: shuffle.result.host ? shuffle.result.host : shuffle.result, 
-        //            port: shuffle.result.port ? shuffle.result.port : streembit.DEFS.BOOT_PORT
-        //        }
-        //    );
-            
-        //} while (bootseeds.length > 0);
-        
-        //if (discovery_srvs.length == 0) {
-        //    return callback("invalid boot discovery services array");
-        //}
- 
-        //var index = 0;
-        //var bootresult = 0;
-        
-        //async.whilst(
-        //    function () {
-        //        var incomplete = !bootresult && !bootresult.seeds && index < discovery_srvs.length;
-        //        return incomplete;
-        //    },
-        //    function (asyncfn) {
-        //        var host = discovery_srvs[index].host;
-        //        var port = discovery_srvs[index].port;
-        //        index++;
-        //        logger.debug("get_seeds domain: " + host + ":" + port);
-        //        events.emit(events.APPEVENT, events.TYPES.ONINITPROGRESS, "Querying seeds from " + host + ":" + port);     
-        //        get_seeds(host, port, function (err, result) {
-        //            if (err) {
-        //                logger.debug("get_seeds error: %j", err);
-        //                asyncfn(null, []);
-        //            }
-        //            else {
-        //                bootresult = result;
-        //                asyncfn(null, bootresult);
-        //            }
-        //        });
-        //    },
-        //    function (err, result) {
-        //        // normalize the seed list by removing the duplicates
-        //        if (bootresult && bootresult.seeds && bootresult.seeds.length > 0) {
-        //            var seeds = normalize_seeds(bootresult.seeds);
-        //            bootresult.seeds = seeds;
-        //            callback(null, bootresult);
-        //        }
-        //        else {
-        //            callback("Error in populating the seed list. Please make sure the bootseeds configuration is correct and a firewall doesn't block the Streembit software!");
-        //        }
-        //    }
-        //);
-        
     }
     
     module.ws_resolve = function (bootseeds, callback) {
@@ -278,38 +128,46 @@ streembit.bootclient = (function (module, logger, config, events) {
                 return callback("bootseeds configuration is missing");
             }
             
-            var discovery_srvs = [];
+            var wsservers = [];
             
-            do {
-                
+            do {                
                 if (bootseeds.length <= 1) {
                     if (bootseeds.length == 1) {
-                        discovery_srvs.push(
-                            {
-                                host: bootseeds[0].host ? bootseeds[0].host : bootseeds[0], 
-                                port: bootseeds[0].port ? bootseeds[0].port : streembit.DEFS.WS_PORT
-                            });
+                        var isadd = true;
+                        var host = bootseeds[0].address ? bootseeds[0].address : bootseeds[0];
+                        wsservers.forEach(function (item, index, array) {
+                            if (item.host == host) {
+                                isadd = false;
+                            }
+                        });
+                        
+                        if (isadd) {
+                            wsservers.push(
+                                {
+                                    host: bootseeds[0].address ? bootseeds[0].address : bootseeds[0], 
+                                    port: streembit.DEFS.WS_PORT
+                                });
+                        }
                     }
                     break;
                 }
                 
                 var shuffle = shuffleItem(bootseeds);
                 
-                discovery_srvs.push(
+                wsservers.push(
                     {
-                        host: shuffle.result.host ? shuffle.result.host : shuffle.result, 
-                        port: shuffle.result.port ? shuffle.result.port : streembit.DEFS.WS_PORT
+                        host: shuffle.result.address ? shuffle.result.address : shuffle.result, 
+                        port: streembit.DEFS.WS_PORT
                     }
                 );
             
             } while (bootseeds.length > 0);        
             
-            if (discovery_srvs.length == 0) {
-                return callback("invalid boot discovery services array");
+            if (wsservers.length == 0) {
+                return callback("invalid ws services array");
             }
-            
-            var result = { seeds: discovery_srvs };
-            callback(null, result);
+
+            callback(null, wsservers);
         }
         catch (e) {
             callback("ws_boot error: " + e.message);
@@ -333,7 +191,6 @@ streembit.bootclient = (function (module, logger, config, events) {
         
         client.on('data', function (data) {
             var reply = JSON.parse(data.toString());
-            console.log("discovery reply: %j", reply);
             if (reply && reply.address) {
                 var reply_address;
                 var ipv6prefix = "::ffff:";
@@ -389,7 +246,7 @@ streembit.bootclient = (function (module, logger, config, events) {
                 module.tcp_discovery(address, seed, callback);
                 break;
             case streembit.DEFS.TRANSPORT_WS:
-                callback();
+                callback(null, "");
                 break;
             default:
                 return callback("discovery error, not implemented transport type: " + config.transport);

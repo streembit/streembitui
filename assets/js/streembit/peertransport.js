@@ -80,15 +80,10 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
                 }
             }
         }
-    }
-    
-    function onNodeError(err, contact, data) {
-        //logger.error("onNodeError: %j", err);     
-        events.emit(events.APPEVENT, events.TYPES.ONPEERERROR, { error: err, contact: contact, data: data });
-    }
-    
-    function onNetworkError(errcode, msg) {
-        logger.error("Network handler error code: " + errcode + ", error message: " + (msg || "NA"));     
+    }    
+
+    function onTransportError(err) {
+        logger.error('RPC error: %j', err);
     }
     
     function get_account_id() {
@@ -102,93 +97,83 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
     }
     
     obj.init = function (bootdata, resultfn) {
-        try{
+        try {
+            var self = obj;
             if (obj.node && obj.is_connected == true) {
-                obj.node.close();
-                obj.is_connected = false;
-            }
-        
-            if (!bootdata || !bootdata.seeds || !bootdata.seeds.length) {
-                return resultfn("Invalid seeds");
-            }
-        
-            var is_private_network = bootdata.isprivate_network;
-            var private_network_accounts = bootdata.private_accounts;
-        
-            streembit.User.port = config.tcpport;
-            streembit.User.address = bootdata.address;
-        
-            if (streembit.Main.network_type == streembit.DEFS.PUBLIC_NETWORK) {
-                if (is_private_network && private_network_accounts && private_network_accounts.length) {
-                    return resultfn("Public network is requested. The seed is a private network.");
-                }            
+                obj.node.disconnect(function () {
+                    self.is_connected = false;
+                    self.node = null;
+                    self.init(bootdata, resultfn);
+                });
             }
             else {
-                if (!is_private_network || !private_network_accounts || !private_network_accounts.length) {
-                    return resultfn("Invalid private network information boot data");
+                if (!bootdata || !bootdata.seeds || !bootdata.seeds.length) {
+                    return resultfn("Invalid seeds");
                 }
-            }        
-        
-            var seedlist = [];
-
-            for (var i = 0; i < bootdata.seeds.length; i++) {
-                seedlist.push(bootdata.seeds[i]);
-                logger.debug("seed: %j", bootdata.seeds[i]);
-            }
-        
-            assert(bootdata.address, "address must be passed to node initialization");
-            assert(config.tcpport, "port must be passed to node initialization");
-            assert(streembit.User.public_key, "account public key must be initialized");
-            assert(streembit.User.name, "account name  key must be initialized");
-        
-            var param = {
-                address: bootdata.address,
-                port: config.node.port,
-                account: streembit.User.name,
-                public_key: streembit.User.public_key
-            };
-        
-            var contact = wotkad.contacts.StreembitContact(param);
-        
-            var transport_options = {
-                logger: logger
-            };
-            var transport = wotkad.transports.TCP(contact, transport_options);
-        
-            transport.after('open', function (next) {
-                // exit middleware stack if contact is blacklisted
-                logger.info('TCP peer connection is opened');
-            
-                // otherwise pass on
-                next();
-            });
-        
-            // handle errors from RPC
-            transport.on('error', onTransportError);
-        
-            var options = {
-                transport: transport,
-                logger: logger,
-                storage: db,
-                seeds: seedlist,
-                onPeerMessage: onPeerMessage
-            };
-        
-            wotkad.create(options, function (err, peer) {
-                if (err) {
-                    streembit.User.address = "";
-                    streembit.User.port = 0;
-                    return resultfn(err);
-                }
-            
-                logger.debug("peernode.create complete");
                 
-                obj.is_connected = true;
-                obj.node = peer;
-
-                resultfn();
-            });
-
+                var seedlist = [];
+                
+                for (var i = 0; i < bootdata.seeds.length; i++) {
+                    seedlist.push(bootdata.seeds[i]);
+                    logger.debug("seed: %j", bootdata.seeds[i]);
+                }
+                
+                assert(bootdata.address, "address must be passed to node initialization");
+                assert(config.tcpport, "port must be passed to node initialization");
+                assert(streembit.User.public_key, "account public key must be initialized");
+                assert(streembit.User.name, "account name  key must be initialized");
+                
+                var param = {
+                    address: bootdata.address,
+                    port: config.tcpport,
+                    account: streembit.User.name,
+                    public_key: streembit.User.public_key
+                };
+                
+                var contact = kad.contacts.StreembitContact(param);
+                
+                var transport_options = {
+                    logger: logger
+                };
+                var transport = kad.transports.TCP(contact, transport_options);
+                                
+                transport.after('open', function (next) {
+                    // exit middleware stack if contact is blacklisted
+                    logger.info('TCP peer connection is opened');
+                    
+                    // otherwise pass on
+                    next();
+                });
+                
+                // handle errors from RPC
+                transport.on('error', onTransportError);
+                
+                var options = {
+                    transport: transport,
+                    logger: logger,
+                    storage: db,
+                    seeds: seedlist,
+                    onPeerMessage: onPeerMessage
+                };
+                
+                kad.create(options, function (err, peer) {
+                    if (err) {
+                        streembit.User.address = "";
+                        streembit.User.port = 0;
+                        return resultfn(err);
+                    }
+                    
+                    logger.debug("peernode.create complete");
+                    
+                    streembit.User.port = config.tcpport;
+                    streembit.User.address = bootdata.address;
+                    
+                    obj.is_connected = true;
+                    obj.node = peer;
+                    
+                    resultfn();
+                });
+            }
         }
         catch (e) {
             resultfn(e);
@@ -280,18 +265,31 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
     
     obj.validate_connection = function (callback) {
         try {
-            obj.node.validate_connection(function (err) {
-                if (err) {
-                    //  it was an error
-                    //  close the node connection 
-                    if (obj.node && obj.is_connected == true) {
-                        obj.node.close();
-                        obj.is_connected = false;
-                        obj.node = null;
+            if (!obj.node || !obj.is_connected) {
+                return callback("the node is not connected");
+            }
+
+            var count = 0;
+            var buckets = obj.node._router._buckets;;
+            if (buckets) {
+                for (var prop in buckets) {
+                    var bucket = buckets[prop];
+                    if (bucket._contacts) {
+                        for (var i = 0; i < bucket._contacts.length; i++) {
+                            logger.debug("bucket contact: %j", bucket._contacts[i]);
+                            count++;
+                        }
                     }
                 }
-                callback(err);
-            });
+            }
+            
+            if (!count) {
+                // if seeds are defined then contacts mustr exists in the bucket
+                callback("no contacts exist in the bucket");
+            }
+            else {
+                callback();
+            }           
         }
         catch (e) {
             callback(e);
@@ -301,7 +299,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
     obj.put = function (key, value, callback) {
         //  For this public key upload message the key is the device name
         //  false == don't store locally
-        obj.node.put(key, value, false, function (err, results) {
+        obj.node.put(key, value, function (err, results) {
             if (callback) {
                 callback(err, results);
             }
@@ -328,13 +326,20 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
         });
     }
     
-    obj.get_node = function (account, callback) {
+    obj.find_contact = function (account, public_key, callback) {
         if (!callback || (typeof callback != "function"))
             throw new Error("invalid callback at find_node");
         
         //  For this public key upload message the key is the device name
-        obj.node.getNode(account, function (err, msg) {
-            callback(err, msg);
+        kad.find_contact(obj.node, account, public_key, function (err, contact) {
+            if (!err && contact && contact.account == account) {
+                contact.protocol = streembit.DEFS.TRANSPORT_TCP;
+                contact.name = account;
+                callback(err, contact);
+            }
+            else {
+                callback(err, null);
+            }
         });
     }    
 

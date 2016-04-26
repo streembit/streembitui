@@ -1966,29 +1966,7 @@ streembit.Contacts = (function (module, logger, events, config) {
         logger.debug("contact " + account + " populated from network and updated. address: " + contact.address + ". port: " + contact.port + ". protocol: " + contact.protocol);
     }
     
-    function find_contact_onnetwork(contact_address, contact_port, contact_protocol, contact_name, callback) {
-        streembit.PeerNet.find_contact(contact_name, function (err, contact) {
-            if (err) {
-                streembit.notify.error("Contact search error %j", err);
-                return callback();
-            }
-            if (!contact) {
-                streembit.notify.error("Couldn't find contact " + contact_name + " on the network");
-                return callback();
-            }
-            
-            if (contact_address && contact_port && contact_protocol) {
-                //  the NOED_FIND Kademlia call returned a contact which could be more current than 
-                //  the stored contact so use the current address info
-                contact.address = contact_address;
-                contact.port = contact_port;
-                contact.protocol = contact_protocol;
-            }
-            
-            callback(contact);
-            //
-        });
-    }
+  
     
     function ping_contact(account) {
         if (!account) {
@@ -2002,68 +1980,67 @@ streembit.Contacts = (function (module, logger, events, config) {
         
         logger.debug("ping contact " + account);
     }
-
-    function init_contact(param_contact, callback) {
-        var contact_name = param_contact.name;
-        logger.debug("initialzing, find contact " + contact_name);
-        
-        streembit.Node.find_account(contact_name)
-            .then(
-            function (rescontacts) {
-                var contact_address = null;
-                var contact_port = null;
-                var contact_protocol = null;
-                if (rescontacts && rescontacts.length > 0) {
-                    for (var i = 0; i < rescontacts.length; i++) {
-                        if (contact_name != rescontacts[i].account) {
-                            continue;
-                        }
-                        
-                        contact_address = rescontacts[i].address;
-                        contact_port = rescontacts[i].port;
-                        contact_protocol = rescontacts[i].protocol;
-                        break;
-                    }
-                }
-                
-                find_contact_onnetwork(contact_address, contact_port, contact_protocol, contact_name, function (contact) {
-                    if (!contact) {
-                        setTimeout(function () {
-                            callback();
-                        }, 3000);
-                        return;
-                    }
-
-                    streembit.notify.taskbarmsg("Found " + contact.name + " contact data on network");
-
-                    streembit.ContactsDB.update_contact(streembit.User.name, contact).then(
-                        function () {
-                            update_contact(contact.name, contact);
-                            
-                            //ping_contact(contact.name);
-                            
-                            streembit.Session.contactsvm.update_contact(contact.name, contact);
-                            
-                            setTimeout(function () {
-                                callback();
-                            }, 3000);
-                        },
-                        function (err) {
-                            streembit.notify.error("Database update add contact error %j", err);
-
-                            setTimeout(function () {
-                                callback();
-                            }, 3000);
-                        }                        
-                    );
-                });
-                            
+    
+    function updateDB(contact) {
+        streembit.ContactsDB.update_contact(streembit.User.name, contact).then(
+            function () {
             },
             function (err) {
-                // use the stored contact info
-                logger.error("find_account error: %j", err);
-            }
-        )
+                streembit.notify.error("Database update add contact error %j", err);
+            }                        
+        );
+    }
+
+    function init_contact(param, callback) {
+        try {
+            var account = param.name;
+            var public_key = param.public_key;
+            logger.debug("initialzing, find contact: " + account + ", public_key: " + public_key);
+            
+            streembit.PeerNet.get_published_account(account, function (err, contact) {
+                if (err) {
+                    streembit.notify.error("Contact search error %j", err);
+                    return callback();
+                }
+                if (!contact || account != contact.name) {
+                    streembit.notify.error("Couldn't find contact " + account + " on the network");
+                    return callback();
+                }
+                
+                //callback(contact);
+                updateDB(contact);
+                update_contact(account, contact);
+                streembit.Session.contactsvm.update_contact(account, contact);
+                
+                streembit.Node.find_contact(account, public_key)
+                .then(
+                    function (contact_node) {
+                        if (contact_node && contact_node.name == account && contact_node.address && contact_node.port && contact_node.protocol) {
+                            if (contact_node.address != contact.address || 
+                                contact_node.port != contact.port || 
+                                contact_node.protocol != contact.protocol) {
+                                contact.address = contact_node.address;
+                                contact.port = contact_node.port;
+                                contact.protocol= contact_node.protocol;
+                                updateDB(contact);
+                                update_contact(account, contact);
+                                streembit.Session.contactsvm.update_contact(account, contact);
+                            }                            
+                        }
+                        callback();
+                    },
+                    function (err) {
+                        logger.error("find_contact error: %j", err);
+                        callback();
+                    }
+                );
+            //
+            });
+        }
+        catch (err) {
+            callback();
+            logger.error("init_contact error: %j", err);
+        }
     }
     
     function init_contacts() {
@@ -2080,7 +2057,6 @@ streembit.Contacts = (function (module, logger, events, config) {
             // get the offline messages
             var key = streembit.User.name + "/message";
             streembit.PeerNet.get_account_messages(key);
-
         });
     }
     
@@ -2292,7 +2268,7 @@ streembit.Contacts = (function (module, logger, events, config) {
     module.search = function (account, callback) {
         try {
             logger.debug("search " + account);
-            streembit.PeerNet.find_contact(account, function (err, contact) {
+            streembit.PeerNet.get_published_account(account, function (err, contact) {
                 if (err) {
                     return streembit.notify.error_popup('The contact search for account "' + account + '" returned no result');
                 }
