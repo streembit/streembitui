@@ -2828,44 +2828,31 @@ streembit.Main = (function (module, logger, events, config) {
         
         streembit.UI.show_netbootscreen();
         
+        var transport = config.transport;
+        
         var node_config = { seeds: null, address: null };
         
         async.waterfall([        
             function (callback) {
-                module.set_upnp_port(callback);
-            },
-            //function (callback) {
-            //    // bootstrap the app with the streembit network
-            //    appboot_msg_handler("Bootstrap the network");
-            //    //setTimeout(
-            //    //    function () {
-            //    //        streembit.bootclient.boot(seeds, callback);
-            //    //    },
-            //    //    100
-            //    //);
-
-            //    streembit.bootclient.discovery(config.node.seeds[0], function (err, address) {
-            //        if (err) {
-            //            callback(err);
-            //        }
-            //        else {
-            //            if (!address) {
-            //                callback("failed to populate discovery address");
-            //            }
-            //            else {
-            //                config.node.address = address;
-            //                callback();
-            //            }
-            //        }
-            //    });
-            //},    
+                if (transport == streembit.DEFS.TRANSPORT_TCP) {
+                    module.set_upnp_port(callback);
+                }
+                else {
+                    callback();
+                }
+            },    
             function (callback) {
-                appboot_msg_handler("Discovering own public IP address");
-                streembit.bootclient.discovery(null, seeds[0], callback);
+                if (transport == streembit.DEFS.TRANSPORT_TCP) {
+                    appboot_msg_handler("Discovering own public IP address");
+                    streembit.bootclient.discovery(null, seeds[0], callback);
+                }
+                else {
+                    callback(null, "");
+                }
             },
             function (address, callback) {
                 appboot_msg_handler("Resolving seeds DNS");
-                if (!address && config.transport == streembit.DEFS.TRANSPORT_TCP) {
+                if (!address && transport == streembit.DEFS.TRANSPORT_TCP) {
                     callback("error in populating discovery address");
                 }
                 else {
@@ -2876,6 +2863,10 @@ streembit.Main = (function (module, logger, events, config) {
             function (bootseeds, callback) {
                 if (!bootseeds || !bootseeds.length) {
                     return callback("Error in populating the seed list. Please make sure the 'bootseeds' configuration is correct and a firewall doesn't block the Streembit software!");
+                }
+                
+                if (config.transport == streembit.DEFS.TRANSPORT_TCP) {
+                    node_config.port = config.tcpport;
                 }
                 
                 node_config.seeds = bootseeds;

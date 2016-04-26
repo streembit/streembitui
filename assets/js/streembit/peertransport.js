@@ -38,6 +38,157 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
     obj.is_publickey_uplodaed = false;
     obj.is_connected = false;
     
+    var listOfContacts = {};
+    
+    //  TODO validate the time and remove contact after an idle period
+    function updateContact(contact) {
+        if (contact && contact.account) {
+            var cobj = {
+                public_key: contact.public_key,
+                nodeID: contact.nodeID,
+                address: contact.address,
+                port: contact.port,
+                updated: Date.now()
+            }
+            listOfContacts[contact.account] = cobj;
+        }
+    }
+    
+    function isContactAllowed(contact) {
+        //TODO for private networks    
+        return true;
+    }
+
+    function validateMessage(params, contact, callback) {
+        var is_update_key = false, is_system_update_key = false, msgid = 0;
+        
+        try {
+            var payload = wotmsg.getpayload(params.value);
+            if (!payload || !payload.data || !payload.data.type) {
+                return callback("validateMessage error invalid payload");
+            }
+            
+            if (payload.data.type == wotmsg.MSGTYPE.PUBPK || payload.data.type == wotmsg.MSGTYPE.UPDPK || payload.data.type == wotmsg.MSGTYPE.DELPK) {
+                if (!payload.data[wotmsg.MSGFIELD.PUBKEY]) {
+                    return callback("validateMessage error invalid public key payload");
+                }
+                is_update_key = true;
+            }
+            
+            var account_key;
+            if (is_update_key) {
+                //  is_update_key == true -> the publisher claims this is a public key store, update or delete message
+                //  check if the existing key does exits and if yes then validate the message
+                account_key = params.key;
+            }
+            else {
+                //  get the iss field of the JSON web token message
+                account_key = payload.iss;
+            }
+            
+            if (!account_key) {
+                return callback("validateMessage error: invalid public key account field");
+            }
+            
+            if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+                msgid = payload.data[wotmsg.MSGFIELD.MSGID];
+                if (!msgid) {
+                    return callback("validateMessage error: invalid MSGID for delete message");
+                }
+            }
+        }
+        catch (err) {
+            return callback("onKadMessage error: " + err.message);
+        }
+        
+        thisobj.node.get(account_key, function (err, value) {
+            try {
+                if (err) {
+                    if (is_update_key && err.message && err.message.indexOf("error: 0x0100") > -1) {
+                        logger.debug('validateMessage PUBPK key not exists on the network, allow to complete PUBPK message');
+                        //  TODO check whether the public key matches with private network keys
+                        return callback(null, true);
+                    }
+                    else {
+                        return callback('validateMessage get existing PK error: ' + err.message);
+                    }
+                }
+                else {
+                    logger.debug("validateMessage decode wot message");
+                    var stored_payload = wotmsg.getpayload(value);
+                    var stored_pkkey = stored_payload.data[wotmsg.MSGFIELD.PUBKEY];
+                    if (!stored_pkkey) {
+                        return callback('validateMessage error: stored public key does not exists');
+                    }
+                    
+                    if (contact.public_key != stored_pkkey) {
+                        return callback('validateMessage error: stored public key and contact public key do not match');
+                    }
+                    
+                    //  if this is a private network then the public key must matches with the account's key in the list of public key
+                    //  TODO check whether the public key matches with private network keys
+                    
+                    logger.debug("validateMessage validate account: " + account_key + " public key: " + stored_pkkey);
+                    
+                    if (payload.data.type == wotmsg.MSGTYPE.PUBPK || 
+                        payload.data.type == wotmsg.MSGTYPE.UPDPK || 
+                        payload.data.type == wotmsg.MSGTYPE.DELPK ||
+                        payload.data.type == wotmsg.MSGTYPE.OMSG ||
+                        payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+                        var decoded_msg = wotmsg.decode(params.value, stored_pkkey);
+                        if (!decoded_msg) {
+                            return callback('VERIFYFAIL ' + account);
+                        }
+                        
+                        //  passed the validation -> add to the network
+                        logger.debug('validateMessage validation for msgtype: ' + payload.data.type + '  is OK');
+                        
+                        //node._log.debug('data: %j', params);
+                        callback(null, true);
+                    }
+                }
+            }
+            catch (val_err) {
+                logger.error("validateMessage error: " + val_err.message);
+            }
+        });
+    }
+    
+    function onKadMessage(message, contact, next) {
+        try {
+            
+            // TODO check for the private network
+            if (!isContactAllowed(contact)) {
+                return next(new Error('Message dropped, reason: contact ' + contact.account + ' is not allowed'));
+            }
+            
+            if (!message || !message.method || message.method != "STORE" || 
+                !message.params || !message.params.item || !message.params.item.key) {
+                updateContact(contact);
+                // only validate the STORE messages
+                return next();
+            }
+            
+            logger.debug('validate STORE key: ' + message.params.item.key);
+            
+            validateMessage(message.params.item, contact, function (err, isvalid) {
+                if (err) {
+                    return next(new Error('Message dropped, error: ' + ((typeof err === 'string') ? err : (err.message ? err.message :  "validation failed"))));
+                }
+                if (!isvalid) {
+                    return next(new Error('Message dropped, reason: validation failed'));
+                }
+                
+                // valid message
+                return next();
+            });
+        }
+        catch (err) {
+            logger.error("onKadMessage error: " + err.message);
+            next("onKadMessage error: " + err.message);
+        }
+    }    
+    
     function onPeerMessage (message, info) {
         try {
             if (!message) {
@@ -125,7 +276,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
                 
                 var param = {
                     address: bootdata.address,
-                    port: config.tcpport,
+                    port: bootdata.port,
                     account: streembit.User.name,
                     public_key: streembit.User.public_key
                 };
@@ -145,6 +296,9 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
                     next();
                 });
                 
+                // message validator
+                transport.before('receive', onKadMessage);
+
                 // handle errors from RPC
                 transport.on('error', onTransportError);
                 
@@ -165,7 +319,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
                     
                     logger.debug("peernode.create complete");
                     
-                    streembit.User.port = config.tcpport;
+                    streembit.User.port = bootdata.port;
                     streembit.User.address = bootdata.address;
                     
                     obj.is_connected = true;
@@ -178,89 +332,6 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
         catch (e) {
             resultfn(e);
         }
-
-        //for (var i = 0; i < bootdata.seeds.length; i++) {
-        //    //if (!bootdata.seeds[i].port) {
-        //    //    bootdata.seeds[i].port = DEFAULT_STREEMBIT_PORT;
-        //    //}
-
-        //    //if (streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK) {
-        //    //    if (!bootdata.seeds[i].account) {
-        //    //        return resultfn("Invalid seed configuration data. The seed must have an account in a private network");
-        //    //    }
-        //    //}
-        //    //else {
-        //    //    if (!bootdata.seeds[i].account) {
-        //    //        var str = "" + bootdata.seeds[i].address + ":" + bootdata.seeds[i].port;
-        //    //        var buffer = new Buffer(str);
-        //    //        var acc = nodecrypto.createHash('sha1').update(buffer).digest().toString('hex');
-        //    //        bootdata.seeds[i].account = acc;
-        //    //    }
-        //    //}
-            
-        //    //// remove our own account id in case if it is in the list
-        //    //if (bootdata.seeds[i].account != accountId) {
-        //    //    seedlist.push(bootdata.seeds[i]);
-        //    //    logger.debug("seed: %j", bootdata.seeds[i]);
-        //    //}
-        //    seedlist.push(bootdata.seeds[i]);
-        //    logger.debug("seed: %j", bootdata.seeds[i]);
-        //}        
-        
-        //var options = {
-        //    onnodeerror: onNodeError,
-        //    onnetworkerror: onNetworkError,
-        //    log: logger,
-        //    port: config.tcpport,
-        //    account: accountId,
-        //    seeds: seedlist, 
-        //    peermsgHandler: onPeerMessage,
-        //    storage: db,
-        //    is_private_network: is_private_network,
-        //    private_network_accounts: private_network_accounts
-        //};
-        
-        //try {
-        //    var peernode = streembitkad(options);
-        //    peernode.create(function (err) {
-        //        if (err) {
-        //            return resultfn(err);
-        //        }
-                
-        //        logger.debug("peernode.create complete");
-                
-        //        obj.is_connected = true;
-        //        obj.node = peernode;
-                
-        //        var address = obj.node.Address;
-        //        var port = obj.node.Port;
-        //        if (!address || !port) {
-        //            return resultfn("Invalid peer address and port");
-        //        }
-                
-        //        streembit.User.address = address;
-        //        streembit.User.port = port;
-                
-        //        obj.node.is_seedcontact_exists(function (result) {
-        //            if (result) {
-        //                logger.debug("seed contact exists in buckets");
-        //                resultfn();
-        //            }
-        //            else {
-        //                resultfn("communication with seeds failed");
-        //            }
-        //        });    
-        //    });
-            
-        //    // handle msgstored event
-        //    peernode.on('msgstored', msg_stored);
-
-            //
-            //
-        //}
-        //catch (e) {            
-        //    resultfn(e);
-        //}
     }    
     
     obj.validate_connection = function (callback) {
