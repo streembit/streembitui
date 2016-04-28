@@ -506,7 +506,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             var socket = net.createConnection(contact.port, contact.address);       
             
             socket.on('error', function (err) {
-                callback("self peer_send failed to " + contact.address + ":" + contact.port + ". error: " + (err.message ? err.message : err));
+                logger.error("peer_send failed " + contact.address + ":" + contact.port + ". error: " + (err.message ? err.message : err));
             });
 
             socket.write(message);
@@ -526,7 +526,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             peerobj.node.get_range( msgkey, callback);
         }
         catch (err) {
-            logger.error("get_range error:  %j", err);
+            logger.error("streembit.PeerTransport.get_range error:  %j", err);
         }
     }    
     

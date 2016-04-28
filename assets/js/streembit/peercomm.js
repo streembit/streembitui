@@ -1526,7 +1526,7 @@ streembit.PeerNet = (function (module, logger, events, config) {
             
             streembit.Node.get_range(msgkey, function (err, result) {
                 if (err) {
-                    return streembit.notify.error("get_range error:  %j", err);
+                    return streembit.notify.error("streembit.PeerNet.get_range error:  %j", err);
                 }
                 
                 events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, result);
