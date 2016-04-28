@@ -1194,6 +1194,8 @@ var EccKey = require('streembitlib/crypto/EccKey');
             chatitems: ko.observableArray([]),
             chatmsg: ko.observable(''),
             issession: ko.observable(issession),
+            btncaption: ko.observable(issession ? 'Send Message' : 'Send Offline Message'),
+            lblheader: ko.observable(issession ? ('Chat with ' + contact.name ) : ('Offline message to ' + contact.name)),
 
             init: function (callback) {
                 try {
@@ -1204,7 +1206,7 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     callback();
 
                     if (this.issession() != true) {
-                        bootbox.alert("It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.");
+                        
                     }
                 }
                 catch (err) {
@@ -1644,12 +1646,17 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     },
                     function (err) {
                         streembit.logger.error("Error in creating peer session: %j", err);
-                        // still open the view and indicate the contact is offline
-                        var options = {
-                            contact : viewModel.contact,
-                            issession: false
-                        };
-                        events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
+                        
+                        var text = "It seems the contact is off-line. You can send an off-line message to the contact. The network will store the message and deliver it once the contact is on-line.";
+                        bootbox.confirm(text, function (result) {
+                            if (result) {
+                                var options = {
+                                    contact : viewModel.contact,
+                                    issession: false
+                                };
+                                events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_CONTACT_CHAT, null, options);
+                            }
+                        });
                     }
                 );
             },

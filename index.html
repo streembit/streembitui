@@ -896,7 +896,7 @@ Copyright (C) 2016 The Streembit software development team
         <div style="padding:10px;text-align:left;">
             <div class="chat-win-header">
                 <div style="float:left;font-size:12px;font-weight:bold;color:#555">
-                    Chat with <span data-bind="text: contact_name"></span>
+                    <span data-bind="text: lblheader"></span>
                 </div>
                 <div style="float:right" data-bind="visible: issession">
                     <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
@@ -933,7 +933,7 @@ Copyright (C) 2016 The Streembit software development team
                     <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
                 </div>
                 <div style="text-align:center;margin-top:5px">
-                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
+                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px"><span data-bind="text: btncaption"></span></button>
                 </div>
             </div>        
         </div>
