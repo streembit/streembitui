@@ -30,8 +30,8 @@ var kad = require('streembitlib/kadlib');
 var uuid = require("uuid");
 var nodecrypto = require("crypto");
 
-streembit.PeerTransport = (function (peerobj, logger, events, config, db) {
-    
+streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
+
     var DEFAULT_STREEMBIT_PORT = 32320;
 
     peerobj.node = 0;
@@ -39,7 +39,8 @@ streembit.PeerTransport = (function (peerobj, logger, events, config, db) {
     peerobj.is_connected = false;
     
     var listOfContacts = {};
-    
+
+
     //  TODO validate the time and remove contact after an idle period
     function updateContact(contact) {
         if (contact && contact.account) {
@@ -253,7 +254,8 @@ streembit.PeerTransport = (function (peerobj, logger, events, config, db) {
             logger.error("expireHandler error: %j", err);
         }
     }
-    
+   
+
     function onPeerMessage (message, info) {
         try {
             if (!message) {
@@ -515,6 +517,6 @@ streembit.PeerTransport = (function (peerobj, logger, events, config, db) {
         peerobj.node.delete_item(key, request);
     }
 
-    return peerobj.
+    return peerobj;
 
-}(streembit.PeerTransport || {}, streembit.logger, global.appevents, streembit.config, streembit.MainDB));
+}( streembit.PeerTransport || {}, streembit.logger, global.appevents, streembit.config, streembit.MainDB));
