@@ -30,13 +30,13 @@ var kad = require('streembitlib/kadlib');
 var uuid = require("uuid");
 var nodecrypto = require("crypto");
 
-streembit.PeerTransport = (function (obj, logger, events, config, db) {
+streembit.PeerTransport = (function (peerobj, logger, events, config, db) {
     
     var DEFAULT_STREEMBIT_PORT = 32320;
 
-    obj.node = 0;
-    obj.is_publickey_uplodaed = false;
-    obj.is_connected = false;
+    peerobj.node = 0;
+    peerobj.is_publickey_uplodaed = false;
+    peerobj.is_connected = false;
     
     var listOfContacts = {};
     
@@ -101,7 +101,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
             return callback("onKadMessage error: " + err.message);
         }
         
-        thisobj.node.get(account_key, function (err, value) {
+        peerobj.node.get(account_key, function (err, value) {
             try {
                 if (err) {
                     if (is_update_key && err.message && err.message.indexOf("error: 0x0100") > -1) {
@@ -308,15 +308,15 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
         return accountId;        
     }
     
-    obj.is_node_connected = function () {
-        return obj.is_connected;
+    peerobj.is_node_connected = function () {
+        return peerobj.is_connected;
     }
     
-    obj.init = function (bootdata, resultfn) {
+    peerobj.init = function (bootdata, resultfn) {
         try {
-            var self = obj;
-            if (obj.node && obj.is_connected == true) {
-                obj.node.disconnect(function () {
+            var self = peerobj.
+            if (peerobj.node && peerobj.is_connected == true) {
+                peerobj.node.disconnect(function () {
                     self.is_connected = false;
                     self.node = null;
                     self.init(bootdata, resultfn);
@@ -388,8 +388,8 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
                     streembit.User.port = bootdata.port;
                     streembit.User.address = bootdata.address;
                     
-                    obj.is_connected = true;
-                    obj.node = peer;
+                    peerobj.is_connected = true;
+                    peerobj.node = peer;
                     
                     resultfn();
                 });
@@ -400,14 +400,14 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
         }
     }    
     
-    obj.validate_connection = function (callback) {
+    peerobj.validate_connection = function (callback) {
         try {
-            if (!obj.node || !obj.is_connected) {
+            if (!peerobj.node || !peerobj.is_connected) {
                 return callback("the node is not connected");
             }
 
             var count = 0;
-            var buckets = obj.node._router._buckets;;
+            var buckets = peerobj.node._router._buckets;;
             if (buckets) {
                 for (var prop in buckets) {
                     var bucket = buckets[prop];
@@ -433,42 +433,42 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
         }
     }
 
-    obj.put = function (key, value, callback) {
+    peerobj.put = function (key, value, callback) {
         //  For this public key upload message the key is the device name
         //  false == don't store locally
-        obj.node.put(key, value, function (err, results) {
+        peerobj.node.put(key, value, function (err, results) {
             if (callback) {
                 callback(err, results);
             }
         });
     }
     
-    obj.get = function (key, callback) {
+    peerobj.get = function (key, callback) {
         if (!callback || (typeof callback != "function"))
             throw new Error("invalid callback at node get");
 
         //  For this public key upload message the key is the device name
-         obj.node.get(key, function (err, msg) {
+         peerobj.node.get(key, function (err, msg) {
             callback(err, msg);
         });
     }
     
-    obj.find = function (key, callback) {
+    peerobj.find = function (key, callback) {
         if (!callback || (typeof callback != "function"))
             throw new Error("invalid callback at node find");
         
         //  For this public key upload message the key is the device name
-        obj.node.find(key, function (err, msg) {
+        peerobj.node.find(key, function (err, msg) {
             callback(err, msg);
         });
     }
     
-    obj.find_contact = function (account, public_key, callback) {
+    peerobj.find_contact = function (account, public_key, callback) {
         if (!callback || (typeof callback != "function"))
             throw new Error("invalid callback at find_node");
         
         //  For this public key upload message the key is the device name
-        kad.find_contact(obj.node, account, public_key, function (err, contact) {
+        kad.find_contact(peerobj.node, account, public_key, function (err, contact) {
             if (!err && contact && contact.account == account) {
                 contact.protocol = streembit.DEFS.TRANSPORT_TCP;
                 contact.name = account;
@@ -480,7 +480,7 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
         });
     }    
 
-    obj.peer_send = function (contact, data) {
+    peerobj.peer_send = function (contact, data) {
         try {
             if (!data) {
                 throw new Error("peer_send invalid data parameter");
@@ -491,30 +491,30 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
             
             var message = streembit.Message.create_peermsg(data);
             var options = { address: contact.address, port: contact.port };
-            obj.node.peer_send(options, message);
+            peerobj.node.peer_send(options, message);
         }
         catch (err) {
             logger.error("peer_send error:  %j", err);
         }
     }
     
-    obj.get_account_messages = function (account, msgkey, callback) {
+    peerobj.get_account_messages = function (account, msgkey, callback) {
         try {
             if (!account ) {
                 throw new Error("get_account_messages invalid account parameter");
             }
 
-            obj.node.get_account_messages(account, msgkey, callback);
+            peerobj.node.get_account_messages(account, msgkey, callback);
         }
         catch (err) {
             logger.error("get_account_messages error:  %j", err);
         }
     }    
     
-    obj.delete_item = function (key, request) {
-        obj.node.delete_item(key, request);
+    peerobj.delete_item = function (key, request) {
+        peerobj.node.delete_item(key, request);
     }
 
-    return obj;
+    return peerobj.
 
 }(streembit.PeerTransport || {}, streembit.logger, global.appevents, streembit.config, streembit.MainDB));
