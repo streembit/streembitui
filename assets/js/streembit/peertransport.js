@@ -29,6 +29,7 @@ var wotmsg = require("streembitlib/message/wotmsg");
 var kad = require('streembitlib/kadlib'); 
 var uuid = require("uuid");
 var nodecrypto = require("crypto");
+var net = require("net");
 
 streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
 
@@ -496,29 +497,36 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             if (!data) {
                 throw new Error("peer_send invalid data parameter");
             }
-            if (!contact) {
+            if (!contact || !contact.address || !contact.port ) {
                 throw new Error("peer_send invalid contact parameter");
             }
             
             var message = streembit.Message.create_peermsg(data);
-            var options = { address: contact.address, port: contact.port };
-            peerobj.node.peer_send(options, message);
+            
+            var socket = net.createConnection(contact.port, contact.address);       
+            
+            socket.on('error', function (err) {
+                callback("self peer_send failed to " + contact.address + ":" + contact.port + ". error: " + (err.message ? err.message : err));
+            });
+
+            socket.write(message);
+
         }
         catch (err) {
             logger.error("peer_send error:  %j", err);
         }
     }
     
-    peerobj.get_account_messages = function (account, msgkey, callback) {
+    peerobj.get_range = function (msgkey, callback) {
         try {
-            if (!account ) {
-                throw new Error("get_account_messages invalid account parameter");
+            if (!msgkey ) {
+                throw new Error("get_account_messages invalid msgkey parameter");
             }
 
-            peerobj.node.get_account_messages(account, msgkey, callback);
+            peerobj.node.get_range( msgkey, callback);
         }
         catch (err) {
-            logger.error("get_account_messages error:  %j", err);
+            logger.error("get_range error:  %j", err);
         }
     }    
     

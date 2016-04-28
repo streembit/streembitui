@@ -141,9 +141,9 @@ streembit.Node = (function (module, logger, events, config) {
         transport.peer_send(contact, data);
     }
     
-    module.get_account_messages = function (account, msgkey, callback) {
+    module.get_range = function (msgkey, callback) {
         var transport = streembit.TransportFactory.transport;
-        transport.get_account_messages(account, msgkey, callback);
+        transport.get_range(msgkey, callback);
     }
     
     module.delete_item = function (key, request) {
@@ -1524,9 +1524,9 @@ streembit.PeerNet = (function (module, logger, events, config) {
         try {
             logger.debug("get_account_messages");
             
-            streembit.Node.get_account_messages(streembit.User.name, msgkey, function (err, result) {
+            streembit.Node.get_range(msgkey, function (err, result) {
                 if (err) {
-                    return streembit.notify.error("get_account_messages error:  %j", err);
+                    return streembit.notify.error("get_range error:  %j", err);
                 }
                 
                 events.emit(events.APPEVENT, events.TYPES.ONACCOUNTMSG, result);

@@ -324,14 +324,14 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
         }
     }
     
-    module.get_account_messages = function (account, msgkey, callback) {
+    module.get_range = function ( msgkey, callback) {
         try {            
             var socket = get_account_socket();
             if (!socket) {
                 return callback("web socket does not exists");
             }
             
-            socket.emit("get_account_messages", account, msgkey, function (err, data) {
+            socket.emit("get_account_messages", streembit.User.name, msgkey, function (err, data) {
                 if (!err && data && data.error) {
                     err = data.error;
                 }
