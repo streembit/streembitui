@@ -216,7 +216,14 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
     }
     
     module.find_contact = function (account, public_key, callback) {
-        callback();
+        var socket = get_account_socket();
+        if (!socket) {
+            return callback("web socket does not exists");
+        }
+        
+        socket.emit("find_contact", account, public_key, function (err, contact) {
+            callback(err, contact);
+        });
     }
     
     module.put = function (key, value, callback) {
@@ -244,13 +251,13 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
         });
     }
     
-    module.find = function (account, callback) {
+    module.get = function (key, callback) {
         var socket = get_account_socket();
         if (!socket) {
             return callback("web socket does not exists");
         }
         
-        socket.emit("find", account, function (err, data) {
+        socket.emit("get", key, function (err, data) {
             callback(err, data);
         });
     }
@@ -331,11 +338,8 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
                 return callback("web socket does not exists");
             }
             
-            socket.emit("get_account_messages", streembit.User.name, msgkey, function (err, data) {
-                if (!err && data && data.error) {
-                    err = data.error;
-                }
-                callback(err, data);
+            socket.emit("get_range", msgkey, function (err, result) {
+                callback(err, result);
             });            
         }
         catch (err) {

@@ -413,14 +413,14 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                 
                 assert(bootdata.address, "address must be passed to node initialization");
                 assert(config.tcpport, "port must be passed to node initialization");
-                assert(streembit.User.public_key, "account public key must be initialized");
-                assert(streembit.User.name, "account name  key must be initialized");
+                assert(bootdata.public_key, "account public key must be initialized");
+                assert(bootdata.account, "account name  key must be initialized");
                 
                 var param = {
                     address: bootdata.address,
                     port: bootdata.port,
-                    account: streembit.User.name,
-                    public_key: streembit.User.public_key
+                    account: bootdata.account,
+                    public_key: bootdata.public_key
                 };
                 
                 var contact = kad.contacts.StreembitContact(param);
@@ -528,17 +528,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
          peerobj.node.get(key, function (err, msg) {
             callback(err, msg);
         });
-    }
-    
-    peerobj.find = function (key, callback) {
-        if (!callback || (typeof callback != "function"))
-            throw new Error("invalid callback at node find");
-        
-        //  For this public key upload message the key is the device name
-        peerobj.node.find(key, function (err, msg) {
-            callback(err, msg);
-        });
-    }
+    }    
     
     peerobj.find_contact = function (account, public_key, callback) {
         if (!callback || (typeof callback != "function"))

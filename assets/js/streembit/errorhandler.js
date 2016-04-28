@@ -35,20 +35,35 @@ streembit.Error = (function (module, logger, events) {
     }
     
     function handleFindMessages(err) {
-        if (!err) {
-            return streembit.notify.error("Error in finding messages, unknow error");
-        }
-        if (!err.message) {
-            return streembit.notify.error("Error in finding messages:  %j", err);
-        }
 
-        if (err.message.indexOf("0x0100") > -1) {
-            //  no messages exist for the account, not an error
-            return streembit.notify.taskbarmsg("There are no messages for the account");
+        if (!err) {
+            streembit.notify.error("Error in finding messages: unknow error" ); 
         }
         else {
-            return streembit.notify.error("Error in finding messages: " + err.message);
-        }        
+            if (!err.message) {
+                if (typeof err == "string") {
+                    if (err.indexOf("0x0100") > -1) {
+                        //  no messages exist for the account, not an error
+                        streembit.notify.taskbarmsg("There are no messages for the account");
+                    }
+                    else {
+                        streembit.notify.error("Error in finding messages: " + err);
+                    }
+                }
+                else {
+                    streembit.notify.error("Error in finding messages:  %j", err);
+                }
+            }
+            else {
+                if (err.message.indexOf("0x0100") > -1) {
+                    //  no messages exist for the account, not an error
+                    streembit.notify.taskbarmsg("There are no messages for the account");
+                }
+                else {
+                    streembit.notify.error("Error in finding messages: " + err.message);
+                }
+            }
+        }
     }
     
     module.init = function () {

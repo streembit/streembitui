@@ -1091,545 +1091,6 @@ streembit.notify = (function (module) {
 }(streembit.notify || {}));
 
 
-streembit.User = (function (usrobj, events) {
-    
-    var m_name = null;
-    var key = null;
-    var ecdhkey = null;
-    var m_port = null;
-    var m_address = null;
-    var m_ecdhkeys = null;
-    var m_lastpkey = null;
-    
-    Object.defineProperty(usrobj, "name", {
-        get: function () {
-            return m_name;
-        },
-        
-        set: function (value) {
-            m_name = value;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "port", {
-        get: function () {
-            return m_port;
-        },
-        
-        set: function (value) {
-            m_port = value;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "address", {
-        get: function () {
-            return m_address;
-        },
-        
-        set: function (value) {
-            m_address = value;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "crypto_key", {
-        get: function () {
-            return key;
-        },
-        
-        set: function (value) {
-            key = value;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "private_key", {
-        get: function () {
-            return key ? key.privateKey : '';
-        }
-    });
-    
-    Object.defineProperty(usrobj, "ecdh_key", {
-        get: function () {
-            return ecdhkey;
-        },
-        
-        set: function (value) {
-            ecdhkey = value;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "ecdh_public_key", {
-        get: function () {
-            return ecdhkey ? ecdhkey.getPublicKey('hex') : '';
-        }
-    });
-    
-    Object.defineProperty(usrobj, "ecdh_private_key", {
-        get: function () {
-            return ecdhkey ? ecdhkey.getPrivateKey('hex') : '';
-        }
-    });
-    
-    Object.defineProperty(usrobj, "public_key", {
-        get: function () {
-            return key ? key.publicKeyStr : '';
-        }
-    });
-    
-    Object.defineProperty(usrobj, "last_public_key", {
-        get: function () {
-            return m_last_key;
-        },
-        
-        set: function (value) {
-            m_last_key = value;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "is_user_initialized", {
-        get: function () {
-            var isuser = m_name && key && ecdhkey;
-            return isuser ? true : false;
-        }
-    });
-    
-    Object.defineProperty(usrobj, "ecdhkeys", {
-        get: function () {
-            return m_ecdhkeys;
-        },
-        
-        set: function (value) {
-            m_ecdhkeys = value;
-        }
-    });
-    
-    function getCryptPassword(password, account) {
-        var text = password + account;
-        var salt = nodecrypto.createHash('sha1').update(text).digest().toString('hex');
-        var pbkdf2key = nodecrypto.pbkdf2Sync(text, salt, 100, 64, 'sha512');
-        var pwdhex = pbkdf2key.toString('hex');
-        return pwdhex;
-    }
-    
-    function addToDB(account, publickey, cipher_context, callback) {
-        var user = {
-            "account": account, 
-            "public_key": publickey,
-            "cipher": cipher_context
-        };
-        
-        streembit.AccountsDB.put(user, function (err) {
-            if (err) {
-                return streembit.notify.error("Database update error %j", err);
-            }
-            
-            logger.debug("database user updated");
-            
-            if (callback) {
-                callback();
-            }
-        });
-    }
-    
-    usrobj.create_account = function (account, password, callback) {
-        try {
-
-            if (!account || !password)
-                throw new Error("create_account invalid parameters");
-            
-            var pbkdf2 = getCryptPassword(password, account);
-            
-            // get an entropy for the ECC key
-            var entropy = secrand.randomBuffer(32).toString("hex");
-            
-            // create ECC key
-            var key = new EccKey(entropy);
-            
-            // create a ECDH key
-            var ecdh_key = nodecrypto.createECDH('secp256k1');
-            ecdh_key.generateKeys();
-            
-            //  encrypt this
-            var user_context = {
-                "pk_entropy": entropy,
-                "timestamp": Date.now(),
-                "ecdhkeys": []
-            };
-            
-            user_context.ecdhkeys.push({
-                ecdh_private_key: ecdh_key.getPrivateKey('hex'),
-                ecdh_public_key: ecdh_key.getPublicKey('hex')
-            });
-            
-            var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(user_context));
-            
-            addToDB(account, key.publicKeyStr, cipher_context, function () {
-                usrobj.crypto_key = key;
-                usrobj.ecdh_key = ecdh_key;
-                usrobj.name = account;
-                usrobj.ecdhkeys = user_context.ecdhkeys;
-                
-                events.emit(events.APPEVENT, events.TYPES.ONUSERINIT);
-                
-                streembit.UI.set_account_title(account);
-                
-                callback();
-            });
-        }
-        catch (err) {
-            logger.error("create_account error %j", err);
-            callback(err);
-        }
-    };
-    
-    usrobj.initialize = function (user, password, callback) {
-        try {
-            if (!user || !password) {
-                return streembit.notify.error_popup("Invalid parameters, the account and passwords are required");
-            }
-            
-            var account_name = user.account;
-            if (!account_name) {
-                return streembit.notify.error_popup("Invalid account name");
-            }
-            
-            var pbkdf2 = getCryptPassword(password, account_name);
-            
-            // decrypt the cipher
-            var plain_text;
-            try {
-                plain_text = streembit.Message.aes256decrypt(pbkdf2, user.cipher);
-            }
-            catch (err) {
-                if (err.message && err.message.indexOf("bad decrypt") > -1) {
-                    return streembit.notify.error_popup("User initialize error: incorrect password");
-                }
-                else {
-                    return streembit.notify.error_popup("User initialize error: %j", err);
-                }
-            }
-            
-            var userobj = JSON.parse(plain_text);
-            
-            var entropy = userobj.pk_entropy;
-            
-            // create ECC key
-            var key = new EccKey(entropy);
-            
-            if (key.publicKeyStr != user.public_key) {
-                return streembit.notify.error_popup("Error in initializing the account, invalid password");
-            }
-            
-            // the account exists and the encrypted entropy is correct!
-        
-            if (!userobj.ecdhkeys) {
-                userobj.ecdhkeys = [];
-            }
-
-            var ecdh_key = nodecrypto.createECDH('secp256k1');
-           
-            if (userobj.ecdhkeys.length == 0) {
-                // create a ECDH key
-                ecdh_key.generateKeys();
-                
-                userobj.timestamp = Date.now();
-                userobj.ecdhkeys.push({
-                    ecdh_private_key: ecdh_key.getPrivateKey('hex'),
-                    ecdh_public_key: ecdh_key.getPublicKey('hex')
-                });
-            }
-            else {
-                try {
-                    var ecdhprivate = userobj.ecdhkeys[0].ecdh_private_key;
-                    ecdh_key.setPrivateKey(ecdhprivate, 'hex');
-                }
-                catch (e) {
-                    userobj.ecdhkeys = [];
-                    ecdh_key.generateKeys();                    
-                    userobj.timestamp = Date.now();
-                    userobj.ecdhkeys.push({
-                        ecdh_private_key: ecdh_key.getPrivateKey('hex'),
-                        ecdh_public_key: ecdh_key.getPublicKey('hex')
-                    });
-                    streembit.notify.error("ECDH exception occured when setting private key. New ECDH array is created");
-                }
-            }
-            
-            var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
-            
-            addToDB(account_name, key.publicKeyStr, cipher_context, function () {
-                
-                usrobj.crypto_key = key;
-                usrobj.ecdh_key = ecdh_key;
-                usrobj.name = account_name;
-                usrobj.ecdhkeys = userobj.ecdhkeys;
-                
-                events.emit(events.APPEVENT, events.TYPES.ONUSERINIT);
-                
-                streembit.UI.set_account_title(account_name);
-                
-                callback();
-            });
-                //}
-                //catch (err) {
-                //    streembit.notify.error_popup("User initialize error: %j", err);
-                //}
-          //  });                       
-        }
-        catch (err) {
-            streembit.notify.error_popup("User initialize error: %j", err);
-        }
-    };
-    
-    usrobj.backup = function () {
-        try {
-            if (!usrobj.name) {
-                throw new Error("the account is not initialized");
-            }
-            
-            streembit.AccountsDB.get(usrobj.name, function (err, user) {
-                if (err) {
-                    throw new Error(err);
-                }
-                if (!user) {
-                    throw new Error("The account does not exists");
-                }
-                
-                streembit.Fdialog.initialize({
-                    type: 'save',
-                    accept: ['streembit.dat'],
-                    path: '~/Documents',
-                    defaultSavePath: 'streembit.dat'
-                });
-                
-                var objext = JSON.stringify(user);
-                var encoded = window.btoa(objext);
-                
-                var text = "---BEGIN STREEMBIT KEY---\n";
-                text += encoded;
-                text += "\n---END STREEMBIT KEY---";
-                
-                var file_name = "streembit_" + usrobj.name + ".dat";
-                streembit.Fdialog.saveTextFile(text, file_name, function () {
-                    logger.debug("File saved in", path);
-                });
-                
-            });
-        }
-        catch (err) {
-            streembit.notify.error_popup("Account backup error: %j", err);
-        }
-    };
-    
-    usrobj.restore = function () {
-        try {
-            var user = null;
-            var account = null;
-            
-            streembit.Fdialog.initialize({
-                type: 'open',
-                accept: ['.dat'],
-                path: '~/Documents'
-            });
-            
-            streembit.Fdialog.readTextFile(function (err, buffer, path) {
-                var text = null;
-                try {
-                    if (!buffer) {
-                        throw new Error("invalid key backup buffer");
-                    }
-                    
-                    var data = buffer.toString();
-                    var find1 = "---BEGIN STREEMBIT KEY---\n";
-                    var pos1 = data.indexOf(find1);
-                    if (pos1 == -1) {
-                        throw new Error("invalid key backup data");
-                    }
-                    var pos2 = data.indexOf("\n---END STREEMBIT KEY---");
-                    if (pos2 == -1) {
-                        throw new Error("invalid key backup data");
-                    }
-                    
-                    var start = find1.length;
-                    var decoded = data.substring(start, pos2);
-                    text = window.atob(decoded);
-                }
-                catch (e) {
-                    return streembit.notify.error_popup("Invalid key backup data. Error: %j", e);
-                }
-                
-                if (!text) {
-                    return streembit.notify.error_popup("Invalid key backup data");
-                }
-                
-                user = JSON.parse(text);
-                account = user.account;
-                
-                // get the password
-                var box = bootbox.dialog({
-                    title: "Private key password", 
-                    message: '<div class="row"><div class="col-md-12">   ' +
-                    '<input id="privkeypwd" name="privkeypwd" type="password" class="form-control input-md"> ' +
-                    '</div></div>',
-                    buttons: {
-                        danger: {
-                            label: "Cancel",
-                            className: 'btn-default',
-                            callback: function () {
-                                
-                            }
-                        },
-                        success: {
-                            label: "Login",
-                            className: 'btn-default',
-                            callback: function () {
-                                try {
-                                    var result = $('#privkeypwd').val();
-                                    if (result === null) {
-                                        return bootbox.alert("Enter the private key password!");
-                                    }
-                                    
-                                    var pbkdf2 = getCryptPassword(result, account);
-                                    
-                                    // decrypt the cipher
-                                    var plain_text = streembit.Message.aes256decrypt(pbkdf2, user.cipher);
-                                    var userobj = JSON.parse(plain_text);
-                                    
-                                    var entropy = userobj.pk_entropy;
-                                    
-                                    // create ECC key
-                                    var key = new EccKey(entropy);
-                                    
-                                    if (key.publicKeyStr != user.public_key) {
-                                        return bootbox.alert("Error in initializing the account, invalid password");
-                                    }
-                                    
-                                    // the account exists and the encrypted entropy is correct!
-                                    
-                                    // create a ECDH key
-                                    var ecdh_key = nodecrypto.createECDH('secp256k1');
-                                    ecdh_key.generateKeys();
-                                    
-                                    userobj.timestamp = Date.now();
-                                    userobj.ecdhkeys.push({
-                                        ecdh_private_key: ecdh_key.getPrivateKey('hex'),
-                                        ecdh_public_key: ecdh_key.getPublicKey('hex')
-                                    });
-                                    
-                                    if (userobj.ecdhkeys.length > 5) {
-                                        userobj.ecdhkeys.shift();
-                                        if (userobj.ecdhkeys.length > 5) {
-                                            var removecount = userobj.ecdhkeys.length - 5;
-                                            userobj.ecdhkeys.splice(0, removecount);
-                                        }
-                                    }
-                                    
-                                    var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(userobj));
-                                    
-                                    addToDB(account, key.publicKeyStr, cipher_context, function (err) {
-                                        
-                                        usrobj.crypto_key = key;
-                                        usrobj.ecdh_key = ecdh_key;
-                                        usrobj.name = account;
-                                        usrobj.ecdhkeys = userobj.ecdhkeys;
-                                        
-                                        events.emit(events.APPEVENT, events.TYPES.ONUSERINIT);
-                                        
-                                        streembit.UI.set_account_title(account);
-                                        
-                                        streembit.notify.success("The account has been initialized");
-                                        
-                                        streembit.UI.show_startscreen();
-
-                                    });
-                                }
-                                catch (e) {
-                                    bootbox.alert("Error in initializing the account: " + e.message);
-                                }
-                            }
-                        }
-                    }
-   
-                });
-            });
-                
-            
-        }
-        catch (e) {
-            streembit.notify.error_popup("Account restore error: %j", e);
-        }
-    };
-    
-    usrobj.update_public_key = function (new_key_password) {
-        logger.debug("Publish update_public_key");
-        
-        try {
-            if (!usrobj.is_user_initialized) {
-                return streembit.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streembit network.");
-            }
-            
-            if (!new_key_password) {
-                return streembit.notify.error("Invalid parameters, the passphrase is required");
-            }
-            
-            var current_public_key = usrobj.public_key;
-            if (!current_public_key) {
-                return streembit.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streembit network.");
-            }
-            
-            var account = usrobj.name;
-            if (!account) {
-                return streembit.notify.error("The user account has not been initialized. To change the passphrase you must be connected to the Streembit network.");
-            }
-            
-            var pbkdf2 = getCryptPassword(new_key_password, account);
-            
-            // get an entropy for the ECC key
-            var entropy = secrand.randomBuffer(32).toString("hex");
-            
-            // create ECC key
-            var key = new EccKey(entropy);
-            var new_public_key = key.publicKeyStr;
-            
-            logger.debug("Updating public key on the network");
-            streembit.PeerNet.update_public_key(new_public_key, function (err) {
-                if (err) {
-                    return streembit.notify.error_popup("Publish updated public key error %j", err);
-                }
-                
-                //  encrypt this
-                var user_context = {
-                    "pk_entropy": entropy,
-                    "timestamp": Date.now(),
-                    "ecdhkeys": usrobj.ecdhkeys
-                };
-                
-                var cipher_context = streembit.Message.aes256encrypt(pbkdf2, JSON.stringify(user_context));
-                
-                addToDB(account, new_public_key, cipher_context, function () {
-                    usrobj.crypto_key = key;
-                    
-                    streembit.notify.success("The public key has been updloaded to the network");
-                    events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
-                });
-            });
-        }
-        catch (err) {
-            streembit.notify.error("User initialize error: %j", err);
-            callback(err);
-        }
-    }
-    
-    usrobj.clear = function () {
-        usrobj.crypto_key = null;
-        usrobj.name = null;
-        usrobj.ecdh_key = null;
-    }
-    
-    return usrobj;
-
-}(streembit.User || {}, global.appevents));
-
-
 streembit.Session = (function (module, logger, events, config) {
     
     module.settings = {};
@@ -1826,8 +1287,7 @@ streembit.Main = (function (module, logger, events, config) {
     module.app_command = 0;
     module.upnp_gateway = "";
     module.upnp_local_address = "";
-    module.seeds = [];
-    
+    module.seeds = [];    
 
     function display_new_account() {
         streembit.UI.streembit_appshow();
@@ -1840,8 +1300,13 @@ streembit.Main = (function (module, logger, events, config) {
             display_new_account();
         }
         else {
-            var seeds = config.bootseeds;
-            module.join_to_network(seeds, true, function () {
+            streembit.User.create_anonym_account();
+            var params = {
+                seeds: config.bootseeds,
+                public_key: streembit.User.public_key,
+                account: streembit.User.name     
+            };
+            module.join_to_network(params, true, function () {
                 display_new_account();
             });
         }
@@ -1879,8 +1344,12 @@ streembit.Main = (function (module, logger, events, config) {
                 }            
                 else {
                     logger.debug("Publish user to public network");
-                    var seeds = config.bootseeds;
-                    module.join_to_network(seeds);
+                    var params = {
+                        seeds: config.bootseeds,
+                        public_key: streembit.User.public_key,
+                        account: streembit.User.name     
+                    };
+                    module.join_to_network(params);
                 }
             }
         }));
@@ -2319,14 +1788,27 @@ streembit.Main = (function (module, logger, events, config) {
         }
     }    
     
-    module.network_init = function (seeds, skip_publish, completefn) {
+    module.network_init = function (params, skip_publish, completefn) {        
+        if (!params) {
+            return streembit.notify.error_popup("Invalid parameters at network init.")
+        }
+        if (!params.seeds || !params.seeds.length) {
+            return streembit.notify.error_popup("Invalid seeds parameter at network init.")
+        }
+        if (!params.public_key) {
+            return streembit.notify.error_popup("Invalid public key parameter at network init.")
+        }
+        if (!params.account) {
+            return streembit.notify.error_popup("Invalid public key parameter at network init.")
+        }
+
         module.is_app_initialized = false;
         
         streembit.UI.show_netbootscreen();
         
         var transport = config.transport;
         
-        var node_config = { seeds: null, address: null };
+        var node_config = { seeds: null, address: null, public_key: params.public_key, account: params.account };
         
         async.waterfall([        
             function (callback) {
@@ -2361,7 +1843,7 @@ streembit.Main = (function (module, logger, events, config) {
                         logger.info("node address: " + address)
                     }
                     node_config.address = address;
-                    streembit.bootclient.resolveseeds(seeds, callback);
+                    streembit.bootclient.resolveseeds(params.seeds, callback);
                 }
             },
             function (bootseeds, callback) {
@@ -2410,6 +1892,7 @@ streembit.Main = (function (module, logger, events, config) {
                     callback();
                 }
                 else {
+                    appboot_msg_handler("Publishing user info to the network");
                     streembit.PeerNet.publish_user(callback);
                 }
             }
@@ -2456,26 +1939,26 @@ streembit.Main = (function (module, logger, events, config) {
         });
     }
     
-    module.join_to_network = function (seeds, skip_publish, completefn) {
-        
-        if (!seeds || seeds.length == 0) {
-            return streembit.error_popup("Invalid bootseeds parameters. Please check your Settings and provide a valid seed list.");
+    module.join_to_network = function (params, skip_publish, completefn) {        
+        if (!params || !params.seeds || !params.seeds.length) {
+            return streembit.notify.error_popup("Invalid parameters at join to network.")
         }
-        
+
         events.emit(events.TYPES.ONAPPNAVIGATE, streembit.DEFS.CMD_EMPTY_SCREEN);
         
-        if (!skip_publish) {  // undefined will return true as well but nust set to false
+        if (!skip_publish) {  // undefined will return true as well but must set to false
             skip_publish = false;
         }
         
         var retry_with_websocket = false;
         
         var bootseeds = [];
-        for (var i = 0; i < seeds.length; i++) {
-            bootseeds.push(seeds[i]);
+        for (var i = 0; i < params.seeds.length; i++) {
+            bootseeds.push(params.seeds[i]);
         }
+        params.seeds = bootseeds;
 
-        module.network_init(bootseeds, skip_publish, function (err) {            
+        module.network_init(params, skip_publish, function (err) {            
             if (err) {
                 if (!retry_with_websocket && config.transport == streembit.DEFS.TRANSPORT_TCP && config.wsfallback == true) {
                     logger.info("The TCP connection failed. Retry to connect via WebSockets.")
@@ -2535,8 +2018,12 @@ streembit.Main = (function (module, logger, events, config) {
             }            
             else {
                 logger.debug("Publish user to public network");
-                var seeds = config.bootseeds;
-                module.join_to_network(seeds);
+                var params = {
+                    seeds: config.bootseeds,
+                    public_key: streembit.User.public_key,
+                    account: streembit.User.name     
+                };
+                module.join_to_network(params);
             }
         }
         else if (app_cmd == streembit.DEFS.CMD_APP_JOINPRIVATENET) {
@@ -2571,11 +2058,20 @@ streembit.Main = (function (module, logger, events, config) {
             
             if (module.app_command == streembit.DEFS.CMD_APP_JOINPUBLICNET) {
                 logger.debug("Publish user to public network");
-                var seeds = config.bootseeds;
-                module.join_to_network(seeds);
+                var params = {
+                    seeds: config.bootseeds,
+                    public_key: streembit.User.public_key,
+                    account: streembit.User.name     
+                };
+                module.join_to_network(params);
             }
             else if (module.app_command == streembit.DEFS.CMD_APP_JOINPRIVATENET) {
                 var seeds = [module.private_net_seed];
+                var params = {
+                    seeds: seeds,
+                    public_key: streembit.User.public_key,
+                    account: streembit.User.name  
+                };
                 module.join_to_network(seeds);
             }
         }
