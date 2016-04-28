@@ -2718,6 +2718,31 @@ streembit.Main = (function (module, logger, events, config) {
                 );
             },     
             function (callback) {
+                try {
+                    var fsconfig = require("./config.json");
+                    if (fsconfig) {
+                        console.log("fsconfig exists");
+                        if (fsconfig.tcpaddress) {
+                            streembit.config.tcpaddress = fsconfig.tcpaddress;
+                            console.log("streembit.config.tcpaddress: " + streembit.config.tcpaddress);
+                        }
+                        if (fsconfig.bootseeds) {
+                            streembit.config.bootseeds = fsconfig.bootseeds;
+                            console.log("streembit.config.bootseeds: " + streembit.config.bootseeds);
+                        }
+                        if (fsconfig.ice_resolvers) {
+                            streembit.config.ice_resolvers = fsconfig.ice_resolvers;
+                            console.log("streembit.config.ice_resolvers: " + streembit.config.ice_resolvers);
+                        }
+                    }
+                }
+                catch (err) {
+                    console.log("fsconfig error: " + err.message);
+                }
+
+                callback();
+            },
+            function (callback) {
                 // set the log level
                 console.log("Creating logger");
                 
@@ -2843,8 +2868,13 @@ streembit.Main = (function (module, logger, events, config) {
             },    
             function (callback) {
                 if (transport == streembit.DEFS.TRANSPORT_TCP) {
-                    appboot_msg_handler("Discovering own public IP address");
-                    streembit.bootclient.discovery(null, seeds[0], callback);
+                    if (config.tcpaddress) {
+                        callback(null, config.tcpaddress);
+                    }
+                    else {
+                        appboot_msg_handler("Discovering own public IP address");
+                        streembit.bootclient.discovery(null, seeds[0], callback);
+                    }
                 }
                 else {
                     callback(null, "");
@@ -2856,6 +2886,9 @@ streembit.Main = (function (module, logger, events, config) {
                     callback("error in populating discovery address");
                 }
                 else {
+                    if (transport == streembit.DEFS.TRANSPORT_TCP) {
+                        logger.info("node address: " + address)
+                    }
                     node_config.address = address;
                     streembit.bootclient.resolveseeds(seeds, callback);
                 }

@@ -187,7 +187,72 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
             logger.error("onKadMessage error: " + err.message);
             next("onKadMessage error: " + err.message);
         }
-    }    
+    }
+    
+    function expireHandler(data, callback) {
+        try {
+            if (!data || !data.key || !data.value) {
+                logger.debug("delete invalid message");
+                return callback(true);
+            }
+            
+            var msgobj = JSON.parse(data.value);
+            if (!msgobj || !msgobj.value) {
+                // invalid data
+                return callback(true);
+            }
+            
+            // get the payload
+            var payload = wotmsg.getpayload(msgobj.value);
+            
+            if (data.key.indexOf("/") == -1) {
+                //  The account-key messages publishes the public key of the account to the network
+                //  Delete the message if it is marked to be deleted, otherwise never delete the account-key messages           
+                
+                if ((!payload || !payload.data || !payload.data.type) || payload.data.type == wotmsg.MSGTYPE.DELPK) {
+                    logger.debug('DELETE public key of ' + data.key);
+                    return callback(true);
+                }
+                
+                // return, no delete
+                return callback();
+            }
+            
+            if (!msgobj.timestamp) {
+                logger.debug("delete message without timestamp, key: %s", data.key);
+                return callback(true);
+            }
+            
+            // check for MSGTYPE.DELMSG
+            if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+                logger.debug("delete message with type DELMSG, key: %s", data.key);
+                return callback(true);
+            }
+            
+            var currtime = Date.now();
+            var expiry_time = 0;
+            var keyitems = data.key.split("/");
+            if (keyitems && keyitems.length > 2 && keyitems[1] == "message") {
+                expiry_time = value.timestamp + T_MSG_EXPIRE;
+            }
+            else {
+                expiry_time = value.timestamp + T_ITEM_EXPIRE;
+            }
+            
+            if (expiry_time <= currtime) {
+                logger.debug("delete expired message %s", data.key);
+                callback(true);
+            }
+            else {
+                callback();
+            }
+        }
+        catch (err) {
+            // delete the time which triggered error
+            callback(true);
+            logger.error("expireHandler error: %j", err);
+        }
+    }
     
     function onPeerMessage (message, info) {
         try {
@@ -307,7 +372,8 @@ streembit.PeerTransport = (function (obj, logger, events, config, db) {
                     logger: logger,
                     storage: db,
                     seeds: seedlist,
-                    onPeerMessage: onPeerMessage
+                    onPeerMessage: onPeerMessage,
+                    expireHandler: expireHandler
                 };
                 
                 kad.create(options, function (err, peer) {
