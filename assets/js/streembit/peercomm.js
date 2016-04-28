@@ -160,6 +160,11 @@ streembit.Node = (function (module, logger, events, config) {
         var transport = streembit.TransportFactory.transport;
         return transport.is_node_connected();
     }
+    
+    module.get_seeds = function () {
+        var transport = streembit.TransportFactory.transport;
+        return transport.get_seeds();
+    }
 
     return module;
 

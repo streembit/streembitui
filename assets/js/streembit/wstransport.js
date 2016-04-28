@@ -345,6 +345,10 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
         catch (err) {
             logger.error("get_account_messages error:  %j", err);
         }
+    }
+    
+    module.get_seeds = function () {
+        return [];
     }    
     
     return module;

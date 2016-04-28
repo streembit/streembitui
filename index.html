@@ -1096,7 +1096,7 @@ Copyright (C) 2016 The Streembit software development team
                 <div>
                     <span style="font-weight:bold">Seeds</span>
                 </div>
-                <div class="accountinfo_seed_list" data-bind="foreach: streembit.Main.seeds">
+                <div class="accountinfo_seed_list" data-bind="foreach: seeds">
                     <div class="seed_list_item">
                         <div><span data-bind="text: account"></span></div>
                         <div><span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
@@ -1107,7 +1107,7 @@ Copyright (C) 2016 The Streembit software development team
 
             <!-- ko if: !streembit.Main.is_node_initialized -->
             <div style="color:#ff006e;margin-top:30px;font-size:16px">
-                The account is not connected to the Streembit network</td>
+                The account is not connected to the Streembit network
             </div>
             <!-- /ko -->
 

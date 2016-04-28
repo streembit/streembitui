@@ -234,6 +234,21 @@ streembit.Contacts = (function (module, logger, events, config) {
         };
         streembit.ContactsDB.update_contact(streembit.User.name, updobj).then(
             function () {
+                for (var i = 0; i < contacts.length; i++) {
+                    if (contacts[i].name == contact.name) {
+                        if (contact.address) {
+                            contacts[i].address = contact.address;
+                        }
+                        if (contact.port) {
+                            contacts[i].port = contact.port;
+                        }
+                        if (contact.protocol) {
+                            contacts[i].protocol = contact.protocol;
+                        }
+                        streembit.Session.contactsvm.update_contact(contacts[i].name, contacts[i]);
+                        break;
+                    }
+                }
                 callback();
             },
             function (err) {

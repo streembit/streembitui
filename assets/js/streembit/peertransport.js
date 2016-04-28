@@ -596,6 +596,27 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
     peerobj.delete_item = function (key, request) {
         peerobj.node.delete_item(key, request);
     }
+    
+    peerobj.get_seeds = function () {
+        var seeds = [];
+        if (!peerobj.node) {
+            return seeds;   
+        }
+        
+        var buckets = peerobj.node._router._buckets;
+        if (buckets) {
+            for (var prop in buckets) {
+                var bucket = buckets[prop];
+                if (bucket._contacts) {
+                    for (var i = 0; i < bucket._contacts.length; i++) {
+                        seeds.push(bucket._contacts[i]);
+                    }
+                }
+            }
+        }
+
+        return seeds;
+    }    
 
     return peerobj;
 

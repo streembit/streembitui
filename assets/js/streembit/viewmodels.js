@@ -1222,7 +1222,8 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     if (msg) {
                         if (this.issession() == true) {
                             var message = { cmd: streembit.DEFS.PEERMSG_TXTMSG, sender: streembit.User.name, text: msg };
-                            streembit.PeerNet.send_peer_message(this.contact, message);
+                            var contact = streembit.Contacts.get_contact(this.contact.name);
+                            streembit.PeerNet.send_peer_message(contact, message);
                             //  update the list with the sent message
                             this.onTextMessage(message);
                             this.chatmsg('');
@@ -2143,8 +2144,16 @@ var EccKey = require('streembitlib/crypto/EccKey');
     streembit.vms.AccountInfoViewModel = function () {
         var viewModel = {
             account: ko.observable(streembit.User.name),
-            public_key: ko.observable(streembit.User.public_key)
+            public_key: ko.observable(streembit.User.public_key),
+            seeds: ko.observableArray([])
         };
+        
+        if (streembit.config.transport == 'tcp') {
+            var seedarray = streembit.Node.get_seeds();
+            if (seedarray) {
+                viewModel.seeds(seedarray);
+            }
+        }
         
         return viewModel;
     }
