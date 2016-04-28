@@ -274,7 +274,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
     
     function findRangeMessages(query, callback) {
         try {
-            logger.debug('getRangeMessages for %s', query);
+            logger.debug('findRangeMessages for %s', query);
             
             var self = peerobj;
             var stream = db.createReadStream();
@@ -312,7 +312,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                         }
                     } 
                     catch (err) {
-                        logger.error('getRangeMessages error: %j', err);
+                        logger.error('findRangeMessages error: %j', err);
                     }
                 }
             });
@@ -326,7 +326,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             });
         }
         catch (err) {
-            logger.error('getStoredMessages error: %j', err);
+            logger.error('findRangeMessages error: %j', err);
             callback(err.message ? err.message : err);
         }
     };
@@ -450,7 +450,8 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                     storage: db,
                     seeds: seedlist,
                     onPeerMessage: onPeerMessage,
-                    expireHandler: expireHandler
+                    expireHandler: expireHandler,
+                    findRangeMessages: findRangeMessages
                 };
                 
                 kad.create(options, function (err, peer) {
