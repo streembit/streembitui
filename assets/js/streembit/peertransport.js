@@ -314,7 +314,7 @@ streembit.PeerTransport = (function (peerobj, logger, events, config, db) {
     
     peerobj.init = function (bootdata, resultfn) {
         try {
-            var self = peerobj.
+            var self = peerobj;
             if (peerobj.node && peerobj.is_connected == true) {
                 peerobj.node.disconnect(function () {
                     self.is_connected = false;
