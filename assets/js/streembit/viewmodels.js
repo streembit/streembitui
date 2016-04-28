@@ -2237,11 +2237,11 @@ var EccKey = require('streembitlib/crypto/EccKey');
                     return;
                 }
                 
-                streembit.PeerNet.get_published_account(account, function (err, contact) {
+                streembit.PeerNet.get_published_contact(account, function (err, contact) {
                     if (err) {
                         // check the error
                         if (err.message && err.message.indexOf("0x0100") > -1) {
-                            // 0x0100 error indicates the key does not exists
+                            // error code 0x0100 error indicates the key does not exists
                             return callback(null, false);
                         }
                     }

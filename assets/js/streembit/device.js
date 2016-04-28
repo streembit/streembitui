@@ -80,7 +80,7 @@ streembit.Device = (function (device, logger, events, config) {
 
         async.waterfall([  
             function (callback) {
-                streembit.PeerNet.get_published_account(device_account, callback);
+                streembit.PeerNet.get_published_contact(device_account, callback);
             },   
             function (contact, callback) {
                 streembit.Contacts.update_contact_database(contact, callback);

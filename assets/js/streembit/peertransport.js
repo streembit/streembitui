@@ -36,6 +36,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
     var DEFAULT_STREEMBIT_PORT = 32320;
 
     peerobj.node = 0;
+    peerobj.db = 0;
     peerobj.is_publickey_uplodaed = false;
     peerobj.is_connected = false;
     
@@ -97,9 +98,15 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             }
             
             if (payload.data.type == wotmsg.MSGTYPE.DELMSG) {
-                msgid = payload.data[wotmsg.MSGFIELD.MSGID];
-                if (!msgid) {
-                    return callback("validateMessage error: invalid MSGID for delete message");
+                // only the owner (recipient) of the message can delete the message
+                try {
+                    var msgtags = params.key.split("/");
+                    if (!msgtags || !msgtags.length || msgtags.length < 3 || msgtags[0] != account_key || msgtags[1] != "message") {
+                        return callback("validateMessage error: delete message failed.");
+                    }
+                }
+                catch (err) {
+                    return callback("validateMessage error: delete message failed, parse exception");
                 }
             }
         }
@@ -110,7 +117,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
         peerobj.node.get(account_key, function (err, value) {
             try {
                 if (err) {
-                    if (is_update_key && err.message && err.message.indexOf("error: 0x0100") > -1) {
+                    if (is_update_key && err.message && err.message.indexOf("0x0100") > -1) {
                         logger.debug('validateMessage PUBPK key not exists on the network, allow to complete PUBPK message');
                         //  TODO check whether the public key matches with private network keys
                         return callback(null, true);
@@ -264,7 +271,65 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             logger.error("expireHandler error: %j", err);
         }
     }
-   
+    
+    function findRangeMessages(query, callback) {
+        try {
+            logger.debug('getRangeMessages for %s', query);
+            
+            var self = peerobj;
+            var stream = db.createReadStream();
+            
+            var key, count = 0, page = 10, start = 0;
+            var messages = [];
+            
+            var params = querystring.parse(query);
+            if (!params.key) {
+                return callback('key is missing in range query');
+            }
+            key = params.key;
+            
+            if (params.page) {
+                page = params.page;
+            }
+            if (params.start) {
+                start = params.start;
+            }
+            
+            stream.on('data', function (data) {
+                if (data && data.key && (typeof data.key === 'string') && data.value && (typeof data.value === 'string')) {
+                    try {
+                        if (data.key.indexOf(key) > -1) {
+                            var jsonobj = JSON.parse(data.value);
+                            if (jsonobj.value) {
+                                var payload = wotmsg.getpayload(jsonobj.value);
+                                if (payload.data.type != wotmsg.MSGTYPE.DELMSG) {
+                                    if (count >= start && messages.length < page) {
+                                        messages.push({ key: data.key, value: jsonobj.value });
+                                    }
+                                    count++;
+                                }
+                            }
+                        }
+                    } 
+                    catch (err) {
+                        logger.error('getRangeMessages error: %j', err);
+                    }
+                }
+            });
+            
+            stream.on('error', function (err) {
+                callback(err.message ? err.message : err);
+            });
+            
+            stream.on('end', function () {
+                callback(null, count, page, start, messages);
+            });
+        }
+        catch (err) {
+            logger.error('getStoredMessages error: %j', err);
+            callback(err.message ? err.message : err);
+        }
+    };
 
     function onPeerMessage (message, info) {
         try {

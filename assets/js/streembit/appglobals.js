@@ -93,7 +93,9 @@ streembit.DEFS = (function (module) {
         MSG_TEXT: "text",
         MSG_ADDCONTACT: "addcontact",
         MSG_ACCEPTCONTACT: "acceptcontact",
-        MSG_DECLINECONTACT: "declinecontact"
+        MSG_DECLINECONTACT: "declinecontact",
+
+        EVENT_ERROR: "app_error_event"
     }
 
 }(streembit.DEFS || {}))
