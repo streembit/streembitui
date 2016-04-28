@@ -1867,52 +1867,6 @@ streembit.Contacts = (function (module, logger, events, config) {
     };
     
     
-    function on_contact_online(account, contobj) {
-        try {            
-            var contact = module.get_contact(account);
-            if (!contact) return;
-            
-            //  parse the message
-            //  must use the existing public key which guarantees data integrity and that the 
-            //  contact is indeed the sender
-            var public_key = module.get_public_key(account);
-            var payload = streembit.Message.decode(contobj.value, contact.public_key);
-            var incoming_contact = payload.data;
-            if (incoming_contact.public_key != contact.public_key) {
-                streembit.notify.error("Invalid contact received from the network. Contact '" + account + "' will be removed from the contact list");
-                // remove from the list
-                streembit.Session.contactsvm.delete_byname(contact.name);
-                //  remove from the local db
-                return module.remove(account);
-            }
-            
-            contact.address = incoming_contact.address;
-            contact.port = incoming_contact.port;
-            contact.ecdh_public = incoming_contact.ecdh_public;
-            
-            var updobj = {
-                public_key: incoming_contact.public_key, 
-                ecdh_public: incoming_contact.ecdh_public, 
-                address: incoming_contact.address, 
-                port: incoming_contact.port, 
-                name: account,
-                protocol: incoming_contact.protocol ? incoming_contact.protocol : streembit.DEFS.TRANSPORT_TCP,
-                user_type: contact.user_type
-            };
-            
-            module.update_contact_database(updobj, function (err) {
-                if (err) {
-                    return;
-                }
-
-                module.on_online(account);
-            });
-        }
-        catch (err) {
-            streembit.notify.error("on_contact_online() error: %j", err);
-        }
-    }
-    
     function pending_contact_handler() {
         var pcontacts = streembit.Session.settings.data.pending_contacts;
         if (!pcontacts || !pcontacts.length) {
@@ -1965,8 +1919,6 @@ streembit.Contacts = (function (module, logger, events, config) {
 
         logger.debug("contact " + account + " populated from network and updated. address: " + contact.address + ". port: " + contact.port + ". protocol: " + contact.protocol);
     }
-    
-  
     
     function ping_contact(account) {
         if (!account) {
@@ -2286,6 +2238,47 @@ streembit.Contacts = (function (module, logger, events, config) {
         var contact = module.get_contact(account);
         if (contact) {
             contact.isonline(true);
+        }
+    }
+    
+    module.on_contactseen = function(contobj) {
+        try {
+            var account = contobj.account;
+            var contact = module.get_contact(account);
+            if (!contact) return;
+            
+            if (contobj.public_key != contact.public_key) {
+                //TODO
+                return;
+            }
+            
+            if (contobj.address != contact.address || contact.port != contobj.port) {
+                contact.address = contobj.address;
+                contact.port = contobj.port;
+                contact.protocol = contobj.protocol ? contobj.protocol : streembit.DEFS.TRANSPORT_TCP;
+                
+                var updobj = {
+                    public_key: contact.public_key, 
+                    ecdh_public: contact.ecdh_public, 
+                    address: contact.address, 
+                    port: contact.port, 
+                    name: account,
+                    protocol: contact.protocol,
+                    user_type: contact.user_type
+                };
+                
+                module.update_contact_database(updobj, function (err) {
+                    if (err) {
+                        //TODO
+                        return;
+                    }
+                });
+            }
+
+            module.on_online(account);
+        }
+        catch (err) {
+            streembit.notify.error("on_contact_online() error: %j", err);
         }
     }
     
@@ -3191,6 +3184,9 @@ streembit.Main = (function (module, logger, events, config) {
             if (streembit.Session.curent_viewmodel && streembit.Session.curent_viewmodel.ondevice_event) {
                 streembit.Session.curent_viewmodel.ondevice_event(payload);
             }
+        }
+        else if (eventcmd == "contact_seen") {
+            streembit.Contacts.on_contactseen(payload);
         }
 
     });

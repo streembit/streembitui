@@ -49,9 +49,13 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                 nodeID: contact.nodeID,
                 address: contact.address,
                 port: contact.port,
-                updated: Date.now()
+                updated: Date.now(),
+                protocol: streembit.DEFS.TRANSPORT_TCP,
+                account: contact.account
             }
             listOfContacts[contact.account] = cobj;
+
+            events.emit(events.APPEVENT, "contact_seen", cobj);
         }
     }
     
@@ -122,12 +126,14 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                         return callback('validateMessage error: stored public key does not exists');
                     }
                     
-                    if (contact.public_key != stored_pkkey) {
-                        return callback('validateMessage error: stored public key and contact public key do not match');
-                    }
-                    
                     //  if this is a private network then the public key must matches with the account's key in the list of public key
                     //  TODO check whether the public key matches with private network keys
+                    
+                    if (payload.data.type == wotmsg.MSGTYPE.PUBPK) {
+                        if (payload.data[wotmsg.MSGFIELD.PUBKEY] != stored_pkkey) {
+                            return callback('validateMessage error: stored public key and message public key do not match');
+                        }
+                    }                    
                     
                     logger.debug("validateMessage validate account: " + account_key + " public key: " + stored_pkkey);
                     
@@ -136,6 +142,7 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                         payload.data.type == wotmsg.MSGTYPE.DELPK ||
                         payload.data.type == wotmsg.MSGTYPE.OMSG ||
                         payload.data.type == wotmsg.MSGTYPE.DELMSG) {
+                        
                         var decoded_msg = wotmsg.decode(params.value, stored_pkkey);
                         if (!decoded_msg) {
                             return callback('VERIFYFAIL ' + account);
@@ -163,9 +170,11 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
                 return next(new Error('Message dropped, reason: contact ' + contact.account + ' is not allowed'));
             }
             
+            updateContact(contact);
+
             if (!message || !message.method || message.method != "STORE" || 
                 !message.params || !message.params.item || !message.params.item.key) {
-                updateContact(contact);
+                
                 // only validate the STORE messages
                 return next();
             }
