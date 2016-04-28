@@ -503,13 +503,20 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
             
             var message = streembit.Message.create_peermsg(data);
             
-            var socket = net.createConnection(contact.port, contact.address);       
+            var client = net.connect( 
+                { port: contact.port, host: contact.address },
+                function () {
+                    client.write(message);
+                    client.end();
+                }
+            );
             
-            socket.on('error', function (err) {
+            client.on('end', function () {
+            });
+            
+            client.on('error', function (err) {
                 logger.error("peer_send failed " + contact.address + ":" + contact.port + ". error: " + (err.message ? err.message : err));
             });
-
-            socket.write(message);
 
         }
         catch (err) {
