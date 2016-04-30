@@ -1,5 +1,5 @@
 ﻿{
-    "tcpaddress": "192.168.1.79",
+    "tcpaddress": 0,
     "bootseeds": 0,
     "ice_resolvers": 0
 }

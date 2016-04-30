@@ -1788,18 +1788,21 @@ streembit.Main = (function (module, logger, events, config) {
         }
     }    
     
-    module.network_init = function (params, skip_publish, completefn) {        
+    module.network_init = function (params, skip_publish, completefn) {
+        
+        var transport = config.transport;
+               
         if (!params) {
-            return streembit.notify.error_popup("Invalid parameters at network init.")
+            return completefn("Invalid parameters at network init for transport " + transport);
         }
         if (!params.seeds || !params.seeds.length) {
-            return streembit.notify.error_popup("Invalid seeds parameter at network init.")
+            return completefn("Invalid seeds parameter at network init for transport " + transport);
         }
         if (!params.public_key) {
-            return streembit.notify.error_popup("Invalid public key parameter at network init.")
+            return completefn("Invalid public key parameter at network init for transport " + transport);
         }
         if (!params.account) {
-            return streembit.notify.error_popup("Invalid public key parameter at network init.")
+            return completefn("Invalid public key parameter at network init for transport " + transport);
         }
 
         module.is_app_initialized = false;
@@ -1826,7 +1829,7 @@ streembit.Main = (function (module, logger, events, config) {
                     }
                     else {
                         appboot_msg_handler("Discovering own public IP address");
-                        streembit.bootclient.discovery(null, seeds[0], callback);
+                        streembit.bootclient.discovery(null, params.seeds[0], callback);
                     }
                 }
                 else {
@@ -1900,13 +1903,7 @@ streembit.Main = (function (module, logger, events, config) {
         function (err, result) {          
             if (err) {
                 appboot_msg_handler("", true);
-                var msg = "Error in initializing the application. "
-                if (config.transport == streembit.DEFS.TRANSPORT_TCP) {
-                    if (!module.upnp_gateway) {
-                        msg += "The system was unable to configure your peer listener port via UPnP. Please check you router configuration to allow UPnP port configuration. If UPnP is disabled on your router then you must manually configure the listener port mapping. "
-                    }
-                }
-                
+                var msg = "Error in initializing the application. ";
                 if (err.message) {
                     msg += util.format("%s", err.message);
                 }
@@ -1966,7 +1963,7 @@ streembit.Main = (function (module, logger, events, config) {
                     config.transport = streembit.DEFS.TRANSPORT_WS;
                     //  the TCP connection failed, ry with websocket fallback
                     retry_with_websocket = true;
-                    module.network_init(bootseeds, skip_publish, function (ret_err) {
+                    module.network_init(params, skip_publish, function (ret_err) {
                         if (ret_err) {
                             if (retry_with_websocket) {
                                 retry_with_websocket = false;
