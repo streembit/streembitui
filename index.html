@@ -62,8 +62,11 @@ Copyright (C) 2016 The Streembit software development team
     <script type="text/javascript" src="assets/js/streembit/node_app_bundle.js"></script>
 
     <script type="text/javascript" src="assets/js/streembit/appglobals.js"></script>
+    <script type="text/javascript" src="assets/js/streembit/errorhandler.js"></script>
 
     <script type="text/javascript" src="assets/js/streembit/bootclient.js"></script>
+    <script type="text/javascript" src="assets/js/streembit/user.js"></script>
+    <script type="text/javascript" src="assets/js/streembit/contacts.js"></script>
     <script type="text/javascript" src="assets/js/streembit/peercomm.js"></script>
 
     <script type="text/javascript" src="assets/js/streembit/main.js"></script>
@@ -80,7 +83,6 @@ Copyright (C) 2016 The Streembit software development team
             function appboot_msg_handler(msg, close) {
                 $("#appboot-msg").text(msg);
                 if (close) {
-                    debugger;
                     streembit.UI.hide_netbootscreen();
                 }
             }
@@ -894,7 +896,7 @@ Copyright (C) 2016 The Streembit software development team
         <div style="padding:10px;text-align:left;">
             <div class="chat-win-header">
                 <div style="float:left;font-size:12px;font-weight:bold;color:#555">
-                    Chat with <span data-bind="text: contact_name"></span>
+                    <span data-bind="text: lblheader"></span>
                 </div>
                 <div style="float:right" data-bind="visible: issession">
                     <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
@@ -931,7 +933,7 @@ Copyright (C) 2016 The Streembit software development team
                     <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
                 </div>
                 <div style="text-align:center;margin-top:5px">
-                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
+                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px"><span data-bind="text: btncaption"></span></button>
                 </div>
             </div>        
         </div>
@@ -1094,7 +1096,7 @@ Copyright (C) 2016 The Streembit software development team
                 <div>
                     <span style="font-weight:bold">Seeds</span>
                 </div>
-                <div class="accountinfo_seed_list" data-bind="foreach: streembit.Main.seeds">
+                <div class="accountinfo_seed_list" data-bind="foreach: seeds">
                     <div class="seed_list_item">
                         <div><span data-bind="text: account"></span></div>
                         <div><span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
@@ -1105,7 +1107,7 @@ Copyright (C) 2016 The Streembit software development team
 
             <!-- ko if: !streembit.Main.is_node_initialized -->
             <div style="color:#ff006e;margin-top:30px;font-size:16px">
-                The account is not connected to the Streembit network</td>
+                The account is not connected to the Streembit network
             </div>
             <!-- /ko -->
 
@@ -1610,18 +1612,25 @@ Copyright (C) 2016 The Streembit software development team
                         <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
                         </div>
                         <div style="text-align:left;margin-top:15px">
-                            <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed('');}" title="Add boot seed">Add seed</button>
+                            <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
                         </div>
                         <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
-                            <div class="form-group" style="font-size:12px;margin-bottom:0">
-                                <label for="newseed" style="font-size:12px">Seed:</label>
-                                <input type="text" class="form-control" id="newseed" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_seed"> &nbsp;&nbsp;<button data-bind="click:add_bootseed">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:function() {is_add_bootseed(false);new_seed('');}">Cancel</button>
+                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                                <label for="newseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
+                                <input type="text" class="form-control" id="newseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_host"> 
+                            </div>
+                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                                <label for="newseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
+                                <input type="text" class="form-control" id="newseedport" maxlength="4" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
+                            </div>
+                            <div class="form-group" style="font-size:11px;margin-bottom:0">
+                                <label for="newseedpk" style="font-size:11px;width:80px;text-align:right">Public key: </label>
+                                <input type="text" class="form-control" id="newseedpk" maxlength="48" style="font-size:11px;width:400px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_publickey">
+                            </div>
+                            <div style="margin-top:20px">
+                                <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
                             </div>
                         </div>
-                    </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
                     </div>
                 </div>
 
@@ -1713,14 +1722,21 @@ Copyright (C) 2016 The Streembit software development team
 </script>
 
 <script type="text/html" id="bootseed-item-template">
-    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:400px">
-        <div class="pull-left" style="padding-top:2px">
-            <span data-bind="text: $data" style="font-size:11px;font-weight:bold;"></span>
+    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
+        <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
+            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div> 
+            <div class="pull-left" data-bind="text: $data.address"></div>:<span data-bind="text: $data.port"></span>
+            <div style="clear:both"></div>  
         </div>
         <div class="pull-right">
             <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
         </div>
-        <div style="clear:both"></div>   
+        <div style="clear:both"></div>  
+        <div style="font-size:11px;font-weight:bold;margin-top:5px;">
+            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Public key:</div> 
+            <div class="pull-left" data-bind="text: $data.public_key"></div>
+            <div style="clear:both"></div>  
+        </div>
     </div>
 </script>
 

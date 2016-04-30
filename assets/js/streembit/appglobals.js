@@ -93,7 +93,9 @@ streembit.DEFS = (function (module) {
         MSG_TEXT: "text",
         MSG_ADDCONTACT: "addcontact",
         MSG_ACCEPTCONTACT: "acceptcontact",
-        MSG_DECLINECONTACT: "declinecontact"
+        MSG_DECLINECONTACT: "declinecontact",
+
+        EVENT_ERROR: "app_error_event"
     }
 
 }(streembit.DEFS || {}))
@@ -119,14 +121,19 @@ streembit.config = (function (module) {
         "tcpport": streembit.DEFS.APP_PORT,
         "wsport": streembit.DEFS.WS_PORT,
         "bootseeds": [
-            "seed.streemio.org", "seed.streemio.net", "seed.streemio.biz", "seed.streemio.co"
+            { "address": "seed.streemio.org", "port": 32320, "public_key": "033b726f5ff2fc02a009ab2ef0844b807372af4b13d1236c2df9752de1ee93f5fa" },
+            { "address": "seed.streemio.net", "port": 32320, "public_key": "033d92278f9440c8b4061dddf862f5e224d0ff312e642edfa2c93c86671442609f" },
+            { "address": "seed.streemio.biz", "port": 32320, "public_key": "026f2303d7932ed86bf21b7150bcd45024f3926d37b615798855994b6b53e8b81b" },
+            { "address": "seed.streemo.uk", "port": 32320, "public_key": "035f4881a0c7d50af6fcf7cc40c3eab60c382bf7f8cd83cd2a3ff5064afd893c70" },
+            { "address": "seed.streemio.co", "port": 32320, "public_key": "037fb797e8bf14aefba94ea5efafccebfe1b4591567625a68a9f68ef53a02b9306" }
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
         ],
         "private_net_seed": { "account": "", "host": "", "port": 0 },
         "pending_contacts": []
-    };
+    };    
+    
 
     Object.defineProperty(module, "data", {
         get: function () {
@@ -175,6 +182,16 @@ streembit.config = (function (module) {
         
         set: function (value) {
             config_data.wsfallback = value;
+        }
+    });
+    
+    Object.defineProperty(module, "tcpaddress", {
+        get: function () {
+            return config_data.tcpaddress;
+        },
+        
+        set: function (value) {
+            config_data.tcpaddress = value;
         }
     });
     
