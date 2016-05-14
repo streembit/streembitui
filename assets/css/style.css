@@ -1221,3 +1221,7 @@ span.awesomeBlue i.addbtn{
 .device-property-item{
     border: 2px solid #ccc;
 }
+
+.seed_list_item span {
+    font-weight:bold;
+}

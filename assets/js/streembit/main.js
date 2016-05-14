@@ -1829,7 +1829,7 @@ streembit.Main = (function (module, logger, events, config) {
                     }
                     else {
                         appboot_msg_handler("Discovering own public IP address");
-                        streembit.bootclient.discovery(null, params.seeds[0], callback);
+                        streembit.bootclient.discovery(null, params.seeds, callback);
                     }
                 }
                 else {
@@ -1871,21 +1871,6 @@ streembit.Main = (function (module, logger, events, config) {
                     },
                     function (err) {
                         logger.error("PeerNet init error %j", err);
-                        callback(err);
-                    }
-                );
-            },
-            function (callback) {
-                // validate the connection
-                appboot_msg_handler("Validating Streembit network connection");
-                streembit.PeerNet.validate_connection().then(
-                    function () {
-                        appboot_msg_handler("PeerNet connection is validated");
-                        logger.debug("PeerNet connection is validated");
-                        callback(null);
-                    },
-                    function (err) {
-                        logger.error("Error in P2P connection %j", err);
                         callback(err);
                     }
                 );
