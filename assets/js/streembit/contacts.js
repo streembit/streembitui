@@ -118,7 +118,7 @@ streembit.Contacts = (function (module, logger, events, config) {
                 
                 contacts[i].address = obj.address;
                 contacts[i].port = obj.port;
-                contacts[i].ecdh_public = obj.ecdh_public;
+                contacts[i].ecdh_public = obj.ecdh_public || contacts[i].ecdh_public;
                 contacts[i].protocol = obj.protocol  ? obj.protocol : streembit.DEFS.TRANSPORT_TCP;
                 contacts[i].user_type = obj.user_type;
             }

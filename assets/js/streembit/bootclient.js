@@ -174,48 +174,80 @@ streembit.bootclient = (function (module, logger, config, events) {
         }
     };
     
-    module.tcp_discovery = function (address, seed, callback) {
+    module.tcp_discovery = function (address, seeds, callback) {
         if (is_ipaddress(address)) {
             return callback(null, address);
         }
         
-        var client = net.connect( 
-            {
-                port: seed.port, 
-                host: seed.address
-            },
-            function () {
-                client.write(JSON.stringify({ type: 'DISCOVERY' }));
-            }
-        );
+        if (!seeds || !Array.isArray(seeds) || seeds.length == 0) {
+            return callback("invalid seeds parameters at address discovery");
+        }
         
-        client.on('data', function (data) {
-            var reply = JSON.parse(data.toString());
-            if (reply && reply.address) {
-                var reply_address;
-                var ipv6prefix = "::ffff:";
-                if (reply.address.indexOf(ipv6prefix) > -1) {
-                    reply_address = reply.address.replace(ipv6prefix, '');
+        var result_ipaddress = 0;
+        
+        function discover_address(seed, asyncfn) {
+            if (result_ipaddress) {
+                return asyncfn(null, true);
+            }
+            
+            var tcpclient = net.connect( 
+                {
+                    port: seed.port, 
+                    host: seed.address
+                },
+                function () {
+                    tcpclient.write(JSON.stringify({ type: 'DISCOVERY' }));
+                }
+            );
+            
+            tcpclient.on('data', function (data) {
+                tcpclient.end();
+                var reply = JSON.parse(data.toString());
+                if (reply && reply.address) {
+                    var ipv6prefix = "::ffff:";
+                    if (reply.address.indexOf(ipv6prefix) > -1) {
+                        reply.address = reply.address.replace(ipv6prefix, '');
+                    }
+                    
+                    if (is_ipaddress(reply.address)) {
+                        result_ipaddress = reply.address;
+                        asyncfn(null, true);
+                    }
+                    else {
+                        asyncfn(null, false);
+                    }
                 }
                 else {
-                    reply_address = reply.address;
-                }                   
-                
-                callback(null, reply_address);
-            }
-            else {
-                callback("discovery failed for " + seed.address + ":" + seed.port);
-            }
-            client.end();
-        });
+                    logger.error("address discovery failed at " + seed.address + ":" + seed.port);
+                    asyncfn(null, false);
+                }
+            });
+            
+            tcpclient.on('end', function () {
+            });
+            
+            tcpclient.on('error', function (err) {
+                logger.error("address discovery failed at " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
+                asyncfn(null, false);
+            });
+        }
         
-        client.on('end', function () {
-        });
         
-        client.on('error', function (err) {
-            callback("self discovery failed with " + seed.address + ":" + seed.port + ". " + (err.message ? err.message : err));
-        });
+        async.detectSeries(
+            seeds, 
+            discover_address, 
+            function (err, result) {
+                if (result_ipaddress) {
+                    callback(null, result_ipaddress);
+                }
+                else {
+                    return callback("IP address discovery failed");
+                }
+            }
+        );
+
     };
+
     
     module.resolveseeds = function (seeds, callback) {
         var transport = config.transport;
