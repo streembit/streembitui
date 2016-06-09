@@ -22,8 +22,8 @@ Run Streembit from source
 Once Chromium and NW.js are built clone the streembit repository:  
 
 ```bash
-$ git clone https://github.com/streembit/streembit
-$ cd /streembit
+$ git clone https://github.com/streembit/streembitui
+$ cd /streembitui
 ```
 
 Install the Streembit Node.js dependencies:  
