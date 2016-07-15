@@ -59,3 +59,4 @@ build/macosx64
 
 
 *.zip
+/typings

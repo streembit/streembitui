@@ -5,7 +5,7 @@
     "name": "T Z Pardi",
     "email": "tzpardi@streembit.com"
   },
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "index.html",
   "window": {
     "toolbar": false,
@@ -34,6 +34,6 @@
     "uuid": "^2.0.1",
     "winston": "^2.1.1",
     "xml2js": "^0.1.14",
-    "streembitlib": "git+https://github.com/streembit/streembitlib.git"
+    "streembitlib": "git+https://github.com/streembit/streembitlib.git#develop"
   }
 }
