@@ -122,47 +122,66 @@ streembit.bootclient = (function (module, logger, config, events) {
     
     module.ws_resolve = function (bootseeds, callback) {
         try {
+
+            function shuffle(array) {
+                let counter = array.length;
+
+                // While there are elements in the array
+                while (counter > 0) {
+                    // Pick a random index
+                    let index = Math.floor(Math.random() * counter);
+
+                    // Decrease counter by 1
+                    counter--;
+
+                    // And swap the last element with it
+                    let temp = array[counter];
+                    array[counter] = array[index];
+                    array[index] = temp;
+                }
+
+                return array;
+            }
+
+            function is_seed_exists(arr, host) {
+                var exists = false;
+                arr.forEach(function (item, index, array) {
+                    if (item.host == host) {
+                        exists = true;
+                    }
+                });
+                return exists;
+            }
+
+
             logger.debug("bootclient ws_boot()");
-            
+
             if (!bootseeds || bootseeds.length == 0) {
                 return callback("bootseeds configuration is missing");
             }
-            
+
+            var temparr = [];
+            for (var i = 0; i < bootseeds.length; i++) {
+                temparr.push(bootseeds[i]);
+            }
+
+            var tseeds = shuffle(temparr);
+
             var wsservers = [];
-            
-            do {                
-                if (bootseeds.length <= 1) {
-                    if (bootseeds.length == 1) {
-                        var isadd = true;
-                        var host = bootseeds[0].address ? bootseeds[0].address : bootseeds[0];
-                        wsservers.forEach(function (item, index, array) {
-                            if (item.host == host) {
-                                isadd = false;
-                            }
-                        });
-                        
-                        if (isadd) {
-                            wsservers.push(
-                                {
-                                    host: bootseeds[0].address ? bootseeds[0].address : bootseeds[0], 
-                                    port: streembit.DEFS.WS_PORT
-                                });
+
+            for (var i = 0; i < tseeds.length; i++) {
+                var host = tseeds[i].address ? tseeds[i].address : tseeds[i];
+                var exists = is_seed_exists(wsservers, host);
+                if (!exists) {
+                    wsservers.push(
+                        {
+                            host: host,
+                            port: streembit.DEFS.WS_PORT
                         }
-                    }
-                    break;
+                    );
                 }
-                
-                var shuffle = shuffleItem(bootseeds);
-                
-                wsservers.push(
-                    {
-                        host: shuffle.result.address ? shuffle.result.address : shuffle.result, 
-                        port: streembit.DEFS.WS_PORT
-                    }
-                );
-            
-            } while (bootseeds.length > 0);        
-            
+            }         
+
             if (wsservers.length == 0) {
                 return callback("invalid ws services array");
             }
