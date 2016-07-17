@@ -5,7 +5,7 @@
     "name": "T Z Pardi",
     "email": "tzpardi@streembit.com"
   },
-  "version": "1.0.9",
+  "version": "1.0.8.1",
   "main": "index.html",
   "window": {
     "toolbar": false,

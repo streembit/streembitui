@@ -1590,8 +1590,12 @@ streembit.Main = (function (module, logger, events, config) {
                 streembit.util.getVersion(function (version) {
                     if (version) {
                         try {
-                            var numver = parseFloat(streembit.Main.version.replace('.', ''));
-                            var rcvver = parseFloat(version.replace('.', ''));
+                            var tverarr = streembit.Main.version.split(".");
+                            var strver = tverarr.join('');
+                            var numver = parseInt(strver);
+                            var trcvver = version.split('.');
+                            var rcvnum = trcvver.join('');
+                            var rcvver = parseInt(rcvnum);
                             if (numver >= rcvver) {
                                 streembit.notify.success("Your Streembit version v" + streembit.Main.version + " is up to date, there is no new version available.");
                             }
