@@ -5,8 +5,13 @@
     "name": "T Z Pardi",
     "email": "tzpardi@streembit.com"
   },
-  "version": "1.0.8.1",
-  "main": "index.html",
+  "version": "1.0.9",
+    "main": "index.html",
+    "license": "SEE LICENSE IN LICENSE.MD",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/streembit/streembitui.git"
+  },
   "window": {
     "toolbar": false,
     "width": 1140,
@@ -28,7 +33,8 @@
     "ip": "^1.1.0",
     "lodash": "^3.10.1",
     "merge": "^1.2.0",
-    "ms": "^0.7.1",    "request": "^2.69.0",
+    "ms": "^0.7.1",    
+    "request": "^2.69.0",
     "restify": "^4.0.3",
     "secure-random": "^1.1.1",
     "uuid": "^2.0.1",
