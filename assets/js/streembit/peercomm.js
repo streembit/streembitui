@@ -155,6 +155,11 @@ streembit.Node = (function (module, logger, events, config) {
         var transport = streembit.TransportFactory.transport;
         transport.validate_connection(callback);
     }
+
+    module.validate_contacts = function (callback) {
+        var transport = streembit.TransportFactory.transport;
+        transport.validate_contacts(callback);
+    }
     
     module.is_node_connected = function () {
         var transport = streembit.TransportFactory.transport;
@@ -1750,7 +1755,7 @@ streembit.PeerNet = (function (module, logger, events, config) {
             }
         });
     }
-    
+
     module.validate_connection = function () {
         return new Promise(function (resolve, reject) {
             streembit.Node.validate_connection(function (err) {

@@ -476,7 +476,16 @@ streembit.PeerTransport = ( function (peerobj, logger, events, config, db) {
         catch (e) {
             resultfn(e);
         }
-    }    
+    }   
+
+    peerobj.validate_contacts = function (callback) {
+        try {
+            kad.validate_contacts(peerobj.node, callback);
+        }
+        catch (e) {
+            callback(e);
+        }
+    }
     
     peerobj.validate_connection = function (callback) {
         try {

@@ -210,7 +210,16 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
             }
         );
     }
-    
+
+    module.validate_contacts = function (callback) {
+        try {
+            callback(null, 1);
+        }
+        catch (e) {
+            callback(e);
+        }
+    }
+
     module.validate_connection = function (callback) {
         callback();
     }
