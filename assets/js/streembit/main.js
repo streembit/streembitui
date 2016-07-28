@@ -1908,18 +1908,23 @@ streembit.Main = (function (module, logger, events, config) {
                 );
             },
             function (callback) {
-                streembit.Node.validate_contacts(function (err, contcount) {
-                    if (err) {
-                        callback("The peer is not connected. Error: " + err);
-                    }
-                    else if (!contcount) {
-                        callback("The peer is not communicating with any contacts.");
-                    }
-                    else {
-                        logger.debug("Number of connected peers: " + contcount);
-                        callback();
-                    }
-                });
+                if (transport == streembit.DEFS.TRANSPORT_TCP) {
+                    streembit.Node.validate_contacts(function (err, contcount) {
+                        if (err) {
+                            callback("The peer is not connected. Error: " + err);
+                        }
+                        else if (!contcount) {
+                            callback("The peer is not communicating with any contacts.");
+                        }
+                        else {
+                            logger.debug("Number of connected peers: " + contcount);
+                            callback();
+                        }
+                    });
+                }
+                else {
+                    callback();
+                }                
             },
             function (callback) {
                 if (skip_publish) {
