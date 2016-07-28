@@ -115,7 +115,7 @@ streembit.config = (function (module) {
 
     var config_data = {
         "isdevmode": false, //  set this to true when run the software with "\path\to\nw\nw.exe ." so in development mode 
-        "loglevel": "debug",
+        "loglevel": "info",
         "transport": streembit.DEFS.TRANSPORT_TCP,
         "wsfallback": true,
         "tcpport": streembit.DEFS.APP_PORT,

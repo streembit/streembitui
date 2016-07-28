@@ -1461,6 +1461,34 @@ streembit.Main = (function (module, logger, events, config) {
         }));
         toolsMenu.append(new gui.MenuItem({ type: 'separator' }));
         toolsMenu.append(new gui.MenuItem({
+            label: 'Ping to network',
+            click: function () {
+                if (!streembit.User.is_user_initialized) {
+                    streembit.notify.error_popup("The account is not initialized");
+                }
+                else {
+                    // ping
+                    try {
+                        streembit.Node.validate_contacts(function (err, contcount) {
+                            if (err) {
+                                streembit.notify.error_popup("The peer is not connected. Error: " + err);
+                            }
+                            else if (!contcount) {
+                                streembit.notify.error_popup("The peer is not communicating with any contacts.");
+                            }
+                            else {
+                                streembit.notify.info("Number of connected peers: " + contcount);
+                            }
+                        });
+                    }
+                    catch (err) {
+                        streembit.notify.error_popup("The peer is not connected. Error: %s", err.message);
+                    }
+                }
+            }
+        }));
+        toolsMenu.append(new gui.MenuItem({ type: 'separator' }));
+        toolsMenu.append(new gui.MenuItem({
             label: 'Account/network info',
             click: function () {
                 if (!streembit.User.is_user_initialized) {
@@ -1878,6 +1906,25 @@ streembit.Main = (function (module, logger, events, config) {
                         callback(err);
                     }
                 );
+            },
+            function (callback) {
+                if (transport == streembit.DEFS.TRANSPORT_TCP) {
+                    streembit.Node.validate_contacts(function (err, contcount) {
+                        if (err) {
+                            callback("The peer is not connected. Error: " + err);
+                        }
+                        else if (!contcount) {
+                            callback("The peer is not communicating with any contacts.");
+                        }
+                        else {
+                            logger.debug("Number of connected peers: " + contcount);
+                            callback();
+                        }
+                    });
+                }
+                else {
+                    callback();
+                }                
             },
             function (callback) {
                 if (skip_publish) {

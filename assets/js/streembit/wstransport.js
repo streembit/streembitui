@@ -210,7 +210,24 @@ streembit.WebSocketTransport = (function (module, logger, events, config) {
             }
         );
     }
-    
+
+    module.validate_contacts = function (callback) {
+        try {
+            return callback ("WS ping is not implemented");
+            //var socket = get_account_socket();
+            //if (!socket) {
+            //    return callback("web socket does not exists");
+            //}
+
+            //socket.emit("ping", function (err, result) {
+            //    callback(err, result);
+            //});
+        }
+        catch (e) {
+            callback(e);
+        }
+    }
+
     module.validate_connection = function (callback) {
         callback();
     }
