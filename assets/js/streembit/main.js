@@ -101,7 +101,21 @@ streembit.util = (function (util) {
     
     function loadView(view, callback) {
         var html = $("#streembit-view-" + view).html();
-        callback(html);
+        if (html) {
+            return callback(html);
+        }
+
+        var viewfile = view + '.html';
+        var filepath = path.join(global.viewpath, viewfile)
+        fs.readFile(filepath, 'utf8', function (err, data) {
+            if (err || !data) {
+                throw new Error(err && err.message ? err.message : (err ? err : "loading view failed"));
+            }
+            else {
+                callback(data);
+            }
+        });
+
     }
     
     function loadLogs(callback) {
@@ -870,18 +884,19 @@ streembit.UI = (function (module, logger, events, config) {
     }
     
     module.show_about = function (element) {
-        var content = $("#streembit-view-about").html();
-        var box = bootbox.dialog({
-            title: "About Streembit", 
-            message: content,
-            buttons: {
-                close: {
-                    label: "Close",
-                    className: "btn-default",
-                    callback: function () {
+        streembit.util.loadView("about", function (content) {
+            var box = bootbox.dialog({
+                title: "About Streembit",
+                message: content,
+                buttons: {
+                    close: {
+                        label: "Close",
+                        className: "btn-default",
+                        callback: function () {
+                        }
                     }
                 }
-            }
+            });
         });
     }
     
@@ -1654,6 +1669,12 @@ streembit.Main = (function (module, logger, events, config) {
 
         async.waterfall([  
             function (callback) {
+                var wdir = process.cwd();
+                global.viewpath = path.join(wdir, 'views');
+                console.log("global.viewpath: %s", global.viewpath);
+                callback();
+            },
+            function (callback) {
                 // initialize the database
                 console.log("Initializing the database");
                 streembit.DB.init().then(
@@ -1741,12 +1762,8 @@ streembit.Main = (function (module, logger, events, config) {
                 // make sure the data directory exists
                 logger.debug("Creating data directory");
                 streembit.util.dataDir(callback);
-            }//,
-            //function (callback) {
-            //    // make sure the data directory exists
-            //    logger.debug("Getting software version");
-            //    streembit.util.getVersion(callback);
-            //}
+            }
+
         ], 
         function (err, result) {
             if (err) {

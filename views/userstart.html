@@ -1,0 +1,38 @@
+﻿    <div id="user-start-container" class="user-start-view">
+        <div style="width:640px;height:460px">
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6;padding-top:20px;" data-bind="click: start_audio_call">
+                <i class="fa fa-phone"></i>
+                <div class="flex-btnitem-text">Audio call</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9BF3B" data-bind="click: start_video_call">
+                <i class="fa fa-video-camera"></i>
+                <div class="flex-btnitem-text">Video call</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#68C3A3" data-bind="click: start_chat">
+                <i class="fa fa-commenting"></i>
+                <div class="flex-btnitem-text">Chat</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9690E" data-bind="click: start_sendfile">
+                <i class="glyphicon glyphicon-copy"></i>
+                <div class="flex-btnitem-text">Send File</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#5fb2c4" data-bind="click: start_sharescreen">
+                <i class="glyphicon glyphicon-share"></i>
+                <div class="flex-btnitem-text">Share Screen</div>
+            </div>
+            <div class="flex-btnitem margin20 pull-left" style="background-color:#dd7474;padding-top:24px;" data-bind="click: start_iotdevice">
+                <i class="fa fa-cogs" style="font-size:100px"></i>
+                <div class="flex-btnitem-text">Control Gadget</div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uistartdiv = document.getElementById('user-start-container');
+            var vm = new streembit.vms.UserUIStartViewModel();
+            ko.applyBindings(vm, uistartdiv);
+        });
+    </script>
+

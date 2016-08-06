@@ -1,0 +1,107 @@
+﻿
+    <div id="uiview-container">
+
+        <div class="uiview-container-panel">
+
+            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+                <h4>Update Private Key Passphrase</h4>
+            </div>
+
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
+                <span for="text">Streembit account: </span><span data-bind="text: streembit.User.name"></span>
+            </div>
+
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
+                <label for="text">Private key passphrase:</label>
+                <div id="lblPwdErrorContainer" class="error-label">
+                    <span id="lblPwdError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
+            </div>
+
+            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm">
+                <label for="text">Confirm private key passphrase:</label>
+                <div id="lblPwdConfErrCont" class="error-label">
+                    <span id="lblPwdConfError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
+            </div>
+
+            <div style="margin-top:30px">
+                <button data-bind="click: update_account" style="margin-right:10px">Update phassprase</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var is_new_account = false;
+        var uioptions = streembit.Session.uioptions;
+        if (uioptions) {
+            is_new_account = uioptions.newuser
+        }
+        var user_div = document.getElementById('uiview-container');
+        var vm = new streembit.vms.UpdateKeyViewModel(validatePassword, validatePasswordConfirm);
+        vm.init(function () {
+            ko.applyBindings(vm, user_div);
+        });
+
+        function validateAccount(valid, msg) {
+            if (!valid) {
+                $("#grpAccount").addClass("has-error");
+                $("#lblAccountError").text(msg);
+                $("#lblAccountErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpAccount").removeClass("has-error");
+                $("#lblAccountError").text("");
+                $("#lblAccountErrorContainer").hide();
+            }
+        }
+
+        function validatePassword(valid, msg) {
+            if (!valid) {
+                $("#grpPassword").addClass("has-error");
+                $("#lblPwdError").text(msg);
+                $("#lblPwdErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPassword").removeClass("has-error");
+                $("#lblPwdError").text("");
+                $("#lblPwdErrorContainer").hide();
+            }
+        }
+
+        function validatePasswordConfirm(valid, msg) {
+            if (!valid) {
+                $("#grpPasswordConfirm").addClass("has-error");
+                $("#lblPwdConfError").text(msg);
+                $("#lblPwdConfErrCont").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPasswordConfirm").removeClass("has-error");
+                $("#lblPwdConfError").text("");
+                $("#lblPwdConfErrCont").hide();
+            }
+        }
+
+        $("#txtAccount").blur(function () {
+            vm.onAccountChange();
+        });
+
+        $("#txtPassword").blur(function () {
+            vm.onPasswordChange();
+        });
+
+        $("#txtPasswordConfirm").blur(function () {
+            vm.onPasswordConfirmChange();
+        });
+
+    });
+    </script>
+

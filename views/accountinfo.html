@@ -1,0 +1,81 @@
+﻿    <div id="uiview-container" style="margin:0 20px">
+
+        <div class="uiview-container-panel" style="min-width:700px;">
+
+            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+                <h4>Account/Network info</h4>
+            </div>
+
+            <table style="margin-top:30px;width:100%;font-size: 12px;">
+                <tr>
+                    <td>Account:</td>
+                    <td class="account-info-item"><span data-bind="text: account"></span></td>
+                </tr>
+                <tr>
+                    <td>Public key:</td>
+                    <td class="account-info-item"><span data-bind="text: public_key"></span></td>
+                </tr>
+                <!-- ko if: streembit.Main.is_node_initialized == true && streembit.config.transport == 'tcp' -->
+                <tr>
+                    <td>Transport:</td>
+                    <td class="account-info-item">TCP</td>
+                </tr>
+                <tr>
+                    <td>P2P port:</td>
+                    <td class="account-info-item"><span data-bind="text: streembit.User.port"></span></td>
+                </tr>
+                <tr>
+                    <td>P2P IP address:</td>
+                    <td class="account-info-item"><span data-bind="text: streembit.User.address"></span></td>
+                </tr>
+                <tr>
+                    <td>UPNP gateway:</td>
+                    <td class="account-info-item"><span data-bind="text: streembit.Main.upnp_gateway"></span></td>
+                </tr>
+                <tr>
+                    <td>UPNP local address:</td>
+                    <td class="account-info-item"><span data-bind="text: streembit.Main.upnp_local_address"></span></td>
+                </tr>
+                <!-- /ko -->
+                <!-- ko if: streembit.Main.is_node_initialized == true && streembit.config.transport == 'ws' -->
+                <tr>
+                    <td>Transport:</td>
+                    <td class="account-info-item">WebSocket</td>
+                </tr>
+                <tr>
+                    <td>WebSocket node:</td>
+                    <td class="account-info-item"><span data-bind="text: streembit.User.address"></span>:<span data-bind="text: streembit.User.port"></span></td>
+                </tr>
+                <!-- /ko -->
+            </table>
+
+            <!-- ko if: streembit.Main.is_node_initialized == true && streembit.config.transport == 'tcp' -->
+            <div style="margin-top:15px;font-size: 12px;">
+                <div>
+                    <span style="font-weight:bold">Seeds</span>
+                </div>
+                <div class="accountinfo_seed_list" data-bind="foreach: seeds">
+                    <div class="seed_list_item">
+                        <div>NodeID: <span data-bind="text: nodeID"></span></div>
+                        <div>IP address: <span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: !streembit.Main.is_node_initialized -->
+            <div style="color:#ff006e;margin-top:30px;font-size:16px">
+                The account is not connected to the Streembit network
+            </div>
+            <!-- /ko -->
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var user_div = document.getElementById('uiview-container');
+            var vm = new streembit.vms.AccountInfoViewModel();
+            ko.applyBindings(vm, user_div);
+        });
+    </script>

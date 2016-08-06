@@ -1,0 +1,198 @@
+﻿
+    <div id="media-call-container">
+        <div class="media-call-center">
+            <div class="media-call-header">
+                <div style="float:left;" class="callbuttons">
+                    <div style="display:inline-block;margin:0;padding:0;float:left">
+                        <div style="margin-top:10px">
+                            <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
+                                <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Send file" data-bind="click: sendfile">
+                                <i class="fa fa-file fa-stack-2x awesomeEntity" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Chat" data-bind="click: showchat">
+                                <i class="fa fa-commenting fa-stack-2x awesomeEntity" />
+                            </span>
+                        </div>
+                    </div>
+                    <div data-bind="visible: isvideocall" style="display:inline-block;margin:0;padding:0;float:left">
+                        <div style="margin-top:10px">
+                            <span class="fa-stack awesomeBlue" title="Remove video" data-bind="click: remove_video, visible: isvideo">
+                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Add video" data-bind="click: add_video, visible: isvideo() == false">
+                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Mute Audio" data-bind="click: remove_audio, visible: isaudio">
+                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
+                            </span>
+                            <span class="fa-stack awesomeBlue" title="Add audio" data-bind="click: add_audio, visible: isaudio() == false">
+                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
+                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
+                            </span>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
+                    Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <div class="media-call-content">
+
+                <div class="video_ctrls_items">
+                    <div class="localvid_parent" data-bind="visible: isvideo">
+                        <video id="localvid" autoplay muted></video>
+                    </div>
+                    <div class="remotevid_parent">
+                        <video id="remotevid" autoplay></video>
+                    </div>
+                </div>
+
+                <div class="chat_items">
+                    <div id="chat-container" style="flex:1">
+                        <div class="fill-area" style="padding:10px;flex:1">
+                            <div class="chat-fill-area chatitemswnd">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tbody data-bind="foreach: chatitems">
+                                        <tr>
+                                            <td>
+                                                <div style="padding:6px 10px 0 0">
+                                                    <span data-bind="text: time"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="padding-top:6px">
+                                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streembit.User.name }"></span>:
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streembit.User.name }">
+                                                    <span data-bind="text: text"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="footer-chat-controls">
+                                <div>
+                                    <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                                </div>
+                                <div style="text-align:center;margin-top:5px">
+                                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var mediacall_vm = null;
+
+        function resize_video_controls() {
+            $('.localvid_parent').css("display", "");
+            $('.localvid_parent').css("justify-content");
+            $('.localvid_parent').css("margin-bottom", 0);
+            $('.localvid_parent').css("position", 'absolute');
+
+            var vh = $('.remotevid_parent').height();
+            var h = vh - 10;
+            var w = parseInt(h * 1.3333);
+            var video = $("#remotevid");
+            $(video).width(w);
+
+            var rpos = $('#remotevid').position();
+            var rwidth = $('#remotevid').width();
+            var local_left = (rpos.left + rwidth) - 166;
+            $('.localvid_parent').css({
+                position: 'absolute',
+                top: 10,
+                left: local_left
+            });
+            $('.localvid_parent').css('zIndex', '9999');
+        }
+
+        function onRemoteVidConn() {
+            resize_video_controls();
+            var local_video = document.getElementById("localvid");
+            local_video.muted = true; // !important, without this the sound will be echoing
+        }
+
+        function onWindowResize() {
+            resize_video_controls();
+        }
+
+        function showChatControl(callback) {
+
+            // show the chat window
+            var chatContainer = $(".chat_items");
+            $(chatContainer).css({
+                flex: 1,
+                display: 'flex',
+            });
+
+            resize_video_controls();
+
+            var parent_div_width = $('.media-call-content').width();
+            var parent_div_height = $('.media-call-content').height();
+
+
+            var video_h = parent_div_height - 300;
+            if (video_h < 500) {
+                video_h = 500;
+            }
+
+            $('.video_ctrls_items').css({
+                'min-height': video_h + 'px'
+            });
+
+            resize_video_controls();
+
+            $(chatContainer).css({
+                flex: 1,
+                display: 'flex',
+            });
+
+            callback();
+
+            resize_video_controls();
+        }
+
+
+        $(document).ready(function () {
+            var iscaller = streembit.Session.uioptions.iscaller;
+            var contact = streembit.Session.uioptions.contact;
+            var calltype = streembit.Session.uioptions.calltype;
+            var mediacall_div = document.getElementById('media-call-container');
+            mediacall_vm = new streembit.vms.MediaCallViewModel("localvid", "remotevid", iscaller, contact, calltype, onRemoteVidConn, showChatControl);
+            ko.applyBindings(mediacall_vm, mediacall_div);
+            mediacall_vm.init();
+
+            streembit.Session.curent_viewmodel = mediacall_vm;
+
+            $(window).resize(onWindowResize);
+
+            $("#txtChatCtrl").keyup(function (e) {
+                var code = e.which;
+                if (code == 13) {
+                    e.preventDefault();
+                    var text = $.trim($("#txtChatCtrl").val());
+                    if(text){
+                        mediacall_vm.chatmsg(text);
+                        mediacall_vm.sendchat();
+                    }
+                }
+            });
+        });
+    </script>

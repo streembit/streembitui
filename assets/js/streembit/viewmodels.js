@@ -2592,15 +2592,20 @@ var EccKey = require('streembitlib/crypto/EccKey');
         }
         
         var showView = function (view) {
-            streembit.util.loadView(view, function (html) {
-                if (!html) {
-                    return alert("Error in loading the " + view + " view ");
-                }
-                
-                streembit.Session.curent_viewmodel = 0;
-                $(container).empty();
-                $(container).append(html);
-            });
+            try {
+                streembit.util.loadView(view, function (html) {
+                    if (!html) {
+                        return streembit.notify.error("Error in loading the " + view + " view ");
+                    }
+
+                    streembit.Session.curent_viewmodel = 0;
+                    $(container).empty();
+                    $(container).append(html);
+                });
+            }
+            catch (err) {
+                streembit.notify.error("Error in loading the " + view + " view. Error: " + err.message);
+            }
         }
         
         events.on(events.TYPES.ONAPPNAVIGATE, function (cmd, datactx, options) {
