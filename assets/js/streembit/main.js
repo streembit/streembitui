@@ -67,15 +67,11 @@ streembit.util = (function (util) {
             var datapath = null;
             var datadir = 'data';
             
-            if (streembit.config.isdevmode == true) {
-                var wdir = process.cwd();
-                datapath = path.join(wdir, datadir);
-            }
-            else {
-                var nwPath = process.execPath;
-                var nwDir = path.dirname(nwPath);
-                datapath = path.join(nwDir, datadir);
-            }
+            // the data paths is in the same directory as the executable
+            var wdir = process.cwd();
+            datapath = path.join(wdir, datadir);
+
+            console.log("application data path: %s", datapath);
             
             fs.open(datapath, 'r', function (err, fd) {
                 if (err && err.code == 'ENOENT') {
@@ -1737,18 +1733,11 @@ streembit.Main = (function (module, logger, events, config) {
             },
             function (callback) {
                 // set the log level
-                console.log("Creating logger");
+                console.log("Creating logger");                
                 
-                var logspath = null;
-                if (config.isdevmode == true) {
-                    var wdir = process.cwd();
-                    logspath = path.join(wdir, 'logs');
-                }
-                else {
-                    var nwPath = process.execPath;
-                    var nwDir = path.dirname(nwPath);
-                    logspath = path.join(nwDir, 'logs');
-                }
+                // the logs dir is in the saem directory as the executable
+                var wdir = process.cwd();
+                var logspath = path.join(wdir, 'logs');
                 
                 var level = streembit.config.loglevel;
                 console.log('log level: ' + level);
