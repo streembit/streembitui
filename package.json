@@ -6,8 +6,8 @@
     "email": "tzpardi@streembit.com"
   },
   "version": "1.0.9",
-    "main": "index.html",
-    "license": "SEE LICENSE IN LICENSE.MD",
+  "main": "streembit.html",
+  "license": "SEE LICENSE IN LICENSE.MD",
   "repository": {
     "type": "git",
     "url": "https://github.com/streembit/streembitui.git"
@@ -33,13 +33,13 @@
     "ip": "^1.1.0",
     "lodash": "^3.10.1",
     "merge": "^1.2.0",
-    "ms": "^0.7.1",    
+    "ms": "^0.7.1",
     "request": "^2.69.0",
     "restify": "^4.0.3",
     "secure-random": "^1.1.1",
+    "streembitlib": "git+https://github.com/streembit/streembitlib.git",
     "uuid": "^2.0.1",
     "winston": "^2.1.1",
-    "xml2js": "^0.1.14",
-    "streembitlib": "git+https://github.com/streembit/streembitlib.git"
+    "xml2js": "^0.1.14"
   }
 }

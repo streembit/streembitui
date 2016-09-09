@@ -87,24 +87,30 @@ streembit.Device = (function (device, logger, events, config) {
             },     
             function (callback) {
                 // connecting to device
+                logger.debug("PIFIX pinging");
                 var contact = streembit.Contacts.get_contact(device_account);
-                streembit.PeerNet.ping(contact, true, 10000)
+                streembit.PeerNet.ping(contact, true, 20000)
                 .then(
                     function () {
+                        logger.debug("PIFIX ping completed");
                         callback(null, contact);
                     },
                     function (err) {
+                        logger.debug("PIFIX ping failed");
                         callback(err);
                     }
                 );
             },
             function (contact, callback) {
+                logger.debug("PIFIX get_contact_session");
                 streembit.PeerNet.get_contact_session(contact)
                 .then(
                     function () {
+                        logger.debug("PIFIX get_contact_session completed");
                         callback(null, contact);
                     },
                     function (err) {
+                        logger.debug("PIFIX get_contact_session failed");
                         callback(err);
                     }
                 );                

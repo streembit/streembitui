@@ -23,7 +23,7 @@ Copyright (C) 2016 The Streembit software development team
 
 var streembit = streembit || {};
 
-const DB_VERSION = 1;
+const DB_VERSION = 3;
 
 const DB_NAME = 'streembitdb';
 
@@ -31,6 +31,7 @@ const DB_ACCOUNTS_STORE_NAME = 'accountsdb';
 const DB_CONTACTS_STORE_NAME = 'contactsdb';
 const DB_STREEMBIT_STORE_NAME = 'streembitdb';
 const DB_SETTINGS_STORE_NAME = 'settingsdb';
+const DB_BLOCKCHAIN_STORE_NAME = 'blockchaindb';
 
 streembit.DB = (function (module, logger, events){
     
@@ -38,26 +39,83 @@ streembit.DB = (function (module, logger, events){
     
     module.is_initialized = false;
     
-    function getObjectStore(store_name, mode) {
+    function get_objectstore(store_name, mode) {
         if (!mode) {
             mode = "readwrite";
         }
         var tx = db.transaction(store_name, mode);
         return tx.objectStore(store_name);
     }
+
+    function validate_objectstore(store_name) {
+        var store, err;
+        try {
+            store = get_objectstore(store_name);
+        }
+        catch (e) {
+            err = e;
+        }
+
+        try {
+            if (!store) {
+                switch (store_name) {
+                    case DB_BLOCKCHAIN_STORE_NAME:
+                        db.createObjectStore(DB_BLOCKCHAIN_STORE_NAME, { keyPath: 'key' });
+                        break;
+                    default:
+                        throw new Error("failed to create object store " + DB_BLOCKCHAIN_STORE_NAME);
+                }
+            }
+        }
+        catch (cerr) {
+            throw new Error("error in creating object store " + DB_BLOCKCHAIN_STORE_NAME + ": " + cerr.message);
+        }
+
+        return store;
+    }
     
     function create_objectstores() {
         console.log("DB create_objectstores");
 
-        var accounts_store = db.createObjectStore(DB_ACCOUNTS_STORE_NAME, { keyPath: 'account' });
-        var contacts_store = db.createObjectStore(DB_CONTACTS_STORE_NAME, { keyPath: 'account' });
-        var streembit_store = db.createObjectStore(DB_STREEMBIT_STORE_NAME, { keyPath: 'key' });
-        var settings_store = db.createObjectStore(DB_SETTINGS_STORE_NAME, { keyPath: 'key' });
+        try {
+            db.createObjectStore(DB_ACCOUNTS_STORE_NAME, { keyPath: 'account' });
+        }
+        catch (err) {
+            console.log("createObjectStore " + DB_ACCOUNTS_STORE_NAME + " error: " + err.message);
+        }
+
+        try {
+            db.createObjectStore(DB_CONTACTS_STORE_NAME, { keyPath: 'account' });
+        }
+        catch (err) {
+            console.log("createObjectStore " + DB_CONTACTS_STORE_NAME + " error: " + err.message);
+        }
+
+        try {
+            db.createObjectStore(DB_STREEMBIT_STORE_NAME, { keyPath: 'key' });
+        }
+        catch (err) {
+            console.log("createObjectStore " + DB_STREEMBIT_STORE_NAME + " error: " + err.message);
+        }
+
+        try {
+            db.createObjectStore(DB_SETTINGS_STORE_NAME, { keyPath: 'key' });
+        }
+        catch (err) {
+            console.log("createObjectStore " + DB_SETTINGS_STORE_NAME + " error: " + err.message);
+        }
+
+        try {
+            db.createObjectStore(DB_BLOCKCHAIN_STORE_NAME, { keyPath: 'key' });
+        }
+        catch (err) {
+            console.log("createObjectStore " + DB_BLOCKCHAIN_STORE_NAME + " error: " + err.message);
+        }        
     }
     
     module.update = function (dbstore, data) {
         return new Promise(function (resolve, reject) {
-            var objectStore = getObjectStore(dbstore);
+            var objectStore = get_objectstore(dbstore);
             var updateRequest = objectStore.put(data);
 
             updateRequest.onerror = function (error) {
@@ -74,7 +132,7 @@ streembit.DB = (function (module, logger, events){
     // this is kfor the streembitdb stoe
     module.del = function (dbstore, key) {
         return new Promise(function (resolve, reject) {
-            var objectStore = getObjectStore(dbstore);
+            var objectStore = get_objectstore(dbstore);
             var deleteRequest = objectStore.delete(key);
             
             deleteRequest.onerror = function (error) {
@@ -89,7 +147,7 @@ streembit.DB = (function (module, logger, events){
     
     module.get = function (dbstore, key ) {
         return new Promise(function (resolve, reject) {
-            var objectStore = getObjectStore(dbstore);
+            var objectStore = get_objectstore(dbstore);
             var getRequest = objectStore.get(key);
             
             getRequest.onerror = function (error) {
@@ -104,13 +162,13 @@ streembit.DB = (function (module, logger, events){
     }
     
     module.object_store = function (dbstore) {
-        var objectStore = getObjectStore(dbstore);
+        var objectStore = get_objectstore(dbstore);
         return objectStore;
     }
     
     module.getall = function (dbstore, callback) {        
         var result = [];
-        var objectStore = getObjectStore(dbstore);
+        var objectStore = get_objectstore(dbstore);
         var request = objectStore.openCursor();
         request.onsuccess = function (event) {            
             var cursor = event.target.result;
@@ -152,6 +210,7 @@ streembit.DB = (function (module, logger, events){
                 try {
                     console.log("DB init onsuccess");
                     db = event.target.result;
+
                     module.is_initialized = true;
                     resolve();
                 }
@@ -162,22 +221,18 @@ streembit.DB = (function (module, logger, events){
             
             request.onupgradeneeded = function (event) {
                 try {
-                    console.log("DB init onupgradeneeded");
+                    console.log("DB init onupgradeneeded, upgrading the database");
 
                     db = event.target.result;
                     
                     db.onerror = function (event) {
-                        reject('Error loading database');
+                        reject('Error in upgrading the database');
                     };
                     
-                    //var transaction = event.target.transaction;                                        
-                    //transaction.oncomplete = function (event) {
-                    //    console.log("DB init version change transaction.oncomplete");                        
-                    //}
-
                     create_objectstores();
+
+                    //validate_objectstore(DB_BLOCKCHAIN_STORE_NAME);
                     
-                    //resolve();
                 }
                 catch (err) {
                     console.log("onupgradeneeded error: %j", err);
@@ -204,6 +259,7 @@ streembit.DB = (function (module, logger, events){
     module.CONTACTSDB = DB_CONTACTS_STORE_NAME;
     module.MAINDB = DB_STREEMBIT_STORE_NAME;
     module.SETTINGSDB = DB_SETTINGS_STORE_NAME;
+    module.BLOCKCHAINDB = DB_BLOCKCHAIN_STORE_NAME;
 
     return module;
 

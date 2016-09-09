@@ -1735,7 +1735,7 @@ streembit.Main = (function (module, logger, events, config) {
                 // set the log level
                 console.log("Creating logger");                
                 
-                // the logs dir is in the saem directory as the executable
+                // the logs dir is in the same directory as the executable
                 var wdir = process.cwd();
                 var logspath = path.join(wdir, 'logs');
                 
@@ -1751,6 +1751,11 @@ streembit.Main = (function (module, logger, events, config) {
                 // make sure the data directory exists
                 logger.debug("Creating data directory");
                 streembit.util.dataDir(callback);
+            },
+            function (callback) {
+                // migrate to websql
+                logger.info("initializing webSQL database");
+                streembit.database.initialize(callback);
             }
 
         ], 
