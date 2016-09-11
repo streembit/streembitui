@@ -872,7 +872,7 @@ span.awesomeBlue i.addbtn{
     margin-top:-30px;
 }
 
-.flex-btnitem {
+.flex-btnitem , a.flex-btnitem {
     background-color: cornflowerblue;
     width: 172px;
     height: 172px;
@@ -887,11 +887,12 @@ span.awesomeBlue i.addbtn{
     box-shadow: 4px 4px 5px #bbb;
 }
 
-.flex-btnitem:hover{
+.flex-btnitem:hover, a.flex-btnitem:hover{
     opacity:1.0;
+    text-decoration:none;
 }
 
-.flex-btnitem i{
+.flex-btnitem i, a.flex-btnitem i{
     font-size:120px;
     color:#fff;
     display: flex;

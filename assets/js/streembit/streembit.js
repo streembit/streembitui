@@ -1,24 +1,24 @@
 ﻿
 var app = angular.module('streembit', ['ui.router']);
 
-app.config(function ($stateProvider) {
-    var start_state = {
-        name: 'start',
-        url: '/start',
-        templateUrl: '/assets/views/startui.html'
-    }
+app.config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
 
-    var aboutState = {
-        name: 'about',
-        url: '/about',
-        template: '<h3>Its the UI-Router hello world app!</h3>'
-    }
+        $stateProvider.state('start', {
+            url: '/start',
+            templateUrl: '/assets/views/startui.html'
+        }).state('inituser', {
+            url: '/inituser',
+            templateUrl: '/assets/views/inituser.html'
+        }).state('about',{
+            url: '/about',
+            templateUrl: '/assets/views/about.html'
+        });
 
-    $stateProvider.state(start_state);
-    $stateProvider.state(aboutState);
-});
+    }
+]);
 
 app.run(function ($state, $rootScope) {
-    debugger;
+    //debugger;
     $state.go("start");
 });

@@ -5,37 +5,97 @@
     <meta charset="utf-8" />
     <title>Streembit</title>
 
-    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/bootstrap/css/bootstrap-dialog.css" rel="stylesheet">
+    <script type="text/javascript">
+        var streembit = streembit || {};
+        streembit.globals = streembit.globals || {};
+        streembit.globals.uimode = 'nw';
+    </script>
+
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="bower_components/bootstrap3-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet" />
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="assets/css/webstyle.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/streembit.css" rel="stylesheet">
 
-    <!-- jquery -->
-    <script type="text/javascript" src="assets/js/jquery/jquery-2.1.4.js"></script>
-    <script type="text/javascript" src="assets/js/jquery/jquery.blockUI.js"></script>
-    
-    <!-- bootstrap -->
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootbox.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-notify.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-dialog.js"></script>
-
-    <script type="text/javascript" src="assets/js/angular/angular.js"></script>
-    <script type="text/javascript" src="assets/js/angular/angular-ui-router.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/streembit.js"></script>
+    <!-- build:js -->
+    <script src="app/require.config.js"></script>
+    <script data-main="app/startup" src="bower_components/requirejs/require.js"></script>
+    <!-- endbuild -->
 
 </head>
-<body ng-app="streembit">  
-     
-    <ui-view></ui-view>
+<body>  
+    <div data-bind="component: { name: 'navbar', params: route }">
+    </div>
 
-    <script>
-        $(document).ready(function () {
+    <div id="main">
+        <div class="content-panel">
+            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.is_network_init">                
+            </div>
+            <div class="content" data-bind="component: { name: route().page, params: route }">
+            </div>
+        </div>
+        <div class="footer">
+            Footer
+        </div>
+    </div>
+    
 
-        });        
-    </script>
+    <!--<div class="appcontent">
+        <p style="padding-top:50px">content</p>
+        <p style="padding-top:50px">content</p>
+        <p style="padding-top:50px">content</p>
+        <p style="padding-top:50px">content</p>
+        <p style="padding-top:50px">content</p>
+        <p style="padding-top:50px">content</p>
+        <p style="padding-top:150px">content</p>
+        <p style="padding-top:150px">content</p>
+        <p style="padding-top:150px">content</p>
+        <p style="padding-top:150px">content</p>
+    </div>-->
+
+    <!--<div class="container-fluid">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-2">
+                left bar
+            </div>
+            <div class="col-md-10">
+                <div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>
+            </div>-->
+            <!--<div class="col-xs-4 col-sm-2 sidebar-offcanvas">
+                left bar
+            </div>
+            <div class="col-xs-14 col-sm-10">
+                <div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>
+            </div>-->
+        <!--</div>-->
+        <!--<div class="row row-offcanvas row-offcanvas-left">
+            <div class="col-xs-4 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
+                <div class="sidebar-nav">
+                    <ul class="nav">
+                        <li class="active"><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-14 col-sm-10">
+                <div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>
+            </div>
+        </div>-->
+        <!--/row-->
+    <!--</div>-->
+    
+    <!--<footer>
+        Footer
+    </footer-->
+
+    <!--<div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>-->
 
 </body>
 </html>
