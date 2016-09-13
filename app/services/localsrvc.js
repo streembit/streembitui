@@ -1,6 +1,14 @@
 ﻿'use strict';
 
-define(['knockout', 'jquery', 'i18next'], function (ko, $, i18n) {
+define([
+    'knockout', 'jquery', 'i18next',
+    'text!../resources/locals/en.json',
+    'text!../resources/locals/de_DE.json',
+    'text!../resources/locals/it_IT.json'
+    ],
+    function (
+        ko, $, i18n,
+        enFile, deFile, itFile) {
 
     var koBindingHandler = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -61,9 +69,29 @@ define(['knockout', 'jquery', 'i18next'], function (ko, $, i18n) {
             }
         },
 
-        init: function (i18obj) {
-            this.i18n = i18obj;        
-            ko.bindingHandlers['i18n'] = koBindingHandler;   
+        init: function (callback) {
+            //this.i18n = i18obj;        
+            //ko.bindingHandlers['i18n'] = koBindingHandler;   
+            var enjson = JSON.parse(enFile);
+            var dejson = JSON.parse(deFile);
+            var itjson = JSON.parse(itFile);
+            i18n.init(
+                {
+                    lng: "en",
+                    resources: {
+                        "en": enjson,
+                        "de_DE": dejson,
+                        "it_IT": itjson
+                    }
+                },
+                function (err, t) {
+                    ko.bindingHandlers['i18n'] = koBindingHandler;   
+                    if (callback) {
+                        callback();
+                    }
+                    console.log("local resources are initialized")
+                }
+            );
         },
 
         t: function () {
@@ -74,6 +102,8 @@ define(['knockout', 'jquery', 'i18next'], function (ko, $, i18n) {
             });
         }
     };
+
+    i18nextko.init();
 
     return i18nextko;
 

@@ -2,7 +2,7 @@
 
 define(['knockout', 'jquery'], function (ko, $) {
     var model = {
-        is_account_exists: ko.observable(true),
+        is_account_exists: ko.observable(false),
 
         initialize: function () {
 
