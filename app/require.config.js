@@ -2,15 +2,17 @@
 var require = {
     baseUrl: ".",
     paths: {
-        "bootstrap":            "bower_components/components-bootstrap/js/bootstrap.min",
+        "bootstrap":            "bower_components/components-bootstrap/js/bootstrap",
         "crossroads":           "bower_components/crossroads/dist/crossroads.min",
         "hasher":               "bower_components/hasher/dist/js/hasher.min",
         "jquery":               "bower_components/jquery/dist/jquery",
+        "i18next":              "bower_components/i18next/i18next",
         "knockout":             "bower_components/knockout/dist/knockout",
-        "knockout-projections": "bower_components/knockout-projections/dist/knockout-projections",
         "signals":              "bower_components/js-signals/dist/signals.min",
         "text":                 "bower_components/requirejs-text/text",
-        "appsrvc":              "app/services/appsrvc"
+        "appsrvc":              "app/services/appsrvc",
+        "accountsrvc":          "app/services/accountsrvc",
+        "localsrvc":            "app/services/localsrvc"
     },
     shim: {
         "bootstrap":            { deps: ["jquery"] },

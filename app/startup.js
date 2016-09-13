@@ -1,23 +1,73 @@
-define(['jquery', 'knockout', './router', 'appsrvc', 'bootstrap', 'knockout-projections'], function ($, ko, router, appsrvc) {
+define(['jquery', 'knockout', './router', 'appsrvc', 'accountsrvc', 'bootstrap', 'i18next', 'localsrvc'],
+    function ($, ko, router, appsrvc, accountsrvc, bootstrap, i18n, localsrvc) {
+        // Components can be packaged as AMD modules, such as the following:
+        ko.components.register('navbar', { require: 'components/navbar/navbar' });
+        ko.components.register('contacts-bar', { require: 'components/contacts-bar/contacts-bar' });
+        ko.components.register('initui', { require: 'components/initui/initui' });
+        ko.components.register('connect-to-public', { require: 'components/connect-to-public/connect-to-public' });
 
-  // Components can be packaged as AMD modules, such as the following:
-    ko.components.register('navbar', { require: 'components/navbar/navbar' });
-    ko.components.register('contacts-bar', { require: 'components/contacts-bar/contacts-bar' });
-    ko.components.register('initui', { require: 'components/initui/initui' });
+        // ... or for template-only components, you can just point to a .html file directly:
+        ko.components.register('about', {
+            template: { require: 'text!components/about/about.html' }
+        });
 
-    // ... or for template-only components, you can just point to a .html file directly:
-    ko.components.register('about', {
-        template: { require: 'text!components/about/about.html' }
-    });
+        //debugger;
+        // initialize the local resource files
+        require([
+            'text!../resources/locals/en.json',
+            'text!../resources/locals/de_DE.json',
+            'text!../resources/locals/it_IT.json'], function (enFile, deFile, itFile) {
+                var enjson = JSON.parse(enFile);
+                var dejson = JSON.parse(deFile);
+                var itjson = JSON.parse(itFile);
+                //console.log(enjson);
+                i18n.init(
+                {
+                    lng: "en",
+                    resources: {
+                        "en": enjson,
+                        "de_DE": dejson,
+                        "it_IT": itjson
+                    }
+                },
+                function (err, t) {
+                    //var x = t("testkey");
+                    //console.log(x);
+                    //x = t("userinit.view_header_createaccount");
+                    //console.log(x);
 
-    //ko.components.register('investments-component', { require: 'components/investments-component/investments-component' });
-    //ko.components.register('investment-filter', { require: 'components/investment-filter/investment-filter' });
-    //ko.components.register('investment-page', { require: 'components/investment-page/investment-page' });
-    //ko.components.register('sector-component', { require: 'components/sector-component/sector-component' });
-    //ko.components.register('transactions-component', { require: 'components/transactions-component/transactions-component' });
+                    localsrvc.init(t);
 
-    // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
+                    console.log("local resources are initialized");
+                    // Start the application
+                    ko.applyBindings({ route: router.currentRoute, appsrvc: appsrvc, accountsrvc: accountsrvc });
+                }
+            );
+        })
 
-    // Start the application
-    ko.applyBindings({ route: router.currentRoute, appsrvc: appsrvc });
-});
+        //localsrvc.init("resources/locals", "en");
+        //var option = {
+        //    customLoad: function (lng, ns, options, loadComplete) {
+        //        // load the file for given language and namespace
+
+        //        // callback with parsed json data
+        //        loadComplete(null, data); // or loadComplete('some error'); if failed
+        //    }
+        //};
+
+        //i18n.init(option);
+
+        //i18n.init(
+        //    {
+        //        lng: "en",
+        //        resStore: "resources/locals"
+        //    },
+        //    function (err, t) {
+        //        var x = t("testkey");
+        //        console.log(x);
+        //    }
+        //);
+
+       
+    }
+);

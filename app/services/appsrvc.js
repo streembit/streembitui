@@ -4,12 +4,12 @@ var streembit = streembit || {};
 streembit.services = streembit.services || {};
 
 define(['knockout', 'jquery'], function (ko, $) {
-    var appsrvc = {
+    var viewModel = {
         is_network_init: ko.observable(false)
 
     };
     
-    return appsrvc;
+    return viewModel;
 });
 
 

@@ -12,6 +12,7 @@ define(["knockout", "crossroads", "hasher"], function (ko, crossroads, hasher) {
     return new Router({
         routes: [
             { url: '', params: { page: 'initui' } },
+            { url: 'connect-to-public', params: { page: 'connect-to-public' } },
             { url: 'contacts-bar', params: { page: 'contacts-bar' } },
             { url: 'about', params: { page: 'about' } },
             { url: 'investment/{id}',    params: { page: 'investment-page' } }

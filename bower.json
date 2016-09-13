@@ -12,7 +12,6 @@
     "jquery-mockjax": "~1.5.3",
     "requirejs": "~2.3.1",
     "requirejs-text": "~2.0.10",
-    "knockout": "~3.4.0",
-    "knockout-projections": "~1.1.0"
+    "knockout": "~3.4.0"
   }
 }

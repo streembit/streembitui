@@ -33,7 +33,7 @@
             <div class="content" data-bind="component: { name: route().page, params: route }">
             </div>
         </div>
-        <div class="footer">
+        <div class="footer" data-bind="visible: appsrvc.is_network_init">
             Footer
         </div>
     </div>

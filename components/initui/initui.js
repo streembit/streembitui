@@ -1,13 +1,8 @@
-define(['knockout', 'text!./initui.html'], function(ko, template) {
+define(['knockout', 'text!./initui.html', 'appsrvc'], function (ko, template, appsrvc) {
 
-  function InitUIViewModel(params) {
+    function InitUIViewModel(params) {
+        this.route = params.route;
+    }
 
-    // This viewmodel doesn't do anything except pass through the 'route' parameter to the view.
-    // You could remove this viewmodel entirely, and define 'navbar' as a template-only component.
-    // But in most apps, you'll want some viewmodel logic to determine what navigation options appear.
-
-    this.route = params.route;
-  }
-
-  return { viewModel: InitUIViewModel, template: template };
+    return { viewModel: InitUIViewModel, template: template };
 });
