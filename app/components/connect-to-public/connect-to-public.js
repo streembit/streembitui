@@ -17,8 +17,8 @@ define(['knockout', 'text!./connect-to-public.html', 'appsrvc', 'accountsrvc'], 
             private_net_port: ko.observable(),
  
             init: function (callback) {
-                viewModel.is_private_network(streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK);
-                if (streembit.Main.network_type == streembit.DEFS.PRIVATE_NETWORK) {
+                viewModel.is_private_network(appsrvc.network_type == streembit.DEFS.PRIVATE_NETWORK);
+                if (appsrvc.network_type == streembit.DEFS.PRIVATE_NETWORK) {
                     if (config && config.private_net_seed) {
                         if (config.private_net_seed.account) {
                             viewModel.private_net_account(config.private_net_seed.account);
@@ -32,7 +32,7 @@ define(['knockout', 'text!./connect-to-public.html', 'appsrvc', 'accountsrvc'], 
                     }
                 }
 
-                if (!newaccount) {
+                if (!viewModel.is_new_account()) {
                     this.get_accounts(function () {
                         callback(null);
                     });
@@ -393,6 +393,8 @@ define(['knockout', 'text!./connect-to-public.html', 'appsrvc', 'accountsrvc'], 
                 }
             }
         };
+
+        viewModel.init();
 
         return viewModel;
     }    

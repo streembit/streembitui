@@ -8,10 +8,7 @@
     <script type="text/javascript">
         var streembit = streembit || {};
         streembit.globals = streembit.globals || {};
-        streembit.globals.uimode = 'nw';
-
-        window.node_require = window.require;
-        window.require = undefined;
+        streembit.globals.uimode = 'web';
     </script>
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
@@ -19,6 +16,7 @@
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="assets/css/streembit.css" rel="stylesheet">
 
+    <script src="app/services/events.js"></script>
     <script src="app/appglobals.js"></script>
     <!-- build:js -->
     <script src="app/require.config.js"></script>
