@@ -10,7 +10,8 @@ System.config({
   },
   paths: {
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    "bower:*": "jspm_packages/bower/*"
   },
 
   map: {
@@ -18,11 +19,19 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "core-js": "npm:core-js@1.2.7",
+    "crossroads": "npm:crossroads@0.12.2",
     "css": "github:systemjs/plugin-css@0.1.29",
+    "font-awesome": "npm:font-awesome@4.6.3",
+    "hasher": "bower:hasher@1.2.0",
     "jquery": "npm:jquery@3.1.1",
     "json": "github:systemjs/plugin-json@0.2.0",
     "knockout": "github:knockout/knockout@3.4.0",
     "lodash": "npm:lodash@4.16.1",
+    "millermedeiros/Hasher": "github:millermedeiros/Hasher@1.2.0",
+    "text": "github:systemjs/plugin-text@0.0.9",
+    "bower:hasher@1.2.0": {
+      "js-signals": "bower:js-signals@1.0.0"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
@@ -66,6 +75,14 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:crossroads@0.12.2": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "signals": "npm:signals@1.0.0"
+    },
+    "npm:font-awesome@4.6.3": {
+      "css": "github:systemjs/plugin-css@0.1.29"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
