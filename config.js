@@ -20,6 +20,7 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.29",
     "jquery": "npm:jquery@3.1.1",
+    "json": "github:systemjs/plugin-json@0.2.0",
     "lodash": "npm:lodash@4.16.1",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
