@@ -10,29 +10,17 @@
         streembit.globals = streembit.globals || {};
         streembit.globals.uimode = 'nw';
 
-        window.node_require = window.require;
-        window.require = undefined;
+        //window.node_require = window.require;
+        //window.require = undefined;
     </script>
-
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="bower_components/bootstrap3-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet" />
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="assets/css/streembit.css" rel="stylesheet">
-
-    <script src="app/appglobals.js"></script>
-    <!-- build:js -->
-    <script src="app/require.config.js"></script>
-    <script data-main="app/startup" src="bower_components/requirejs/require.js"></script>
-    <!-- endbuild -->
-
 </head>
 <body>  
-    <div data-bind="component: { name: 'navbar', params: route }">
-    </div>
+    <navbar data-bind="component: { name: 'navbar', params: route }">
+    </navbar>
 
     <div id="main">
         <div class="content-panel">
-            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.is_network_init">                
+            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.is_network_init">
             </div>
             <div class="content" data-bind="component: { name: route().page, params: route }">
             </div>
@@ -41,65 +29,12 @@
             Footer
         </div>
     </div>
-    
 
-    <!--<div class="appcontent">
-        <p style="padding-top:50px">content</p>
-        <p style="padding-top:50px">content</p>
-        <p style="padding-top:50px">content</p>
-        <p style="padding-top:50px">content</p>
-        <p style="padding-top:50px">content</p>
-        <p style="padding-top:50px">content</p>
-        <p style="padding-top:150px">content</p>
-        <p style="padding-top:150px">content</p>
-        <p style="padding-top:150px">content</p>
-        <p style="padding-top:150px">content</p>
-    </div>-->
-
-    <!--<div class="container-fluid">-->
-        <!--<div class="row">-->
-            <!--<div class="col-md-2">
-                left bar
-            </div>
-            <div class="col-md-10">
-                <div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>
-            </div>-->
-            <!--<div class="col-xs-4 col-sm-2 sidebar-offcanvas">
-                left bar
-            </div>
-            <div class="col-xs-14 col-sm-10">
-                <div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>
-            </div>-->
-        <!--</div>-->
-        <!--<div class="row row-offcanvas row-offcanvas-left">
-            <div class="col-xs-4 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
-                <div class="sidebar-nav">
-                    <ul class="nav">
-                        <li class="active"><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li class="nav-divider"></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li class="nav-divider"></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-xs-14 col-sm-10">
-                <div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>
-            </div>
-        </div>-->
-        <!--/row-->
-    <!--</div>-->
-    
-    <!--<footer>
-        Footer
-    </footer-->
-
-    <!--<div id="page" data-bind="component: { name: route().page, params: route }" class="container"></div>-->
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+        System.import('lib/main.js');
+    </script>
 
 </body>
 </html>
