@@ -6,7 +6,7 @@
     "email": "tzpardi@streembit.com"
   },
   "version": "1.0.9",
-  "main": "index.html",
+  "main": "streembit.html",
   "window": {
     "toolbar": false,
     "width": 1140,
@@ -19,6 +19,6 @@
   "scripts": {
     "start": "nw ."
   },
-  "dependencies": {
-  }
+  "dependencies": {},
+  "jspm": { }
 }

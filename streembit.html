@@ -19,22 +19,13 @@
     </div>
 
     <div id="main">
-        <!--<div class="content-panel">
-            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.is_network_init">
-            </div>
-            <div class="content" data-bind="component: { name: route().page, params: route }">
-            </div>
-        </div>
-        <div class="footer" data-bind="visible: appsrvc.is_network_init">
-            Footer
-        </div>-->
         <div class="content-panel">
-            <!--<div class="side-panel">
-            </div>-->
+            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.network_ready">
+            </div>
             <div class="content" data-bind="component: { name: route().page, params: route }">
             </div>
         </div>
-        <div class="footer">
+        <div class="footer" data-bind="visible: appsrvc.network_ready">
             Footer
         </div>
     </div>

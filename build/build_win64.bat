@@ -79,7 +79,9 @@ REM goto :eof
 call :ColorText 0C "create package.nw"
 echo.
 
-%ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html ..\config.json  ..\assets ..\node_modules
+REM %ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\index.html ..\config.json  ..\assets ..\node_modules
+
+%ZIP_EXE% a -tzip %NWPACK_PATH% package.json ..\config.js ..\streembit.html ..\config.json  ..\lib ..\node_modules ..\jspm_packages
 
 IF EXIST %RESOURCER_PATH% (
 	call :ColorText 19 "Resourcer.exe exists, setting Streembit icon"
