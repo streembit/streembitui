@@ -11,20 +11,119 @@
         streembit.globals.uimode = 'nw';
     </script>
 
-    <link href="lib/css/loader.css" rel="stylesheet" />
-    <script src="assets/js/jquery/jquery-3.1.1.min.js"></script>
+    <style>
+        body{
+            background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+            background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+        }
+
+        body, html {
+          height: 100%;
+        }
+
+        /* loader */
+
+        #load-container{
+          width:100%;
+          height:100%;
+        }
+
+        #load-screen{
+          width:100%;
+          height:100%;
+          background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+          background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+          text-align: center;
+          box-sizing: border-box;
+          font-family: sans-serif;
+          color: rgba(255,255, 255, 0.8);
+          font-size:75px;
+          display:flex;
+          flex-direction:column;
+          justify-content:center;
+          align-items:center;
+        }
+
+        .load-box {
+          display: inline-block;
+          border: none;
+          position: relative;
+          vertical-align: top;
+          -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
+          transition: .3s color, .3s border, .3s transform, .3s opacity;
+        }
+
+        .load-text{
+            font-size:20px;
+            font-weight:bold;
+            text-align:center;
+        }
+
+        [class*="loader-"] {
+          display: inline-block;
+          width: 1em;
+          height: 1em;
+          color: inherit;
+          vertical-align: middle;
+          pointer-events: none;
+        }
+
+        .loader-05 {
+          border: .2em solid transparent;
+          border-top-color: currentcolor;
+          border-radius: 50%;
+          -webkit-animation: 1s loader-05 linear infinite;
+                  animation: 1s loader-05 linear infinite;
+          position: relative;
+        }
+        .loader-05:before {
+          content: '';
+          display: block;
+          width: inherit;
+          height: inherit;
+          position: absolute;
+          top: -.2em;
+          left: -.2em;
+          border: .2em solid currentcolor;
+          border-radius: 50%;
+          opacity: .5;
+        }
+
+        @-webkit-keyframes loader-05 {
+          0% {
+            -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+          }
+          100% {
+            -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+          }
+        }
+
+        @keyframes loader-05 {
+          0% {
+            -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+          }
+          100% {
+            -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+          }
+        }
+    </style>
+
 </head>
-<body>  
+<body>
+
     <div id="load-container">
         <div id="load-screen">
             <div class="load-box">
                 <div class="loader-05"></div>
             </div>
-            <div class="load-text">
-                Loading Streembit
+            <div id="load-info" class="load-text">
             </div>
         </div>
-    </div>    
+    </div>
 
     <div id="navbar-section" data-bind="component: { name: 'navbar', params: route }" style="display:none">
     </div>
@@ -44,16 +143,24 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-        $("#load-container").show(800, function () {
-            console.log("load container initiated");
-            $(".load-box").show(function () {
-                $(".load-box").css("display", "inline-block");
-            });           
-            $(".load-text").show();
-        });
-
-        System.import('lib/app.js');
+        System.import('lib/main.js');
     </script>
 
 </body>
 </html>
+
+<script type="text/html" id="load-container-view">
+    <div id="load-container">
+        <div id="load-screen">
+            <div class="load-box">
+                <div class="loader-05"></div>
+            </div>
+            <div class="load-text">
+                Loading Streembit
+            </div>
+            <div id="load-info" class="load-text">
+
+            </div>
+        </div>
+    </div>
+</script>

@@ -23,7 +23,9 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.29",
     "font-awesome": "npm:font-awesome@4.6.3",
     "hasher": "bower:hasher@1.2.0",
+    "i18next": "npm:i18next@3.4.3",
     "jquery": "npm:jquery@3.1.1",
+    "jqueryi18n": "github:wikimedia/jquery.i18n@1.0.4/src/jquery.i18n",
     "json": "github:systemjs/plugin-json@0.2.0",
     "knockout": "github:knockout/knockout@3.4.0",
     "lodash": "npm:lodash@4.16.1",
@@ -66,7 +68,7 @@ System.config({
       "base64-js": "npm:base64-js@0.0.8",
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "ieee754": "npm:ieee754@1.1.6",
+      "ieee754": "npm:ieee754@1.1.8",
       "isarray": "npm:isarray@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -83,6 +85,9 @@ System.config({
     },
     "npm:font-awesome@4.6.3": {
       "css": "github:systemjs/plugin-css@0.1.29"
+    },
+    "npm:i18next@3.4.3": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"

@@ -1,0 +1,9 @@
+﻿{
+    "appname-title": "Streembit",
+    "appname-sub-title": "Decentralized, peer-to-peer, secure communication system for humans and machines",
+    "appload-streembit": "Load Streembit",
+    "appload-locals": "Load localization resources",
+    "appload-database": "Load database",
+    "appload-logger": "Load application logger",
+    "appload-kademlia": "Load Kademlia DHT"
+}
