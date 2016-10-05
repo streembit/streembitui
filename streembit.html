@@ -9,16 +9,27 @@
         var streembit = streembit || {};
         streembit.globals = streembit.globals || {};
         streembit.globals.uimode = 'nw';
-
-        //window.node_require = window.require;
-        //window.require = undefined;
     </script>
+
+    <link href="lib/css/loader.css" rel="stylesheet" />
+    <script src="assets/js/jquery/jquery-3.1.1.min.js"></script>
 </head>
 <body>  
-    <div data-bind="component: { name: 'navbar', params: route }">
+    <div id="load-container">
+        <div id="load-screen">
+            <div class="load-box">
+                <div class="loader-05"></div>
+            </div>
+            <div class="load-text">
+                Loading Streembit
+            </div>
+        </div>
+    </div>    
+
+    <div id="navbar-section" data-bind="component: { name: 'navbar', params: route }" style="display:none">
     </div>
 
-    <div id="main">
+    <div id="main" style="display:none">
         <div class="content-panel">
             <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.network_ready">
             </div>
@@ -33,7 +44,15 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-        System.import('lib/main.js');
+        $("#load-container").show(800, function () {
+            console.log("load container initiated");
+            $(".load-box").show(function () {
+                $(".load-box").css("display", "inline-block");
+            });           
+            $(".load-text").show();
+        });
+
+        System.import('lib/app.js');
     </script>
 
 </body>
