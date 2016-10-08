@@ -86,10 +86,6 @@ System.config({
     "npm:font-awesome@4.6.3": {
       "css": "github:systemjs/plugin-css@0.1.29"
     },
-    "npm:i18next-ko@3.0.1": {
-      "i18next": "npm:i18next@3.4.3",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
     "npm:i18next@3.4.3": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },

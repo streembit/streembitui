@@ -1,7 +1,7 @@
 ﻿{
     "appconfig": {
         "isdevmode": false, 
-        "loglevel": "info",
+        "loglevel": "debug",
         "transport": "tcp",
         "wsfallback": true,
         "tcpport": 8905,
