@@ -6,9 +6,12 @@
     <title>Streembit</title>
 
     <script type="text/javascript">
+        window.nwrequire = window.require;
+        window.require = undefined;
+
         var streembit = streembit || {};
         streembit.globals = streembit.globals || {};
-        streembit.globals.uimode = 'web';
+        streembit.globals.nwmode = false;
 
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";

@@ -43,9 +43,11 @@
   },
   "jspm": {
     "dependencies": {
+      "async": "npm:async@^2.0.1",
       "bootstrap": "github:twbs/bootstrap@^3.3.7",
       "crossroads": "npm:crossroads@^0.12.2",
       "css": "github:systemjs/plugin-css@^0.1.29",
+      "events": "github:jspm/nodelibs-events@^0.1.1",
       "font-awesome": "npm:font-awesome@^4.6.3",
       "hasher": "bower:hasher@^1.2.0",
       "i18next": "npm:i18next@^3.4.3",
@@ -54,7 +56,9 @@
       "json": "github:systemjs/plugin-json@^0.2.0",
       "knockout": "github:knockout/knockout@^3.4.0",
       "lodash": "npm:lodash@^4.16.1",
-      "text": "github:systemjs/plugin-text@^0.0.9"
+      "streembit/streembitlib": "github:streembit/streembitlib@^1.0.4",
+      "text": "github:systemjs/plugin-text@^0.0.9",
+      "util": "github:jspm/nodelibs-util@^0.1.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

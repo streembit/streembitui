@@ -15,12 +15,14 @@ System.config({
   },
 
   map: {
+    "async": "npm:async@2.0.1",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "core-js": "npm:core-js@1.2.7",
     "crossroads": "npm:crossroads@0.12.2",
     "css": "github:systemjs/plugin-css@0.1.29",
+    "events": "github:jspm/nodelibs-events@0.1.1",
     "font-awesome": "npm:font-awesome@4.6.3",
     "hasher": "bower:hasher@1.2.0",
     "i18next": "npm:i18next@3.4.3",
@@ -28,9 +30,11 @@ System.config({
     "jqueryi18n": "github:wikimedia/jquery.i18n@1.0.4/src/jquery.i18n",
     "json": "github:systemjs/plugin-json@0.2.0",
     "knockout": "github:knockout/knockout@3.4.0",
-    "lodash": "npm:lodash@4.16.1",
+    "lodash": "npm:lodash@4.16.4",
     "millermedeiros/Hasher": "github:millermedeiros/Hasher@1.2.0",
+    "streembit/streembitlib": "github:streembit/streembitlib@1.0.4",
     "text": "github:systemjs/plugin-text@0.0.9",
+    "util": "github:jspm/nodelibs-util@0.1.0",
     "bower:hasher@1.2.0": {
       "js-signals": "bower:js-signals@1.0.0"
     },
@@ -39,6 +43,9 @@ System.config({
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.6.0"
+    },
+    "github:jspm/nodelibs-events@0.1.1": {
+      "events": "npm:events@1.0.2"
     },
     "github:jspm/nodelibs-path@0.1.0": {
       "path-browserify": "npm:path-browserify@0.0.0"
@@ -60,6 +67,10 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "util": "npm:util@0.10.3"
+    },
+    "npm:async@2.0.1": {
+      "lodash": "npm:lodash@4.16.4",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:babel-runtime@5.8.38": {
       "process": "github:jspm/nodelibs-process@0.1.2"
