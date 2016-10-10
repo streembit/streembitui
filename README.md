@@ -5,14 +5,17 @@ http://streembit.github.io/
 What is Streembit?
 -----------------
 
-Streembit is an experimental decentralised communication system for humans and 
-Internet of Things devices. Streembit uses peer-to-peer technology to operate
-with no central authority: discovering contacts, persisting the data and routing 
-messages are carried out collectively by the network. Streembit is the name 
-of open source software which enables the use of this P2P network.
+Streembit is an open source, peer-to-peer communication network for humans and machines. We aim to solve secure, decentralized network formation with Streembit. Streembit uses peer-to-peer technology to operate with no central authority: discovering contacts, persisting the data and routing messages are carried out collectively by the network. It is primarily secured by elliptic curve public/private key cryptography infrastructure (PPKI). 
 
-For more information, as well as an immediately useable, packaged version of
-the Streembit software, see http://streembit.github.io/download.
+Streembit comes with video calls, audio calls, text chat, file transfer, screen sharing, and the ability to connect to your Internet-of-Things devices.
+
+Streembit is optimized for the Internet-of-Things. Along with complying with open security and communication standards our developers take an active role in the W3C Web of Things Initiative (https://github.com/w3c/web-of-things-framework) and mirror all WoT standards in the Streembit codebase.
+
+Please join our Gitter (https://gitter.im/orgs/streembit/rooms) if you would like to chat! 
+
+For more information, as well as an immediately useable, packaged version of the Streembit software, see http://streembit.github.io/download.
+
+For help using Streembit please visit the documentation: http://streembit.github.io/documentation/
 
 License
 -------
@@ -24,7 +27,7 @@ information or see http://www.gnu.org/licenses/.
 Building Streembit
 -----------------
 
-The build workflow is described in [BUILD.md](BUILD.md).
+If you would like to build Streembit from the source instead of using the prebuilt binaries (found at http://streembit.github.io/download) follow the build workflow described in [BUILD.md](BUILD.md).
 
 
 Development Process

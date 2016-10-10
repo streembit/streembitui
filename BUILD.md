@@ -1,9 +1,9 @@
 Build Streembit
 --------------
 
-The Streembit Core software is a Node.js application which uses the NW.js(node-webkit) library. NW.js is an app runtime based on Chromium. In order to build Streembit from source you must be familiar with Node.js, the Chromium project and NW.js (node-webkit).
+The Streembit core software is a Node.js application which uses the NW.js (node-webkit) library. NW.js is an app runtime based on Chromium. In order to build Streembit and it's dependencies from source you must be familiar with Node.js, the Chromium project and NW.js (node-webkit). Building Chromium and NW.js is a long process, you might want to download the trusted prebuilt binaries from the NW.js website instead: http://nwjs.io/downloads/
 
-To build Streembit from source first you must build Chromium software and the NW.js (node-webkit) library.
+Follow the instructions below if you would like to build Chromium and NW.js from source.
 
 To build Chromium please refer to the Chromium project web site.
 
@@ -36,7 +36,7 @@ Run Streembit:
 ```bash
 $ /path/to/nw .
 ```
-(The node-webkit executables must be in the /nw directory if you run the above command. The package.json file must exists in the Streembit directory).
+(The node-webkit executables must be in the /nw directory if you run the above command. The package.json file must exist in the Streembit directory).
 
 
 
