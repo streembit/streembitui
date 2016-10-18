@@ -37,12 +37,20 @@ System.config({
     "knockout": "github:knockout/knockout@3.4.0",
     "lodash": "npm:lodash@4.16.4",
     "millermedeiros/Hasher": "github:millermedeiros/Hasher@1.2.0",
+    "remarkable-bootstrap-notify": "bower:remarkable-bootstrap-notify@3.1.3",
     "secure-random": "npm:secure-random@1.1.1",
     "streembit/streembitlib": "github:streembit/streembitlib@1.0.4",
     "text": "github:systemjs/plugin-text@0.0.9",
     "util": "github:jspm/nodelibs-util@0.1.0",
+    "bower:bootstrap@3.3.7": {
+      "jquery": "bower:jquery@3.1.1"
+    },
     "bower:hasher@1.2.0": {
       "js-signals": "bower:js-signals@1.0.0"
+    },
+    "bower:remarkable-bootstrap-notify@3.1.3": {
+      "bootstrap": "bower:bootstrap@3.3.7",
+      "jquery": "bower:jquery@3.1.1"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
