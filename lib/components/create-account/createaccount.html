@@ -1,0 +1,169 @@
+
+<div id="uiview-container">
+
+    <div class="uiview-container-panel">
+
+        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
+            <h4 data-bind="i18n:'lbl-createaccount-create'"></h4>
+        </div>
+
+        <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
+
+            <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isaccount_error() == true}">
+                <label for="text" data-bind="i18n:'lbl-streembitacc'"></label>
+                <div class="error-label" data-bind="visible: isaccount_error">
+                    <span data-bind="text: accounterrormsg"></span>
+                </div>
+                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="max-width:300px" id="txtAccount" maxlength="20" />
+            </div>
+
+            <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': ispwd_error() == true}">
+                <label for="text" data-bind="i18n:'lbl-privkeypassword'"></label>
+                <div class="error-label" data-bind="visible: ispwd_error">
+                    <span data-bind="text: pwderrormsg"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}" style="max-width:400px" id="txtPassword" />
+            </div>
+
+            <!--<div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
+                <label for="text">Confirm private key password:</label>
+                <div id="lblPwdConfErrCont" class="error-label">
+                    <span id="lblPwdConfError"></span>
+                </div>
+                <input type="password" class="form-control" data-bind="value: private_key_pwd_conf, event: { keyup: ctrlKeyUp }" style="max-width:400px" id="txtPasswordConfirm" />
+            </div>
+
+            <div style="margin-top:30px">
+                <button id="btnCreate" data-bind="click: create_account, i18n:'lbl-createaccount-create'"></button> 
+            </div>-->
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var is_new_account = false;
+        var uioptions = streembit.Session.uioptions;
+        if (uioptions) {
+            is_new_account = uioptions.newuser || false;
+            is_init_existing_account = uioptions.initexisting || false;
+        }
+        var user_div = document.getElementById('uiview-container');
+        var vm = new streembit.vms.UserViewModel(is_new_account, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount, is_init_existing_account);
+        vm.init(function () {
+            ko.applyBindings(vm, user_div);
+
+            $("#txtAccount").blur(function () {
+                vm.onAccountChange();
+            });
+
+            $("#txtPassword").blur(function () {
+                vm.onPasswordChange();
+            });
+
+            $("#txtPasswordConfirm").blur(function () {
+                vm.onPasswordConfirmChange();
+            });
+
+            $("#txtPrivateNetHost").blur(function () {
+                vm.onPrivateSeedHostChange();
+            });
+
+            $("#txtPrivateNetPort").blur(function () {
+                vm.onPrivateSeedPortChange();
+            });
+
+            $("#txtPrivateNetAccount").blur(function () {
+                vm.onPrivateSeedAccountChange();
+            });
+        });
+
+        function validateAccount(valid, msg) {
+            if (!valid) {
+                $("#grpAccount").addClass("has-error");
+                $("#lblAccountError").text(msg);
+                $("#lblAccountErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpAccount").removeClass("has-error");
+                $("#lblAccountError").text("");
+                $("#lblAccountErrorContainer").hide();
+            }
+        }
+
+        function validatePassword(valid, msg) {
+            if (!valid) {
+                $("#grpPassword").addClass("has-error");
+                $("#lblPwdError").text(msg);
+                $("#lblPwdErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPassword").removeClass("has-error");
+                $("#lblPwdError").text("");
+                $("#lblPwdErrorContainer").hide();
+            }
+        }
+
+        function validatePasswordConfirm(valid, msg) {
+            if (!valid) {
+                $("#grpPasswordConfirm").addClass("has-error");
+                $("#lblPwdConfError").text(msg);
+                $("#lblPwdConfErrCont").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPasswordConfirm").removeClass("has-error");
+                $("#lblPwdConfError").text("");
+                $("#lblPwdConfErrCont").hide();
+            }
+        }
+
+        function validatePrivateSeedHost(valid, msg) {
+            if (!valid) {
+                $("#grpPrivateSeedHost").addClass("has-error");
+                $("#lblSeedHostError").text(msg);
+                $("#lblSeedHostErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPrivateSeedHost").removeClass("has-error");
+                $("#lblSeedHostError").text("");
+                $("#lblSeedHostErrorContainer").hide();
+            }
+        }
+
+        function validatePrivateSeedPort(valid, msg) {
+            if (!valid) {
+                $("#grpPrivateSeedPort").addClass("has-error");
+                $("#lblSeedPortError").text(msg);
+                $("#lblSeedPortErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPrivateSeedPort").removeClass("has-error");
+                $("#lblSeedPortError").text("");
+                $("#lblSeedPortErrorContainer").hide();
+            }
+        }
+
+        function validatePrivateSeedAccount(valid, msg) {
+            if (!valid) {
+                $("#grpPrivateSeedAccount").addClass("has-error");
+                $("#lblSeedAccountError").text(msg);
+                $("#lblSeedAccountErrorContainer").show();
+                //alert(msg)
+            }
+            else {
+                $("#grpPrivateSeedAccount").removeClass("has-error");
+                $("#lblSeedAccountError").text("");
+                $("#lblSeedAccountErrorContainer").hide();
+            }
+        }
+
+    });
+</script>
+
