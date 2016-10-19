@@ -22,6 +22,7 @@ System.config({
     "browserify-aes": "npm:browserify-aes@1.0.6",
     "buffer": "github:jspm/nodelibs-buffer@0.1.0",
     "core-js": "npm:core-js@1.2.7",
+    "create-hash": "npm:create-hash@1.1.2",
     "crossroads": "npm:crossroads@0.12.2",
     "css": "github:systemjs/plugin-css@0.1.29",
     "elliptic": "npm:elliptic@6.3.2",
