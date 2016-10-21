@@ -40,7 +40,6 @@ System.config({
     "millermedeiros/Hasher": "github:millermedeiros/Hasher@1.2.0",
     "remarkable-bootstrap-notify": "bower:remarkable-bootstrap-notify@3.1.3",
     "secure-random": "npm:secure-random@1.1.1",
-    "streembit/streembitlib": "github:streembit/streembitlib@1.0.4",
     "text": "github:systemjs/plugin-text@0.0.9",
     "util": "github:jspm/nodelibs-util@0.1.0",
     "bower:bootstrap@3.3.7": {
