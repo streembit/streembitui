@@ -6,7 +6,7 @@
     <title>Streembit</title>
 
     <script type="text/javascript">
-        window.nwrequire = window.require;
+        window.nwrequire = window.require || (function () {});
         window.require = undefined;
 
         var streembit = streembit || {};

@@ -36,7 +36,7 @@
     "request": "^2.69.0",
     "restify": "^4.0.3",
     "secure-random": "^1.1.1",
-    "streembitlib": "git+https://github.com/streembit/streembitlib.git",
+    "streembitlib": "git+https://github.com/streembit/streembitlib.git#develop",
     "uuid": "^2.0.1",
     "winston": "^2.1.1",
     "xml2js": "^0.1.14"
