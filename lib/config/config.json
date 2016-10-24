@@ -37,6 +37,10 @@
         {
             "url": "create-account",
             "params": { "page": "create-account" }
+        },
+        {
+            "url": "netinfo",
+            "params": { "page": "netinfo" }
         }
     ]
 }

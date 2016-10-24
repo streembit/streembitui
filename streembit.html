@@ -143,12 +143,12 @@
 
     <div id="main" style="display:none">
         <div class="content-panel">
-            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.network_ready">
+            <div class="side-panel" data-bind="component: { name: 'contacts-bar', params: route }, visible: appsrvc.account_connected">
             </div>
             <div class="content" data-bind="component: { name: route().page, params: route }">
             </div>
         </div>
-        <div class="footer" data-bind="visible: appsrvc.network_ready">
+        <div class="footer" data-bind="visible: appsrvc.account_connected">
             Footer
         </div>
     </div>
