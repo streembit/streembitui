@@ -54,12 +54,28 @@
             <div>
                 <span style="font-weight:bold">Seeds</span>
             </div>
-            <div class="accountinfo_seed_list" data-bind="foreach: seeds">
+            <table>
+                <thead>
+                    <tr style="background-color:#444;color:white;">
+                        <th>NodeID</th>
+                        <th>IP address</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: seeds">
+                    <tr>
+                        <td data-bind="text: nodeID"></td>
+                        <td>
+                            <span data-bind="text: address"></span>:<span data-bind="text: port"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--<div class="accountinfo_seed_list" data-bind="foreach: seeds">
                 <div class="seed_list_item">
                     <div>NodeID: <span data-bind="text: nodeID"></span></div>
                     <div>IP address: <span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
                 </div>
-            </div>
+            </div>-->
         </div>
         <!-- /ko -->
         <!-- ko if: net_connected() == false -->
