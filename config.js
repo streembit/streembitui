@@ -21,6 +21,7 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "browserify-aes": "npm:browserify-aes@1.0.6",
     "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+    "collections": "npm:collections@5.0.5",
     "core-js": "npm:core-js@1.2.7",
     "create-hash": "npm:create-hash@1.1.2",
     "crossroads": "npm:crossroads@0.12.2",
@@ -172,6 +173,9 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "stream": "github:jspm/nodelibs-stream@0.1.0",
       "string_decoder": "github:jspm/nodelibs-string_decoder@0.1.0"
+    },
+    "npm:collections@5.0.5": {
+      "weak-map": "npm:weak-map@1.0.5"
     },
     "npm:constants-browserify@0.0.1": {
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
