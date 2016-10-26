@@ -38,6 +38,7 @@ System.config({
     "json": "github:systemjs/plugin-json@0.2.0",
     "knockout": "github:knockout/knockout@3.4.0",
     "lodash": "npm:lodash@4.16.4",
+    "malsup/blockui": "github:malsup/blockui@2.55.0-2013.01.23",
     "millermedeiros/Hasher": "github:millermedeiros/Hasher@1.2.0",
     "remarkable-bootstrap-notify": "bower:remarkable-bootstrap-notify@3.1.3",
     "secure-random": "npm:secure-random@1.1.1",
@@ -85,6 +86,9 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
+    "github:malsup/blockui@2.55.0-2013.01.23": {
+      "jquery": "npm:jquery@3.1.1"
     },
     "github:twbs/bootstrap@3.3.7": {
       "jquery": "npm:jquery@3.1.1"
