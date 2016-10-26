@@ -1,7 +1,7 @@
 ﻿JSPM installation notes
 -----------------------
 
-There are a few extra steps are required to configure jsp and  install jspm packages.
+There are a few extra steps are required to configure jspm and  install jspm packages.
 
 To load bower packages the bower endpoint must be installed.
 
@@ -21,6 +21,9 @@ jspm registry create bower jspm-bower-endpoint
 
 Reference:
 http://stackoverflow.com/questions/34774702/how-to-make-jspm-install-bower-dependencies
+
+
+#### Unregistered library management, shims
 
 We must create shims for JS libraries tha taren't registered in the JSPM register.
 For example, below is the jquery Blocui plugin installation:
