@@ -22,11 +22,11 @@
             "params": { "page": "initui" }
         },
         {
-            "url": "connect-to-public",
-            "params": { "page": "connect-to-public" }
+            "url": "connectpublic",
+            "params": { "page": "connectpublic" }
         },
         {
-            "url": "contacts-bar",
+            "url": "contactsbar",
             "params": { "page": "contacts-bar" }
         },
         {
@@ -34,8 +34,8 @@
             "params": { "page": "about" }
         },
         {
-            "url": "create-account",
-            "params": { "page": "create-account" }
+            "url": "createaccount",
+            "params": { "page": "createaccount" }
         },
         {
             "url": "netinfo",
