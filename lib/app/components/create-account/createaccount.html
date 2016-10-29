@@ -1,45 +1,44 @@
 
 <div id="uiview-container">
+    <div class="uiview-plane">
+        <div class="uiview-container-panel">
 
-    <div class="uiview-container-panel">
+            <div class="uiview-container-panel-header">
+                <h4 data-bind="i18n:'lbl-createaccount-create'"></h4>
+            </div>
 
-        <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-            <h4 data-bind="i18n:'lbl-createaccount-create'"></h4>
-        </div>
+            <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
 
-        <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isaccount_error() == true}">
-                <label for="text" data-bind="i18n:'lbl-streembitacc'"></label>
-                <div class="error-label" data-bind="visible: isaccount_error">
-                    <span data-bind="text: accounterrormsg"></span>
+                <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isaccount_error() == true}">
+                    <label for="text" data-bind="i18n:'lbl-streembitacc'"></label>
+                    <div class="error-label" data-bind="visible: isaccount_error">
+                        <span data-bind="text: accounterrormsg"></span>
+                    </div>
+                    <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="max-width:300px" id="txtAccount" maxlength="20" />
                 </div>
-                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="max-width:300px" id="txtAccount" maxlength="20" />
-            </div>
 
-            <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': ispwd_error() == true}">
-                <label for="text" data-bind="i18n:'lbl-privkeypassword'"></label>
-                <div class="error-label" data-bind="visible: ispwd_error">
-                    <span data-bind="text: pwderrormsg"></span>
+                <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': ispwd_error() == true}">
+                    <label for="text" data-bind="i18n:'lbl-privkeypassword'"></label>
+                    <div class="error-label" data-bind="visible: ispwd_error">
+                        <span data-bind="text: pwderrormsg"></span>
+                    </div>
+                    <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}" style="max-width:400px" />
                 </div>
-                <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}" style="max-width:400px" />
-            </div>
 
-            <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isconfpwd_error() == true}">
-                <label for="text" data-bind="i18n:'lbl-confirmpassword'"></label>
-                <div class="error-label" data-bind="visible: isconfpwd_error">
-                    <span data-bind="text: pwdconferrormsg"></span>
+                <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isconfpwd_error() == true}">
+                    <label for="text" data-bind="i18n:'lbl-confirmpassword'"></label>
+                    <div class="error-label" data-bind="visible: isconfpwd_error">
+                        <span data-bind="text: pwdconferrormsg"></span>
+                    </div>
+                    <input type="password" class="form-control" data-bind="value: private_keypwd_conf, event: { keyup: ctrlkeyup, blur: onPasswordConfirmChange }" style="max-width:400px" />
                 </div>
-                <input type="password" class="form-control" data-bind="value: private_keypwd_conf, event: { keyup: ctrlkeyup, blur: onPasswordConfirmChange }" style="max-width:400px" />
-            </div>
 
-            <div style="margin-top:30px">
-                <button data-bind="click: create_account, i18n:'lbl-createaccount-create'"></button> 
-            </div>
+                <div style="margin-top:30px">
+                    <button data-bind="click: create_account, i18n:'lbl-createaccount-create'"></button>
+                </div>
 
+            </div>
         </div>
     </div>
-
 </div>
-
 

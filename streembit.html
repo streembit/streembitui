@@ -20,7 +20,7 @@
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";
         streembit.ui.load_info = "load-info";
-        streembit.ui.main = "main";
+        streembit.ui.main = "streembit-app";
         streembit.ui.navbar_section = "navbar-section";
     </script>
 
@@ -28,6 +28,7 @@
         body{
             background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
             background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+            margin:0;
         }
 
         body, html {
@@ -138,10 +139,109 @@
         </div>
     </div>
 
-    <div id="navbar-section" data-bind="component: { name: 'navbar', params: route }" style="display:none">
+    <div id="streembit-app" style="display:none">
+        <div id="navbar-section">
+            <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Streembit</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Start Streembit</a></li>
+                                    <li><a href="#connectpublic">Connect to public network</a></li>
+                                    <li><a href="#">Connect to private hub</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#createaccount">New account</a></li>
+                                    <li><a href="#">Initialize existing account</a></li>
+                                    <li><a href="#">Restore account</a></li>
+                                    <li><a href="#">Backup account</a></li>
+                                    <li><a href="#">Change passphrase</a></li>
+                                    <li><a href="#">Delete account</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Settings</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#netinfo">Account/network info</a></li>
+                                    <li><a href="#">View Logs</a></li>
+                                    <li><a href="#">Clear Database</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Ping to network</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contacts <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Interact with contact</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Get offline messages</a></li>
+                                    <li><a href="#">Find contact</a></li>
+                                    <li><a href="#">Backup contacts to file</a></li>
+                                    <li><a href="#">Restore contacts from file</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Machines <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Connect to Internet of Things device</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Help Content</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Check software updates</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#about">About</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DAPP <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Search</a></li>
+                                    <li><a href="#">Organize</a></li>
+                                    <li><a href="#">Publish DAPP</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </div>
+        </div>
+        <div id="main">
+            <div class="content-panel" data-bind="component: { name: route().page, params: route }">
+            </div>
+            <div class="footer">
+                <div id="footer-text-container"></div>
+            </div>
+        </div>
     </div>
 
-    <div id="main" style="display:none">
+    <!--<div id="navbar-section" data-bind="component: { name: 'navbar', params: route }" style="display:none">
+    </div>-->
+
+
+    <!--<div id="main" style="display:none">
         <div class="content-panel">
             <div class="side-panel" data-bind="component: { name: 'contactsbar', params: route }, visible: appsrvc.account_connected">
             </div>
@@ -151,7 +251,7 @@
         <div class="footer" data-bind="visible: appsrvc.account_connected">
             Footer
         </div>
-    </div>
+    </div>-->
 
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
