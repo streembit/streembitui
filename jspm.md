@@ -6,7 +6,7 @@ There are a few extra steps are required to configure jspm and  install jspm pac
 To load bower packages the bower endpoint must be installed.
 
 ```bash
-npm install -save jspm-bower-endpoint
+npm install -g jspm-bower-endpoint
 ```
 
 Reference:
