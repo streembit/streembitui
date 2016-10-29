@@ -8,7 +8,7 @@
         "wsport": 32318,
         "seedmode": 0,
         "bootseeds": [
-            { "address": "localhost", "port":  32320 },
+            { "address": "192.168.1.76", "port":  32320 },
             { "address": "192.168.1.76", "port":  32322 }
         ],
         "ice_resolvers": [
