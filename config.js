@@ -15,6 +15,9 @@ System.config({
   },
 
   map: {
+    "filedialog": "lib/app/filedialog",
+    "filesaver": "lib/app/filesaver",
+    "cmdhandler": "lib/app/cmdhandler",
     "accounts": "lib/app/accounts",
     "appconfig": "lib/app/config.js",
     "appevents": "lib/app/libs/events/index",

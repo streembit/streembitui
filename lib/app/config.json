@@ -41,6 +41,10 @@
         {
             "url": "netinfo",
             "params": { "page": "netinfo" }
+        },
+        {
+            "url": "cmd/backup-account",
+            "params": { "cmd": "backup-account" }
         }
     ]
 }
