@@ -11,10 +11,26 @@ System.config({
   paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*",
-    "bower:*": "jspm_packages/bower/*"
+    "bower:*": "jspm_packages/bower/*",
+    "streembit:*": "lib/*"
   },
 
   map: {
+    "basevm": "streembit:app/components/BaseVM",
+    "appconfig": "streembit:app/config",
+    "applogger": "streembit:app/logger",
+    "appsrvc": "streembit:app/appsrvc",
+    "uihandler": "streembit:app/uihandler",
+    "peercomm": "streembit:app/peercomm",
+    "user": "streembit:app/user",
+    "definitions": "streembit:app/definitions",
+    "database": "streembit:app/database",
+    "accounts": "streembit:app/accounts",
+    "streembitnet": "streembit:app/streembitnet",
+    "appevents": "streembit:app/libs/events/index",
+    "cryptlib": "streembit:app/libs/crypto/cryptlib",
+    "peermsg": "streembit:app/libs/message/msglib",
+    "datadir": "streembit:app/datadir",
     "async": "npm:async@2.0.1",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
