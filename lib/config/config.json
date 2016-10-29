@@ -8,8 +8,9 @@
         "wsport": 32318,
         "seedmode": 0,
         "bootseeds": [
-            { "address": "192.168.1.76", "port":  32320 },
-            { "address": "192.168.1.76", "port":  32322 }
+            { "address": "seed.streembit.uk" },
+            { "address": "seed.streembit.eu" },
+            { "address": "seed.streembit.net"}
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
