@@ -14,8 +14,8 @@
   },
   "window": {
     "toolbar": false,
-    "width": 1200,
-    "height": 850,
+    "width": 1050,
+    "height": 750,
     "frame": true,
     "icon": "assets/icons/streembit64.png"
   },
