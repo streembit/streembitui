@@ -15,9 +15,6 @@ System.config({
   },
 
   map: {
-    "filedialog": "lib/app/filedialog",
-    "filesaver": "lib/app/filesaver",
-    "cmdhandler": "lib/app/cmdhandler",
     "accounts": "lib/app/accounts",
     "appconfig": "lib/app/config.js",
     "appevents": "lib/app/libs/events/index",
@@ -29,10 +26,10 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "browserify-aes": "npm:browserify-aes@1.0.6",
     "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+    "cmdhandler": "lib/app/cmdhandler",
     "collections": "npm:collections@5.0.5",
     "core-js": "npm:core-js@1.2.7",
     "create-hash": "npm:create-hash@1.1.2",
-    "crossroads": "npm:crossroads@0.12.2",
     "cryptlib": "lib/app/libs/crypto/cryptlib",
     "css": "github:systemjs/plugin-css@0.1.29",
     "database": "lib/app/database",
@@ -40,9 +37,10 @@ System.config({
     "definitions": "lib/app/definitions",
     "elliptic": "npm:elliptic@6.3.2",
     "events": "github:jspm/nodelibs-events@0.1.1",
+    "filedialog": "lib/app/filedialog",
+    "filesaver": "lib/app/filesaver",
     "font-awesome": "npm:font-awesome@4.6.3",
     "hash.js": "npm:hash.js@1.0.3",
-    "hasher": "bower:hasher@1.2.0",
     "i18next": "npm:i18next@3.4.3",
     "jquery": "npm:jquery@3.1.1",
     "jqueryi18n": "github:wikimedia/jquery.i18n@1.0.4",
@@ -63,9 +61,6 @@ System.config({
     "util": "github:jspm/nodelibs-util@0.1.0",
     "bower:bootstrap@3.3.7": {
       "jquery": "bower:jquery@3.1.1"
-    },
-    "bower:hasher@1.2.0": {
-      "js-signals": "bower:js-signals@1.0.0"
     },
     "bower:remarkable-bootstrap-notify@3.1.3": {
       "bootstrap": "bower:bootstrap@3.3.7",
@@ -231,11 +226,6 @@ System.config({
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "inherits": "npm:inherits@2.0.1",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
-    },
-    "npm:crossroads@0.12.2": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "path": "github:jspm/nodelibs-path@0.1.0",
-      "signals": "npm:signals@1.0.0"
     },
     "npm:crypto-browserify@3.11.0": {
       "browserify-cipher": "npm:browserify-cipher@1.0.0",

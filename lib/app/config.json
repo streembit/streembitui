@@ -16,35 +16,5 @@
             { "url": "stun:stun.l.google.com:19302" }, { "url": "stun:stun1.l.google.com:19302" }, { "url": "stun:stun2.l.google.com:19302" }
         ],
         "private_net_seed": { "account": "", "host": "", "port": 0 }
-    },
-    "routes": [
-        {
-            "url": "",
-            "params": { "page": "initui" }
-        },
-        {
-            "url": "connectpublic",
-            "params": { "page": "connectpublic" }
-        },
-        {
-            "url": "contactsbar",
-            "params": { "page": "contacts-bar" }
-        },
-        {
-            "url": "about",
-            "params": { "page": "about" }
-        },
-        {
-            "url": "createaccount",
-            "params": { "page": "createaccount" }
-        },
-        {
-            "url": "netinfo",
-            "params": { "page": "netinfo" }
-        },
-        {
-            "url": "cmd/backup-account",
-            "params": { "cmd": "backup-account" }
-        }
-    ]
+    }
 }

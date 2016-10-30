@@ -1,7 +1,7 @@
 <div id="app-init-screen">
     <div class="app-select-screen">
         <div class="flex-btncontainer">
-            <a href="#connectpublic" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
+            <a href="#" data-bind="click: $root.nav.bind($data, 'connectpublic')" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
                 <i class="fa fa-group" style="font-size:100px"></i>
                 <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-connect'"></div>
             </a>
@@ -9,7 +9,7 @@
                 <i class="fa fa-lock"></i>
                 <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-connectpriv'"></div>
             </a>
-            <a href="#createaccount" id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
+            <a href="#" data-bind="click: $root.nav.bind($data, 'createaccount')" id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
                 <i class="fa fa-user-plus"></i>
                 <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-newaccount'"></div>
             </a>
