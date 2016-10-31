@@ -20,11 +20,18 @@
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";
         streembit.ui.load_info = "load-info";
-        streembit.ui.main = "streembit-app";
+        streembit.ui.main = "streembit-container";
         streembit.ui.navbar_section = "navbar-section";
+        streembit.ui.taskbarmsg = "footer-text-container";
 
         // application service
         streembit.appsrvc = {};
+
+        //  the mainapplication component loaded from the lib/views directory
+        //  change this to load another main app
+        //  the component must be registered with the lib/viewreg 
+        streembit.view = {};
+        streembit.view.mainapp = "streembit-app";
 
     </script>
 
@@ -143,7 +150,7 @@
         </div>
     </div>
 
-    <div id="streembit-app" style="display:none">
+    <div id="streembit-container" style="display:none">
         <div id="navbar-section">
             <div class="navbar navbar-fixed-top navbar-default" role="navigation">
                 <div class="container-fluid">
@@ -240,22 +247,6 @@
             </div>
         </div>
     </div>
-
-    <!--<div id="navbar-section" data-bind="component: { name: 'navbar', params: route }" style="display:none">
-    </div>-->
-
-
-    <!--<div id="main" style="display:none">
-        <div class="content-panel">
-            <div class="side-panel" data-bind="component: { name: 'contactsbar', params: route }, visible: appsrvc.account_connected">
-            </div>
-            <div class="content" data-bind="component: { name: route().page, params: route }">
-            </div>
-        </div>
-        <div class="footer" data-bind="visible: appsrvc.account_connected">
-            Footer
-        </div>
-    </div>-->
 
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
