@@ -11,11 +11,13 @@
 
         var streembit = streembit || {};
         streembit.globals = streembit.globals || {};
-        streembit.notify = streembit.notify || {};
-        streembit.UI = streembit.UI || {};
 
         // set this flag for Web mode (i.e. serving the application from a web server) to false
+        // nwmode = true indicates the application is using node-webkit
         streembit.globals.nwmode = true;
+
+        streembit.notify = streembit.notify || {};
+        streembit.UI = streembit.UI || {};
 
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";
