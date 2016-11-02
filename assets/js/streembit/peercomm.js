@@ -31,7 +31,7 @@ var uuid = require("uuid");
 var Map = require("collections/map");
 var secrand = require('secure-random');
 var nodecrypto = require(global.cryptolib);
-
+var contactlist = require(global.cryptolib);
 
 streembit.TransportFactory = (function (module, logger, events, config) {
     
@@ -520,7 +520,7 @@ streembit.PeerNet = (function (module, logger, events, config) {
             data[wotmsg.MSGFIELD.REQJTI] = payload.jti;
             data[wotmsg.MSGFIELD.ECDHPK] = streembit.User.ecdh_public_key;
             
-            var contact = streembit.Contacts.get_contact(sender);
+            var contact = contactlist.get_contact(sender);
             if (!contact) {
                 throw new Error("Ping error: contact not exists");    
             }
