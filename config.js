@@ -51,6 +51,7 @@ System.config({
     "knockout": "github:knockout/knockout@3.4.0",
     "lodash": "npm:lodash@4.16.4",
     "logger": "lib/app/logger",
+    "makeusabrew/bootbox": "github:makeusabrew/bootbox@4.4.0",
     "malsup/blockui": "github:malsup/blockui@2.55.0-2013.01.23",
     "millermedeiros/Hasher": "github:millermedeiros/Hasher@1.2.0",
     "peercomm": "lib/app/peercomm",

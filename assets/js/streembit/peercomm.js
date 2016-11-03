@@ -1135,7 +1135,7 @@ streembit.PeerNet = (function (module, logger, events, config) {
                 list_of_waithandlers[jti] = waithandler;
                 
                 if (showprog) {
-                    streembit.notify.showprogress("Waiting reply from peer ... ");
+                    streembit.notify.info("Waiting reply from peer ... ", null, true);
                 }
                 
                 logger.debug("wait peer complete jti: " + jti);
