@@ -65,6 +65,8 @@ System.config({
     "uihandler": "lib/app/uihandler",
     "user": "lib/app/user",
     "util": "github:jspm/nodelibs-util@0.1.0",
+    "webrtc-adapter": "npm:webrtc-adapter@2.0.6",
+    "webrtclib": "lib/app/webrtclib",
     "bower:bootstrap@3.3.7": {
       "jquery": "bower:jquery@3.1.1"
     },
@@ -361,6 +363,9 @@ System.config({
     },
     "npm:vm-browserify@0.0.4": {
       "indexof": "npm:indexof@0.0.1"
+    },
+    "npm:webrtc-adapter@2.0.6": {
+      "sdp": "npm:sdp@1.0.1"
     }
   }
 });
