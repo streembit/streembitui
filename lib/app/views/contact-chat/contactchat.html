@@ -22,11 +22,11 @@
                         </td>
                         <td>
                             <div style="padding-top:6px">
-                                <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != username() }"></span>:
+                                <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != $parent.username() }"></span>:
                             </div>
                         </td>
                         <td>
-                            <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == username() }">
+                            <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == $parent.username() }">
                                 <span data-bind="text: text"></span>
                             </div>
                         </td>
