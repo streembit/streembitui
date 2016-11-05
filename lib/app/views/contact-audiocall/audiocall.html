@@ -1,4 +1,3 @@
-
 <div id="media-call-container">
     <div class="media-call-center">
         <div class="media-call-header">
@@ -46,16 +45,13 @@
 
         <div class="media-call-content">
 
-            <div class="video_ctrls_items">
-                <div class="localvid_parent" data-bind="visible: isvideo">
-                    <video id="localvid" autoplay muted></video>
-                </div>
-                <div class="remotevid_parent">
-                    <video id="remotevid" autoplay></video>
+            <div class="audio_ctrls_items">
+                <div class="remoteaudio_parent">
+                    <audio id="remote-audio" controls autoplay></audio>
                 </div>
             </div>
 
-            <div class="chat_items">
+            <div class="chat_items" style="display:none;flex: 1">
                 <div id="chat-container" style="flex:1">
                     <div class="fill-area" style="padding:10px;flex:1">
                         <div class="chat-fill-area chatitemswnd">
