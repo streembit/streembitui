@@ -90,5 +90,8 @@
         }
       }
     }
+  },
+  "devDependencies": {
+    "jspm": "^0.16.47"
   }
 }
