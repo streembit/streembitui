@@ -11,6 +11,7 @@
 
         var streembit = streembit || {};
         streembit.globals = streembit.globals || {};
+        streembit.globals.appname = "Streembit";
 
         // set this flag for Web mode (i.e. serving the application from a web server) to false
         // nwmode = true indicates the application is using node-webkit
@@ -106,10 +107,10 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#" data-bind="click: nav.bind($data, 'createaccount')">New account</a></li>
                                     <li><a href="#">Initialize existing account</a></li>
-                                    <li><a href="#" data-bind="click: cmd.bind($data, 'restore-account')">Restore account</a></li>
-                                    <li><a href="#" data-bind="click: cmd.bind($data, 'backup-account')">Backup account</a></li>
+                                    <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                    <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
                                     <li><a href="#">Change passphrase</a></li>
-                                    <li><a href="#">Delete account</a></li>
+                                    <li><a href="#" data-bind="click: deleteAccount">Delete account</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
