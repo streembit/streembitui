@@ -3,6 +3,11 @@
 
 There are a few extra steps are required to configure jspm and  install jspm packages.
 
+First install jspm locally.
+```bash
+npm install jspm --save-dev
+```
+
 To load bower packages the bower endpoint must be installed.
 
 ```bash
