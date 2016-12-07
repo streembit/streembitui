@@ -7,8 +7,8 @@
         "wsfallback": false,
         "askwsfallback": false,
         "tcpport": 8905,
-        "wshost": "31.49.191.197",
-        "wsport": 32317,
+        "wshost": "www.streembit.org",
+        "wsport": 32318,
         "seedmode": 0,
         "bootseeds": [
             { "address": "seed.streembit.uk" },
