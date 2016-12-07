@@ -23,6 +23,9 @@
                         <span data-bind="text: pwderrormsg"></span>
                     </div>
                     <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}" style="max-width:400px" />
+                    <div style="font-size:10px;font-weight:bold">
+                        NOTE: Choose your password carefully. If you forget your password, no one will be able to unlock your account for you on the permissionless and decentralised Streembit network.
+                    </div>
                 </div>
 
                 <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isconfpwd_error() == true}">
@@ -34,7 +37,7 @@
                 </div>
 
                 <div style="margin-top:30px">
-                    <button data-bind="click: create_account, i18n:'lbl-createaccount-create'"></button>
+                    <button data-bind="click: submit, i18n:'lbl-createaccount-create'"></button>
                 </div>
 
             </div>

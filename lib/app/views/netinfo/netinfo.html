@@ -50,6 +50,16 @@
         </table>
 
         <!-- ko if: net_connected() == true && transport() == 'tcp' -->
+        <div style="margin-top:30px;font-size:14px;font-weight:bold">WebSocket connectivity</div>
+        <table style="margin-bottom:30px;width:100%;font-size: 12px;">
+            <tr>
+                <td>WebSocket Publish:</td>
+                <td class="account-info-item"><span data-bind="text: iswspublish"></span></td>
+            </tr>
+        </table>
+        <!-- /ko -->
+
+        <!-- ko if: net_connected() == true && transport() == 'tcp' -->
         <div style="margin-top:15px;font-size: 12px;">
             <div>
                 <span style="font-weight:bold">Seeds</span>

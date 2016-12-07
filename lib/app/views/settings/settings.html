@@ -18,29 +18,46 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
-                <div class="form-group form-section-panel">
-                    <label for="tcpport">TCP port:</label><br />
-                    <input type="number" class="form-control" id="tcpport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. If the transport is WebSocket (WS) then this settings is not used by the application." />
-                </div>
-
-                <div class="form-group form-section-panel">
-                    <label for="wsport">WebSocket port:</label><br />
-                    <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket outbound port. The application sends data on this port via WebSocket to the seed nodes in case if the transport is WebSocket." />
-                </div>
-
-                <div class="form-group form-section-panel">
+                <div class="form-group form-section-panel" data-bind="visible: nwmode">
                     <label for="transport">Transport:</label><br />
                     <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport">
                         <option value="0">Choose ...</option>
                         <option value="tcp">TCP</option>
                         <option value="ws">WebSocket</option>
-                    </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the WebSocket transport then make sure the WebSocket listener is operational" />
+                    </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational." />
                 </div>
 
-                <div class="form-group form-section-panel">
-                    <div class="checkbox">
-                        <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streembit community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streembit network!" />
+                <div class="form-group form-section-panel" data-bind="visible: nwmode">
+                    <label for="tcpport">TCP port:</label><br />
+                    <input type="number" class="form-control" id="tcpport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. This settings is not used by the application in case the transport is WebSocket (WS)." />
+                </div>
+
+                <div class="form-section-panel" data-bind="visible: nwmode">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label> <input type="checkbox" data-bind="checked: iswspublish"> <span style="font-weight:bold">Publish at WebSocket services</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Using WebSocket enables communication with users who are unable to etablish a TCP connection. Using WS signalling your video, audio, text communication and file sending will still be fully encrypted and peer-to-peer." />
+                        </div>
                     </div>
+                </div>
+
+                <div class="form-section-panel">
+                    <div class="form-group" data-bind="visible: nwmode">
+                        <div class="checkbox">
+                            <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked." />
+                        </div>
+                    </div>
+
+                    <div style="clear:both"></div>
+
+                    <div class="form-group" style="float:left;margin-left:0">
+                        <label for="wsport">WebSocket host:</label><br />
+                        <input class="form-control" id="wshost" style="width:200px;display:inline-block" data-bind="value: wshost, enable: iswsfallback">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket host. The application sends data to this host via WebSocket in case the transport is WebSocket." />
+                    </div>                     
+                    <div class="form-group" style="float:left;margin-left:40px">
+                        <label for="wsport">WebSocket port:</label><br />
+                        <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport, enable: iswsfallback">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket outbound port. The application sends data on this port via WebSocket in case if the transport is WebSocket." />
+                    </div>
+                    <div style="clear:both;margin:0;padding:0"></div>
                 </div>
 
                 <div style="margin-top:30px">
@@ -65,10 +82,6 @@
                         <div class="form-group" style="font-size:11px;margin-bottom:5px">
                             <label for="newseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
                             <input type="text" class="form-control" id="newseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
-                        </div>
-                        <div class="form-group" style="font-size:11px;margin-bottom:0">
-                            <label for="newseedpk" style="font-size:11px;width:80px;text-align:right">Public key: </label>
-                            <input type="text" class="form-control" id="newseedpk" maxlength="48" style="font-size:11px;width:400px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_publickey">
                         </div>
                         <div style="margin-top:20px">
                             <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
@@ -134,12 +147,6 @@
                     </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
                 </div>
 
-                <div class="form-group form-section-panel">
-                    <div class="checkbox">
-                        <label> <input type="checkbox" data-bind="checked: isdevmode"> <span style="font-weight:bold">Developer mode</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Software developers should select this option to resolve directories and develop the software from IDE such as Visual Studio." />
-                    </div>
-                </div>
-
                 <div style="margin-top:30px">
                     <button data-bind="click: save" style="margin-right:10px">Save</button>
                 </div>
@@ -164,11 +171,6 @@
             <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
         </div>
         <div style="clear:both"></div>
-        <div style="font-size:11px;font-weight:bold;margin-top:5px;">
-            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Public key:</div>
-            <div class="pull-left" data-bind="text: $data.public_key"></div>
-            <div style="clear:both"></div>
-        </div>
     </div>
 </script>
 

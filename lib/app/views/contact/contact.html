@@ -1,0 +1,63 @@
+<div id="view-container" style="padding-left:20px">
+    <div>
+        <div class="contact-details-buttons">
+            <button type="button" class="btn btn-info btn-circle btn-lg" data-bind="click: chat" title="Chat"><i class="glyphicon glyphicon-comment"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sendfile" title="Send file"><i class="glyphicon glyphicon-copy"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('audio') }" title="Audio call"><i class="glyphicon glyphicon-earphone"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('video') }" title="Video call"><i class="glyphicon glyphicon-facetime-video"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sharescreen" title="Share your screen"><i class="glyphicon glyphicon-share"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: ping" title="Ping to contact"><i class="glyphicon glyphicon-bell"></i></button>
+            <button type="button" class="btn btn-danger btn-circle btn-lg" style="margin-left:8px" data-bind="click: remove" title="Delete contact"><i class="glyphicon glyphicon-remove"></i></button>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <div class="contact-details">
+        <div style="margin-bottom:25px">
+            <div style="border-bottom:1px dotted #ddd;padding-bottom:8px;">
+                <div style="float:left">
+                    <div style="margin-top:10px;font-size:12px">
+                        <span style="color:#777">Account:</span> <br />
+                        <span style="font-weight:bold" data-bind="text:name"></span>
+                    </div>
+                </div>
+                <div style="float:left;margin-left:30px;padding-left:30px;border-left:1px solid #ddd">
+                    <div style="margin-top:10px;font-size:12px">
+                        <span style="color:#777">Connection:</span> <br />
+                        <span style="word-wrap: break-word;font-weight:bold" data-bind="text: protocol"></span>://<span style="word-wrap: break-word;font-weight:bold" data-bind="text: address"></span>:<span style="word-wrap: break-word;font-weight:bold" data-bind="text: port"></span>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>            
+            <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
+                <span style="color:#777">Public key:</span> <br />
+                <span style="word-wrap: break-word;font-weight:bold" data-bind="text: public_key"></span>
+            </div>
+        </div>
+    </div>
+    <!--<div data-bind="component: { name: component, params: component_params }"></div>-->
+</div>
+
+<script type="text/html" id="callprogress-template">
+    <div class="gradient-titanium" style="height:100%;width:100%;display:flex;justify-content: center;align-items: center;">
+        <div style="width:540px;height:240px;margin-top:-130px;color:#fff;">
+            <div style="text-align:center;margin:0">
+                <div id="wait-msg-tag" style="font-size:28px"></div>
+            </div>
+            <div style="display:flex;align-items: center;justify-content:center;">
+                <div style="font-size:160px;display:inline-block;color:#84c3ee"><i class="fa fa-user"></i></div>
+                <div style="display: flex;justify-content: space-around;align-items: center;min-width:100px;margin:0 30px">
+                    <div class="loading-pulse" style="width: 10px;height:36px;"></div>
+                </div>
+                <div style="font-size:160px;display:inline-block;color:#84c3ee"><i class="fa fa-user"></i></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="send-file-template">
+    <div id="filesend-dlg-container" style="width:450px;padding-bottom:10px;text-align:left">
+        <div>
+            <input type="file" id="fileInput" name="files" />
+        </div>
+    </div>
+</script>

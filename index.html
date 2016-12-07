@@ -1,554 +1,279 @@
-<!-- 
+ï»¿<!DOCTYPE html>
 
-This file is part of Streembit application. 
-Streembit is an open source project to create a real time communication system for humans and machines. 
-
-Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
-as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
-
-Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
-of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with Streembit software.  
-If not, see http://www.gnu.org/licenses/.
- 
--------------------------------------------------------------------------------------------------------------------------
-Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streembit software development team
--------------------------------------------------------------------------------------------------------------------------
-       
--->
-
-<!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8" />
     <title>Streembit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script type="text/javascript">
-            try {
-                if (global){
-                    global.appgui = require('nw.gui');
-                }
-            }
-            catch (e) { }
+        window.nwrequire = window.require || (function () {});
+        window.require = undefined;
 
-            if (global && global.appgui) {
-                global.cryptolib = "crypto";    //  nodejs app
-            }
-            else {
-                var global = global || {};
-                global.cryptolib = "crypto-browserify";
-            }
-    </script>
+        var streembit = streembit || {};
 
-    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/bootstrap/css/bootstrap-dialog.css" rel="stylesheet">
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="assets/css/webstyle.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+        streembit.globals = streembit.globals || {};
+        streembit.globals.appname = "Streembit";
+        streembit.globals.version = "1.1.0";
+        streembit.globals.wsprotocol = "http";
+        // set this flag for Web mode (i.e. serving the application from a web server) to false
+        // nwmode = true indicates the application is using node-webkit
+        streembit.globals.nwmode = true;
 
-    <script type="text/javascript" src="assets/js/jquery/jquery-2.1.4.js"></script>
-    <script type="text/javascript" src="assets/js/jquery/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootbox.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-notify.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-dialog.js"></script>
-    <script type="text/javascript" src="assets/js/knockout/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="assets/js/knockout/knockout.mapping-latest.js"></script>
+        streembit.api = streembit.api || {};       
 
-    <script type="text/javascript" src="assets/js/streembit/filesaver.js"></script>
+        streembit.notify = streembit.notify || {};
 
-    <script type="text/javascript" src="assets/js/streembit/node_app_bundle.js"></script>
+        streembit.ui = streembit.ui || {};
+        streembit.ui.load_container = "load-container";
+        streembit.ui.load_info = "load-info";
+        streembit.ui.main = "streembit-container";
+        streembit.ui.navbar_section = "navbar-section";
+        streembit.ui.taskbarmsg = "footer-text-container";
 
-    <script type="text/javascript" src="assets/js/streembit/appglobals.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/errorhandler.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/bootclient.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/user.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/contacts.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/peercomm.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/main.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/indexdb.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/database.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/peertransport.js"></script>
-    <script type="text/javascript" src="assets/js/socketio/socket.io.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/wstransport.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/device.js"></script>
-
-    <script type="text/javascript">
-            global.$ = $;
-
-            function appboot_msg_handler(msg, close) {
-                $("#appboot-msg").text(msg);
-                if (close) {
-                    streembit.UI.hide_netbootscreen();
-                }
-            }
+        //  the mainapplication component loaded from the lib/views directory
+        //  change this to load another main app
+        //  the component must be registered with the lib/viewreg 
+        streembit.view = {};
+        streembit.view.mainapp = "streembit-app";
 
     </script>
+
+    <style>
+        body{           
+        }
+
+        body[data-appinit=true]{
+            background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+            background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;            
+        }
+
+        body[data-appinit=false]{
+            background:linear-gradient(to bottom, #e9f1fa 0%, #ffffff 100%);    
+        }
+
+        body[data-appinit=false] #load-container{
+            display:none;
+        }
+        body[data-appinit=true] #load-container{
+            display:normal;
+        }
+
+        body[data-appinit=true] #streembit-container{
+            display:none;
+        }
+        body[data-appinit=false] #streembit-container{
+            display:normal;
+        }
+
+        body, html {
+            margin:0;
+            height: 100%;
+        }
+
+        /* loader */
+        #load-container{
+            width:100%;
+            height:100%;
+        }
+
+        #load-screen{
+            width:100%;
+            height:100%;
+            text-align: center;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            color: rgba(255,255, 255, 0.8);
+            font-size:5em;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .load-box {
+            display: inline-block;
+            border: none;
+            position: relative;
+            vertical-align: top;
+            -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
+            transition: .3s color, .3s border, .3s transform, .3s opacity;
+        }
+
+        .load-text{
+            font-size:20px;
+            font-weight:bold;
+            text-align:center;
+            margin-top:20px;
+        }
+
+        @-webkit-keyframes pulse {	
+          50% { 
+            background: rgb(255,255,255);
+          } 
+        }
+
+        @keyframes pulse {	
+          50% { 
+            background: rgb(255,255,255);
+          } 
+        }
+
+
+        @-webkit-keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .loading {
+            border-radius: 50%;
+            width: 1em;
+            height: 1em;
+            border: 1.4rem solid rgba(255,255,255, 0.2);
+            border-top-color: #fff;
+            animation: spin 1s infinite linear;
+        }
+        /* loader */
+
+    </style>
 
 </head>
-<body>
+<body data-appinit="true">
 
-    <div id="app-init-screen"></div>
-   
-    <div class="streembit-screen" style="display:none;border-top:1px solid #eee">
-        <div id="contacts-container" class="contacts-tab">
-            <div class="sidebar-search" data-bind="visible: issearch"> 
-                <div class="input-group" style="margin:0;padding:0">
-                    <input type="text" class="form-control" placeholder="Find contact on Streembit ..." data-bind="value: contact_lookup">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
-                    </span>
-                </div>                
-                <div data-bind="visible: show_addcontact_panel" style="margin-top:8px;text-align:center;padding:8px;border-radius:4px;background-color:#f9f9f9;border:1px solid #ddd">
-                    <div style="margin-bottom:8px;font-weight:bold;font-size:11px">
-                        Contact found. Do you want to send contact request to <span data-bind="text: addcontact_name"></span>?
-                    </div>
-                    <button class="btn btn-default" type="button" data-bind="click: onSendAddContactRequest" style="font-size:11px">Send contact request</button>
-                </div>
-            </div><!-- /input-group -->
-            <div style="border-bottom:1px solid #7dace1;border-top:1px solid #eee">
-                <div>
-                    <div class="contacts-title" data-bind="click: onShowContacts, css: {activetab: active_tab() == 'contacts'}">
-                        CONTACTS
-                    </div>
-                    <div class="contacts-title" data-bind="click: onShowRecents, css: {activetab: active_tab() == 'recent'}">
-                        RECENT
-                    </div>
-                    <div style="float:left;margin:4px 0 0 10px" data-bind="visible: is_recent_msg">
-                        <span class="glyphicon glyphicon-envelope" style="color:#d3b301" data-bind="click: onShowRecents"></span>
-                    </div>
-                    <div style="float:right;">
-                        <div style="padding:6px 6px 2px 6px">
-                            <a data-bind="click:dosearch" style="margin:0;padding:0"><i class="glyphicon glyphicon-search"></i></a>
-                        </div>
-                    </div>
-                    <div style="clear:both">
-                    </div>
-                </div>
+    <div id="load-container">
+        <div id="load-screen">
+            <div class="load-box">
+                <div class="loading"></div>
             </div>
-            <div>
-                <div data-bind="visible: active_tab() == 'contacts'" >
-                    <div data-bind="template: { name: 'contacts-template', foreach: contacts }">                        
-                    </div>
-                </div>
-                <div data-bind="visible: active_tab() == 'recent'">
-                    <div data-bind="template: { name: 'recent-messages-template', foreach: recent_messages }">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="main-container">
-            <div style="position:relative;height:100%;">
-                <div id="app-progress">
-                    <div class="app-error-indicator-panel">
-                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>&nbsp;&nbsp;<span>Error: </span>&nbsp;&nbsp;<a href="#" id="lnkShowLogs" style="text-decoration:underline">View errors</a>
-                    </div>
-                    <div class="app-progress-panel">
-                        <span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <span class="app-progress-msg"></span>
-                    </div>
-                </div>
-                <div data-bind="template: {name: template_name, data: template_datactx}"></div>
-                <div id="view-container"></div>
-            </div>
-        </div>
-        <div style="clear:both"></div>
-        <div class="footer-container">
-            <div class="foot-textpanel">
-                <span id="txt-taskbar-info"></span>
-            </div>
-        </div>
-        <div id="footer-info">
-            <div class="footer-info-panel" style="display:none" data-bind="visible: isshowpanel">
-                <div data-bind="foreach: tasks" class="taskprogress-list">
-                    <div data-bind="template: {name: template}" class="task-progress-item">                        
-                    </div>
-                </div>
+            <div id="load-info" class="load-text">
+                Loading Streembit ...
             </div>
         </div>
     </div>
 
-    <audio id="ringsound1" src="assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+    <div id="streembit-container">
+        <div id="navbar-section">
+            <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"  data-bind="click: nav.bind($data, '')">Streembit</a>
+                    </div>
 
-    <script type="text/javascript" src="assets/js/streembit/viewmodels.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/adapter.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/webrtcconn.js"></script>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'initui')">Start Streembit</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'connectpublic')">Connect to public network</a></li>
+                                    <li><a href="#">Connect to private hub</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'createaccount')">New account</a></li>
+                                    <li><a href="#">Initialize existing account</a></li>
+                                    <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                    <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                    <li><a href="#">Clear Database</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Ping to network</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contacts <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: offline_contact_request">Create offline contact offer</a></li>
+                                    <li><a href="#" data-bind="click: accept_contact_request">Add contact</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click:backupContacts">Backup contacts to file</a></li>
+                                    <li><a href="#" data-bind="click:restoreContacts">Restore contacts from file</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Machines <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Connect to Internet of Things device</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <!-- ko if: streembit.globals.nwmode == true -->
+                                    <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <!-- /ko -->
+                                    <li><a href="#" data-bind="click:about">About</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DAPP <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Wallet</a></li>
+                                    <li><a href="#">Blockchain</a></li>
+                                    <li><a href="#">Games</a></li>
+                                    <li><a href="#">Apps</a></li>                                  
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </div>
+        </div>
+        <div id="main">
+            <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+            </div>
+            <div class="footer">
+                <div id="footer-text-container"></div>
+            </div>
+            <div id="footer-info" data-bind="component: 'tasks'">                
+            </div>
+        </div>
+    </div>
 
-    <script type="text/javascript">
+    <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
 
-        $(document).ready(function () {
-            streembit.notify.showprogress("Starting Streembit... ");
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+        System.import('lib/main.js');
+    </script>
 
-            // initialize the menu
-            streembit.Main.initMenu();
-
-            // show the start screen
-            streembit.UI.show_startscreen();
-
-            // init the main view model
-            var mainview_div = document.getElementById('main-container');
-            var viewcontainer_div = document.getElementById('view-container');
-            var mainvmodel = new streembit.vms.MainViewModel(viewcontainer_div);
-            ko.applyBindings(mainvmodel, mainview_div);
-            streembit.Session.mainvm = mainvmodel;
-
-            var contacts_div = document.getElementById('contacts-container');
-            var contactsmodel = new streembit.vms.ContactsListViewModel()
-            ko.applyBindings(contactsmodel, contacts_div);
-            streembit.Session.contactsvm = contactsmodel;
-
-            var footer_info_div = document.getElementById('footer-info');
-            var tasksvm = new streembit.vms.TasksViewModel()
-            ko.applyBindings(tasksvm, footer_info_div);
-            streembit.Session.tasksvm = tasksvm;
-
-            streembit.Main.start(function () {
-                streembit.notify.hideprogress();
-            });
-
-            //
-            $("#lnkShowLogs").on("click", function () {
-                streembit.UI.showLogs();
-            });
-
-            if (!global.appgui) {
-                $('#web-streembit-navbar').show();
-
-                $('#cmd_backup').on('click', function () {
-                    streembit.User.backup();
-                });
-            }
-
-        });
-
+    <script type="text/html" id="empty-template">
+        <div class="emptydiv"></div>
     </script>
 
 </body>
 </html>
-
-
-<script type="text/html" id="empty-template">
-    <div style="padding:0;margin:0;display:none">
-    </div>
-</script>
-
-
-<script type="text/html" id="appstart">
-    <div class="app-select-screen">
-        <div class="flex-btncontainer">
-            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
-                <i class="fa fa-group" style="font-size:100px"></i>
-                <div class="flex-btnitem-text">Connect to Public Streembit</div>
-            </div>
-            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#5fb2c4">
-                <i class="fa fa-lock"></i>
-                <div class="flex-btnitem-text">Connect to Private Streembit</div>
-            </div>
-            <div id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
-                <i class="fa fa-user-plus"></i>
-                <div class="flex-btnitem-text">New Account</div>
-            </div>
-            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#E26A6A">
-                <i class="fa fa-folder-open"></i>
-                <div class="flex-btnitem-text">Initialize Existing Account</div>
-            </div>
-            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
-                <i class="fa fa-sign-in"></i>
-                <div class="flex-btnitem-text">Restore Account</div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-           
-            $("#btnAppSelectPublic").on("click", function () {
-                logger.debug("Connecting to public Streembit network");
-                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPUBLICNET);
-            });
-
-            $("#btnAppSelectPrivate").on("click", function () {
-                logger.debug("Connecting a private Streembit hub");
-                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPRIVATENET);
-            });
-
-            $("#btnCreateUser").on("click", function () {
-                logger.debug("Create new account");
-                streembit.Main.init(streembit.DEFS.CMD_APP_CREATEACCOUNT);
-            });
-
-            $("#btnInitializeUser").on("click", function () {
-                logger.debug("Initialize existing account");
-                streembit.Main.init(streembit.DEFS.CMD_APP_INITACCOUNT);
-            });
-
-            $("#btnRestoreUser").on("click", function () {
-                logger.debug("Restore account");
-                streembit.Main.init(streembit.DEFS.CMD_APP_RESTOREACCOUNT);
-            });
-
-        });
-
-    </script>
-
-</script>
-
-<script type="text/html" id="netboot">
-    <div class="appboot-screen">
-        <div class="appboot-screen-content">
-            <div style="color:#fff; margin-bottom:30px;font-size:18px;">
-                <span id="appboot-msg"></span>
-            </div>
-            <div class="appboot-screen-spinner">
-                <div>
-                    <i class="fa fa-spinner fa-pulse fa-6x"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-
-<script type="text/html" id="contacts-template">
-    <div class="contact-item" data-bind="click: $parent.itemSelect">
-        <div style="float:left">
-            <span data-bind="css: usertypeicon" style="font-size:11px;"></span>
-        </div>
-        <div style="float:left;margin-left:8px">
-            <span data-bind="text: name"></span>
-        </div>
-        <div style="float:right;font-size:16px">
-            <div style="float:left;margin-right:14px" class="contact-msg-indicator">
-                <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e0be00"></span>
-            </div>
-            <div style="float:right;font-size:11px;" data-bind="visible: isonline">
-                <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;"></span>
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div style="clear:both"></div>
-    </div>
-</script>
-
-<script type="text/html" id="recent-messages-template">
-    <div data-bind="template: {name: template_name}">
-    </div>
-</script>
-
-<script type="text/html" id="addcontact-recent-messages">
-    <div style="text-align:center;margin:5px 5px 10px 5px;background-color:#f5f5f5;padding:5px;border:2px solid #ddd;border-radius:5px;font-size:12px;color:#666">
-        <div>Accept add contact request?</div>
-        <div>
-            Contact: <span data-bind="text: contact.name" style="color:#000;font-weight:bold"></span>
-        </div>
-        <div style="margin:8px 30px;border-top:1px solid #ddd;padding-top:8px">
-            <button style="font-size:12px" data-bind="click: $parent.acceptAddContact">Accept</button> <button style="font-size:12px;margin-left:15px" data-bind="click: $parent.declineAddContact">Decline</button>
-        </div>
-    </div>    
-</script>
-
-<script type="text/html" id="contact-details-template">
-    <div style="padding-left:20px">
-        <div>
-            <div class="contact-details-buttons">
-                <button type="button" class="btn btn-info btn-circle btn-lg" data-bind="click: chat" title="Chat"><i class="glyphicon glyphicon-comment"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sendfile" title="Send file"><i class="glyphicon glyphicon-copy"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('audio') }" title="Audio call"><i class="glyphicon glyphicon-earphone"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('video') }" title="Video call"><i class="glyphicon glyphicon-facetime-video"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sharescreen" title="Share your screen"><i class="glyphicon glyphicon-share"></i></button>
-                <button type="button" class="btn btn-danger btn-circle btn-lg" style="margin-left:8px" data-bind="click: remove" title="Delete contact"><i class="glyphicon glyphicon-remove"></i></button>
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="contact-details">
-            <div style="margin-bottom:25px">
-                <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
-                    <span style="color:#777">Account:</span> <br />
-                    <span style="font-weight:bold" data-bind="text:name"></span>
-                </div>
-                <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
-                    <span style="color:#777">Public key:</span> <br />
-                    <span style="word-wrap: break-word;font-weight:bold" data-bind="text: public_key"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="app-logs-template">
-    <div>
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#error-tab">Error</a></li>
-            <li><a data-toggle="tab" href="#info-tab">Info</a></li>
-            <li><a data-toggle="tab" href="#debug-tab">Debug</a></li>
-        </ul>
-
-        <div class="tab-content logs-view-container">
-            <div id="error-tab" class="tab-pane fade in active">
-                <div data-bind="foreach: errors">
-                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
-                </div>
-            </div>
-            <div id="info-tab" class="tab-pane fade">
-                <div data-bind="foreach: infos">
-                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
-                </div>
-            </div>
-            <div id="debug-tab" class="tab-pane fade">
-                <div data-bind="foreach: debugs">
-                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="send-file-template">
-    <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
-        <div style="width:450px" data-bind="visible: isinprogress() == false">
-            <input type="file" id="fileInput" name="files" data-bind="event: { change: function() { send_file($element.files[0]) } }" />
-        </div>
-        <div style="width:450px;margin-top:10px;display:none" data-bind="visible: isinprogress">
-            <div style="font-size:12px;color:#666">Send progress: </div>
-            <div>
-                <progress id="fileProgress" value="0" max="100" style="width:400px"></progress>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="contact-files-template">
-    <div id="contact-files-dlg-container" style="width:500px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left;max-height:400px">
-        <div>
-            <div><span class="fileobj-filename"></span></div>
-            <div><a class="fileobj-url" data-bind="attr: { href: objecturl, download: name, textContent: textcontent }"></a></div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-progress-template">
-    <div class="pull-right" style="margin-right:5px">
-        <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-    </div>
-    <div class="task-progress-prog">
-        <div class="file-progress-msg">
-            <div data-bind="if: mode == 'send'"><span>Sending file </span><span data-bind="text:file_name"></span> to <span data-bind="text: contact_name"></span></div>
-            <div data-bind="if: mode == 'receive'"><span>Receiving file </span><span data-bind="text:file_name"></span> from <span data-bind="text: contact_name"></span></div>
-        </div>
-        <div class="file-progress-msg">File hash: <span data-bind="text: hash"></span></div>
-        <div class="file-progress-ctrl">
-            <progress value="0" max="100" style="width:300px" data-bind="progressctrl: progress_val, max: file_size"></progress>
-        </div>
-        <div class="task-progress-cancel">
-            <a data-bind="click: $parent.cancel">Cancel File Transfer</a>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-complete-template">
-    <div style="background-color:#555;min-height:55px">
-        <div class="pull-right" style="margin-right:5px">
-            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-        </div>
-        <div style="padding:10px 30px;margin:0 auto;text-align:center">
-            <div class="file-progress-msg">File <span data-bind="text: file_name"></span> has been saved to <span data-bind="text: savedir"></span></div>
-            <div class="file-progress-msg" data-bind="visible: streembit.Main.is_gui">File hash <span data-bind="text: hash"></span> is verified. File hash is valid.</div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-send-complete-template">
-    <div style="background-color:#555;min-height:55px">
-        <div class="pull-right" style="margin-right:5px">
-            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-        </div>
-        <div style="padding:10px 30px;margin:0 auto;text-align:center">
-            <div class="file-progress-msg">File <span data-bind="text: file_name"></span> was sent to peer <span data-bind="text: contact_name"></span></div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-error-template">
-    <div style="background-color:#bb2020;min-height:50px">
-        <div class="pull-right" style="margin-right:5px">
-            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-        </div>
-        <div style="padding:10px 30px;margin:0 auto;text-align:center">
-            <div class="file-progress-msg" style="margin:20px 0;color:#fff">Error in trasfering the file:  <span data-bind="text: error_msg"></span></div>
-        </div>
-    </div>
-</script>
-
-
-
-
-<script type="text/html" id="account-text-message">
-    <div class="account-message">
-        <div class="account-message-from">
-            <div class="pull-left">From: <span data-bind="text: sender"></span></div>
-            <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="account-message-time">
-            Time: <span data-bind="text: time"></span>
-        </div>
-        <div class="account-message-text">
-            <span data-bind="text: data.message"></span>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="account-addcontact-message">
-    <div class="account-message">
-        <div class="account-message-from">
-            <div class="pull-left">Add contact request from  <span data-bind="text: sender"></span></div>
-            <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="account-message-time">
-            Request sent: <span data-bind="text: time"></span>
-        </div>
-        <div class="account-message-controls">
-            <button data-bind="click:$parent.accept_addcontact">Accept Contact</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:$parent.decline_addcontact">Decline Contact</button>
-        </div>
-    </div>
-</script>
-
-
-<script type="text/html" id="bootseed-item-template">
-    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
-        <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
-            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div> 
-            <div class="pull-left" data-bind="text: $data.address"></div>:<span data-bind="text: $data.port"></span>
-            <div style="clear:both"></div>  
-        </div>
-        <div class="pull-right">
-            <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
-        </div>
-        <div style="clear:both"></div>  
-        <div style="font-size:11px;font-weight:bold;margin-top:5px;">
-            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Public key:</div> 
-            <div class="pull-left" data-bind="text: $data.public_key"></div>
-            <div style="clear:both"></div>  
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="iceresolver-item-template">
-    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:400px">
-        <div class="pull-left" style="padding-top:2px">
-            <span data-bind="text: $data.url" style="font-size:11px;font-weight:bold;"></span>
-        </div>
-        <div class="pull-right">
-            <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_iceresolver" title="Delete ICE resolver"></i>
-        </div>
-        <div style="clear:both"></div>
-    </div>
-</script>
-
-

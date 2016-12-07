@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="chat_items">
+            <div class="video_chat_items">
                 <div id="chat-container" style="flex:1">
                     <div class="fill-area" style="padding:10px;flex:1">
                         <div class="chat-fill-area chatitemswnd">
@@ -69,11 +69,11 @@
                                         </td>
                                         <td>
                                             <div style="padding-top:6px">
-                                                <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streembit.User.name }"></span>:
+                                                <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != $parent.contact_name() }"></span>:
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streembit.User.name }">
+                                            <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == $parent.contact_name() }">
                                                 <span data-bind="text: text"></span>
                                             </div>
                                         </td>

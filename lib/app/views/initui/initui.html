@@ -13,11 +13,7 @@
                 <i class="fa fa-user-plus"></i>
                 <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-newaccount'"></div>
             </a>
-            <a id="btnInitializeUser" class="flex-btnitem" style="background-color:#E26A6A">
-                <i class="fa fa-folder-open"></i>
-                <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-initexisting'"></div>
-            </a>
-            <a id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
+            <a href="#" data-bind="click: $root.restoreAccount"  id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
                 <i class="fa fa-sign-in"></i>
                 <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-restore'"></div>
             </a>

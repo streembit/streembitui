@@ -1,9 +1,0 @@
-﻿{
-    "appname-title": "German Streembit",
-    "appname-sub-title": "German Decentralized, peer-to-peer, secure communication system for humans and machines",
-    "appload-streembit": "German Load Streembit",
-    "appload-locals": "German Load localization resources",
-    "appload-database": "German Load database",
-    "appload-logger": "German Load application logger",
-    "appload-kademlia": "German Load Kademlia DHT"
-}

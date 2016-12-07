@@ -1,0 +1,49 @@
+<div style="margin:20px 30px;">
+
+    <div class="uiview-container-panel-header">
+        <h4>Add contact</h4>
+    </div>
+
+    <div style="min-width:500px;margin-top:20px">
+        <div>
+            Copy the request of your contact in the text box
+        </div>
+        <div style="margin-top:10px">
+            <textarea style="width:700px;height:200px;font-size:12px" data-bind="value: request"></textarea>
+        </div>
+    </div>    
+
+    <div style="display:none;" data-bind="visible:showcontent">
+        <table style="margin-top:30px;font-size: 12px;">
+            <tr>
+                <td>Account:</td>
+                <td class="account-info-item"><span data-bind="text: account"></span></td>
+            </tr>
+            <tr>
+                <td>Public key:</td>
+                <td class="account-info-item"><span data-bind="text: public_key" style="font-size: 11px;"></span></td>
+            </tr>
+            <tr>
+                <td>Transport:</td>
+                <td class="account-info-item"><span data-bind="text: transport" style="font-size: 11px;"></span></td>
+            </tr>
+            <tr>
+                <td>Port:</td>
+                <td class="account-info-item"><span data-bind="text: port"></span></td>
+            </tr>
+            <tr>
+                <td>IP address/host:</td>
+                <td class="account-info-item"><span data-bind="text: address"></span></td>
+            </tr>
+            <tr>
+                <td>User type:</td>
+                <td class="account-info-item"><span data-bind="text: usertype"></span></td>
+            </tr>
+        </table>
+
+        <div style="margin:20px 0 30px 0;">            
+            <button data-bind="click: addcontact">Add contact</button>
+        </div>
+    </div>
+
+</div>
