@@ -26,7 +26,7 @@ http://stackoverflow.com/questions/34774702/how-to-make-jspm-install-bower-depen
 #### Unregistered library management, shims
 
 We must create shims for JS libraries that aren't registered in the JSPM register.
-For example, below is the jquery Blocui plugin installation:
+For example, below is the jquery Blockui plugin installation:
 
 ```bash
 jspm install github:malsup/blockui -o "{ registry: 'jspm', main: 'jquery.blockUI', shim: { 'jquery.blockUI': { deps: [
