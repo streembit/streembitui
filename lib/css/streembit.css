@@ -1468,3 +1468,14 @@ div[data-notify='container'].alert-danger {
     background: -webkit-linear-gradient(to bottom, #2C3E50 , #74b7c2); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to bottom, #2C3E50 , #74b7c2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */        
 }
+
+table.logstable {
+    width:100%;
+    font-size:12px;
+}
+
+.logstable td{
+    padding: 3px 20px 5px 0;
+    border-bottom:1px solid #eee;
+}
+
