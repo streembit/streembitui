@@ -28,7 +28,6 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "browserify-aes": "npm:browserify-aes@1.0.6",
     "bs58check": "npm:bs58check@1.1.1",
-    "buffer": "github:jspm/nodelibs-buffer@0.1.0",
     "clarinet": "npm:clarinet@0.11.0",
     "collections": "npm:collections@5.0.5",
     "connections": "lib/app/connections",
