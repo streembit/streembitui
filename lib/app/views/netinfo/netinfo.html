@@ -54,8 +54,14 @@
         <table style="margin-bottom:30px;width:100%;font-size: 12px;">
             <tr>
                 <td>WebSocket Publish:</td>
-                <td class="account-info-item"><span data-bind="text: iswspublish"></span></td>
+                <td class="account-info-item"><span data-bind="text: iswspublish() ? 'YES' : 'NO'"></span></td>
             </tr>
+            <!-- ko if: iswspublish -->
+            <tr>
+                <td>WebSocket Hub:</td>
+                <td class="account-info-item"><span data-bind="text: wshub"></span></td>
+            </tr>
+            <!-- /ko -->
         </table>
         <!-- /ko -->
 
@@ -80,12 +86,6 @@
                     </tr>
                 </tbody>
             </table>
-            <!--<div class="accountinfo_seed_list" data-bind="foreach: seeds">
-                <div class="seed_list_item">
-                    <div>NodeID: <span data-bind="text: nodeID"></span></div>
-                    <div>IP address: <span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
-                </div>
-            </div>-->
         </div>
         <!-- /ko -->
         <!-- ko if: net_connected() == false -->
