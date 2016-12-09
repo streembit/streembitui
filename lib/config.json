@@ -7,7 +7,7 @@
         "wsfallback": false,
         "askwsfallback": false,
         "tcpport": 8905,
-        "wshost": "ws.streembit.org",
+        "wshost": "www.streembit.org",
         "wsport": 32318,
         "seedmode": 0,
         "bootseeds": [
