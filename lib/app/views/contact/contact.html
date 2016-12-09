@@ -23,7 +23,7 @@
                 <div style="float:left;margin-left:30px;padding-left:30px;border-left:1px solid #ddd">
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777">Connection:</span> <br />
-                        <span style="word-wrap: break-word;font-weight:bold" data-bind="text: protocol"></span>://<span style="word-wrap: break-word;font-weight:bold" data-bind="text: address"></span>:<span style="word-wrap: break-word;font-weight:bold" data-bind="text: port"></span>
+                        <span style="word-wrap: break-word;font-weight:bold" data-bind="text: connection_info, css: {error_color: connection_error() == true}"></span>
                     </div>
                 </div>
                 <div style="clear:both"></div>
