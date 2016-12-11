@@ -1,0 +1,29 @@
+﻿{
+    "appconfig": {
+        "loglevel": "debug",
+        "transport": "tcp",
+        "wspublish": false,
+        "askwspublish": false,
+        "wsfallback": false,
+        "askwsfallback": false,
+        "tcpport": 8905,
+        "wshost": "www.streembit.org",
+        "wsport": 32318,
+        "seedmode": 0,
+        "bootseeds": [
+            { "address": "seed.streembit.uk" },
+            { "address": "seed.streembit.eu" },
+            { "address": "seed.streembit.net" },
+            { "address": "seed.streembit.co" },
+            { "address": "seed.streembit.biz" },
+            { "address": "seed.streembit.org"}
+        ],
+        "ice_resolvers": [
+            { "url": "stun:stun.l.google.com:19302" },
+            { "url": "stun:stun1.l.google.com:19302" },
+            { "url": "stun:stun2.l.google.com:19302" }
+        ],
+        "is_private_network":  false,
+        "private_net_seed": { "account": "", "host": "", "port": 0 }
+    }
+}
