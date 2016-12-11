@@ -13,7 +13,10 @@
         "bootseeds": [
             { "address": "seed.streembit.uk" },
             { "address": "seed.streembit.eu" },
-            { "address": "seed.streembit.net"}
+            { "address": "seed.streembit.net" },
+            { "address": "seed.streembit.co" },
+            { "address": "seed.streembit.biz" },
+            { "address": "seed.streembit.org"}
         ],
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" },
