@@ -32,6 +32,12 @@ Install the Streembit Node.js dependencies:
 $ npm install
 ```
 
+Please refer to the [jspm.md](jspm.md) readme file which explains installing and configuring jspm.
+Once jspm is configured enter
+```bash
+$ jspm install
+```
+
 Run Streembit:  
 ```bash
 $ /path/to/nw . 
