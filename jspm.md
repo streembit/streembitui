@@ -11,7 +11,7 @@ npm install jspm --save-dev
 To load bower packages the bower endpoint must be installed.
 
 ```bash
-npm install -g jspm-bower-endpoint
+npm install jspm-bower-endpoint
 ```
 
 Reference:
