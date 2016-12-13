@@ -70,8 +70,14 @@ else
 echo "buildtools/linux64 was found"
 fi
 
+mkdir $BUILD_DIR
+mkdir $BUILD_DIR/lib
+
+echo "copy lib directory"
+cp -R ../lib/* $BUILD_DIR/lib 
+
 echo "copy nw files"
-cp -R $CURR_DIR/buildtools/linux64 $BUILD_DIR
+cp -R $CURR_DIR/buildtools/linux64/* $BUILD_DIR
 
 if ! [ -e "$EXE_PATH" ]; 
 then
@@ -90,8 +96,6 @@ cp -f ../config.js $BUILD_DIR/config.js
 echo "copy index.html"
 cp -f ../index.html $BUILD_DIR/index.html
 
-echo "copy lib directory"
-cp -R ../lib $BUILD_DIR/lib 
 
 echo "copy node_modules directory"
 cp -R ../node_modules $BUILD_DIR/node_modules 
@@ -121,14 +125,4 @@ $ZIP_EXE a -tzip "streembit_linux64.zip" $BUILD_DIR/locales $BUILD_DIR/lib $BUIL
 md5sum $BUILD_DIR/streembit_linux64.zip > $BUILD_DIR/streembit_linux64.md5
 
 echo "creating Streembit binaries completed"
-
-
-
-
-
-
-
-
-
-
 
