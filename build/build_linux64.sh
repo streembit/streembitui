@@ -99,6 +99,9 @@ cp -R ../jspm_packages $BUILD_DIR/jspm_packages
 echo "renaming nw to streembit"
 mv $EXE_PATH $APPEXE_PATH
 
+echo "add executable permission"
+chmod +x $APPEXE_PATH 
+
 if ! [ -e "$APPEXE_PATH" ]; 
 then
 echo "error: failed to create streembit executable"
