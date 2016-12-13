@@ -81,6 +81,9 @@ else
 echo "nw executable exists"
 fi
 
+echo "copy package.json"
+cp -f package.json $BUILD_DIR/package.json
+
 echo "copy config.js"
 cp -f ../config.js $BUILD_DIR/config.js 
 
