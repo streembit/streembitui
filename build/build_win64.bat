@@ -44,13 +44,13 @@ echo.
 
 IF EXIST %BUILD_DIR%\jspm_packages (
 rmdir /s /q %BUILD_DIR%\jspm_packages
-call :ColorText 19 "node_modules directory deleted"
+call :ColorText 19 "jspm_packages directory deleted"
 echo.
 )
 
 IF EXIST %BUILD_DIR%\lib (
 rmdir /s /q %BUILD_DIR%\lib
-call :ColorText 19 "node_modules directory deleted"
+call :ColorText 19 "lib directory deleted"
 echo.
 )
 
