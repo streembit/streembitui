@@ -1,2182 +1,278 @@
-<!-- 
+ï»¿<!DOCTYPE html>
 
-This file is part of Streembit application. 
-Streembit is an open source project to create a real time communication system for humans and machines. 
-
-Streembit is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
-as published by the Free Software Foundation, either version 3.0 of the License, or (at your option) any later version.
-
-Streembit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
-of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with Streembit software.  
-If not, see http://www.gnu.org/licenses/.
- 
--------------------------------------------------------------------------------------------------------------------------
-Author: Tibor Zsolt Pardi 
-Copyright (C) 2016 The Streembit software development team
--------------------------------------------------------------------------------------------------------------------------
-       
--->
-
-<!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8" />
     <title>Streembit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script type="text/javascript">
-            try {
-                if (global){
-                    global.appgui = require('nw.gui');
-                }
-            }
-            catch (e) { }
+        window.nwrequire = window.require || (function () {});
+        window.require = undefined;
 
-            if (global && global.appgui) {
-                global.cryptolib = "crypto";    //  nodejs app
-            }
-            else {
-                var global = global || {};
-                global.cryptolib = "crypto-browserify";
-            }
-    </script>
+        var streembit = streembit || {};
 
-    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/bootstrap/css/bootstrap-dialog.css" rel="stylesheet">
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="assets/css/webstyle.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+        streembit.globals = streembit.globals || {};
+        streembit.globals.appname = "Streembit";
+        streembit.globals.version = "1.1.0";
+        streembit.globals.wsprotocol = "http";
+        // set this flag for Web mode (i.e. serving the application from a web server) to false
+        // nwmode = true indicates the application is using node-webkit
+        streembit.globals.nwmode = true;
 
-    <script type="text/javascript" src="assets/js/jquery/jquery-2.1.4.js"></script>
-    <script type="text/javascript" src="assets/js/jquery/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootbox.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-notify.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap-dialog.js"></script>
-    <script type="text/javascript" src="assets/js/knockout/knockout-3.4.0.js"></script>
-    <script type="text/javascript" src="assets/js/knockout/knockout.mapping-latest.js"></script>
+        streembit.api = streembit.api || {};       
 
-    <script type="text/javascript" src="assets/js/streembit/filesaver.js"></script>
+        streembit.notify = streembit.notify || {};
 
-    <script type="text/javascript" src="assets/js/streembit/node_app_bundle.js"></script>
+        streembit.ui = streembit.ui || {};
+        streembit.ui.load_container = "load-container";
+        streembit.ui.load_info = "load-info";
+        streembit.ui.main = "streembit-container";
+        streembit.ui.navbar_section = "navbar-section";
+        streembit.ui.taskbarmsg = "footer-text-container";
 
-    <script type="text/javascript" src="assets/js/streembit/appglobals.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/errorhandler.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/bootclient.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/user.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/contacts.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/peercomm.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/main.js"></script>
-
-    <script type="text/javascript" src="assets/js/streembit/indexdb.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/peertransport.js"></script>
-    <script type="text/javascript" src="assets/js/socketio/socket.io.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/wstransport.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/device.js"></script>
-
-    <script type="text/javascript">
-            global.$ = $;
-
-            function appboot_msg_handler(msg, close) {
-                $("#appboot-msg").text(msg);
-                if (close) {
-                    streembit.UI.hide_netbootscreen();
-                }
-            }
+        //  the mainapplication component loaded from the lib/views directory
+        //  change this to load another main app
+        //  the component must be registered with the lib/viewreg 
+        streembit.view = {};
+        streembit.view.mainapp = "streembit-app";
 
     </script>
+
+    <style>
+        body{           
+        }
+
+        body[data-appinit=true]{
+            background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
+            background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;            
+        }
+
+        body[data-appinit=false]{
+            background:linear-gradient(to bottom, #e9f1fa 0%, #ffffff 100%);    
+        }
+
+        body[data-appinit=false] #load-container{
+            display:none;
+        }
+        body[data-appinit=true] #load-container{
+            display:normal;
+        }
+
+        body[data-appinit=true] #streembit-container{
+            display:none;
+        }
+        body[data-appinit=false] #streembit-container{
+            display:normal;
+        }
+
+        body, html {
+            margin:0;
+            height: 100%;
+        }
+
+        /* loader */
+        #load-container{
+            width:100%;
+            height:100%;
+        }
+
+        #load-screen{
+            width:100%;
+            height:100%;
+            text-align: center;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            color: rgba(255,255, 255, 0.8);
+            font-size:5em;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .load-box {
+            display: inline-block;
+            border: none;
+            position: relative;
+            vertical-align: top;
+            -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
+            transition: .3s color, .3s border, .3s transform, .3s opacity;
+        }
+
+        .load-text{
+            font-size:20px;
+            font-weight:bold;
+            text-align:center;
+            margin-top:20px;
+        }
+
+        @-webkit-keyframes pulse {	
+          50% { 
+            background: rgb(255,255,255);
+          } 
+        }
+
+        @keyframes pulse {	
+          50% { 
+            background: rgb(255,255,255);
+          } 
+        }
+
+
+        @-webkit-keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .loading {
+            border-radius: 50%;
+            width: 1em;
+            height: 1em;
+            border: 1.4rem solid rgba(255,255,255, 0.2);
+            border-top-color: #fff;
+            animation: spin 1s infinite linear;
+        }
+        /* loader */
+
+    </style>
 
 </head>
-<body>
+<body data-appinit="true">
 
-    <div id="app-init-screen"></div>
-   
-    <div class="streembit-screen" style="display:none;border-top:1px solid #eee">
-        <div id="contacts-container" class="contacts-tab">
-            <div class="sidebar-search" data-bind="visible: issearch"> 
-                <div class="input-group" style="margin:0;padding:0">
-                    <input type="text" class="form-control" placeholder="Find contact on Streembit ..." data-bind="value: contact_lookup">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
-                    </span>
-                </div>                
-                <div data-bind="visible: show_addcontact_panel" style="margin-top:8px;text-align:center;padding:8px;border-radius:4px;background-color:#f9f9f9;border:1px solid #ddd">
-                    <div style="margin-bottom:8px;font-weight:bold;font-size:11px">
-                        Contact found. Do you want to send contact request to <span data-bind="text: addcontact_name"></span>?
-                    </div>
-                    <button class="btn btn-default" type="button" data-bind="click: onSendAddContactRequest" style="font-size:11px">Send contact request</button>
-                </div>
-            </div><!-- /input-group -->
-            <div style="border-bottom:1px solid #7dace1;border-top:1px solid #eee">
-                <div>
-                    <div class="contacts-title" data-bind="click: onShowContacts, css: {activetab: active_tab() == 'contacts'}">
-                        CONTACTS
-                    </div>
-                    <div class="contacts-title" data-bind="click: onShowRecents, css: {activetab: active_tab() == 'recent'}">
-                        RECENT
-                    </div>
-                    <div style="float:left;margin:4px 0 0 10px" data-bind="visible: is_recent_msg">
-                        <span class="glyphicon glyphicon-envelope" style="color:#d3b301" data-bind="click: onShowRecents"></span>
-                    </div>
-                    <div style="float:right;">
-                        <div style="padding:6px 6px 2px 6px">
-                            <a data-bind="click:dosearch" style="margin:0;padding:0"><i class="glyphicon glyphicon-search"></i></a>
-                        </div>
-                    </div>
-                    <div style="clear:both">
-                    </div>
-                </div>
+    <div id="load-container">
+        <div id="load-screen">
+            <div class="load-box">
+                <div class="loading"></div>
             </div>
-            <div>
-                <div data-bind="visible: active_tab() == 'contacts'" >
-                    <div data-bind="template: { name: 'contacts-template', foreach: contacts }">                        
-                    </div>
-                </div>
-                <div data-bind="visible: active_tab() == 'recent'">
-                    <div data-bind="template: { name: 'recent-messages-template', foreach: recent_messages }">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="main-container">
-            <div style="position:relative;height:100%;">
-                <div id="app-progress">
-                    <div class="app-error-indicator-panel">
-                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>&nbsp;&nbsp;<span>Error: </span>&nbsp;&nbsp;<a href="#" id="lnkShowLogs" style="text-decoration:underline">View errors</a>
-                    </div>
-                    <div class="app-progress-panel">
-                        <span class="glyphicon glyphicon-refresh glyphicon-spin"></span> <span class="app-progress-msg"></span>
-                    </div>
-                </div>
-                <div data-bind="template: {name: template_name, data: template_datactx}"></div>
-                <div id="view-container"></div>
-            </div>
-        </div>
-        <div style="clear:both"></div>
-        <div class="footer-container">
-            <div class="foot-textpanel">
-                <span id="txt-taskbar-info"></span>
-            </div>
-        </div>
-        <div id="footer-info">
-            <div class="footer-info-panel" style="display:none" data-bind="visible: isshowpanel">
-                <div data-bind="foreach: tasks" class="taskprogress-list">
-                    <div data-bind="template: {name: template}" class="task-progress-item">                        
-                    </div>
-                </div>
+            <div id="load-info" class="load-text">
+                Loading Streembit ...
             </div>
         </div>
     </div>
 
-    <audio id="ringsound1" src="assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+    <div id="streembit-container">
+        <div id="navbar-section">
+            <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"  data-bind="click: nav.bind($data, '')">Streembit</a>
+                    </div>
 
-    <script type="text/javascript" src="assets/js/streembit/viewmodels.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/adapter.js"></script>
-    <script type="text/javascript" src="assets/js/streembit/webrtcconn.js"></script>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'initui')">Start Streembit</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'connectpublic')">Connect to public network</a></li>
+                                    <li><a href="#">Connect to private hub</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'createaccount')">New account</a></li>
+                                    <li><a href="#">Initialize existing account</a></li>
+                                    <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                    <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contacts <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: offline_contact_request">Create offline contact offer</a></li>
+                                    <li><a href="#" data-bind="click: accept_contact_request">Add contact</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click:backupContacts">Backup contacts to file</a></li>
+                                    <li><a href="#" data-bind="click:restoreContacts">Restore contacts from file</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Machines <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Connect to Internet of Things device</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <!-- ko if: streembit.globals.nwmode == true -->
+                                    <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <!-- /ko -->
+                                    <li><a href="#" data-bind="click:about">About</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DAPP <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Wallet</a></li>
+                                    <li><a href="#">Blockchain</a></li>
+                                    <li><a href="#">Games</a></li>
+                                    <li><a href="#">Apps</a></li>                                  
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </div>
+        </div>
+        <div id="main">
+            <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+            </div>
+            <div class="footer">
+                <div id="footer-text-container"></div>
+            </div>
+            <div id="footer-info" data-bind="component: 'tasks'">                
+            </div>
+        </div>
+    </div>
 
-    <script type="text/javascript">
+    <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
 
-        $(document).ready(function () {
-            streembit.notify.showprogress("Starting Streembit... ");
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+        System.import('lib/main.js');
+    </script>
 
-            // initialize the menu
-            streembit.Main.initMenu();
-
-            // show the start screen
-            streembit.UI.show_startscreen();
-
-            // init the main view model
-            var mainview_div = document.getElementById('main-container');
-            var viewcontainer_div = document.getElementById('view-container');
-            var mainvmodel = new streembit.vms.MainViewModel(viewcontainer_div);
-            ko.applyBindings(mainvmodel, mainview_div);
-            streembit.Session.mainvm = mainvmodel;
-
-            var contacts_div = document.getElementById('contacts-container');
-            var contactsmodel = new streembit.vms.ContactsListViewModel()
-            ko.applyBindings(contactsmodel, contacts_div);
-            streembit.Session.contactsvm = contactsmodel;
-
-            var footer_info_div = document.getElementById('footer-info');
-            var tasksvm = new streembit.vms.TasksViewModel()
-            ko.applyBindings(tasksvm, footer_info_div);
-            streembit.Session.tasksvm = tasksvm;
-
-            streembit.Main.start(function () {
-                streembit.notify.hideprogress();
-            });
-
-            //
-            $("#lnkShowLogs").on("click", function () {
-                streembit.UI.showLogs();
-            });
-
-            if (!global.appgui) {
-                $('#web-streembit-navbar').show();
-
-                $('#cmd_backup').on('click', function () {
-                    streembit.User.backup();
-                });
-            }
-
-        });
-
+    <script type="text/html" id="empty-template">
+        <div class="emptydiv"></div>
     </script>
 
 </body>
 </html>
-
-
-<script type="text/html" id="empty-template">
-    <div style="padding:0;margin:0;display:none">
-    </div>
-</script>
-
-
-<script type="text/html" id="appstart">
-    <div class="app-select-screen">
-        <div class="flex-btncontainer">
-            <div id="btnAppSelectPublic" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
-                <i class="fa fa-group" style="font-size:100px"></i>
-                <div class="flex-btnitem-text">Connect to Public Streembit</div>
-            </div>
-            <div id="btnAppSelectPrivate" class="flex-btnitem" style="background-color:#5fb2c4">
-                <i class="fa fa-lock"></i>
-                <div class="flex-btnitem-text">Connect to Private Streembit</div>
-            </div>
-            <div id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
-                <i class="fa fa-user-plus"></i>
-                <div class="flex-btnitem-text">New Account</div>
-            </div>
-            <div id="btnInitializeUser" class="flex-btnitem" style="background-color:#E26A6A">
-                <i class="fa fa-folder-open"></i>
-                <div class="flex-btnitem-text">Initialize Existing Account</div>
-            </div>
-            <div id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
-                <i class="fa fa-sign-in"></i>
-                <div class="flex-btnitem-text">Restore Account</div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-           
-            $("#btnAppSelectPublic").on("click", function () {
-                logger.debug("Connecting to public Streembit network");
-                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPUBLICNET);
-            });
-
-            $("#btnAppSelectPrivate").on("click", function () {
-                logger.debug("Connecting a private Streembit hub");
-                streembit.Main.init(streembit.DEFS.CMD_APP_JOINPRIVATENET);
-            });
-
-            $("#btnCreateUser").on("click", function () {
-                logger.debug("Create new account");
-                streembit.Main.init(streembit.DEFS.CMD_APP_CREATEACCOUNT);
-            });
-
-            $("#btnInitializeUser").on("click", function () {
-                logger.debug("Initialize existing account");
-                streembit.Main.init(streembit.DEFS.CMD_APP_INITACCOUNT);
-            });
-
-            $("#btnRestoreUser").on("click", function () {
-                logger.debug("Restore account");
-                streembit.Main.init(streembit.DEFS.CMD_APP_RESTOREACCOUNT);
-            });
-
-        });
-
-    </script>
-
-</script>
-
-<script type="text/html" id="netboot">
-    <div class="appboot-screen">
-        <div class="appboot-screen-content">
-            <div style="color:#fff; margin-bottom:30px;font-size:18px;">
-                <span id="appboot-msg"></span>
-            </div>
-            <div class="appboot-screen-spinner">
-                <div>
-                    <i class="fa fa-spinner fa-pulse fa-6x"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="streembit-view-userstart">
-    <div id="user-start-container" class="user-start-view">
-        <div style="width:640px;height:460px">
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#4190c6;padding-top:20px;" data-bind="click: start_audio_call">
-                <i class="fa fa-phone"></i>
-                <div class="flex-btnitem-text">Audio call</div>
-            </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9BF3B" data-bind="click: start_video_call">
-                <i class="fa fa-video-camera"></i>
-                <div class="flex-btnitem-text">Video call</div>
-            </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#68C3A3" data-bind="click: start_chat">
-                <i class="fa fa-commenting"></i>
-                <div class="flex-btnitem-text">Chat</div>
-            </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#F9690E" data-bind="click: start_sendfile">
-                <i class="glyphicon glyphicon-copy"></i>
-                <div class="flex-btnitem-text">Send File</div>
-            </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#5fb2c4" data-bind="click: start_sharescreen">
-                <i class="glyphicon glyphicon-share"></i>
-                <div class="flex-btnitem-text">Share Screen</div>
-            </div>
-            <div class="flex-btnitem margin20 pull-left" style="background-color:#dd7474;padding-top:24px;" data-bind="click: start_iotdevice">
-                <i class="fa fa-cogs" style="font-size:100px"></i>
-                <div class="flex-btnitem-text">Control Gadget</div>
-            </div>
-            <div style="clear:both"></div>
-        </div>        
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var uistartdiv = document.getElementById('user-start-container');
-            var vm = new streembit.vms.UserUIStartViewModel();
-            ko.applyBindings(vm, uistartdiv);
-        });
-    </script>
-</script>
-
-<script type="text/html" id="streembit-view-callprogress">
-    <div style="background:#000;height:100%;width:100%;display:flex;justify-content: center;align-items: center;">
-        <div style="width:540px;height:240px;margin-top:-130px;color:#fff;">
-            <div style="text-align:center;margin:0">
-                <div style="font-size:28px;">Contacting <span id="call_contact_name"></span> ... </div>
-            </div>
-            <div style="position:relative">
-                <div style="font-size:160px;display:inline-block;position:absolute;left:0;color:#6ca4c4"><i class="fa fa-user"></i></div>
-                <div style="position:relative;display:inline-block;position:absolute;width:260px;top:110px;left:130px">
-                    <img src="assets/images/loading.gif" />
-                </div>
-                <div style="font-size:160px;display:inline-block;position:absolute;left:400px;color:#76c8b9"><i class="fa fa-user"></i></div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#call_contact_name').text(streembit.Session.selected_contact.name);
-        });
-    </script>
-</script>
-
-<script type="text/html" id="contacts-template">
-    <div class="contact-item" data-bind="click: $parent.itemSelect">
-        <div style="float:left">
-            <span data-bind="css: usertypeicon" style="font-size:11px;"></span>
-        </div>
-        <div style="float:left;margin-left:8px">
-            <span data-bind="text: name"></span>
-        </div>
-        <div style="float:right;font-size:16px">
-            <div style="float:left;margin-right:14px" class="contact-msg-indicator">
-                <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e0be00"></span>
-            </div>
-            <div style="float:right;font-size:11px;" data-bind="visible: isonline">
-                <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;"></span>
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div style="clear:both"></div>
-    </div>
-</script>
-
-<script type="text/html" id="recent-messages-template">
-    <div data-bind="template: {name: template_name}">
-    </div>
-</script>
-
-<script type="text/html" id="addcontact-recent-messages">
-    <div style="text-align:center;margin:5px 5px 10px 5px;background-color:#f5f5f5;padding:5px;border:2px solid #ddd;border-radius:5px;font-size:12px;color:#666">
-        <div>Accept add contact request?</div>
-        <div>
-            Contact: <span data-bind="text: contact.name" style="color:#000;font-weight:bold"></span>
-        </div>
-        <div style="margin:8px 30px;border-top:1px solid #ddd;padding-top:8px">
-            <button style="font-size:12px" data-bind="click: $parent.acceptAddContact">Accept</button> <button style="font-size:12px;margin-left:15px" data-bind="click: $parent.declineAddContact">Decline</button>
-        </div>
-    </div>    
-</script>
-
-<script type="text/html" id="contact-details-template">
-    <div style="padding-left:20px">
-        <div>
-            <div class="contact-details-buttons">
-                <button type="button" class="btn btn-info btn-circle btn-lg" data-bind="click: chat" title="Chat"><i class="glyphicon glyphicon-comment"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sendfile" title="Send file"><i class="glyphicon glyphicon-copy"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('audio') }" title="Audio call"><i class="glyphicon glyphicon-earphone"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('video') }" title="Video call"><i class="glyphicon glyphicon-facetime-video"></i></button>
-                <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sharescreen" title="Share your screen"><i class="glyphicon glyphicon-share"></i></button>
-                <button type="button" class="btn btn-danger btn-circle btn-lg" style="margin-left:8px" data-bind="click: remove" title="Delete contact"><i class="glyphicon glyphicon-remove"></i></button>
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="contact-details">
-            <div style="margin-bottom:25px">
-                <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
-                    <span style="color:#777">Account:</span> <br />
-                    <span style="font-weight:bold" data-bind="text:name"></span>
-                </div>
-                <div style="margin-top:10px;border-bottom:1px dotted #ddd;padding-bottom:8px;font-size:12px">
-                    <span style="color:#777">Public key:</span> <br />
-                    <span style="word-wrap: break-word;font-weight:bold" data-bind="text: public_key"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="app-logs-template">
-    <div>
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#error-tab">Error</a></li>
-            <li><a data-toggle="tab" href="#info-tab">Info</a></li>
-            <li><a data-toggle="tab" href="#debug-tab">Debug</a></li>
-        </ul>
-
-        <div class="tab-content logs-view-container">
-            <div id="error-tab" class="tab-pane fade in active">
-                <div data-bind="foreach: errors">
-                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
-                </div>
-            </div>
-            <div id="info-tab" class="tab-pane fade">
-                <div data-bind="foreach: infos">
-                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
-                </div>
-            </div>
-            <div id="debug-tab" class="tab-pane fade">
-                <div data-bind="foreach: debugs">
-                    <div class="log-item alt-color"><span data-bind="text: message"></span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="send-file-template">
-    <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
-        <div style="width:450px" data-bind="visible: isinprogress() == false">
-            <input type="file" id="fileInput" name="files" data-bind="event: { change: function() { send_file($element.files[0]) } }" />
-        </div>
-        <div style="width:450px;margin-top:10px;display:none" data-bind="visible: isinprogress">
-            <div style="font-size:12px;color:#666">Send progress: </div>
-            <div>
-                <progress id="fileProgress" value="0" max="100" style="width:400px"></progress>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="contact-files-template">
-    <div id="contact-files-dlg-container" style="width:500px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left;max-height:400px">
-        <div>
-            <div><span class="fileobj-filename"></span></div>
-            <div><a class="fileobj-url" data-bind="attr: { href: objecturl, download: name, textContent: textcontent }"></a></div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-progress-template">
-    <div class="pull-right" style="margin-right:5px">
-        <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-    </div>
-    <div class="task-progress-prog">
-        <div class="file-progress-msg">
-            <div data-bind="if: mode == 'send'"><span>Sending file </span><span data-bind="text:file_name"></span> to <span data-bind="text: contact_name"></span></div>
-            <div data-bind="if: mode == 'receive'"><span>Receiving file </span><span data-bind="text:file_name"></span> from <span data-bind="text: contact_name"></span></div>
-        </div>
-        <div class="file-progress-msg">File hash: <span data-bind="text: hash"></span></div>
-        <div class="file-progress-ctrl">
-            <progress value="0" max="100" style="width:300px" data-bind="progressctrl: progress_val, max: file_size"></progress>
-        </div>
-        <div class="task-progress-cancel">
-            <a data-bind="click: $parent.cancel">Cancel File Transfer</a>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-complete-template">
-    <div style="background-color:#555;min-height:55px">
-        <div class="pull-right" style="margin-right:5px">
-            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-        </div>
-        <div style="padding:10px 30px;margin:0 auto;text-align:center">
-            <div class="file-progress-msg">File <span data-bind="text: file_name"></span> has been saved to <span data-bind="text: savedir"></span></div>
-            <div class="file-progress-msg" data-bind="visible: streembit.Main.is_gui">File hash <span data-bind="text: hash"></span> is verified. File hash is valid.</div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-send-complete-template">
-    <div style="background-color:#555;min-height:55px">
-        <div class="pull-right" style="margin-right:5px">
-            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-        </div>
-        <div style="padding:10px 30px;margin:0 auto;text-align:center">
-            <div class="file-progress-msg">File <span data-bind="text: file_name"></span> was sent to peer <span data-bind="text: contact_name"></span></div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="file-error-template">
-    <div style="background-color:#bb2020;min-height:50px">
-        <div class="pull-right" style="margin-right:5px">
-            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
-        </div>
-        <div style="padding:10px 30px;margin:0 auto;text-align:center">
-            <div class="file-progress-msg" style="margin:20px 0;color:#fff">Error in trasfering the file:  <span data-bind="text: error_msg"></span></div>
-        </div>
-    </div>
-</script>
-
-
-<script type="text/html" id="streembit-view-about">
-    <div style="text-align:center;font-size:14px">
-        <div style="font-weight:bold;margin-bottom:10px;padding-bottom:5px;border-bottom:2px dotted #eee">
-            An open source, decentralised, P2P communication system for humans and machines. v<span id="lbl_app_version"></span>
-        </div>
-        <div style="display:flex;justify-content:center">
-            <div style="margin-right:20px;border-right:2px dotted #eee;padding-right:20px;">
-                <div>
-                    Web
-                </div>
-                <div style="color:#2f7db2;text-decoration:underline">
-                    http://streembit.github.io
-                </div>
-            </div>
-            <div>
-                <div>
-                    Source code
-                </div>
-                <div style="color:#2f7db2;text-decoration:underline">
-                    https://github.com/streembit
-                </div>     
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#lbl_app_version").text(streembit.Main.version);
-        });
-    </script>
-</script>
-
-
-<script type="text/html" id="streembit-view-inituser">
-    <div id="uiview-container">
-
-        <div class="uiview-container-panel">
-
-            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-                <h4 data-bind="text: caption_view_title"></h4>
-            </div>
-
-            <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
-
-                <div style="display:none" data-bind="visible: is_private_network">
-
-                    <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedHost">
-                        <label for="text">Private hub seed host:</label>
-                        <div style="font-size:11px">(IP address or domain name)</div>
-                        <div id="lblSeedHostErrorContainer" class="error-label">
-                            <span id="lblSeedHostError"></span>
-                        </div>
-                        <input type="text" class="form-control" data-bind="value: private_net_host" style="max-width:300px" id="txtPrivateNetHost" maxlength="40" />
-                    </div>
-
-                    <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedPort">
-                        <label for="text">Private hub seed port:</label>
-                        <div id="lblSeedPortErrorContainer" class="error-label">
-                            <span id="lblSeedPortError"></span>
-                        </div>
-                        <input type="text" class="form-control" data-bind="value: private_net_port" style="max-width:90px" id="txtPrivateNetPort" maxlength="5" />
-                    </div>
-
-                    <div class="form-group" style="max-width:600px;margin-top:20px;" id="grpPrivateSeedAccount">
-                        <label for="text">Private hub seed account:</label>
-                        <div id="lblSeedAccountErrorContainer" class="error-label">
-                            <span id="lblSeedAccountError"></span>
-                        </div>
-                        <input type="text" class="form-control" data-bind="value: private_net_account" style="max-width:350px" id="txtPrivateNetAccount" maxlength="32" />
-                    </div>
-
-                </div>
-
-                <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
-                    <label for="text">Streembit account:</label>
-                    <div id="lblAccountErrorContainer" class="error-label">
-                        <span id="lblAccountError"></span>
-                    </div>
-                    <input type="text" class="form-control" data-bind="value: account, visible: is_new_account() == true || is_account_exists() == false" style="max-width:300px" id="txtAccount" maxlength="20" />
-                    <div data-bind="visible: is_new_account() == false && is_account_exists() == true">
-                        <select class="form-control" data-bind="options: accounts, optionsText: 'account', value: selected_account, optionsCaption: 'Choose...'" style="max-width:300px"></select>
-                    </div>
-                </div>
-
-                <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
-                    <label for="text">Private key password:</label>
-                    <div id="lblPwdErrorContainer" class="error-label">
-                        <span id="lblPwdError"></span>
-                    </div>
-                    <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlKeyUp }" style="max-width:400px" id="txtPassword" />
-                </div>
-
-                <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm" data-bind="visible: is_new_account() == true">
-                    <label for="text">Confirm private key password:</label>
-                    <div id="lblPwdConfErrCont" class="error-label">
-                        <span id="lblPwdConfError"></span>
-                    </div>
-                    <input type="password" class="form-control" data-bind="value: private_key_pwd_conf, event: { keyup: ctrlKeyUp }" style="max-width:400px" id="txtPasswordConfirm" />
-                </div>
-
-                <div style="margin-top:30px">
-                    <button data-bind="click: login, visible: is_new_account() == false" style="margin-right:10px"><span data-bind="text:caption_btninit"></span></button> <button id="btnCreate" data-bind="visible: is_new_account() == true, click: create_account">Create new account</button> <a href="#" data-bind="visible: is_new_account() == false, click: set_newaccount_mode" style="margin-left:10px;text-decoration:underline">Create new account</a>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-    <script type="text/javascript">
-    $(document).ready(function () {
-        var is_new_account = false;
-        var uioptions = streembit.Session.uioptions;
-        if (uioptions) {
-            is_new_account = uioptions.newuser || false;
-            is_init_existing_account = uioptions.initexisting || false;
-        }
-        var user_div = document.getElementById('uiview-container');
-        var vm = new streembit.vms.UserViewModel(is_new_account, validateAccount, validatePassword, validatePasswordConfirm, validatePrivateSeedHost, validatePrivateSeedPort, validatePrivateSeedAccount, is_init_existing_account);
-        vm.init(function () {
-            ko.applyBindings(vm, user_div);
-
-            $("#txtAccount").blur(function () {
-                vm.onAccountChange();
-            });
-
-            $("#txtPassword").blur(function () {
-                vm.onPasswordChange();
-            });
-
-            $("#txtPasswordConfirm").blur(function () {
-                vm.onPasswordConfirmChange();
-            });
-
-            $("#txtPrivateNetHost").blur(function () {
-                vm.onPrivateSeedHostChange();
-            });
-
-            $("#txtPrivateNetPort").blur(function () {
-                vm.onPrivateSeedPortChange();
-            });
-
-            $("#txtPrivateNetAccount").blur(function () {
-                vm.onPrivateSeedAccountChange();
-            });
-        });
-
-        function validateAccount(valid, msg) {
-            if (!valid) {
-                $("#grpAccount").addClass("has-error");
-                $("#lblAccountError").text(msg);
-                $("#lblAccountErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpAccount").removeClass("has-error");
-                $("#lblAccountError").text("");
-                $("#lblAccountErrorContainer").hide();
-            }
-        }
-
-        function validatePassword(valid, msg) {
-            if (!valid) {
-                $("#grpPassword").addClass("has-error");
-                $("#lblPwdError").text(msg);
-                $("#lblPwdErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPassword").removeClass("has-error");
-                $("#lblPwdError").text("");
-                $("#lblPwdErrorContainer").hide();
-            }
-        }
-
-        function validatePasswordConfirm(valid, msg) {
-            if (!valid) {
-                $("#grpPasswordConfirm").addClass("has-error");
-                $("#lblPwdConfError").text(msg);
-                $("#lblPwdConfErrCont").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPasswordConfirm").removeClass("has-error");
-                $("#lblPwdConfError").text("");
-                $("#lblPwdConfErrCont").hide();
-            }
-        }
-
-        function validatePrivateSeedHost(valid, msg) {
-            if (!valid) {
-                $("#grpPrivateSeedHost").addClass("has-error");
-                $("#lblSeedHostError").text(msg);
-                $("#lblSeedHostErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPrivateSeedHost").removeClass("has-error");
-                $("#lblSeedHostError").text("");
-                $("#lblSeedHostErrorContainer").hide();
-            }
-        }
-
-        function validatePrivateSeedPort(valid, msg) {
-            if (!valid) {
-                $("#grpPrivateSeedPort").addClass("has-error");
-                $("#lblSeedPortError").text(msg);
-                $("#lblSeedPortErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPrivateSeedPort").removeClass("has-error");
-                $("#lblSeedPortError").text("");
-                $("#lblSeedPortErrorContainer").hide();
-            }
-        }
-
-        function validatePrivateSeedAccount(valid, msg) {
-            if (!valid) {
-                $("#grpPrivateSeedAccount").addClass("has-error");
-                $("#lblSeedAccountError").text(msg);
-                $("#lblSeedAccountErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPrivateSeedAccount").removeClass("has-error");
-                $("#lblSeedAccountError").text("");
-                $("#lblSeedAccountErrorContainer").hide();
-            }
-        }
-
-    });
-    </script>
-</script>
-
-
-<script type="text/html" id="streembit-view-changekey">
-    <div id="uiview-container">
-
-        <div class="uiview-container-panel">
-
-            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-                <h4>Update Private Key Passphrase</h4>
-            </div>
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpAccount">
-                <span for="text">Streembit account: </span><span data-bind="text: streembit.User.name"></span>
-            </div>
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPassword">
-                <label for="text">Private key passphrase:</label>
-                <div id="lblPwdErrorContainer" class="error-label">
-                    <span id="lblPwdError"></span>
-                </div>
-                <input type="password" class="form-control" data-bind="value: private_key_pwd" style="max-width:400px" id="txtPassword" />
-            </div>
-
-            <div class="form-group" style="max-width:600px;margin-top:20px" id="grpPasswordConfirm">
-                <label for="text">Confirm private key passphrase:</label>
-                <div id="lblPwdConfErrCont" class="error-label">
-                    <span id="lblPwdConfError"></span>
-                </div>
-                <input type="password" class="form-control" data-bind="value: private_key_pwd_conf" style="max-width:400px" id="txtPasswordConfirm" />
-            </div>
-
-            <div style="margin-top:30px">
-                <button data-bind="click: update_account" style="margin-right:10px">Update phassprase</button>
-            </div>
-
-        </div>       
-
-    </div>
-
-    <script type="text/javascript">
-    $(document).ready(function () {
-        var is_new_account = false;
-        var uioptions = streembit.Session.uioptions;
-        if (uioptions) {
-            is_new_account = uioptions.newuser
-        }
-        var user_div = document.getElementById('uiview-container');
-        var vm = new streembit.vms.UpdateKeyViewModel(validatePassword, validatePasswordConfirm);
-        vm.init(function () {
-            ko.applyBindings(vm, user_div);
-        });
-
-        function validateAccount(valid, msg) {
-            if (!valid) {
-                $("#grpAccount").addClass("has-error");
-                $("#lblAccountError").text(msg);
-                $("#lblAccountErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpAccount").removeClass("has-error");
-                $("#lblAccountError").text("");
-                $("#lblAccountErrorContainer").hide();
-            }
-        }
-
-        function validatePassword(valid, msg) {
-            if (!valid) {
-                $("#grpPassword").addClass("has-error");
-                $("#lblPwdError").text(msg);
-                $("#lblPwdErrorContainer").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPassword").removeClass("has-error");
-                $("#lblPwdError").text("");
-                $("#lblPwdErrorContainer").hide();
-            }
-        }
-
-        function validatePasswordConfirm(valid, msg) {
-            if (!valid) {
-                $("#grpPasswordConfirm").addClass("has-error");
-                $("#lblPwdConfError").text(msg);
-                $("#lblPwdConfErrCont").show();
-                //alert(msg)
-            }
-            else {
-                $("#grpPasswordConfirm").removeClass("has-error");
-                $("#lblPwdConfError").text("");
-                $("#lblPwdConfErrCont").hide();
-            }
-        }
-
-        $("#txtAccount").blur(function () {
-            vm.onAccountChange();
-        });
-
-        $("#txtPassword").blur(function () {
-            vm.onPasswordChange();
-        });
-
-        $("#txtPasswordConfirm").blur(function () {
-            vm.onPasswordConfirmChange();
-        });
-
-    });
-    </script>
-</script>
-
-
-<script type="text/html" id="streembit-view-chat">
-    <div id="chat-container" style="width:100%; height:100%">
-        <div style="padding:10px;text-align:left;">
-            <div class="chat-win-header">
-                <div style="float:left;font-size:12px;font-weight:bold;color:#555">
-                    <span data-bind="text: lblheader"></span>
-                </div>
-                <div style="float:right" data-bind="visible: issession">
-                    <button data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
-                </div>
-                <div style="clear:both"></div>
-            </div>
-        </div>
-        <div class="fill-area" style="padding:10px;flex:1">
-            <div class="chat-fill-area chatitemswnd">
-                <table cellspacing="0" cellpadding="0">
-                    <tbody data-bind="foreach: chatitems">
-                        <tr>
-                            <td>
-                                <div style="padding:6px 10px 0 0">
-                                    <span data-bind="text: time"></span>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="padding-top:6px">
-                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streembit.User.name }"></span>:
-                                </div>
-                            </td>
-                            <td>
-                                <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streembit.User.name }">
-                                    <span data-bind="text: text"></span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>    
-            <div class="footer-chat-controls">
-                <div>
-                    <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
-                </div>
-                <div style="text-align:center;margin-top:5px">
-                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px"><span data-bind="text: btncaption"></span></button>
-                </div>
-            </div>        
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="sendmsg-modal" tabindex="-1" role="dialog" aria-labelledby="sendmsg-label">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="sendmsg-label">Send off-line message</h4>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var chat_div = document.getElementById('chat-container');
-            var contact = streembit.Session.uioptions.contact;
-            var issession = streembit.Session.uioptions.issession;
-            var vm = new streembit.vms.ChatViewModel(contact, issession);
-            vm.init(function () {
-                ko.applyBindings(vm, chat_div);
-            });
-
-            streembit.Session.curent_viewmodel = vm;
-
-            $("#txtChatCtrl").keyup(function (e) {
-                var code = e.which;
-                if (code == 13) {
-                    e.preventDefault();
-                    var text = $.trim($("#txtChatCtrl").val());
-                    if (text) {
-                        vm.chatmsg(text);
-                        vm.sendchat();
-                    }
-                }
-            });
-        });
-    </script>
-
-</script>
-
-<script type="text/html" id="streembit-view-accountmsgs">
-    <div id="messages-container" style="padding: 10px 10px">
-        <div style="border-bottom:4px solid #eee;padding-bottom:8px;color:#666;font-size:24px;font-weight:bold">
-            Messages for <span data-bind="text: streembit.User.name"></span>
-        </div>
-        <div class="account-messages-items" data-bind="foreach: messages">
-            <div data-bind="template:{name: template }">
-
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var messages_div = document.getElementById('messages-container');
-            ko.applyBindings(streembit.UI.messagesvm, messages_div);
-        });
-    </script>
-
-</script>
-
-<script type="text/html" id="account-text-message">
-    <div class="account-message">
-        <div class="account-message-from">
-            <div class="pull-left">From: <span data-bind="text: sender"></span></div>
-            <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="account-message-time">
-            Time: <span data-bind="text: time"></span>
-        </div>
-        <div class="account-message-text">
-            <span data-bind="text: data.message"></span>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="account-addcontact-message">
-    <div class="account-message">
-        <div class="account-message-from">
-            <div class="pull-left">Add contact request from  <span data-bind="text: sender"></span></div>
-            <div class="pull-right" style="margin:0 4px"><button class="close" title="Delete message" data-bind="click: $parent.deletemsg">×</button></div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="account-message-time">
-            Request sent: <span data-bind="text: time"></span>
-        </div>
-        <div class="account-message-controls">
-            <button data-bind="click:$parent.accept_addcontact">Accept Contact</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:$parent.decline_addcontact">Decline Contact</button>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="streembit-view-accountinfo">
-    <div id="uiview-container" style="margin:0 20px">
-
-        <div class="uiview-container-panel" style="min-width:700px;">
-
-            <div style="text-align:left;border-bottom:1px solid #ccc;padding-bottom:5px">
-                <h4>Account/Network info</h4>
-            </div>
-
-            <table style="margin-top:30px;width:100%;font-size: 12px;">
-                <tr>
-                    <td>Account:</td>
-                    <td class="account-info-item"><span data-bind="text: account"></span></td>
-                </tr>
-                <tr>
-                    <td>Public key:</td>
-                    <td class="account-info-item"><span data-bind="text: public_key"></span></td>
-                </tr>
-                <!-- ko if: streembit.Main.is_node_initialized == true && streembit.config.transport == 'tcp' -->   
-                <tr>
-                    <td>Transport:</td>
-                    <td class="account-info-item">TCP</td>
-                </tr>          
-                <tr>
-                    <td>P2P port:</td>
-                    <td class="account-info-item"><span data-bind="text: streembit.User.port"></span></td>
-                </tr>
-                <tr>
-                    <td>P2P IP address:</td>
-                    <td class="account-info-item"><span data-bind="text: streembit.User.address"></span></td>
-                </tr>
-                <tr>
-                    <td>UPNP gateway:</td>
-                    <td class="account-info-item"><span data-bind="text: streembit.Main.upnp_gateway"></span></td>
-                </tr>
-                <tr>
-                    <td>UPNP local address:</td>
-                    <td class="account-info-item"><span data-bind="text: streembit.Main.upnp_local_address"></span></td>
-                </tr>
-                <!-- /ko -->
-                <!-- ko if: streembit.Main.is_node_initialized == true && streembit.config.transport == 'ws' -->
-                <tr>
-                    <td>Transport:</td>
-                    <td class="account-info-item">WebSocket</td>
-                </tr>   
-                <tr>
-                    <td>WebSocket node:</td>
-                    <td class="account-info-item"><span data-bind="text: streembit.User.address"></span>:<span data-bind="text: streembit.User.port"></span></td>
-                </tr>
-                <!-- /ko -->
-            </table>
-
-            <!-- ko if: streembit.Main.is_node_initialized == true && streembit.config.transport == 'tcp' -->
-            <div style="margin-top:15px;font-size: 12px;">
-                <div>
-                    <span style="font-weight:bold">Seeds</span>
-                </div>
-                <div class="accountinfo_seed_list" data-bind="foreach: seeds">
-                    <div class="seed_list_item">
-                        <div>NodeID: <span data-bind="text: nodeID"></span></div>
-                        <div>IP address: <span data-bind="text: address"></span>:<span data-bind="text: port"></span></div>
-                    </div>
-                </div>
-            </div>
-            <!-- /ko -->
-
-            <!-- ko if: !streembit.Main.is_node_initialized -->
-            <div style="color:#ff006e;margin-top:30px;font-size:16px">
-                The account is not connected to the Streembit network
-            </div>
-            <!-- /ko -->
-
-        </div>
-        
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var user_div = document.getElementById('uiview-container');
-            var vm = new streembit.vms.AccountInfoViewModel();
-            ko.applyBindings(vm, user_div);
-        });
-    </script>
-</script>
-
-<script type="text/html" id="streembit-view-videocall">
-    <div id="media-call-container">
-        <div class="media-call-center">
-            <div class="media-call-header">
-                <div style="float:left;" class="callbuttons">
-                    <div style="display:inline-block;margin:0;padding:0;float:left">
-                        <div style="margin-top:10px">
-                            <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
-                                <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Send file" data-bind="click: sendfile">
-                                <i class="fa fa-file fa-stack-2x awesomeEntity" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Chat" data-bind="click: showchat">
-                                <i class="fa fa-commenting fa-stack-2x awesomeEntity" />
-                            </span>
-                        </div>
-                    </div>
-                    <div data-bind="visible: isvideocall" style="display:inline-block;margin:0;padding:0;float:left">
-                        <div style="margin-top:10px">
-                            <span class="fa-stack awesomeBlue" title="Remove video" data-bind="click: remove_video, visible: isvideo">
-                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Add video" data-bind="click: add_video, visible: isvideo() == false">
-                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Mute Audio" data-bind="click: remove_audio, visible: isaudio">
-                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Add audio" data-bind="click: add_audio, visible: isaudio() == false">
-                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
-                            </span>
-                        </div>
-                    </div>
-                    <div style="clear:both"></div>
-                </div>
-                <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
-                    Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
-                </div>
-                <div style="clear:both"></div>
-            </div>
-
-            <div class="media-call-content">
-
-                <div class="video_ctrls_items"> 
-                    <div class="localvid_parent" data-bind="visible: isvideo">
-                        <video id="localvid" autoplay muted></video>
-                    </div>     
-                    <div class="remotevid_parent">
-                        <video id="remotevid" autoplay></video>
-                    </div>    
-                </div>   
-
-                <div class="chat_items">
-                    <div id="chat-container" style="flex:1">
-                        <div class="fill-area" style="padding:10px;flex:1">
-                            <div class="chat-fill-area chatitemswnd">
-                                <table cellspacing="0" cellpadding="0">
-                                    <tbody data-bind="foreach: chatitems">
-                                        <tr>
-                                            <td>
-                                                <div style="padding:6px 10px 0 0">
-                                                    <span data-bind="text: time"></span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="padding-top:6px">
-                                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streembit.User.name }"></span>:
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streembit.User.name }">
-                                                    <span data-bind="text: text"></span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="footer-chat-controls">
-                                <div>
-                                    <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
-                                </div>
-                                <div style="text-align:center;margin-top:5px">
-                                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        var mediacall_vm = null;
-
-        function resize_video_controls() {
-            $('.localvid_parent').css("display", "");
-            $('.localvid_parent').css("justify-content");
-            $('.localvid_parent').css("margin-bottom", 0);
-            $('.localvid_parent').css("position", 'absolute');
-
-            var vh = $('.remotevid_parent').height();
-            var h = vh - 10;
-            var w = parseInt(h * 1.3333);
-            var video = $("#remotevid");            
-            $(video).width(w);
-
-            var rpos = $('#remotevid').position();
-            var rwidth = $('#remotevid').width();
-            var local_left = (rpos.left + rwidth) - 166;
-            $('.localvid_parent').css({
-                position: 'absolute',
-                top: 10,
-                left: local_left
-            });
-            $('.localvid_parent').css('zIndex', '9999');
-        }
-
-        function onRemoteVidConn() {
-            resize_video_controls();
-            var local_video = document.getElementById("localvid");
-            local_video.muted = true; // !important, without this the sound will be echoing
-        }
-
-        function onWindowResize() {
-            resize_video_controls();
-        }
-
-        function showChatControl(callback) {
-
-            // show the chat window
-            var chatContainer = $(".chat_items");          
-            $(chatContainer).css({
-                flex: 1,
-                display: 'flex',
-            });
-
-            resize_video_controls();
-
-            var parent_div_width = $('.media-call-content').width();
-            var parent_div_height = $('.media-call-content').height();            
-
-
-            var video_h = parent_div_height - 300;
-            if (video_h < 500) {
-                video_h = 500;
-            }
-            
-            $('.video_ctrls_items').css({
-                'min-height': video_h + 'px'
-            });
-
-            resize_video_controls();                 
-
-            $(chatContainer).css({
-                flex: 1,
-                display: 'flex',
-            });
-
-            callback();
-
-            resize_video_controls();
-        }
-
-
-        $(document).ready(function () {
-            var iscaller = streembit.Session.uioptions.iscaller;
-            var contact = streembit.Session.uioptions.contact;
-            var calltype = streembit.Session.uioptions.calltype;
-            var mediacall_div = document.getElementById('media-call-container');
-            mediacall_vm = new streembit.vms.MediaCallViewModel("localvid", "remotevid", iscaller, contact, calltype, onRemoteVidConn, showChatControl);
-            ko.applyBindings(mediacall_vm, mediacall_div);
-            mediacall_vm.init();
-
-            streembit.Session.curent_viewmodel = mediacall_vm;
-
-            $(window).resize(onWindowResize);
-
-            $("#txtChatCtrl").keyup(function (e) {
-                var code = e.which; 
-                if (code == 13) {
-                    e.preventDefault();
-                    var text = $.trim($("#txtChatCtrl").val());
-                    if(text){
-                        mediacall_vm.chatmsg(text);
-                        mediacall_vm.sendchat();
-                    }
-                }
-            });
-        });
-    </script>
-
-</script>
-
-
-<script type="text/html" id="streembit-view-audiocall">
-    <div id="media-call-container">
-        <div class="media-call-center">
-            <div class="media-call-header">
-                <div style="float:left;" class="callbuttons">
-                    <div style="display:inline-block;margin:0;padding:0;float:left">
-                        <div style="margin-top:10px">
-                            <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
-                                <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Send file" data-bind="click: sendfile">
-                                <i class="fa fa-file fa-stack-2x awesomeEntity" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Chat" data-bind="click: showchat">
-                                <i class="fa fa-commenting fa-stack-2x awesomeEntity" />
-                            </span>
-                        </div>
-                    </div>
-                    <div data-bind="visible: isvideocall" style="display:inline-block;margin:0;padding:0;float:left">
-                        <div style="margin-top:10px">
-                            <span class="fa-stack awesomeBlue" title="Remove video" data-bind="click: remove_video, visible: isvideo">
-                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Add video" data-bind="click: add_video, visible: isvideo() == false">
-                                <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Mute Audio" data-bind="click: remove_audio, visible: isaudio">
-                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
-                            </span>
-                            <span class="fa-stack awesomeBlue" title="Add audio" data-bind="click: add_audio, visible: isaudio() == false">
-                                <i class="fa fa-microphone fa-stack-2x awesomeEntity" />
-                                <i class="fa fa-plus-circle fa-stack-1x awesomeAction addbtn" />
-                            </span>
-                        </div>
-                    </div>
-                    <div style="clear:both"></div>
-                </div>
-                <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
-                    Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
-                </div>
-                <div style="clear:both"></div>
-            </div>
-
-            <div class="media-call-content">
-
-                <div class="audio_ctrls_items">
-                    <div class="remoteaudio_parent">
-                        <audio id="remote-audio" controls autoplay></audio>
-                    </div>
-                </div>
-
-                <div class="chat_items" style="display:none;flex: 1">
-                    <div id="chat-container" style="flex:1">
-                        <div class="fill-area" style="padding:10px;flex:1">
-                            <div class="chat-fill-area chatitemswnd">
-                                <table cellspacing="0" cellpadding="0">
-                                    <tbody data-bind="foreach: chatitems">
-                                        <tr>
-                                            <td>
-                                                <div style="padding:6px 10px 0 0">
-                                                    <span data-bind="text: time"></span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="padding-top:6px">
-                                                    <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != streembit.User.name }"></span>:
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == streembit.User.name }">
-                                                    <span data-bind="text: text"></span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="footer-chat-controls">
-                                <div>
-                                    <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
-                                </div>
-                                <div style="text-align:center;margin-top:5px">
-                                    <button data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        var mediacall_vm = null;
-
-        function showChatControl(callback) {
-            $(".chat_items").css({
-                flex: 1,
-                display: 'flex',
-            });
-            $(".chat_items").show();
-            callback();
-        }
-
-        $(document).ready(function () {
-            try {
-                var iscaller = streembit.Session.uioptions.iscaller;
-                var contact = streembit.Session.uioptions.contact;
-                var calltype = streembit.Session.uioptions.calltype;
-                var mediacall_div = document.getElementById('media-call-container');
-                mediacall_vm = new streembit.vms.MediaCallViewModel(null, null, iscaller, contact, calltype, null, showChatControl);
-                ko.applyBindings(mediacall_vm, mediacall_div);
-                mediacall_vm.init();
-
-                streembit.Session.curent_viewmodel = mediacall_vm;
-
-                $("#txtChatCtrl").keyup(function (e) {
-                    var code = e.which;
-                    if (code == 13) {
-                        e.preventDefault();
-                        var text = $.trim($("#txtChatCtrl").val());
-                        if (text) {
-                            mediacall_vm.chatmsg(text);
-                            mediacall_vm.sendchat();
-                        }
-                    }
-                });
-            }
-            catch (err) {
-                streembit.notify.error_popup("Audio call UI error: %j", err)
-            }
-        });
-    </script>
-
-</script>
-
-<script type="text/html" id="streembit-view-sendersharescreen">
-    <div id="screenshare-container" style="width:100%;height:100%;display:flex;align-items:stretch;align-content: stretch;">      
-        <div style="flex:1;display:flex;justify-content: center;align-items: center;">
-            <div style="text-align:center;border: 5px solid #ccc;padding: 40px 50px;border-radius: 8px;background-color: #f2f2f2;">
-                <div style="font-weight:bold;font-size:12px;padding:0">
-                    <audio id="contactaudio" controls autoplay></audio>
-                </div>
-                <div style="margin-top:20px;font-size:26px">Sharing your screen to <span data-bind="text: contact_name"></span></div>
-                <div><button data-bind="click: hangup" style="font-size:20px;padding:5px 30px;margin-top:20px">Cancel screen share</button></div>
-            </div>       
-        </div>
-    </div>
-
-    <script type="text/javascript">
-
-        function onContactConnect() {
-        }
-
-        $(document).ready(function () {
-            var contact = streembit.Session.uioptions.contact;
-            var screensharediv = document.getElementById('screenshare-container');
-            var vm = new streembit.vms.ShareScreenViewModel(null, true, contact, onContactConnect);
-            ko.applyBindings(vm, screensharediv);
-            vm.init();
-
-            streembit.Session.curent_viewmodel = vm;
-
-        });
-    </script>
-
-</script>
-
-<script type="text/html" id="streembit-view-recipientsharescreen">
-    <div id="screensharercp-container" style="display:none">
-        <div class="media-call-center">
-            <div class="media-call-header">
-                <div style="float:left;font-weight:bold;font-size:12px;padding:8px 0 0 20px">
-                    <audio id="contactaudio" controls autoplay></audio>
-                </div>
-                <div style="float:left;font-weight:bold;font-size:12px;padding-left:30px;padding-top:18px">
-                    Screen share from <span data-bind="text: contact_name"></span>
-                </div>
-                <div style="float:right;" class="callbuttons">
-                    <div style="display:inline-block;margin:0;padding:0;text-align:right">
-                        <div style="margin-top:10px">
-                            <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
-                                <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div style="clear:both"></div>
-            </div>
-
-            <div style="margin-top:5px">
-                <video id="screenvideo" class="video" autoplay style="min-height:100%;min-width:100%"></video>
-            </div>
-        </div>
-    </div>
-
-    <div id="screenshare-wait-container" style="width:100%;height:100%;display:flex;align-items: stretch;align-content: stretch;">
-        <div style="flex:1;display: flex; justify-content: center;align-items: center;width: 100%;height:100%;text-align:center">
-            <div style="text-align:center">
-                <i class="fa fa-spinner fa-pulse fa-6x"></i>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-
-        function onContactConnect() {
-            $('#screenshare-wait-container').hide();
-            $('#screensharercp-container').show();
-        }
-
-        $(document).ready(function () {
-            var contact = streembit.Session.uioptions.contact;
-            var div = document.getElementById('screensharercp-container');
-            var vm = new streembit.vms.ShareScreenViewModel("screenvideo", false, contact, onContactConnect);
-            ko.applyBindings(vm, div);
-            vm.init();
-
-            streembit.Session.curent_viewmodel = vm;
-
-        });
-    </script>
-
-</script>
-
-<script type="text/html" id="streembit-view-settings">
-    <div id="uiview-container">
-
-        <div class="uiview-container-panel">
-            <div style="text-align:left;border-bottom:3px solid #ddd;padding-bottom:5px">
-                <h4>Streembit settings</h4>
-            </div>
-
-            <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
-                <li role="presentation" class="active"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab">Network</a></li>
-                <li role="presentation" ><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab">Seeds</a></li>
-                <li role="presentation" ><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab">Ice resolvers</a></li>
-                <li role="presentation"><a href="#privatenet_settings" aria-controls="privatenet_settings" role="tab" data-toggle="tab">Private network</a></li>
-                <li role="presentation"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab">System</a></li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content">
-
-                <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings"> 
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">TCP port:</label><br />
-                        <input type="number" class="form-control" id="tcpport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. If the transport is WebSocket (WS) then this settings is not used by the application." />
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <label for="wsport">WebSocket port:</label><br />
-                        <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket outbound port. The application sends data on this port via WebSocket to the seed nodes in case if the transport is WebSocket." />
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <label for="transport">Transport:</label><br />
-                        <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport">
-                            <option value="0">Choose ...</option>
-                            <option value="tcp">TCP</option>
-                            <option value="ws">WebSocket</option>
-                        </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the WebSocket transport then make sure the WebSocket listener is operational" />
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <div class="checkbox">
-                            <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streembit community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streembit network!" />
-                        </div>
-                    </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
-
-                </div>
-
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
-                    <div class="form-group form-section-panel">
-                        <div style="font-weight:bold;display:inline-block">Bootstrap seeds</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and stores the users’ public key data in their distributed hash table (DHT) storage. You can define here your seed nodes if you run a private Streembit network." />
-                        <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
-                        </div>
-                        <div style="text-align:left;margin-top:15px">
-                            <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
-                        </div>
-                        <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
-                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                                <label for="newseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
-                                <input type="text" class="form-control" id="newseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_host"> 
-                            </div>
-                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                                <label for="newseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
-                                <input type="text" class="form-control" id="newseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
-                            </div>
-                            <div class="form-group" style="font-size:11px;margin-bottom:0">
-                                <label for="newseedpk" style="font-size:11px;width:80px;text-align:right">Public key: </label>
-                                <input type="text" class="form-control" id="newseedpk" maxlength="48" style="font-size:11px;width:400px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_publickey">
-                            </div>
-                            <div style="margin-top:20px">
-                                <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="ice_settings">
-                    <div class="form-group form-section-panel">
-                        <div style="font-weight:bold;display:inline-block">Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
-                        <div data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="margin-top:10px">
-                        </div>
-                        <div style="text-align:left;margin-top:15px">
-                            <button style="font-size:12px" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
-                        </div>
-                        <div data-bind="visible: is_add_iceresolver" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
-                            <div class="form-group" style="font-size:12px;margin-bottom:0">
-                                <label for="newice" style="font-size:12px">ICE server:</label>
-                                <input type="text" class="form-control" id="newice" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_iceresolver"> &nbsp;&nbsp;<button data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
-                </div>
-
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="privatenet_settings">
-
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">Seed account:</label><br />
-                        <input type="text" class="form-control" id="wsport" maxlength="5" style="width:400px;display:inline-block" data-bind="value: private_net_account">
-                        &nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streembit network. " />
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">Seed port:</label><br />
-                        <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: private_net_port">
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">Seed IP/domain name:</label><br />
-                        <input type="text" class="form-control" id="wsport" maxlength="5" style="width:300px;display:inline-block" data-bind="value: private_net_address">
-                    </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
-
-                </div>
-
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="system_settings">
-
-                    <div class="form-group form-section-panel">
-                        <label for="loglevel">Log level:</label><br />
-                        <select type="select" class="form-control" id="loglevel" maxlength="5" style="width:170px;display:inline-block" data-bind="value: selected_loglevel">
-                            <option value="0">Choose ...</option>
-                            <option value="debug">Debug</option>
-                            <option value="info">Info</option>
-                            <option value="error">Error</option>
-                        </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <div class="checkbox">
-                            <label> <input type="checkbox" data-bind="checked: isdevmode"> <span style="font-weight:bold">Developer mode</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Software developers should select this option to resolve directories and develop the software from IDE such as Visual Studio." />
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {            
-            var settings_div = document.getElementById('uiview-container');
-            var settings_vm = new streembit.vms.SettingsViewModel();
-            settings_vm.init(function () {
-                ko.applyBindings(settings_vm, settings_div);
-            });
-            
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
-</script>
-
-<script type="text/html" id="bootseed-item-template">
-    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
-        <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
-            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div> 
-            <div class="pull-left" data-bind="text: $data.address"></div>:<span data-bind="text: $data.port"></span>
-            <div style="clear:both"></div>  
-        </div>
-        <div class="pull-right">
-            <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
-        </div>
-        <div style="clear:both"></div>  
-        <div style="font-size:11px;font-weight:bold;margin-top:5px;">
-            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Public key:</div> 
-            <div class="pull-left" data-bind="text: $data.public_key"></div>
-            <div style="clear:both"></div>  
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="iceresolver-item-template">
-    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:400px">
-        <div class="pull-left" style="padding-top:2px">
-            <span data-bind="text: $data.url" style="font-size:11px;font-weight:bold;"></span>
-        </div>
-        <div class="pull-right">
-            <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_iceresolver" title="Delete ICE resolver"></i>
-        </div>
-        <div style="clear:both"></div>
-    </div>
-</script>
-
-<script type="text/html" id="helpitem_overview_what_is_streembit">
-    <div class="help-content-item">
-        <h4>What is Streembit?</h4>
-        <div>
-            <p>Streembit is a decentralized, peer to peer (P2P) real time communication system for humans and machines. The application aims to implement a system that securely manages humans to machine and machine to machine (M2M) communication without using a central server or client-server infrastructure. The actors of the system are nodes on a peer-to-peer network. Hardware services are manifested in smart contracts that are accessible via messages and transactions. The system uses a Kademlia distributed hash table (DHT) discover human and machine nodes on the network. The system ensures data integrity using public-private key cryptography. Messages are signed with the contact’s private key on the client side using ECDSA cryptography. The data is encrypted using ECDH key exchange to exchange the cryptography keys between the contacts and AES symmetric encryption. The video and audio chat feature utilizes the WebRTC the protocol that allows a fully encrypted video and audio communication in a true P2P manner, without routing the conversation through of any central servers. </p>
-            <p>Streembit aims to comply with open security and communication standards. The compliance is verifiable via peer review of the Streembit open source system. Streembit is built on FIPS, IETF and W3C security; data and communication standards such as JWT, JWS, WebRTC, as well as the latest planned and actual standards from W3C Web of Things initiative. The system uses recommended curves for the ECDSA and ECDH elliptic curve cryptography functions.</p>
-            <p>Decentralisation addresses several major system and business requirements. Decentralised systems are scalable; in fact they become more stable if there are more active users. This means that no expensive cluster servers are needed to run a decentralised system. The peers make up the system with their home and office computers, tablets, and mobile devices.
-            <p>Decentralised systems are the composite of their peers, and are always available as long as at least two peers are connected. On the other hand, centralised systems require expensive load balancers, and even more costly data centers across geographical regions to provide high availability. A decentralised P2P system makes centralised high-cost server infrastructures obsolete.</p>
-            <p>Human right activists, dissidents, and citizens who stand up against totalitarian states and undemocratic policies also need a secure communication tool. Oppressive regimes are even cracking down on critics beyond their own borders. A decentralised peer to peer system, in which the communication is fully encrypted between the users, preserves privacy without using a central server, and keeps the data safe from oppressive regimes.</p>
-        </div>
-    </div>
-</script>   
-
-<script type="text/html" id="helpitem_overview_open_source">
-    <div class="help-content-item">
-        <h4>Open source</h4>
-        <div>
-            <p>The system is free, fully open source and released under the Apache 2.0 license. The source code is available at https://github.com/streembit. Users can download the source and build the application from directly the source code. We encourage peer review by security experts and software developers to verify there are no security backdoors exist in the system and the application complies with security and communication standards (FIPS, JWT, JWS, JWE, etc).</p>
-        </div>
-    </div>
-</script>  
-
-<script type="text/html" id="helpitem_overview_system_architecture">
-    <div class="help-content-item">
-        <h4>System architecture</h4>
-        <div>
-            <p>The Streembit system forms a decentralized peer to peer network to manage connections between machines and machines or humans and machines.  The participants in the network are the peer nodes. The peer to peer network is scalable and an unlimited number of nodes can participate in the network.</p>
-            <p>The system performs public private key infrastructure based authentication and access control functions to securely connect peer nodes. The application generates at least one private/public key pair on each peer node including on the Internet-of-Things devices. The actors of the system publish their public keys to the peer to peer network via a Kademlia distributed hash table (DHT). Each peer node knows the public key of the other connected peer nodes.  The system identifies peer nodes in the peer to peer network by their public key. To ensure data integrity the nodes sign the messages with their private key. The nodes sign all messages -  there are no unsigned messages circulated in the system. (The requirement for signing the messages also help to mitigate the risks of Sybil attacks and DDoS attacks).</p>
-            
-            <img src="assets/images/streembit_system.png" style="margin:10px 0 30px 0"/>
-
-            <p>Streembit supports two types of network implementations:</p>
-            <ol type="a">
-                <li>Public network. Anyone can connect, there is no security gate enabled in the public network. The main Streembit network is public.</li>
-                <li>Private network, which implements a security gate to provide only a set of preconfigured contacts with access. A private Streembit network is isolated from the public Streembit network. Only certain peer nodes are allowed to connect to the network. The access control is governed by built in authentication functions. Typically, IoT devices within a building, teams, communities or businesses would run a private Streembit network to establish an even more secure communication mechanism than the public Streembit network. A private Streembit network is functioning as a firewall: only preconfigured contacts allowed to connect. The collection of the preconfigured contacts is maintained in a lookup list. The connection of devices and users which are not in the preconfigured list is refused by the private network.</li>
-            </ol>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_overview_security">
-    <div class="help-content-item">
-        <h4>Security</h4>
-        <div>
-            <p>The cornerstone of Streembit security is elliptic curve public/private key cryptography infrastructure (PPKI). PPKI allows the implementation of robust security. We use PPKI to identify the entities of the system (based on their public key and PPKI signature), perform authentication, and ensure data integrity (using cryptography signatures). Using the public/private key cryptography infrastructure paves the way for the deployment of a robust, secure authentication and access control scheme. The parties are identified by their public key. The authenticity of messages and the identities of the actors are then verified using PPKI cryptography routines. Using a PPKI infrastructure based security scheme greatly simplifies the authentication, access control, and identity management aspects of Internet-of-Things security.</p>
-            <p>The elliptic curve cryptography (ECC) scheme is particularly suitable for IoT devices. The small footprint of ECC allows security modules to be implemented on embedded devices. ECDH is a trusted and proven key agreement protocol. Using the ECDSA digital signature algorithm ensures data integrity.</p>
-            <p>The system performs public/private key infrastructure based authentication and access control functions to securely connect machines to machines or machines to humans. The Streembit security module of the IoT device must generate at least one public/private key pair for each connected IoT device. Human users generate their ECC public/private key pair when they create their account. The actors of the system publish their public keys to the network, where each entity knows the public key of the other connected human or machine. The system identifies each of the entities by their ECC public key.</p>
-            <p>The collision resistant SHA-256 hash function is used to create a hash of data which can be signed using the private key to guarantee data integrity, as well as provide information about the originator of the data. To ensure data integrity the messages, control commands, event data, requests, and responses are signed with the ECC private key; the signature can be verified using ECDSA. To ensure integrity of data, each entity must sign all messages with their private key. The messages in the Streembit network are based on the following standards: JSON Web Token (JWT), JSON Web Encryption (JWE), and JSON Web Signature (JWS).</p>
-            
-            <div style="margin-top:30px;font-weight:bold">Streembit security implementation and design summary</div>
-            <ul>
-                <li>Human users and Internet of Things devices use public/private key (PPK) infrastructure and PPK cryptography functions to secure messages</li>
-                <li>Each actor of the system must generate a public/private key pair. (Typically keys are generated prior to configuring the device and will be burned into the devices’ firmware).</li>
-                <li>The device or user publishes the public key to other users of the system.</li>
-                <li>The data integrity and authenticity of the messages is guaranteed with PPK signatures.</li>
-                <li>Each session between users is secured with strong symmetric cryptography keys.</li>
-                <li>All messages between users are secured with 128-bit and 256-bit AES symmetric encryption/decryption.</li>
-                <li>The system uses elliptic curve Diffie Hellman (ECDH) key exchange algorithms to facilitate the exchange of session keys.</li>
-            </ul>
-
-            <div style="margin-top:30px;font-weight:bold">Protecting the ECC public/private key pair</div>
-            <p>The ultimate issue of all applications, systems, and devices that protect data with cryptography is the security of the symmetric key of the encryption or the private key of the public/private key pair. Similarly to the iPhone and PGP, which both use passcode to protect their keys, Streembit requires users have a passcode to protect their PPKI private key. The Streembit passcode that protects the user’s PPK key pair is relatively complex.</p>
-            <p>To protect real time communication, Streembit uses a randomly generated 256-bit AES session key and exchanged between peers with a randomly generated ECDH key pair. This means that real time communication, which is the main functionality of Streembit, is secure even from the brute force attacks of NSA super computers and large zombie computer clusters of cyber criminals.</p>
-
-            <div style="margin-top:30px;font-weight:bold">Mitigate the risk of Sybil attacks</div>
-            <p>
-                A known issue with regards to peer-to-peer (P2P) networks and their practical limitation is that they are frequently subject to Sybil attacks. This means that malicious parties can compromise the network by generating and controlling large numbers of shadow identities. A malicious node may present multiple fake identities to a peer-to-peer network in order to appear and function as several distinct nodes.
-            </p>
-            <p>
-                A Sybil attack is most effective on anonymous and reputation systems where if the malicious nodes outnumber the honest nodes the outcome of the application could be compromised. For example, on a file sharing network a successful horizontal Sybil attack allows the attacker to sniff most of the control messages, hijack the system, and deliver bogus content. Contrarily, Streembit facilitates communication between contacts that you know, such as your family members, teammates, and business partners. You are also aware of the location and identity of your Internet of Things device(s) you control via Streembit, lessening the likelihood of a Sybil attack. Malicious nodes, regardless of their weight and presence on the network, are unable to change the public keys of your contacts (as the public key is based on the cryptographically secured PPK infrastructure).
-            </p>
-            <p>
-                Additionally, Streembit introduces another layer of security, private networks. Using private networks, the public keys of the contacts are loaded to the seed nodes manually; mitigating further the risk of a Sybil attack as well as a Man-in-the-middle attack (MITM). A Sybil attack, which generally speaking is a serious security issue for P2P networks such as file sharing applications, is much less of a problem for the Streembit P2P system.
-            </p>
-
-            <div style="margin-top:30px;font-weight:bold">How secure the cryptography of Streembit?</div>
-            <p>Both 128-bit and 256-bit AES symmetric encryption, the cryptography schemes of the messages in the Streembit network, are safe from any brute force attacks. The following UML diagram describes the key exchange using ECDH and securing the message with 256-bit AES symmetric key between "User A" and "User B".</p>
-            <img src="assets/images/streembit_key_exchange.png" />
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_overview_iotdevices">
-    <div class="help-content-item">
-        <h4>Internet of Things devices</h4>
-        <div>
-            <p>Streembit is a unified communication platform for both human users and Internet of Things devices.</p>
-
-            <p>Streembit manages device discovery as well as authentication, access control and provisioning of devices without using a centralized authority server. The system facilitates device discovery and device control in a peer to peer manner. For many IoT use cases a decentralized, P2P network topology is the most secure, robust, scalable and reliable method of operation. Instead of using expensive corporate owned third party cloud systems, Streembit manages Internet of Things devices without the need of proprietary centralized cloud platforms. Centralized, corporate owned cloud is certainly an easier way to build out IoT platforms. However, the owners and authorities in these topologies all have an influence upon the network and can be exploited. They can ban devices, spy on devices and compromise data integrity of devices. In fact, government can order them to do any or all of these. In the near future, the doors of your garage and home, air conditioning units and your home security system will be fully internet connected. You will be able to control your home automation system from your mobile phone. It is essential that only you can control your IoT devices. Streembit excludes third party service and cloud providers from the ecosystem to give full control to the end users over the devices.</p>
-
-            <p>The primary premise of this system is that all aspects of the IoT device operation must consist of decentralized P2P communication between the device and human user. For example, in the case of a building’s door device: a secure and decentralized P2P system can manage the door (including device configuration, upgrades and provisioning). There is no need to involve a centralized server nor a cloud based solution in order to implement a secure and fully operation Internet of Things system.</p>
-
-            <div style="margin-top:30px;font-weight:bold">Internet of Things device discovery on Streembit</div>
-            <p>Streembit allows IoT application providers and context producers to register their IoT Objects on the decentralised Streembit network, and in turn allow context consumers to discover them in a secure and peer to peer manner. </p>
-            <img src="assets/images/iot3.png" />
-
-            <div style="margin-top:30px;font-weight:bold">Control Internet of Things devices via Streembit</div>
-            <ul>
-                <li>The Internet of Things devices and human users communicate with each other directly in a peer to peer manner</li>
-                <li>The data is end to end encrypted between the human user and IoT device. The encryption key is shared only between the user and device – never with any third parties.</li>
-                <li>The device exposes functionalities via the Streembit network and user interface using W3C WoT standards</li>
-                <li>The user interacts with the device via the Streembit P2P layer and UI. For example, opening a door, turning ON a light, controlling motor speed, getting temperature data, viewing CCTV pictures etc. all peer to peer, without a centralised solution and via the Streembit user interface.</li>
-            </ul>
-            <img src="assets/images/iot2.png" />
-
-            <div style="margin-top:30px;font-weight:bold">Upgrade and manage Internet of Things devices via Streembit</div>
-            <ul>
-                <li>Hardware and software providers upgrade Internet of Things devices on the always up and running Streembit network.</li>
-                <li>Internet of Things device manufacturers and software designers publishes firmware and software updates via the Streembit network.</li>
-                <li>Internet of Things devices run the Streembit system and ensure the origin and data integrity of the updates by verifying the public key of the publisher.</li>
-            </ul>
-            <img src="assets/images/iot1.png" />
-
-            <div style="margin-top:30px;font-weight:bold">Standards</div>
-            <p>The Streembit Internet of Things system is based on the latest W3C Web of Things standards. The system incorporates the latest modules from the W3C web-of-things-framework. The devices are defined with JSON-LD and the security uses FIPS standards for cryptography and JWT, JWS and JWE standards to secure data.</p>
-
-            <p>To integrate devices with Streembit please refer to the IoT section of the Streembit Github repository.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_settings">
-    <div class="help-content-item">
-        <h4>Streembit settings</h4>
-        <div>
-            <p>Click on the Tools/Settings menu item to open the Settings screen.</p>
-            
-            <div class="settings-helpitem-title">Network tab</div>
-            <div>
-                <span style="font-weight:bold">TCP port:</span> <span>Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. If the transport is WebSocket (WS) then this settings is not used by the application.</span>
-            </div>
-            <div>
-                <span style="font-weight:bold">WebSocket port:</span> <span>If the TCP port is not available then the connect to the WebSocket listener must listen on this port.</span>
-            </div>
-            <div>
-                <span style="font-weight:bold">Transport:</span> <span>Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the WebSocket transport then make sure the WebSocket listener seed node is operational.</span>
-            </div>
-            <div>
-                <span style="font-weight:bold">Use WebSocket fallback:</span> <span>Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streembit community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streembit network!</span>
-            </div>
-
-            <div class="settings-helpitem-title">Seeds tab</div>
-            <div>
-                <span style="font-weight:bold">List of seed nodes:</span> <span>The seed nodes assist in user and device discovery, and stores the users’ public key data in their distributed hash table (DHT) storage. Also, you can define here your seed nodes if you run a private Streembit network.</span>
-            </div>
-
-            <div class="settings-helpitem-title">Ice resolvers tab</div>
-            <div>
-                <span>Complete decentralization is not possible in Internet communication. All decentralized systems like Bitcoin or Telehash must use some internet services for certain tasks. For instance, decentralized systems use DNS servers and services to resolve domain names. WebRTC video and audio chats clients use ICE servers to get information about their own IP address.</span>
-            </div>
-
-            <div class="settings-helpitem-title">Private network tab</div>
-            <div>
-                <span style="font-weight:bold">Seed account, Seed port, Seed IP/domain name:</span> <span>If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streembit network. </span>
-            </div>
-
-            <div class="settings-helpitem-title">System tab</div>
-            <div>
-                <span style="font-weight:bold">Log level:</span> <span>Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged.</span>
-            </div>
-            <div>
-                <span style="font-weight:bold">Developer mode:</span> <span>Software developers should select this option to resolve directories and develop the software from IDE such as Visual Studio.</span>
-            </div>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_configure_node">
-    <div class="help-content-item">
-        <h4>Configure your Streembit</h4>
-        <div>
-            <p>If you want to use the Streembit network from your desktop computer, tablet or mobile device and communicate with other peers without using a central server you must allow inbound connections.</p>
-            <p>Home connections are usually filtered by a router or modem. Streembit will request your router automatically configure itself to allow inbound connections to port 8905. Unfortunately, many routers don’t allow automatic configuration, so you must manually configure your router. You may also need to configure your firewall to allow inbound connections to port 8905. Please see the following subsections for details.</p>
-
-            <div class="settings-helpitem-title">Enabling Connections</div>
-
-            <p>If the Streembit application can’t automatically configure your router to open port 8905, you will need to manually configure your router. We’ve tried to make the following instructions generic enough to cover most router models; if you need specific help with your router, please ask for help on a tech support site such as SuperUser.</p>
-
-            <p>Enabling inbound connections typically requires two steps, plus an extra third step for firewall users:</p>
-            <ul>
-                <li>Giving your computer a static (unchanging) internal IP address by configuring the Dynamic Host Configuration Protocol (DHCP) on your router.</li>
-                <li>Forwarding inbound connections from the Internet through your router to your computer where Streembit can process them.</li>
-                <li>Configuring your firewall to allow inbound connections. This step mainly applies to Windows users, as Mac OS X and most Linuxes do not enable a firewall by default.</li>
-                <li>Please refer to your router configuration document for port forwarding information.</li>
-            </ul>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_create_account">
-    <div class="help-content-item">
-        <h4>Create account</h4>
-        <div>
-            <p>Human users and Internet of Things devices are identified by their account name on the Streembit network.</p>
-            <p>Click on the Streembit/New account menu item or click on the New Account button from the start screen.</p>
-            <p>Enter the account name. You will receive an error message if the account exists on the network. The account name must be between 6-20 characters and it can only contain alphanumeric characters (letters a-z, A-Z and numbers 0-9)</p>
-            <p>Enter the password key pair encryption password. Based on the password, the system generates a 256-bit AES key using PBKDF2 with a randomly generated 160-bit salt. The system protects the ECC public key pair with the 256-bit AES key. The password must be at least 8 characters, must not contain empty space, must contain at least one letter, one digit and one special character.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_backup_account">
-    <div class="help-content-item">
-        <h4>Backup account</h4>
-        <div>
-            <p>You can perform an account backup to save a local copy of your Streembit account data. The Streembit account can be restored from a backup using the “Restore account” function.</p>
-            <p>In order to backup the account the account must be intialized. Click on the Streembit/Backup account menu item to start backup your account.</p>
-            <p>Your account backup data is never saved on a central server by the Streembit application and the account backup file is saved to your Download directory.</p>
-    
-            <div class="settings-helpitem-title">What is saved in the Backup file?</div>
-            <p>The backup file contains your encrypted Streembit ECC public/private key pair. The backup data is base64 encoded. It starts with “---BEGIN STREEMBIT KEY---“, and the file ends with “---END STREEMBIT KEY---“</p>
-        </div>
-    </div>
-</script> 
-
-
-<script type="text/html" id="helpitem_restore_account">
-    <div class="help-content-item">
-        <h4>Restore account from backup file</h4>
-        <div>
-            <p>
-                <span style="font-weight:bold">Why restore your account data? </span><br />
-                <span>Your contacts identify your account and validate your identity using your PPK public key. The public/private key pair is created using a random entropy - once it is created then it cannot be changed. The public/private key pair isn’t deterministic and in order to communicate with your contacts, you must use the same public key which was published to the Streembit network and known to your contacts. The published public key can be restored from an account backup file.</span>
-            </p>
-            <p>You can restore your Streembit account data on any computer from a backup file.</p>
-            <p>Click on the Streembit/Restore account menu item or the Restore account to start restoring the account from a backup file.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_delete_account">
-    <div class="help-content-item">
-        <h4>Delete account</h4>
-        <div>
-            <p>It is a good practice to delete your account from the Streembit network if you don’t use it anymore. Click on the Streembit/Delete account menu item to remove the account from the Streembit network.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_logfiles">
-    <div class="help-content-item">
-        <h4>Log files</h4>
-        <div>
-            <p>Your Streembit system provides vital information using an application log file. The log file is JSON file format, and sits in the application /log directory. You can also open the log file by clicking on the Tools/View logs menu item. Configure the log to “Debug” log level to populate detailed debug messages from the application.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_network_connect_public">
-    <div class="help-content-item">
-        <h4>Connect to the public Streembit network</h4>
-        <div>
-            <p>Click on the “CONNECT TO PUBLIC STREEMBIT” button from the start screen or click on the Streembit/Connect to public network menu item to connect the public Streembit network. The user information view will be initialized. Enter your password and then the application will try to connect to the public Streembit network.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_network_connect_private">
-    <div class="help-content-item">
-        <h4>Connect to a private network</h4>
-        <div>
-            <p>Click on the “CONNECT TO PRIVATE STREEMBIT” button from the start screen or click on the Streembit/Connect to private network menu item to connect the a private Streembit hub. The user information view will be initialized. Enter your password and then the application will try to connect to the private Streembit hub.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_network_share_keys">
-    <div class="help-content-item">
-        <h4>Share your public key with your Streembit hub contacts</h4>
-        <div>
-            <p>The seed nodes and client nodes of a private Streembit hub identify users by a) validating their PPK signature, b) looking up the account name from a configuration list. That means seeds and clients must know about the public keys and account names of the participants on a the private Streembit hub. Therefore, prior to connecting a private Streembit hub you must share your account details with at least the seed node of private Streembit hub. Typically, you would do this by configuring the seed node configuration file with the list of contacts. (Please refer to the private network readme document at the Streembit Github repository how to create the configuration file for a private Streembit hub.)</p>
-            <p>To get your public key either create a new account or initialize an existing account. Click on the Streembit/New account menu item to create a new account or click on the Streembit/Initialize existing account to use an existing account. Once your account is initialized click on the Tools/Account security info menu item. Your account name and public key will be displayed on the screen. Add this  account name and public key data to the configuration file of private Streembit hub seed.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="helpitem_system_clear_database">
-    <div class="help-content-item">
-        <h4>Clear database</h4>
-        <div>
-            <p>It is essential to clear the database if you are using Streembit on a public computer, for example in an internet café or airport.</p>
-            <p>You can remove all Streembit data from the computer by clicking on the Tools/Clear database menu item. Once the deletion is confirmed the application will erase all configuration, account and contacts data from the computer.</p>
-        </div>
-    </div>
-</script> 
-
-<script type="text/html" id="streembit-view-help">
-    <div class="help-view">
-        <!--<div class="help-container">-->
-            <div class="help-titles">
-                <ul id="helptree">
-                    <li>
-                        <a href="#">Overview</a>
-                        <ul>
-                            <li data-link="helpitem_overview_what_is_streembit">What is Streembit?</li>
-                            <li data-link="helpitem_overview_open_source">Open source</li>
-                            <li data-link="helpitem_overview_system_architecture">System architecture</li>
-                            <li data-link="helpitem_overview_security">Security</li>
-                            <li data-link="helpitem_overview_iotdevices">Internet of Things devices</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Settings, configuration</a>
-                        <ul>
-                            <li data-link="helpitem_settings">Settings</li>
-                            <li data-link="helpitem_configure_node">Configure your Streembit</li>
-                            <li data-link="helpitem_create_account">Create account</li>
-                            <li data-link="helpitem_backup_account">Backup account</li>
-                            <li data-link="helpitem_restore_account">Restore account</li>
-                            <li data-link="helpitem_delete_account">Delete account</li>
-                            <li data-link="helpitem_logfiles">Log files</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Streembit network</a>
-                        <ul>
-                            <li data-link="helpitem_network_connect_public">Connect to public network</li>
-                            <li data-link="helpitem_network_connect_private">Connect to private network</li>     
-                            <li data-link="helpitem_network_share_keys">Share your keys</li>                            
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">System</a>
-                        <ul>
-                            <li data-link="helpitem_system_clear_database">Clear database</li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="help-content">
-            </div>
-        <!--</div>-->
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#helptree').treed();
-
-            $('#helptree li').on("click", function () {
-                var datalink = $(this).attr("data-link");
-                if (datalink) {
-                    $(".help-content").empty();
-                    var html = $('#' + datalink).html();
-                    $(".help-content").append(html);
-                }                
-            });
-        });
-    </script>
-
-
-</script>
-
-
-<!-- device handling templates -->
-
-<script type="text/html" id="device_event_highTemperature_template">
-    <div class="device-property boxed-device-property">
-        <div style="text-align:center;padding:10px">
-            <div data-bind="visible: is_subscribed() == false && send_in_progress() == false">
-                Receive notification when the temperature is higher than <input type="number" style="width:70px;padding-left:5px" data-bind="value: threshold" /> &#8451; &nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:subscribe">Subscribe</button>
-            </div>
-            <div data-bind="visible: send_in_progress">
-                Sending subscription ... <i class="fa fa-refresh fa-spin" style="color:#307bae;font-size:16px"></i>
-            </div>
-            <div data-bind="visible: is_subscribed() == true && onevent_raised() == false">
-                Subscribed to receive notification when the temperature is higher than <span data-bind="text: threshold"></span> &#8451;
-            </div>
-            <div data-bind="visible: is_subscribed && onevent_raised" style="padding: 8px;display: flex;justify-content: center;align-items: center;font-size:14px;color:#c62727;font-weight:bold">
-                <i class="fa fa-exclamation-circle" style="font-size:18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;The temperature is higher than <span data-bind="text: threshold"></span> &#8451;.
-            </div>
-        </div>  
-    </div>
-</script>
-
-
-<script type="text/html" id="device_property_temperature_template">
-    <div class="device-property boxed-device-property">
-        <div style="text-align:right;padding:5px 10px">
-            <div>
-                <i class="fa fa-refresh" style="color:#307bae;font-size:16px" data-bind="click: refresh, css: { 'fa-spin': refresh_in_progress() == true }"></i>
-            </div>
-        </div>
-        <div style="font-size:120px;color:#333;padding: 20px;">
-            <span data-bind="text: temperature"></span> &#8451;
-        </div>   
-    </div>
-</script>
-
-<script type="text/html" id="temperature_sensor_template">
-    <div class="sensor-container">
-        <div class="sensor-header">  
-            <div>
-                <span data-bind="text: name"></span> | Model: <span data-bind="text: model"></span>
-            </div>      
-        </div>
-        <div class="interactions-list" data-bind="foreach: interactions">
-            <div data-bind="template: { name: template_name}" style="flex: 1;display: flex;justify-content: center;align-items: center;">
-            </div>
-        </div>     
-    </div>
-</script>
-
-<script type="text/html" id="streembit-view-connectdevice">
-    <div id="device-container">
-        <div style="text-align:center">
-            <div class="device-header">
-                Device: <span data-bind="text:name"></span>
-            </div>
-        </div>
-        <div class="devices-list" data-bind="foreach: devices">            
-            <div data-bind="template: { name: template_name}">
-            </div>       
-        </div>    
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var datacontext = streembit.Session.uioptions;
-            var div = document.getElementById('device-container');
-            var vm = new streembit.vms.DeviceModel(datacontext);
-            vm.init(function () {
-                ko.applyBindings(vm, div);
-                streembit.Session.curent_viewmodel = vm;
-                vm.init_properties();
-            });
-        });
-    </script>
-</script>

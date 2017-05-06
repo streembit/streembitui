@@ -25,6 +25,8 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
+jspm_packages
+
 .DS_Store
 design.txt
 readme
@@ -60,3 +62,4 @@ build/macosx64
 
 *.zip
 /typings
+/lib/config.app.json

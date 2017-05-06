@@ -1,0 +1,43 @@
+<div style="width:100%;height:100%;background:#fff">
+    <div style="background:#333;padding:5px 10px;color:#fff;font-weight:bold;">
+        Logs
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#error-tab">Error</a></li>
+        <li><a data-toggle="tab" href="#info-tab">Info</a></li>
+        <li><a data-toggle="tab" href="#debug-tab">Debug</a></li>
+    </ul>
+
+    <div class="tab-content logs-view-container">
+        <div id="error-tab" class="tab-pane fade in active">
+            <table class="logstable">
+                <tbody data-bind="foreach: errors">
+                    <tr>
+                        <td data-bind="isodate: time" style="width:180px"></td>
+                        <td data-bind="text: message" style="width:auto"></td>
+                    </tr>
+                </tbody>
+            </table>    
+        </div>
+        <div id="info-tab" class="tab-pane fade">
+            <table class="logstable">
+                <tbody data-bind="foreach: infos">
+                    <tr>
+                        <td data-bind="isodate: time" style="width:180px"></td>
+                        <td data-bind="text: message" style="width:auto"></td>
+                    </tr>
+                </tbody>
+            </table>            
+        </div>
+        <div id="debug-tab" class="tab-pane fade">
+            <table class="logstable">
+                <tbody data-bind="foreach: debugs">
+                    <tr>
+                        <td data-bind="isodate: time" style="width:180px"></td>
+                        <td data-bind="text: message" style="width:auto"></td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>

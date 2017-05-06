@@ -29,12 +29,29 @@ Building Streembit
 
 If you would like to build Streembit from the source instead of using the prebuilt binaries (found at http://streembit.github.io/download) follow the build workflow described in [BUILD.md](BUILD.md).
 
+You must create a config.app.json configuration file in the lib folder, the same location where the config.json file is placed.
+Put the following to the config.app.json
+```json
+{
+    "nwmode": true,
+    "wsprotocol":  "https"
+}
+```
+
+Set the nwmode false to run the streembitui as we web application. (We run it using NGINX but any web server should be able to serve the content.) Streembit is a desktop application, so normally the nwmode flag is true.
+The default value of wsprotocol is "https".
+
+Please refer to the [jspm.md](jspm.md) readme file which explains installing and configuring jspm.
+
+---------------
+
+
 
 Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/streembit/streembit/tags) are created
+completely stable. [Tags](https://github.com/streembit/streembitui/tags) are created
 regularly to indicate new official, stable release versions of Streembit Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -54,7 +71,7 @@ lots of money.
 
 ### Automated Testing
 
-Developers are strongly encouraged to write [unit tests](/doc/unit-tests.md) for new code, and to
+Developers are strongly encouraged to write unit tests for new code, and to
 submit new unit tests for old code. Unit tests can be compiled and run
 (assuming they weren't disabled in configure) with: `make check`
 
@@ -67,16 +84,5 @@ to add a test plan to the pull request description if testing the changes is
 not straightforward.
 
 
-Translations
-------------
-
-Changes to translations as well as new translations can be submitted to
-[Bitcoin Core's Transifex page](https://www.transifex.com/projects/p/streembit/).
-
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
-
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
 
 
