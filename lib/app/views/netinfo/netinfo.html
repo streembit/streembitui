@@ -1,14 +1,13 @@
-<div style="display:flex;justify-content:center;width:100%">
+<div class="uiview">
 
-    <div id="uiview-container" style="margin:20px;max-width:1040px">
-
-        <div class="uiview-container-panel" style="min-width:800px;width:100%">
-
-            <div class="uiview-container-panel-header">
-                <h4>Account/Network info</h4>
-            </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
 
             <table style="margin-top:30px;width:100%;font-size: 12px;">
+                <tr>
+                    <td>MOI session ID:</td>
+                    <td class="account-info-item"><span data-bind="text: sessionid"></span></td>
+                </tr>
                 <tr>
                     <td>Account:</td>
                     <td class="account-info-item"><span data-bind="text: account"></span></td>
@@ -90,12 +89,12 @@
             </div>
             <!-- /ko -->
             <!-- ko if: net_connected() == false -->
-            <div style="color:#ff006e;margin-top:30px;font-size:16px">
-                The account is not connected to the Streembit network
+            <div style="color:#e40a40;margin-top:30px;font-size:14px;font-weight:bold;border:1px solid #ccc;padding:5px 10px;background:#f7dce2">
+                <i class="fa fa-info-circle"></i> The account is not connected to the Streembit peer-to-peer network
             </div>
             <!-- /ko -->
 
         </div>
+    </div> 
 
-    </div>
 </div>

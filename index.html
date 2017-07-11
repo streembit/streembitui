@@ -1,11 +1,17 @@
 ﻿<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us">
 <head>
     <meta charset="utf-8" />
     <title>Streembit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <script type="text/javascript">
+        var gui = require('nw.gui'); 
+        // Get the current window
+        var nwwin = gui.Window.get();
+        nwwin.maximize();
+
         window.nwrequire = window.require || (function () {});
         window.require = undefined;
 
@@ -26,43 +32,97 @@
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";
         streembit.ui.load_info = "load-info";
-        streembit.ui.main = "streembit-container";
-        streembit.ui.navbar_section = "navbar-section";
         streembit.ui.taskbarmsg = "footer-text-container";
 
         //  the mainapplication component loaded from the lib/views directory
         //  change this to load another main app
         //  the component must be registered with the lib/viewreg 
         streembit.view = {};
-        streembit.view.mainapp = "streembit-app";
+        streembit.view.mainapp = "dashboard";
 
     </script>
 
+    <!-- Basic Styles -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css">
+
+    <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-skins.min.css">
+
+    <!-- SmartAdmin RTL Support  -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-rtl.min.css">
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
+    <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/demo.min.css">-->
+
+    <!-- FAVICONS -->
+    <!--<link rel="shortcut icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">-->
+
+    <!-- GOOGLE FONT -->
+    <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">-->
+
+
+    <link rel="apple-touch-icon" href="lib/images/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="lib/images/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="lib/images/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="lib/images/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Startup image for web apps -->
+    <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="lib/images/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
     <style>
-        body{           
+        body[data-appinit=true] {
+            background: #333;
         }
 
-        body[data-appinit=true]{
-            background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
-            background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;            
+        body[data-account-load-complete=false] {
+            background: #333;
         }
 
-        body[data-appinit=false]{
-            background:linear-gradient(to bottom, #e9f1fa 0%, #ffffff 100%);    
+        body[data-account-load-complete=true]{
+            background:#fff; 
         }
 
         body[data-appinit=false] #load-container{
             display:none;
         }
         body[data-appinit=true] #load-container{
-            display:normal;
+            display:block;
         }
 
-        body[data-appinit=true] #streembit-container{
-            display:none;
+        body[data-account-load-complete=false] #main {
+            background: #333;
+            height:100%;
         }
-        body[data-appinit=false] #streembit-container{
-            display:normal;
+
+        body[data-account-load-complete=true] .content-panel {
+            background: #fff;
+        }
+
+        body[data-account-load-complete=false] #header,
+        body[data-account-load-complete=false] #left-panel,
+        body[data-account-load-complete=false] #ribbon,
+        body[data-account-load-complete=false] .page-footer {
+            display: none;
+        }
+
+        body[data-appinit=false] #load-container {
+            display: none;
+        }
+
+        body[data-appinit=true] #load-container {
+            display: block;
         }
 
         body, html {
@@ -147,10 +207,35 @@
         }
         /* loader */
 
+
+        .jqstooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            background: rgb(0, 0, 0) transparent;
+            background-color: rgba(0,0,0,0.6);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px;
+            border: 1px solid white;
+            z-index: 10000;
+        }
+
+        .jqsfield {
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+        }
     </style>
 
 </head>
-<body data-appinit="true">
+
+<body data-appinit="true" data-account-load-complete="false">
 
     <div id="load-container">
         <div id="load-screen">
@@ -163,113 +248,421 @@
         </div>
     </div>
 
-    <div id="streembit-container">
-        <div id="navbar-section">
-            <div class="navbar navbar-fixed-top navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"  data-bind="click: nav.bind($data, '')">Streembit</a>
+    <div id="app-container">
+
+        <!-- HEADER -->
+        <header id="header" style="flex: 0 0 49px">
+            <div id="logo-group">
+
+                <!-- PLACE YOUR LOGO HERE -->
+                <span id="logo" style="font-weight: bold;padding-top: 4px;"> STREEMBIT </span>
+                <!-- END LOGO PLACEHOLDER -->
+                <!-- Note: The activity badge color changes when clicked and resets the number to 0
+            Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
+                <span id="activity" class="activity-dropdown hidden-xs"> <i class="fa fa-user"></i> <b class="badge">0</b> </span>
+
+                <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
+                <div class="ajax-dropdown">
+
+                    <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/mail.html">
+                            Msgs (14)
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/notifications.html">
+                            notify (3)
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="activity" id="ajax/notify/tasks.html">
+                            Tasks (4)
+                        </label>
                     </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'initui')">Start Streembit</a></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'connectpublic')">Connect to public network</a></li>
-                                    <li><a href="#">Connect to private hub</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'createaccount')">New account</a></li>
-                                    <li><a href="#">Initialize existing account</a></li>
-                                    <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
-                                    <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
-                                </ul>
+                    <!-- notification content -->
+                    <div class="ajax-notifications custom-scroll">
+
+                        <div class="alert alert-transparent">
+                            <h4>Click a button to show messages here</h4>
+                            This blank page message helps protect your privacy, or you can show the first message here automatically.
+                        </div>
+
+                        <i class="fa fa-lock fa-4x fa-border"></i>
+
+                    </div>
+                    <!-- end notification content -->
+                    <!-- footer: refresh area -->
+                    <span>
+                        Last updated on: 12/12/2013 9:43AM
+                        <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </span>
+                    <!-- end footer -->
+
+                </div>
+                <!-- END AJAX-DROPDOWN -->
+            </div>
+
+            <!-- messages dropdown -->
+            <div class="project-context hidden-xs">
+
+                <span class="label">Messages:</span>
+                <span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent messages <i class="fa fa-angle-down"></i></span>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <div>
+                            <!-- TODO populate the list -->
+                        </div>
+                    </li>
+
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
+                    </li>
+                </ul>
+                <!-- end dropdown-menu-->
+
+            </div>
+            <!-- end projects dropdown -->
+            <!-- pulled right: nav area -->
+            <div class="pull-right">
+
+                <!-- collapse menu button -->
+                <div id="hide-menu" class="btn-header pull-right">
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                </div>
+                <!-- end collapse menu -->
+
+                <!-- multiple lang dropdown : find all flags in the flags page -->
+                <ul class="header-dropdown-list hidden-xs">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="lib/images/blank.gif" class="flag flag-us" alt="United States"> <span> English (US) </span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="active">
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-us" alt="United States"> English (US)</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
-                                </ul>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contacts <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: offline_contact_request">Create offline contact offer</a></li>
-                                    <li><a href="#" data-bind="click: accept_contact_request">Add contact</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click:backupContacts">Backup contacts to file</a></li>
-                                    <li><a href="#" data-bind="click:restoreContacts">Restore contacts from file</a></li>
-                                </ul>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Machines <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Connect to Internet of Things device</a></li>
-                                </ul>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <!-- ko if: streembit.globals.nwmode == true -->
-                                    <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <!-- /ko -->
-                                    <li><a href="#" data-bind="click:about">About</a></li>
-                                </ul>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
                             </li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DAPP <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Wallet</a></li>
-                                    <li><a href="#">Blockchain</a></li>
-                                    <li><a href="#">Games</a></li>
-                                    <li><a href="#">Apps</a></li>                                  
-                                </ul>
-                            </li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+                    </li>
+                </ul>
+                <!-- end multiple lang -->
+
+            </div>
+            <!-- end pulled right: nav area -->
+
+        </header>
+        <!-- END HEADER -->
+        
+        <section style="flex: 1 0 auto;display: flex;flex-direction: row">
+
+            <!-- Left panel : Navigation area -->
+            <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+            <aside id="left-panel" style="flex: 0 0 220px;">
+                <!-- User info -->
+                <div class="login-info">
+                    <span>
+                        <!-- User image size is adjusted inside CSS, it should stay as it -->
+                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                            <span data-bind="text: user_name" style="padding-top:4px">
+                            </span>
+                            <i class="fa fa-angle-down" style="padding-top:5px"></i>
+                        </a>
+
+                    </span>
+                </div>
+                <!-- end user info -->
+                <!-- NAVIGATION : This navigation is also responsive-->
+                <nav>
+                    <ul>
+                        <li class="active">
+                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'filecabinets')">My devices</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'ndas')">Add device </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'connectpublic')">Initialize existing account</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'connectpublic')">Connect to network</a></li>-->
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Wallett</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">My Wallett</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Blockchain explorer</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-phone-square"></i> <span class="menu-item-parent">Call</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file to a contact</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat with a contact</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'ndareceived')">My contacts</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: offline_contact_request">Create offline contact offer</a></li>
+                                <li><a href="#" data-bind="click: accept_contact_request">Add contact</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click:backupContacts">Backup contacts to file</a></li>
+                                <li><a href="#" data-bind="click:restoreContacts">Restore contacts from file</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-lock"></i> <span class="menu-item-parent">Security</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'certificates')">Certificates</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'commsecurity')">Communication security</a></li>
+                            </ul>
+                        </li>
+                        <li class="chat-users top-menu-invisible">
+                            <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                <li role="separator" class="divider"></li>
+                                <!-- ko if: streembit.globals.nwmode == true -->
+                                <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                                <li role="separator" class="divider"></li>
+                                <!-- /ko -->
+                                <li><a href="#" data-bind="click:about">About</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+            </aside>
+            <!-- END NAVIGATION -->
+            <!-- MAIN PANEL -->
+            <div style="flex:1">
+
+                <!-- RIBBON -->
+                <div id="ribbon" class="main_ribbon_header">
+                    <!-- breadcrumb -->
+                    <div class="breadcrumb">
+                    </div>
+                    <!-- end breadcrumb -->
+                </div>
+                <!-- END RIBBON -->
+                <!-- MAIN CONTENT -->
+                <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+                </div>
+                <!-- END MAIN CONTENT -->
+
+            </div>
+            <!-- END MAIN PANEL --> 
+
+        </section>
+
+        
+        
+        <!-- PAGE FOOTER -->
+        <div class="page-footer" style="flex: 0 0 52px">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div id="footer-text-container">
+                        <i class="fa fa-info-circle"></i> <span class="tasktext"></span>
+                    </div>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+                    <div class="txt-color-white inline-block">
+                        <i class="txt-color-blueLight hidden-mobile">Last account activity ...</i>
+                        <div class="btn-group dropup">
+                            <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" data-toggle="dropdown">
+                                <i class="fa fa-link"></i> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right text-left">
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Download Progress</p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-success" style="width: 50%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Server Load</p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Memory Load <span class="text-danger">*critical*</span></p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-danger" style="width: 70%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <button class="btn btn-block btn-default">refresh</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="main">
-            <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
-            </div>
-            <div class="footer">
-                <div id="footer-text-container"></div>
-            </div>
-            <div id="footer-info" data-bind="component: 'tasks'">                
-            </div>
+        <!-- END PAGE FOOTER -->
+
+        <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag) Note: These tiles are completely responsive, you can add as many as you like  -->
+        <div id="shortcut">
+            <ul>
+                <li>
+                    <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-file-o fa-4x"></i> <span>Cabinets</span> </span> </a>
+                </li>
+                <li>
+                    <a href="gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-map-marker fa-4x"></i> <span>Office</span> </span> </a>
+                </li>
+                <li>
+                    <a href="invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-institution  fa-4x"></i> <span>NDA <span class="label pull-right bg-color-darken">99</span></span> </span> </a>
+                </li>
+                <li>
+                    <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-envelope fa-4x"></i> <span>Chat </span> </span> </a>
+                </li>
+                <li>
+                    <a href="profile.html" class="jarvismetro-tile big-cubes selected bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-user fa-4x"></i> <span>My Profile </span> </span> </a>
+                </li>
+            </ul>
         </div>
-    </div>
+        <!-- END SHORTCUT AREA -->
+
+    </div>   
+
+    
 
     <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
 
+    <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+    <!--<script data-pace-options='{ "restartOnRequestAfter": true }' src="lib/js/plugin/pace/pace.min.js"></script>-->
+
+    <script src="lib/js/libs/jquery-2.1.1.min.js"></script>
+
+    <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script>
+
+    <!-- IMPORTANT: APP CONFIG -->
+    <script src="lib/js/app.config.js"></script>
+
+    <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
+    <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="lib/js/bootstrap/bootstrap.js"></script>
+
+    <!-- CUSTOM NOTIFICATION -->
+    <script src="lib/js/notification/SmartNotification.min.js"></script>
+
+    <!-- JARVIS WIDGETS -->
+    <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>
+
+    <!-- EASY PIE CHARTS -->
+    <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+    <!-- SPARKLINES -->
+    <script src="lib/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- JQUERY VALIDATE -->
+    <script src="lib/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+
+    <!-- JQUERY MASKED INPUT -->
+    <script src="lib/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+
+    <!-- JQUERY SELECT2 INPUT -->
+    <script src="lib/js/plugin/select2/select2.min.js"></script>
+
+    <!-- JQUERY UI + Bootstrap Slider -->
+    <script src="lib/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+
+    <!-- browser msie issue fix -->
+    <script src="lib/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+
+    <!-- FastClick: For mobile devices -->
+    <script src="lib/js/plugin/fastclick/fastclick.min.js"></script>
+
+    <!-- Demo purpose only -->
+    <!--<script src="lib/js/demo.min.js"></script>-->
+
+    <!-- MAIN APP JS FILE -->
+    <script src="lib/js/app.js"></script>
+
+    <!-- Full Calendar -->
+    <script src="lib/js/plugin/moment/moment.min.js"></script>
+    <script src="lib/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+    <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+    <!-- app specific source files -->
+    <script src="lib/js/plugin/bootbox/bootbox.min.js"></script>
+    <script src="lib/js/plugin/blockui/jquery.blockUI.js"></script>
+    <script src="lib/js/plugin/knockout/knockout-3.4.2.js"></script>
+    <script src="lib/js/plugin/knockout/knockout.mapping.js"></script>
+    <script src="lib/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
-    <script>
-        System.import('lib/main.js');
-    </script>
 
+    <script>
+        $(document).ready(function() {
+            pageSetUp();      
+
+            System.import('lib/main.js');
+
+            //$(window).resize(function () {
+            //    initApp.toggleMobile();
+            //});
+        });
+    </script>
+    
     <script type="text/html" id="empty-template">
         <div class="emptydiv"></div>
     </script>

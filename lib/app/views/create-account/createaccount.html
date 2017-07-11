@@ -1,3 +1,63 @@
+<div style="width:100%;height:100%;display:flex;flex-direction: column;align-items:center;justify-content: center;align-content:center">
+
+    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+        <header role="heading">
+            <span class="widget-icon"><i class="fa fa-user"></i> </span>
+            <h2>Streembit</h2>
+            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+        </header>
+
+        <div role="content">
+            <div class="widget-body no-padding">
+                <form id="comment-form" class="smart-form" novalidate="novalidate">
+                    <header>
+                        <span data-bind="i18n:'lbl-createaccount-create'"></span>
+                    </header>
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-12">
+                                <label for="text" data-bind="i18n:'lbl-streembitacc'"></label>
+                                <div class="error-label" data-bind="visible: isaccount_error">
+                                    <span data-bind="text: accounterrormsg"></span>
+                                </div>
+                                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-12">
+                                <label for="text" data-bind="i18n:'lbl-privkeypassword'"></label>
+                                <div class="error-label" data-bind="visible: ispwd_error">
+                                    <span data-bind="text: pwderrormsg"></span>
+                                </div>
+                                <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}" style="width:400px;padding:3px;font-size:16px" />
+                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                                <div style="font-size:11px;font-weight:bold;">
+                                    NOTE: Choose your password carefully. If you forget your password, no one will be able to<br />
+                                    unlock your account for you on the permissionless and decentralised Streembit network.
+                                </div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-12">
+                                <label for="text" data-bind="i18n:'lbl-confirmpassword'"></label>
+                                <div class="error-label" data-bind="visible: isconfpwd_error">
+                                    <span data-bind="text: pwdconferrormsg"></span>
+                                </div>
+                                <input type="password" class="form-control" data-bind="value: private_keypwd_conf, event: { keyup: ctrlkeyup, blur: onPasswordConfirmChange }" style="width:400px;padding:3px;font-size:16px" />
+                            </section>
+                        </div>
+                    </fieldset>
+
+                    <footer>
+                        <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-createaccount-create'"></button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="uiview-container">
     <div class="uiview-plane">

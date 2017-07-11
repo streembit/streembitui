@@ -1,0 +1,286 @@
+<style>
+    .wrap {
+        width: auto;
+        margin: 30px 30px;
+        background: #fff;
+        border: 1px solid #ECECED;
+        padding: 5px 5px 0 5px;
+        overflow: hidden;
+    }
+
+    section {
+        padding: 0;        
+    }
+
+    h1, h2, h3, h4 {
+        text-transform: uppercase;
+    }
+
+
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+        display: block;
+        text-transform: none;
+    }
+
+    h1 small {
+        font-size: 18px;
+        font-weight: 400;
+        margin-top: 10px;
+    }
+
+    h3 small {
+        font-size: 18px;
+        margin-top: 15px;
+    }
+
+        h3 small strong {
+            font-weight: 700;
+        }
+
+    h4 small {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    p {
+        padding: 0 30px;
+        margin-bottom: 30px;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    label {
+        font-weight: 500;
+    }
+
+    .spacer-lg {
+        height: 60px;
+    }
+
+    .spacer-md {
+        height: 30px;
+    }
+
+    .spacer-sm {
+        height: 15px;
+    }
+
+    .info_tip {
+        border-bottom-width: 1px;
+        border-bottom-style: dashed;
+        cursor: help;
+    }
+
+    .text-large {
+        font-size: 18px;
+    }
+
+        .text-large big {
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+    .highlight {
+        font-weight: 600;
+    }
+
+    h1 .highlight, h2 .highlight, h3 .highlight {
+        font-weight: 400;
+    }
+
+    .no-m {
+        margin: 0;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .absolute {
+        position: absolute;
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    .title-ico {
+        font-size: 96px;
+    }
+
+    a.help-link {
+        font-size: 14px;
+        text-decoration: underline;
+    }
+
+    /* =====================================
+ =============== FOOTER ================
+ =======================================
+ */
+    footer .highlight {
+        font-weight: 400;
+    }
+
+    .btm_wrap {
+        position: relative;
+        padding: 0px 15px;
+        z-index: 2;
+        border-radius: 4px;
+    }
+
+    .btm_panel {
+        position: absolute;
+        min-height: 300px;
+        width: 100%;
+        bottom: -500px;
+        left: 0;
+        transition: all 0.5s ease;
+        border-radius: 4px;
+        padding: 0px 20px 50px 20px;
+        z-index: 1;
+    }
+
+    .btm_wrap h6 {
+        position: relative;
+        z-index: 3;
+        margin: 0;
+        padding: 15px 0;
+        cursor: pointer;
+    }
+
+        .btm_wrap h6 span {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+    .btm_panel p {
+        font-size: 14px;
+        padding: 0;
+    }
+
+    .btm_wrap h3 {
+        float: left;
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        margin-bottom: 25px;
+    }
+
+    .btn_close {
+        right: 20px;
+        top: 20px;
+        opacity: 0.3;
+    }
+
+        .btn_close:hover {
+            text-decoration: none;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+    .slide-up {
+        bottom: 0px !important;
+    }
+
+    .slide-down {
+        bottom: -500px !important;
+        height: 0;
+    }
+
+
+    footer {
+        height: 100px;
+        background: #f2f2f2;
+        padding: 10px 20px;
+        position: relative;
+        z-index: 3;
+        border-top: 5px solid #fff;
+        border-bottom: 5px solid #fff;
+    }
+
+    footer a {
+        line-height: 70px;
+        margin: 0 10px 0 20px;
+    }
+
+    footer .copy {
+        font-size: 12px;
+        color: #999;
+        padding-right: 20px;
+        margin-top: 15px;
+    }
+
+    .light_panel {
+        background: #ddeee8;
+        padding: 30px;
+        border-radius: 4px;
+    }
+
+    .error_msg_color {
+        background-color: #fff;
+        font-size: 11px;
+        color: #e93c3c;
+        padding: 3px 8px;
+        margin-bottom: 4px;
+    }
+
+</style>
+
+<div style="display:flex;justify-content: center;padding-top:30px;width:100%;align-items: center;height:100%">
+    <div class="wrap">
+        <div>
+            <div>
+                <section>
+                    <div class="row">
+                        <div class="col col-sm-12 text-center" style="background: url(lib/images/Osmio_watermark_lg.png) center 10px no-repeat;">
+                            <span class="icon-frames title-ico"></span>
+                            <h1>City of Osmio&trade; Enrollment Process</h1>
+                            <p>Sharing your things with other people requires relaible identity management. It's natural that you - like us - want to know that those you're sharing with are who they say they are. </p>                            
+                            <h3>That's why we're sponsoring You <small>for <strong>City of Osmio&trade;</strong> identity credential.</small></h3>
+                            <div class="spacer-sm"></div>
+                            <div>Please select the type of enrollment</div>
+                            <div data-bind="visible: is_enrolltype_error" class="error_msg_color">Currently only email verification based enrollment is supported</div>
+                            <select data-bind="value: enroll_type">
+                                <option value="0">Choose...</option>
+                                <option value="1">Email verification</option>
+                                <option value="2">SMS verification</option>
+                                <option value="3">PII collaboration</option>
+                                <option value="4">PhotoID verification</option>
+                                <option value="5">PhotoID with Skype photo of face</option>
+                                <option value="6">Face to face Notary verfication</option>
+                            </select>
+                            <div class="spacer-md"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="enroll" class="btn btn-success" role="button" data-bind="click: start_enroll">Begin Enrollment Procedure</a>
+                                </div>
+                            </div>
+                            <div class="spacer-lg"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <footer>
+            <!-- Button trigger modal -->
+            <a class="btn-link" data-toggle="modal" data-target="#">City of Osmio&trade;</a>
+            <img src="lib/images/logo_footer.png" height="67" width="67" class="right">
+            <span class="right text-right copy"><strong>Privacy + Accountability</strong> <br> Copyright &copy; 2014-2017 by The City of Osmio </span>
+        </footer>
+    </div>
+</div>
