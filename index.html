@@ -421,12 +421,12 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-phone-square"></i> <span class="menu-item-parent">Call</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-headphones"></i> <span class="menu-item-parent">Communicate</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file to a contact</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat with a contact</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
                             </ul>
                         </li>
                         <li>
@@ -560,19 +560,19 @@
         <div id="shortcut">
             <ul>
                 <li>
-                    <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-file-o fa-4x"></i> <span>Cabinets</span> </span> </a>
+                    <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-signal fa-4x"></i> <span>IoT Devices</span> </span> </a>
                 </li>
                 <li>
-                    <a href="gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-map-marker fa-4x"></i> <span>Office</span> </span> </a>
+                    <a href="gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-group fa-4x"></i> <span>Contacts</span> </span> </a>
                 </li>
                 <li>
-                    <a href="invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-institution  fa-4x"></i> <span>NDA <span class="label pull-right bg-color-darken">99</span></span> </span> </a>
+                    <a href="invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-money  fa-4x"></i> <span>Wallett</span> </span> </a>
                 </li>
                 <li>
-                    <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-envelope fa-4x"></i> <span>Chat </span> </span> </a>
+                    <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-headphones fa-4x"></i> <span>Call </span> </span> </a>
                 </li>
                 <li>
-                    <a href="profile.html" class="jarvismetro-tile big-cubes selected bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-user fa-4x"></i> <span>My Profile </span> </span> </a>
+                    <a href="profile.html" class="jarvismetro-tile big-cubes bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-cogs fa-4x"></i> <span>Settings </span> </span> </a>
                 </li>
             </ul>
         </div>
@@ -654,12 +654,7 @@
     <script>
         $(document).ready(function() {
             pageSetUp();      
-
             System.import('lib/main.js');
-
-            //$(window).resize(function () {
-            //    initApp.toggleMobile();
-            //});
         });
     </script>
     
