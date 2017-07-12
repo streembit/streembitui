@@ -1599,19 +1599,336 @@ table.logstable {
 }
 
 
-/* shoul be the last section */
-/* at the END media queries */
-@media (max-width: 790px) {
-    #left-panel {
-        display: none;
-    }
 
-    #header > div {
-        display: none;
+
+
+
+@media (min-width: 768px) {
+    .circle-tile {
+        margin-bottom: 30px;
     }
 }
 
-.cert-info-panels dd span, .network-info-panels dd span {
+.circle-tile {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.circle-tile-heading {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto -40px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 100%;
+    color: #fff;
+    transition: all ease-in-out .3s;
+}
+
+/* -- Background Helper Classes */
+
+/* Use these to cuztomize the background color of a div. These are used along with tiles, or any other div you want to customize. */
+
+.dark-blue {
+    background-color: #34495e;
+}
+
+.green {
+    background-color: #16a085;
+}
+
+.blue {
+    background-color: #2980b9;
+}
+
+.orange {
+    background-color: #f39c12;
+}
+
+.red {
+    background-color: #e74c3c;
+}
+
+.purple {
+    background-color: #8e44ad;
+}
+
+.dark-gray {
+    background-color: #7f8c8d;
+}
+
+.gray {
+    background-color: #95a5a6;
+}
+
+.light-gray {
+    background-color: #bdc3c7;
+}
+
+.yellow {
+    background-color: #f1c40f;
+}
+
+/* -- Text Color Helper Classes */
+
+.text-dark-blue {
+    color: #34495e;
+}
+
+.text-green {
+    color: #16a085;
+}
+
+.text-blue {
+    color: #2980b9;
+}
+
+.text-orange {
+    color: #f39c12;
+}
+
+.text-red {
+    color: #e74c3c;
+}
+
+.text-purple {
+    color: #8e44ad;
+}
+
+.text-gray {
+    color: #ccc;
+}
+
+
+.text-faded {
+    color: rgba(255,255,255,0.7);
+}
+
+
+
+.circle-tile-heading .fa {
+    line-height: 80px;
+}
+
+.circle-tile-content {
+    padding-top: 50px;
+}
+
+.circle-tile-description {
+    text-transform: uppercase;
+}
+
+.text-faded {
+    color: rgba(255,255,255,0.7);
+}
+
+.circle-tile-number {
+    padding: 5px 0 15px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.circle-tile-footer {
+    display: block;
+    padding: 5px;
+    color: rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.1);
+    transition: all ease-in-out .3s;
+}
+
+.circle-tile-footer:hover {
+    text-decoration: none;
+    color: rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.2);
+}
+
+
+
+.card-box {
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    -webkit-border-radius: 3px;
+    border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px;
+    background-clip: padding-box;
+    background-color: #ffffff;
+}
+
+.card-box-link {
+    margin-bottom: 20px;
+    border-radius: 0 0 3px 3px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.9);
+}
+
+
+.card-box-link a:hover{
+    color:#fff;
+}
+
+    /* =============
+   Widgets
+============= */
+    .widget-box-one .widget-one-icon {
+        position: absolute;
+        right: 30px;
+        font-size: 72px !important;
+        top: 0;
+        color: #f3f3f3;
+        overflow: hidden;
+        vertical-align: middle;
+        line-height: 2 !important;
+    }
+
+.widget-box-one .wigdet-one-content {
+    position: relative;
+}
+
+.widget-box-two p {
+    font-size: 14px;
+}
+
+.widget-box-two .widget-two-icon {
+    position: absolute;
+    right: 30px;
+    font-size: 40px !important;
+    top: 30px;
+    overflow: hidden;
+    vertical-align: middle;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 50%;
+    color: #ffffff;
+    border: 4px solid rgba(255, 255, 255, 0.4);
+}
+
+.widget-box-two h2 {
+    font-size: 30px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+}
+
+.widget-two-icon .fa {
+    line-height: 80px;
+}
+
+.widget-box-two .wigdet-two-content {
+    position: relative;
+}
+
+.widget-two-custom {
+    background-color: #1ea69a;
+    border-color: #1ea69a;
+}
+
+.widget-two-primary {
+    background-color: #348cd4;
+    border-color: #348cd4;
+}
+
+.widget-two-success {
+    background-color: #78c350;
+    border-color: #78c350;
+}
+
+.widget-two-warning {
+    background-color: #ff9800;
+    border-color: #ff9800;
+}
+
+.widget-two-info {
+    background-color: #45bbe0;
+    border-color: #45bbe0;
+}
+
+.widget-two-danger {
+    background-color: #f7531f;
+    border-color: #f7531f;
+}
+
+.widget-two-inverse {
+    background-color: #3b3e47;
+    border-color: #3b3e47;
+}
+
+.widget-two-purple {
+    background-color: #8892d6;
+    border-color: #8892d6;
+}
+
+.widget-two-red {
+    background-color: #e74c3c;
+    border-color: #c42c1d;
+}
+
+.widget-two-pink {
+    background-color: #F06292;
+    border-color: #F06292;
+}
+
+.widget-two-default {
+    background-color: #ffffff;
+}
+
+.widget-two-default .widget-two-icon {
+    color: #c0c0c0;
+    border: 2px solid #c0c0c0;
+}
+
+.widget-two-footer {
+    display: block;
+    padding: 5px;
+    color: rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.1);
+    transition: all ease-in-out .3s;
+}
+
+
+.text-white {
+    color: #ffffff !important;
+}
+
+.font-600 {
+    font-weight: 600;
+}
+
+.font-secondary {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+
+
+
+
+
+
+    /* shoul be the last section */
+    /* at the END media queries */
+    @media (max-width: 790px) {
+        #left-panel {
+            display: none;
+        }
+
+        #header > div {
+            display: none;
+        }
+    }
+
+    .cert-info-panels dd span, .network-info-panels dd span {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }

@@ -414,19 +414,27 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Wallett</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Wallet</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">My Wallett</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">My Wallet</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Blockchain explorer</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-headphones"></i> <span class="menu-item-parent">Communicate</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
+                            <ul>
+                                <!-- here goes the application list -->
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
                             </ul>
                         </li>
                         <li>
@@ -636,10 +644,9 @@
     <!-- MAIN APP JS FILE -->
     <script src="lib/js/app.js"></script>
 
-    <!-- Full Calendar -->
-    <script src="lib/js/plugin/moment/moment.min.js"></script>
-    <script src="lib/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
-    <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+    <!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
+    <script src="lib/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="lib/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
 
     <!-- app specific source files -->
     <script src="lib/js/plugin/bootbox/bootbox.min.js"></script>
