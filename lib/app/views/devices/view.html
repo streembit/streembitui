@@ -1,5 +1,189 @@
-<div id="error-screen">
-    <div class="errmsg-container">
-        <div class="errmsg" data-bind="text: error"></div>          
+
+<div data-bind="foreach: iothubs" class="row" style="margin:0">        
+    <div class="col-md-12 iothub">
+        <div class="iothub-header">
+            <div class="pull-left" style="padding:5px 0 0 10px;"><span data-bind="text:name"></span></div>
+            <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
+                <button class="btn btn-xs btn-default" data-bind="click: edit_hub">
+                    <i class="fa fa-cog fa-lg"></i>
+                </button>
+                <button class="btn btn-xs btn-default" data-bind="click: add_device">
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                </button>
+                <button class="btn btn-xs btn-default" data-bind="click: $component.removehub">
+                    <i class="fa fa-minus-circle fa-lg"></i>
+                </button>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="iothub-details" data-bind="visible: !isedit_mode()">
+            <table>
+                <tr>
+                    <td><span class="title">ID:</span></td>
+                    <td><span class="data" data-bind="text:id"></span></td>
+                </tr>
+                <tr>
+                    <td><span class="title">Public key: </span></td>
+                    <td><span class="data" data-bind="text:publickey"></span></td>
+                </tr>
+            </table>
+        </div>
+        <div data-bind="template: template_name">
+        </div>
+
+        <div data-bind="foreach: iotdevices" class="row" style="margin:0">
+            <div class="col-md-4 iothub-iotdevice-frame">
+                <div class="iothub-iotdevice">
+                    <div class="title">
+                        <div class="pull-left" style="padding: 6px 5px 5px 5px;"><span data-bind="text: name"></span></div>
+                        <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
+                            <button class="btn btn-xs btn-default" data-bind="click: refresh">
+                                <i class="fa fa-refresh fa-lg"></i>
+                            </button>
+                            <button class="btn btn-xs btn-default" data-bind="click: settings">
+                                <i class="fa fa-cog fa-lg"></i>
+                            </button>
+                            <button class="btn btn-xs btn-default" data-bind="click: function(){ $parent.delete_device($data, $parent); }">
+                                <i class="fa fa-minus-circle fa-lg"></i>
+                            </button>
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div data-bind="template: template_name" class="iothub-iotdevice-details">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<script type="text/html" id="onoff_switch_device">    
+    <div class="onoff_switch">
+        <div>ON/OFF switch</div>
+        <div>
+            ID: <span data-bind="text:id"></span>
+        </div>
+    </div>    
+</script>
+
+<script type="text/html" id="add_device">
+    <div class="row" style="margin:0; padding:10px 0">
+        <article class="col-sm-12 col-md-12 col-lg-6">
+            <div style="border: 1px dotted #ccc;padding:10px">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>Add an IoT device to your Hub</legend>
+                        <div class="padding: 0">
+                            <div class="form-group" style="margin:0 0 10px 0">
+                                <label>Device ID</label>
+                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: newid">
+                                <div data-bind="visible: is_newid_error">
+                                    <em id="id-error" class="invalid error-label">This field is required.</em>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:0 0 10px 0">
+                                <label>Device name</label>
+                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: newname">
+                                <div data-bind="visible: is_newname_error">
+                                    <em id="id-error" class="invalid error-label">This field is required.</em>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:0 0 20px 0">
+                                <label>Device type</label>
+                                <select class="form-control" id="list" data-bind="value: selected_newdevice">
+                                    <option value="0">Select device ...</option>
+                                    <option value="2">On/Off Switch</option>
+                                    <option value="3">On/Off Switch with Electricity Measurement</option>
+                                    <option value="4">Level Control</option>
+                                    <option value="5">Alarms</option>
+                                    <option value="6">Door Lock</option>
+                                    <option value="7">Window Covering</option>
+                                    <option value="8">Pump Configuration and Control</option>
+                                    <option value="9">Thermostat</option>
+                                    <option value="10">Fan Control</option>
+                                    <option value="11">Color Control</option>
+                                    <option value="12">Illuminance Measurement</option>
+                                    <option value="13">Illuminance Level Sensing</option>
+                                    <option value="13">Temperature Measurement</option>
+                                    <option value="15">Pressure Measurement</option>
+                                    <option value="16">Flow Measurement</option>
+                                    <option value="17">Relative Humidity Measurement</option>
+                                    <option value="18">Temperature & Relative Humidity Measurement</option>
+                                    <option value="19">Occupancy Sensing</option>
+                                    <option value="20">Electricity Measurement</option>
+                                </select>
+                                <div data-bind="visible: is_newdevice_error">
+                                    <em id="id-error" class="invalid error-label">This field is required.</em>
+                                </div>
+                            </div>  
+                        </div>
+                    </fieldset>
+                    <div class="form-actions" style="margin:0 0 20px 0">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-12">
+                                <button class="btn btn-default" data-bind="click: cancel_add">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-primary" data-bind="click: add">
+                                    <i class="fa fa-save"></i>
+                                    Add Device
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>            
+        </article>
+    </div>
+</script>
+
+<script type="text/html" id="edit_hub">
+    <div class="row" style="margin:0; padding:10px 0">
+        <article class="col-sm-12 col-md-12 col-lg-6">
+            <div style="border: 1px dotted #ccc;padding:10px">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>Edit Hub</legend>
+                        <div class="padding: 0">
+                            <div class="form-group" style="margin:0 0 10px 0">
+                                <label>Device ID</label>
+                                <div>
+                                    <span data-bind="text: id"></span>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:0 0 10px 0">
+                                <label>Device name</label>
+                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: newname">
+                                <div data-bind="visible: is_newname_error">
+                                    <em id="id-error" class="invalid error-label">This field is required.</em>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:0 0 20px 0">
+                                <label>Public key</label>
+                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: newpublickey">
+                                <div data-bind="visible: is_newid_error">
+                                    <em id="id-error" class="invalid error-label">This field is required.</em>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions" style="margin:0 0 10px 0">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-12">
+                                <button class="btn btn-default" data-bind="click: cancel_edit_hub">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-primary" data-bind="click: submit_edit_hub">
+                                    <i class="fa fa-save"></i>
+                                    Update Hub
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </article>
+    </div>
+</script>

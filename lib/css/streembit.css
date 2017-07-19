@@ -1910,25 +1910,104 @@ table.logstable {
     margin: 0 !important;
 }
 
-
-
-
-
-
-
-    /* shoul be the last section */
-    /* at the END media queries */
-    @media (max-width: 790px) {
-        #left-panel {
-            display: none;
-        }
-
-        #header > div {
-            display: none;
-        }
+/* shoul be the last section */
+/* at the END media queries */
+@media (max-width: 790px) {
+    #left-panel {
+        display: none;
     }
 
-    .cert-info-panels dd span, .network-info-panels dd span {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    #header > div {
+        display: none;
+    }
+}
+
+.cert-info-panels dd span, .network-info-panels dd span {
+word-wrap: break-word;
+overflow-wrap: break-word;
+}
+
+
+.iothub {
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 0 0 20px 0;
+}
+
+.iothub-header {
+    padding: 5px;
+    background: #333;
+    color: #fff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.iothub-details {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    font-weight: bold;
+    padding:10px 0 8px 10px;
+    padding-bottom:8px;
+    border-bottom: 1px solid #ccc;
+    background-color:#f6f6f6;
+}
+
+.iothub-details .title{
+    color:#777;
+    padding-right:5px;
+}
+
+.iothub-details .data {
+    color: #111;
+}
+
+
+.iothub-details table{
+    border-collapse:collapse;
+    border-width:0;
+}
+
+.iothub-iotdevice-frame {
+    padding: 10px;
+}
+
+.iothub-iotdevice {
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    background-color: #fff;
+    box-shadow: 2px 2px 4px #eee;
+}
+
+.iothub-iotdevice .title {
+    background: #f3f3f3;
+    color: #000;
+    padding:0;
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+.iothub-iotdevice-details {
+    padding: 5px;
+}
+
+.iothub-iotdevice .onoff_switch {
+    padding: 10px;
+}
+
+
+@media (max-width: 820px) {
+    .iothub-details .title {
+        font-size: 9px;
+    }
+
+    .iothub-details .data {
+        font-size: 9px;
+    }
+
+    .iothub-iotdevice-frame {
+        padding: 4px;
+    }
 }
