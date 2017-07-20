@@ -1932,7 +1932,7 @@ overflow-wrap: break-word;
     border-radius: 2px;
     border: 1px solid #ddd;
     margin-bottom: 20px;
-    padding: 0 0 20px 0;
+    padding:0;
 }
 
 .iothub-header {
@@ -1944,7 +1944,7 @@ overflow-wrap: break-word;
 }
 
 .iothub-details {
-    margin: 0 0 10px 0;
+    margin: 0;
     font-size: 12px;
     font-weight: bold;
     padding:10px 0 8px 10px;
@@ -1978,6 +1978,7 @@ overflow-wrap: break-word;
     border-radius: 1px;
     background-color: #fff;
     box-shadow: 2px 2px 4px #eee;
+    margin: 10px 0;
 }
 
 .iothub-iotdevice .title {
@@ -2010,4 +2011,18 @@ overflow-wrap: break-word;
     .iothub-iotdevice-frame {
         padding: 4px;
     }
+}
+
+
+.iothub-form .form-actions {
+    margin: 0;
+    padding: 10px 0px 10px;
+}
+
+.iothub-form legend {
+   padding-left:15px;
+}
+
+.iothub-form .form-group {
+    margin: 0 15px 20px 10px;
 }
