@@ -61,15 +61,43 @@
 
 <script type="text/html" id="onoff_switch_device">    
     <div class="onoff_switch">
-        <div>ON/OFF switch</div>
+        <div style="display:flex;flex-direction: row">
+            <div style="flex-grow:1">
+                <div class="widget-toolbar hidden-mobile" role="menu" style="float: none;border-left-width: 0;">
+                    <span class="onoffswitch-title"><i class="fa fa-location-arrow"></i> Power</span>
+                    <span class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus, click: toggle" />
+                        <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span> <span class="onoffswitch-switch"></span> </label>
+                    </span>
+                </div>
+
+                <!--<div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="value: ctrlstatus, click: toggle">
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>-->
+
+            </div>
+            <div  style="flex-grow:1">
+                <div style="padding-top: 12px;">
+                    Device status report: <span data-bind="text: statustext" style="font-weight:bold"></span>
+                </div>
+            </div>
+        </div>
+        
         <div>
-            ID: <span data-bind="text:id"></span>
+            
         </div>
     </div>    
 </script>
 
 
 <script type="text/html" id="onoff_switch_device_settings">
+    <div class="form-group" style="margin-bottom:20px">
+        <div>Device type: <span style="font-weight:bold">ON/OFF switch</span></div>
+    </div>
     <div class="form-group" style="margin-bottom:20px">
         <label>Refresh interval</label>
         <input class="form-control" type="number" min="30000" max="3600000" data-bind="value: refresh_interval" style="max-width:150px">
