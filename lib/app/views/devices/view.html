@@ -63,26 +63,24 @@
     <div class="onoff_switch">
         <div style="display:flex;flex-direction: row">
             <div style="flex-grow:1">
-                <div class="widget-toolbar hidden-mobile" role="menu" style="float: none;border-left-width: 0;">
+                <!--<div class="widget-toolbar hidden-mobile" role="menu" style="float: none;border-left-width: 0;">
                     <span class="onoffswitch-title"><i class="fa fa-location-arrow"></i> Power</span>
                     <span class="onoffswitch">
-                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus, click: toggle" />
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus" />
                         <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span> <span class="onoffswitch-switch"></span> </label>
                     </span>
-                </div>
-
-                <!--<div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="value: ctrlstatus, click: toggle">
+                </div>-->
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus" >
                     <label class="onoffswitch-label" for="myonoffswitch">
                         <span class="onoffswitch-inner"></span>
                         <span class="onoffswitch-switch"></span>
                     </label>
-                </div>-->
-
+                </div>
             </div>
             <div  style="flex-grow:1">
                 <div style="padding-top: 12px;">
-                    Device status report: <span data-bind="text: statustext" style="font-weight:bold"></span>
+                    Device reported status: <span data-bind="text: statustext" style="font-weight:bold"></span>
                 </div>
             </div>
         </div>
