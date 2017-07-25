@@ -1,7 +1,7 @@
 <div class="uiview">
 
     <div class="row">
-        <div class="col-xs-12 col-md-8">
+        <div class="col-xs-12 col-md-12">
 
             <table style="margin-top:30px;width:100%;font-size: 12px;">
                 <tr>
@@ -13,8 +13,12 @@
                     <td class="account-info-item"><span data-bind="text: account"></span></td>
                 </tr>
                 <tr>
+                    <td>Encoded public key:</td>
+                    <td class="account-info-item"><span data-bind="text: bs58_public_key" style="font-size: 12px;"></span></td>
+                </tr>
+                <tr>
                     <td>Public key:</td>
-                    <td class="account-info-item"><span data-bind="text: public_key" style="font-size: 11px;"></span></td>
+                    <td class="account-info-item"><span data-bind="text: public_key" style="font-size: 12px;"></span></td>
                 </tr>
                 <!-- ko if: net_connected() == true && transport() == 'tcp' -->
                 <tr>
