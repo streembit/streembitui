@@ -40,6 +40,20 @@
                     <div class="title">
                         <div class="pull-left" style="padding: 6px 5px 5px 5px;"><span data-bind="text: name"></span></div>
                         <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
+                            <button class="btn btn-xs btn-default popper" data-toggle="popover" title="Device info">
+                                <i class="fa fa-info-circle fa-lg"></i>
+                            </button>
+                            <div class="popper-content hide">
+                                <table>
+                                    <tr><td>Address64: </td> <td data-bind="text: param1"></td></tr>
+                                    <tr><td>Address16: </td> <td data-bind="text: param2"></td></tr>
+                                    <tr><td>Iddle enabled: </td> <td data-bind="text: param3"></td></tr>
+                                    <tr><td>Relationship: </td> <td data-bind="text: param4"></td></tr>
+                                    <tr><td>Permit join: </td> <td data-bind="text: param5"></td></tr>
+                                    <tr><td>Depth: </td> <td data-bind="text: param6"></td></tr>
+                                    <tr><td>LQI: </td> <td data-bind="text: param7"></td></tr>
+                                </table>
+                            </div>
                             <button class="btn btn-xs btn-default" data-bind="click: refresh">
                                 <i class="fa fa-refresh fa-lg"></i>
                             </button>
@@ -62,17 +76,52 @@
 </div>
 
 
+<script type="text/html" id="smart_plug_device">
+    <div class="onoff_switch">
+        <div style="display:flex;flex-direction: row">
+            <div style="flex-grow:1">
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus">
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <div style="flex-grow:1">
+                <div style="padding-top: 12px;">
+                    Device reported status: <span data-bind="text: statustext" style="font-weight:bold"></span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <span>Power consumption: </span> <span data-bind="text: power_consumption"></span>
+        </div>
+        <div>
+            <span>Voltage: </span> <span data-bind="text: voltage"></span>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="smart_plug_device_settings">
+    <div class="form-group" style="margin-bottom:20px">
+        <div>Device type: <span style="font-weight:bold">ON/OFF switch</span></div>
+    </div>
+    <div class="form-group" style="margin-bottom:20px">
+        <label>Refresh interval</label>
+        <input class="form-control" type="number" min="30000" max="3600000" data-bind="value: refresh_interval" style="max-width:150px">
+        <div data-bind="visible: is_interval_error">
+            <em id="id-error" class="invalid error-label">A valid number is required between 30,000 and 3,600,000.</em>
+        </div>
+    </div>
+</script>
+
+
 <script type="text/html" id="onoff_switch_device">    
     <div class="onoff_switch">
         <div style="display:flex;flex-direction: row">
             <div style="flex-grow:1">
-                <!--<div class="widget-toolbar hidden-mobile" role="menu" style="float: none;border-left-width: 0;">
-                    <span class="onoffswitch-title"><i class="fa fa-location-arrow"></i> Power</span>
-                    <span class="onoffswitch">
-                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus" />
-                        <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span> <span class="onoffswitch-switch"></span> </label>
-                    </span>
-                </div>-->
                 <div class="onoffswitch">
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus" >
                     <label class="onoffswitch-label" for="myonoffswitch">
@@ -88,8 +137,11 @@
             </div>
         </div>
         
+        <div>    
+            <span>Power consumption: </span> <span data-bind="text: power_consumption"></span>
+        </div>
         <div>
-            
+            <span>Voltage: </span> <span data-bind="text: voltage"></span>
         </div>
     </div>    
 </script>
@@ -135,7 +187,7 @@
                                 <select class="form-control" id="list" data-bind="value: selected_newdevice">
                                     <option value="0">Select device ...</option>
                                     <option value="2">On/Off Switch</option>
-                                    <option value="3">On/Off Switch with Electricity Measurement</option>
+                                    <option value="3">Smart Plug</option>
                                     <option value="4">Level Control</option>
                                     <option value="5">Alarms</option>
                                     <option value="6">Door Lock</option>
