@@ -2106,3 +2106,84 @@ overflow-wrap: break-word;
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+
+
+.iothub-form .add-device {
+    
+}
+
+.iothub-form .add-device legend {
+    margin:0;
+}
+
+.iothub-form .iot-properties {
+    border-right: 1px dashed #ddd;
+    padding:20px 0 20px 0;
+}
+
+
+.iothub-form .add-feature {
+    padding: 10px 0 0 0;
+}
+
+.iothub-form .add-feature h2 {
+    font-weight: bold;
+    font-size: 18px;
+    color: #888;
+    border-bottom: 1px dashed #ddd;
+    padding: 0 0 5px 20px;
+    margin: 0;
+}
+
+@media (max-width: 820px) {
+    .iothub-form .iot-properties {
+        border-right: none;
+        border-right-width: 0;
+    }
+}
+
+.feature-item {
+    border: 2px solid #ccc;
+    background-color: #f2f2f2;
+    border-radius: 3px;
+    box-shadow: 3px 3px 4px #ddd;    
+    margin:10px;
+}
+
+
+.feature-item-text {
+    font-weight: bold;
+    padding: 0 40px 20px 40px;
+}
+
+.device-net-info {
+    position: absolute;
+    z-index: 9999;
+    right: -10px;
+    top: 0;
+    background-color: #444;
+    color: #fff;
+    padding:10px;
+    border:5px solid #111;
+    border-radius:5px;
+}
+
+.device-net-info table td{
+    padding:3px 0 3px 5px;
+}
+
+.device-feature-item {
+    margin: 5px 5px 10px 5px;
+    padding:0;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+}
+
+.device-feature-item .title {
+    background-color: #4196a5;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 2px 6px;
+    border-bottom: 2px solid #267987;
+}

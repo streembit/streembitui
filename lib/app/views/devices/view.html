@@ -2,7 +2,7 @@
 <div data-bind="foreach: iothubs" class="row" style="margin:0">        
     <div class="col-md-12 iothub">
         <div class="iothub-header">
-            <div class="pull-left" style="padding:5px 0 0 10px;"><span data-bind="text:name"></span></div>
+            <div class="pull-left" style="padding:5px 0 0 10px;"><i class="fa fa-microchip fa-lg"></i>&nbsp;&nbsp;&nbsp;<span data-bind="text:name"></span></div>
             <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
                 <button class="btn btn-xs btn-default" data-bind="click: refresh">
                     <i class="fa fa-refresh fa-lg"></i>
@@ -14,7 +14,7 @@
                     <i class="fa fa-plus-circle fa-lg"></i>
                 </button>
                 <button class="btn btn-xs btn-default" data-bind="click: $component.removehub">
-                    <i class="fa fa-minus-circle fa-lg"></i>
+                    <i class="fa fa-remove fa-lg"></i>
                 </button>
             </div>
             <div style="clear:both"></div>
@@ -35,36 +35,27 @@
         </div>
 
         <div data-bind="foreach: iotdevices" class="row" style="margin:0">
-            <div class="col-md-4 iothub-iotdevice-frame">
+            <div class="col-md-3 iothub-iotdevice-frame">
                 <div class="iothub-iotdevice">
                     <div class="title">
                         <div class="pull-left" style="padding: 6px 5px 5px 5px;"><span data-bind="text: name"></span></div>
-                        <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
-                            <button class="btn btn-xs btn-default popper" data-toggle="popover" title="Device info">
-                                <i class="fa fa-info-circle fa-lg"></i>
-                            </button>
-                            <div class="popper-content hide">
-                                <table>
-                                    <tr><td>Address64: </td> <td data-bind="text: param1"></td></tr>
-                                    <tr><td>Address16: </td> <td data-bind="text: param2"></td></tr>
-                                    <tr><td>Iddle enabled: </td> <td data-bind="text: param3"></td></tr>
-                                    <tr><td>Relationship: </td> <td data-bind="text: param4"></td></tr>
-                                    <tr><td>Permit join: </td> <td data-bind="text: param5"></td></tr>
-                                    <tr><td>Depth: </td> <td data-bind="text: param6"></td></tr>
-                                    <tr><td>LQI: </td> <td data-bind="text: param7"></td></tr>
-                                </table>
-                            </div>
+                        <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">                            
                             <button class="btn btn-xs btn-default" data-bind="click: refresh">
                                 <i class="fa fa-refresh fa-lg"></i>
+                            </button>
+                            <button class="btn btn-xs btn-default" data-bind="click: toggle_network_info">
+                                <i class="fa fa-info-circle fa-lg"></i>
                             </button>
                             <button class="btn btn-xs btn-default" data-bind="click: edit_device">
                                 <i class="fa fa-cog fa-lg"></i>
                             </button>
                             <button class="btn btn-xs btn-default" data-bind="click: function(){ $parent.delete_device($data, $parent); }">
-                                <i class="fa fa-minus-circle fa-lg"></i>
+                                <i class="fa fa-remove fa-lg"></i>
                             </button>
                         </div>
                         <div style="clear:both"></div>
+                    </div>
+                    <div data-bind="template: network_info_template" style="position:relative">
                     </div>
                     <div data-bind="template: template_name" class="iothub-iotdevice-details">
 
@@ -74,6 +65,88 @@
         </div>
     </div>
 </div>
+
+<script type="text/html" id="feature-2-template">
+    <div class="title">
+        ON/OFF Switch        
+    </div>
+    <div style="display: flex;width: 100%;justify-content: center">
+        <div class="onoffswitch" style="margin:15px">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus">
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</script>
+
+<script type="text/html" id="feature-3-template">
+    <div class="title">
+        Electricity Measurement
+    </div>
+    <div style="padding:10px">
+        <div>
+            Power consumption: <span data-bind="text: power_consumption"></span> Watt
+        </div>
+        <div>
+            Voltage: <span data-bind="text: voltage"></span> Volt
+        </div>        
+    </div>
+</script>
+
+<script type="text/html" id="feature-4-template">
+    <div>
+        Temperature Measurement
+    </div>    
+</script>
+
+<script type="text/html" id="feature-5-template">
+    <div>
+        Relative Humidity Measurement
+    </div>
+</script>
+
+<script type="text/html" id="feature-6-template">
+    <div>
+        Occupancy Sensing
+    </div>
+</script>
+
+<script type="text/html" id="features-template">
+    <div data-bind="foreach: features">
+        <div class="device-feature-item" data-bind="template: {name: 'feature-' + $data.type + '-template' }">           
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="zigbee-info-template">
+    <div class="device-net-info">
+        <table>
+            <tr><td>Address64: </td> <td data-bind="text: networkinfo.address64"></td></tr>
+            <tr><td>Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>
+            <tr><td>Iddle enabled: </td> <td data-bind="text: networkinfo.iddle_enable"></td></tr>
+            <tr><td>Relationship: </td> <td data-bind="text: networkinfo.relationship"></td></tr>
+            <tr><td>Permit join: </td> <td data-bind="text: networkinfo.permitjoin"></td></tr>
+            <tr><td>Depth: </td> <td data-bind="text: networkinfo.depth"></td></tr>
+            <tr><td>LQI: </td> <td data-bind="text: networkinfo.lqi"></td></tr>
+        </table>
+    </div>
+</script>
+
+<script type="text/html" id="zwave-info-template">
+    <div class="device-net-info">
+        Z-Wave net info
+    </div>
+</script>
+
+<script type="text/html" id="slowpan-info-template">
+    <div class="device-net-info">
+        6LowPAN net info
+    </div>
+</script>
 
 
 <script type="text/html" id="smart_plug_device">
@@ -117,7 +190,6 @@
     </div>
 </script>
 
-
 <script type="text/html" id="onoff_switch_device">    
     <div class="onoff_switch">
         <div style="display:flex;flex-direction: row">
@@ -146,7 +218,6 @@
     </div>    
 </script>
 
-
 <script type="text/html" id="onoff_switch_device_settings">
     <div class="form-group" style="margin-bottom:20px">
         <div>Device type: <span style="font-weight:bold">ON/OFF switch</span></div>
@@ -161,73 +232,7 @@
 </script>
 
 <script type="text/html" id="add_device">
-    <div class="row" style="margin:0; padding:10px 0">
-        <article class="col-sm-12 col-md-12 col-lg-6">
-            <div style="border: 1px dotted #ccc;padding:0;margin-top:20px; margin-bottom:30px">
-                <form class="form-horizontal iothub-form">
-                    <fieldset>
-                        <legend>Add an IoT device to your Hub</legend>
-                        <div class="padding: 0">
-                            <div class="form-group">
-                                <label>Device ID</label>
-                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: newid">
-                                <div data-bind="visible: is_newid_error">
-                                    <em id="id-error" class="invalid error-label">This field is required.</em>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Device name</label>
-                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: newname">
-                                <div data-bind="visible: is_newname_error">
-                                    <em id="id-error" class="invalid error-label">This field is required.</em>
-                                </div>
-                            </div>
-                            <div class="form-group" style="margin-bottom:20px">
-                                <label>Device type</label>
-                                <select class="form-control" id="list" data-bind="value: selected_newdevice">
-                                    <option value="0">Select device ...</option>
-                                    <option value="2">On/Off Switch</option>
-                                    <option value="3">Smart Plug</option>
-                                    <option value="4">Level Control</option>
-                                    <option value="5">Alarms</option>
-                                    <option value="6">Door Lock</option>
-                                    <option value="7">Window Covering</option>
-                                    <option value="8">Pump Configuration and Control</option>
-                                    <option value="9">Thermostat</option>
-                                    <option value="10">Fan Control</option>
-                                    <option value="11">Color Control</option>
-                                    <option value="12">Illuminance Measurement</option>
-                                    <option value="13">Illuminance Level Sensing</option>
-                                    <option value="13">Temperature Measurement</option>
-                                    <option value="15">Pressure Measurement</option>
-                                    <option value="16">Flow Measurement</option>
-                                    <option value="17">Relative Humidity Measurement</option>
-                                    <option value="18">Temperature & Relative Humidity Measurement</option>
-                                    <option value="19">Occupancy Sensing</option>
-                                    <option value="20">Electricity Measurement</option>
-                                </select>
-                                <div data-bind="visible: is_newdevice_error">
-                                    <em id="id-error" class="invalid error-label">This field is required.</em>
-                                </div>
-                            </div>  
-                        </div>
-                    </fieldset>
-                    <div class="form-actions">
-                        <div class="row" style="margin:0">
-                            <div class="col-md-12">
-                                <button class="btn btn-default" data-bind="click: cancel_add">
-                                    Cancel
-                                </button>
-                                <button class="btn btn-primary" data-bind="click: add">
-                                    <i class="fa fa-save"></i>
-                                    Add Device
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>            
-        </article>
+    <div data-bind="component:{name: 'addiotdevice', params: $data}">
     </div>
 </script>
 
@@ -302,8 +307,8 @@
                                     <em id="id-error" class="invalid error-label">The name field is required.</em>
                                 </div>
                             </div>
-                            <div data-bind="template: settings_template">
-
+                            <div>
+                                <!--data-bind="template: features_template"-->
                             </div>
                         </div>
                     </fieldset>
