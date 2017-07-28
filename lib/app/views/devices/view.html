@@ -67,9 +67,9 @@
 </div>
 
 <script type="text/html" id="feature-2-template">
-    <div class="title">
+    <!--<div class="title">
         ON/OFF Switch        
-    </div>
+    </div>-->
     <div style="display: flex;width: 100%;justify-content: center">
         <div class="onoffswitch" style="margin:15px">
             <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus">
@@ -83,10 +83,10 @@
 </script>
 
 <script type="text/html" id="feature-3-template">
-    <div class="title">
+    <!--<div class="title">
         Electricity Measurement
-    </div>
-    <div style="padding:10px">
+    </div>-->
+    <div style="padding:10px;text-align:center">
         <div>
             Power consumption: <span data-bind="text: power_consumption"></span> Watt
         </div>
@@ -97,9 +97,24 @@
 </script>
 
 <script type="text/html" id="feature-4-template">
-    <div>
+    <!--<div class="title">
         Temperature Measurement
-    </div>    
+    </div>-->
+    <div style="margin:15px 0">
+        <div class="thermomemter-container">
+            <div class="de">
+                <div class="den">
+                    <div class="dene">
+                        <div class="denem">
+                            <div class="deneme">
+                                <span>23</span><span class="decimal">.9</span><strong>&deg;</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/html" id="feature-5-template">
