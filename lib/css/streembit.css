@@ -2252,27 +2252,61 @@ overflow-wrap: break-word;
 }
 
 .deneme {
-    padding: 3px 10px 0 4px;
+    padding: 10px 10px 0 4px;
     width: 60px;
     height: 68px;
     display: inline-block;
     margin: -35px 0 0 -35px;
     color: #555;
     text-shadow: 1px 1px 1px white;
-    font-family: 'Dosis';
-    font-size: 45px;
-    font-weight: 400;
+    font-size: 32px;
+    font-weight: 800;
     text-align: center;
+    font-family: "Arial Black", Gadget, sans-serif;
 }
 
 .deneme .decimal {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 200;
 }
 
 .deneme strong {
     position: absolute;
-    right: 0;
-    top: 10px;
-    font-size: 20px;
+    right: -1px;
+    top: 2px;
+    font-size: 26px;
+}
+
+.singledigit .deneme {
+    padding-left: 16px;
+}
+
+.singledigit strong {
+    right: 8px;
+}
+
+.temperature {
+    font-size: 56px;
+    font-weight: 800;
+    text-align: center;
+    font-family: "Arial Black", Gadget, sans-serif;
+}
+
+.temperature .decimal {
+    font-size: 28px;
+    font-weight: 200;
+}
+
+.temperature strong {
+    position: absolute;
+    font-size: 36px;
+}
+
+.data-notreceived-info {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    padding:10px 0;
 }

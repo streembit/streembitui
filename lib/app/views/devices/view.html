@@ -43,7 +43,7 @@
                             <button class="btn btn-xs btn-default" data-bind="click: refresh">
                                 <i class="fa fa-refresh fa-lg"></i>
                             </button>
-                            <button class="btn btn-xs btn-default" data-bind="click: toggle_network_info">
+                            <button class="btn btn-xs btn-default" data-bind="click: toggle_shownetwork_info">
                                 <i class="fa fa-info-circle fa-lg"></i>
                             </button>
                             <button class="btn btn-xs btn-default" data-bind="click: edit_device">
@@ -86,13 +86,16 @@
     <!--<div class="title">
         Electricity Measurement
     </div>-->
-    <div style="padding:10px;text-align:center">
+    <div style="padding:10px;text-align:center" data-bind="visible: datareceived">
         <div>
             Power consumption: <span data-bind="text: power_consumption"></span> Watt
         </div>
         <div>
             Voltage: <span data-bind="text: voltage"></span> Volt
         </div>        
+    </div>
+    <div data-bind="visible: !datareceived()" class="data-notreceived-info">
+        <i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>&nbsp;&nbsp;<span>Waiting to receive data ...</span>
     </div>
 </script>
 
@@ -101,18 +104,13 @@
         Temperature Measurement
     </div>-->
     <div style="margin:15px 0">
-        <div class="thermomemter-container">
-            <div class="de">
-                <div class="den">
-                    <div class="dene">
-                        <div class="denem">
-                            <div class="deneme">
-                                <span>23</span><span class="decimal">.9</span><strong>&deg;</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div style="position: relative;" data-bind="visible: datareceived">
+            <div class="temperature">
+                <i class="fa fa-thermometer-three-quarters fa-5" style="color:#aaa"></i>&nbsp;<span data-bind="text: integral">1</span><span class="decimal">.</span><span class="decimal" data-bind="text: decimal">9</span><strong>&deg;</strong>
             </div>
+        </div>
+        <div data-bind="visible: !datareceived()" class="data-notreceived-info">
+            <i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>&nbsp;&nbsp;<span>Waiting to receive data ...</span>
         </div>
     </div>
 </script>
