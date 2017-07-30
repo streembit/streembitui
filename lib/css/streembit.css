@@ -2165,12 +2165,20 @@ overflow-wrap: break-word;
     background-color: #444;
     color: #fff;
     padding:10px;
-    border:5px solid #111;
+    border:4px solid #000;
     border-radius:5px;
 }
 
-.device-net-info table td{
-    padding:3px 0 3px 5px;
+.device-net-info table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #666;
+    background-color: #222;
+    color: #bbb;
+}
+
+.device-net-info table td:nth-child(2) {
+    background-color: #222;
+    color: #fff;
 }
 
 .device-feature-item {
@@ -2197,93 +2205,6 @@ overflow-wrap: break-word;
     margin: 6px auto 0;
 }
 
-.de .den, .de .dene, .de .denem, .de .deneme {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-}
-
-.de {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-    background-color: transparent;
-}
-
-.den {
-    position: relative;
-    width: 105px;
-    height: 105px;
-    margin: -52px 0 0 -52px;
-    border-radius: 100%;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, .5), 0 2px 20px rgba(255, 255, 255, 1);
-    background: #df3341;
-    background: -moz-linear-gradient(left, #df3341 0%, #d4f355 50%, #61c0ec 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#df3341), color-stop(50%,#d4f355), color-stop(100%,#61c0ec));
-    background: -webkit-linear-gradient(left, #df3341 0%,#d4f355 50%,#61c0ec 100%);
-    background: linear-gradient(to right, #df3341 0%,#d4f355 50%,#61c0ec 100%);
-    position: relative;
-}
-
-.dene {
-    width: 90px;
-    height: 90px;
-    margin: -45px 0 0 -45px;
-    border-radius: 100%;
-    box-shadow: inset 0 2px 2px rgba(255, 255, 255, .4), 0 3px 13px rgba(0, 0, 0, .85);
-    background: #f2f6f5;
-    background: -moz-linear-gradient(top, #f2f6f5 0%, #cbd5d6 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2f6f5), color-stop(100%, #cbd5d6));
-    background: -webkit-linear-gradient(top, #f2f6f5 0%, #cbd5d6 100%);
-    background: -o-linear-gradient(top, #f2f6f5 0%, #cbd5d6 100%);
-}
-
-.denem {
-    width: 80px;
-    height: 80px;
-    margin: -40px 0 0 -40px;
-    border-radius: 100%;
-    background: #cbd5d6;
-    background: -moz-linear-gradient(top, #cbd5d6 0%, #f2f6f5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cbd5d6), color-stop(100%, #f2f6f5));
-    background: -webkit-linear-gradient(top, #cbd5d6 0%, #f2f6f5 100%);
-}
-
-.deneme {
-    padding: 10px 10px 0 4px;
-    width: 60px;
-    height: 68px;
-    display: inline-block;
-    margin: -35px 0 0 -35px;
-    color: #555;
-    text-shadow: 1px 1px 1px white;
-    font-size: 32px;
-    font-weight: 800;
-    text-align: center;
-    font-family: "Arial Black", Gadget, sans-serif;
-}
-
-.deneme .decimal {
-    font-size: 16px;
-    font-weight: 200;
-}
-
-.deneme strong {
-    position: absolute;
-    right: -1px;
-    top: 2px;
-    font-size: 26px;
-}
-
-.singledigit .deneme {
-    padding-left: 16px;
-}
-
-.singledigit strong {
-    right: 8px;
-}
 
 .temperature {
     font-size: 56px;
@@ -2309,4 +2230,10 @@ overflow-wrap: break-word;
     align-items: center;
     font-size: 16px;
     padding:10px 0;
+}
+
+.inactive-device-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: #bbb;
 }
