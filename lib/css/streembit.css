@@ -2179,14 +2179,20 @@ overflow-wrap: break-word;
 .device-net-info table td:nth-child(2) {
     background-color: #222;
     color: #fff;
+    max-width: 400px;
+    word-wrap: break-word;
 }
 
 .device-feature-item {
     margin: 3px;
-    padding:0;
+    padding: 0;
     border: 1px dashed #ccc;
     border-radius: 5px;
-    background-color:#fff;
+    background-color: #fff;
+    min-height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .device-feature-item .title {

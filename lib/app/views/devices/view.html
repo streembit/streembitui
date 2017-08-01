@@ -24,7 +24,7 @@
         </div>
         <div data-bind="template: network_info_template" style="position:relative">
         </div>
-        <div class="iothub-details" data-bind="visible: !isedit_mode()">
+        <!--<div class="iothub-details" data-bind="visible: !isedit_mode()">
             <table>
                 <tr>
                     <td><span class="title">ID:</span></td>
@@ -35,7 +35,7 @@
                     <td><span class="data" data-bind="text:publickey"></span></td>
                 </tr>
             </table>
-        </div>
+        </div>-->
         <div data-bind="template: template_name">
         </div>
 
@@ -71,69 +71,74 @@
     </div>
 </div>
 
-<script type="text/html" id="feature-2-template">
-    <div data-bind="visible: datareceived">
-        <div style="display: flex;width: 100%;justify-content: center">
-            <div class="onoffswitch" style="margin:15px">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus">
-                <label class="onoffswitch-label" for="myonoffswitch">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
-            </div>
-            <div style="clear:both"></div>
-        </div>        
+<!-- Feature specific templates -->
+<script type="text/html" id="feature-receiving-data">
+    <div class="data-notreceived-info">
+        <span class="inactive-device-info">Receiving data ...</span>
     </div>
-    <div data-bind="visible: !datareceived()" class="data-notreceived-info">
+</script>
+
+<script type="text/html" id="feature-inactive-device">
+    <div class="data-notreceived-info">
         <span class="inactive-device-info">Device is inactive ...</span>
     </div>
 </script>
 
-<script type="text/html" id="feature-3-template">
-    <div style="padding:10px;text-align:center" data-bind="visible: datareceived">
+<script type="text/html" id="feature-on-off-switch">
+    <div style="display: flex;width: 100%;justify-content: center">
+        <div class="onoffswitch" style="margin:15px">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-bind="switchbtn: ctrlstatus">
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <div style="clear:both"></div>
+    </div>  
+</script>
+
+<script type="text/html" id="feature-electric-measurement">
+    <div style="padding:10px;text-align:center">
         <div>
             Power consumption: <span data-bind="text: power_consumption"></span> Watt
         </div>
         <div>
             Voltage: <span data-bind="text: voltage"></span> Volt
-        </div>        
-    </div>
-    <div data-bind="visible: !datareceived()" class="data-notreceived-info">
-        <span class="inactive-device-info">Device is inactive ...</span>
+        </div>
     </div>
 </script>
 
-<script type="text/html" id="feature-4-template">
-    <!--<div class="title">
-        Temperature Measurement
-    </div>-->
+<script type="text/html" id="feature-temperature-measurement">
     <div style="margin:15px 0">
-        <div style="position: relative;" data-bind="visible: datareceived">
+        <div style="position: relative;">
             <div class="temperature">
                 <i class="fa fa-thermometer-three-quarters fa-5" style="color:#aaa"></i>&nbsp;<span data-bind="text: integral">1</span><span class="decimal">.</span><span class="decimal" data-bind="text: decimal">9</span><strong>&deg;</strong>
             </div>
         </div>
-        <div data-bind="visible: !datareceived()" class="data-notreceived-info">
-            <span class="inactive-device-info">Device is inactive ...</span>
-        </div>
     </div>
 </script>
 
-<script type="text/html" id="feature-5-template">
+<script type="text/html" id="feature-relhumidity-measurement">
     <div>
         Relative Humidity Measurement
     </div>
 </script>
 
-<script type="text/html" id="feature-6-template">
+<script type="text/html" id="feature-occupancy-sensing">
     <div>
         Occupancy Sensing
     </div>
 </script>
 
+<script type="text/html" id="feature-template">
+    <div data-bind="template: template_name">        
+    </div>        
+</script>
+
+
 <script type="text/html" id="features-template">
     <div data-bind="foreach: features">
-        <div class="device-feature-item" data-bind="template: {name: 'feature-' + $data.type + '-template' }">           
+        <div class="device-feature-item" data-bind="template: {name: 'feature-template' }">           
         </div>
     </div>
 </script>
@@ -142,6 +147,7 @@
 <script type="text/html" id="gateway-info-template">
     <div class="device-net-info" style="right:25px;top:3px" data-bind="click: toggle_shownetwork_info">
         <table>
+            <tr><td>Device ID: </td> <td data-bind="text: id"></td></tr>
             <tr><td>Network: </td> <td data-bind="text: networkinfo.platform"></td></tr>
             <tr><td>Manufacturer: </td> <td data-bind="text: networkinfo.manufacturername"></td></tr>
             <tr><td>Model: </td> <td data-bind="text: networkinfo.modelidentifier"></td></tr>
@@ -151,6 +157,7 @@
             <tr><td>Secure_hardware: </td> <td data-bind="text: networkinfo.secure_hardware"></td></tr>
             <tr><td>MCU Address64: </td> <td data-bind="text: networkinfo.address64"></td></tr>
             <tr><td>MCU Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>
+            <tr><td>Public key: </td> <td data-bind="text: publickey"></td></tr>
         </table>
     </div>
 </script>
