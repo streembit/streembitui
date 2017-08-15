@@ -24,18 +24,6 @@
         </div>
         <div data-bind="template: network_info_template" style="position:relative">
         </div>
-        <!--<div class="iothub-details" data-bind="visible: !isedit_mode()">
-            <table>
-                <tr>
-                    <td><span class="title">ID:</span></td>
-                    <td><span class="data" data-bind="text:id"></span></td>
-                </tr>
-                <tr>
-                    <td><span class="title">Public key: </span></td>
-                    <td><span class="data" data-bind="text:publickey"></span></td>
-                </tr>
-            </table>
-        </div>-->
         <div data-bind="template: template_name">
         </div>
 
@@ -75,6 +63,12 @@
 <script type="text/html" id="feature-receiving-data">
     <div class="data-notreceived-info">
         <span class="inactive-device-info">Receiving data ...</span>
+    </div>
+</script>
+
+<script type="text/html" id="feature-error-deviceoffline">
+    <div class="data-notreceived-info">
+        <span class="inactive-device-info">The device is offline.</span>
     </div>
 </script>
 
@@ -171,11 +165,6 @@
             <tr><td>Network: </td> <td>Zigbee</td></tr>
             <tr><td>Address64: </td> <td data-bind="text: networkinfo.address64"></td></tr>
             <tr><td>Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>            
-            <!--<tr><td>Iddle enabled: </td> <td data-bind="text: networkinfo.iddle_enable"></td></tr>
-            <tr><td>Relationship: </td> <td data-bind="text: networkinfo.relationship"></td></tr>
-            <tr><td>Permit join: </td> <td data-bind="text: networkinfo.permitjoin"></td></tr>
-            <tr><td>Depth: </td> <td data-bind="text: networkinfo.depth"></td></tr>
-            <tr><td style="border-bottom-width:0">LQI: </td> <td style="border-bottom-width:0" data-bind="text: networkinfo.lqi"></td></tr>-->
         </table>
     </div>
 </script>

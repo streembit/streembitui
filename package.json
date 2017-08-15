@@ -12,15 +12,13 @@
     "type": "git",
     "url": "https://github.com/streembit/streembitui.git"
   },
-  "window": {
+"window": {
+    "id": "streembitwindow",
     "toolbar": false,
-    "width": 1050,
-    "height": 750,
-    "min-width": 1040,
-    "min-height": 740,
     "frame": true,
-    "icon": "lib/images/streembit64.png"
-  },
+    "icon": "lib/images/streembit64.png",
+    "show": false
+},
   "scripts": {
     "start": "nw ."
   },
