@@ -16,6 +16,12 @@
                 <button class="btn btn-xs btn-default" data-bind="click: add_device">
                     <i class="fa fa-plus-circle fa-lg"></i>
                 </button>
+                <button class="btn btn-xs btn-default" data-bind="click: manage_users">
+                    <i class="fa fa-user fa-lg"></i>
+                </button>
+                <button class="btn btn-xs btn-default" data-bind="click: manage_devices">
+                    <i class="fa fa-dashboard fa-lg"></i>
+                </button>
                 <button class="btn btn-xs btn-default" data-bind="click: $component.removehub">
                     <i class="fa fa-remove fa-lg"></i>
                 </button>
@@ -27,7 +33,7 @@
         <div data-bind="template: template_name">
         </div>
 
-        <div data-bind="foreach: iotdevices" class="row" style="margin:0">
+        <div data-bind="foreach: iotdevices, visible: isedit_mode() == false" class="row" style="margin:0">
             <div class="col-md-3 iothub-iotdevice-frame">
                 <div class="iothub-iotdevice">
                     <div class="title">
@@ -89,6 +95,16 @@
         </div>
         <div style="clear:both"></div>
     </div>  
+</script>
+
+<script type="text/html" id="feature-occupancy-sensing">
+    <div style="display: flex;width: 100%;justify-content: center">
+        <div class="occupancy-sensor" style="margin:15px">
+            <div>
+                <i class="fa fa-bell fa-5x" data-bind="css: {'faa-ring': isoccupancy, animated: isoccupancy, 'occupancy-alarmed': isoccupancy}"></i>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/html" id="feature-electric-measurement">
@@ -317,6 +333,68 @@
         </article>
     </div>
 </script>
+
+
+<script type="text/html" id="manage_users">
+    <div class="row" style="margin:0; padding:0">
+        <article class="col-sm-12 col-md-12 col-lg-6">
+            <div style="border: 1px dotted #ccc;padding:0;margin-top:20px;margin-bottom:30px">
+                <form class="form-horizontal iothub-form">
+                    <fieldset>
+                        <legend>Manage users on the Hub</legend>
+                        <div class="padding: 0">
+                          
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-12">
+                                <button class="btn btn-default" data-bind="click: cancel_manage_users">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-primary" data-bind="click: submit_manage_users">
+                                    <i class="fa fa-save"></i>
+                                    Update Hub
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </article>
+    </div>
+</script>
+
+<script type="text/html" id="manage_devices">
+    <div class="row" style="margin:0; padding:0">
+        <article class="col-sm-12 col-md-12 col-lg-6">
+            <div style="border: 1px dotted #ccc;padding:0;margin-top:20px;margin-bottom:30px">
+                <form class="form-horizontal iothub-form">
+                    <fieldset>
+                        <legend>Manage devices on the Hub</legend>
+                        <div class="padding: 0">
+
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-12">
+                                <button class="btn btn-default" data-bind="click: cancel_manage_devices">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-primary" data-bind="click: submit_manage_devices">
+                                    <i class="fa fa-save"></i>
+                                    Update Hub
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </article>
+    </div>
+</script>
+
 
 <script type="text/html" id="edit_device">
     <div class="row" style="margin:0; padding:0">
