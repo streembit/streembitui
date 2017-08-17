@@ -441,3 +441,35 @@
         </article>
     </div>
 </script>
+
+
+
+<script type="text/html" id="notpermitted-zigbee-devices-template">
+    <div data-bind="foreach: notpermitted_devices">
+        <div>
+            <table>
+                <tr><td>Device ID: </td> <td data-bind="text: deviceid"></td></tr>
+                <tr><td>Protocol: </td> <td data-bind="text: protocol"></td></tr>
+                <tr><td>Manufacturer: </td> <td data-bind="text: manufacturername"></td></tr>
+                <tr><td>Model: </td> <td data-bind="text: modelidentifier"></td></tr>
+                <tr><td>Hardware version: </td> <td data-bind="text: hwversion"></td></tr>
+                <tr><td>Network: </td> <td>Zigbee</td></tr>
+                <tr><td>Address64: </td> <td data-bind="text: address64"></td></tr>
+                <tr><td>Address16: </td> <td data-bind="text: address16"></td></tr>
+            </table>
+            <div data-bind="foreach: features">
+                <div data-bind="text: name">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-default" data-bind="click: cancel_edit_notpremitted_devices">
+            Cancel
+        </button>
+        <button class="btn btn-primary" data-bind="click: submit_notpremitted_devices">
+            <i class="fa fa-save"></i>
+            Update Gateway
+        </button>
+    </div>
+</script>
