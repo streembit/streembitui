@@ -2,18 +2,18 @@
 <div data-bind="foreach: iothubs" class="row" style="margin:0">        
     <div class="col-md-12 iothub">
         <div class="iothub-header">
-            <div class="pull-left" style="padding:5px 0 0 10px;"><i class="fa fa-tasks fa-lg"></i>&nbsp;&nbsp;&nbsp;<span data-bind="text:name"></span></div>
+            <div class="pull-left" style="padding:5px 0 0 15px;"><span data-bind="text:name"></span></div>
             <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
-                <button class="btn btn-xs btn-default" data-bind="click: refresh">
-                    <i class="fa fa-refresh fa-lg"></i>
-                </button>
-                <button class="btn btn-xs btn-default" data-bind="click: toggle_shownetwork_info">
+                <button class="btn btn-xs btn-default" data-bind="click: toggle_shownetwork_info" data-toggle="tooltip" data-placement="bottom" title="Network info">
                     <i class="fa fa-info-circle fa-lg"></i>
                 </button>
-                <button class="btn btn-xs btn-default" data-bind="click: edit_hub">
+                <button class="btn btn-xs btn-default" data-bind="click: show_device_list" data-toggle="tooltip" data-placement="bottom" title="List devices">
+                    <i class="fa fa-list-ul fa-lg"></i>
+                </button>
+                <button class="btn btn-xs btn-default" data-bind="click: edit_hub" data-toggle="tooltip" data-placement="bottom" title="Edit Hub">
                     <i class="fa fa-cog fa-lg"></i>
                 </button>
-                <button class="btn btn-xs btn-default" data-bind="click: add_device">
+                <!--<button class="btn btn-xs btn-default" data-bind="click: add_device">
                     <i class="fa fa-plus-circle fa-lg"></i>
                 </button>
                 <button class="btn btn-xs btn-default" data-bind="click: manage_users">
@@ -21,8 +21,8 @@
                 </button>
                 <button class="btn btn-xs btn-default" data-bind="click: manage_devices">
                     <i class="fa fa-dashboard fa-lg"></i>
-                </button>
-                <button class="btn btn-xs btn-default" data-bind="click: $component.removehub">
+                </button>-->
+                <button class="btn btn-xs btn-default" data-bind="click: $component.removehub" data-toggle="tooltip" data-placement="bottom" title="Delete Hub">
                     <i class="fa fa-remove fa-lg"></i>
                 </button>
             </div>
@@ -66,9 +66,9 @@
 </div>
 
 <!-- Feature specific templates -->
-<script type="text/html" id="feature-receiving-data">
+<script type="text/html" id="receiving-data">
     <div class="data-notreceived-info">
-        <span class="inactive-device-info">Receiving data ...</span>
+        <span class="inactive-device-info">Receiving data </span> <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
     </div>
 </script>
 
@@ -444,32 +444,61 @@
 
 
 
-<script type="text/html" id="notpermitted-zigbee-devices-template">
-    <div data-bind="foreach: notpermitted_devices">
-        <div>
-            <table>
-                <tr><td>Device ID: </td> <td data-bind="text: deviceid"></td></tr>
-                <tr><td>Protocol: </td> <td data-bind="text: protocol"></td></tr>
-                <tr><td>Manufacturer: </td> <td data-bind="text: manufacturername"></td></tr>
-                <tr><td>Model: </td> <td data-bind="text: modelidentifier"></td></tr>
-                <tr><td>Hardware version: </td> <td data-bind="text: hwversion"></td></tr>
-                <tr><td>Network: </td> <td>Zigbee</td></tr>
-                <tr><td>Address64: </td> <td data-bind="text: address64"></td></tr>
-                <tr><td>Address16: </td> <td data-bind="text: address16"></td></tr>
-            </table>
-            <div data-bind="foreach: features">
-                <div data-bind="text: name">
+<script type="text/html" id="unconfigured-zigbee-devices-template">
+    <div style="display:flex;justify-content:center;padding:10px 30px">
+        <div class="administer_devices">
+            <div class="header">
+                New connected devices
+            </div>
+            <div data-bind="foreach: unconfigured_devices" class="unconfigured_devices_items">
+                <div class="unconfigured_device">
+                    <!-- ko if: protocol == "zigbee" -->
+                    <table>
+                        <tr><td>Protocol: </td> <td>Zigbee</td></tr>
+                        <tr><td>Device ID: </td> <td data-bind="text: deviceid"></td></tr>
+                        <tr><td>Manufacturer: </td> <td data-bind="text: manufacturername"></td></tr>
+                        <tr><td>Model: </td> <td data-bind="text: modelidentifier"></td></tr>
+                        <tr><td>Hardware version: </td> <td data-bind="text: hwversion"></td></tr>
+                        <tr><td>Address64: </td> <td data-bind="text: address64"></td></tr>
+                        <tr><td>Address16: </td> <td data-bind="text: address16"></td></tr>
+                    </table>
+                    <div style="margin-top:15px;padding: 0 5px">
+                        <div>Device name</div>
+                        <input type="text" data-bind="value: devicename" style="min-width:200px" />
+                    </div>
+                    <div data-bind="foreach: features" class="featureslist">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-bind="checked: selected"><span data-bind="text: name"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: protocol == "zwave" -->
+                        Z-wave TODO
+                    <!-- /ko -->
+                    <div class="permission_btns">
+                        <label class="radio radio-inline" style="margin-top: 0">
+                            <input type="radio" class="radiobox" name="permissionGroup" value="1" data-bind="checked: permitted">
+                            <span>Allow</span>
+                        </label>
+                        <label class="radio radio-inline" style="margin-top: 0">
+                            <input type="radio" class="radiobox" name="permissionGroup" value="0" data-bind="checked: permitted">
+                            <span>Remove</span>
+                        </label>
+                    </div>
                 </div>
             </div>
+            <div style="margin-top:20px;width:100%;text-align:center;border-top:2px dashed #f0f0f0;padding:15px">
+                <button class="btn btn-default" data-bind="click: cancel_edit_unconfigured_devices">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" data-bind="click: submit_devices_configuration">
+                    <i class="fa fa-save"></i>
+                    Update Hub
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <button class="btn btn-default" data-bind="click: cancel_edit_notpremitted_devices">
-            Cancel
-        </button>
-        <button class="btn btn-primary" data-bind="click: submit_notpremitted_devices">
-            <i class="fa fa-save"></i>
-            Update Gateway
-        </button>
-    </div>
+    </div>  
+    
 </script>
