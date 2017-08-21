@@ -287,50 +287,184 @@
 
 <script type="text/html" id="edit_hub">
     <div class="row" style="margin:0; padding:0">
-        <article class="col-sm-12 col-md-12 col-lg-6">
-            <div style="border: 1px dotted #ccc;padding:0;margin-top:20px;margin-bottom:30px">
-                <form class="form-horizontal iothub-form">
-                    <fieldset>
-                        <legend>Edit Hub</legend>
-                        <div class="padding: 0">
-                            <div class="form-group">
-                                <label>Hub ID</label>
-                                <div>
-                                    <span data-bind="text: id" style="font-weight:bold"></span>
+        <div class="col-sm-12 col-md-12" style="padding-left:0">
+            <div style="margin-top:20px">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a data-toggle="tab" href="#edithub_details" role="tab" aria-expanded="true"> <span class="hidden-mobile hidden-tablet"> Edit Hub details </span> </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" href="#edithub_devices" role="tab" aria-expanded="false"> <span class="hidden-mobile hidden-tablet"> Manage Hub devices </span> </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" href="#edithub_control" role="tab" aria-expanded="false"> <span class="hidden-mobile hidden-tablet"> Control Hub </span> </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" href="#edithub_users" role="tab" aria-expanded="false"> <span class="hidden-mobile hidden-tablet"> Manage Hub users </span> </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="edithub_details">
+                        <div style="padding-top:20px">
+                            <form class="form-horizontal iothub-form">
+                                <fieldset>
+                                    <div class="padding: 0">
+                                        <div class="form-group">
+                                            <label>Hub ID</label>
+                                            <div>
+                                                <span data-bind="text: id" style="font-weight:bold"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Hub name</label>
+                                            <input class="form-control" placeholder="Hub name" type="text" data-bind="value: newname" style="max-width:450px" maxlength="64">
+                                            <div data-bind="visible: is_newname_error">
+                                                <em id="id-error" class="invalid error-label">This field is required.</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-bottom:20px">
+                                            <label>Public key</label>
+                                            <input class="form-control" placeholder="BS58 encoded public key" type="text" data-bind="value: newpublickey" style="max-width:900px" maxlength="128">
+                                            <div data-bind="visible: is_newid_error">
+                                                <em id="id-error" class="invalid error-label">This field is required.</em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-actions" style="text-align:left">
+                                    <div class="row" style="margin:0">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-default" data-bind="click: cancel_edit_hub">
+                                                Cancel Edit
+                                            </button>
+                                            <button class="btn btn-primary" data-bind="click: submit_edit_hub">
+                                                <i class="fa fa-save"></i>
+                                                Update Hub
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Hub name</label>
-                                <input class="form-control" placeholder="Hub name" type="text" data-bind="value: newname">
-                                <div data-bind="visible: is_newname_error">
-                                    <em id="id-error" class="invalid error-label">This field is required.</em>
-                                </div>
-                            </div>
-                            <div class="form-group" style="margin-bottom:20px">
-                                <label>Public key</label>
-                                <input class="form-control" placeholder="BS58 encoded public key" type="text" data-bind="value: newpublickey">
-                                <div data-bind="visible: is_newid_error">
-                                    <em id="id-error" class="invalid error-label">This field is required.</em>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </fieldset>
-                    <div class="form-actions">
-                        <div class="row" style="margin:0">
-                            <div class="col-md-12">
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="edithub_devices">
+                        <div class="all_devices_edit">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Device ID</td>
+                                        <td>Device type</td>
+                                        <td>Device name</td>
+                                        <td>Model</td>
+                                        <td>Manufacturer</td>
+                                        <td>Hardware version</td>
+                                        <td>Permission</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: hubdevicelist">
+                                    <tr>
+                                        <td>
+                                            <span data-bind="text: deviceid"></span>
+                                        </td>
+                                        <td>
+                                            <span data-bind="text: typename"></span>
+                                        </td>
+                                        <td>
+                                            <span data-bind="text: name"></span>
+                                        </td>
+                                        <td>
+                                            <span data-bind="text: details.modelidentifier"></span>
+                                        </td>
+                                        <td>
+                                            <span data-bind="text: details.manufacturername"></span>
+                                        </td>
+                                        <td>
+                                            <span data-bind="text: details.hwversion"></span>
+                                        </td>
+                                        <td style="min-width:150px">
+                                            <!-- ko if: uipermission() == 0 -->
+                                            <span>Not provisioned</span>
+                                            <!-- /ko -->
+                                            <!-- ko if: uipermission() == 1 -->
+                                            <i class="fa fa-check-circle fa-lg"style="color:#11a724"></i> <span>Allowed</span>
+                                            <!-- /ko -->
+                                            <!-- ko if: uipermission() == 2 -->
+                                            <i class="fa fa-times-circle fa-lg" style="color:#cc0101"></i> <span>Not permitted</span>
+                                            <!-- /ko -->
+                                        </td>
+                                        <td style="min-width:80px">
+                                            <!-- ko if: type == 2 && uipermission() == 0 -->
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Deny</button>  
+                                            <!-- /ko -->
+                                            <!-- ko if: type == 2 && uipermission() == 1 -->
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Deny</button>
+                                            <!-- /ko -->
+                                            <!-- ko if: type == 2 && uipermission() == 2 -->
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button> 
+                                            <!-- /ko -->
+                                        </td>
+                                        <td style="min-width:80px">
+                                            <!-- ko if: type == 2 && uipermission() == 0 -->
+                                            <button data-bind="click: function(){ $parent.delete_device_fromdb($data, $parent); }">Delete</button>
+                                            <!-- /ko -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="text-align:left;margin-top:20px;border-top:2px solid #f0f0f0;padding-top:10px">
                                 <button class="btn btn-default" data-bind="click: cancel_edit_hub">
-                                    Cancel
+                                    Cancel Edit
                                 </button>
-                                <button class="btn btn-primary" data-bind="click: submit_edit_hub">
-                                    <i class="fa fa-save"></i>
-                                    Update Hub
+                            </div>
+                        </div>       
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="edithub_control">
+                        <div class="all_devices_edit">
+                            <div>
+                                <div>
+                                    <div style="font-size:14px;font-weight:bold">
+                                        Enable device join on Hub
+                                    </div>
+                                    <div>
+                                        <div>
+                                            Join interval in seconds (max 300 seconds)
+                                        </div>
+                                        <div style="margin-top:6px">
+                                            <input type="number" style="max-width:100px" max="300" min="30" data-bind="value: new_join_interval"/>&nbsp;&nbsp;<button data-bind="click: enable_gateway_join">Enable</button>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:10px" data-bind="visible: enable_timer() > 1">
+                                        <div style="background-color:#0f0f0f;padding:5px 10px;display:inline-block;font-weight:bold;color:#fff;border-radius:3px">
+                                            Remaining join time <span data-bind="text: enable_timer"></span> seconds.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align:left;margin-top:20px;border-top:2px solid #f0f0f0;padding-top:10px">
+                                <button class="btn btn-default" data-bind="click: cancel_edit_hub">
+                                    Cancel Edit
                                 </button>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </article>
+                    <div role="tabpanel" class="tab-pane" id="edithub_users">
+                        <div>
+                            <div style="padding:50px">
+                                Users ...
+                            </div>
+                            <div style="text-align:left;margin-top:30px">
+                                <button class="btn btn-default" data-bind="click: cancel_edit_hub">
+                                    Cancel Edit
+                                </button>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>     
+        </div>
     </div>
 </script>
 
@@ -441,8 +575,6 @@
         </article>
     </div>
 </script>
-
-
 
 <script type="text/html" id="unconfigured-zigbee-devices-template">
     <div style="display:flex;justify-content:center;padding:10px 30px">

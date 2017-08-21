@@ -2456,3 +2456,39 @@ overflow-wrap: break-word;
     justify-content: center;
     align-items: center;
 }
+
+.all_devices_edit{
+    padding:20px;
+}
+
+.all_devices_edit table {
+    font-size: 14px;
+}
+
+.all_devices_edit table td {
+    padding: 4px 8px;
+    border: 1px solid #aaa;
+    color: #000;
+}
+
+.all_devices_edit tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.all_devices_edit tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+
+.all_devices_edit table thead td {
+    padding: 4px 8px;
+    border: 1px solid #aaa;
+    background-color: #4a80bd;
+    color: #fff;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.all_devices_edit table button{
+   padding: 0 8px;
+}
