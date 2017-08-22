@@ -397,17 +397,17 @@
                                         </td>
                                         <td style="min-width:80px">
                                             <!-- ko if: type == 2 && uipermission() == 0 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Deny</button>  
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>  
                                             <!-- /ko -->
                                             <!-- ko if: type == 2 && uipermission() == 1 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Deny</button>
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
                                             <!-- /ko -->
                                             <!-- ko if: type == 2 && uipermission() == 2 -->
                                             <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button> 
                                             <!-- /ko -->
                                         </td>
                                         <td style="min-width:80px">
-                                            <!-- ko if: type == 2 && uipermission() == 0 -->
+                                            <!-- ko if: type == 2 -->
                                             <button data-bind="click: function(){ $parent.delete_device_fromdb($data, $parent); }">Delete</button>
                                             <!-- /ko -->
                                         </td>
