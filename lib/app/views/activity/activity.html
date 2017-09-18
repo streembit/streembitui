@@ -1,0 +1,73 @@
+ <!-- Note: The activity badge color changes when clicked and resets the number to 0 -->
+<span id="activity" class="activity-dropdown hidden-xs" data-bind="activitypanel: activitymsg"> <i class="fa fa-user"></i> <b class="badge" data-bind="text:activitycount, css: {'bg-color-red': activitycount() > 0 }"></b> </span>
+
+<!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
+<div class="ajax-dropdown">
+
+    <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
+    <div class="btn-group btn-group-justified" data-toggle="buttons">
+        <label class="btn btn-default" data-bind="click: show_messages">
+            <input type="radio" name="activity">
+            Msgs (<span data-bind="text:msgcount"></span>)
+        </label>
+        <label class="btn btn-default" data-bind="click: show_notifications">
+            <input type="radio" name="activity">
+            Notify (<span data-bind="text:notifycount"></span>)
+        </label>
+        <label class="btn btn-default" data-bind="click: show_errors">
+            <input type="radio" name="activity">
+            Errors (<span data-bind="text:errorcount"></span>)
+        </label>
+    </div>
+
+    <!-- notification content -->
+    <div class="ajax-notifications custom-scroll" data-bind="template:{name: template}">  
+    </div>
+    <!-- end notification content -->
+    <!-- footer: refresh area -->
+    <span>
+        Last updated on: <span data-bind="localdate: lastupdate"></span>
+    </span>
+    <!-- end footer -->
+
+</div>
+<!-- END AJAX-DROPDOWN -->
+
+<script type="text/html" id="activity-start-template">
+    <div style="padding:30px 20px;font-size:18px">
+        Click on the Msgs, Notify or Errors button to review the activity.
+    </div>
+</script>
+
+<script type="text/html" id="message-activity-template">
+    <ul class="notification-body" data-bind="foreach: list_of_messages">
+        <li>
+            <div><span data-bind="localdate: time" class="time"></span></div>
+            <div>
+                <span class="msg-body" data-bind="text: msg"></span>
+            </div>
+        </li>
+    </ul>
+</script>
+
+<script type="text/html" id="error-activity-template">
+    <ul class="notification-body" data-bind="foreach: list_of_errors">
+        <li>
+            <div><span data-bind="localdate: time" class="time"></span></div>
+            <div>
+                <span class="msg-body" data-bind="text: msg"></span>
+            </div>
+        </li>
+    </ul>
+</script>
+
+<script type="text/html" id="notification-activity-template">
+    <ul class="notification-body" data-bind="foreach: list_of_notifications">
+        <li>
+            <div><span data-bind="localdate: time" class="time"></span></div>
+            <div>
+                <span class="msg-body" data-bind="text: msg"></span>
+            </div>
+        </li>
+    </ul>
+</script>

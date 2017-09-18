@@ -2492,3 +2492,19 @@ overflow-wrap: break-word;
 .all_devices_edit table button{
    padding: 0 8px;
 }
+
+.ajax-notifications {
+    background-color:#fff;
+}
+
+.notification-body > li {
+    padding: 7px;
+}
+
+.notification-body .msg-body{
+    color:#222;
+}
+
+.notification-body .time {
+    color: #aaa;
+}

@@ -28,11 +28,11 @@
         streembit.api = streembit.api || {};       
 
         streembit.notify = streembit.notify || {};
+        streembit.activity = streembit.activity || {};
 
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";
         streembit.ui.load_info = "load-info";
-        streembit.ui.taskbarmsg = "footer-text-container";
 
         //  the mainapplication component loaded from the lib/views directory
         //  change this to load another main app
@@ -256,77 +256,20 @@
 
                 <!-- PLACE YOUR LOGO HERE -->
                 <span id="logo" style="font-weight: bold;padding-top: 4px;"> STREEMBIT </span>
-                <!-- END LOGO PLACEHOLDER -->
-                <!-- Note: The activity badge color changes when clicked and resets the number to 0
-            Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-                <span id="activity" class="activity-dropdown hidden-xs"> <i class="fa fa-user"></i> <b class="badge">0</b> </span>
+                <!-- END LOGO PLACEHOLDER --> 
+                
+                <div style="display:block;margin:0;padding:0" data-bind="component: {name: 'activity'}">
 
-                <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
-                <div class="ajax-dropdown">
-
-                    <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
-                    <div class="btn-group btn-group-justified" data-toggle="buttons">
-                        <label class="btn btn-default">
-                            <input type="radio" name="activity" id="ajax/notify/mail.html">
-                            Msgs (14)
-                        </label>
-                        <label class="btn btn-default">
-                            <input type="radio" name="activity" id="ajax/notify/notifications.html">
-                            notify (3)
-                        </label>
-                        <label class="btn btn-default">
-                            <input type="radio" name="activity" id="ajax/notify/tasks.html">
-                            Tasks (4)
-                        </label>
-                    </div>
-
-                    <!-- notification content -->
-                    <div class="ajax-notifications custom-scroll">
-
-                        <div class="alert alert-transparent">
-                            <h4>Click a button to show messages here</h4>
-                            This blank page message helps protect your privacy, or you can show the first message here automatically.
-                        </div>
-
-                        <i class="fa fa-lock fa-4x fa-border"></i>
-
-                    </div>
-                    <!-- end notification content -->
-                    <!-- footer: refresh area -->
-                    <span>
-                        Last updated on: 12/12/2013 9:43AM
-                        <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
-                            <i class="fa fa-refresh"></i>
-                        </button>
-                    </span>
-                    <!-- end footer -->
-
-                </div>
-                <!-- END AJAX-DROPDOWN -->
+                </div>           
             </div>
 
-            <!-- messages dropdown -->
-            <div class="project-context hidden-xs">
+            <!-- activity dropdown -->
+            <!--<div class="hidden-xs">
+                
 
-                <span class="label">Messages:</span>
-                <span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent messages <i class="fa fa-angle-down"></i></span>
+            </div>-->
+            <!-- end activity dropdown -->
 
-                <ul class="dropdown-menu">
-                    <li>
-                        <div>
-                            <!-- TODO populate the list -->
-                        </div>
-                    </li>
-
-                    <li class="divider"></li>
-                    <li>
-                        <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
-                    </li>
-                </ul>
-                <!-- end dropdown-menu-->
-
-            </div>
-            <!-- end projects dropdown -->
             <!-- pulled right: nav area -->
             <div class="pull-right">
 
@@ -510,12 +453,6 @@
         <!-- PAGE FOOTER -->
         <div class="page-footer" style="flex: 0 0 52px">
             <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <div id="footer-text-container">
-                        <i class="fa fa-info-circle"></i> <span class="tasktext"></span>
-                    </div>
-                </div>
-
                 <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                     <div class="txt-color-white inline-block">
                         <i class="txt-color-blueLight hidden-mobile">Last account activity ...</i>
