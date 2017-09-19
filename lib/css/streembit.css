@@ -2497,12 +2497,21 @@ overflow-wrap: break-word;
     background-color:#fff;
 }
 
-.notification-body > li {
-    padding: 7px;
+.ajax-notifications > ul {
+    max-width: 100%;
+    word-break: break-all;
 }
 
-.notification-body .msg-body{
-    color:#222;
+.notification-body > li {
+    padding: 7px;
+    max-width: 100%;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+.notification-body .msg-body {
+    color: #222;
+    white-space:normal;
 }
 
 .notification-body .time {
