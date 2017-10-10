@@ -1943,6 +1943,18 @@ overflow-wrap: break-word;
     font-weight:bold;
 }
 
+.iothub-header .authenticated{
+    padding-left:5px;
+    padding-top:8px;
+    color: #53d466;
+    font-size: 24px;
+}
+
+.iothub-header .authenticated:before {
+    font-family: FontAwesome;
+    content: "\f1eb";
+}
+
 .iothub-details {
     margin: 0;
     font-size: 12px;
