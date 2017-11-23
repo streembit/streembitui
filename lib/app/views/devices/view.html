@@ -1,31 +1,26 @@
 
 <div data-bind="foreach: iothubs" class="row" style="margin:0">        
     <div class="col-md-12 iothub">
-        <div class="iothub-header">
-            <div class="pull-left" style="padding:0;"><span data-bind="css:{'authenticated':  authenticated() == true}"></span></div>
-            <div class="pull-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>            
+        <div class="iothub-header">            
+            <div class="pull-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>     
             <div class="btn-group display-inline pull-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
                 <button class="btn btn-xs btn-default" data-bind="click: toggle_shownetwork_info" data-toggle="tooltip" data-placement="bottom" title="Network info">
                     <i class="fa fa-info-circle fa-lg"></i>
                 </button>
-                <button class="btn btn-xs btn-default" data-bind="click: show_device_list" data-toggle="tooltip" data-placement="bottom" title="List devices">
+                <!--<button class="btn btn-xs btn-default" data-bind="click: show_device_list" data-toggle="tooltip" data-placement="bottom" title="List devices">
                     <i class="fa fa-list-ul fa-lg"></i>
-                </button>
+                </button>-->
                 <button class="btn btn-xs btn-default" data-bind="click: edit_hub" data-toggle="tooltip" data-placement="bottom" title="Edit Hub">
                     <i class="fa fa-cog fa-lg"></i>
                 </button>
-                <!--<button class="btn btn-xs btn-default" data-bind="click: add_device">
-                    <i class="fa fa-plus-circle fa-lg"></i>
-                </button>
-                <button class="btn btn-xs btn-default" data-bind="click: manage_users">
-                    <i class="fa fa-user fa-lg"></i>
-                </button>
-                <button class="btn btn-xs btn-default" data-bind="click: manage_devices">
-                    <i class="fa fa-dashboard fa-lg"></i>
-                </button>-->
                 <button class="btn btn-xs btn-default" data-bind="click: $component.removehub" data-toggle="tooltip" data-placement="bottom" title="Delete Hub">
                     <i class="fa fa-remove fa-lg"></i>
                 </button>
+            </div>
+            <div class="pull-right">
+                <div class="pull-left" style="padding:5px 10px 0 0;">
+                    <span data-bind="css:{'authenticated':  authenticated() == true}"></span>
+                </div>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -167,7 +162,7 @@
             <tr><td>Protocol: </td> <td data-bind="text: networkinfo.protocol"></td></tr>
             <tr><td>Security: </td> <td data-bind="text: networkinfo.security"></td></tr>
             <tr><td>Secure_hardware: </td> <td data-bind="text: networkinfo.secure_hardware"></td></tr>
-            <tr><td>MCU Address64: </td> <td data-bind="text: networkinfo.address64"></td></tr>
+            <tr><td>MCU Address64: </td> <td data-bind="text: authenticated() ? networkinfo.address64 : ''"></td></tr>
             <tr><td>MCU Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>
             <tr><td>Public key: </td> <td data-bind="text: publickey"></td></tr>
         </table>

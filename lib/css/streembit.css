@@ -1944,10 +1944,8 @@ overflow-wrap: break-word;
 }
 
 .iothub-header .authenticated{
-    padding-left:5px;
-    padding-top:8px;
     color: #53d466;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .iothub-header .authenticated:before {
