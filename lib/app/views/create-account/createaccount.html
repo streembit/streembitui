@@ -21,7 +21,7 @@
                                 <div class="error-label" data-bind="visible: isaccount_error">
                                     <span data-bind="text: accounterrormsg"></span>
                                 </div>
-                                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
+                                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}, hasfocus: true" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
                             </section>
                         </div>
                         <div class="row">
