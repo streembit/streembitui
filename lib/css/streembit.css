@@ -2527,3 +2527,7 @@ overflow-wrap: break-word;
 .notification-body .time {
     color: #aaa;
 }
+
+.mywallet-tab-panel {
+    padding: 10px;
+}

@@ -1,0 +1,238 @@
+<div class="mywallet-view">
+    <h1>My Wallet</h1>
+    <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
+        <li role="presentation" class="active">
+            <a href="#mywallet_overview" aria-controls="home" role="tab" data-toggle="tab">
+                Overview
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#mywallet-sendmoney" aria-controls="seeds_settings" role="tab" data-toggle="tab">
+                Send Money
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#mywallet-receivemoney" aria-controls="ice_settings" role="tab" data-toggle="tab">
+               Receive Money
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#mywallet-transactions" aria-controls="privatenet_settings" role="tab" data-toggle="tab">
+                Transactions
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active mywallet-tab-panel" id="mywallet_overview">
+            <div class="col-sm-6 tab-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Balance</h3>
+                    </div>
+                    <div class="panel-body">
+                        <strong class="col-xs-4">
+                            Available
+                        </strong>
+                        <span class="col-xs-8">
+                            0.00
+                        </span>
+                        <strong class="col-xs-4">
+                            Pending
+                        </strong>
+                        <span class="col-xs-8">
+                            0.00
+                        </span>
+                        <strong class="col-xs-4">
+                            Total
+                        </strong>
+                        <span class="col-xs-8">
+                            0.00
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Recent Transactions</h3>
+                    </div>
+                    <div class="panel-body">
+                        No Recent Trasactions
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-sendmoney">
+            <form class="form-horizontal container-fluid">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="payTo">
+                        Pay To:
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="payTo" placeholder="Enter a bitcoin address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="label">
+                        Label:
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="label" placeholder="Enter a label for this address to add to your addressbook">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="amount">
+                        Amount:
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="amount" placeholder="0.000">
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control">
+                            <option>BTC</option>
+                            <option>UBTC</option>
+                            <option>MBTC</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="fees">
+                        Transaction Fees:
+                    </label>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fees" placeholder="Enter a transaction fees" value="0.0002">
+                            <div class="input-group-addon">BTC/kB</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Request Replace-By-Fee
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <input type="submit" value="Send Money" class="btn btn-default">
+                        <input type="reset" class="btn btn-default">
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <div class="text-center">
+                <button type="button" class="btn btn-default" title="Add more recipients">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-receivemoney">
+            <form class="form-horizontal container-fluid">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="payTo">
+                        Label:
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="payTo" placeholder="Enter a bitcoin address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="amount">
+                        Amount:
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="amount" placeholder="0.000">
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control">
+                            <option>BTC</option>
+                            <option>UBTC</option>
+                            <option>MBTC</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="label">
+                        Message:
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="label" placeholder="Enter a label for this address to add to your addressbook">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <input value="Request Money" type="submit" class="btn btn-default">
+                        <input type="reset" class="btn btn-default">
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <h5>Requested Payment History</h5>
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Label
+                    </th>
+                    <th>
+                        Amount Requested (BTC)
+                    </th>
+                    <th>
+                        Message
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-transactions">
+            <form class="form-horizontal container-fluid">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <select class="form-control">
+                            <option>Today</option>
+                            <option>This Week</option>
+                            <option>This Month</option>
+                            <option>This Year</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Min Amount">                        
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control">
+                            <option>All Transactions</option>
+                            <option>Sent To</option>
+                            <option>Received From</option>
+                            <option>To Myself</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" placeholder="Enter address or label to search">         
+                    </div>
+                </div>
+            </form>
+            <div class="container-fluid">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Label
+                        </th>
+                        <th>
+                            Amount Transacted (BTC)
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
