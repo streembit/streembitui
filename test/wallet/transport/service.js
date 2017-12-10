@@ -1,4 +1,4 @@
-/*
+﻿/*
 
 This file is part of Streembit application. 
 Streembit is an open source communication application. 
@@ -20,21 +20,13 @@ Copyright (C) Streembit 2017
 
 
 (function () {
-    define(['./mywallet.html!text'], function ( template) {
-        function MyWalletModel(params) {
-            var vm = {
-                init: function () {
 
-                }
-            };     
+    var wallet_service = {};
 
+    wallet_service.transactions = function () {
 
-            return vm;
-        }
+    };
 
-        return {
-            viewModel: MyWalletModel,
-            template: template
-        };
-    });
+    module.exports = wallet_service;
+
 }());
