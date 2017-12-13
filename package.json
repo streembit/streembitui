@@ -67,7 +67,7 @@
       "secure-random": "npm:secure-random@^1.1.1",
       "signals": "npm:signals@^1.0.0",
       "socket.io-client": "npm:socket.io-client@^1.6.0",
-      "text": "github:systemjs/plugin-text@^0.0.9",
+      "text": "github:systemjs/plugin-text@^0.0.11",
       "util": "github:jspm/nodelibs-util@^0.1.0",
       "uuid": "npm:uuid@^2.0.3",
       "webrtc-adapter": "npm:webrtc-adapter@^2.0.6"

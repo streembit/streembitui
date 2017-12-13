@@ -74,7 +74,7 @@ System.config({
     "signals": "npm:signals@1.0.0",
     "socket.io-client": "npm:socket.io-client@1.7.4",
     "streembitnet": "lib/app/streembitnet",
-    "text": "github:systemjs/plugin-text@0.0.9",
+    "text": "github:systemjs/plugin-text@0.0.11",
     "transport": "lib/app/transport",
     "uihandler": "lib/app/uihandler",
     "user": "lib/app/user",
