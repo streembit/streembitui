@@ -41,6 +41,7 @@
     "dependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.1.0",
       "async": "npm:async@^2.3.0",
+      "bip39": "npm:bip39@^2.4.0",
       "browserify-aes": "npm:browserify-aes@^1.0.6",
       "bs58check": "npm:bs58check@^1.1.1",
       "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
