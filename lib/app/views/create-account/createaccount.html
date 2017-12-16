@@ -12,7 +12,12 @@
             <div class="widget-body no-padding">
                 <form id="comment-form" class="smart-form" novalidate="novalidate">
                     <header>
+                        <!-- ko if: (!mnemonic()) -->
                         <span data-bind="i18n:'lbl-createaccount-create'"></span>
+                        <!-- /ko -->
+                        <!-- ko if: (mnemonic()) -->
+                        <span data-bind="i18n:'hdr-restore-mnemonic'"></span>
+                        <!-- /ko -->
                     </header>
                     <fieldset>
                         <div class="row">
@@ -21,7 +26,7 @@
                                 <div class="error-label" data-bind="visible: isaccount_error">
                                     <span data-bind="text: accounterrormsg"></span>
                                 </div>
-                                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}, hasfocus: true" style="width:300px;padding:3px;font-size:16px" maxlength="20" />
+                                <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
                             </section>
                         </div>
                         <div class="row">
@@ -50,7 +55,13 @@
                     </fieldset>
 
                     <footer>
+                        <!-- ko if: !mnemonic() -->
                         <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-createaccount-create'"></button>
+                        <button type="button" class="btn btn-default" data-bind="click: restore_account, i18n:'hdr-restore-mnemonic'"></button>
+                        <!-- /ko -->
+                        <!-- ko if: mnemonic() -->
+                        <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-restore-mnemonic-submit'"></button>
+                        <!-- /ko -->
                     </footer>
                 </form>
             </div>
@@ -58,7 +69,7 @@
     </div>
 </div>
 
-
+<!--
 <div id="uiview-container">
     <div class="uiview-plane">
         <div class="uiview-container-panel">
@@ -104,4 +115,4 @@
         </div>
     </div>
 </div>
-
+-->
