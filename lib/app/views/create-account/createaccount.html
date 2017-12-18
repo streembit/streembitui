@@ -27,11 +27,8 @@
                                     <span data-bind="text: mnemonicerrormsg"></span>
                                 </div>
                                 <label class="textarea" data-bind="css: { 'state-error': ismnemonic_error() == true}">
-                                    <textarea name="mnemonic" style="width:475px;height:60px;" data-bind="value: mnemonic, event: { blur: onMnemonicBlur }"></textarea>
+                                    <textarea class="form-control" name="mnemonic" data-bind="value: mnemonic, event: { blur: onMnemonicBlur }" style="width:540px;height:auto;padding:3px;font-size:16px;"></textarea>
                                 </label>
-                                <footer style="background: #fff;">
-                                    <button type="button" name="submit" class="btn btn-primary" data-bind="click: false, i18n:'sbm-restore-mnemonic'"></button>
-                                </footer>
                             </section>
                         </div>
                         <div class="row">
@@ -40,7 +37,7 @@
                                 <div class="error-label" data-bind="visible: isaccount_error">
                                     <span data-bind="text: accounterrormsg"></span>
                                 </div>
-                                <input type="text" class="form-control" data-bind="value: account, disable: sbm_disable, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
+                                <input type="text" class="form-control" data-bind="value: account, event: { change: ctrlchange.bind($data, 'onAccountChange'), keyup: ctrlkeyup }" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
                             </section>
                         </div>
                         <div class="row">
@@ -49,7 +46,7 @@
                                 <div class="error-label" data-bind="visible: ispwd_error">
                                     <span data-bind="text: pwderrormsg"></span>
                                 </div>
-                                <input type="password" class="form-control" data-bind="value: private_key_pwd, disable: sbm_disable, event: { keyup: ctrlkeyup, blur: onPasswordChange}" style="width:400px;padding:3px;font-size:16px" />
+                                <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { change: ctrlchange.bind($data, 'onPasswordChange'), keyup: ctrlkeyup }" style="width:540px;padding:3px;font-size:16px" />
                                 <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
                                 <div style="font-size:11px;font-weight:bold;">
                                     NOTE: Choose your password carefully. If you forget your password, no one will be able to<br />
@@ -63,15 +60,15 @@
                                 <div class="error-label" data-bind="visible: isconfpwd_error">
                                     <span data-bind="text: pwdconferrormsg"></span>
                                 </div>
-                                <input type="password" class="form-control" data-bind="value: private_keypwd_conf, disable: sbm_disable, event: { keyup: ctrlkeyup, blur: onPasswordConfirmChange }" style="width:400px;padding:3px;font-size:16px" />
+                                <input type="password" class="form-control" data-bind="value: private_keypwd_conf, event: { change: ctrlchange.bind($data, 'onPasswordConfirmChange'), keyup: ctrlkeyup }" style="width:540px;padding:3px;font-size:16px" />
                             </section>
                         </div>
                     </fieldset>
 
                     <footer>
-                        <button type="button" class="btn btn-primary" data-bind="click: submit, disable: sbm_disable, i18n:'lbl-createaccount-create'"></button>
-                        <button type="button" class="btn btn-default" data-bind="click: show_mnemonic_inp, visible: !ismnemonic_visible(), i18n:'ttlbtn-restore-mnemonic'"></button>
-                        <button type="button" class="btn btn-default" data-bind="click: hide_mnemonic_inp, visible: ismnemonic_visible(), i18n:'btn-hide-restore-mnemonic'"></button>
+                        <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-createaccount-create'"></button>
+                        <button type="button" class="btn btn-warning" data-bind="click: cancel_form">Cancel</button>
+                        <button type="button" class="btn btn-default" data-bind="click: show_mnemonic_inp, visible: !ismnemonic_visible(), i18n: 'ttlbtn-restore-mnemonic'"></button>
                     </footer>
                 </form>
             </div>
