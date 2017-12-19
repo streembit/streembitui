@@ -65,10 +65,10 @@
                         </div>
                     </fieldset>
 
-                    <footer>
-                        <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-createaccount-create'"></button>
-                        <button type="button" class="btn btn-warning" data-bind="click: cancel_form">Cancel</button>
-                        <button type="button" class="btn btn-default" data-bind="click: show_mnemonic_inp, visible: !ismnemonic_visible(), i18n: 'ttlbtn-restore-mnemonic'"></button>
+                    <footer>                        
+                        <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-submit'"></button>                        
+                        <button type="button" class="btn btn-primary" data-bind="click: show_mnemonic_inp, visible: !ismnemonic_visible(), i18n: 'ttlbtn-restore-mnemonic'"></button>
+                        <button type="button" class="btn btn-default" data-bind="click: cancel_form">Cancel</button>
                     </footer>
                 </form>
             </div>
