@@ -65,3 +65,7 @@ build/macosx64
 /lib/config.app.json
 
 /package-lock.json
+
+nw.sh
+.idea/*
+
