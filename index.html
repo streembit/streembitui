@@ -13,19 +13,24 @@
         streembit.globals.version = "1.1.0";
         streembit.globals.wsprotocol = "http";
 
-        // set this flag for Web mode (i.e. serving the application from a web server) to false
-        // nwmode = true indicates the application is using node-webkit
-        streembit.globals.nwmode = false;
+        var gui = null;
+        try{
+            gui = require('nw.gui');
+        }
+        catch(err) {
+        }
 
-        console.log("Running the app in nwmode = " + streembit.globals.nwmode);
-        if (streembit.globals.nwmode == true) {            
-            var gui = require('nw.gui'); 
+        if (gui) {
             // Get the current window
             var nwwin = gui.Window.get();
             nwwin.maximize();
 
-            window.nwrequire = window.require || (function () {});
-            window.require = undefined;            
+            window.nwrequire = window.require || (function () { });
+            window.require = undefined;
+
+            streembit.globals.nwmode = true;
+
+            console.log("Running the app in nwmode = " + streembit.globals.nwmode);
         }
 
         streembit.api = streembit.api || {};       
@@ -365,8 +370,7 @@
                             <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Wallet</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'mywallet')">My Wallet</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Blockchain explorer</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Ankit's Wallet</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'mywallet')">Blockchain explorer</a></li>
                             </ul>
                         </li>
                         <li>
