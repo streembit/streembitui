@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "/streembitui/",
+  baseURL: "/",
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
