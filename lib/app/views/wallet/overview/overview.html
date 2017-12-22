@@ -1,38 +1,135 @@
-
-    <div class="col-sm-6 tab-body">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Balance</h3>
+<a href="#fees" role="button" class="blueLink" data-toggle="collapse" aria-expanded="true" aria-controls="collapseExample" data-bind="i18n: 'col-fees'"></a><br>
+<div id="fees">
+    <div class="modal-body ">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4" style="padding: 10px 0">
+            <input type="checkbox" class="leftCheckbox col-md-1">
+            <div class="col-md-4" data-bind="i18n:'wal-dinamic-fees'"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4" style="padding: 10px 0">
+            <input type="checkbox" class="leftCheckbox col-md-1">
+            <div class="col-md-4" data-bind="i18n:'wal-fees-manually'"></div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding: 10px 0">
+                <div class="col-md-5" data-bind="i18n:'wal-propose-replace'"></div>
+                <select data-bind="options: propose, optionsText: 'name'" style="padding: 5px 0"></select>
+            </div> 
+        </div>  
+        <div class="row">
+            <div class="col-md-4" style="padding: 10px 0">
+                <div class="col-md-5" data-bind="i18n:'wal-fee-unit'"></div>
+                <select data-bind="options: feeUnit, optionsText: 'name'" style="padding: 5px 0"></select>
+            </div> 
+        </div> 
+      </div>
+    </div>  
+</div>
+<a href="#transactions" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-transactions'"></a><br>
+<div id="transactions" class="collapse">
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4" style="padding: 10px 0">
+                <input type="checkbox" class="leftCheckbox col-md-1">
+                <div class="col-md-4" data-bind="i18n:'wal-change-address'"></div>
             </div>
-            <div class="panel-body">
-                <strong class="col-xs-4">
-                    Available
-                </strong>
-                <span class="col-xs-8">
-                    0.00
-                </span>
-                <strong class="col-xs-4">
-                    Pending
-                </strong>
-                <span class="col-xs-8">
-                    0.00
-                </span>
-                <strong class="col-xs-4">
-                    Total
-                </strong>
-                <span class="col-xs-8">
-                    0.00
-                </span>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding: 10px 0">
+                <input type="checkbox" class="leftCheckbox col-md-1">
+                <div class="col-md-5" data-bind="i18n:'wal-multiple-change-address'"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding: 10px 0">
+                <div class="col-md-5" data-bind="i18n:'wal-coin-section'"></div>
+                <select style="padding: 5px 0">
+                    <option>Priority</option>
+                    <option>Privacy</option>
+                </select>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding: 10px 0">
+                <input type="checkbox" class="leftCheckbox col-md-1">
+                <div class="col-md-5" data-bind="i18n:'wal-confirmed-coins'"></div>
+            </div>
+        </div>  
+      </div>
+    </div>  
+</div>
+<a href="#appearance" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-appearance'"></a><br>
+<div id="appearance" class="collapse">
+    <div class="modal-body ">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px 0">
+                    <div class="col-md-5" data-bind="i18n:'wal-decimal-point'"></div>
+                    <input type="text" class="decimalPoint" data-bind="textInput: pointNumber">
+                    <button data-bind="click: pointIncrease, attr: {'class': 'pointIncrease', 'disabled' : maxLimit}">
+                        <i class="fa fa-caret-up pointIcUp" aria-hidden="true"></i>
+                    </button>
+                    <button data-bind="click: pointDecrease, attr: {'class': 'pointDecrease', 'disabled' : minLimit}">
+                        <i class="fa fa-caret-down pointIcDown" aria-hidden="true"></i>
+                    </button>
+                    
+                </div>                            
+            </div>
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px 0">
+                    <div class="col-md-5" data-bind="i18n:'wal-base-unit'"></div>
+                    <select data-bind="options: feeUnit, optionsText: 'name'" style="padding: 5px 0"></select>
+                </div>                            
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Recent Transactions</h3>
+</div>
+<a href="#fiat" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-fiat'"></a><br>
+<div id="fiat" class="collapse">
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px 0">
+                    <div class="col-md-5" data-bind="i18n: 'wal-currency'"></div>
+                    <select data-bind="options: currency, optionsText: 'name'" style="padding: 5px 0"></select>
+                </div> 
             </div>
-            <div class="panel-body">
-                No Recent Trasactions
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px 0">
+                    <div class="col-md-5" data-bind="i18n: 'wal-history-rates'"></div>
+                    <input type="checkbox">
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px 0">
+                    <div class="col-md-5" data-bind="i18n: 'wal-fiatBalance-address'"></div>
+                    <input type="checkbox">
+                </div> 
             </div>
         </div>
     </div>
+</div>
+<a href="#identity" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-identity'"></a><br>
+<div id="identity" class="collapse">
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5" style="padding:10px 0">
+                    <div class="col-md-5" data-bind="i18n: 'wal-open-alias'"></div>
+                    <input type="text" style="border-radius: 6px">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5" style="padding:10px 0">
+                    <div class="col-md-5" data-bind="i18n: 'wal-ssl-certificate'"></div>
+                    <input type="text" style="border-radius: 6px">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
