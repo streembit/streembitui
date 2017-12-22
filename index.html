@@ -15,7 +15,7 @@
 
         // set this flag for Web mode (i.e. serving the application from a web server) to false
         // nwmode = true indicates the application is using node-webkit
-        streembit.globals.nwmode = true;
+        streembit.globals.nwmode = false;
 
         console.log("Running the app in nwmode = " + streembit.globals.nwmode);
         if (streembit.globals.nwmode == true) {            
@@ -59,6 +59,8 @@
 
 
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/your_style.css">
+
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/demo.min.css">-->
 
