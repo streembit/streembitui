@@ -21,12 +21,49 @@ Copyright (C) Streembit 2017
 
 (function () {
 
-    var wallet_service = {};
+    const appevents = require("appevents");
+    const secrand = require('secure-random');
+    const createHash = require('create-hash');
 
-    wallet_service.transactions = function () {
+    var bcTransport = {};
 
+    bcTransport.send = function (data, callback) {
+        try {
+
+            if (callback) {
+                callback(null, { dispatched: true });
+            }
+
+            setTimeout(
+                () => {
+                    // return the transaction number
+                    // mock data from this mimick service
+                    var rndstr = secrand.randomBuffer(32).toString("hex");
+                    var txid = createHash("sha256").update(rndstr).digest("hex");
+                    var payload = {
+                        "event": "sendcomplete",
+                        "txid": txid
+                    };
+                    appevents.dispatch("on-bc-event", payload);
+
+                },
+                3000
+            );
+        }
+        catch (err) {
+            if (callback) {
+                callback(err)
+            }
+            else {
+                //TODO
+            }
+        }
+    }
+
+    bcTransport.init = function () {
+        console.log("bcTransport init");
     };
 
-    module.exports = wallet_service;
+    module.exports = bcTransport;
 
 }());

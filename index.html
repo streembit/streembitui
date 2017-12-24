@@ -13,6 +13,9 @@
         streembit.globals.version = "1.1.0";
         streembit.globals.wsprotocol = "http";
 
+        // bc services flag
+        streembit.globals.devbcnet = true;
+
         var gui = null;
         try{
             gui = require('nw.gui');
@@ -367,10 +370,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Wallet</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'mywallet')">My Wallet</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'mywallet')">Blockchain explorer</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
                             </ul>
                         </li>
                         <li>

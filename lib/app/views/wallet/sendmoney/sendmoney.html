@@ -1,54 +1,56 @@
 <form class="form-horizontal container-fluid">
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-payTo'"></label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control qrcode-text" data-bind="value: payBit" id="payTo" placeholder="Enter a SBCoin address">
-        <label class="qrcode-text-btn">
-            <input type="file" accept="image/*" capture="environment" tabindex="-1" id="cameraInput">
-        </label> 
-    </div>
-</div>
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-label'"></label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="label" data-bind="value: inputText" placeholder="Enter a label for this address to add to your addressbook">
-    </div>
-</div>
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-amount'"></label>
-    <div class="col-sm-3">
-        <div class="input-group">
-            <input type="text" class="form-control" id="amount" data-bind="value: amountText" placeholder="0.000">
-            <div class="input-group-addon" data-bind="i18n: 'coin-name'"></div>
+    <!--<div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-payTo'"></label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control qrcode-text" data-bind="value: payBit" id="payTo" placeholder="Enter a SBCoin address">
+            <label class="qrcode-text-btn">
+                <input type="file" accept="image/*" capture="environment" tabindex="-1" id="cameraInput">
+            </label> 
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-label'"></label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="label" data-bind="value: recipientAddress" placeholder="Enter the recipient address">
         </div>
     </div>
-</div>
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-transaction-fees'"></label>
-    <div class="col-sm-3">
-        <div class="input-group">
-            <input type="text" class="form-control" id="fees" data-bind="value: feesText" placeholder="Enter a transaction fees" value="0.0002">
-            <div class="input-group-addon" data-bind="i18n: 'tab-SBCoin'"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-amount'"></label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <input type="text" class="form-control" id="amount" data-bind="value: txnAmount" placeholder="0.000">
+                <div class="input-group-addon" data-bind="i18n: 'coin-name'"></div>
+            </div>
         </div>
     </div>
-    <div class="col-sm-3">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"><div data-bind="i18n: 'tab-request-replace-be-fee'"></div>
-            </label>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-transaction-fees'"></label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <input type="text" class="form-control" id="fees" data-bind="value: txnFee" placeholder="Enter a transaction fees" value="0.0002">
+                <div class="input-group-addon" data-bind="i18n: 'tab-SBCoin'"></div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" /><div data-bind="i18n: 'tab-request-replace-be-fee'"></div>
+                </label>
+            </div>
         </div>
     </div>
-</div>
-<div class="form-group">
-    <div class="col-sm-10 col-sm-offset-2">
-        <button data-bind="click: clear, i18n: 'btn-clear'" class="btn btn-default"></button>
-        <input type="submit" value="Send Money" class="btn btn-default">
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button data-bind="click: clear, i18n: 'btn-clear'" class="btn btn-default"></button>
+            <input type="button" value="Send Money" class="btn btn-default" data-bind="click: send">
+        </div>
     </div>
-</div>
 </form>
+
 <hr>
+
 <div class="text-center">
-<button type="button" class="btn btn-default" title="Add more recipients">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-</button>
+    <button type="button" class="btn btn-default" title="Add more recipients">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
 </div>
