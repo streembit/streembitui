@@ -1912,7 +1912,7 @@ table.logstable {
 
 /* shoul be the last section */
 /* at the END media queries */
-@media (max-width: 790px) {
+/*@media (max-width: 790px) {
     #left-panel {
         display: none;
     }
@@ -1920,7 +1920,7 @@ table.logstable {
     #header > div {
         display: none;
     }
-}
+}*/
 
 .cert-info-panels dd span, .network-info-panels dd span {
 word-wrap: break-word;

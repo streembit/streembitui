@@ -138,3 +138,84 @@
     	position: relative;
     	bottom: 7px;
     }
+    /*for my wallet main menu*/
+    .navbar-nav{
+    	float: none;
+    }
+    #mainMenu .open>a, #mainMenu .open>a:focus, #mainMenu .open>a:hover{
+    	background-color: #3276b1;
+    	color:white;
+    }
+    /*for the main menu*/
+    .dropbtn {
+      cursor: pointer;
+      
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content div {
+        color: black;
+        padding: 5px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content div:hover {
+      background-color: #3276b1;
+      color: white;
+    }
+
+    .transaction-dropdown:hover .dropdown-content {
+        display: block;
+        left:100%;
+        top:0;
+    }
+
+    .dropdown-menu li div{
+      padding: 4px 11px;
+    }
+    .dropdown-menu li div:hover, .transaction-dropdown:hover {
+      background-color: #3276b1;
+      color:white;
+      cursor: pointer;
+    }
+    .transaction-dropdown{
+      list-style-type: none;
+      padding: 4px 11px;
+    }
+    .dividerLine{
+      border-bottom: 1px solid #ccc;
+    }
+    /*for admin panel*/
+    nav>ul>li>ul::before{
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 1;
+      left: 23px;
+      top: 0;
+      bottom: 0;
+      border-left: 1px solid #7A7A7A;
+    }
+    nav>ul ul li::before{
+      content: "";
+      display: block;
+      position: absolute;
+      width: 8px;
+      left: 23px;
+      top: 16px;
+      border-top: 1px solid #7A7A7A;
+      z-index: 1;
+    }
+    .chooseFileWallet{
+      display: inline-block!important;
+      margin-left: 30px;
+      width: 90px;
+    }

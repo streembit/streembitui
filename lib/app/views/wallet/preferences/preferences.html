@@ -1,0 +1,80 @@
+<div id="preferences-item-template">
+	<div class="mywallet-view">
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active">
+				<a href="#preferences-fees" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'col-fees'"></a>
+			</li>
+			<li role="presentation">
+				<a href="#preferences-transaction" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'col-transactions'"></a>
+			</li>
+			<li role="presentation">
+				<a href="#" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'col-appearance'"></a>
+			</li>
+			<li role="presentation">
+				<a href="#" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'col-fiat'"></a>
+			</li>
+			<li role="presentation">
+				<a href="#" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'col-identity'"></a>
+			</li>
+		</ul>
+	</div>
+	<div class="tab-content">
+
+		<div id="preferences-fees" role="tabpanel" class="tab-pane">
+			<div class="row">
+	          <div style="padding: 10px 0">
+	            <input type="checkbox" class="leftCheckbox col-md-1">
+	            <div data-bind="i18n:'wal-dinamic-fees'"></div>
+	          </div>
+	        </div>
+	        <div class="row">
+	          <div style="padding: 10px 0">
+	            <input type="checkbox" class="leftCheckbox col-md-1">
+	            <div data-bind="i18n:'wal-fees-manually'"></div>
+	          </div>
+	        </div>
+	        <div class="row">
+	            <div style="padding: 10px 0">
+	                <div class="col-md-5" data-bind="i18n:'wal-propose-replace'"></div>
+	                <select data-bind="options: propose, optionsText: 'name'" style="padding: 5px 0"></select>
+	            </div> 
+	        </div>  
+	        <div class="row">
+	            <div style="padding: 10px 0">
+	                <div class="col-md-5" data-bind="i18n:'wal-fee-unit'"></div>
+	                <select data-bind="options: feeUnit, optionsText: 'name'" style="padding: 5px 0"></select>
+	            </div> 
+	        </div> 
+		</div>
+
+		<div id="preferences-transaction" role="tabpanel" class="tab-pane">
+			<div class="row">
+	            <div class="col-md-4" style="padding: 10px 0">
+	                <input type="checkbox" class="leftCheckbox col-md-1">
+	                <div class="col-md-4" data-bind="i18n:'wal-change-address'"></div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-4" style="padding: 10px 0">
+	                <input type="checkbox" class="leftCheckbox col-md-1">
+	                <div class="col-md-5" data-bind="i18n:'wal-multiple-change-address'"></div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-4" style="padding: 10px 0">
+	                <div class="col-md-5" data-bind="i18n:'wal-coin-section'"></div>
+	                <select style="padding: 5px 0">
+	                    <option>Priority</option>
+	                    <option>Privacy</option>
+	                </select>
+	            </div> 
+	        </div>
+	        <div class="row">
+	            <div class="col-md-4" style="padding: 10px 0">
+	                <input type="checkbox" class="leftCheckbox col-md-1">
+	                <div class="col-md-5" data-bind="i18n:'wal-confirmed-coins'"></div>
+	            </div>
+	        </div>  
+		</div>
+	</div>
+</div>
