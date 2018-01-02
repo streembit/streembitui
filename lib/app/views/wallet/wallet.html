@@ -14,14 +14,34 @@
     </li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span data-bind="i18n: 'menu-title-wallet'"></span>
+            <span data-bind="i18n: 'menu-title-security'"></span>
         </a>
         <ul class="dropdown-menu">
             <li>
                <div data-bind="i18n: 'menu-item-password', click: passwordItem"></div> 
                <div data-bind="i18n: 'menu-item-seed', click: seedItem"></div>
                <div data-bind="i18n: 'menu-item-private-keys', click: privateKeysItem"></div>
-               <div data-bind="i18n: 'menu-item-history', click: historyItem"></div>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span data-bind="i18n: 'menu-title-transactions'"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <ul class="dropdown transaction-dropdown">
+                    <li class="dropbtn">
+                        <span data-bind="i18n: 'menu-item-load-transaction'"></span>
+                        <i class="fa fa-caret-right"></i>
+                    </li>
+                    <li class="dropdown-content">
+                        <div data-bind="i18n: 'menu-item-from-text', click: transactionText"></div>
+                        <div data-bind="i18n: 'menu-item-from-blockchain', click: transactionBlockchain"></div>
+                        <div data-bind="i18n: 'menu-item-qr-code', click: transactionQRCode"></div>
+                    </li>
+                </ul>
+                <div data-bind="i18n: 'menu-item-history', click: historyItem"></div>
             </li>
         </ul>
     </li>
@@ -34,19 +54,7 @@
                 <div data-bind="i18n: 'menu-item-contract', click: contactItem" class="dividerLine"></div> 
                 <div data-bind="i18n: 'menu-item-preferences', click: preferencesItem"></div>
                 <div data-bind="i18n: 'menu-item-network', click: networkItem" class="dividerLine"></div>
-                <div data-bind="i18n: 'menu-item-sign-message', click: signMessageItem"></div>
-                <div data-bind="i18n: 'menu-item-encrypt', click: encryptItem" class="dividerLine"></div>
-                <ul class="dropdown transaction-dropdown">
-                    <li class="dropbtn">
-                        <span data-bind="i18n: 'menu-item-load-transaction'"></span>
-                        <i class="fa fa-caret-right"></i>
-                    </li>
-                    <li class="dropdown-content">
-                        <div data-bind="i18n: 'menu-item-from-text', click: transactionText"></div>
-                        <div data-bind="i18n: 'menu-item-from-blockchain', click: transactionBlockchain"></div>
-                        <div data-bind="i18n: 'menu-item-qr-code', click: transactionQRCode"></div>
-                    </li>
-                </ul>
+                <div data-bind="i18n: 'menu-item-sign-message', click: signMessageItem"></div>             
             </li>
         </ul>
     </li>
