@@ -223,3 +223,10 @@
         border: 1px solid #8F2129;
         background: #fdc;
     }
+    .wallet-balance-block {
+        position: absolute;
+        top:0;
+        right:0;
+        color: #bbb;
+        padding: 11px 34px 11px 0;
+    }
