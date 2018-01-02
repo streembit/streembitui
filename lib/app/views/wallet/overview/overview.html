@@ -3,38 +3,18 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title" style="color: #3276b1">
-            <a href="#fees" role="button" class="blueLink" data-toggle="collapse" aria-expanded="true" aria-controls="collapseExample" data-bind="i18n: 'col-fees'"></a><br>
+            <a href="#balance" role="button" class="blueLink" data-toggle="collapse" aria-expanded="true" aria-controls="collapseExample" data-bind="i18n: 'col-balance'"></a><br>
         </h4>
-            <div id="fees">
-                <div class="modal-body ">
-                  <div class="container-fluid">
-                    <div class="row">
-                      <div class="col-md-4" style="padding: 10px 0">
-                        <input type="checkbox" class="leftCheckbox col-md-1">
-                        <div class="col-md-4" data-bind="i18n:'wal-dinamic-fees'"></div>
-                      </div>
+        <div id="balance">
+            <div class="modal-body ">
+                <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4" style="padding: 10px 0">
                     </div>
-                    <div class="row">
-                      <div class="col-md-4" style="padding: 10px 0">
-                        <input type="checkbox" class="leftCheckbox col-md-1">
-                        <div class="col-md-4" data-bind="i18n:'wal-fees-manually'"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4" style="padding: 10px 0">
-                            <div class="col-md-5" data-bind="i18n:'wal-propose-replace'"></div>
-                            <select data-bind="options: propose, optionsText: 'name'" style="padding: 5px 0"></select>
-                        </div> 
-                    </div>  
-                    <div class="row">
-                        <div class="col-md-4" style="padding: 10px 0">
-                            <div class="col-md-5" data-bind="i18n:'wal-fee-unit'"></div>
-                            <select data-bind="options: feeUnit, optionsText: 'name'" style="padding: 5px 0"></select>
-                        </div> 
-                    </div> 
-                  </div>
-                </div>  
-            </div>
+                </div>
+                </div>
+            </div>  
+        </div>
         </div>
     </div>
 </div>
@@ -42,7 +22,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title" style="color: #3276b1">
-            <a href="#transactions" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-transactions'"></a><br>
+            <a href="#transactions" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-recent-transactions'"></a><br>
         </h4>
             <div id="transactions" class="collapse">
                 <div class="modal-body">
@@ -80,98 +60,5 @@
         </div>
     </div>
 </div>
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title" style="color: #3276b1">
-            <a href="#appearance" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-appearance'"></a><br>
-        </h4>
-            <div id="appearance" class="collapse">
-                <div class="modal-body ">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-4" style="padding: 10px 0">
-                                <div class="col-md-5" data-bind="i18n:'wal-decimal-point'"></div>
-                                <input type="text" class="decimalPoint" data-bind="textInput: pointNumber">
-                                <button data-bind="click: pointIncrease, attr: {'class': 'pointIncrease', 'disabled' : maxLimit}">
-                                    <i class="fa fa-caret-up pointIcUp" aria-hidden="true"></i>
-                                </button>
-                                <button data-bind="click: pointDecrease, attr: {'class': 'pointDecrease', 'disabled' : minLimit}">
-                                    <i class="fa fa-caret-down pointIcDown" aria-hidden="true"></i>
-                                </button>
-                                
-                            </div>                            
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4" style="padding: 10px 0">
-                                <div class="col-md-5" data-bind="i18n:'wal-base-unit'"></div>
-                                <select data-bind="options: feeUnit, optionsText: 'name'" style="padding: 5px 0"></select>
-                            </div>                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title" style="color: #3276b1">
-            <a href="#fiat" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-fiat'"></a><br>
-        </h4>
-            <div id="fiat" class="collapse">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-4" style="padding: 10px 0">
-                                <div class="col-md-5" data-bind="i18n: 'wal-currency'"></div>
-                                <select data-bind="options: currency, optionsText: 'name'" style="padding: 5px 0"></select>
-                            </div> 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4" style="padding: 10px 0">
-                                <div class="col-md-5" data-bind="i18n: 'wal-history-rates'"></div>
-                                <input type="checkbox">
-                            </div> 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4" style="padding: 10px 0">
-                                <div class="col-md-5" data-bind="i18n: 'wal-fiatBalance-address'"></div>
-                                <input type="checkbox">
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title" style="color: #3276b1">
-            <a href="#identity" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-identity'"></a><br>
-        </h4>
-            <div id="identity" class="collapse">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-5" style="padding:10px 0">
-                                <div class="col-md-5" data-bind="i18n: 'wal-open-alias'"></div>
-                                <input type="text" style="border-radius: 6px">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5" style="padding:10px 0">
-                                <div class="col-md-5" data-bind="i18n: 'wal-ssl-certificate'"></div>
-                                <input type="text" style="border-radius: 6px">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 </div>

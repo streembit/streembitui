@@ -72,17 +72,21 @@
 <div class="mywallet-view">
     <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
         <li role="presentation" class="active">
-            <a href="#mywallet-transactions" aria-controls="privatenet_settings" role="tab" data-toggle="tab" data-bind="i18n: 'col-transactions'"></a>
-        </li>
+            <a href="#mywallet_overview" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'nav-overview'"></a>
+        </li>        
         <li role="presentation">
             <a href="#mywallet-sendmoney" aria-controls="seeds_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-send-money'"></a>
         </li>
         <li role="presentation">
             <a href="#mywallet-receivemoney" aria-controls="ice_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-receive-money'"></a>
         </li>
+        <li role="presentation">
+            <a href="#mywallet-transactions" aria-controls="privatenet_settings" role="tab" data-toggle="tab" data-bind="i18n: 'col-transactions'"></a>
+        </li>
     </ul>
 </div>
 <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active mywallet-tab-panel" id="mywallet_overview" data-bind="component: {name: 'overview'}"></div>
     <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-transactions" data-bind="component: {name: 'transactions'}"></div>
     <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-sendmoney" data-bind="component: {name: 'sendmoney'}"></div>
     <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-receivemoney" data-bind="component: {name: 'receivemoney'}"></div>    
