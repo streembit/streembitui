@@ -41,7 +41,8 @@ Copyright (C) Streembit 2017
                     var rndstr = secrand.randomBuffer(32).toString("hex");
                     var txid = createHash("sha256").update(rndstr).digest("hex");
                     var payload = {
-                        "event": "sendcomplete",
+                        "event": "sendresult",
+                        "error": false,
                         "txid": txid
                     };
                     appevents.dispatch("on-bc-event", payload);
