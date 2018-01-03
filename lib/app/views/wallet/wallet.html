@@ -6,9 +6,9 @@
         </a>
         <ul class="dropdown-menu">
             <li>
-               <div data-bind="i18n: 'sbm-restore-mnemonic',click: restore"></div>                
-               <div data-bind="i18n: 'backup', click: backupItem" class="dividerLine"></div>
-               <div data-bind="i18n: 'delete', click: deleteItem"></div>
+               <div data-bind="i18n: 'menu-item-restore-wallet',click: restore"></div>                
+               <div data-bind="i18n: 'menu-item-backup-wallet', click: backupItem" class="dividerLine"></div>
+               <div data-bind="i18n: 'menu-item-delete-wallet', click: deleteItem"></div>
             </li>
         </ul>
     </li>
@@ -26,10 +26,12 @@
     </li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span data-bind="i18n: 'menu-title-transactions'"></span>
+            <span data-bind="i18n: 'menu-title-actions'"></span>
         </a>
         <ul class="dropdown-menu">
             <li>
+                <div data-bind="i18n: 'menu-item-contract', click: contactItem" class="dividerLine"></div> 
+                <div data-bind="i18n: 'menu-item-sign-message', click: signMessageItem" class="dividerLine"></div>    
                 <ul class="dropdown transaction-dropdown">
                     <li class="dropbtn">
                         <span data-bind="i18n: 'menu-item-load-transaction'"></span>
@@ -47,14 +49,12 @@
     </li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span data-bind="i18n: 'menu-title-tools'"></span>
+            <span data-bind="i18n: 'menu-title-settings'"></span>
         </a>
         <ul class="dropdown-menu">
             <li>
-                <div data-bind="i18n: 'menu-item-contract', click: contactItem" class="dividerLine"></div> 
                 <div data-bind="i18n: 'menu-item-preferences', click: preferencesItem"></div>
-                <div data-bind="i18n: 'menu-item-network', click: networkItem" class="dividerLine"></div>
-                <div data-bind="i18n: 'menu-item-sign-message', click: signMessageItem"></div>             
+                <div data-bind="i18n: 'menu-item-network', click: networkItem"></div>
             </li>
         </ul>
     </li>
@@ -86,7 +86,7 @@
             <a href="#mywallet-receivemoney" aria-controls="ice_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-receive-money'"></a>
         </li>
         <li role="presentation">
-            <a href="#mywallet-transactions" aria-controls="privatenet_settings" role="tab" data-toggle="tab" data-bind="i18n: 'col-transactions'"></a>
+            <a href="#mywallet-transactions" aria-controls="privatenet_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-transactions'"></a>
         </li>
     </ul>
 </div>
