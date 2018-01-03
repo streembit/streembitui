@@ -31,7 +31,12 @@ Copyright (C) Streembit 2017
         try {
 
             if (callback) {
-                callback(null, { dispatched: true });
+                if ((data.amount/100000000) == 5) {
+                    return callback("some BC error when sending 5 to test the whole thing");
+                }
+                else {
+                    callback(null, { dispatched: true });
+                }
             }
 
             setTimeout(
