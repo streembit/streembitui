@@ -1,5 +1,8 @@
  <!-- Note: The activity badge color changes when clicked and resets the number to 0 -->
-<span id="activity" class="activity-dropdown hidden-xs" data-bind="activitypanel: activitymsg"> <i class="fa fa-user"></i> <b class="badge" data-bind="text:activitycount, css: {'bg-color-red': activitycount() > 0 }"></b> </span>
+<span id="activity" class="activity-dropdown hidden-xs" data-bind="activitypanel: activitymsg">
+    <i class="fa fa-user"></i>
+    <b class="badge" data-bind="text:activitycount, css: { 'bg-color-red': errorcount() > 0, 'bg-color-blue': (msgcount() > 0 || notifycount() > 0) }"></b>
+</span>
 
 <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
 <div class="ajax-dropdown">
