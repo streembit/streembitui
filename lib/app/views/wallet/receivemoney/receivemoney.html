@@ -1,44 +1,66 @@
-<form class="form-horizontal container-fluid col-md-10">
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-label'"></label>
-    <div class="col-sm-8">
-        <input type="text" class="form-control copyTextInp" data-bind="" id="payTo" placeholder="Enter a SBCoin address">
-        <span data-bind="" class="copyText copyBitAddress">
-            <i class="fa fa-files-o copyBitAddress" aria-hidden="true" style="cursor: pointer;"></i>
-        </span>
+<div class="receive-payment-container">
+    <form class="form-horizontal container-fluid col-md-10">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-address'"></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control copyTextInp" data-bind="value: address, css: { 'inp-error': errAddress() == true }" id="payTo" placeholder="Enter a SBCoin address">
+            <span data-bind="" class="copyText copyBitAddress">
+                <i class="fa fa-files-o copyBitAddress" aria-hidden="true" style="cursor: pointer;"></i>
+            </span>
+            <em class="invalid error-label" data-bind="visible: errAddress, text: errTxtAddress"></em>
+        </div>
     </div>
-</div>
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-amount'"></label>
-    <div class="col-sm-3">
-        <div class="input-group">
-            <input type="text" class="form-control" id="amount" placeholder="0.000">
-            <div class="input-group-addon" data-bind="i18n: 'coin-name'"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-amount'"></label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <input type="text" class="form-control" data-bind="value: amount, css: { 'inp-error': errAmount() == true }" id="amount" placeholder="0.000">
+                <div class="input-group-addon" data-bind="i18n: 'coin-name'"></div>
+                <em class="invalid error-label" data-bind="visible: errAmount, text: errTxtAmount"></em>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" data-bind="i18n: 'tab-label'"></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" data-bind="value: label, css: { 'inp-error': errLabel() == true }" id="label" placeholder="Enter a label for this address to add to your addressbook">
+            <em class="invalid error-label" data-bind="visible: errLabel, text: errTxtLabel"></em>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button data-bind="click: clear, i18n: 'btn-clear'" class="btn btn-default"></button>
+            <input value="Request Money" type="button" class="btn btn-default" data-bind="click: generateAddress">
+        </div>
+    </div>
+    </form>
+    <div class="col-md-2">
+
+    </div>
+    <h5 class="col-md-12" data-bind="i18n: 'tab-request-payment-history'"></h5>
+    <table class="table table-bordered">
+        <tr>
+            <th data-bind="i18n: 'tb-header-text-date'"></th>
+            <th data-bind="i18n: 'tb-header-test-label'"></th>
+            <th data-bind="i18n: 'tb-header-amount-req'"></th>
+            <th data-bind="i18n: 'tab-message'"></th>
+        </tr>
+    </table>
+
+    <!-- Address modal -->
+    <div class="container container-address" data-bind="fadeVisible: addressPanel">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Request Payment to <span class="payment-to"></span>
+            </div>
+            <div class="panel-body">
+                <div id="addr-qrcode"></div>
+                <div class="address-info">
+                    <p>Payment Information</p>
+                    <p>URI: <span>streembit:<span class="payment-to"></span></span></p>
+                    <p>Address: <span class="payment-to"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="form-group">
-    <label class="col-sm-2 control-label" data-bind="i18n: 'tab-message'"></label>
-    <div class="col-sm-8">
-        <input type="text" class="form-control" id="label" placeholder="Enter a label for this address to add to your addressbook">
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-sm-10 col-sm-offset-2">
-        <input value="Request Money" type="submit" class="btn btn-default">
-        <input type="reset" class="btn btn-default">
-    </div>
-</div>
-</form>
-<div class="col-md-2">
-
-</div>
-<h5 class="col-md-12" data-bind="i18n: 'tab-request-payment-history'"></h5>
-<table class="table table-bordered">
-    <tr>
-        <th data-bind="i18n: 'tb-header-text-date'"></th>
-        <th data-bind="i18n: 'tb-header-test-label'"></th>
-        <th data-bind="i18n: 'tb-header-amount-req'"></th>
-        <th data-bind="i18n: 'tab-message'"></th>
-    </tr>
-</table>
