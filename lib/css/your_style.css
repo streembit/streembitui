@@ -246,8 +246,8 @@
          background-color: #f9f9f6;
     }
     #addr-qrcode {
-        width: 260px;
-        height: 260px;
+        width: 200px;
+        height: 200px;
         margin: 0 auto;
     }
     .address-info {
@@ -256,7 +256,7 @@
         background: #fff;
         border: 1px solid #dadada;
         padding: 4px;
-        margin: 14px 0 0 0;
+        margin: 14px 0 6px 0;
     }
     .address-info p {
         font-weight: bold;
