@@ -38,10 +38,20 @@
     <table class="table table-bordered">
         <tr>
             <th data-bind="i18n: 'tb-header-text-date'"></th>
-            <th data-bind="i18n: 'tb-header-test-label'"></th>
+            <th data-bind="i18n: 'tb-header-text-address'"></th>
             <th data-bind="i18n: 'tb-header-amount-req'"></th>
+            <th data-bind="i18n: 'tb-header-test-label'"></th>
             <th data-bind="i18n: 'tab-message'"></th>
         </tr>
+        <!-- ko foreach: transactions -->
+        <tr>
+            <td data-bind="text: (new Date(time)).toString().replace(/ GMT.*/, '')"></td>
+            <td data-bind="text: key"></td>
+            <td data-bind="text: amount"></td>
+            <td data-bind="text: label"></td>
+            <td data-bind="text: message"></td>
+        </tr>
+        <!-- /ko -->
     </table>
 
     <!-- Address modal -->
