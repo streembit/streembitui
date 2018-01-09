@@ -1,0 +1,37 @@
+
+<div class="row cert-info-panels">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Encrypted certificate private key</div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Private key</dt>
+                    <dd><span data-bind="text: cert_encrypted_privkey"></span></dd>                   
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Certificate</div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Type</dt>
+                    <dd><span data-bind="text: cert.type"></span></dd>
+                    <dt>Algorithm</dt>
+                    <dd><span data-bind="text: cert.algo"></span></dd>
+                    <dt>Signature algorithm</dt>
+                    <dd><span data-bind="text: cert.sigalg"></span></dd>
+                    <dt>Length</dt>
+                    <dd><span data-bind="text: cert.bits"></span></dd>
+                    <dt>Certificate request</dt>
+                    <dd><span data-bind="text: cert.pemstr"></span></dd>
+                    <dt>Certificate public key</dt>
+                    <dd><span data-bind="text: cert.publickey"></span></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+</div>

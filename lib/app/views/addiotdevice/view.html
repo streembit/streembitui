@@ -1,0 +1,103 @@
+<div class="row" style="margin:0; padding:10px 0">
+    <article class="col-xs-12 col-md-12 col-lg-12">
+        <div style="border: 1px dotted #ccc;padding:0;margin-top:20px; margin-bottom:30px">
+            <form class="form-horizontal iothub-form add-device">
+                <fieldset>
+                    <legend style="margin:0">Add an IoT device to your Hub</legend>
+                    <div class="col-xs-12 col-md-6 col-lg-6 iot-properties">
+                        <div class="form-group">
+                            <label>Device ID</label>
+                            <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device ..." type="text" data-bind="value: newid">
+                            <div data-bind="visible: is_newid_error">
+                                <em id="id-error" class="invalid error-label"><span data-bind="text: iderror_text"></span></em>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Device name</label>
+                            <input class="form-control" placeholder="The name of your device ..." type="text" data-bind="value: newname">
+                            <div data-bind="visible: is_newname_error">
+                                <em id="id-error" class="invalid error-label">This field is required.</em>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:20px">
+                            <label>Network</label>
+                            <select class="form-control" id="list" data-bind="value: selected_newnetwork">
+                                <option value="0">Select network ...</option>
+                                <option value="1">Zigbee</option>
+                                <option value="2">Z-wave</option>
+                                <option value="3">6LowPAN</option>
+                            </select>
+                            <div data-bind="visible: is_selected_newnetwork_error">
+                                <em id="id-error" class="invalid error-label">This field is required.</em>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-lg-6 add-feature">
+                        <h2>Features</h2>
+                        <div style="padding-left:10px">
+                            <div data-bind="visible: is_feature_error" style="padding-left:20px">
+                                <em id="id-error" class="invalid error-label">At least one feature must be defined for the device.</em>
+                            </div>
+                            <div class="form-group" style="margin-top:10px; margin-bottom:20px">
+                                <select class="form-control" id="list" data-bind="value: selected_feature">
+                                    <option value="0">Select feature ...</option>
+                                    <option value="2">On/Off Switch</option>
+                                    <option value="3">Electricity Measurement</option>
+                                    <option value="4">Temperature Measurement</option>
+                                    <option value="5">Relative Humidity Measurement</option>
+                                    <option value="6">Occupancy Sensing</option>
+                                    <option value="7">Gas sensor</option>
+                                    <option value="8">Level Control</option>
+                                    <option value="9">Alarms</option>
+                                    <option value="10">Door Lock</option>
+                                    <option value="11">Window Covering</option>
+                                    <option value="12">Pump Configuration and Control</option>
+                                    <option value="13">Thermostat</option>
+                                    <option value="14">Fan Control</option>
+                                    <option value="15">Color Control</option>
+                                    <option value="16">Illuminance Measurement</option>
+                                    <option value="17">Illuminance Level Sensing</option>                                    
+                                    <option value="18">Pressure Measurement</option>
+                                    <option value="19">Flow Measurement</option>
+                                    <option value="20">Water presence sensor</option>                                    
+                                    <option value="21">Video streaming</option>
+                                    <option value="22">Vehicle CAN interface</option>
+                                    <option value="23">Drone controller</option>
+                                </select>
+                                <button class="btn btn-default pull-right" style="margin-top:6px" data-bind="click: add_feature">
+                                    <i class="fa fa-plus"></i>
+                                    Add selected feature
+                                </button>
+                                <div style="clear:both"></div>
+                            </div>
+                        </div>                        
+                        <div style="padding-left:10px;border-top:1px dashed #eee;padding-top:10px;">
+                            <div data-bind="foreach: features" style="display:flex;flex-wrap:wrap;">
+                                <div class="feature-item">
+                                    <div class="pull-right" style="padding:2px 3px;">
+                                        <a href="javascript:void(0);" class="btn btn-default btn-xs" data-bind="click: function(){ $parent.delete_feature($data, $parent); } "><i class="fa fa-window-close"></i></a>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                    <div class="feature-item-text "><span data-bind="text: text" style=""></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-actions">
+                    <div class="row" style="margin:0">
+                        <div class="col-md-12">
+                            <button class="btn btn-default" data-bind="click: cancel_add">
+                                Cancel
+                            </button>
+                            <button class="btn btn-primary" data-bind="click: submit">
+                                <i class="fa fa-save"></i>
+                                Add Device
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </article>
+</div>

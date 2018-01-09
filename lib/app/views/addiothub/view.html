@@ -1,0 +1,59 @@
+<div>    
+    <div class="row" style="margin:0">
+        <article class="col-sm-12 col-md-12 col-lg-6">
+            <div style="border: 1px dotted #ccc;margin-top:20px;">
+                <form class="form-horizontal iothub-form">
+                    <fieldset>
+                        <legend>Add new IoT Hub</legend>
+
+                        <div class="padding: 0">
+
+                            <div class="form-group">
+                                <label>Hub ID</label>
+                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: id">
+                                <div data-bind="visible: is_id_error">
+                                    <em id="id-error" class="invalid error-label">The HUb ID field is required.</em>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hub name</label>
+                                <input class="form-control" placeholder="Hub name" type="text" data-bind="value: name">
+                                <div data-bind="visible: is_name_error">
+                                    <em id="id-error" class="invalid error-label">The Hub name field is required.</em>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom:20px">
+                                <label>Public key</label>
+                                <input class="form-control" placeholder="BSd8 encoded public key" type="text" data-bind="value: publickey">
+                                <div data-bind="visible: is_publickey_error">
+                                    <em id="id-error" class="invalid error-label">Public key is required for a Hub device.</em>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+
+
+                    <div class="form-actions">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-12">
+                                <button class="btn btn-default" data-bind="click:cancel">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-primary" data-bind="click:submit">
+                                    <i class="fa fa-save"></i>
+                                    Add Device
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            
+        </article>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 ﻿    <div class="help-view">
         <!--<div class="help-container">-->
-        <div class="help-titles">
-            <ul id="helptree">
+        <div class="help-titles tree">
+            <ul>
                 <li>
-                    <a href="#">Overview</a>
+                    <span><i class="fa fa-lg fa-folder-open"></i> Overview</span>
                     <ul>
                         <li data-link="helpitem_overview_what_is_streembit">What is Streembit?</li>
                         <li data-link="helpitem_overview_open_source">Open source</li>
@@ -13,7 +13,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Settings, configuration</a>
+                    <span><i class="fa fa-lg fa-folder-open"></i> Settings, configuration</span>
                     <ul>
                         <li data-link="helpitem_settings">Settings</li>
                         <li data-link="helpitem_configure_node">Configure your Streembit</li>
@@ -25,7 +25,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Streembit network</a>
+                    <span><i class="fa fa-lg fa-folder-open"></i> Streembit network</span>
                     <ul>
                         <li data-link="helpitem_network_connect_public">Connect to public network</li>
                         <li data-link="helpitem_network_connect_private">Connect to private network</li>
@@ -33,7 +33,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">System</a>
+                    <span><i class="fa fa-lg fa-folder-open"></i> System</span>
                     <ul>
                         <li data-link="helpitem_system_clear_database">Clear database</li>
                     </ul>
@@ -44,22 +44,6 @@
         </div>
         <!--</div>-->
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#helptree').treed();
-
-            $('#helptree li').on("click", function () {
-                var datalink = $(this).attr("data-link");
-                if (datalink) {
-                    $(".help-content").empty();
-                    var html = $('#' + datalink).html();
-                    $(".help-content").append(html);
-                }
-            });
-        });
-    </script>
-
 
     <script type="text/html" id="helpitem_overview_what_is_streembit">
     <div class="help-content-item">
@@ -78,7 +62,7 @@
     <div class="help-content-item">
         <h4>Open source</h4>
         <div>
-            <p>The system is free, fully open source and released under the Apache 2.0 license. The source code is available at https://github.com/streembit. Users can download the source and build the application from directly the source code. We encourage peer review by security experts and software developers to verify there are no security backdoors exist in the system and the application complies with security and communication standards (FIPS, JWT, JWS, JWE, etc).</p>
+            <p>The system is free, fully open source and released under the Apache 2.0 license. The source code is available at https://github.com/Streembit. Users can download the source and build the application from directly the source code. We encourage peer review by security experts and software developers to verify there are no security backdoors exist in the system and the application complies with security and communication standards (FIPS, JWT, JWS, JWE, etc).</p>
         </div>
     </div>
 </script>
@@ -271,7 +255,7 @@
             <p>Your account backup data is never saved on a central server by the Streembit application and the account backup file is saved to your Download directory.</p>
 
             <div class="settings-helpitem-title">What is saved in the Backup file?</div>
-            <p>The backup file contains your encrypted Streembit ECC public/private key pair. The backup data is base64 encoded. It starts with “---BEGIN STREEMBIT KEY---“, and the file ends with “---END STREEMBIT KEY---“</p>
+            <p>The backup file contains your encrypted Streembit ECC public/private key pair. The backup data is base64 encoded. It starts with “---BEGIN Streembit KEY---“, and the file ends with “---END Streembit KEY---“</p>
         </div>
     </div>
 </script>
@@ -313,7 +297,7 @@
     <div class="help-content-item">
         <h4>Connect to the public Streembit network</h4>
         <div>
-            <p>Click on the “CONNECT TO PUBLIC STREEMBIT” button from the start screen or click on the Streembit/Connect to public network menu item to connect the public Streembit network. The user information view will be initialized. Enter your password and then the application will try to connect to the public Streembit network.</p>
+            <p>Click on the “CONNECT TO PUBLIC Streembit” button from the start screen or click on the Streembit/Connect to public network menu item to connect the public Streembit network. The user information view will be initialized. Enter your password and then the application will try to connect to the public Streembit network.</p>
         </div>
     </div>
 </script>
@@ -322,7 +306,7 @@
     <div class="help-content-item">
         <h4>Connect to a private network</h4>
         <div>
-            <p>Click on the “CONNECT TO PRIVATE STREEMBIT” button from the start screen or click on the Streembit/Connect to private network menu item to connect the a private Streembit hub. The user information view will be initialized. Enter your password and then the application will try to connect to the private Streembit hub.</p>
+            <p>Click on the “CONNECT TO PRIVATE Streembit” button from the start screen or click on the Streembit/Connect to private network menu item to connect the a private Streembit hub. The user information view will be initialized. Enter your password and then the application will try to connect to the private Streembit hub.</p>
         </div>
     </div>
 </script>
