@@ -337,6 +337,10 @@
         .smart-style-1 #logo, .smart-style-2 #logo{
             color: #fff!important;
         }
+        .smart-style-5, .smart-style-5 .content-panel{
+            background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
+            background-size: cover!important;
+        }
     </style>
 
 </head>
@@ -578,10 +582,10 @@
                                 <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
                                 <span data-bind="i18n: 'layout-inside'"></span>
                             </label>
-                            <!-- <label>
+                            <label>
                                 <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
                                 <span data-bind="i18n: 'layout-rtl-support'"></span>
-                            </label> -->
+                            </label>
                             <label>
                                 <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
                                 <span data-bind="i18n: 'layout-menu'"></span>
@@ -591,6 +595,12 @@
                                 <span data-bind="i18n: 'layout-for-colorblind'"></span>
                                 <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
                             </label>
+                        </section>
+                        <section>
+                            <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
+                            <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
+                                <i class="fa fa-refresh"></i>
+                            </a>
                         </section>
                         <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
                         <section id="smart-styles">
@@ -607,7 +617,20 @@
             </div>            
             </div>
             <!-- END MAIN PANEL --> 
-
+            <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
+                <div class="MessageBoxContainer animated fadeIn fast" id="message">
+                    <div class="MessageBoxMiddle">
+                        <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'"> 
+                            <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
+                        </span>
+                        <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
+                        <div class="MessageBoxButtonSection">
+                            <button id="btn2-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
+                            <button id="btn1-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         
