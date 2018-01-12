@@ -14,7 +14,7 @@
         <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
             <div class="form-group form-section-panel">
                 <label for="transport">Transport:</label><br />
-                <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport">
+                <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport, enable: nwmode">
                     <option value="0">Choose ...</option>
                     <option value="tcp">TCP</option>
                     <option value="ws">WebSocket</option>
