@@ -16,7 +16,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" data-bind="i18n: 'tab-payTo'"></label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="label" data-bind="value: recipientAddress, css: { 'inp-error': errRecipient() == true }" placeholder="Enter the recipient address">
+            <input type="text" class="form-control" data-bind="value: recipientAddress, css: { 'inp-error': errRecipient() == true }" placeholder="Enter the recipient address">
             <em class="invalid error-label" data-bind="visible: errRecipient, text: errTxtRecipient"></em>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <label class="col-sm-2 control-label" data-bind="i18n: 'tab-amount'"></label>
         <div class="col-sm-4">
             <div class="input-group">
-                <input type="text" class="form-control" id="amount" data-bind="value: txnAmount, css: { 'inp-error': errAmount() == true }" placeholder="0.000">
+                <input type="text" class="form-control" data-bind="value: txnAmount, css: { 'inp-error': errAmount() == true }" placeholder="0.000">
                 <div class="input-group-addon" data-bind="i18n: 'coin-name'"></div>
             </div>
             <em class="invalid error-label" data-bind="visible: errAmount, text: errTxtAmount"></em>

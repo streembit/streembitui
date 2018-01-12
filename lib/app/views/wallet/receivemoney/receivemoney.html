@@ -11,7 +11,7 @@
         <label class="col-sm-2 control-label" data-bind="i18n: 'tab-amount'"></label>
         <div class="col-sm-4">
             <div class="input-group">
-                <input type="text" class="form-control" data-bind="value: amount, css: { 'inp-error': errAmount() == true }" id="amount" placeholder="0.000">
+                <input type="text" class="form-control" data-bind="value: amount, css: { 'inp-error': errAmount() == true }" placeholder="0.000">
                 <div class="input-group-addon" data-bind="i18n: 'coin-name'"></div>
             </div>
             <em class="invalid error-label" data-bind="visible: errAmount, text: errTxtAmount"></em>
@@ -20,7 +20,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label" data-bind="i18n: 'tab-label'"></label>
         <div class="col-sm-8">
-            <input type="text" class="form-control" data-bind="value: label, css: { 'inp-error': errLabel() == true }" id="label" placeholder="Enter a label for this address to add to your addressbook">
+            <input type="text" class="form-control" data-bind="value: label, css: { 'inp-error': errLabel() == true }" placeholder="Enter a label for this address to add to your addressbook">
             <em class="invalid error-label" data-bind="visible: errLabel, text: errTxtLabel"></em>
         </div>
     </div>
