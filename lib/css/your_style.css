@@ -284,4 +284,10 @@
         position: absolute;
 
     }
-
+    .bootbox .modal-title{
+      text-align: center!important;
+    }
+    #sign-message > .panel{
+      border: 1px solid #ccc!important;
+      border-top: navajowhite!important;
+    }

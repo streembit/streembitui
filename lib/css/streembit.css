@@ -2531,4 +2531,8 @@ overflow-wrap: break-word;
 .mywallet-tab-panel {
     padding: 10px;
 }
-
+#restore-dialog{
+    position: fixed;
+    bottom: 0;
+    left: 30px;
+}
