@@ -12,7 +12,7 @@
     <div class="tab-content">
 
         <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
-            <div class="form-group form-section-panel" data-bind="visible: nwmode">
+            <div class="form-group form-section-panel">
                 <label for="transport">Transport:</label><br />
                 <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport">
                     <option value="0">Choose ...</option>
@@ -34,8 +34,8 @@
                 </div>
             </div>
 
-            <div class="form-section-panel">
-                <div class="form-group" data-bind="visible: nwmode">
+            <div class="form-section-panel" data-bind="visible: nwmode">
+                <div class="form-group">
                     <div class="checkbox">
                         <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked." />
                     </div>
