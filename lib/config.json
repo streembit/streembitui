@@ -7,8 +7,6 @@
         "wsfallback": false,
         "askwsfallback": false,
         "tcpport": 8905,
-        "wshost": "www.streembit.org",
-        "wsport": 32318,
         "seedmode": 0,
         "bootseeds": [
             { "address": "seed.streembit.uk" },
@@ -22,11 +20,6 @@
             { "url": "stun:stun.l.google.com:19302" },
             { "url": "stun:stun1.l.google.com:19302" },
             { "url": "stun:stun2.l.google.com:19302" }
-        ],
-        "moisrv": {
-            "protocol":  "http",
-            "host": "127.0.0.1",
-            "port": 1341
-        }
+        ]
     }
 }

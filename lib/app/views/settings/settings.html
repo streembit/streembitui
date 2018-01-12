@@ -41,16 +41,6 @@
                     </div>
                 </div>
 
-                <div style="clear:both"></div>
-
-                <div class="form-group" style="float:left;margin-left:0">
-                    <label for="wsport">WebSocket host:</label><br />
-                    <input class="form-control" id="wshost" style="width:200px;display:inline-block" data-bind="value: wshost, enable: iswsfallback">&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebSocket host. The application sends data to this host via WebSocket in case the transport is WebSocket." />
-                </div>
-                <div class="form-group" style="float:left;margin-left:40px">
-                    <label for="wsport">WebSocket port:</label><br />
-                    <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport, enable: iswsfallback">&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebSocket outbound port. The application sends data on this port via WebSocket in case if the transport is WebSocket." />
-                </div>
                 <div style="clear:both;margin:0;padding:0"></div>
             </div>
 
@@ -62,7 +52,7 @@
 
         <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
             <div class="form-group form-section-panel">
-                <div style="font-weight:bold;display:inline-block">Bootstrap seeds</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
+                <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
                 <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
                 </div>
                 <div style="text-align:left;margin-top:15px">
