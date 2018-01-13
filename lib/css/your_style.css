@@ -291,3 +291,74 @@
       border: 1px solid #ccc!important;
       border-top: navajowhite!important;
     }
+
+    /*----- Tabs -----*/
+    .signmessagePopup .tabs {
+        width:100%;
+        display:inline-block;
+        margin-top: 40px;
+    }
+     
+    /*----- Tab Links -----*/
+    /* Clearfix */
+    .signmessagePopup .tab-links:after {
+        display:block;
+        clear:both;
+        content:'';
+    }
+ 
+    .signmessagePopup .tab-links li {
+        margin-right: 5px;
+        float:left;
+        list-style:none;
+    }
+ 
+    .signmessagePopup .tab-links a {
+        padding:9px 15px;
+        display:inline-block;
+        border-radius:5px 5px 0px 0px;
+        background:rgba(204, 204, 204, 0.54);
+        font-size:16px;
+        font-weight:600;
+        color:#4c4c4c;
+        transition:all linear 0.15s;
+    }
+
+    .signmessagePopup .tab-links a:hover {
+        background:#fff;
+        text-decoration:none;
+        border-radius: 5px 5px 0 0;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+    }
+
+    .signmessagePopup li.active a,.signmessagePopup li.active a:hover {
+        background:#fff;
+        color:#4c4c4c;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+    }
+
+    /*----- Content of Tabs -----*/
+    .signmessagePopup .tab-content {
+        padding:15px;
+        /*border-radius:3px;
+        box-shadow:-1px 1px 1px rgba(0,0,0,0.15);*/
+        background:#fff;
+        border: 1px solid #ccc;
+    }
+ 
+    .signmessagePopup .tab {
+        display:none;
+    }
+
+    .signmessagePopup .tab.active {
+        display:block;
+    }
+    .signmessagePopup .tab-links {
+        padding-left: 0;
+        margin: 0;
+        position: absolute;
+        top: 20px;
+
+    }
