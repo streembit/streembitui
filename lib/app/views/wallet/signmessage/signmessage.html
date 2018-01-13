@@ -1,0 +1,84 @@
+<div id="signmessage-item-template">
+	<div class="signmessagePopup">
+		<div class="tabs">
+		    <ul class="tab-links">
+		        <li class="active"><a href="#tab1" data-bind="i18n: 'nav-sing-message'" role="tab"></a></li>
+		        <li><a href="#tab2" data-bind="i18n: 'nav-verify-message'" role="tab"></a></li>
+		    </ul>
+	 
+		    <div class="tab-content">
+		        <div id="tab1" class="tab active">
+		            <div class="panel">
+						<div class="panel-body">
+							<div class="form-group">
+		    					<p data-bind="i18n: 'sign-message-text'"></p>
+		    				    <input type="text" class="col-md-10 recipientAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
+								<button class="col-md-1 addressBookBtn">
+									<i class="fa fa-address-book-o" aria-hidden="true"></i>
+								</button>
+								<button class="col-md-1 fileTextBtn">
+									<i class="fa fa-file-text" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<input type="textarea" class="col-lg-12" style="height: 150px; margin-top: 10px">
+							<div class="clearfix"></div>
+
+							<div class="form-group">
+								<p data-bind="i18n: 'sign-message-signature'"></p>
+								<input type="text" placeholder='Click "Sign Message" to generate signature' class="col-lg-11">
+								<button class="col-lg-1">
+									<i class="fa fa-window-restore" aria-hidden="true"></i>
+								</button>
+							</div>
+
+							<div class="clearfix"></div>
+							<div class="form-group" style="margin: 15px 0">
+								<button class="signMsgBtn">
+									<span><i class="fa fa-pencil" aria-hidden="true"></i></span>
+									<span data-bind="i18n: 'nav-sing-message'"></span>
+								</button>
+								<button class="signClearBtn">
+									<span><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+									<span data-bind="i18n: 'message-clear'"></span>
+								</button>
+							</div>
+							
+						</div>
+					</div>
+		        </div>
+		 
+		        <div id="tab2" class="tab">
+		           <div class="panel">
+						<div class="panel-body">
+							<div class="form-group">
+								<p data-bind="i18n: 'verify-message-text'"></p>
+								<input type="text" class="col-md-11" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
+								<button class="col-md-1">
+									<i class="fa fa-address-book-o" aria-hidden="true"></i>
+								</button>
+							</div>
+							<input type="textarea" class="col-lg-12" style="height: 150px; margin-top: 10px">
+							<input type="textarea" class="col-lg-12" style="margin-top: 10px">
+
+							<div class="clearfix"></div>
+
+							<div class="form-group" style="margin-top: 10px">
+								<button class="verifyMsgBtn">
+									<span><i class="fa fa-question" aria-hidden="true"></i></span>
+									<span data-bind="i18n: 'nav-verify-message'"></span>
+								</button>
+								<button class="verifyClearBtn">
+									<span><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+									<span data-bind="i18n: 'message-clear'"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+		        </div>
+		 
+		        
+		    </div>
+		</div>
+	</div>
+</div>

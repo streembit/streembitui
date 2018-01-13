@@ -1,0 +1,32 @@
+<div style="width:100%;height:100%;display:flex;flex-direction: column;align-items:center;justify-content: center;align-content:center" data-bind="visible: !valid_mnemonic()">
+
+  <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+    <header role="heading">
+      <span class="widget-icon"><i class="fa fa-user"></i> </span>
+      <h2>Streembit</h2>
+      <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+    </header>
+
+    <div role="content">
+      <div class="widget-body no-padding">
+        <form id="comment-form" class="smart-form" novalidate="novalidate">
+          <header>
+            <span data-bind="i18n:'lbl-restore-mnemonic'"></span>
+          </header>
+          <fieldset>
+            <label class="label">Mnemonic</label>
+            <label class="textarea" data-bind="css: { 'state-error': ismnemonic_error() == true}">
+               <textarea name="mnemonic" style="width:460px;height:120px;" data-bind="value: mnemonic, event: { blur: onMnemonicBlur }"></textarea>
+            </label>
+          </fieldset>
+          <footer>
+            <button type="button" name="submit" class="btn btn-primary" data-bind="click: false, i18n:'lbl-restore-mnemonic-submit'"></button>
+          </footer>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<createaccount params="mnemo: mnemonic()" data-bind="visible: valid_mnemonic()"></createaccount>

@@ -63,3 +63,9 @@ build/macosx64
 *.zip
 /typings
 /lib/config.app.json
+
+/package-lock.json
+
+nw.sh
+.idea/*
+

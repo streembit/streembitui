@@ -1,68 +1,141 @@
 ﻿<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us">
 <head>
     <meta charset="utf-8" />
     <title>Streembit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <script type="text/javascript">
-        window.nwrequire = window.require || (function () {});
-        window.require = undefined;
-
         var streembit = streembit || {};
-
         streembit.globals = streembit.globals || {};
         streembit.globals.appname = "Streembit";
         streembit.globals.version = "1.1.0";
-        streembit.globals.wsprotocol = "http";
-        // set this flag for Web mode (i.e. serving the application from a web server) to false
-        // nwmode = true indicates the application is using node-webkit
-        streembit.globals.nwmode = true;
+
+        // bc services flag
+        streembit.globals.devbcnet = true;
+
+        var gui = null;
+        try{
+            gui = require('nw.gui');
+        }
+        catch(err) {
+        }
+
+        if (gui) {
+            // Get the current window
+            var nwwin = gui.Window.get();
+            nwwin.maximize();
+
+            window.nwrequire = window.require || (function () { });
+            window.require = undefined;
+
+            streembit.globals.nwmode = true;
+
+            console.log("Running the app in nwmode = " + streembit.globals.nwmode);
+        }
 
         streembit.api = streembit.api || {};       
 
         streembit.notify = streembit.notify || {};
+        streembit.activity = streembit.activity || {};
 
         streembit.ui = streembit.ui || {};
         streembit.ui.load_container = "load-container";
         streembit.ui.load_info = "load-info";
-        streembit.ui.main = "streembit-container";
-        streembit.ui.navbar_section = "navbar-section";
-        streembit.ui.taskbarmsg = "footer-text-container";
 
         //  the mainapplication component loaded from the lib/views directory
         //  change this to load another main app
         //  the component must be registered with the lib/viewreg 
         streembit.view = {};
-        streembit.view.mainapp = "streembit-app";
+        streembit.view.mainapp = "dashboard";
 
     </script>
 
+    <!-- Basic Styles -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css">
+
+    <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-skins.min.css">
+
+    <!-- SmartAdmin RTL Support  -->
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-rtl.min.css">
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/your_style.css">
+
+    <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/demo.min.css">-->
+
+    <!-- FAVICONS -->
+    <!--<link rel="shortcut icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">-->
+
+    <!-- GOOGLE FONT -->
+    <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">-->
+
+
+    <link rel="apple-touch-icon" href="lib/images/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="lib/images/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="lib/images/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="lib/images/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Startup image for web apps -->
+    <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="lib/images/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
     <style>
-        body{           
+        body[data-appinit=true] {
+            background: #333;
         }
 
-        body[data-appinit=true]{
-            background: -webkit-radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;
-            background: radial-gradient(ellipse farthest-corner at center bottom, #2a7b9b 0%, #030f28 100%) center bottom/100% fixed;            
+        body[data-account-load-complete=false] {
+            background: #333;
         }
 
-        body[data-appinit=false]{
-            background:linear-gradient(to bottom, #e9f1fa 0%, #ffffff 100%);    
+        body[data-account-load-complete=true]{
+            background:#fff; 
         }
 
         body[data-appinit=false] #load-container{
             display:none;
         }
         body[data-appinit=true] #load-container{
-            display:normal;
+            display:block;
         }
 
-        body[data-appinit=true] #streembit-container{
-            display:none;
+        body[data-account-load-complete=false] #main {
+            background: #333;
+            height:100%;
         }
-        body[data-appinit=false] #streembit-container{
-            display:normal;
+
+        body[data-account-load-complete=true] .content-panel {
+            background: #fff;
+        }
+
+        body[data-account-load-complete=false] #header,
+        body[data-account-load-complete=false] #left-panel,
+        body[data-account-load-complete=false] #ribbon,
+        body[data-account-load-complete=false] .page-footer,
+        body[data-account-load-complete=false] .demo{
+            display: none;
+        }
+
+        body[data-appinit=false] #load-container {
+            display: none;
+        }
+
+        body[data-appinit=true] #load-container {
+            display: block;
         }
 
         body, html {
@@ -147,10 +220,131 @@
         }
         /* loader */
 
+
+        .jqstooltip {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            visibility: hidden;
+            background: rgb(0, 0, 0) transparent;
+            background-color: rgba(0,0,0,0.6);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px;
+            border: 1px solid white;
+            z-index: 10000;
+        }
+
+        .jqsfield {
+            color: white;
+            font: 10px arial, san serif;
+            text-align: left;
+        }
+        .demo_settings_layout{
+            width: 160px;
+            position: absolute;
+            z-index: 900;
+            top: 54px;
+            right: 0;
+            background: #F1DA91;
+            padding: 12px;
+            display:none;
+        }
+        .demo.activate>span{
+            right: 160px;
+        }
+        .demo_settings_layout legend{
+            margin-top: -5px;
+        }
+        .demo .btn{
+            font-size: 13px!important;
+            line-height: 1.5!important;
+            border-radius: 3px!important;
+            padding: 3px 7px!important;
+            height: auto!important;
+        }
+        .fixed-header #allContent{
+            margin-top: 49px;
+        }
+        .demo>span{
+          position: absolute;
+          right: 0;
+          top:54px;
+          z-index: 900;
+          display: block;
+          height: 30px;
+          width: 30px;
+          border-radius: 5px 0 0 5px;
+          background: #F1DA91;
+          padding: 2px;
+          text-align: center;
+          line-height: 28px;
+          cursor: pointer;
+        }
+        .fixed-navigation #mainPanel{
+            margin-left: 220px;
+        }
+        .fixed-ribbon .content-panel{
+            padding-top: 50px;
+        }
+        .fixed-ribbon .demo_settings_layout, .fixed-ribbon #demo-setting{
+            z-index: 903;
+        }
+        .fixed-page-footer .page-footer{
+            bottom:0;
+            height: 52px;
+        }
+        .smart-rtl .widget-box-two .widget-two-icon{
+            right: 300px;
+        }
+        .smart-rtl .demo_settings_layout, .smart-rtl .demo>span{
+            left:0;
+            right: auto;
+        }
+        .smart-rtl .demo.activate>span{
+            right: auto;
+            left: 160px;
+        }
+        .menu-on-top #mainPanel{
+            margin-left: 0!important;
+            margin-top: 70px!important;
+        }
+        .menu-on-top #left-panel{
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 904;
+            padding-top: 49px;
+        }
+        .menu-on-top .demo>span, .menu-on-top .demo_settings_layout{
+            z-index: 904;
+            top:123px;
+        }
+        .smart-style-4:not(.menu-on-top) #left-panel{
+            padding-top: 0!important;
+        }
+        .smart-style-2 #left-panel{
+            padding-top: 0px; 
+        }
+        body.smart-style-6 #logo-group>span#logo:before{
+            content: none;
+        }
+        .smart-style-1 #logo, .smart-style-2 #logo{
+            color: #fff!important;
+        }
+        .smart-style-5, .smart-style-5 .content-panel{
+            background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
+            background-size: cover!important;
+        }
     </style>
 
 </head>
-<body data-appinit="true">
+
+<body data-appinit="true" data-account-load-complete="false">
 
     <div id="load-container">
         <div id="load-screen">
@@ -163,116 +357,403 @@
         </div>
     </div>
 
-    <div id="streembit-container">
-        <div id="navbar-section">
-            <div class="navbar navbar-fixed-top navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"  data-bind="click: nav.bind($data, '')">Streembit</a>
+    <div id="app-container">
+
+        <!-- HEADER -->
+        <header id="header" style="flex: 0 0 49px">
+            <div id="logo-group">
+
+                <!-- PLACE YOUR LOGO HERE -->
+                <span id="logo" style="font-weight: bold;padding-top: 4px;"> STREEMBIT </span>
+                <!-- END LOGO PLACEHOLDER --> 
+                
+                <div style="display:block;margin:0;padding:0" data-bind="component: {name: 'activity'}">
+
+                </div>           
+            </div>
+
+            <!-- activity dropdown -->
+            <!--<div class="hidden-xs">
+                
+
+            </div>-->
+            <!-- end activity dropdown -->
+
+            <!-- pulled right: nav area -->
+            <div class="pull-right">
+
+                <!-- collapse menu button -->
+                <div id="hide-menu" class="btn-header pull-right">
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                </div>
+                <!-- end collapse menu -->
+
+                <!-- multiple lang dropdown : find all flags in the flags page -->
+                <ul class="header-dropdown-list hidden-xs">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="active">
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- end multiple lang -->
+
+            </div>
+            <!-- end pulled right: nav area -->
+
+        </header>
+        <!-- END HEADER -->
+        
+        <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
+
+            <!-- Left panel : Navigation area -->
+            <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+            <aside id="left-panel" style="flex: 0 0 220px;">
+                <!-- User info -->
+                <div class="login-info">
+                    <span>
+                        <!-- User image size is adjusted inside CSS, it should stay as it -->
+                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                            <span data-bind="text: user_name" style="padding-top:4px">
+                            </span>
+                            <i class="fa fa-angle-down" style="padding-top:5px"></i>
+                        </a>
+
+                    </span>
+                </div>
+                <!-- end user info -->
+                <!-- NAVIGATION : This navigation is also responsive-->
+                <nav>
+                    <ul>
+                        <li class="active">
+                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
+                            <ul>
+                                <!-- here goes the application list -->
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'ndareceived')">My contacts</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: offline_contact_request">Create offline contact offer</a></li>
+                                <li><a href="#" data-bind="click: accept_contact_request">Add contact</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click:backupContacts">Backup contacts to file</a></li>
+                                <li><a href="#" data-bind="click:restoreContacts">Restore contacts from file</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-lock"></i> <span class="menu-item-parent">Security</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'certificates')">Certificates</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'commsecurity')">Communication security</a></li>
+                            </ul>
+                        </li>
+                        <li class="chat-users top-menu-invisible">
+                            <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
+                            <ul>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                <li role="separator" class="divider"></li>
+                                <!-- ko if: streembit.globals.nwmode == true -->
+                                <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                                <li role="separator" class="divider"></li>
+                                <!-- /ko -->
+                                <li><a href="#" data-bind="click:about">About</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+            </aside>
+            <!-- END NAVIGATION -->
+            <!-- MAIN PANEL -->
+            <div style="flex:1;" id="mainPanel">
+
+                <!-- RIBBON -->
+                <div id="ribbon" class="main_ribbon_header">
+                    <!-- breadcrumb -->
+                    <div class="breadcrumb">
                     </div>
+                    <!-- end breadcrumb -->
+                </div>
+                <!-- END RIBBON -->
+                <!-- MAIN CONTENT -->
+                <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+                </div>
+                <!-- END MAIN CONTENT -->
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'initui')">Start Streembit</a></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'connectpublic')">Connect to public network</a></li>
-                                    <li><a href="#">Connect to private hub</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'createaccount')">New account</a></li>
-                                    <li><a href="#">Initialize existing account</a></li>
-                                    <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
-                                    <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contacts <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: offline_contact_request">Create offline contact offer</a></li>
-                                    <li><a href="#" data-bind="click: accept_contact_request">Add contact</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#" data-bind="click:backupContacts">Backup contacts to file</a></li>
-                                    <li><a href="#" data-bind="click:restoreContacts">Restore contacts from file</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Machines <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Connect to Internet of Things device</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <!-- ko if: streembit.globals.nwmode == true -->
-                                    <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <!-- /ko -->
-                                    <li><a href="#" data-bind="click:about">About</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DAPP <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Wallet</a></li>
-                                    <li><a href="#">Blockchain</a></li>
-                                    <li><a href="#">Games</a></li>
-                                    <li><a href="#">Apps</a></li>                                  
-                                </ul>
-                            </li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+            <!-- layout option-->
+            <div class="demo">
+                <span id="demo-setting" data-action="demoSettings">
+                    <i class="fa fa-cog txt-color-blueDark"></i>
+                </span>
+                <div class="demo_settings_layout">
+                    <form>
+                        <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
+                        <section>
+                            <label>
+                                <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-fixed-header'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-fixed-navigation'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-fixed-footer'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-inside'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-rtl-support'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-menu'"></span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
+                                <span data-bind="i18n: 'layout-for-colorblind'"></span>
+                                <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
+                            </label>
+                        </section>
+                        <section>
+                            <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
+                            <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                        </section>
+                        <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
+                        <section id="smart-styles">
+                            <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
+                            <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
+                            <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
+                            <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
+                            <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
+                            <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
+                            <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
+                        </section>
+                    </form>
+                </div>
+            </div>            
+            </div>
+            <!-- END MAIN PANEL --> 
+            <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
+                <div class="MessageBoxContainer animated fadeIn fast" id="message">
+                    <div class="MessageBoxMiddle">
+                        <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'"> 
+                            <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
+                        </span>
+                        <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
+                        <div class="MessageBoxButtonSection">
+                            <button id="btn2-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
+                            <button id="btn1-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        
+        <!-- PAGE FOOTER -->
+        <div class="page-footer" style="flex: 0 0 52px">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 hidden-xs"></div>
+                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+                    <div class="txt-color-white inline-block">
+                        <i class="txt-color-blueLight hidden-mobile">Last account activity ...</i>
+                        <div class="btn-group dropup">
+                            <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" data-toggle="dropdown">
+                                <i class="fa fa-link"></i> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right text-left">
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Download Progress</p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-success" style="width: 50%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Server Load</p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <p class="txt-color-darken font-sm no-margin">Memory Load <span class="text-danger">*critical*</span></p>
+                                        <div class="progress progress-micro no-margin">
+                                            <div class="progress-bar progress-bar-danger" style="width: 70%;"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="padding-5">
+                                        <button class="btn btn-block btn-default">refresh</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="main">
-            <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
-            </div>
-            <div class="footer">
-                <div id="footer-text-container"></div>
-            </div>
-            <div id="footer-info" data-bind="component: 'tasks'">                
-            </div>
-        </div>
-    </div>
+        <!-- END PAGE FOOTER -->
 
-    <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+        <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag) Note: These tiles are completely responsive, you can add as many as you like  -->
+        <div id="shortcut">
+            <ul>
+                <li>
+                    <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-signal fa-4x"></i> <span>IoT Devices</span> </span> </a>
+                </li>
+                <li>
+                    <a href="gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-group fa-4x"></i> <span>Contacts</span> </span> </a>
+                </li>
+                <li>
+                    <a href="invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-money  fa-4x"></i> <span>Wallett</span> </span> </a>
+                </li>
+                <li>
+                    <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-headphones fa-4x"></i> <span>Call </span> </span> </a>
+                </li>
+                <li>
+                    <a href="profile.html" class="jarvismetro-tile big-cubes bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-cogs fa-4x"></i> <span>Settings </span> </span> </a>
+                </li>
+            </ul>
+        </div>
+        <!-- END SHORTCUT AREA -->
+
+    </div>   
+
+    <script src="lib/js/libs/jquery-2.1.1.min.js"></script>
+    <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script>
+
+    <script src="lib/js/app.config.js"></script>
+    <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+    <script src="lib/js/bootstrap/bootstrap.js"></script>
+    <script src="lib/js/notification/SmartNotification.min.js"></script>  
+    <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>
+    <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+    <script src="lib/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+    <script src="lib/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+    <script src="lib/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="lib/js/plugin/select2/select2.min.js"></script>
+    <script src="lib/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <script src="lib/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+    <script src="lib/js/plugin/fastclick/fastclick.min.js"></script>
+    <script src="lib/js/function.js"></script>
+    <script src="lib/js/app.js"></script>
+    
+    <script src="lib/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="lib/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <script src="lib/js/plugin/bootbox/bootbox.min.js"></script>
+    <script src="lib/js/plugin/blockui/jquery.blockUI.js"></script>
+    <script src="lib/js/plugin/jquery-qrcode/jquery-qrcode-0.14.0.min.js"></script>
+    <script src="lib/js/plugin/knockout/knockout-3.4.2.debug.js"></script>
+    <script src="lib/js/plugin/knockout/knockout.mapping.js"></script>
+    <script src="lib/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
-    <script>
-        System.import('lib/main.js');
-    </script>
 
+    <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+
+    <script>
+        $(document).ready(function() {
+            pageSetUp();      
+            System.import('lib/main.js');
+            
+        });
+    </script>
+    
     <script type="text/html" id="empty-template">
         <div class="emptydiv"></div>
-    </script>
+    </script>    
 
 </body>
 </html>

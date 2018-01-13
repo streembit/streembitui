@@ -1,159 +1,143 @@
-<div style="display:flex;justify-content:center;width:100%">
-    <div id="uiview-container" style="margin:20px;max-width:960px">
-        <div class="uiview-container-panel" style="min-width:800px;width:100%">
-            <div class="uiview-container-panel-header">
-                <h4>Settings</h4>
+
+<div>
+    <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
+        <li role="presentation" class="active"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab">Network</a></li>
+        <li role="presentation"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab">Seeds</a></li>
+        <li role="presentation"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab">Ice resolvers</a></li>
+        <li role="presentation"><a href="#privatenet_settings" aria-controls="privatenet_settings" role="tab" data-toggle="tab">Private network</a></li>
+        <li role="presentation"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab">System</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
+            <div class="form-group form-section-panel">
+                <label for="transport">Transport:</label><br />
+                <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport">
+                    <option value="0">Choose ...</option>
+                    <option value="tcp">TCP</option>
+                    <option value="ws">WebSocket</option>
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational." />
             </div>
 
-            <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
-                <li role="presentation" class="active"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab">Network</a></li>
-                <li role="presentation"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab">Seeds</a></li>
-                <li role="presentation"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab">Ice resolvers</a></li>
-                <li role="presentation"><a href="#privatenet_settings" aria-controls="privatenet_settings" role="tab" data-toggle="tab">Private network</a></li>
-                <li role="presentation"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab">System</a></li>
-            </ul>
+            <div class="form-group form-section-panel" data-bind="visible: nwmode">
+                <label for="tcpport">TCP port:</label><br />
+                <input type="number" class="form-control" id="tcpport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. This settings is not used by the application in case the transport is WebSocket (WS)." />
+            </div>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-
-                <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
-                    <div class="form-group form-section-panel" data-bind="visible: nwmode">
-                        <label for="transport">Transport:</label><br />
-                        <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport">
-                            <option value="0">Choose ...</option>
-                            <option value="tcp">TCP</option>
-                            <option value="ws">WebSocket</option>
-                        </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational." />
+            <div class="form-section-panel" data-bind="visible: nwmode">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label> <input type="checkbox" data-bind="checked: iswspublish"> <span style="font-weight:bold">Publish at WebSocket services</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Using WebSocket enables communication with users who are unable to etablish a TCP connection. Using WS signalling your video, audio, text communication and file sending will still be fully encrypted and peer-to-peer." />
                     </div>
-
-                    <div class="form-group form-section-panel" data-bind="visible: nwmode">
-                        <label for="tcpport">TCP port:</label><br />
-                        <input type="number" class="form-control" id="tcpport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. This settings is not used by the application in case the transport is WebSocket (WS)." />
-                    </div>
-
-                    <div class="form-section-panel" data-bind="visible: nwmode">
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label> <input type="checkbox" data-bind="checked: iswspublish"> <span style="font-weight:bold">Publish at WebSocket services</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Using WebSocket enables communication with users who are unable to etablish a TCP connection. Using WS signalling your video, audio, text communication and file sending will still be fully encrypted and peer-to-peer." />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section-panel">
-                        <div class="form-group" data-bind="visible: nwmode">
-                            <div class="checkbox">
-                                <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked." />
-                            </div>
-                        </div>
-
-                        <div style="clear:both"></div>
-
-                        <div class="form-group" style="float:left;margin-left:0">
-                            <label for="wsport">WebSocket host:</label><br />
-                            <input class="form-control" id="wshost" style="width:200px;display:inline-block" data-bind="value: wshost, enable: iswsfallback">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket host. The application sends data to this host via WebSocket in case the transport is WebSocket." />
-                        </div>
-                        <div class="form-group" style="float:left;margin-left:40px">
-                            <label for="wsport">WebSocket port:</label><br />
-                            <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: wsport, enable: iswsfallback">&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebSocket outbound port. The application sends data on this port via WebSocket in case if the transport is WebSocket." />
-                        </div>
-                        <div style="clear:both;margin:0;padding:0"></div>
-                    </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
-
                 </div>
+            </div>
 
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
-                    <div class="form-group form-section-panel">
-                        <div style="font-weight:bold;display:inline-block">Bootstrap seeds</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
-                        <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds, afterRender: initui }" style="margin-top:10px">
-                        </div>
-                        <div style="text-align:left;margin-top:15px">
-                            <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
-                        </div>
-                        <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
-                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                                <label for="newseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
-                                <input type="text" class="form-control" id="newseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_host">
-                            </div>
-                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                                <label for="newseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
-                                <input type="text" class="form-control" id="newseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
-                            </div>
-                            <div style="margin-top:20px">
-                                <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
-                            </div>
-                        </div>
+            <div class="form-section-panel" data-bind="visible: nwmode">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked." />
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="ice_settings">
-                    <div class="form-group form-section-panel">
-                        <div style="font-weight:bold;display:inline-block">Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
-                        <div data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="margin-top:10px">
-                        </div>
-                        <div style="text-align:left;margin-top:15px">
-                            <button style="font-size:12px" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
-                        </div>
-                        <div data-bind="visible: is_add_iceresolver" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
-                            <div class="form-group" style="font-size:12px;margin-bottom:0">
-                                <label for="newice" style="font-size:12px">ICE server:</label>
-                                <input type="text" class="form-control" id="newice" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_iceresolver"> &nbsp;&nbsp;<button data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
+                <div style="clear:both;margin:0;padding:0"></div>
+            </div>
 
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
+            <div style="margin-top:30px">
+                <button data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
+            <div class="form-group form-section-panel">
+                <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
+                <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
                 </div>
-
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="privatenet_settings">
-
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">Seed account:</label><br />
-                        <input type="text" class="form-control" id="wsport" maxlength="5" style="width:400px;display:inline-block" data-bind="value: private_net_account">
-                        &nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streembit network. " />
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">Seed port:</label><br />
-                        <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: private_net_port">
-                    </div>
-
-                    <div class="form-group form-section-panel">
-                        <label for="tcpport">Seed IP/domain name:</label><br />
-                        <input type="text" class="form-control" id="wsport" maxlength="5" style="width:300px;display:inline-block" data-bind="value: private_net_address">
-                    </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
-                    </div>
-
+                <div style="text-align:left;margin-top:15px">
+                    <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
                 </div>
-
-                <div role="tabpanel" class="tab-pane settings-tab-panel" id="system_settings">
-
-                    <div class="form-group form-section-panel">
-                        <label for="loglevel">Log level:</label><br />
-                        <select type="select" class="form-control" id="loglevel" maxlength="5" style="width:170px;display:inline-block" data-bind="value: selected_loglevel">
-                            <option value="0">Choose ...</option>
-                            <option value="debug">Debug</option>
-                            <option value="info">Info</option>
-                            <option value="error">Error</option>
-                        </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-toggle="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
+                <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
+                    <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                        <label for="newseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
+                        <input type="text" class="form-control" id="newseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_host">
                     </div>
-
-                    <div style="margin-top:30px">
-                        <button data-bind="click: save" style="margin-right:10px">Save</button>
+                    <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                        <label for="newseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
+                        <input type="text" class="form-control" id="newseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
+                    </div>
+                    <div style="margin-top:20px">
+                        <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel" id="ice_settings">
+            <div class="form-group form-section-panel">
+                <div style="font-weight:bold;display:inline-block">Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
+                <div data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="margin-top:10px">
+                </div>
+                <div style="text-align:left;margin-top:15px">
+                    <button style="font-size:12px" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
+                </div>
+                <div data-bind="visible: is_add_iceresolver" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
+                    <div class="form-group" style="font-size:12px;margin-bottom:0">
+                        <label for="newice" style="font-size:12px">ICE server:</label>
+                        <input type="text" class="form-control" id="newice" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_iceresolver"> &nbsp;&nbsp;<button data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:30px">
+                <button data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel" id="privatenet_settings">
+
+            <div class="form-group form-section-panel">
+                <label for="tcpport">Seed account:</label><br />
+                <input type="text" class="form-control" id="wsport" maxlength="5" style="width:400px;display:inline-block" data-bind="value: private_net_account">
+                &nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streembit network. " />
+            </div>
+
+            <div class="form-group form-section-panel">
+                <label for="tcpport">Seed port:</label><br />
+                <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: private_net_port">
+            </div>
+
+            <div class="form-group form-section-panel">
+                <label for="tcpport">Seed IP/domain name:</label><br />
+                <input type="text" class="form-control" id="wsport" maxlength="5" style="width:300px;display:inline-block" data-bind="value: private_net_address">
+            </div>
+
+            <div style="margin-top:30px">
+                <button data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel" id="system_settings">
+
+            <div class="form-group form-section-panel">
+                <label for="loglevel">Log level:</label><br />
+                <select type="select" class="form-control" id="loglevel" maxlength="5" style="width:170px;display:inline-block" data-bind="value: selected_loglevel">
+                    <option value="0">Choose ...</option>
+                    <option value="debug">Debug</option>
+                    <option value="info">Info</option>
+                    <option value="error">Error</option>
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
+            </div>
+
+            <div style="margin-top:30px">
+                <button data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+        </div>
     </div>
 </div>
+
 
 
 

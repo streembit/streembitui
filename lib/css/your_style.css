@@ -1,0 +1,364 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+    .qrcode-text {padding-right:1.7em; margin-right:0}
+    .qrcode-text-btn {display:inline-block; background:url(//dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg) 50% 50% no-repeat; height:2em; width:1.7em; cursor:pointer;position: relative;bottom: 29px;float: right;right: 5px;}
+    .qrcode-text-btn > input[type=file] {position:absolute; overflow:hidden; width:1px; height:1px; opacity:0}
+    .seekbar {
+      margin: 12px 0;
+     position: relative;
+    }
+
+    .seekbar-progress {
+      height: 6px;
+      background-color: #f5f5f5;
+      background-image: linear-gradient(to bottom, #ebebeb 0%, #f5f5f5 100%);
+      background-repeat: repeat-x;
+      border-radius: 6px;
+    }
+
+    .seekbar-progress [role="progressbar"] {
+      height: 100%;
+      position: relative;
+      background: rgba(0, 128, 0, 0.66);
+      border-radius: 6px;
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    }
+
+    .seekbar-progress [role="progressbar"]:after {
+      content: " ";
+      display: block;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: -7px;
+      right: -12px;
+      background-color: #888;
+      background-image: linear-gradient(to bottom, #ccc 0%, #888 100%);
+      background-repeat: repeat-x;
+      border: 1px solid #999;
+      border-radius: 20px;  
+    }
+
+    .seekbar input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      background: transparent;
+      outline: 0;
+      border: 0;
+    }
+
+    .seekbar input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      display: block;
+      width: 48px;
+      height: 48px;
+      background-color: transparent;
+    }
+
+    /*
+     Mozilla:
+     https://developer.mozilla.org/en-US/docs/User:Jonathan_Watt/range
+    */
+    .seekbar input[type="range"]::-moz-range-thumb {
+      display: block;
+      width: 48px;
+      height: 48px;
+      background: transparent;
+      border: 0;
+    }
+
+    .seekbar input[type="range"]::-moz-range-track {
+      background: transparent;
+      border: 0;
+    }
+
+    .seekbar input[type="range"]::-moz-focus-outer {
+      border: 0;
+    }
+    /*for copy button*/
+    .copyText{
+        position: relative;
+        float: right;
+        font-size: 20px;
+        left: 15px;
+        top: 2px;
+    }
+    .copyTextInp{
+        position: absolute;
+    }
+    .leftCheckbox{
+    	float:left;
+    }
+    .blueLink{
+    	font-size: 20px;
+    }
+    #coinSelect{
+    	padding: 6px;
+    }
+    .decimalPoint{
+    	position: absolute;
+    }
+    .pointIncrease, .pointDecrease{
+    	position: relative;
+	    height: 12px;
+	    display: block;
+	    right: 0;
+	    left: 147px;
+	    background: transparent;
+	    border: 1px solid transparent;
+    }
+    .pointIcUp{
+    	position: relative;
+    	bottom: 4px
+    }
+    .pointIcDown{
+    	position: relative;
+    	bottom: 7px;
+    }
+    /*for my wallet main menu*/
+    .navbar-nav{
+    	float: none;
+    }
+    #mainMenu .open>a, #mainMenu .open>a:focus, #mainMenu .open>a:hover{
+    	background-color: #3276b1;
+    	color:white;
+    }
+    /*for the main menu*/
+    .dropbtn {
+      cursor: pointer;
+      
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content div {
+        color: black;
+        padding: 5px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content div:hover {
+      background-color: #3276b1;
+      color: white;
+    }
+
+    .transaction-dropdown:hover .dropdown-content {
+        display: block;
+        left:100%;
+        top:0;
+    }
+
+    .dropdown-menu li div{
+      padding: 4px 11px;
+    }
+    .dropdown-menu li div:hover, .transaction-dropdown:hover {
+      background-color: #3276b1;
+      color:white;
+      cursor: pointer;
+    }
+    .transaction-dropdown{
+      list-style-type: none;
+      padding: 4px 11px;
+    }
+    .dividerLine{
+      border-bottom: 1px solid #ccc;
+    }
+    /*for admin panel*/
+    nav>ul>li>ul::before{
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 1;
+      left: 23px;
+      top: 0;
+      bottom: 0;
+      border-left: 1px solid #7A7A7A;
+    }
+    nav>ul ul li::before{
+      content: "";
+      display: block;
+      position: absolute;
+      width: 8px;
+      left: 23px;
+      top: 16px;
+      border-top: 1px solid #7A7A7A;
+      z-index: 1;
+    }
+    .chooseFileWallet{
+      display: inline-block!important;
+      margin-left: 30px;
+      width: 90px;
+    }
+    .inp-error {
+        border: 1px solid #8F2129;
+        background: #fdc;
+    }
+    .wallet-balance-block {
+        position: absolute;
+        top:0;
+        right:0;
+        color: #bbb;
+        padding: 11px 34px 11px 0;
+    }
+    .receive-payment-container {
+        position: relative;
+    }
+    .container-address {
+        position: absolute;
+        top: 0;
+        /*left: calc((100% - 520px)/2);*/
+        left: 10px;
+        width: 520px;
+        height: auto;
+        z-index: 1000;
+    }
+    .container-address .panel-body {
+         background-color: #f9f9f6;
+    }
+    #addr-qrcode {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+    .address-info {
+        width: 100%;
+        height: 100px;
+        background: #fff;
+        border: 1px solid #dadada;
+        padding: 4px;
+        margin: 14px 0 6px 0;
+    }
+    .address-info p {
+        font-weight: bold;
+    }
+    .address-info p:first-child {
+        font-size: 14px;
+    }
+    .container-address .panel-heading {
+        position: relative;
+        background-color: #d4d4d4;
+    }
+    .container-address .panel-heading img {
+        position: absolute;
+        top: 8px;
+        right: 4px;
+        cursor: pointer;
+    }
+    .address-info p span {
+        font-weight: normal;
+    }
+    span.payment-to {
+
+    }
+    address-panel-close {
+        position: absolute;
+
+    }
+    .bootbox .modal-title{
+      text-align: center!important;
+    }
+    #sign-message > .panel{
+      border: 1px solid #ccc!important;
+      border-top: navajowhite!important;
+    }
+
+    /*----- Tabs -----*/
+    .signmessagePopup .tabs {
+        width:100%;
+        display:inline-block;
+        margin-top: 40px;
+    }
+     
+    /*----- Tab Links -----*/
+    /* Clearfix */
+    .signmessagePopup .tab-links:after {
+        display:block;
+        clear:both;
+        content:'';
+    }
+ 
+    .signmessagePopup .tab-links li {
+        margin-right: 5px;
+        float:left;
+        list-style:none;
+    }
+ 
+    .signmessagePopup .tab-links a {
+        padding:9px 15px;
+        display:inline-block;
+        border-radius:5px 5px 0px 0px;
+        background:rgba(204, 204, 204, 0.54);
+        font-size:16px;
+        font-weight:600;
+        color:#4c4c4c;
+        transition:all linear 0.15s;
+    }
+
+    .signmessagePopup .tab-links a:hover {
+        background:#fff;
+        text-decoration:none;
+        border-radius: 5px 5px 0 0;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+    }
+
+    .signmessagePopup li.active a,.signmessagePopup li.active a:hover {
+        background:#fff;
+        color:#4c4c4c;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+    }
+
+    /*----- Content of Tabs -----*/
+    .signmessagePopup .tab-content {
+        padding:15px;
+        /*border-radius:3px;
+        box-shadow:-1px 1px 1px rgba(0,0,0,0.15);*/
+        background:#fff;
+        border: 1px solid #ccc;
+    }
+ 
+    .signmessagePopup .tab {
+        display:none;
+    }
+
+    .signmessagePopup .tab.active {
+        display:block;
+    }
+    .signmessagePopup .tab-links {
+        padding-left: 0;
+        margin: 0;
+        position: absolute;
+        top: 20px;
+
+    }

@@ -1,4 +1,83 @@
+<div style="width:100%;height:100%;display:flex;flex-direction: column;align-items:center;justify-content: center;align-content:center">
 
+    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+        <header role="heading">
+            <span class="widget-icon"><i class="fa fa-user"></i> </span>
+            <h2>Streembit</h2>
+            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+        </header>
+
+        <div role="content">
+            <div class="widget-body no-padding">
+                <form id="comment-form" class="smart-form" novalidate="novalidate">
+                    <header>
+                        <!-- ko if: (!ismnemonic_visible()) -->
+                        <span data-bind="i18n:'lbl-createaccount-create'"></span>
+                        <!-- /ko -->
+                        <!-- ko if: (ismnemonic_visible()) -->
+                        <span data-bind="i18n:'ttlbtn-restore-mnemonic'"></span>
+                        <!-- /ko -->
+                    </header>
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-12" data-bind="visible: ismnemonic_visible()">
+                                <label data-bind="i18n: 'lbl-mnemonic'"></label>
+                                <div class="error-label" data-bind="visible: ismnemonic_error">
+                                    <span data-bind="text: mnemonicerrormsg"></span>
+                                </div>
+                                <label class="textarea" data-bind="css: { 'state-error': ismnemonic_error() == true}">
+                                    <textarea class="form-control" name="mnemonic" data-bind="value: mnemonic, event: { blur: onMnemonicBlur }" style="width:540px;height:60px;padding:3px;font-size:16px;"></textarea>
+                                </label>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-12">
+                                <label for="text" data-bind="i18n:'lbl-streembitacc'"></label>
+                                <div class="error-label" data-bind="visible: isaccount_error">
+                                    <span data-bind="text: accounterrormsg"></span>
+                                </div>
+                                <input type="text" class="form-control" data-bind="value: account, event: { change: ctrlchange.bind($data, 'onAccountChange'), keyup: ctrlkeyup }" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-12">
+                                <label for="text" data-bind="i18n:'lbl-privkeypassword'"></label>
+                                <div class="error-label" data-bind="visible: ispwd_error">
+                                    <span data-bind="text: pwderrormsg"></span>
+                                </div>
+                                <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { change: ctrlchange.bind($data, 'onPasswordChange'), keyup: ctrlkeyup }" style="width:540px;padding:3px;font-size:16px" />
+                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                                <div style="font-size:11px;font-weight:bold;">
+                                    NOTE: Choose your password carefully. If you forget your password, no one will be able to<br />
+                                    unlock your account for you on the permissionless and decentralised Streembit network.
+                                </div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-12">
+                                <label for="text" data-bind="i18n:'lbl-confirmpassword'"></label>
+                                <div class="error-label" data-bind="visible: isconfpwd_error">
+                                    <span data-bind="text: pwdconferrormsg"></span>
+                                </div>
+                                <input type="password" class="form-control" data-bind="value: private_keypwd_conf, event: { change: ctrlchange.bind($data, 'onPasswordConfirmChange'), keyup: ctrlkeyup }" style="width:540px;padding:3px;font-size:16px" />
+                            </section>
+                        </div>
+                    </fieldset>
+
+                    <footer>                        
+                        <button type="button" class="btn btn-primary" data-bind="click: submit, i18n:'lbl-submit'"></button>                        
+                        <button type="button" class="btn btn-primary" data-bind="click: restore_account, i18n:'lbl-restore-backup'"></button>
+                        <button type="button" class="btn btn-primary" data-bind="click: show_mnemonic_inp, visible: !ismnemonic_visible(), i18n: 'ttlbtn-restore-mnemonic'"></button>
+                        <button type="button" class="btn btn-default" data-bind="click: cancel_form">Cancel</button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
 <div id="uiview-container">
     <div class="uiview-plane">
         <div class="uiview-container-panel">
@@ -14,7 +93,7 @@
                     <div class="error-label" data-bind="visible: isaccount_error">
                         <span data-bind="text: accounterrormsg"></span>
                     </div>
-                    <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="max-width:300px" id="txtAccount" maxlength="20" />
+                    <input type="text" class="form-control" data-bind="value: account, event: { keyup: ctrlkeyup, blur: onAccountChange}" style="max-width:300px" maxlength="20" />
                 </div>
 
                 <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': ispwd_error() == true}">
@@ -44,4 +123,4 @@
         </div>
     </div>
 </div>
-
+-->
