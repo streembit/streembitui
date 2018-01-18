@@ -491,7 +491,7 @@
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'ndareceived')">My contacts</a></li>
+                                <li><a href="#" data-bind="click: showContacts">My contacts</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
@@ -707,6 +707,16 @@
         </div>
         <!-- END SHORTCUT AREA -->
 
+        <!-- contacts -->
+        
+        <div id="contacts-modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div data-bind="component: { name: 'contacts-bar'}"></div>
+                </div>
+            </div>
+        </div>
+
     </div>   
 
     <script src="lib/js/libs/jquery-2.1.1.min.js"></script>
@@ -754,6 +764,10 @@
     <script type="text/html" id="empty-template">
         <div class="emptydiv"></div>
     </script>    
+
+    <script type="text/html" id="contacts-bar-template">
+        
+    </script> 
 
 </body>
 </html>
