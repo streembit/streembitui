@@ -349,13 +349,11 @@ body{
   }
 }
 
-.contact-details{
-    min-width:450px;
-    max-width:600px;
-    display:inline-block;
-    margin-top:20px;
-    border-top:1px solid #ccc;
-    padding-top:15px;
+.contact-details {
+    min-width: 600px;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
 }
 
 .contact-details-buttons{
