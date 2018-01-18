@@ -355,10 +355,26 @@
     .signmessagePopup .tab.active {
         display:block;
     }
+
     .signmessagePopup .tab-links {
         padding-left: 0;
         margin: 0;
         position: absolute;
         top: 20px;
 
+    }
+
+    .titleCollapseOverview{
+      font-weight: bold;
+    }
+
+    .titleCollapseOverview:hover{
+      background-color: orange;
+      color:white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #help-style-change .nav-tabs>li{
+      float: none!important;
     }
