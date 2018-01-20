@@ -574,7 +574,7 @@ body{
     color:#222;
 }
 
-#chat-container{
+#text-chat-area{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -615,7 +615,7 @@ body{
 }
 
 .footer-chat-controls{
-    padding: 8px 0 0 0;
+    padding: 8px 0 40px 0;
     border-top: 3px solid #eee;
     margin-top:8px;
 }
