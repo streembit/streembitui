@@ -264,7 +264,7 @@ body{
 .footer-info-panel{
     position:fixed;
     bottom:5px;
-    left:5px;
+    right:5px;
     min-width:350px;
     max-width:500px;
     min-height:60px;
