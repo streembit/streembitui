@@ -16,6 +16,7 @@
             { "address": "seed.streembit.biz" },
             { "address": "seed.streembit.org" }
         ],
+        "lastseed": { "host": 0, "port": 0 },
         "ice_resolvers": [
             { "url": "stun:stun.l.google.com:19302" },
             { "url": "stun:stun1.l.google.com:19302" },
