@@ -14,6 +14,7 @@
             <button class="btn btn-default" type="button" data-bind="click: onSendAddContactRequest" style="font-size:11px">Send contact request</button>
         </div>
     </div><!-- /input-group -->
+    <div id="title-of-contacts">Contacts option</div>
     <div style="border-bottom:1px solid #7dace1;border-top:1px solid #eee">
         <div>
             <div class="contacts-title" data-bind="click: onShowContacts, css: {activetab: active_tab() == 'contacts'}">
@@ -35,7 +36,7 @@
         </div>
     </div>
     <div>
-        <div data-bind="visible: active_tab() == 'contacts'">
+        <div data-bind="visible: active_tab() == 'contacts'" class="all-contacts-field">
             <div data-bind="template: { name: 'contacts-template', foreach: contacts }">
             </div>
         </div>

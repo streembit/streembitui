@@ -388,7 +388,8 @@
         height: auto;
         max-height: 340px;
         min-height: 120px;
-        background: rgba(64, 170, 255, 0.98);
+        /*background: rgba(64, 170, 255, 0.98);*/
+        background: #fff;
         border-radius: 4px;
         border-top-left-radius: 0;
         overflow-y: auto;
@@ -403,10 +404,47 @@
         height: auto;
     }
     .demo > span > i {
-        width: 12px;
+        width: 17px;
         height: 12px;
         margin: 0 2px;
     }
     .contact-item {
         cursor: pointer;
+    }
+    .contact-icon{
+      font-size: 1.33333333em;
+    }
+    .layout-icon{
+      font-size:20px;
+    }
+    .demo.activate>span{
+      right:160px!important;
+    }
+    .demo.activate #demo-settings{
+      background:rgb(241, 218, 145)!important;
+    }
+    .demo.contact_activate>span{
+      right: 260px!important;
+      background: rgba(64, 170, 255, 0.98)!important;
+    }
+    #title-of-contacts{
+      padding: 3px;
+      text-align: center;
+      font-size: 17px;
+      color: #4a80bd;
+      font-weight: bold;
+    }
+    #help-style-change .nav-tabs > li.active > a{
+      border-top: none!important;
+      -webkit-box-shadow:none!important;
+      box-shadow: none!important;
+      border: none!important;
+    }
+    #help-style-change .nav-tabs>li>a:hover{
+      border-color: transparent!important;
+      cursor: pointer!important;
+    }
+    .all-contacts-field{
+      overflow-y: scroll;
+      max-height: 150px;
     }
