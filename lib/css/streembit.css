@@ -561,7 +561,8 @@ body{
     margin:5px 5px 8px 5px;
     border:1px solid #ccc;
     border-radius:3px;   
-    background: linear-gradient(to bottom, rgba(220,240,255,1) 0%,rgba(242,250,255,1) 100%);
+    /*background: linear-gradient(to bottom, rgba(220,240,255,1) 0%,rgba(242,250,255,1) 100%);*/
+    background: #e5eef9;
     font-size:12px;
     font-weight:bold;
     color:#555;
@@ -569,7 +570,8 @@ body{
 }
 
 .contact-item:hover{
-    background: linear-gradient(to bottom, rgba(223,246,255,1) 0%,rgba(253,253,253,1) 100%);
+    /*background: linear-gradient(to bottom, rgba(223,246,255,1) 0%,rgba(253,253,253,1) 100%);*/
+    background: #e5eef9;
     border:1px solid #ddd;
     color:#222;
 }
@@ -2533,4 +2535,15 @@ overflow-wrap: break-word;
     position: fixed;
     bottom: 0;
     left: 30px;
+}
+.footer-chat-controls1{
+    height: 120px;
+    width: 100%;
+    margin: 24px auto;
+    /*background-color: #EFEFEF;*/
+    /*border: 1px solid #79CEF4;*/
+    border-top: 3px solid #eee;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
 }
