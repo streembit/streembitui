@@ -2521,7 +2521,14 @@ overflow-wrap: break-word;
 
 .notification-body .msg-body {
     color: #222;
-    white-space:normal;
+    overflow-wrap: normal;
+    word-wrap: normal;
+    word-break: normal;
+    line-break: auto;
+    white-space: unset;
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
 }
 
 .notification-body .time {
