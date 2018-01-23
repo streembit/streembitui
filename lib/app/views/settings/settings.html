@@ -57,6 +57,35 @@
                 <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
                 <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
                 </div>
+               
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editSeedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Seed</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                        <div class="modal-body">
+                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                            <label for="editseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
+                            <input type="text" class="form-control" id="editseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: edit_seed_host">
+                        </div>
+                        <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                            <label for="editseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
+                            <input type="text" class="form-control" id="editseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: edit_seed_port">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: update_seed">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end edit modal -->
                 <div style="text-align:left;margin-top:15px">
                     <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
                 </div>
@@ -73,6 +102,7 @@
                         <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
                     </div>
                 </div>
+                
             </div>
         </div>
 
@@ -147,10 +177,12 @@
     <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
         <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
             <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div>
-            <div class="pull-left" data-bind="text: $data.address"></div>:<span data-bind="text: $data.port"></span>
+            <div class="pull-left" data-bind="text: address"></div>:<span data-bind="text: $data.port"></span>
             <div style="clear:both"></div>
         </div>
         <div class="pull-right">
+            <i class="fa fa-pencil-square-o" aria-hidden="true" data-bind="visible: $parent.is_edit_bootseed() == false, click: $parent.edit_bootseed"></i>
+            
             <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
         </div>
         <div style="clear:both"></div>
