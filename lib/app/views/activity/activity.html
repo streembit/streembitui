@@ -36,6 +36,15 @@
 </div>
 <!-- END AJAX-DROPDOWN -->
 
+ <span id="connection_indicator">
+     <span class="fa fa-plug" aria-hidden="true"
+           data-bind="
+           css: { 'txt-color-greenCustom': connect() === true },
+           toolTip: { title: txtConnectStatus },
+           click: showConnectionDetails">
+     </span>
+ </span>
+
 <script type="text/html" id="activity-start-template">
     <div style="padding:30px 20px;font-size:18px">
         Click on the Msgs, Notify or Errors button to review the activity.
@@ -74,3 +83,28 @@
         </li>
     </ul>
 </script>
+
+ <!-- Address modal -->
+ <div class="container container-connect" data-bind="fadeVisible: connectInfoPanel">
+     <div class="panel panel-default">
+         <div class="panel-heading">
+             <span data-bind="i18n: 'current-connection-header'"></span>
+             <img src="/lib/img/close-a.png" width="45" height="20" data-bind="click: closePanel" alt="" />
+         </div>
+         <div class="panel-body">
+             <div class="connect-info">
+                 <p><b data-bind="i18n: 'current-connection-account'"></b>: <b data-bind="text: account"></b> <span class="fa fa-user-circle acc_connected" data-bind="css: { 'txt-color-greenCustom': accountConnected }"></span></p>
+                 <hr />
+                 <p><b data-bind="i18n: 'current-connection-transport'"></b>: <span data-bind="text: transport"></span></p>
+                 <p><b data-bind="i18n: 'current-connection-host'"></b>: <span data-bind="text: host"></span></p>
+                 <p><b data-bind="i18n: 'current-connection-port'"></b>: <span data-bind="text: port"></span></p>
+                 <hr />
+                 <p><b data-bind="i18n: 'current-connection-connsymmkey'"></b>: <span data-bind="text: connsymmkey"></span></p>
+                 <p><b data-bind="i18n: 'current-connection-pubkey'"></b>: <span data-bind="text: publickey"></span></p>
+                 <hr />
+                 <p><b data-bind="i18n: 'current-connection-mnemonic'"></b>: <span data-bind="text: mnemonic"></span></p>
+             </div>
+             <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-default pull-right"></button>
+         </div>
+     </div>
+ </div>
