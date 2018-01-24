@@ -9,12 +9,12 @@
         "tcpport": 8905,
         "seedmode": 0,
         "bootseeds": [
-            { "host": "seed.streembit.uk" },
-            { "host": "seed.streembit.eu" },
-            { "host": "seed.streembit.net" },
-            { "host": "seed.streembit.co" },
-            { "host": "seed.streembit.biz" },
-            { "host": "seed.streembit.org" }
+            { "address": "seed.streembit.uk" },
+            { "address": "seed.streembit.eu" },
+            { "address": "seed.streembit.net" },
+            { "address": "seed.streembit.co" },
+            { "address": "seed.streembit.biz" },
+            { "address": "seed.streembit.org" }
         ],
         "lastseed": { "host": 0, "port": 0 },
         "ice_resolvers": [
