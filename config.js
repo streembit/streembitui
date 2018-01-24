@@ -48,7 +48,9 @@ System.config({
     "devbctansport": "test//wallet/transport/service",
     "elliptic": "npm:elliptic@6.4.0",
     "errcodes": "github:streembit/streembit-errcodes@master",
+
     "errhandler": "lib/errorhandler",
+
     "events": "github:jspm/nodelibs-events@0.1.1",
     "filedialog": "lib/app/filedialog",
     "filesaver": "lib/app/filesaver",
