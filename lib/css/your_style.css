@@ -233,7 +233,7 @@
     .receive-payment-container {
         position: relative;
     }
-    .container-address {
+    .container-address, .container-connect {
         position: absolute;
         top: 0;
         /*left: calc((100% - 520px)/2);*/
@@ -242,7 +242,11 @@
         height: auto;
         z-index: 1000;
     }
-    .container-address .panel-body {
+    .container-connect {
+        top: 34px;
+        left: 220px;
+    }
+    .container-address .panel-body, .container-connect .panel-body {
          background-color: #f9f9f6;
     }
     #addr-qrcode {
@@ -250,7 +254,7 @@
         height: 200px;
         margin: 0 auto;
     }
-    .address-info {
+    .address-info, .connect-info {
         width: 100%;
         height: 100px;
         background: #fff;
@@ -258,23 +262,26 @@
         padding: 4px;
         margin: 14px 0 6px 0;
     }
-    .address-info p {
+    .connect-info {
+        height: auto;
+    }
+    .address-info p, .connect-info p {
         font-weight: bold;
     }
-    .address-info p:first-child {
+    .address-info p:first-child, .connect-info p:first-child {
         font-size: 14px;
     }
-    .container-address .panel-heading {
+    .container-address .panel-heading, .container-connect .panel-heading {
         position: relative;
         background-color: #d4d4d4;
     }
-    .container-address .panel-heading img {
+    .container-address .panel-heading img, .container-connect .panel-heading img {
         position: absolute;
         top: 8px;
         right: 4px;
         cursor: pointer;
     }
-    .address-info p span {
+    .address-info p span, .connect-info p span {
         font-weight: normal;
     }
     span.payment-to {
@@ -404,9 +411,9 @@
         height: auto;
     }
     .demo > span > i {
-        width: 17px;
-        height: 12px;
-        margin: 0 2px;
+        width: 18px;
+        height: 18px;
+        margin: 3px 2px 0;
     }
     .contact-item {
         cursor: pointer;
@@ -447,4 +454,26 @@
     .all-contacts-field{
       overflow-y: scroll;
       max-height: 150px;
+    }
+    #connection_indicator {
+        display: inline-block;
+        float: right;
+        margin: 4px 10px;
+        width: 20px;
+        height: 40px;
+        cursor: pointer;
+    }
+    #connection_indicator span {
+        font-size: 16px;
+        width: 20px;
+        height: 20px;
+        margin: 12px 0 0;
+        color: #808080;
+    }
+    .txt-color-greenCustom {
+        color: #5abf5a !important;
+    }
+    .acc_connected {
+        font-size: 14px;
+        color: #808080;
     }
