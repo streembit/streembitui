@@ -51,6 +51,7 @@
       "create-hmac": "npm:create-hmac@^1.1.6",
       "css": "github:systemjs/plugin-css@^0.1.29",
       "elliptic": "npm:elliptic@^6.3.2",
+      "errcodes": "github:streembit/streembit-errcodes@master",
       "events": "github:jspm/nodelibs-events@^0.1.1",
       "font-awesome": "npm:font-awesome@^4.6.3",
       "hash.js": "npm:hash.js@^1.0.3",
