@@ -388,19 +388,19 @@
 
     /*------- Contacts Bar --------*/
     .contact_bar {
-        position: fixed;
+        /*position: fixed;
         top: 54px;
         right: -280px;
         width: 260px;
         height: auto;
         max-height: 340px;
-        min-height: 120px;
+        min-height: 120px;*/
         /*background: rgba(64, 170, 255, 0.98);*/
-        background: #fff;
+ /*       background: #fff;
         border-radius: 4px;
         border-top-left-radius: 0;
         overflow-y: auto;
-        overflow-x: hidden;
+        overflow-x: hidden;*/
     }
     .contact_bar.activate {
         right: 0;
@@ -455,6 +455,7 @@
       overflow-y: scroll;
       max-height: 150px;
     }
+
     #connection_indicator {
         display: inline-block;
         float: right;
