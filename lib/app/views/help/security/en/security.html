@@ -1,0 +1,35 @@
+<div id="helpitem_overview_security">
+    <div class="help-content-item">
+        <h4>Security</h4>
+        <div>
+            <p>The cornerstone of Streembit security is elliptic curve public/private key cryptography infrastructure (PPKI). PPKI allows the implementation of robust security. We use PPKI to identify the entities of the system (based on their public key and PPKI signature), perform authentication, and ensure data integrity (using cryptography signatures). Using the public/private key cryptography infrastructure paves the way for the deployment of a robust, secure authentication and access control scheme. The parties are identified by their public key. The authenticity of messages and the identities of the actors are then verified using PPKI cryptography routines. Using a PPKI infrastructure based security scheme greatly simplifies the authentication, access control, and identity management aspects of Internet-of-Things security.</p>
+            <p>The elliptic curve cryptography (ECC) scheme is particularly suitable for IoT devices. The small footprint of ECC allows security modules to be implemented on embedded devices. ECDH is a trusted and proven key agreement protocol. Using the ECDSA digital signature algorithm ensures data integrity.</p>
+            <p>The system performs public/private key infrastructure based authentication and access control functions to securely connect machines to machines or machines to humans. The Streembit security module of the IoT device must generate at least one public/private key pair for each connected IoT device. Human users generate their ECC public/private key pair when they create their account. The actors of the system publish their public keys to the network, where each entity knows the public key of the other connected human or machine. The system identifies each of the entities by their ECC public key.</p>
+            <p>The collision resistant SHA-256 hash function is used to create a hash of data which can be signed using the private key to guarantee data integrity, as well as provide information about the originator of the data. To ensure data integrity the messages, control commands, event data, requests, and responses are signed with the ECC private key; the signature can be verified using ECDSA. To ensure integrity of data, each entity must sign all messages with their private key. The messages in the Streembit network are based on the following standards: JSON Web Token (JWT), JSON Web Encryption (JWE), and JSON Web Signature (JWS).</p>
+
+            <div style="margin-top:30px;font-weight:bold">Streembit security implementation and design summary</div>
+            <ul>
+                <li>Human users and Internet of Things devices use public/private key (PPK) infrastructure and PPK cryptography functions to secure messages</li>
+                <li>Each actor of the system must generate a public/private key pair. (Typically keys are generated prior to configuring the device and will be burned into the devices’ firmware).</li>
+                <li>The device or user publishes the public key to other users of the system.</li>
+                <li>The data integrity and authenticity of the messages is guaranteed with PPK signatures.</li>
+                <li>Each session between users is secured with strong symmetric cryptography keys.</li>
+                <li>All messages between users are secured with 128-bit and 256-bit AES symmetric encryption/decryption.</li>
+                <li>The system uses elliptic curve Diffie Hellman (ECDH) key exchange algorithms to facilitate the exchange of session keys.</li>
+            </ul>
+
+            <div style="margin-top:30px;font-weight:bold">Protecting the ECC public/private key pair</div>
+            <p>The ultimate issue of all applications, systems, and devices that protect data with cryptography is the security of the symmetric key of the encryption or the private key of the public/private key pair. Similarly to the iPhone and PGP, which both use passcode to protect their keys, Streembit requires users have a passcode to protect their PPKI private key. The Streembit passcode that protects the user’s PPK key pair is relatively complex.</p>
+            <p>To protect real time communication, Streembit uses a randomly generated 256-bit AES session key and exchanged between peers with a randomly generated ECDH key pair. This means that real time communication, which is the main functionality of Streembit, is secure even from the brute force attacks of NSA super computers and large zombie computer clusters of cyber criminals.</p>
+
+            <div style="margin-top:30px;font-weight:bold">Mitigate the risk of Sybil attacks</div>
+            <p>A known issue with regards to peer-to-peer (P2P) networks and their practical limitation is that they are frequently subject to Sybil attacks. This means that malicious parties can compromise the network by generating and controlling large numbers of shadow identities. A malicious node may present multiple fake identities to a peer-to-peer network in order to appear and function as several distinct nodes.</p>
+            <p>A Sybil attack is most effective on anonymous and reputation systems where if the malicious nodes outnumber the honest nodes the outcome of the application could be compromised. For example, on a file sharing network a successful horizontal Sybil attack allows the attacker to sniff most of the control messages, hijack the system, and deliver bogus content. Contrarily, Streembit facilitates communication between contacts that you know, such as your family members, teammates, and business partners. You are also aware of the location and identity of your Internet of Things device(s) you control via Streembit, lessening the likelihood of a Sybil attack. Malicious nodes, regardless of their weight and presence on the network, are unable to change the public keys of your contacts (as the public key is based on the cryptographically secured PPK infrastructure).</p>
+            <p>Additionally, Streembit introduces another layer of security, private networks. Using private networks, the public keys of the contacts are loaded to the seed nodes manually; mitigating further the risk of a Sybil attack as well as a Man-in-the-middle attack (MITM). A Sybil attack, which generally speaking is a serious security issue for P2P networks such as file sharing applications, is much less of a problem for the Streembit P2P system.</p>
+
+            <div style="margin-top:30px;font-weight:bold">How secure the cryptography of Streembit?</div>
+            <p>Both 128-bit and 256-bit AES symmetric encryption, the cryptography schemes of the messages in the Streembit network, are safe from any brute force attacks. The following UML diagram describes the key exchange using ECDH and securing the message with 256-bit AES symmetric key between 'User A' and 'User B'.</p>
+            <img src="lib/images/streembit_key_exchange.png" />
+        </div>
+    </div>
+</div>
