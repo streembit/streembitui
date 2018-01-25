@@ -53,20 +53,20 @@
     </script>
 
     <!-- Basic Styles -->
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css">-->
 
     <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production-plugins.min.css">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production-plugins.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-skins.min.css">-->
 
     <!-- SmartAdmin RTL Support  -->
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-rtl.min.css">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-rtl.min.css">-->
 
 
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/your_style.css">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/your_style.css">-->
 
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/demo.min.css">-->
@@ -75,23 +75,41 @@
     <!--<link rel="shortcut icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">
     <link rel="icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">-->
 
-    <!-- GOOGLE FONT -->
-    <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">-->
-
-
-    <link rel="apple-touch-icon" href="lib/images/splash/sptouch-icon-iphone.png">
+    <!--<link rel="apple-touch-icon" href="lib/images/splash/sptouch-icon-iphone.png">
     <link rel="apple-touch-icon" sizes="76x76" href="lib/images/splash/touch-icon-ipad.png">
     <link rel="apple-touch-icon" sizes="120x120" href="lib/images/splash/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="lib/images/splash/touch-icon-ipad-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="lib/images/splash/touch-icon-ipad-retina.png">-->
 
     <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">-->
 
     <!-- Startup image for web apps -->
-    <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <!--<link rel="apple-touch-startup-image" href="lib/images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-    <link rel="apple-touch-startup-image" href="lib/images/splash/iphone.png" media="screen and (max-device-width: 320px)">
+    <link rel="apple-touch-startup-image" href="lib/images/splash/iphone.png" media="screen and (max-device-width: 320px)">-->
+
+    <!-- Google font-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!-- iconfont -->
+    <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
+
+    <!-- simple line icon -->
+    <link rel="stylesheet" type="text/css" href="assets/icon/simple-line-icons/css/simple-line-icons.css">
+
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <!--color css-->
+    <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />		
+    
+    <link rel="stylesheet" href="assets/css/jquery-ui/jquery-ui.min.css">
+
+    <!--<link rel="stylesheet" type="text/css" href="assets/bower_components/Waves/dist/waves.min.css" />-->
 
     <style>
         body[data-appinit=true] {
@@ -122,11 +140,10 @@
             background: #fff;
         }
 
-        body[data-account-load-complete=false] #header,
-        body[data-account-load-complete=false] #left-panel,
-        body[data-account-load-complete=false] #ribbon,
-        body[data-account-load-complete=false] .page-footer,
-        body[data-account-load-complete=false] .demo{
+        body[data-account-load-complete=false] .main-header-top,
+        body[data-account-load-complete=false] .main-sidebar, 
+        body[data-account-load-complete=false] .color-picker, 
+        body[data-account-load-complete=false] #sidebar {
             display: none;
         }
 
@@ -220,131 +237,11 @@
         }
         /* loader */
 
-
-        .jqstooltip {
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            visibility: hidden;
-            background: rgb(0, 0, 0) transparent;
-            background-color: rgba(0,0,0,0.6);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
-            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
-            color: white;
-            font: 10px arial, san serif;
-            text-align: left;
-            white-space: nowrap;
-            padding: 5px;
-            border: 1px solid white;
-            z-index: 10000;
-        }
-
-        .jqsfield {
-            color: white;
-            font: 10px arial, san serif;
-            text-align: left;
-        }
-        .demo_settings_layout{
-            width: 160px;
-            position: absolute;
-            z-index: 900;
-            top: 54px;
-            right: 0;
-            background: rgb(241, 218, 145);
-            padding: 12px;
-            display:none;
-        }
-        .demo.activate>span{
-            right: 160px;
-        }
-        .demo_settings_layout legend{
-            margin-top: -5px;
-        }
-        .demo .btn{
-            font-size: 13px!important;
-            line-height: 1.5!important;
-            border-radius: 3px!important;
-            padding: 3px 7px!important;
-            height: auto!important;
-        }
-        .fixed-header #allContent{
-            margin-top: 49px;
-        }
-        .demo>span{
-          position: absolute;
-          right: 0;
-          top:54px;
-          z-index: 900;
-          display: block;
-          height: 30px;
-          width: 60px;
-          border-radius: 5px 0 0 5px;
-          background: #F1DA91;
-          padding: 2px 0 0 4px;
-          text-align: center;
-          line-height: 28px;
-          cursor: pointer;
-        }
-        .fixed-navigation #mainPanel{
-            margin-left: 220px;
-        }
-        .fixed-ribbon .content-panel{
-            padding-top: 50px;
-        }
-        .fixed-ribbon .demo_settings_layout, .fixed-ribbon #demo-setting{
-            z-index: 903;
-        }
-        .fixed-page-footer .page-footer{
-            bottom:0;
-            height: 52px;
-        }
-        .smart-rtl .widget-box-two .widget-two-icon{
-            right: 300px;
-        }
-        .smart-rtl .demo_settings_layout, .smart-rtl .demo>span{
-            left:0;
-            right: auto;
-        }
-        .smart-rtl .demo.activate>span{
-            right: auto;
-            left: 160px;
-        }
-        .menu-on-top #mainPanel{
-            margin-left: 0!important;
-            margin-top: 70px!important;
-        }
-        .menu-on-top #left-panel{
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 904;
-            padding-top: 49px;
-        }
-        .menu-on-top .demo>span, .menu-on-top .demo_settings_layout{
-            z-index: 904;
-            top:123px;
-        }
-        .smart-style-4:not(.menu-on-top) #left-panel{
-            padding-top: 0!important;
-        }
-        .smart-style-2 #left-panel{
-            padding-top: 0px; 
-        }
-        body.smart-style-6 #logo-group>span#logo:before{
-            content: none;
-        }
-        .smart-style-1 #logo, .smart-style-2 #logo{
-            color: #fff!important;
-        }
-        .smart-style-5, .smart-style-5 .content-panel{
-            background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
-            background-size: cover!important;
-        }
     </style>
 
 </head>
 
-<body data-appinit="true" data-account-load-complete="false">
+<body data-appinit="true" data-account-load-complete="false" class="sidebar-mini fixed">
 
     <div id="load-container">
         <div id="load-screen">
@@ -357,362 +254,1092 @@
         </div>
     </div>
 
-    <div id="app-container">
 
-        <!-- HEADER -->
-        <header id="header" style="flex: 0 0 49px">
-            <div id="logo-group">
+   <div class="wrapper">
 
-                <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo" style="font-weight: bold;padding-top: 4px;"> STREEMBIT </span>
-                <!-- END LOGO PLACEHOLDER --> 
-                
-                <div style="display:block;margin:0;padding:0;width:268px;height:40px;" data-bind="component: {name: 'activity'}">
+       <!-- Navbar-->
+       <header class="main-header-top">
+           <a href="index.html" class="logo"><img class="img-fluid able-logo" src="assets/images/logo.png" alt="Theme-logo"></a>
+           <nav class="navbar navbar-static-top">
+               <!-- Sidebar toggle button--><a href="#!" data-toggle="offcanvas" class="sidebar-toggle"></a>
+               <!-- Navbar Right Menu-->
+               <div class="navbar-custom-menu">
+                   <ul class="top-nav">
+                       <!--Notification Menu-->
 
-                </div>           
-            </div>
+                       <li class="dropdown pc-rheader-submenu message-notification search-toggle">
+                           <a href="#!" id="morphsearch-search" class="drop icon-circle txt-white">
+                               <i class="icofont icofont-search-alt-1"></i>
+                           </a>
+                       </li>
+                       <li class="dropdown notification-menu">
+                           <a href="#!" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
+                               <i class="icon-bell"></i>
+                               <span class="badge badge-danger header-badge">9</span>
+                           </a>
+                           <ul class="dropdown-menu">
+                               <li class="not-head">You have <b class="text-primary">4</b> new notifications.</li>
+                               <li class="bell-notification">
+                                   <a href="javascript:;" class="media">
+                                       <span class="mr-3 media-icon">
+                                           <img class="rounded-circle" src="assets/images/avatar-1.png" alt="User Image">
+                                       </span>
+                                       <div class="media-body"><span class="block">Lisa sent you a mail</span><span class="text-muted block-time">2min ago</span></div>
+                                   </a>
+                               </li>
+                               <li class="bell-notification">
+                                   <a href="javascript:;" class="media">
+                                       <span class="mr-3 media-icon">
+                                           <img class="rounded-circle" src="assets/images/avatar-2.png" alt="User Image">
+                                       </span>
+                                       <div class="media-body"><span class="block">Server Not Working</span><span class="text-muted block-time">20min ago</span></div>
+                                   </a>
+                               </li>
+                               <li class="bell-notification">
+                                   <a href="javascript:;" class="media">
+                                       <span class="mr-3 media-icon">
+                                           <img class="rounded-circle" src="assets/images/avatar-3.png" alt="User Image">
+                                       </span>
+                                       <div class="media-body"><span class="block">Transaction xyz complete</span><span class="text-muted block-time">3 hours ago</span></div>
+                                   </a>
+                               </li>
+                               <li class="not-footer">
+                                   <a href="#!">See all notifications.</a>
+                               </li>
+                           </ul>
+                       </li>
+                       <!-- chat dropdown -->
+                       <li class="pc-rheader-submenu ">
+                           <a href="#!" class="drop icon-circle displayChatbox">
+                               <i class="icon-bubbles"></i>
+                               <span class="badge badge-danger header-badge blink">5</span>
+                           </a>
 
-            <!-- activity dropdown -->
-            <!--<div class="hidden-xs">
-                
+                       </li>
+                       <!-- window screen -->
+                       <li class="pc-rheader-submenu">
+                           <a href="#!" class="drop icon-circle" onclick="javascript:toggleFullScreen()">
+                               <i class="icon-size-fullscreen"></i>
+                           </a>
 
-            </div>-->
-            <!-- end activity dropdown -->
+                       </li>
+                       <!-- User Menu-->
+                       <li class="dropdown">
+                           <a href="#!" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle drop icon-circle drop-image">
+                               <span><img class="rounded-circle" src="assets/images/avatar-1.png" style="width:40px;" alt="User Image"></span>
+                               <span>John <b>Doe</b> <i class=" icofont icofont-simple-down"></i></span>
 
-            <!-- pulled right: nav area -->
-            <div class="pull-right">
+                           </a>
+                           <ul class="dropdown-menu settings-menu">
+                               <li><a href="#!"><i class="icon-settings"></i> Settings</a></li>
+                               <li><a href="profile.html"><i class="icon-user"></i> Profile</a></li>
+                               <li><a href="message.html"><i class="icon-envelope-open"></i> My Messages</a></li>
+                               <li class="p-0">
+                                   <div class="dropdown-divider m-0"></div>
+                               </li>
+                               <li><a href="lock-screen.html"><i class="icon-lock"></i> Lock Screen</a></li>
+                               <li><a href="#!"><i class="icon-logout"></i> Logout</a></li>
 
-                <!-- collapse menu button -->
-                <div id="hide-menu" class="btn-header pull-right">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                           </ul>
+                       </li>
+                   </ul>
+
+                   <!-- search -->
+                   <div id="morphsearch" class="morphsearch">
+                       <form class="morphsearch-form">
+
+                           <input class="morphsearch-input" type="search" placeholder="Search..." />
+
+                           <button class="morphsearch-submit" type="submit">Search</button>
+
+                       </form>
+                       <div class="morphsearch-content">
+                           <div class="dummy-column">
+                               <h2>People</h2>
+                               <a class="dummy-media-object" href="#!">
+                                   <img class="round" src="http://0.gravatar.com/avatar/81b58502541f9445253f30497e53c280?s=50&d=identicon&r=G" alt="Sara Soueidan" />
+                                   <h3>Sara Soueidan</h3>
+                               </a>
+
+                               <a class="dummy-media-object" href="#!">
+                                   <img class="round" src="http://1.gravatar.com/avatar/9bc7250110c667cd35c0826059b81b75?s=50&d=identicon&r=G" alt="Shaun Dona" />
+                                   <h3>Shaun Dona</h3>
+                               </a>
+                           </div>
+                           <div class="dummy-column">
+                               <h2>Popular</h2>
+                               <a class="dummy-media-object" href="#!">
+                                   <img src="assets/images/avatar-1.png" alt="PagePreloadingEffect" />
+                                   <h3>Page Preloading Effect</h3>
+                               </a>
+
+                               <a class="dummy-media-object" href="#!">
+                                   <img src="assets/images/avatar-1.png" alt="DraggableDualViewSlideshow" />
+                                   <h3>Draggable Dual-View Slideshow</h3>
+                               </a>
+                           </div>
+                           <div class="dummy-column">
+                               <h2>Recent</h2>
+                               <a class="dummy-media-object" href="#!">
+                                   <img src="assets/images/avatar-1.png" alt="TooltipStylesInspiration" />
+                                   <h3>Tooltip Styles Inspiration</h3>
+                               </a>
+                               <a class="dummy-media-object" href="#!">
+                                   <img src="assets/images/avatar-1.png" alt="NotificationStyles" />
+                                   <h3>Notification Styles Inspiration</h3>
+                               </a>
+                           </div>
+                       </div><!-- /morphsearch-content -->
+                       <span class="morphsearch-close"><i class="icofont icofont-search-alt-1"></i></span>
+                   </div>
+                   <!-- search end -->
+               </div>
+           </nav>
+       </header>
+
+       <!-- Side-Nav-->
+       <aside class="main-sidebar hidden-print ">
+           <section class="sidebar" id="sidebar-scroll">
+               <div class="user-panel">
+                   <div class="f-left image"><img src="assets/images/avatar-1.png" alt="User Image" class="rounded-circle"></div>
+                   <div class="f-left info">
+                       <p>John Doe</p>
+                       <p class="designation">UX Designer <i class="icofont icofont-caret-down m-l-5"></i></p>
+                   </div>
+               </div>
+               <!-- sidebar profile Menu-->
+               <ul class="nav sidebar-menu extra-profile-list">
+                   <li>
+                       <a class="waves-effect waves-dark" href="profile.html">
+                           <i class="icon-user"></i>
+                           <span class="menu-text">View Profile</span>
+                           <span class="selected"></span>
+                       </a>
+                   </li>
+                   <li>
+                       <a class="waves-effect waves-dark" href="javascript:void(0)">
+                           <i class="icon-settings"></i>
+                           <span class="menu-text">Settings</span>
+                           <span class="selected"></span>
+                       </a>
+                   </li>
+                   <li>
+                       <a class="waves-effect waves-dark" href="javascript:void(0)">
+                           <i class="icon-logout"></i>
+                           <span class="menu-text">Logout</span>
+                           <span class="selected"></span>
+                       </a>
+                   </li>
+               </ul>
+               <!-- Sidebar Menu-->
+               <ul class="sidebar-menu">
+                   <li class="nav-level">Navigation</li>
+                   <li class="active treeview">
+                       <a class="waves-effect waves-dark" href="index.html">
+                           <i class="icon-speedometer"></i><span> Dashboard</span><i class="icon-arrow-down"></i>
+                       </a>
+                       <ul class="treeview-menu">
+                           <li class="active"><a class="waves-effect waves-dark" href="index.html"><i class="icon-arrow-right"></i><span>Dashboard 1 </span></a></li>
+                           <li><a class="waves-effect waves-dark" href="dashboard2.html"><i class="icon-arrow-right"></i><span>Dashboard 2 </span></a></li>
+                           <li><a class="waves-effect waves-dark" href="dashboard3.html"><i class="icon-arrow-right"></i><span>Dashboard 3 </span></a></li>
+                           <li><a class="waves-effect waves-dark" href="dashboard4.html"><i class="icon-arrow-right"></i><span>Dashboard 4 </span></a></li>
+                       </ul>
+                   </li>
+                   <li><a href="widget.html"><i class="icon-grid"></i><span> Widget</span><span class="label label-warning menu-caption">100+</span></a> </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!">
+                           <i class="icon-film"></i>
+                           <span> Page Layout</span><i class="icon-arrow-down"></i>
+                       </a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="menu-static.html"><i class="icon-arrow-right"></i> Static Layout</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-fixed.html"><i class="icon-arrow-right"></i> Header and Sidebar Fixed</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-sidebar-sticky.html"><i class="icon-arrow-right"></i> Sidebar Sticky</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-header-fixed.html"><i class="icon-arrow-right"></i> Header Fixed</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-horizontal.html" target="_blank"><i class="icon-arrow-right"></i> Menu Horizontal</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-horizontal-icon.html" target="_blank"><i class="icon-arrow-right"></i> Menu Horizontal Icon</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-horizontal-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Header Horizontal Fixed</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-horizontal-icon-fixed.html" target="_blank"><i class="icon-arrow-right"></i> Header Horizontal Icon Fixed</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-footer-fixed.html"><i class="icon-arrow-right"></i> Footer Fixed</a></li>
+                           <li><a class="waves-effect waves-dark" href="menu-bottom.html" target="_blank"><i class="icon-arrow-right"></i> Bottom Menu Fixed</a></li>
+                           <li><a class="waves-effect waves-dark" href="mega-menu.html" target="_blank"><i class="icon-arrow-right"></i> Mega Menu</a></li>
+                           <li><a class="waves-effect waves-dark" href="box-layout.html"><i class="icon-arrow-right"></i> Box-Layout </a></li>
+                       </ul>
+                   </li>
+                   <li class="nav-level">Components</li>
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-briefcase"></i><span> UI Elements</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="accordion.html"><i class="icon-arrow-right"></i> Accordion</a></li>
+                           <li><a class="waves-effect waves-dark" href="button.html"><i class="icon-arrow-right"></i> Button</a></li>
+                           <li><a class="waves-effect waves-dark" href="button-fab.html"><i class="icon-arrow-right"></i> Button FAB</a></li>
+                           <li><a class="waves-effect waves-dark" href="label-badge.html"><i class="icon-arrow-right"></i> Label Badge</a></li>
+                           <li><a class="waves-effect waves-dark" href="bootstrap-ui.html"><i class="icon-arrow-right"></i> Grid system</a></li>
+                           <li><a class="waves-effect waves-dark" href="box-shadow.html"><i class="icon-arrow-right"></i> Box Shadow</a></li>
+                           <li><a class="waves-effect waves-dark" href="color.html"><i class="icon-arrow-right"></i> Color</a></li>
+                           <li><a class="waves-effect waves-dark" href="draggable.html"><i class="icon-arrow-right"></i> Draggable</a></li>
+                           <li><a class="waves-effect waves-dark" href="light-box.html"><i class="icon-arrow-right"></i> Light Box</a></li>
+                           <li><a class="waves-effect waves-dark" href="list.html"><i class="icon-arrow-right"></i> List</a></li>
+                           <li><a class="waves-effect waves-dark" href="nestable.html"><i class="icon-arrow-right"></i> Nestable</a></li>
+                           <li><a class="waves-effect waves-dark" href="notification.html"><i class="icon-arrow-right"></i> Notification</a></li>
+                           <li><a class="waves-effect waves-dark" href="panels-wells.html"><i class="icon-arrow-right"></i> Panels-Wells</a></li>
+                           <li><a class="waves-effect waves-dark" href="preloader.html"><i class="icon-arrow-right"></i> Preloader</a></li>
+                           <li><a class="waves-effect waves-dark" href="range-slider.html"><i class="icon-arrow-right"></i> Range-Slider</a></li>
+                           <li><a class="waves-effect waves-dark" href="rating.html"><i class="icon-arrow-right"></i> Rating</a></li>
+                           <li><a class="waves-effect waves-dark" href="slider.html"><i class="icon-arrow-right"></i> Slider</a></li>
+                           <li><a class="waves-effect waves-dark" href="tabs.html"><i class="icon-arrow-right"></i> Tabs</a></li>
+                           <li><a class="waves-effect waves-dark" href="treeview.html"><i class="icon-arrow-right"></i> Tree View</a></li>
+                           <li><a class="waves-effect waves-dark" href="tour.html"><i class="icon-arrow-right"></i> Tour</a></li>
+                           <li><a class="waves-effect waves-dark" href="tooltips.html"><i class="icon-arrow-right"></i> Tooltips</a></li>
+                           <li><a class="waves-effect waves-dark" href="typography.html"><i class="icon-arrow-right"></i> Typography</a></li>
+                           <li><a class="waves-effect waves-dark" href="card.html"><i class="icon-arrow-right"></i> Card</a></li>
+                           <li><a class="waves-effect waves-dark" href="footer.html"><i class="icon-arrow-right"></i> Footer</a></li>
+                           <li><a class="waves-effect waves-dark" href="footer-center.html"><i class="icon-arrow-right"></i> Footer Center</a></li>
+                           <li><a class="waves-effect waves-dark" href="footer-right.html"><i class="icon-arrow-right"></i> Footer Right</a></li>
+                           <li><a class="waves-effect waves-dark" href="other.html"><i class="icon-arrow-right"></i> Other</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-picture"></i><span> Theme UI</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="contact-card.html"><i class="icon-arrow-right"></i> Contact Card</a></li>
+                           <li><a class="waves-effect waves-dark" href="contact-details.html"><i class="icon-arrow-right"></i> Contact Details</a></li>
+                           <li><a class="waves-effect waves-dark" href="animation.html"><i class="icon-arrow-right"></i> Animation</a></li>
+                           <li><a class="waves-effect waves-dark" href="dynamic-grid.html"><i class="icon-arrow-right"></i> Dynamic Grid</a></li>
+                           <li><a class="waves-effect waves-dark" href="generic-class.html"><i class="icon-arrow-right"></i> Generic Class</a></li>
+                           <li><a class="waves-effect waves-dark" href="gridstack.html"><i class="icon-arrow-right"></i> Grid Stack</a></li>
+                           <li><a class="waves-effect waves-dark" href="modal.html"><i class="icon-arrow-right"></i> Modal</a></li>
+                           <li><a class="waves-effect waves-dark" href="portlets.html"><i class="icon-arrow-right"></i> Portlets</a></li>
+                           <li><a class="waves-effect waves-dark" href="sticky.html"><i class="icon-arrow-right"></i> Sticky</a></li>
+
+                           <li class="treeview">
+                               <a href="#!"><i class="icon-arrow-right"></i><span> Icon</span><i class="icon-arrow-down"></i></a>
+                               <ul class="treeview-menu">
+                                   <li><a class="waves-effect waves-dark" href="font-awesome.html"><i class="icon-arrow-right"></i> Font-Awesome Icons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="material-design-icons.html"><i class="icon-arrow-right"></i> Material Design Icons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="simple-line-icons.html"><i class="icon-arrow-right"></i> Simple Line Icons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="ion-icon.html"><i class="icon-arrow-right"></i> Ion Icons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="icofonts.html"><i class="icon-arrow-right"></i> Ico Fonts Icons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="weather-icons.html"><i class="icon-arrow-right"></i> Weather Icons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="typicons-icons.html"><i class="icon-arrow-right"></i> TypIcons</a></li>
+                                   <li><a class="waves-effect waves-dark" href="flags.html"><i class="icon-arrow-right"></i> Flags</a></li>
+                               </ul>
+                           </li>
+
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-chart"></i><span> Charts &amp; Maps</span><span class="label label-success menu-caption">New</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="echart.html"><i class="icon-arrow-right"></i> E-Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="chartjs.html"><i class="icon-arrow-right"></i> Chart Js</a></li>
+                           <li><a class="waves-effect waves-dark" href="list-charts.html"><i class="icon-arrow-right"></i> List Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="float-chart.html"><i class="icon-arrow-right"></i> Float Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="knob-chart.html"><i class="icon-arrow-right"></i> Knob Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="morris-chart.html"><i class="icon-arrow-right"></i> Morris Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="nvd3-chart.html"><i class="icon-arrow-right"></i> nvd3 Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="peity-chart.html"><i class="icon-arrow-right"></i> Peity Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="radial-chart.html"><i class="icon-arrow-right"></i> Radial Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="rickshaw-chart.html"><i class="icon-arrow-right"></i> Rickshaw Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="sparkline-chart.html"><i class="icon-arrow-right"></i> Sparkline Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="c3chart-chart.html"><i class="icon-arrow-right"></i> c3Chart Charts</a></li>
+                           <li><a class="waves-effect waves-dark" href="map-google.html"><i class="icon-arrow-right"></i> Map Google</a></li>
+                           <li><a class="waves-effect waves-dark" href="map-vector.html"><i class="icon-arrow-right"></i> Map Vector</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-book-open"></i><span> Forms</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="form-elements-bootstrap.html"><i class="icon-arrow-right"></i> Form Elements Bootstrap</a></li>
+                           <li><a class="waves-effect waves-dark" href="form-elements-materialize.html"><i class="icon-arrow-right"></i> Form Elements Material</a></li>
+                           <li><a class="waves-effect waves-dark" href="form-elements-advance.html"><i class="icon-arrow-right"></i> Form Elements Advance</a></li>
+                           <li><a class="waves-effect waves-dark" href="forms-wizard.html"><i class="icon-arrow-right"></i> Form Wizard</a></li>
+                           <li><a class="waves-effect waves-dark" href="form-mask.html"><i class="icon-arrow-right"></i> Form Masking</a></li>
+                           <li><a class="waves-effect waves-dark" href="forms-validation.html"><i class="icon-arrow-right"></i> Form Validation</a></li>
+                           <li><a class="waves-effect waves-dark" href="x-editable.html"><i class="icon-arrow-right"></i> X-Editable</a></li>
+                           <li><a class="waves-effect waves-dark" href="file-upload.html"><i class="icon-arrow-right"></i> File Upload</a></li>
+                           <li><a class="waves-effect waves-dark" href="image-cropper.html"><i class="icon-arrow-right"></i> Image Cropper</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-list"></i><span> Tables</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="basic-table.html"><i class="icon-arrow-right"></i> Basic Tables</a></li>
+                           <li><a class="waves-effect waves-dark" href="data-table.html"><i class="icon-arrow-right"></i> Data Tables</a></li>
+                           <li><a class="waves-effect waves-dark" href="responsive-table.html"><i class="icon-arrow-right"></i> Responsive Tables</a></li>
+                           <li><a class="waves-effect waves-dark" href="editable-table.html"><i class="icon-arrow-right"></i> Editable Tables</a></li>
+                           <li><a class="waves-effect waves-dark" href="foo-tables.html"><i class="icon-arrow-right"></i> Foo Tables</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="nav-level">More</li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-docs"></i><span>Pages</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li class="treeview">
+                               <a href="#!"><i class="icon-arrow-right"></i><span> Authentication</span><i class="icon-arrow-down"></i></a>
+                               <ul class="treeview-menu">
+                                   <li><a class="waves-effect waves-dark" href="register1.html" target="_blank"><i class="icon-arrow-right"></i> Register 1</a></li>
+                                   <li><a class="waves-effect waves-dark" href="register2.html" target="_blank"><i class="icon-arrow-right"></i><span> Register 2</span></a></li>
+                                   <li><a class="waves-effect waves-dark" href="signin-up-modal.html"><i class="icon-arrow-right"></i><span> Sign In/Up with Modal </span></a></li>
+                                   <li><a class="waves-effect waves-dark" href="login1.html" target="_blank"><i class="icon-arrow-right"></i><span> Login 1</span></a></li>
+                                   <li><a class="waves-effect waves-dark" href="login2.html" target="_blank"><i class="icon-arrow-right"></i><span> Login 2</span></a></li>
+                                   <li><a class="waves-effect waves-dark" href="forgot-password.html" target="_blank"><i class="icon-arrow-right"></i><span> Forgot Password</span></a></li>
+                               </ul>
+                           </li>
+
+                           <li><a class="waves-effect waves-dark" href="landing-page.html" target="_blank"><i class="icon-arrow-right"></i> Landing page</a></li>
+                           <li><a class="waves-effect waves-dark" href="lock-screen.html" target="_blank"><i class="icon-arrow-right"></i> Lock Screen</a></li>
+                           <li><a class="waves-effect waves-dark" href="400.html" target="_blank"><i class="icon-arrow-right"></i> Error 400</a></li>
+                           <li><a class="waves-effect waves-dark" href="403.html" target="_blank"><i class="icon-arrow-right"></i> Error 403</a></li>
+                           <li><a class="waves-effect waves-dark" href="404.html" target="_blank"><i class="icon-arrow-right"></i> Error 404</a></li>
+                           <li><a class="waves-effect waves-dark" href="500.html" target="_blank"><i class="icon-arrow-right"></i> Error 500</a></li>
+                           <li><a class="waves-effect waves-dark" href="503.html" target="_blank"><i class="icon-arrow-right"></i> Error 503</a></li>
+                           <li><a class="waves-effect waves-dark" href="gallery.html"><i class="icon-arrow-right"></i> Gallery</a></li>
+                           <li><a class="waves-effect waves-dark" href="sample-page.html"><i class="icon-arrow-right"></i> Sample Page</a></li>
+                           <li><a class="waves-effect waves-dark" href="invoice.html"><i class="icon-arrow-right"></i> Invoice</a></li>
+                           <li><a class="waves-effect waves-dark" href="blog.html"><i class="icon-arrow-right"></i> Blog</a></li>
+                           <li><a class="waves-effect waves-dark" href="blog-detail.html"><i class="icon-arrow-right"></i> Blog Detail</a></li>
+                           <li><a class="waves-effect waves-dark" href="search-result.html"><i class="icon-arrow-right"></i> Search Result 1</a></li>
+                           <li><a class="waves-effect waves-dark" href="search-result2.html"><i class="icon-arrow-right"></i> Search Result 2</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-social-dropbox"></i><span>Apps</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+
+                           <li class="treeview">
+                               <a href="#!"><i class="icon-arrow-right"></i><span> Task </span><i class="icon-arrow-down"></i></a>
+                               <ul class="treeview-menu">
+                                   <li><a class="waves-effect waves-dark" href="task-list.html"><i class="icon-arrow-right"></i> Task List</a></li>
+                                   <li><a class="waves-effect waves-dark" href="task-board.html"><i class="icon-arrow-right"></i> Task Board</a></li>
+                                   <li><a class="waves-effect waves-dark" href="task-detailed.html"><i class="icon-arrow-right"></i> Task Detailed</a></li>
+                                   <li><a class="waves-effect waves-dark" href="issue-list.html"><i class="icon-arrow-right"></i> Issue List</a></li>
+                               </ul>
+                           </li>
+
+                           <li class="treeview">
+                               <a href="#!"><i class="icon-arrow-right"></i><span> Email </span><i class="icon-arrow-down"></i></a>
+                               <ul class="treeview-menu">
+                                   <li><a class="waves-effect waves-dark" href="inbox.html"><i class="icon-arrow-right"></i> Inbox</a></li>
+                                   <li><a class="waves-effect waves-dark" href="compose.html"><i class="icon-arrow-right"></i> Compose</a></li>
+                                   <li><a class="waves-effect waves-dark" href="read-mail.html"><i class="icon-arrow-right"></i> Read Mail</a></li>
+                               </ul>
+                           </li>
+
+                           <li><a class="waves-effect waves-dark" href="todo.html"><i class="icon-arrow-right"></i> To Do</a></li>
+                           <li><a class="waves-effect waves-dark" href="chat.html"><i class="icon-arrow-right"></i> Chat</a></li>
+                           <li><a class="waves-effect waves-dark" href="ck-editor.html"><i class="icon-arrow-right"></i> CK Editor</a></li>
+                           <li><a class="waves-effect waves-dark" href="wysiwyg-editor.html"><i class="icon-arrow-right"></i> wysiwyg Editor</a></li>
+                           <li><a class="waves-effect waves-dark" href="ace-editor.html"><i class="icon-arrow-right"></i> Ace Editor</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-user-follow"></i><span>CRM</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="crm-dashboard.html"><i class="icon-arrow-right"></i> CRM-Dashbord</a></li>
+                           <li><a class="waves-effect waves-dark" href="crm-contact.html"><i class="icon-arrow-right"></i> CRM-Contact</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-basket-loaded"></i><span>E-Commerce</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="product.html"><i class="icon-arrow-right"></i> Product</a></li>
+                           <li><a class="waves-effect waves-dark" href="product-detail.html"><i class="icon-arrow-right"></i> Product Detail</a></li>
+                           <li><a class="waves-effect waves-dark" href="product-list.html"><i class="icon-arrow-right"></i> Product List</a></li>
+                           <li><a class="waves-effect waves-dark" href="product-edit.html"><i class="icon-arrow-right"></i> Product Edit</a></li>
+                           <li><a class="waves-effect waves-dark" href="product-cart.html"><i class="icon-arrow-right"></i> Product Card</a></li>
+                           <li><a class="waves-effect waves-dark" href="e-payment.html"><i class="icon-arrow-right"></i> Credit Card Form </a></li>
+                       </ul>
+                   </li>
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icofont icofont-job-search"></i><span>Job Search</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="job-card-view.html"><i class="icon-arrow-right"></i> Card View</a></li>
+                           <li><a class="waves-effect waves-dark" href="job-details.html"><i class="icon-arrow-right"></i> Job Detailed</a></li>
+                           <li><a class="waves-effect waves-dark" href="job-find.html"><i class="icon-arrow-right"></i> Job Find </a></li>
+                           <li><a class="waves-effect waves-dark" href="job-panel-view.html"><i class="icon-arrow-right"></i> Job Panel View</a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-share"></i><span>Social</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li><a class="waves-effect waves-dark" href="profile-social.html"><i class="icon-arrow-right"></i> Profile Social</a></li>
+                           <li><a class="waves-effect waves-dark" href="timeline-social.html"><i class="icon-arrow-right"></i><span> Timeline Social</span></a></li>
+                           <li><a class="waves-effect waves-dark" href="wall.html"><i class="icon-arrow-right"></i><span> Wall</span></a></li>
+                           <li><a class="waves-effect waves-dark" href="message.html"><i class="icon-arrow-right"></i><span> Message</span></a></li>
+                       </ul>
+                   </li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icon-present"></i><span>Extras</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+
+                           <li class="treeview">
+                               <a href="#!"><i class="icon-arrow-right"></i><span> Email Template</span><span class="label label-primary menu-arrow-caption">4</span><i class="icon-arrow-down"></i></a>
+                               <ul class="treeview-menu">
+                                   <li><a class="waves-effect waves-dark" href="email-confirm.html" target="_blank"><i class="icon-arrow-right"></i> Email Confirm</a></li>
+                                   <li><a class="waves-effect waves-dark" href="email-order-track.html" target="_blank"><i class="icon-arrow-right"></i> Email Order Track</a></li>
+                                   <li><a class="waves-effect waves-dark" href="email-otp.html" target="_blank"><i class="icon-arrow-right"></i> Email OTP</a></li>
+                                   <li><a class="waves-effect waves-dark" href="email-signup.html" target="_blank"><i class="icon-arrow-right"></i> Email Signup</a></li>
+                               </ul>
+                           </li>
+
+                           <li><a class="waves-effect waves-dark" href="timeline.html"><i class="icon-arrow-right"></i> Timeline</a></li>
+                           <li><a class="waves-effect waves-dark" href="maintainance.html" target="_blank"><i class="icon-arrow-right"></i> Maintainace</a></li>
+                           <li><a class="waves-effect waves-dark" href="coming-soon.html" target="_blank"><i class="icon-arrow-right"></i> Coming Soon</a></li>
+                           <li><a class="waves-effect waves-dark" href="profile.html"><i class="icon-arrow-right"></i> Profile</a></li>
+                           <li><a class="waves-effect waves-dark" href="pricing.html"><i class="icon-arrow-right"></i> Pricing</a></li>
+                           <li><a class="waves-effect waves-dark" href="full-calender.html"><i class="icon-arrow-right"></i>Full Calender<span class="label label-danger menu-caption">Hot</span></a></li>
+                       </ul>
+                   </li>
+
+
+                   <li><a href="Change-loges.html"><i class="icon-list"></i><span>Change Log</span><span class="label label-warning menu-caption">5</span></a> </li>
+                   <li class="nav-level">Menu Level</li>
+
+                   <li class="treeview">
+                       <a class="waves-effect waves-dark" href="#!"><i class="icofont icofont-company"></i><span>Menu Level 1</span><i class="icon-arrow-down"></i></a>
+                       <ul class="treeview-menu">
+                           <li>
+                               <a class="waves-effect waves-dark" href="#!">
+                                   <i class="icon-arrow-right"></i>
+                                   Level Two
+                               </a>
+                           </li>
+                           <li class="treeview">
+                               <a class="waves-effect waves-dark" href="#!">
+                                   <i class="icon-arrow-right"></i>
+                                   <span>Level Two</span>
+                                   <i class="icon-arrow-down"></i>
+                               </a>
+                               <ul class="treeview-menu">
+                                   <li>
+                                       <a class="waves-effect waves-dark" href="#!">
+                                           <i class="icon-arrow-right"></i>
+                                           Level Three
+                                       </a>
+                                   </li>
+                                   <li>
+                                       <a class="waves-effect waves-dark" href="#!">
+                                           <i class="icon-arrow-right"></i>
+                                           <span>Level Three</span>
+                                           <i class="icon-arrow-down"></i>
+                                       </a>
+                                       <ul class="treeview-menu">
+                                           <li>
+                                               <a class="waves-effect waves-dark" href="#!">
+                                                   <i class="icon-arrow-right"></i>
+                                                   Level Four
+                                               </a>
+                                           </li>
+                                           <li>
+                                               <a class="waves-effect waves-dark" href="#!">
+                                                   <i class="icon-arrow-right"></i>
+                                                   Level Four
+                                               </a>
+                                           </li>
+                                       </ul>
+                                   </li>
+                               </ul>
+                           </li>
+                       </ul>
+                   </li>
+               </ul>
+           </section>
+       </aside>
+
+       <!-- Sidebar chat start -->
+       <div id="sidebar" class="p-fixed header-users showChat">
+           <div class="had-container">
+               <div class="card card_main header-users-main">
+                   <div class="card-content user-box">
+
+                       <div class="md-group-add-on p-20">
+                           <span class="md-add-on">
+                               <i class="icofont icofont-search-alt-2 chat-search"></i>
+                           </span>
+                           <div class="md-input-wrapper">
+                               <input type="text" class="md-form-control" name="username" id="search-friends">
+                               <label for="username">Search</label>
+                           </div>
+
+                       </div>
+                       <div class="media friendlist-main">
+
+                           <h6>Friend List</h6>
+
+                       </div>
+                       <div class="main-friend-list">
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Alice</div>
+                                   <span>1 hour ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="7" data-status="offline" data-username="Michael Scofield" data-toggle="tooltip" data-placement="left" title="Michael Scofield">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-3.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-danger"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Michael Scofield</div>
+                                   <span>3 hours ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="5" data-status="online" data-username="Irina Shayk" data-toggle="tooltip" data-placement="left" title="Irina Shayk">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-4.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Irina Shayk</div>
+                                   <span>1 day ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="6" data-status="offline" data-username="Sara Tancredi" data-toggle="tooltip" data-placement="left" title="Sara Tancredi">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-5.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-danger"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Sara Tancredi</div>
+                                   <span>2 days ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Alice</div>
+                                   <span>1 hour ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Alice</div>
+                                   <span>1 hour ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="3" data-status="online" data-username="Alice" data-toggle="tooltip" data-placement="left" title="Alice">
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Alice</div>
+                                   <span>1 hour ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                           <div class="media friendlist-box" data-id="1" data-status="online" data-username="Josephin Doe" data-toggle="tooltip" data-placement="left" title="Josephin Doe">
+
+                               <a class="mr-3" href="#!">
+                                   <img class="media-object rounded-circle" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                                   <div class="live-status bg-success"></div>
+                               </a>
+                               <div class="media-body">
+                                   <div class="friend-header">Josephin Doe</div>
+                                   <span>20min ago</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+       </div>
+
+       <div class="showChat_inner">
+           <div class="media chat-inner-header">
+               <a class="back_chatBox">
+                   <i class="icofont icofont-rounded-left"></i> Josephin Doe
+               </a>
+           </div>
+           <div class="media chat-messages">
+               <a class="mr-3 photo-table" href="#!">
+                   <img class="media-object rounded-circle m-t-5" src="assets/images/avatar-1.png" alt="Generic placeholder image">
+                   <div class="live-status bg-success"></div>
+               </a>
+               <div class="media-body chat-menu-content">
+                   <div class="">
+                       <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                       <p class="chat-time">8:20 a.m.</p>
+                   </div>
+               </div>
+           </div>
+           <div class="media chat-messages">
+               <div class="media-body chat-menu-reply">
+                   <div class="">
+                       <p class="chat-cont">I'm just looking around. Will you tell me something about yourself?</p>
+                       <p class="chat-time">8:20 a.m.</p>
+                   </div>
+               </div>
+               <div class="media-right photo-table">
+                   <a href="#!">
+                       <img class="media-object rounded-circle m-t-5" src="assets/images/avatar-2.png" alt="Generic placeholder image">
+                       <div class="live-status bg-success"></div>
+                   </a>
+               </div>
+           </div>
+           <div class="media chat-reply-box">
+               <div class="md-input-wrapper">
+                   <input type="text" class="md-form-control" id="inputEmail" name="inputEmail">
+                   <label>Share your thoughts</label>
+                   <span class="highlight"></span>
+                   <span class="bar"></span>  <button type="button" class="chat-send waves-effect waves-light">
+                       <i class="icofont icofont-location-arrow f-20 "></i>
+                   </button>
+
+                   <button type="button" class="chat-send waves-effect waves-light">
+                       <i class="icofont icofont-location-arrow f-20 "></i>
+                   </button>
+               </div>
+
+           </div>
+       </div>
+       <!-- Sidebar chat end-->
+
+
+        <!-- Main Content container -->
+        <div class="content-wrapper">
+            <!-- Container-fluid starts -->
+            <div class="container-fluid">
+                <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
                 </div>
-                <!-- end collapse menu -->
-
-                <!-- multiple lang dropdown : find all flags in the flags page -->
-                <ul class="header-dropdown-list hidden-xs">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li class="active">
-                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- end multiple lang -->
-
             </div>
-            <!-- end pulled right: nav area -->
+        </div>
 
-        </header>
-        <!-- END HEADER -->
-        
-        <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
+        </div>
 
-            <!-- Left panel : Navigation area -->
-            <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" style="flex: 0 0 220px;">
-                <!-- User info -->
-                <div class="login-info">
-                    <span>
-                        <!-- User image size is adjusted inside CSS, it should stay as it -->
-                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                            <span data-bind="text: user_name" style="padding-top:4px;text-transform:none"></span>
-                            <i class="fa fa-angle-down" style="padding-top:5px"></i>
-                        </a>
+        <!--<div id="app-container">
 
-                    </span>
+            <header id="header" style="flex: 0 0 49px">
+                <div id="logo-group">
+                    <span id="logo" style="font-weight: bold;padding-top: 4px;"> STREEMBIT </span>
+                    <div style="display:block;margin:0;padding:0;width:268px;height:40px;" data-bind="component: {name: 'activity'}">
+                    </div>
                 </div>
-                <!-- end user info -->
-                <!-- NAVIGATION : This navigation is also responsive-->
-                <nav>
-                    <ul>
-                        <li class="active">
-                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
-                        </li>
+
+                <div class="pull-right">
+                    <div id="hide-menu" class="btn-header pull-right">
+                        <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                    </div>
+                    <ul class="header-dropdown-list hidden-xs">
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
-                                <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
-                            <ul>
-                                <!-- here goes the application list -->
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: showContacts">My contacts</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
-                                <li><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
-                            </ul>
-                        </li>
-                        <li class="chat-users top-menu-invisible">
-                            <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
-                                <li role="separator" class="divider"></li>
-                                <!-- ko if: streembit.globals.nwmode == true -->
-                                <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
-                                <li role="separator" class="divider"></li>
-                                <!-- /ko -->
-                                <li><a href="#" data-bind="click:about">About</a></li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li class="active">
+                                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
-                </nav>
 
-            </aside>
-            <!-- END NAVIGATION -->
-            <!-- MAIN PANEL -->
-            <div style="flex:1;" id="mainPanel">
+                </div>
 
-                <!-- RIBBON -->
-                <div id="ribbon" class="main_ribbon_header">
-                    <!-- breadcrumb -->
-                    <div class="breadcrumb">
-                    </div>
-                    <!-- end breadcrumb -->
-                </div>
-                <!-- END RIBBON -->
-                <!-- MAIN CONTENT -->
-                <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
-                </div>
-                <!-- END MAIN CONTENT -->
+            </header>
 
-                <!-- layout option-->
-                <div class="demo">
-                    <span id="demo-setting">
-                        <i class="fa fa-address-book txt-color-blueDark contact-icon" data-action="contactsBar"></i>
-                        <i class="fa fa-cog txt-color-blueDark layout-icon" data-action="demoSettings"></i>
-                    </span>
-                    <div class="demo_settings_layout">
-                        <form>
-                            <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
-                            <section>
-                                <label>
-                                    <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-header'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-navigation'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-footer'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-inside'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-rtl-support'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-menu'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-for-colorblind'"></span>
-                                    <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
-                                </label>
-                            </section>
-                            <section>
-                                <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
-                                <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
-                                    <i class="fa fa-refresh"></i>
-                                </a>
-                            </section>
-                            <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
-                            <section id="smart-styles">
-                                <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
-                                <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
-                                <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
-                                <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
-                                <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
-                                <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
-                                <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
-                            </section>
-                        </form>
-                    </div>
-                </div>
-                <div class="contact_bar">
-                    <div class="contact_bar_layout" data-bind="component: { name: 'contacts-bar' }"></div>
-                </div>
-            </div>
-            <!-- END MAIN PANEL --> 
-            <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
-                <div class="MessageBoxContainer animated fadeIn fast" id="message">
-                    <div class="MessageBoxMiddle">
-                        <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'"> 
-                            <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
+
+            <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
+                <aside id="left-panel" style="flex: 0 0 220px;">
+                    <div class="login-info">
+                        <span>
+                            <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                                <span data-bind="text: user_name" style="padding-top:4px;text-transform:none"></span>
+                                <i class="fa fa-angle-down" style="padding-top:5px"></i>
+                            </a>
                         </span>
-                        <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
-                        <div class="MessageBoxButtonSection">
-                            <button id="btn2-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
-                            <button id="btn1-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li class="active">
+                                <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                    <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
+                                <ul>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: showContacts">My contacts</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
+                                    <li><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                                </ul>
+                            </li>
+                            <li class="chat-users top-menu-invisible">
+                                <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
+                                <ul>
+                                    <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    -->
+        <!-- ko if: streembit.globals.nwmode == true -->
+        <!--<li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+        <li role="separator" class="divider"></li>-->
+        <!-- /ko -->
+        <!--<li><a href="#" data-bind="click:about">About</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </aside>
+
+
+                <div style="flex:1;" id="mainPanel">
+                    <div id="ribbon" class="main_ribbon_header">
+                        <div class="breadcrumb">
+                        </div>
+                    </div>
+
+                    <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+                    </div>
+
+                    <div class="demo">
+                        <span id="demo-setting">
+                            <i class="fa fa-address-book txt-color-blueDark contact-icon" data-action="contactsBar"></i>
+                            <i class="fa fa-cog txt-color-blueDark layout-icon" data-action="demoSettings"></i>
+                        </span>
+                        <div class="demo_settings_layout">
+                            <form>
+                                <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
+                                <section>
+                                    <label>
+                                        <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-header'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-navigation'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-footer'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-inside'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-rtl-support'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-menu'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-for-colorblind'"></span>
+                                        <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
+                                    </label>
+                                </section>
+                                <section>
+                                    <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
+                                    <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                </section>
+                                <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
+                                <section id="smart-styles">
+                                    <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="contact_bar">
+                        <div class="contact_bar_layout" data-bind="component: { name: 'contacts-bar' }"></div>
+                    </div>
+                </div>
+
+                <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
+                    <div class="MessageBoxContainer animated fadeIn fast" id="message">
+                        <div class="MessageBoxMiddle">
+                            <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'">
+                                <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
+                            </span>
+                            <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
+                            <div class="MessageBoxButtonSection">
+                                <button id="btn2-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
+                                <button id="btn1-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="page-footer" style="flex: 0 0 52px">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 hidden-xs"></div>
+                    <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+                        <div class="txt-color-white inline-block">
+                            <div id="footer-info" data-bind="component: 'tasks'">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- PAGE FOOTER -->
-        <div class="page-footer" style="flex: 0 0 52px">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 hidden-xs"></div>
-                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
-                    <div class="txt-color-white inline-block">
-                        <div id="footer-info" data-bind="component: 'tasks'">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END PAGE FOOTER -->
+        </div>-->
+        <!--<script src="lib/js/libs/jquery-2.1.1.min.js"></script>
+        <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script>
 
-        <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag) Note: These tiles are completely responsive, you can add as many as you like  -->
-        <div id="shortcut">
-            <ul>
-                <li>
-                    <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-signal fa-4x"></i> <span>IoT Devices</span> </span> </a>
-                </li>
-                <li>
-                    <a href="gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-group fa-4x"></i> <span>Contacts</span> </span> </a>
-                </li>
-                <li>
-                    <a href="invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-money  fa-4x"></i> <span>Wallett</span> </span> </a>
-                </li>
-                <li>
-                    <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-headphones fa-4x"></i> <span>Call </span> </span> </a>
-                </li>
-                <li>
-                    <a href="profile.html" class="jarvismetro-tile big-cubes bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-cogs fa-4x"></i> <span>Settings </span> </span> </a>
-                </li>
-            </ul>
-        </div>
-        <!-- END SHORTCUT AREA -->
-    </div>   
+        <script src="lib/js/app.config.js"></script>
+        <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+        <script src="lib/js/bootstrap/bootstrap.js"></script>
+        <script src="lib/js/notification/SmartNotification.min.js"></script>
+        <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>
+        <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+        <script src="lib/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+        <script src="lib/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+        <script src="lib/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+        <script src="lib/js/plugin/select2/select2.min.js"></script>
+        <script src="lib/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+        <script src="lib/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+        <script src="lib/js/plugin/fastclick/fastclick.min.js"></script>
+        <script src="lib/js/function.js"></script>
+        <script src="lib/js/app.js"></script>
 
-    <script src="lib/js/libs/jquery-2.1.1.min.js"></script>
-    <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script>
+        <script src="lib/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="lib/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
 
-    <script src="lib/js/app.config.js"></script>
-    <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
-    <script src="lib/js/bootstrap/bootstrap.js"></script>
-    <script src="lib/js/notification/SmartNotification.min.js"></script>  
-    <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>
-    <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-    <script src="lib/js/plugin/sparkline/jquery.sparkline.min.js"></script>
-    <script src="lib/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-    <script src="lib/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-    <script src="lib/js/plugin/select2/select2.min.js"></script>
-    <script src="lib/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
-    <script src="lib/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
-    <script src="lib/js/plugin/fastclick/fastclick.min.js"></script>
-    <script src="lib/js/function.js"></script>
-    <script src="lib/js/app.js"></script>
-    
-    <script src="lib/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="lib/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-
-    <script src="lib/js/plugin/bootbox/bootbox.min.js"></script>
-    <script src="lib/js/plugin/blockui/jquery.blockUI.js"></script>
-    <script src="lib/js/plugin/jquery-qrcode/jquery-qrcode-0.14.0.min.js"></script>
-    <script src="lib/js/plugin/knockout/knockout-3.4.2.debug.js"></script>
-    <script src="lib/js/plugin/knockout/knockout.mapping.js"></script>
-    <script src="lib/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-
-    <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
-
-    <script>
-        $(document).ready(function() {
-            pageSetUp();      
-            System.import('lib/main.js');
-            
-        });
-    </script>
-    
-    <script type="text/html" id="empty-template">
-        <div class="emptydiv"></div>
-    </script>    
-
-    <script type="text/html" id="contacts-bar-template">
+        <script src="lib/js/plugin/bootbox/bootbox.min.js"></script>
+        <script src="lib/js/plugin/blockui/jquery.blockUI.js"></script>
+        <script src="lib/js/plugin/jquery-qrcode/jquery-qrcode-0.14.0.min.js"></script>
+        <script src="lib/js/plugin/knockout/knockout-3.4.2.debug.js"></script>
+        <script src="lib/js/plugin/knockout/knockout.mapping.js"></script>
+        <script src="lib/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>-->
         
-    </script> 
+        <!-- Required Jqurey -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <script src="assets/js/jquery-ui.min.js"></script>
+        <script src="assets/js/tether.min.js"></script>
 
-</body>
+        <!-- Popper js  -->
+        <script src="assets/plugins/popper/popper.js"></script>
+
+
+        <!-- Required Fremwork -->
+        <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+
+        <!-- waves effects.js -->
+        <!--<script src="assets/bower_components/Waves/dist/waves.js"></script>-->
+        <!-- Scrollbar JS-->
+        <script src="assets/plugins/slimscroll/js/jquery.slimscroll.js"></script>
+        <script src="assets/plugins/slimscroll/js/jquery.nicescroll.min.js"></script>
+
+        <!--classic JS-->
+        <script src="assets/plugins/search/js/classie.js"></script>
+
+        <!-- notification -->
+        <script src="assets/plugins/notification/js/bootstrap-growl.min.js"></script>
+
+        <!-- Counter js  -->
+        <script src="assets/plugins/countdown/js/jquery.waypoints.min.js"></script>
+        <script src="assets/plugins/countdown/js/jquery.counterup.js"></script>
+
+        <!-- custom js -->
+        <script type="text/javascript" src="assets/js/main.js"></script>
+        <script type="text/javascript" src="assets/pages/elements.js"></script>
+        <script src="assets/js/menu.js"></script>
+
+        <script src="assets/js/bootbox/bootbox.min.js"></script>
+        <script src="assets/js/blockui/jquery.blockUI.js"></script>
+        <script src="assets/js/jquery-qrcode/jquery-qrcode-0.14.0.min.js"></script>
+        <script src="assets/js/knockout/knockout-3.4.2.debug.js"></script>
+        <script src="assets/js/knockout/knockout.mapping.js"></script>
+
+        <script src="jspm_packages/system.js"></script>
+        <script src="config.js"></script>
+
+        <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+
+        <script>
+            $(document).ready(function () {
+                System.import('lib/main.js');
+            });
+        </script>
+
+        <script type="text/html" id="empty-template">
+            <div class="emptydiv"></div>
+        </script>
+
+        <script type="text/html" id="contacts-bar-template">
+        </script>
+
+    </body>
+
 </html>

@@ -1,0 +1,1308 @@
+/*TABLE OF CONTENTS */
+/*
+    01 Custom css starts
+    02 Header NavBar css starts
+    03 Services css starts
+    04 About css starts
+    05 What We Do css starts
+    06 Our Creatives css starts
+    07 Pricing List css starts
+    08 LAtest Blog css starts
+    09 Testimonials css starts
+    11 Footer css starts
+    10 Join With Us css starts
+    11 Responsive css starts
+    12 top to bottom button
+
+    */
+/*====== 01 Custom css starts ======= */
+@import "genral";
+
+$theme-col:#1b8bf9;
+
+body {
+    @include f-s(15px);
+    overflow-x: hidden;
+    @include bg-c(#fff);
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    line-height: 1.8;
+}
+
+h2{
+    &.title-center,
+    &.title-sec {
+        @include pos(relative);
+        @include c($theme-col);
+        text-transform: uppercase;
+        @include pb(50px);
+        letter-spacing: 1px;
+    }
+}
+
+ul {
+    list-style: none;
+    @include pl(0);
+}
+
+.text-center {
+    @include t-a(center);
+}
+
+.d-flex {
+    @include disp(flex);
+    align-items: center;
+}
+
+.pre-loader{
+    @include pos(fixed);
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    @include bg(rgba(0,0,0,.65));
+    z-index: 1000;
+    span{
+        @include pos(absolute);
+        top:5px;
+        width: 10px;
+        height: 10px;
+        left:100%;
+        @include b(50%,radius);
+        @include b(1px solid #fff);
+        @include bg(#fff);
+        animation:move 3s infinite cubic-bezier(.57,0,.53,.99);
+        @for $i from 1 through 6{
+            &:nth-child(#{$i}){
+                animation-delay: #{$i/5}s;
+            }
+        }
+    }
+}
+@include k-frames(move){
+    0%{
+        left:-10px;
+    }
+    100%{
+        left:100%;
+    }
+}
+.title-sec:before {
+    @include pos(absolute);
+    content: "";
+    width: 100px;
+    @include bg(#000);
+    bottom: 35px;
+    left: 0;
+    height: 2px;
+}
+
+.title-center:before {
+    content: "";
+    @include pos(absolute);
+    left: 0;
+    right: 0;
+    bottom: 35px;
+    width: 100px;
+    height: 2px;
+    @include bg-c(#000);
+    @include m(auto);
+}
+
+.section-bg {
+    @include bg-c(#f3f3f3);
+    @include p(60px 0);
+}
+
+.section-tb {
+    @include p(60px 0);
+}
+/*Social Icon Start*/
+.socials-icon {
+    @include flt(right);
+    @include p(27px 0);
+    li {
+        @include flt(left);
+        @include pl(10px);
+        @include pr(10px);
+        a {
+            @include c(#000);
+            @include f-s(15px);
+            &:hover {
+                @include c($theme-col);
+            }
+        }
+    }
+}
+
+/*Social Icon Start*/
+/*====== 02 Header NavBar css starts ======= */
+.affix {
+    top: 0;
+    width: 100%;
+    @include bg-c(rgba(0, 0, 0, 0.76));
+    @include p(fixed);
+}
+
+#header-bg {
+    height: 600px;
+}
+
+#home-header{
+    h1,span {
+        text-transform: uppercase;
+        @include c(#fff);
+        @include mb(35px);
+    }
+    span {
+        @include c($theme-col);
+    }
+    &.home-content{
+        h1,p,span {
+            @include t-a(left);
+            @include f-s(37px);
+        }
+        p {
+            @include f-s(20px);
+        }
+    }
+    .btn-inverse-default {
+        @include bg-c(transparent);
+        @include b(2px solid #fff);
+        @include c(#757575);
+    }
+    p {
+        @include c(#fff);
+        @include m(60px 0);
+    }
+}
+
+.bg-inverse {
+    @include bg-c(#000 !important);
+    @include b(inherit,radius);
+}
+
+.navbar-light{
+    .navbar-nav{
+        .active{
+            > .nav-link,> .nav-link:hover,> .nav-link:focus{
+                @include c($theme-col);
+            }
+        }
+        .nav-link{
+            &.active,
+            &.active:focus,
+            &.active:hover,
+            &.open,
+            &.open:focus,
+            &.open:hover,
+            &:focus,
+            &:hover{
+                @include c($theme-col);
+            }
+        }
+        .open{
+            > .nav-link,
+            > .nav-link:focus,
+            > .nav-link:hover {
+                @include c($theme-col);
+            }
+        }
+    }
+}
+.navbar-nav{
+    li.nav-item a.nav-link {
+        @include c(#fff);
+    }
+    .nav-item+.nav-item {
+        @include ml(40px);
+    }
+}
+
+@media (min-width: 320px) {
+    .nav {
+        @include flt(left);
+    }
+    .navbar-nav .nav-item+.nav-item {
+        @include ml(0);
+    }
+}
+@media (min-width: 768px) {
+    .navbar-nav .nav-item+.nav-item {
+        @include ml(40px);
+    }
+    .nav {
+        @include flt(right);
+    }
+}
+/*====== 03 Services css starts ======= */
+.ourpro-icon-wrap {
+    @include t-a(center);
+    @include m(0 auto);
+    @include p(2em 0 3em);
+}
+
+.ourpro-icon {
+    @include disp(inline-block);
+    @include f-s(0);
+    cursor: pointer;
+    @include m(20px 30px);
+    width: 90px;
+    height: 90px;
+    @include b(50%,radius);
+    @include t-a(center);
+    @include pos(relative);
+    z-index: 1;
+    @include c(#fff);
+    &:after {
+        pointer-events: none;
+        @include pos(absolute);
+        width: 100%;
+        height: 100%;
+        @include b(50%,radius);
+        content: '';
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+    &:before {
+        speak: none;
+        @include f-s(35px);
+        line-height: 90px;
+        @include disp(block);
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+.box-process{
+    h6,p {
+        @include c(#222);
+        @include mb(15px);
+    }
+}
+
+/* Effect 8 */
+.ourpro-icon-effect-8{
+    .ourpro-icon {
+        @include bg($theme-col);
+        @include transition(transform ease-out 0.1s, background 0.2s);
+        &:after {
+            top: 0;
+            left: 0;
+            @include p(0);
+            z-index: -1;
+            @include shadow(0 0 0 2px rgba(255,255,255,0.1));
+            opacity: 0;
+            @include transform(scale(0.9));
+        }
+        &:hover {
+            @include bg($theme-col);
+            @include transform(scale(0.93));
+            @include c(#fff);
+            &:after {
+                @include animation(sonarEffect 1.3s ease-out 75ms);
+            }
+        }
+    }
+}
+@include k-frames(sonarEffect)
+{
+    0% {
+        opacity: 0.3;
+    }
+    40% {
+        opacity: 0.5;
+        @include shadow(0 0 0 2px $theme-col, 0 0 10px 10px #{lighten($theme-col, 10%)}, 0 0 0 10px #{lighten($theme-col, 8%)});
+    }
+    100% {
+        @include shadow(0 0 0 2px $theme-col, 0 0 10px 10px #{lighten($theme-col, 10%)}, 0 0 0 10px #{lighten($theme-col, 8%)});
+        @include transform(scale(1.5));
+        opacity: 0;
+    }
+}
+/*====== 04 About css starts ======= */
+.about-sec{
+    .title-center:before {
+        @include m(0);
+    }
+    img {
+        width: 100%;
+    }
+    li{
+        &:last-child {
+            @include mb(0);
+        }
+        i {
+            @include f-s(20px);
+            left: 0;
+            @include pos(absolute);
+            top: 1px;
+            @include c($theme-col);
+        }
+    }
+    p {
+        @include pb(25px);
+        text-transform: capitalize;
+    }
+}
+
+.about-sec,
+.header-back-text{
+    li {
+        @include f-s(15px);
+        @include pl(30px);
+        @include pos(relative);
+    }
+}
+
+/*====== 05 What We Do css starts ======= */
+.grid-item {
+    @include mb(30px);
+}
+
+.port-filt-group{
+    ul {
+        @include mb(50px);
+        list-style: none;
+        li {
+            @include disp(inline-block);
+            @include pos(relative);
+            a {
+                font:{
+                    size: 18px;
+                    weight: 600;
+                }
+                text-transform: uppercase;
+                @include c(#111);
+                text-decoration: none;
+                &:hover {
+                    color: $theme-col;
+                }
+            }
+        }
+    }
+}
+
+.portfolioFilter{
+    li{
+        button {
+            @include bg(none);
+            font:{
+                size: 18px;
+                weight: 400;
+            }
+            text-transform: capitalize;
+            @include m(0 15px);
+            @include shadow(none);
+            &.current,
+            &:hover {
+                color: $theme-col;
+            }
+        }
+        + li:before {
+            content: "";
+            @include p(10px 1px 10px 0);
+            @include bg-c(#111);
+            @include pos(absolute);
+            left: 0;
+            top: 10px;
+        }
+    }
+    img {
+        cursor: pointer;
+        width: 100%;
+    }
+}
+
+.port-main {
+    @include pos(relative);
+    @include o-f(hidden);
+    img {
+        width: 100%;
+        cursor: pointer;
+        @include transition(all 0.35s linear 0s);
+    }
+    &:hover{
+        .port-content {
+            @include transform(scale(1) rotate(360deg));
+            cursor: pointer;
+        }
+        img{
+            @include transform(scale(1.3) rotate(15deg));
+        }
+    }
+}
+
+.port-content {
+    @include bg(rgba(0,0,0,0.6));
+    height: 100%;
+    width: 100%;
+    @include pos(absolute);
+    top: 0;
+    @include transition(all 0.35s linear 0s);
+    @include transform(scale(0) rotate(180deg));
+}
+
+.port-text {
+    width: 100%;
+    i {
+        @include f-s(46px);
+        @include c(#fff);
+    }
+    h4 {
+        @include c(#fff);
+        text-transform: capitalize;
+        @include f-w(inherit);
+    }
+}
+
+/*====== 06 Our Creatives css starts ======= */
+.team-block {
+    @include pos(relative);
+    cursor: pointer;
+    img {
+        width: 100%;
+    }
+    &:hover{
+        .img-hover {
+            span{
+                height: 25%;
+            }
+        }
+        &.img-hover {
+            bottom: 0;
+            @include transition(all 0.3s ease-in-out);
+        }
+        .team-desc {
+            @include shadow(0 10px 28px rgba(0, 0, 0, 0.19));
+            @include transition(all 0.5s ease-in-out);
+        }
+    }
+}
+
+.img-hover {
+    span{
+        @include bg-c(rgba(27, 139, 249, 0.61));
+        width: 100%;
+        height: 0%;
+        @include pos(absolute);
+        left: 0;
+        @for $i from 0 through 3{
+            &:nth-child(#{$i+1}){
+                top:25%*$i;
+            }
+        }
+        @include transition(all 0.3s ease-in-out);
+    }
+}
+
+.team-desc {
+    @include bg(#fff);
+    @include pb(10px);
+    @include pos(relative);
+    z-index: 2;
+    @include shadow(0 10px 28px rgba(0, 0, 0, 0.19));
+    @include transition(all 0.5s ease-in-out);
+}
+
+.team-name {
+    @include p(10px 0);
+}
+
+.team-position p {
+    @include c($theme-col);
+}
+
+.team-socials {
+    @include disp(inline-block);
+    @include pt(15px);
+    @include pl(0);
+    li {
+        @include flt(left);
+        @include pr(5px);
+        @include pl(5px);
+        a {
+            @include c(#2d2d2d);
+        }
+    }
+    i {
+        @include transition(all 0.4s ease-in-out);
+        cursor: pointer;
+        @include f-s(20px);
+    }
+    .fb, .twt, .skype, .l_in{
+        &:hover{
+            @include transform(rotate(20deg));
+            @include transition(all 0.3s ease-in-out);
+        }
+    }
+    .fb i:hover {
+        color: #3A5795;
+    }
+    .twt i:hover {
+        color: #1DA1F2;
+    }
+    .skype i:hover {
+        color: #00AFF0;
+    }
+    .l_in i:hover {
+        color: #0077B5;
+    }
+}
+
+/*====== 07 Pricing List css starts ======= */
+.pricing-table {
+    @include pos(relative);
+    @include m(20px 0);
+    @include p(29px);
+    @include b(4px,radius);
+    @include bg-c(#fff);
+    @include b(10px solid #000,top);
+    @include shadow(0 0 6px rgba(0, 0, 0, 0.1));
+    @include transition(all 0.5s ease-in-out 0s);
+    &:hover {
+        @include b(10px solid $theme-col,top);
+        @include transform(scale(1.10));
+    }
+    h3 {
+        @include c(#111);
+    }
+}
+
+.pricing-table-header {
+    @include pos(relative);
+    min-height: 50px;
+    @include mb(30px);
+    .price {
+        @include pos(absolute);
+        top: 0;
+        right: 0;
+        max-width: 80px;
+        @include mt(-10px);
+        @include t-a(right);
+        @include c($theme-col);
+    }
+    .price-currency {
+        @include f-s(18px);
+        line-height: 1;
+    }
+    .price-number {
+        @include f-s(40px);
+        line-height: 1;
+    }
+    .price-period {
+        @include disp(block);
+        @include f-s(15px);
+        line-height: 1;
+        @include c(#666);
+    }
+}
+
+.free-pricing {
+    @include disp(inline-block);
+}
+
+.pricing-new {
+    @include c(#fff);
+    @include bg-c($theme-col);
+    font:{
+        size: 15px;
+        weight: 700;
+    }
+    @include p(8px 15px);
+    @include b(20px,radius);
+    @include ml(15px);
+    @include disp(inline-block);
+    text-transform: uppercase;
+}
+
+.pricing-table-items {
+    list-style: none;
+    @include p(0);
+    @include m(0 0 30px);
+    li {
+        @include pos(relative);
+        @include pl(40px);
+        @include m(15px 0);
+        i {
+            @include pos(absolute);
+            top: 5px;
+            left: 5px;
+            width: 18px;
+            @include f-s(18px);
+            line-height: 1;
+            @include t-a(center);
+            &.icofont-check {
+                @include c($theme-col);
+            }
+            &.icofont-close {
+                @include c(#666);
+            }
+        }
+    }
+}
+
+.signup-btn {
+    @include pos(absolute);
+    @include t-a(center);
+    right: 0;
+    left: 0;
+    .btn-primary {
+        letter-spacing: 1px;
+        @include f-s(16px);
+        @include p(10px 20px);
+        @include transition(all 0.3s ease-in-out);
+        &:hover {
+            @include bg-c(#fff !important);
+            @include b(2px solid $theme-col);
+            @include c($theme-col);
+        }
+    }
+}
+
+/*====== 08 LAtest Blog css starts  ======= */
+.testimonial-bg {
+    min-height: 500px;
+}
+
+.blog-img {
+    @include pos(relative);
+    @include o-f(hidden);
+    @include shadow(0 -3px 22px rgba(0, 0, 0, 0.12));
+}
+
+.blog-details {
+    @include shadow(0 3px 22px rgba(0, 0, 0, 0.12));
+    @include p(15px);
+    h6 {
+        @include mt(15px);
+        @include mb(10px);
+        @include c($theme-col !important);
+    }
+    h5 {
+        @include c(#222);
+        @include mb(15px);
+    }
+    .read-more a {
+        color: $theme-col;
+    }
+    p {
+        @include t-a(left);
+        @include c(#9a9a9a);
+        @include mb(10px);
+    }
+}
+
+.blog-hover-detail {
+    top: 0;
+    @include transition(all 0.3s ease-in-out);
+    @include transform(scale(0) rotate(240deg));
+    width: 100%;
+    height: 100%;
+    @include pos(absolute);
+    @include bg-c($theme-col);
+    h5, i {
+        @include c(#fff);
+        text-transform: uppercase;
+    }
+    h5 {
+        @include mb(15px);
+    }
+}
+
+.date-blog{
+    i {
+        @include c(#666);
+        @include p(3px);
+    }
+    span {
+        @include c(#666);
+        @include mr(8px);
+        @include f-s(14px);
+    }
+}
+
+.item{
+    img {
+        @include shadow(5px 5px 5px -7px #ccc);
+        @include transition(all 0.3s ease-in-out);
+    }
+    &:hover{
+        .blog-hover-detail {
+            @include transform(scale(1.0) rotate(360deg));
+            @include bg-c(rgba(27, 139, 249, 0.61));
+        }
+        img{
+            @include transform(scale(1.3) rotate(10deg));
+        }
+    }
+}
+
+/*====== 09 Testimonials css starts  ======= */
+.testimonial-bg{
+    h2{
+        &.title-center {
+            @include c(#fff);
+            &:before {
+                @include bg-c(#fff);
+            }
+        }
+    }
+}
+
+.testimonial-slider {
+    @include t-a(center);
+    @include c(#fff);
+    @include m(0 auto);
+    p {
+        font:{
+            size: 14px;
+            weight: 300;
+        }
+        line-height: 1.9;
+        @include c(#fff);
+    }
+}
+
+.testimonial-thumbs {
+    @include pos(relative);
+    @include m(0 auto);
+    cursor: pointer;
+    .slick-slide img {
+        width: 60px;
+        height: 60px;
+        @include b(1px solid #fff);
+        @include b(35px,radius);
+        cursor: pointer;
+        @include disp(inline-block);
+        @include m(20px 0);
+    }
+    .slick-current{
+        img {
+            @include b(1px solid transparent);
+        }
+        h4 {
+            @include c($theme-col);
+        }
+    }
+    h5 {
+        @include c($theme-col);
+        @include t-a(center);
+        @include mb(10px);
+        text-transform: capitalize;
+        letter-spacing: 1px;
+    }
+    h6 {
+        @include f-s(14px);
+        @include c(#fff);
+        @include t-a(center);
+        letter-spacing: 1px;
+    }
+}
+
+/*slick slider Dots css*/
+.slick-dots {
+    @include pos(absolute);
+    bottom: -25px;
+    @include disp(block);
+    width: 100%;
+    @include p(0);
+    @include m(-35px 0);
+    list-style: none;
+    @include t-a(center);
+    li {
+        @include pos(relative);
+        @include disp(inline-block);
+        width: 10px;
+        height: 10px;
+        @include m(0 5px);
+        @include p(0);
+        cursor: pointer;
+        button {
+            @include f-s(0);
+            line-height: 0;
+            @include disp(block);
+            width: 10px;
+            height: 10px;
+            @include p(4px);
+            cursor: pointer;
+            @include c(transparent);
+            outline: none;
+            @include bg(transparent);
+            @include b(2px solid $theme-col);
+            @include b(50px,radius);
+            &:focus,
+            &:hover {
+                outline: none;
+                &:before {
+                    opacity: 1;
+                }
+            }
+            &:before {
+                font-family: 'FontAwesome';
+                @include f-s(13px);
+                line-height: 13px;
+                @include pos(absolute);
+                top: 0;
+                left: 0;
+                width: 10px;
+                height: 10px;
+                content: '\f111';
+                @include t-a(center);
+                opacity: 0;
+                @include c($theme-col);
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+        }
+        &.slick-active button:before {
+            opacity: 1;
+            @include c($theme-col);
+        }
+    }
+}
+
+/*====== 10 Join With Us css starts  ======= */
+.join-us {
+    @include bg-c($theme-col);
+    @include c(#fff);
+    @include p(45px 0);
+    h3 {
+        text-transform: uppercase;
+        font:{
+            size: 24px;
+            weight: 300;
+        }
+        letter-spacing: 1px;
+    }
+}
+
+/*====== 11 Footer css starts  ======= */
+.footer-header {
+    @include pos(relative);
+    @include c(#fff);
+}
+
+.footer,
+footer{
+    p,h5 {
+        font:{
+            size:14px;
+            weight: 300;
+        }
+        @include c(#fff);
+    }
+}
+
+.footer-about,
+.footer-menu{
+    i {
+        top: 0;
+        left: 0;
+        @include pos(absolute);
+    }
+    li {
+        @include pos(relative);
+    }
+}
+
+.footer{
+    h5 {
+        @include m(15px 25px);
+    }
+    h3 {
+        @include mt(0);
+        @include mb(40px);
+        @include f-s(20px);
+    }
+    li img {
+        width: 80px;
+        height: 80px;
+        @include mr(1px);
+    }
+}
+
+.footer-menu{
+    ul li{
+        cursor: pointer;
+        h5 {
+            @include m(0 18px 15px);
+        }
+        &:hover {
+            h5{
+                @include c($theme-col);
+            }
+        }
+    }
+}
+
+.footer-gallery{
+    ul{
+        li {
+            @include pos(relative);
+            @include disp(inline-block);
+            .footer-hvr-effect {
+                top: 0;
+                @include pos(absolute);
+                width: 100%;
+                height: 0%;
+                opacity: 0.65;
+                @include bg-c($theme-col);
+                @include transition(all 0.3s ease-in-out);
+            }
+            &:hover .footer-hvr-effect {
+                height: 100%;
+                @include transition(all 0.3s ease-in-out);
+            }
+        }
+    }
+}
+
+.footer-news{
+    .form-control {
+        height: 35px;
+    }
+    h5 {
+        @include m(0);
+        @include mt(10px);
+    }
+    button {
+        top: -35px;
+        @include flt(right);
+        @include bg-c($theme-col);
+        @include b(0,radius);
+        @include b(.25em,bottom-right-radius);
+        @include b(.25em,top-right-radius);
+    }
+}
+
+.copyright h5 {
+    @include bg-c(#222);
+    @include c(#fff);
+    @include p(20px 0);
+    @include m(0);
+    font:{
+        size: 15px;
+        weight: 100;
+    }
+}
+
+.subscribe-btn {
+    @include m(30px 0);
+    .form-control {
+        height: 35px;
+        @include shadow(none);
+        @include b(none);
+        @include p(6px 12px);
+        width: 180px;
+    }
+    .input-group-btn button {
+        @include bg(#fff);
+    }
+    .btn {
+        top: 0;
+        @include pos(absolute);
+        height: 100%;
+        i {
+            @include c(#fff);
+        }
+    }
+}
+
+.footer-web h5 {
+    @include mb(0);
+}
+
+footer p {
+    @include mb(10px);
+}
+
+.footer .fa-angle-double-right {
+    @include c(#fff);
+    @include f-s(20px);
+}
+
+.footer-about i {
+    @include c($theme-col);
+    @include mr(4px);
+}
+
+.follow-sec .team-socials li i {
+    @include c(#fff);
+}
+
+/*====== 12 Responsive css starts  ======= */
+@media only screen and (max-width: 1560px) {
+    .about-sec .tablet-sc {
+        @include m(50px 0);
+    }
+}
+@media only screen and (max-width: 991px) {
+    .team{
+        .team-block,.team-block:last-child {
+            @include mb(30px);
+        }
+    }
+
+    .navbar-light .navbar-toggler {
+        @include bg(url("../images/landingpage/menu.png"));
+    }
+
+    .navbar-toggler {
+        @include b(0.25rem,radius);
+        @include f-s(1.25rem);
+        height: 2em;
+        line-height: 1;
+        @include p(0.5rem 0.75rem);
+        width: 2.5em;
+    }
+
+    .navbar-nav .nav-item + .nav-item {
+        @include ml(0);
+    }
+
+    #navbarResponsive {
+        @include flt(left);
+    }
+
+    #home-header{
+        &.home-content{
+            span,h1 {
+                @include f-s(25px);
+            }
+        }
+        .btn-md {
+            @include p(10px 13px);
+        }
+    }
+
+    /*portfolio start css*/
+    .port-text h4 {
+        @include f-s(16px);
+    }
+
+    .pricing-table h3 {
+        @include f-s(20px);
+    }
+    /*footer start*/
+    .footer .footer-gallery {
+        height: 270px;
+    }
+
+    .testimonial-thumbs .slick-dots {
+        @include mb(0);
+    }
+
+    .ourclientsslid .slick-slide img {
+        @include disp(inline-block);
+    }
+
+    .about-sec .tablet-sc {
+        @include m(50px 0);
+    }
+
+    .join-us h3 {
+        @include f-s(17px);
+    }
+
+    .blog-details h6 {
+        @include f-s(14px);
+    }
+}
+@media (min-width: 991px) and (max-width: 1199px) {
+    .about-sec .tablet-sc {
+        @include m(50px 0);
+    }
+}
+@media only screen and (max-width: 767px) {
+    .navbar-light .navbar-toggler {
+        @include bg(url("../images/landingpage/menu.png"));
+    }
+
+    .socials-icon li {
+        @include p(0 5px);
+    }
+
+    #home-header{
+        &.home-content{
+            h1,span {
+                @include f-s(22px);
+                @include mb(22px);
+                letter-spacing: 1px;
+            }
+            p {
+                @include f-s(18px);
+                @include m(30px 0);
+            }
+        }
+        .btn-md {
+            @include f-s(13px);
+            @include p(10px 8px);
+            @include mb(20px);
+        }
+    }
+    /* about us start*/
+    .about-sec{
+        .d-flex {
+            @include disp(block);
+        }
+        .title-sec {
+            @include disp(none);
+        }
+        .title-center {
+            @include disp(block);
+            @include t-a(center);
+            @include mt(30px);
+        }
+        .mob-text {
+            @include t-a(center);
+            @include mb(30px);
+        }
+        .title-center:before {
+            @include m(auto);
+        }
+    }
+    /*portfolio start*/
+    .portfolioFilter li button {
+        @include m(0);
+        @include f-s(14px);
+        @include p(9px);
+    }
+    /*pricing table*/
+    .pricing-table {
+        @include m(40px 0);
+    }
+
+    #pricing .row:last-child .col-sm-4:last-child .pricing-table {
+        @include m(20px 0);
+    }
+
+    .our-creatives .row:last-child .col-sm-6:last-child .team-block {
+        @include mb(0);
+    }
+
+    .team-block {
+        @include mb(25px);
+    }
+    /*Testimonials start css*/
+    .testimonial-bg .d-flex {
+        @include disp(block);
+    }
+
+    .testimonial-thumbs .slick-dots {
+        @include mb(0);
+    }
+    /*our client*/
+    .ourclientsslid .slick-slide img {
+        @include disp(inline-block);
+    }
+    /*join us start*/
+    .join-us{
+        .d-flex {
+            @include disp(block);
+            @include t-a(center);
+        }
+        h3 {
+            @include f-s(18px);
+            line-height: 1.8;
+            @include mb(15px);
+        }
+    }
+
+    .m-b-xs-25 {
+        @include mb(25px);
+    }
+
+    .footer .footer-gallery {
+        height: inherit;
+    }
+}
+@media (min-width: 320px) and (max-width: 768px) {
+    #blog ,
+    #our-creatives{
+        img.img-fluid {
+            width: 100%;
+        }
+    }
+}
+/*Responsive css*/
+@media only screen and (max-width: 1199px) {
+    .section-bg,
+    .section-tb {
+        @include p(20px 0);
+    }
+    .title-center:before {
+        bottom: 10px;
+    }
+    h2{
+        .title-center,
+        .title-sec {
+            @include pb(30px);
+        }
+    }
+
+    .port-filt-group ul {
+        @include mb(20px);
+    }
+
+    .testimonial-thumbs .slick-slide img {
+        @include m(10px 0);
+    }
+}
+@media only screen and (max-width: 991px) {
+    .date-blog span {
+        @include disp(block);
+        @include mb(5px);
+    }
+}
+@media only screen and (max-width: 767px) {
+    .about-sec .tablet-sc {
+        @include m(0);
+    }
+    .footer li img {
+        width: 83px;
+        height: 83px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .footer h3 {
+        @include mb(20px);
+    }
+    .subscribe-btn {
+        @include m(0);
+    }
+}
+@media only screen and (max-width: 480px) {
+    .socials-icon {
+        @include m(0);
+        @include p(22px 0);
+    }
+}
+/*======= 12 top to bottom button start====*/
+.scrollup {
+    @include pos(fixed);
+    bottom: 30px;
+    right: 30px;
+    @include disp(none);
+    z-index: 998;
+    @include bg($theme-col);
+    @include c(#fff);
+    @include b(50%,radius);
+    height: 50px;
+    width: 50px;
+    line-height: 1.5;
+    @include pl(0);
+    @include pr(0);
+    &:hover {
+        @include b(1px solid $theme-col);
+    }
+}
+.scrollup-icon {
+    @include c(#fff !important);
+    @include p(0 10px);
+    @include f-s(31px);
+}
+/*=======top to bottom button Ends====*/
