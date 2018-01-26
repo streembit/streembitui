@@ -752,7 +752,7 @@ body{
 }
 
 #media-call-container{
-    height:100%;
+    height: calc(100% - 40px);
     width:100%;
     padding:0 10px;
     /*visibility:hidden;*/
@@ -795,10 +795,8 @@ body{
 }
 
 .chat_items {
-    min-height: 204px;
     display: none;
     margin-bottom: 14px;
-    max-height: calc(100% - 40px);
 }
 
 .video_chat_items{
