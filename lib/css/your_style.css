@@ -453,7 +453,7 @@
     }
     .all-contacts-field{
       overflow-y: scroll;
-      max-height: 150px;
+      max-height: 300px;
     }
 
     #connection_indicator {
