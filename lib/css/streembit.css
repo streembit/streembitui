@@ -624,7 +624,7 @@ body{
 }
 
 .footer-chat-controls{
-    padding: 8px 0 20px 0;
+    padding: 8px 0 0 0;
     border-top: 3px solid #eee;
     margin-top:8px;
 }
@@ -798,6 +798,7 @@ body{
     min-height: 204px;
     display: none;
     margin-bottom: 14px;
+    max-height: calc(100% - 40px);
 }
 
 .video_chat_items{
@@ -846,7 +847,7 @@ body{
 }
 
 audio#remote-audio {
-    width: 462px;
+    width: 294px;
 }
 
 .media-call-chat{
@@ -2567,37 +2568,27 @@ Widgets
 }
 
 @media (max-height: 720px) {
-    .chat_items{
-        min-height:160px;
-    }
     body {
         min-height: 580px;
     }
     .footer-chat-controls {
         margin-top: 0;
-        margin-bottom: 20px;
-    }
-    .chat_items {
-        margin-bottom: 0;
-    }
-    .remoteaudio_parent {
-        justify-content: flex-start;
-    }
-    .remoteaudio_parent canvas {
-        height: 120px !important;
     }
 }
 
 @media (max-height: 612px) {
-    .remoteaudio_parent canvas {
-        height: 100px !important;
+    body {
+        min-height: initial;
     }
-    audio#remote-audio {
-        width: 280px;
+    .footer-chat-controls {
+        margin-top: 0;
     }
-    .footer-chat-controls{
-        padding: 8px 0 14px 0;
+    .chat_items {
+        margin-bottom: 0;
     }
+}
+
+@media (max-height: 612px) {
     textarea#txtChatCtrl {
         height: 50px !important;
     }
@@ -2610,8 +2601,5 @@ Widgets
     }
     textarea#txtChatCtrl {
         height: 60px !important;
-    }
-    audio#remote-audio {
-        width: 320px;
     }
 }
