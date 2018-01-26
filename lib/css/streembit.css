@@ -2569,7 +2569,7 @@ Widgets
 
 @media (max-height: 720px) {
     body {
-        min-height: 580px;
+        min-height: initial !important;
     }
     .footer-chat-controls {
         margin-top: 0;
