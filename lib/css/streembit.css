@@ -242,25 +242,16 @@ body{
     height:100%;
 }
 
-.contacts-tab{
-    /*    width:280px;
-        z-index: 1000;
-        display: block;
-        padding: 0;
-        overflow-x: hidden;*/
-    /*overflow-y: auto;*/ /* Scrollable contents if viewport is shorter than content. */
-    /*    background-color: #f8fbff;
-        height:100%;
-        width:100%;*/
+.contacts-tab {
     width: 260px;
-    position: absolute;
-    z-index: 900;
+    position: fixed;
+    height: 100%;
+    z-index: 906;
     top: 54px;
     right: 0;
     background: #fff;
     padding: 3px;
 }
-
 
 
 #footer-text-container {

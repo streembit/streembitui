@@ -35,6 +35,20 @@
     </div>
 </script>
 
+<script type="text/html" id="network-progress-template">
+    <div style="background-color:#555;min-height:60px; padding-bottom:10px">
+        <div class="pull-right" style="margin-right:5px">
+            <button type="button" class="close" aria-hidden="true" data-bind="click: $parent.close_task">&times;</button>
+        </div>
+        <div style="padding:6px 0;margin:0 auto;text-align:center">
+            <div class="file-progress-msg">Connecting to network at <span data-bind="text: host"></span>:<span data-bind="text: port"></span></div>
+        </div>
+        <div style="display: flex;justify-content: space-around;align-items: center;">
+            <div class="loading-pulse"></div>
+        </div>
+    </div>
+</script>
+
 <script type="text/html" id="file-receive-complete-template">
     <div style="background-color:#555;min-height:55px">
         <div class="pull-right" style="margin-right:5px">

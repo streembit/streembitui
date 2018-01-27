@@ -4,7 +4,6 @@
         <li role="presentation" class="active"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab">Network</a></li>
         <li role="presentation"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab">Seeds</a></li>
         <li role="presentation"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab">Ice resolvers</a></li>
-        <li role="presentation"><a href="#privatenet_settings" aria-controls="privatenet_settings" role="tab" data-toggle="tab">Private network</a></li>
         <li role="presentation"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab">System</a></li>
     </ul>
 
@@ -14,37 +13,12 @@
         <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
             <div class="form-group form-section-panel">
                 <label for="transport">Transport:</label><br />
-                <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport, enable: nwmode">
+                <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport" disabled>
                     <option value="0">Choose ...</option>
-                    <option value="tcp">TCP</option>
+                    <!--<option value="tcp">TCP</option>-->
                     <option value="ws">WebSocket</option>
                 </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational." />
-            </div>
-
-            <!-- ko {if: selected_transport() == 'tcp'} -->
-            <div class="form-group form-section-panel" data-bind="visible: nwmode">
-                <label for="tcpport">TCP port:</label><br />
-                <input type="number" class="form-control" id="tcpport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: tcpport">&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. This settings is not used by the application in case the transport is WebSocket (WS)." />
-            </div>
-
-            <div class="form-section-panel" data-bind="visible: nwmode">
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label> <input type="checkbox" data-bind="checked: iswspublish"> <span style="font-weight:bold">Publish at WebSocket services</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Using WebSocket enables communication with users who are unable to etablish a TCP connection. Using WS signalling your video, audio, text communication and file sending will still be fully encrypted and peer-to-peer." />
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-section-panel" data-bind="visible: nwmode">
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label> <input type="checkbox" data-bind="checked: iswsfallback"> <span style="font-weight:bold">Use WebSocket fallback</span></label>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked." />
-                    </div>
-                </div>
-
-                <div style="clear:both;margin:0;padding:0"></div>
-            </div>
-            <!-- /ko -->
+            </div>  
 
             <div style="margin-top:30px">
                 <button data-bind="click: save" style="margin-right:10px">Save</button>
@@ -127,30 +101,6 @@
             </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane settings-tab-panel" id="privatenet_settings">
-
-            <div class="form-group form-section-panel">
-                <label for="tcpport">Seed account:</label><br />
-                <input type="text" class="form-control" id="wsport" maxlength="5" style="width:400px;display:inline-block" data-bind="value: private_net_account">
-                &nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streembit network. " />
-            </div>
-
-            <div class="form-group form-section-panel">
-                <label for="tcpport">Seed port:</label><br />
-                <input type="number" class="form-control" id="wsport" min="1" max="65000" style="width:120px;display:inline-block" data-bind="value: private_net_port">
-            </div>
-
-            <div class="form-group form-section-panel">
-                <label for="tcpport">Seed IP/domain name:</label><br />
-                <input type="text" class="form-control" id="wsport" maxlength="5" style="width:300px;display:inline-block" data-bind="value: private_net_address">
-            </div>
-
-            <div style="margin-top:30px">
-                <button data-bind="click: save" style="margin-right:10px">Save</button>
-            </div>
-
-        </div>
-
         <div role="tabpanel" class="tab-pane settings-tab-panel" id="system_settings">
 
             <div class="form-group form-section-panel">
@@ -171,13 +121,11 @@
 </div>
 
 
-
-
 <script type="text/html" id="bootseed-item-template">
     <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
         <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
             <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div>
-            <div class="pull-left" data-bind="text: address"></div>:<span data-bind="text: $data.port"></span>
+            <div class="pull-left" data-bind="text: $data.host"></div>:<span data-bind="text: $data.port"></span>
             <div style="clear:both"></div>
         </div>
         <div class="pull-right">
