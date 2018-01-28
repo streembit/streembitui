@@ -452,8 +452,8 @@
       cursor: pointer!important;
     }
     .all-contacts-field{
-      overflow-y: scroll;
-      max-height: 300px;
+      overflow-y: auto;
+     
     }
 
     #connection_indicator {
