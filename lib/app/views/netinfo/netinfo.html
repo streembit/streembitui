@@ -31,29 +31,7 @@
                 <tr>
                     <td>Mnemonic phrase:</td>
                     <td class="account-info-item"><span data-bind="text: mnemonic_phrase" style="font-size: 12px;"></span></td>
-                </tr>
-                <!-- ko if: net_connected() == true && transport() == 'tcp' -->
-                <tr>
-                    <td>Transport:</td>
-                    <td class="account-info-item">TCP</td>
-                </tr>
-                <tr>
-                    <td>P2P port:</td>
-                    <td class="account-info-item"><span data-bind="text: port"></span></td>
-                </tr>
-                <tr>
-                    <td>P2P IP address:</td>
-                    <td class="account-info-item"><span data-bind="text: address"></span></td>
-                </tr>
-                <tr>
-                    <td>UPNP gateway:</td>
-                    <td class="account-info-item"><span data-bind="text: upnpgateway"></span></td>
-                </tr>
-                <tr>
-                    <td>UPNP local address:</td>
-                    <td class="account-info-item"><span data-bind="text: upnpaddress"></span></td>
-                </tr>
-                <!-- /ko -->
+                </tr>                
                 <!-- ko if: net_connected() == true && transport() == 'ws' -->
                 <tr>
                     <td>Transport:</td>
@@ -65,45 +43,7 @@
                 </tr>
                 <!-- /ko -->
             </table>
-
-            <!-- ko if: net_connected() == true && transport() == 'tcp' -->
-            <div style="margin-top:30px;font-size:14px;font-weight:bold">WebSocket connectivity</div>
-            <table style="margin-bottom:30px;width:100%;font-size: 12px;">
-                <tr>
-                    <td>WebSocket Publish:</td>
-                    <td class="account-info-item"><span data-bind="text: iswspublish() ? 'YES' : 'NO'"></span></td>
-                </tr>
-                <!-- ko if: iswspublish -->
-                <tr>
-                    <td>WebSocket Hub:</td>
-                    <td class="account-info-item"><span data-bind="text: wshub"></span></td>
-                </tr>
-                <!-- /ko -->
-            </table>
-            <!-- /ko -->
-            <!-- ko if: net_connected() == true && transport() == 'tcp' -->
-            <div style="margin-top:15px;font-size: 12px;">
-                <div>
-                    <span style="font-weight:bold">Seeds</span>
-                </div>
-                <table>
-                    <thead>
-                        <tr style="background-color:#444;color:white;">
-                            <th>NodeID</th>
-                            <th>IP address</th>
-                        </tr>
-                    </thead>
-                    <tbody data-bind="foreach: seeds">
-                        <tr>
-                            <td data-bind="text: nodeID"></td>
-                            <td>
-                                <span data-bind="text: address"></span>:<span data-bind="text: port"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /ko -->
+            
             <!-- ko if: net_connected() == false -->
             <div style="color:#e40a40;margin-top:30px;font-size:14px;font-weight:bold;border:1px solid #ccc;padding:5px 10px;background:#f7dce2">
                 <i class="fa fa-info-circle"></i> The account is not connected to the Streembit peer-to-peer network
