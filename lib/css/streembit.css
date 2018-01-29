@@ -2651,3 +2651,17 @@ Widgets
     -webkit-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
     box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
 }
+
+.demo_settings_layout {
+    width: 170px;
+    position: absolute;
+    z-index: 900;
+    top: 50px;
+    right: 0;
+    background: rgb(241, 218, 145);
+    padding: 12px;
+    display: none;
+    border: rgb(243, 210, 106) solid 5px;
+    border-bottom-left-radius: 8px;
+}
+
