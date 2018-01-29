@@ -636,6 +636,9 @@ body{
     max-width: calc(100vw - 408px);
     word-wrap: break-word;
 }
+.chat-item-msg {
+    max-width: calc(100vw - 408px);
+}
 .chat-fill-area.chat-audio .chat-item-msg {
     max-width: calc(100vw - 640px);
 }
@@ -643,17 +646,34 @@ body{
 .content-panel.hide-menu .chat-fill-area {
     width: calc(100vw - 52px);
 }
+.content-panel.hide-menu .chat-item-msg {
+    max-width: calc(100vw - 208px);
+}
 .content-panel.hide-menu .chat-fill-area.chat-audio {
     width: calc(100vw - 300px);
 }
 .content-panel.hide-menu .chat-fill-area.chat-audio .chat-item-msg {
     max-width: calc(100vw - 460px);
 }
+
+.content-panel.active-cbar .chat-fill-area {
+    width: calc(100vw - 490px);
+}
+.content-panel.active-cbar .chat-item-msg {
+    max-width: calc(100vw - 640px);
+}
 .content-panel.active-cbar .chat-fill-area.chat-audio {
     width: calc(100vw - 720px);
 }
 .content-panel.active-cbar .chat-fill-area.chat-audio .chat-item-msg {
-    max-width: calc(100vw - 850px);
+    max-width: calc(100vw - 872px);
+}
+
+.content-panel.hide-menu.active-cbar .chat-fill-area {
+    width: calc(100vw - 270px);
+}
+.content-panel.hide-menu.active-cbar .chat-item-msg {
+    max-width: calc(100vw - 420px);
 }
 .content-panel.hide-menu.active-cbar .chat-fill-area.chat-audio {
     width: calc(100vw - 500px);
