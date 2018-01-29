@@ -9,8 +9,11 @@
                 <span data-bind="text: name"></span>
             </div>
             <div style="float:right;font-size:16px">
-                <div style="float:left;margin-right:14px" class="contact-msg-indicator">
-                    <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e0be00"></span>
+                <div style="float:left;margin-right:14px" class="contact-msg-indicator" data-bind="visible: warnicon().length">
+                    <span data-bind="css: warnicon, click: $parent.rmWarning, clickBubble: false, toolTip: { title: warning, placement: 'left' }" style="color:#e0be00"></span>
+                </div>
+                <div style="float:left;margin-right:14px;" class="contact-msg-indicator">
+                    <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e24;"></span>
                 </div>
                 <div style="float:right;font-size:11px;" data-bind="visible: isonline">
                     <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;"></span>
