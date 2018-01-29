@@ -557,13 +557,13 @@ body{
 
 .contact-item {
     margin: 5px 5px 8px 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #e5eef9;
+    border: 2px solid #c1c1c1;
+    border-radius: 4px;
+    background: #dbdbdb;
     font-size: 12px;
     font-weight: bold;
-    color: #333;
-    padding: 5px 5px 5px 5px;
+    color: #6a6a6a;
+    padding: 8px 5px 6px 5px;
     cursor: pointer;
 }
 
@@ -571,11 +571,10 @@ body{
     font-size: 1.33333333em;
 }
 
-.contact-item:hover{
-    /*background: linear-gradient(to bottom, rgba(223,246,255,1) 0%,rgba(253,253,253,1) 100%);*/
-    background: #e5eef9;
-    border:1px solid #ddd;
-    color:#222;
+.contact-item:hover {
+    background: #e3e3e3;
+    color: #7a7a7a;
+    border-color: #d1d1d1;
 }
 
 #text-chat-area{
@@ -2605,7 +2604,7 @@ Widgets
 .contacts-container {
     display: none;
     width: 240px;
-    background-color: #f0f0f0;
+    background-color: #f3f3f3;
     height: 100%;
     border-left: #ddd solid 1px;
 }
