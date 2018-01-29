@@ -51,7 +51,7 @@
             <div class="chat_items" style="display:none;flex: 1">
                 <div id="text-chat-area" style="flex:1">
                     <div class="fill-area" style="padding:10px;flex:1">
-                        <div class="chat-fill-area chatitemswnd">
+                        <div class="chat-fill-area chatitemswnd chat-audio">
                             <table cellspacing="0" cellpadding="0">
                                 <tbody data-bind="foreach: chatitems">
                                     <tr>
@@ -66,7 +66,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="chat-item-msg no-max-width" data-bind="css: { myTextMessage: sender == $parent.contact_name() }">
+                                            <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == $parent.contact_name() }">
                                                 <span data-bind="text: text"></span>
                                             </div>
                                         </td>
