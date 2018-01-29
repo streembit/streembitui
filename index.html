@@ -382,6 +382,18 @@
             <!-- pulled right: nav area -->
             <div class="pull-right">
 
+                <div class="btn-header pull-right">
+                    <span class="top-right-button">
+                        <i class="fa fa-cog" data-action="demoSettings"></i>                        
+                    </span>
+                </div>
+
+                <div class="btn-header pull-right">
+                    <span class="top-right-button">
+                        <i class="fa fa-users" data-action="contactsBar"></i>
+                    </span>
+                </div>
+
                 <!-- collapse menu button -->
                 <div id="hide-menu" class="btn-header pull-right">
                     <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
@@ -539,76 +551,71 @@
                 </div>
                 <!-- END RIBBON -->
                 <!-- MAIN CONTENT -->
-                <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
-                </div>
-                <!-- END MAIN CONTENT -->
-
-                <!-- layout option-->
-                <div class="demo">
-                    <span id="demo-setting">
-                        <i class="fa fa-address-book txt-color-blueDark contact-icon" data-action="contactsBar"></i>
-                        <i class="fa fa-cog txt-color-blueDark layout-icon" data-action="demoSettings"></i>
-                    </span>
-                    <div class="demo_settings_layout">
-                        <form>
-                            <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
-                            <section>
-                                <label>
-                                    <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-header'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-navigation'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-fixed-footer'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-inside'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-rtl-support'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-menu'"></span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
-                                    <span data-bind="i18n: 'layout-for-colorblind'"></span>
-                                    <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
-                                </label>
-                            </section>
-                            <section>
-                                <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
-                                <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
-                                    <i class="fa fa-refresh"></i>
-                                </a>
-                            </section>
-                            <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
-                            <section id="smart-styles">
-                                <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
-                                <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
-                                <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
-                                <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
-                                <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
-                                <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
-                                <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
-                            </section>
-                        </form>
+                <div style="display:flex;flex-direction:row;height: 100%;">
+                    <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
                     </div>
-                </div>
-                <div class="contact_bar">
-                    <div class="contact_bar_layout" data-bind="component: { name: 'contacts-bar' }"></div>
-                </div>
+                    <!-- layout option-->
+                    <div class="demo">
+                        <div class="demo_settings_layout">
+                            <form>
+                                <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
+                                <section>
+                                    <label>
+                                        <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-header'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-navigation'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-fixed-footer'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-inside'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-rtl-support'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-menu'"></span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
+                                        <span data-bind="i18n: 'layout-for-colorblind'"></span>
+                                        <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
+                                    </label>
+                                </section>
+                                <section>
+                                    <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
+                                    <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                </section>
+                                <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
+                                <section id="smart-styles">
+                                    <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
+                                    <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="contacts-container hidecontacts" data-bind="component: { name: 'contacts-bar' }"></div>
+                </div>                
+                <!-- END MAIN CONTENT -->
             </div>
             <!-- END MAIN PANEL --> 
             <div class="divMessageBox animated hidden fast" id="MsgBoxBack">

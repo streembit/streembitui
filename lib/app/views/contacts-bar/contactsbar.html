@@ -1,83 +1,29 @@
 
-<div id="contacts-container" class="contacts-tab">
-    <div class="sidebar-search" data-bind="visible: issearch">
-        <div class="input-group" style="margin:0;padding:0">
-            <input type="text" class="form-control" placeholder="Find contact on Streembit ..." data-bind="value: contact_lookup">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" data-bind="click: search">Search</button>
-            </span>
-        </div>
-        <div data-bind="visible: show_addcontact_panel" style="margin-top:8px;text-align:center;padding:8px;border-radius:4px;background-color:#f9f9f9;border:1px solid #ddd">
-            <div style="margin-bottom:8px;font-weight:bold;font-size:11px">
-                Contact found. Do you want to send contact request to <span data-bind="text: addcontact_name"></span>?
+<div class="all-contacts-field">
+    <div data-bind="foreach: contacts">
+        <div class="contact-item" data-bind="click: $parent.itemSelect">
+            <div style="float:left">
+                <span data-bind="css: usertypeicon" style="font-size:11px;"></span>
             </div>
-            <button class="btn btn-default" type="button" data-bind="click: onSendAddContactRequest" style="font-size:11px">Send contact request</button>
-        </div>
-    </div><!-- /input-group -->
-    <div id="title-of-contacts">Contacts option</div>
-    <div style="border-bottom:1px solid #7dace1;border-top:1px solid #eee">
-        <div>
-            <div class="contacts-title" data-bind="click: onShowContacts, css: {activetab: active_tab() == 'contacts'}">
-                CONTACTS
+            <div style="float:left;margin-left:8px">
+                <span data-bind="text: name"></span>
             </div>
-            <div class="contacts-title" data-bind="click: onShowRecents, css: {activetab: active_tab() == 'recent'}">
-                RECENT
-            </div>
-            <div style="float:left;margin:4px 0 0 10px" data-bind="visible: is_recent_msg">
-                <span class="glyphicon glyphicon-envelope" style="color:#d3b301" data-bind="click: onShowRecents"></span>
-            </div>
-            <div style="float:right;">
-                <div style="padding:6px 6px 2px 6px">
-                    <a data-bind="click:dosearch" style="margin:0;padding:0"><i class="glyphicon glyphicon-search"></i></a>
+            <div style="float:right;font-size:16px">
+                <div style="float:left;margin-right:14px" class="contact-msg-indicator">
+                    <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e0be00"></span>
                 </div>
+                <div style="float:right;font-size:11px;" data-bind="visible: isonline">
+                    <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;"></span>
+                </div>
+                <div style="clear:both"></div>
             </div>
-            <div style="clear:both">
-            </div>
-        </div>
-    </div>
-    <div>
-        <div data-bind="visible: active_tab() == 'contacts'" class="all-contacts-field">
-            <div data-bind="template: { name: 'contacts-template', foreach: contacts }">
-            </div>
-        </div>
-        <div data-bind="visible: active_tab() == 'recent'">
-            <div data-bind="template: { name: 'recent-messages-template', foreach: recent_messages }">
-            </div>
+            <div style="clear:both"></div>
         </div>
     </div>
 </div>
 
-<script type="text/html" id="contacts-template">
-    <div class="contact-item" data-bind="click: $parent.itemSelect">
-        <div style="float:left">
-            <span data-bind="css: usertypeicon" style="font-size:11px;"></span>
-        </div>
-        <div style="float:left;margin-left:8px">
-            <span data-bind="text: name"></span>
-        </div>
-        <div style="float:right;font-size:16px">
-            <div style="float:left;margin-right:14px" class="contact-msg-indicator">
-                <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e0be00"></span>
-            </div>
-            <div style="float:right;font-size:11px;" data-bind="visible: isonline">
-                <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;"></span>
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div style="clear:both"></div>
-    </div>
-</script>
-
-<script type="text/html" id="recent-messages-template">
-    <div data-bind="template: {name: template_name}">
-    </div>
-</script>
 
 
-<script type="text/html" id="send-file-template">
-    <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
-        <div style="width:450px" data-bind="visible: isinprogress() == false">
-            <input type="file" id="fileInput" name="files" />
-        </div>
-    </div>
-</script>
+
+
+
