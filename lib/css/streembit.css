@@ -616,7 +616,6 @@ body{
     flex:1;
     width: calc(100vw - 252px);
     background-color:#fff;
-    overflow-y:auto;
     font-size: 12px;
     text-align: left;
 }
