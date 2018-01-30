@@ -640,7 +640,7 @@ body{
     max-width: calc(100vw - 408px);
 }
 .chat-fill-area.chat-audio .chat-item-msg {
-    max-width: calc(100vw - 640px);
+    max-width: calc(100vw - 650px);
 }
 
 .content-panel.hide-menu .chat-fill-area {
