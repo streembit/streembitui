@@ -19,6 +19,10 @@
                 <td>Account:</td>
                 <td class="account-info-item"><span data-bind="text: account"></span></td>
             </tr>
+            <tr data-bind="visible: avatar">
+                <td>Avatar:</td>
+                <td class="account-info-item"><img src="" width="42px" height="42px" data-bind="attr:{src: avatar}" /></td>
+            </tr>
             <tr>
                 <td>Public key:</td>
                 <td class="account-info-item"><span data-bind="text: public_key" style="font-size: 11px;"></span></td>

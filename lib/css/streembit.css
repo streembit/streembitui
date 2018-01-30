@@ -566,7 +566,7 @@ body{
     font-size: 12px;
     font-weight: bold;
     color: #6a6a6a;
-    padding: 8px 5px 6px 5px;
+    padding: 2px 5px;
     cursor: pointer;
 }
 
@@ -3373,6 +3373,7 @@ Widgets
 
 .btn-file {
     position: relative;
+    width: 100%;
     overflow: hidden;
 }
 .btn-file input[type=file] {
@@ -3396,15 +3397,24 @@ Widgets
     float: none;
     clear: both;
 }
-.ava_file img, .account-info-item img {
+.ava_file img,
+.account-info-item img,
+.contact-item img {
     width: 42px;
     height: 42px;
     margin: 0 10px;
     padding: 2px;
-    border: 1px solid #2a4f58;
+    border: 1px solid #94928e;
     border-radius: 26px;
     box-sizing: content-box;
     overflow: hidden;
+}
+.contact-item > div > img {
+    float: left;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border: 1px solid #fffacd;
 }
 .ava_file button {
     float: right !important;
