@@ -66,7 +66,6 @@
 
 
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="lib/css/your_style.css">
 
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/demo.min.css">-->
@@ -143,190 +142,6 @@
             height: 100%;
         }
 
-        /* loader */
-        #load-container{
-            width:100%;
-            height:100%;
-        }
-
-        #load-screen{
-            width:100%;
-            height:100%;
-            text-align: center;
-            box-sizing: border-box;
-            font-family: sans-serif;
-            color: rgba(255,255, 255, 0.8);
-            font-size:5em;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-        }
-
-        .load-box {
-            display: inline-block;
-            border: none;
-            position: relative;
-            vertical-align: top;
-            -webkit-transition: .3s color, .3s border, .3s transform, .3s opacity;
-            transition: .3s color, .3s border, .3s transform, .3s opacity;
-        }
-
-        .load-text{
-            font-size:20px;
-            font-weight:bold;
-            text-align:center;
-            margin-top:20px;
-        }
-
-        @-webkit-keyframes pulse {
-          50% {
-            background: rgb(255,255,255);
-          }
-        }
-
-        @keyframes pulse {
-          50% {
-            background: rgb(255,255,255);
-          }
-        }
-
-
-        @-webkit-keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-
-        .loading {
-            border-radius: 50%;
-            width: 1em;
-            height: 1em;
-            border: 1.4rem solid rgba(255,255,255, 0.2);
-            border-top-color: #fff;
-            animation: spin 1s infinite linear;
-        }
-        /* loader */
-
-
-        .jqstooltip {
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            visibility: hidden;
-            background: rgb(0, 0, 0) transparent;
-            background-color: rgba(0,0,0,0.6);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
-            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
-            color: white;
-            font: 10px arial, san serif;
-            text-align: left;
-            white-space: nowrap;
-            padding: 5px;
-            border: 1px solid white;
-            z-index: 10000;
-        }
-
-        .jqsfield {
-            color: white;
-            font: 10px arial, san serif;
-            text-align: left;
-        }
-
-        .demo.activate>span{
-            right: 160px;
-        }
-        .demo_settings_layout legend{
-            margin-top: -5px;
-        }
-        .demo .btn{
-            font-size: 13px!important;
-            line-height: 1.5!important;
-            border-radius: 3px!important;
-            padding: 3px 7px!important;
-            height: auto!important;
-        }
-        .fixed-header #allContent{
-            margin-top: 49px;
-        }
-        .demo>span{
-          position: absolute;
-          right: 0;
-          top:54px;
-          z-index: 900;
-          display: block;
-          height: 30px;
-          width: 60px;
-          border-radius: 5px 0 0 5px;
-          background: #F1DA91;
-          padding: 2px 0 0 4px;
-          text-align: center;
-          line-height: 28px;
-          cursor: pointer;
-        }
-        .fixed-navigation #mainPanel{
-            margin-left: 220px;
-        }
-        .fixed-ribbon .content-panel{
-            padding-top: 50px;
-        }
-        .fixed-ribbon .demo_settings_layout, .fixed-ribbon #demo-setting{
-            z-index: 903;
-        }
-        .fixed-page-footer .page-footer{
-            bottom:0;
-            height: 52px;
-        }
-        .smart-rtl .widget-box-two .widget-two-icon{
-            right: 300px;
-        }
-        .smart-rtl .demo_settings_layout, .smart-rtl .demo>span{
-            left:0;
-            right: auto;
-        }
-        .smart-rtl .demo.activate>span{
-            right: auto;
-            left: 160px;
-        }
-        .menu-on-top #mainPanel{
-            margin-left: 0!important;
-            margin-top: 70px!important;
-        }
-        .menu-on-top #left-panel{
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 904;
-            padding-top: 49px;
-        }
-        .menu-on-top .demo>span, .menu-on-top .demo_settings_layout{
-            z-index: 904;
-            top:123px;
-        }
-        .smart-style-4:not(.menu-on-top) #left-panel{
-            padding-top: 0!important;
-        }
-        .smart-style-2 #left-panel{
-            padding-top: 0px; 
-        }
-        body.smart-style-6 #logo-group>span#logo:before{
-            content: none;
-        }
-        .smart-style-1 #logo, .smart-style-2 #logo{
-            color: #fff!important;
-        }
         .smart-style-5, .smart-style-5 .content-panel{
             background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
             background-size: cover!important;
@@ -355,12 +170,21 @@
             <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo" style="font-weight: bold;padding-top: 4px;"> STREEMBIT </span>
+                <span id="logo">
+                    <img src="lib/images/applogo.png">
+                </span>
                 <!-- END LOGO PLACEHOLDER --> 
                 
-                <div style="display:block;margin:0;padding:0;width:268px;height:40px;" data-bind="component: {name: 'activity'}">
+               <!--  <div style="display:block;margin:0;padding:0;width:268px;height:40px;" data-bind="component: {name: 'activity'}">
 
-                </div>           
+                </div> -->   
+                <!-- collapse menu button -->
+                <div id="hide-menu" class="btn-header">
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder" style="margin-top:6px"></i></a> </span>
+                </div>
+                <!-- end collapse menu -->
+
+                <div data-bind="component: {name: 'connection'}"></div>     
             </div>
 
             <!-- activity dropdown -->
@@ -372,6 +196,8 @@
 
             <!-- pulled right: nav area -->
             <div class="pull-right">
+
+                <div class="pull-right" data-bind="component: {name: 'activity'}"></div> 
 
                 <!-- multiple lang dropdown : find all flags in the flags page -->
                 <ul class="header-dropdown-list hidden-xs">
@@ -411,9 +237,9 @@
                 </div>
 
                 <!-- collapse menu button -->
-                <div id="hide-menu" class="btn-header pull-right">
+                <!--  <div id="hide-menu" class="btn-header pull-right">
                     <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
-                </div>
+                </div> -->
                 <!-- end collapse menu -->               
 
             </div>
