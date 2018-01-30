@@ -1,13 +1,28 @@
 <div style="margin:20px">
-
     <div class="uiview-container-panel" style="min-width:500px;padding:10px;">
-
-        <div style="margin:20px;font-size:14px">
-            <div style="width:700px">  --- BEGIN STREEMBIT CONTACT OFFER ---  </div>
-            <div style="width:700px"><span data-bind="text: jsonstr" style="word-wrap:break-word"></span></div>
-            <div style="width:700px">  --- END STREEMBIT CONTACT OFFER ---</div>
+        <div style="margin:20px;">
+            <textarea id="contact-offer" data-bind="value: jsonstr"></textarea>
+            <button class="btn btn-default pull-right" data-bind="click: copyToClipboard">
+                Copy to clipboard
+            </button>
         </div>
-
+        <div class="col-lg-6 col-sm-6 col-12" data-bind="visible: !!window.FileReader">
+            <h6>Optional: choose avatar</h6>
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Browse… <input type="file" accept="image/*" data-bind="event: {change: processAvatar}" style="display: none;" />
+                    </span>
+                </label>
+            </div>
+            <span class="help-block">
+                Max size 64Kb
+            </span>
+        </div>
+        <div class="ava_file" data-bind="visible: avatar().length">
+            <img src="" width="42px" height="42px" data-bind="attr:{src: avatar}" />
+            <button class="btn btn-warning pull-right" data-bind="click: rmAvatar">remove</button>
+        </div>
     </div>
 
     <div style="margin:40px 0 30px 0;font-size:12px">
@@ -23,6 +38,10 @@
             <tr>
                 <td>Account:</td>
                 <td class="account-info-item"><span data-bind="text: account"></span></td>
+            </tr>
+            <tr data-bind="visible: avatar().length">
+                <td>Avatar:</td>
+                <td class="account-info-item"><img src="" width="42px" height="42px" data-bind="attr:{src: avatar}" /></td>
             </tr>
             <tr>
                 <td>Public key:</td>

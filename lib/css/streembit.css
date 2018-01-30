@@ -640,7 +640,7 @@ body{
     max-width: calc(100vw - 408px);
 }
 .chat-fill-area.chat-audio .chat-item-msg {
-    max-width: calc(100vw - 650px);
+    max-width: calc(100vw - 660px);
 }
 
 .content-panel.hide-menu .chat-fill-area {
@@ -2718,3 +2718,47 @@ Widgets
     border-bottom-left-radius: 8px;
 }
 
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.ava_file {
+    width: 150px;
+    height: 48px;
+    float: none;
+    clear: both;
+}
+.ava_file img, .account-info-item img {
+    width: 42px;
+    height: 42px;
+    margin: 0 10px;
+    padding: 2px;
+    border: 1px solid #2a4f58;
+    border-radius: 26px;
+    box-sizing: content-box;
+    overflow: hidden;
+}
+.ava_file button {
+    float: right !important;
+    margin: 8px 0 0 10px;
+}
+#contact-offer {
+    width: 100% !important;
+    height: 200px !important;
+    border: 1px solid #ededed;
+}
