@@ -26,15 +26,55 @@
 
         </div>
 
-        <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
+        <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings" style="max-height: 800px; overflow-y: auto;">
             <div class="form-group form-section-panel">
-                <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
-                <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                    <label for="peersremoteurl" style="font-size:11px;width:120px;text-align:right; font-weight: bold">Remote Peers URL: </label>
-                    <input type="text" class="form-control" id="peersremoteurl" maxlength="400" style="font-size:11px;width:400px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: peers_remote_url">
+                <div class="widget-body" style="margin-top:20px;margin-bottom:20px;border-bottom: 2px solid #eee;padding-bottom: 10px;">
+                    <form>
+                        <fieldset>
+                            <input name="authenticity_token" type="hidden">
+                            <div class="form-group">
+                                <label>WS Peers URL</label>
+                                <input class="form-control" placeholder="URL" type="text" data-bind="value: peers_remote_url" style="max-width: 650px;">
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:left">
+                        <button style="font-size:12px" data-bind="click: save" title="Save">Save</button>
+                    </div>
                 </div>
-                <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
+
+                <div>
+                    <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit WebSocket peer nodes. The WS peer nodes assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your own WS peers to implement your own private Streembit network." />
+                </div>                
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover wspeerstbl">
+                        <thead>
+                            <tr>
+                                <th>Peer</th>
+                                <th>Ping time</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: bootseeds">
+                            <tr>
+                                <td class="hosttd"><span data-bind="text: $data.host"></span>:<span data-bind="text: $data.port"></span></td>
+                                <td class="pingtd"><span data-bind="text: $data.pingstatus"></span></td>
+                                <td class="ctrlstd">                                    
+                                    <div class="pull-right">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true" data-bind="visible: $parent.is_edit_bootseed() == false, click: $parent.edit_bootseed"></i>
+                                        <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+                <!--<div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
+                </div>-->
                
                 <!-- Edit Modal -->
                 <div class="modal fade" id="editSeedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -125,7 +165,7 @@
 </div>
 
 
-<script type="text/html" id="bootseed-item-template">
+<!--<script type="text/html" id="bootseed-item-template">
     <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
         <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
             <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div>
@@ -139,7 +179,7 @@
         </div>
         <div style="clear:both"></div>
     </div>
-</script>
+</script>-->
 
 <script type="text/html" id="iceresolver-item-template">
     <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:400px">

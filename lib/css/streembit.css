@@ -2669,7 +2669,7 @@ Widgets
     float: left;
 }
 
-.top-right-button {
+.top-panelopen-btn {
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
@@ -2684,25 +2684,19 @@ Widgets
     -moz-user-select: none;
     -webkit-user-select: none;
     background-color: #fff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f1f1f1));
-    background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
-    background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
-    background-image: -ms-linear-gradient(top, #f8f8f8, #f1f1f1);
-    background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
-    background-image: linear-gradient(top, #f8f8f8, #f1f1f1);
     border: 1px solid #bfbfbf;
-   /* color: #c4bab6;*/
+    color: #777;
     font-size: 16px;
     margin: 8px 0 0 0;
     position: relative;
 }
 
-.top-right-button:hover {
-    border: 1px solid #bfbfbf;
+.top-panelopen-btn:hover {
+    border: 1px solid #ccc;
     transition: all 0.0s;
     cursor: pointer !important;
-    -webkit-box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
-    box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
+    background-color:#e2e2e2;
+    color:#333;
 }
 
 .demo_settings_layout {
@@ -3420,5 +3414,34 @@ Widgets
     width: 100% !important;
     height: 200px !important;
     border: 1px solid #ededed;
+}
+
+.wspeerstbl {
+    max-width: 800px;
+    border: 2px solid #eee;
+    border-bottom: none;
+}
+
+.wspeerstbl tr:last-child {
+    border-bottom: 2px solid #eee;
+}
+
+.wspeerstbl .ctrlstd {
+    max-width: 90px
+}
+
+.wspeerstbl .pingtd {
+    max-width: 150px
+}
+
+.wspeerstbl hosttd {
+    max-width: 300px
+}
+
+.notifybtn {
+    margin-right: 12px;
+    padding: 4px 8px;
+    font-size: 16px;
+    color: #777;
 }
 
