@@ -29,6 +29,10 @@
         <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
             <div class="form-group form-section-panel">
                 <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit seed nodes. The seeds assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your seed nodes." />
+                <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                    <label for="peersremoteurl" style="font-size:11px;width:120px;text-align:right; font-weight: bold">Remote Peers URL: </label>
+                    <input type="text" class="form-control" id="peersremoteurl" maxlength="400" style="font-size:11px;width:400px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: peers_remote_url">
+                </div>
                 <div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
                 </div>
                
