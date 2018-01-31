@@ -11,6 +11,7 @@
         streembit.globals = streembit.globals || {};
         streembit.globals.appname = "Streembit";
         streembit.globals.version = "1.1.0";
+        streembit.globals.protocol = "http";
 
         // bc services flag
         streembit.globals.devbcnet = true;
@@ -226,14 +227,14 @@
 
                 <div class="pull-right" data-bind="component: {name: 'activity'}" style="margin-right: 10px"></div> 
 
-                <div class="btn-header pull-right" style="margin-right:8px">
-                    <span class="top-right-button">
+                <div class="btn-header pull-right" style="margin-right:10px">
+                    <span class="top-panelopen-btn">
                         <i class="fa fa-cog" data-action="demoSettings"></i>                        
                     </span>
                 </div>
 
                 <div class="btn-header pull-right">
-                    <span class="top-right-button">
+                    <span class="top-panelopen-btn">
                         <i class="fa fa-users" data-action="contactsBar"></i>
                     </span>
                 </div>

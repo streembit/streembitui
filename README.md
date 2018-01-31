@@ -15,11 +15,14 @@ You must create a config.app.json configuration file in the lib folder, the same
 Put the following to the config.app.json
 ```json
 {
-    "nwmode": true
+    "nwmode": true,
+	"protocol":  "https"
 }
 ```
 
 The nwmode indicates whether or not run execute the software as a nwjs desktop application. The nwmode = true will run the application as a nwjs desktop app.
+
+Must define "https" at the "protocol" field to run the web application over the HTTPS protocol. 
 
 ---------------
 
