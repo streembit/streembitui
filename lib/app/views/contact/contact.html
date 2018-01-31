@@ -19,13 +19,16 @@
     <div class="contact-details">
         <div style="margin-bottom:25px">
             <div style="border-bottom:1px dotted #ddd;padding-bottom:8px;">
-                <div style="float:left;margin-left:30px;padding-left:30px;border-left:1px solid #ddd" data-bind="visible: avatar().length">
-                    <img width="42" height="42" data-bind="attr: { src: avatar }">
+                <div class="alert alert-warning" style="margin:10px 0;font-size:11px;" data-bind="visible: connection_warning().length">
+                    <span data-bind="text: connection_warning"></span>
                 </div>
                 <div style="float:left">
-                    <div class="alert alert-warning" style="margin:10px 0;font-size:11px;" data-bind="visible: connection_warning().length">
-                        <span data-bind="text: connection_warning"></span>
+                    <div>
+                        <img width="42" height="42" data-bind="attr: { src: avatar }" />
                     </div>
+                </div>
+                <div style="float:left;margin-left:30px;padding-left:30px;border-left:1px solid #ddd">
+
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777">Account:</span> <br />
                         <span style="font-weight:bold" data-bind="text:name"></span>
