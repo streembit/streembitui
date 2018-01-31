@@ -3379,7 +3379,7 @@ Widgets
 
 .btn-file {
     position: relative;
-    width: 100%;
+    width: 129px;
     overflow: hidden;
 }
 .btn-file input[type=file] {
