@@ -2613,6 +2613,12 @@ Widgets
     flex-wrap: wrap;
 }
 
+.chat-sender img {
+    border-radius: 20px;
+    border: 1px solid #afafaf;
+    box-shadow: 0px 0px 2px #444;
+}
+
 @media (max-height: 720px) {
     body {
         min-height: initial !important;
