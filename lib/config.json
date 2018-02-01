@@ -4,7 +4,7 @@
         "transport": "ws",
         "tcpport": 8905,
         "seedmode": 0,
-        "wspeerlisturl": "https://raw.githubusercontent.com/streembit/streembit-peers/master/peers.json",
+        "wspeerlisturl": "https://raw.githubusercontent.com/streembit/streembit-peers/master/sslpeers.json",
         "bootseeds": [
             { "host": "seed.streembit.uk" },
             { "host": "seed.streembit.eu" },
