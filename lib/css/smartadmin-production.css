@@ -12674,8 +12674,8 @@ button {
   padding-left: 5px;
 }
 .show-stat-microcharts {
-  margin-left: -10px;
-  margin-right: -10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .show-stat-microcharts > div {
   border-right: 1px solid #DADADA !important;
@@ -12706,7 +12706,7 @@ button {
   margin-right: 0px;
 }
 .smaller-stat li:first-child {
-  margin-top: 8px;
+  margin-top: -2px;
 }
 .smaller-stat span.label {
   width: 40px;
@@ -12718,6 +12718,7 @@ button {
 .smaller-stat span.label:hover {
   opacity: 1;
 }
+.open .dropdown-menu{ display: block; }
 /*
  * Login info
  */

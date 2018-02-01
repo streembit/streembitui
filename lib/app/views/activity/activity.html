@@ -1,13 +1,13 @@
 <div data-toggle="buttons" style="margin-top: 8px" id="activity">
-    <div id="showm" class="btn btn-default notifybtn" data-bind="click: show_messages">
+    <div id="showm" class="btn btn-light notifybtn" data-bind="click: show_messages">
         <i class="fa fa-envelope"></i>
         <b class="badge" data-bind="text:msgcount" style="top:4px; right:auto;width: 18px"></b>
     </div>
-    <div id="notifym" class="btn btn-default notifybtn" data-bind="click: show_notifications">
+    <div id="notifym" class="btn btn-light notifybtn" data-bind="click: show_notifications">
         <i class="fa fa-bell"></i>
         <b class="badge" data-bind="text:notifycount, css: { 'bg-color-blue': notifycount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
     </div>
-    <div id="errorm" class="btn btn-default notifybtn" data-bind="click: show_errors">
+    <div id="errorm" class="btn btn-light notifybtn" data-bind="click: show_errors">
         <i class="fa fa-exclamation-triangle"></i>
         <b class="badge" data-bind="text:errorcount, css: { 'bg-color-red': errorcount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
     </div>

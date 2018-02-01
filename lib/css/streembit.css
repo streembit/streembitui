@@ -1964,9 +1964,9 @@ Widgets
     overflow: hidden;
 }
 
-.m-0 {
+/*.m-0 {
     margin: 0 !important;
-}
+}*/
 
 /* shoul be the last section */
 /* at the END media queries */
@@ -1985,7 +1985,19 @@ Widgets
     overflow-wrap: break-word;
 }
 
-
+label{
+      display: inline;
+      margin-bottom: .5rem;
+      padding: .2em .6em .3em;
+      font-size: 75%;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: .25em;
+}
 .iothub {
     border-radius: 2px;
     border: 1px solid #ddd;
