@@ -203,8 +203,8 @@
                 <!-- multiple lang dropdown : find all flags in the flags page -->
                 <ul class="header-dropdown-list hidden-xs">
                     <li> 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
-                        <ul class="dropdown-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> </a>
+                        <ul class="dropdown-menu adjright">
                             <li class="active dropdown-item">
                                 <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
                             </li>
@@ -262,7 +262,6 @@
                         <!-- User image size is adjusted inside CSS, it should stay as it -->
                         <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
                             <span data-bind="text: user_name" style="padding-top:4px;text-transform:none"></span>
-                            <i class="fa fa-angle-down" style="padding-top:5px"></i>
                         </a>
 
                     </span>
@@ -496,6 +495,7 @@
 
     <script src="lib/js/app.config.js"></script>
     <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+        <script src="lib/js/bootstrap/popper.js"></script>
     <script src="lib/js/bootstrap/bootstrap.js"></script>
     <script src="lib/js/notification/SmartNotification.min.js"></script>  
     <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>

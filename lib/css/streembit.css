@@ -1979,12 +1979,27 @@ Widgets
         display: none;
     }
 }*/
-
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 9px 10px 10px;
+}
 .cert-info-panels dd span, .network-info-panels dd span {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+.adjright{
+    right: 0;
+    left: auto!important;
+}
+a:hover{text-decoration: none;}
+.dropdown-menu>li>a {
+    clear: both;
+    color: #333;
+    white-space: nowrap;
+}
 
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus{text-decoration: none!important;}
 label{
       display: inline;
       margin-bottom: .5rem;
@@ -1998,6 +2013,7 @@ label{
       vertical-align: baseline;
       border-radius: .25em;
 }
+.dropdown-item
 .iothub {
     border-radius: 2px;
     border: 1px solid #ddd;
@@ -3153,7 +3169,15 @@ label{
       color: #4a80bd;
       font-weight: bold;
     }*/
-
+    .nav>li {
+        position: relative;
+        display: block;
+    }
+    @media (min-width: 768px){
+        .navbar-nav>li {
+            float: left;
+        }
+    }
     #help-style-change .nav-tabs > li.active > a{
       border-top: none!important;
       -webkit-box-shadow:none!important;

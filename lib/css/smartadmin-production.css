@@ -7594,23 +7594,23 @@ div.wijmo-wijmenu .wijmo-wijmenu-child .wijmo-wijmenu-text {
 .price-features li + li {
   margin-top: 10px;
 }
-.pricing-big .panel-footer {
+.pricing-big .card-footer {
   border-radius: 0 0 5px 5px;
 }
-.pricing-big .panel-footer .btn {
+.pricing-big .card-footer .btn {
   padding: 15px 0;
   border-radius: 3px;
   font-weight: bold;
   font-size: 14px;
 }
-.pricing-big .panel-footer .btn span {
+.pricing-big .card-footer .btn span {
   font-weight: normal;
   font-style: italic;
 }
-.pricing-big .panel-footer {
+.pricing-big .card-footer {
   background-color: #F2F2F2 !important;
 }
-.pricing-big .panel-footer > div {
+.pricing-big .card-footer > div {
   padding: 15px 0 10px;
   display: block;
   font-size: 13px;
@@ -9763,7 +9763,7 @@ td.fc-other-month,
 .inbox-data-message > :first-child span {
   color: #111;
 }
-.inbox-data-message > :first-child span.label {
+.inbox-data-message > :first-child label {
   color: #ffffff;
 }
 .inbox-data-message > :first-child > :first-child:after {
@@ -12708,14 +12708,14 @@ button {
 .smaller-stat li:first-child {
   margin-top: -2px;
 }
-.smaller-stat span.label {
+.smaller-stat label {
   width: 40px;
   display: block;
   text-align: left;
   opacity: .5;
   cursor: default;
 }
-.smaller-stat span.label:hover {
+.smaller-stat label:hover {
   opacity: 1;
 }
 .open .dropdown-menu{ display: block; }
@@ -13050,7 +13050,7 @@ img.away {
 .disabled {
   color: #ffffff;
 }
-.btn-default.disabled {
+.btn-light.disabled {
   color: #999999;
 }
 .btn {
@@ -13219,7 +13219,7 @@ img.away {
   background-color: #57889c;
   border-color: #57889c;
 }
-.panel-footer > .btn-block {
+.card-footer > .btn-block {
   border-radius: 0px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
@@ -13275,7 +13275,7 @@ img.away {
   margin-top: 10px;
   text-transform: uppercase;
 }
-.btn-metro > span.label {
+.btn-metro > label {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -13312,6 +13312,7 @@ img.away {
   background-color: rgba(77, 118, 134, 0.7);
   border-color: #3a7775;
 }
+#mainMenu .nav-item{margin-left: 1em;}
 /*
  * ANIMATION
  */
