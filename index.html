@@ -196,7 +196,7 @@
             <!-- end activity dropdown -->
 
             <!-- pulled right: nav area -->
-            <div class="pull-right">
+            <div class="float-right">
 
                
 
@@ -225,22 +225,22 @@
                 </ul>
                 <!-- end multiple lang -->
 
-                <div class="pull-right" data-bind="component: {name: 'activity'}" style="margin-right: 10px"></div> 
+                <div class="float-right" data-bind="component: {name: 'activity'}" style="margin-right: 10px"></div> 
 
-                <div class="btn-header pull-right" style="margin-right:10px">
+                <div class="btn-header float-right" style="margin-right:10px">
                     <span class="top-panelopen-btn">
                         <i class="fa fa-cog" data-action="demoSettings"></i>                        
                     </span>
                 </div>
 
-                <div class="btn-header pull-right">
+                <div class="btn-header float-right">
                     <span class="top-panelopen-btn">
                         <i class="fa fa-users" data-action="contactsBar"></i>
                     </span>
                 </div>
 
                 <!-- collapse menu button -->
-                <!--  <div id="hide-menu" class="btn-header pull-right">
+                <!--  <div id="hide-menu" class="btn-header float-right">
                     <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
                 </div> -->
                 <!-- end collapse menu -->               
@@ -270,7 +270,7 @@
                 <!-- end user info -->
                 <!-- NAVIGATION : This navigation is also responsive-->
                 <nav>
-                    <ul>
+                    <ul id="navul">
                         <li class="active">
                             <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                         </li>
@@ -491,8 +491,8 @@
         <!-- END SHORTCUT AREA -->
     </div>   
 
-    <script src="lib/js/libs/jquery-2.1.1.min.js"></script>
-    <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script>
+    <script src="lib/js/libs/jquery-3.2.1.min.js"></script>
+    <script src="lib/js/libs/jquery-ui-1.12.1.min.js"></script>
 
     <script src="lib/js/app.config.js"></script>
     <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
