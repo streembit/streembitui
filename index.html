@@ -167,7 +167,7 @@
     <div id="app-container">
 
         <!-- HEADER -->
-        <header id="header" style="flex: 0 0 49px">
+        <header id="header" >
             <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
@@ -180,8 +180,8 @@
 
                 </div> -->   
                 <!-- collapse menu button -->
-                <div id="hide-menu" class="btn-header">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder" style="margin-top:6px"></i></a> </span>
+                <div id="hide-menu" class="btn-header d-none d-lg-block float-right"">
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu" ><!-- <i class="fa fa-reorder" style="margin-top:6px"></i> --> <i class="fa fa-2x fa-angle-double-left"></i></a> </span>
                 </div>
                 <!-- end collapse menu -->
 
@@ -189,7 +189,7 @@
             </div>
 
             <!-- activity dropdown -->
-            <!--<div class="hidden-xs">
+            <!--<div class="hidden-xs-down">
                 
 
             </div>-->
@@ -198,10 +198,8 @@
             <!-- pulled right: nav area -->
             <div class="float-right">
 
-               
-
                 <!-- multiple lang dropdown : find all flags in the flags page -->
-                <ul class="header-dropdown-list hidden-xs">
+                <ul class="header-dropdown-list d-none d-sm-block">
                     <li> 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> </a>
                         <ul class="dropdown-menu adjright">
@@ -225,15 +223,15 @@
                 </ul>
                 <!-- end multiple lang -->
 
-                <div class="float-right" data-bind="component: {name: 'activity'}" style="margin-right: 10px"></div> 
+                <div data-bind="component: {name: 'activity'}" ></div> 
 
-                <div class="btn-header float-right" style="margin-right:10px">
-                    <span class="top-panelopen-btn">
+                <div class="btn-header d-none d-lg-block float-right" >
+                    <span class="top-panelopen-btn ">
                         <i class="fa fa-cog" data-action="demoSettings"></i>                        
                     </span>
                 </div>
 
-                <div class="btn-header float-right">
+                <div class="btn-header d-none d-lg-block float-right">
                     <span class="top-panelopen-btn">
                         <i class="fa fa-users" data-action="contactsBar"></i>
                     </span>
@@ -250,222 +248,217 @@
 
         </header>
         <!-- END HEADER -->
-        
-        <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
+        <div class="container-fluid">
+            <div  id="allContent" class="row">
 
-            <!-- Left panel : Navigation area -->
-            <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" style="flex: 0 0 220px;">
-                <!-- User info -->
-                <div class="login-info">
-                    <span>
-                        <!-- User image size is adjusted inside CSS, it should stay as it -->
-                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                            <span data-bind="text: user_name" style="padding-top:4px;text-transform:none"></span>
-                        </a>
+                <!-- Left panel : Navigation area -->
+                <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+                <aside id="left-panel" class="col-xl-2 col-lg-3 col-md-4" >
+                    <!-- User info -->
+                    <div class="login-info">
+                        <span>
+                            <!-- User image size is adjusted inside CSS, it should stay as it -->
+                            <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                                <span data-bind="text: user_name" style="padding-top:4px;text-transform:none"></span>
+                            </a>
 
-                    </span>
-                </div>
-                <!-- end user info -->
-                <!-- NAVIGATION : This navigation is also responsive-->
-                <nav>
-                    <ul id="navul">
-                        <li class="active">
-                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
-                                <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
-                            <ul>
-                                <!-- here goes the application list -->
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: showContacts">My contacts</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
-                                <li><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
-                            </ul>
-                        </li>
-                        <li class="chat-users top-menu-invisible">
-                            <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
-                                <li role="separator" class="divider"></li>
-                                <!-- ko if: streembit.globals.nwmode == true -->
-                                <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
-                                <li role="separator" class="divider"></li>
-                                <!-- /ko -->
-                                <li><a href="#" data-bind="click:about">About</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-
-            </aside>
-            <!-- END NAVIGATION -->
-            <!-- MAIN PANEL -->
-            <div style="flex:1;" id="mainPanel">
-
-                <!-- RIBBON -->
-                <div id="ribbon" class="main_ribbon_header">
-                    <!-- breadcrumb -->
-                    <div class="breadcrumb">
-                    </div>
-                    <!-- end breadcrumb -->
-                </div>
-                <!-- END RIBBON -->
-                <!-- MAIN CONTENT -->
-                <div style="display:flex;flex-direction:row;height: 100%;">
-                    <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
-                    </div>
-                    <!-- layout option-->
-                    <div class="demo">
-                        <div class="demo_settings_layout">
-                            <form>
-                                <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
-                                <section>
-                                    <label>
-                                        <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-fixed-header'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-fixed-navigation'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-fixed-footer'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-inside'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-rtl-support'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-menu'"></span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
-                                        <span data-bind="i18n: 'layout-for-colorblind'"></span>
-                                        <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
-                                    </label>
-                                </section>
-                                <section>
-                                    <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
-                                    <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
-                                        <i class="fa fa-refresh"></i>
-                                    </a>
-                                </section>
-                                <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
-                                <section id="smart-styles">
-                                    <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
-                                </section>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="contacts-container hidecontacts" data-bind="component: { name: 'contacts-bar' }"></div>
-                </div>                
-                <!-- END MAIN CONTENT -->
-            </div>
-            <!-- END MAIN PANEL --> 
-            <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
-                <div class="MessageBoxContainer animated fadeIn fast" id="message">
-                    <div class="MessageBoxMiddle">
-                        <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'"> 
-                            <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
                         </span>
-                        <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
-                        <div class="MessageBoxButtonSection">
-                            <button id="btn2-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
-                            <button id="btn1-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                    <!-- end user info -->
+                    <!-- NAVIGATION : This navigation is also responsive-->
+                    <nav class="navbar">
+                        <button class="navbar-toggler d-sm-none" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation" style="background-color: transparent;">
+                            <i class="fa fa-reorder navbar-toggler-icon"></i>
+                            <!-- <span class="navbar-toggler-icon"></span> -->
+                        </button>
+                        <div class="navbar-collapse collapse show" id="navbarNav" aria-expanded="true">
+                            <ul id="navul">
+                                <li class="active">
+                                    <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                        <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
+                                    <ul>
+                                        <!-- here goes the application list -->
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: showContacts">My contacts</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
+                                        <li><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                                    </ul>
+                                </li>
+                                <li class="chat-users top-menu-invisible">
+                                    <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
+                                    <ul>
+                                        <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <!-- ko if: streembit.globals.nwmode == true -->
+                                        <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <!-- /ko -->
+                                        <li><a href="#" data-bind="click:about">About</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
-        <!-- PAGE FOOTER -->
-        <div class="page-footer" style="flex: 0 0 52px">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 hidden-xs"></div>
-                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
-                    <div class="txt-color-white inline-block">
-                        <div id="footer-info" data-bind="component: 'tasks'">
+                </aside>
+                <!-- END NAVIGATION -->
+                <!-- MAIN PANEL -->
+                <div id="mainPanel" class="col-xl-10 col-lg-9 col-md-8">
+
+                    <!-- RIBBON -->
+                    <div id="ribbon" class="main_ribbon_header">
+                        <!-- breadcrumb -->
+                        <div class="breadcrumb">
+                        </div>
+                        <!-- end breadcrumb -->
+                    </div>
+                    <!-- END RIBBON -->
+                    <!-- MAIN CONTENT -->
+                    <div style="height: 100%;">
+                        <div class="content-panel col-sm-12" data-bind="component: { name: route().page, params: route().params }">
+                        </div>
+                        <!-- layout option-->
+                        <div class="demo">
+                            <div class="demo_settings_layout">
+                                <form>
+                                    <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
+                                    <section>
+                                        <label>
+                                            <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-fixed-header'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-fixed-navigation'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-fixed-footer'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-inside'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-rtl-support'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-menu'"></span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="terms" id="colorblind" class="checkbox style-0">
+                                            <span data-bind="i18n: 'layout-for-colorblind'"></span>
+                                            <div class="font-xs text-right" data-bind="i18n: 'layout-colorblind-experimental'"></div>
+                                        </label>
+                                    </section>
+                                    <section>
+                                        <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-clear-localstorage'"></h6>
+                                        <a href="javascript:void(0)" class="btn btn-xs btn-block btn-primary" id="reset-smart-widget" data-bind="i18n: 'factory-reset'">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
+                                    </section>
+                                    <h6 class="margin-top-10 semi-bold margin-bottom-5" data-bind="i18n: 'layout-smartadmin-skins'"></h6>
+                                    <section id="smart-styles">
+                                        <a href="javascript:void(0)" id="smart-style-0" class="btn btn-block btn-xs txt-color-white margin-right-5" style="background-color:#4E463F;" data-bind="i18n: 'layout-smart-default'"></a>
+                                        <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
+                                        <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
+                                        <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
+                                        <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
+                                        <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
+                                        <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
+                                    </section>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="contacts-container hidecontacts" data-bind="component: { name: 'contacts-bar' }"></div>
+                    </div>                
+                    <!-- END MAIN CONTENT -->
+                </div>
+                <!-- END MAIN PANEL --> 
+                <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
+                    <div class="MessageBoxContainer animated fadeIn fast" id="message">
+                        <div class="MessageBoxMiddle">
+                            <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'"> 
+                                <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
+                            </span>
+                            <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
+                            <div class="MessageBoxButtonSection">
+                                <button id="btn2-message" class="btn btn-light btn-sm botTempo float-right" data-bind="i18n: 'localstorage-btn-no'"></button>
+                                <button id="btn1-message" class="btn btn-light btn-sm botTempo float-right" data-bind="i18n: 'localstorage-btn-yes'"></button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
-        <!-- END PAGE FOOTER -->
+
 
         <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag) Note: These tiles are completely responsive, you can add as many as you like  -->
         <div id="shortcut">

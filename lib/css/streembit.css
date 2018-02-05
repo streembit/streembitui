@@ -1828,10 +1828,6 @@ table.logstable {
 Widgets
 ============= */
 .widget-box-one .widget-one-icon {
-    position: absolute;
-    right: 30px;
-    font-size: 72px !important;
-    top: 0;
     color: #f3f3f3;
     overflow: hidden;
     vertical-align: middle;
@@ -1847,10 +1843,6 @@ Widgets
 }
 
 .widget-box-two .widget-two-icon {
-    position: absolute;
-    right: 30px;
-    font-size: 40px !important;
-    top: 30px;
     overflow: hidden;
     vertical-align: middle;
     height: 80px;
@@ -3203,7 +3195,7 @@ label{
         font-size: 16px;
         width: 20px;
         height: 20px;
-        margin: 12px 0 0;
+        margin: 12px -12px 0;
         color: #808080;
     }
     .txt-color-greenCustom {
@@ -3225,6 +3217,10 @@ label{
       position: absolute;
       right: 20px;
     }
+    .dropdown-item.active, .dropdown-item:active{
+        background-color: #f8f9fa;
+    }
+    .btn-header{cursor: pointer;}
 
     /*add from index.html*/
 
@@ -3489,11 +3485,15 @@ label{
 .wspeerstbl hosttd {
     max-width: 300px
 }
-
-.notifybtn {
-    margin-right: 12px;
-    padding: 4px 8px;
-    font-size: 16px;
-    color: #777;
+.notifybtn{
+        padding: 4px 8px;
+        font-size: 16px;
+    
+}
+@media (min-width: 768px) {
+    .notifybtn {
+        margin-right: 12px;
+        color: #777;
+    }
 }
 

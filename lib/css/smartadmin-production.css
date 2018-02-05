@@ -11653,7 +11653,6 @@ nav ul ul {
   margin: 0;
   padding: 0;
   display: none;
-  background: rgba(69, 69, 69, 0.6);
 }
 nav ul ul {
   padding: 7px 0;
@@ -16049,6 +16048,7 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   z-index: 0;
   border-bottom-width: 10px;
 }
+  .margin-top{margin-top:5em;}
 /*
  * TABS
  */
@@ -16057,22 +16057,7 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   background-color: #303030;
   color: #fff !important;
 }
-.page-footer {
-    /*height: 52px;*/
-    padding: 15px 13px 0;
-    /*padding-left: 233px;*/
-    padding-left: 20px;
-    border-top: 1px solid #333;
-    background: #313030;
-    width: 100%;
-    /*position: absolute;
-  display: block;
-  bottom: 0px;*/
-}
-.fixed-page-footer .page-footer {
-  position: fixed;
-  z-index: 901;
-}
+
 .minified .page-footer {
   padding-left: 58px;
 }
@@ -16340,6 +16325,7 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
  */
 @media (max-width: 767px) {
   /* Profile Page */
+  .margin-top{margin-top:1em};
   .profile-pic > img {
     width: 100px;
   }
@@ -16367,6 +16353,7 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   #ribbon {
     padding-left: 5px;
     padding-right: 5px;
+    margin-top: 5em;
   }
   #header {
     padding-right: 5px;
@@ -17167,6 +17154,7 @@ body.menu-on-top.fixed-header.fixed-navigation.fixed-ribbon #ribbon {
  * GENERAL MOBILE (Applies to all resolutions below 979px)
  */
 @media (max-width: 979px) {
+  .margin-top{margin-top:2em};
   .menu-on-top #mobile-profile-img a.userdropdown img {
     width: 39px;
     margin-top: 0px;
