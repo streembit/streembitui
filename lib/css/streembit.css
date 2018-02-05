@@ -2660,6 +2660,7 @@ Widgets
     overflow-y: auto;
     /*width:100%;*/
     width: 100vh;
+    background: #fff;
 }
 
 .contacts-container {
@@ -3522,6 +3523,7 @@ Widgets
     border:2px solid #ccc;
     background:  #f0f0f0;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 .contact-bar-list-item:hover{
     background: #fefefe;
