@@ -22,12 +22,12 @@
                 <div class="alert alert-warning" style="margin:10px 0;font-size:11px;" data-bind="visible: connection_warning().length">
                     <span data-bind="text: connection_warning"></span> <span style="font-weight:bold">MAKE SURE YOU HAVE THE LATEST CONTACT OFFER FROM YOUR CONTACT! YOU MUST HAVE THE LATEST PUBLIC KEY FROM YOUR CONTACT IN ORDER TO FIND THE CONNECTION DETAILS ON THE STREEMBIT NETWORK.</span>
                 </div>
-                <div style="float:left">
+                <div style="float:left;margin-right:20px;" data-bind="visible: avatar().length">
                     <div>
                         <img width="42" height="42" data-bind="attr: { src: avatar }" />
                     </div>
                 </div>
-                <div style="float:left;margin-left:20px;padding-left:30px;border-left:1px solid #ddd">
+                <div style="float:left;padding-left:30px;border-left:1px solid #ddd">
 
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777">Account:</span> <br />

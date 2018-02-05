@@ -71,7 +71,7 @@
       "text": "github:systemjs/plugin-text@^0.0.11",
       "util": "github:jspm/nodelibs-util@^0.1.0",
       "uuid": "npm:uuid@^2.0.3",
-      "webrtc-adapter": "npm:webrtc-adapter@^2.0.6"
+      "webrtc-adapter": "npm:webrtc-adapter@^6.1.1"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
