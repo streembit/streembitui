@@ -1,7 +1,7 @@
 <div data-toggle="buttons" style="margin-top: 8px" id="activity">
     <div id="showm" class="btn btn-default notifybtn" data-bind="click: show_messages">
         <i class="fa fa-envelope"></i>
-        <b class="badge" data-bind="text:msgcount" style="top:4px; right:auto;width: 18px"></b>
+        <b class="badge" data-bind="text:msgcount, css: { 'bg-color-orange': msgcount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
     </div>
     <div id="notifym" class="btn btn-default notifybtn" data-bind="click: show_notifications">
         <i class="fa fa-bell"></i>
@@ -12,49 +12,58 @@
         <b class="badge" data-bind="text:errorcount, css: { 'bg-color-red': errorcount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
     </div>
 </div>
-
+<span class="msg-arrow-up hideArroyUp" data-bind="visible: msgTriangle"></span>
+<span class="ntf-arrow-up hideArroyUp" data-bind="visible: ntfTriangle"></span>
+<span class="err-arrow-up hideArroyUp" data-bind="visible: errTriangle"></span>
 <!-- notification content -->
-<div class="ajax-notifications custom-scroll" data-bind="template: {name: template}, visible: contentShow"></div>
+<div class="ajax-notifications custom-scroll dropdown-design-change" data-bind="template: {name: template}, visible: contentShow"></div>
 
 <script type="text/html" id="message-activity-template">
     <ul class="notification-body" data-bind="foreach: list_of_messages">
         <li>
+            <i class="fa fa-close"></i>
             <div><span data-bind="localdate: time" class="time"></span></div>
-            <div>
+            <div style="float:right; width: 83%">
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
     </ul>
-    <span>
+    <div style="padding:12px 10px; background: #d5d5d5">
         Last updated on: <span data-bind="localdate: lastupdate"></span>
-    </span>
+    </div>
 </script>
 
 <script type="text/html" id="error-activity-template">
     <ul class="notification-body" data-bind="foreach: list_of_errors">
         <li>
             <div><span data-bind="localdate: time" class="time"></span></div>
-            <div>
+            <div class="error-ntf-icon-div">
+                <i class="fa fa-close error-ntf-icon"></i>
+            </div>
+            <div style="float:right; width: 83%">
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
     </ul>
-    <span>
+    <div style="padding:12px 10px; background: #d5d5d5">
         Last updated on: <span data-bind="localdate: lastupdate"></span>
-    </span>
+    </div>
 </script>
 
 <script type="text/html" id="notification-activity-template">
     <ul class="notification-body" data-bind="foreach: list_of_notifications">
         <li>
             <div><span data-bind="localdate: time" class="time"></span></div>
-            <div>
+            <div class="notify-ntf-icon-div">
+                <i class="fa fa-warning text-yellow notify-ntf-icon"></i>
+            </div>
+            <div style="float:right; width: 83%">
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
     </ul>
-    <span>
+    <div style="padding:12px 10px; background: #d5d5d5">
         Last updated on: <span data-bind="localdate: lastupdate"></span>
-    </span>
+    </div>
 </script>
 

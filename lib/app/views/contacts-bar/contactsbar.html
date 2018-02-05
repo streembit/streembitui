@@ -1,23 +1,23 @@
 <div class="all-contacts-field">
 
     <div data-bind="foreach: contacts">
-        <div class="contact-item" data-bind="click: $parent.itemSelect">
-            <div style="float:left">
-                <img src="/lib/img/ava_placeholder.png" width="18px" height="18px" data-bind="visible: !avatar" />
-                <img src="" width="18px" height="18px" data-bind="visible: avatar, attr:{src: avatar}" />
+        <div class="list-group-item contact-bar-list-item" data-bind="click: $parent.itemSelect">
+            <div style="float:left" class="media-left pos-rel">
+                <img src="/lib/img/ava_placeholder.png" width="35px" height="35px" data-bind="visible: !avatar" />
+                <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" />
             </div>
-            <div style="float:left;margin: 4px 0 0 8px;">
-                <span data-bind="text: name"></span>
+            <div style="float:left;margin: 9px 0 0 8px;">
+                <span data-bind="text: name" class="mar-no text-main" style="color: #474544;font-weight: bold;"></span>
             </div>
-            <div style="float:right;font-size:16px">
-                <div style="float:left;margin-right:14px" class="contact-msg-indicator" data-bind="visible: warnicon().length">
+            <div style="float:right;font-size:16px;margin-top: 6px">
+                <div style="margin-right:14px; margin-top:3px" class="contact-msg-indicator" data-bind="visible: warnicon().length">
                     <span data-bind="css: warnicon, click: $parent.rmWarning, clickBubble: false, toolTip: { title: warning, placement: 'left' }" style="color:#e0be00;margin: 4px 0;"></span>
                 </div>
                 <div style="float:left;margin-right:14px;" class="contact-msg-indicator">
                     <span data-bind="css: actionicon, click: $parent.itemAction, clickBubble: false" style="color:#e24;margin: 4px 0;"></span>
                 </div>
-                <div style="float:right;font-size:11px;" data-bind="visible: isonline">
-                    <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;margin: 4px 0;"></span>
+                <div style="float:left;font-size:11px;" data-bind="visible: isonline">
+                    <span class="glyphicon glyphicon-ok" style="color:#3dcc00;font-size:11px;margin: 4px 0;margin-right: 4px"></span>
                 </div>
                 <div style="clear:both"></div>
             </div>
