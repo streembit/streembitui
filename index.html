@@ -223,7 +223,7 @@
                 </ul>
                 <!-- end multiple lang -->
 
-                <div data-bind="component: {name: 'activity'}" ></div> 
+                <div data-bind="component: {name: 'activity'}" class="float-right" ></div> 
 
                 <div class="btn-header d-none d-lg-block float-right" >
                     <span class="top-panelopen-btn ">
@@ -366,7 +366,7 @@
                 <div id="mainPanel" class="col-xl-10 col-lg-9 col-md-8">
 
                     <!-- RIBBON -->
-                    <div id="ribbon" class="main_ribbon_header">
+                    <div id="ribbon" class="main_ribbon_header row">
                         <!-- breadcrumb -->
                         <div class="breadcrumb">
                         </div>
@@ -375,7 +375,7 @@
                     <!-- END RIBBON -->
                     <!-- MAIN CONTENT -->
                     <div style="height: 100%;">
-                        <div class="content-panel col-sm-12" data-bind="component: { name: route().page, params: route().params }">
+                        <div class="content-panel row" data-bind="component: { name: route().page, params: route().params }">
                         </div>
                         <!-- layout option-->
                         <div class="demo">

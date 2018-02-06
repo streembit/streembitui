@@ -58,6 +58,9 @@ body{
 .content-panel {
     width: 100%;
     height: 100%;
+    align-items:center;
+    justify-content: center;
+    align-content:center;
     padding:5px;
 }
 
@@ -3086,7 +3089,7 @@ label{
     .signmessagePopup .tab.active {
         display:block;
     }
-
+    .marginleft{margin-left: 40%!important;}
     .signmessagePopup .tab-links {
         padding-left: 0;
         margin: 0;
@@ -3224,7 +3227,7 @@ label{
 
     /*add from index.html*/
 
-            .fixed-navigation #mainPanel{
+        .fixed-navigation #mainPanel{
             margin-left: 220px;
         }
         .fixed-ribbon .content-panel{
@@ -3490,10 +3493,18 @@ label{
         font-size: 16px;
     
 }
+.logInMargines{
+    margin: 0 auto; 
+    margin-top: 10%;
+    width:100%;
+    height:100%;
+    align-items:center;
+    justify-content: center;
+    align-content:center;
+}
 @media (min-width: 768px) {
     .notifybtn {
         margin-right: 12px;
         color: #777;
     }
 }
-

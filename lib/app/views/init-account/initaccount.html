@@ -1,5 +1,5 @@
 
-<div style="width:100%;height:100%;display:flex;flex-direction: column;align-items:center;justify-content: center;align-content:center">
+<div class="col-12 col-lg-6 col-xl-5 logInMargines marginleft">
     
     <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
 
@@ -18,14 +18,14 @@
                     </header>
                     <fieldset>
                         <div class="row">
-                            <section class="col col-md-6 col-sm-12">
+                            <section class="col col-lg-6 col-sm-12">
                                 <label class="label">Account</label>
                                 <label class="select" data-bind="css: { 'state-error': isaccount_error() == true}">                                    
-                                    <select data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'" style="min-width:220px"></select><i></i>
+                                    <select data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'" style="min-width:200px"></select><i></i>
                                 </label>
                                 <em id="account-error" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
                             </section>
-                            <section class="col col-md-6 col-sm-12">
+                            <section class="col col-lg-6 col-sm-12">
                                 <label class="label">Password</label>
                                 <label class="input" data-bind="css: { 'state-error': ispwd_error() == true}">
                                     <i class="icon-append fa fa-lock"></i>
