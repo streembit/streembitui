@@ -58,9 +58,6 @@ body{
 .content-panel {
     width: 100%;
     height: 100%;
-    align-items:center;
-    justify-content: center;
-    align-content:center;
     padding:5px;
 }
 
@@ -1831,6 +1828,10 @@ table.logstable {
 Widgets
 ============= */
 .widget-box-one .widget-one-icon {
+    position: absolute;
+    right: 30px;
+    font-size: 72px !important;
+    top: 0;
     color: #f3f3f3;
     overflow: hidden;
     vertical-align: middle;
@@ -1846,6 +1847,10 @@ Widgets
 }
 
 .widget-box-two .widget-two-icon {
+    position: absolute;
+    right: 30px;
+    font-size: 40px !important;
+    top: 30px;
     overflow: hidden;
     vertical-align: middle;
     height: 80px;
@@ -1959,9 +1964,9 @@ Widgets
     overflow: hidden;
 }
 
-/*.m-0 {
+.m-0 {
     margin: 0 !important;
-}*/
+}
 
 /* shoul be the last section */
 /* at the END media queries */
@@ -1974,41 +1979,13 @@ Widgets
         display: none;
     }
 }*/
-.nav>li>a {
-    position: relative;
-    display: block;
-    padding: 9px 10px 10px;
-}
+
 .cert-info-panels dd span, .network-info-panels dd span {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
-.adjright{
-    right: 0;
-    left: auto!important;
-}
-a:hover{text-decoration: none;}
-.dropdown-menu>li>a {
-    clear: both;
-    color: #333;
-    white-space: nowrap;
-}
 
-.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus{text-decoration: none!important;}
-label{
-      display: inline;
-      margin-bottom: .5rem;
-      padding: .2em .6em .3em;
-      font-size: 75%;
-      font-weight: 700;
-      line-height: 1;
-      color: #fff;
-      text-align: center;
-      white-space: nowrap;
-      vertical-align: baseline;
-      border-radius: .25em;
-}
-.dropdown-item
+
 .iothub {
     border-radius: 2px;
     border: 1px solid #ddd;
@@ -3089,7 +3066,7 @@ label{
     .signmessagePopup .tab.active {
         display:block;
     }
-    .marginleft{margin-left: 40%!important;}
+
     .signmessagePopup .tab-links {
         padding-left: 0;
         margin: 0;
@@ -3164,15 +3141,7 @@ label{
       color: #4a80bd;
       font-weight: bold;
     }*/
-    .nav>li {
-        position: relative;
-        display: block;
-    }
-    @media (min-width: 768px){
-        .navbar-nav>li {
-            float: left;
-        }
-    }
+
     #help-style-change .nav-tabs > li.active > a{
       border-top: none!important;
       -webkit-box-shadow:none!important;
@@ -3198,7 +3167,7 @@ label{
         font-size: 16px;
         width: 20px;
         height: 20px;
-        margin: 12px -12px 0;
+        margin: 12px 0 0;
         color: #808080;
     }
     .txt-color-greenCustom {
@@ -3220,14 +3189,10 @@ label{
       position: absolute;
       right: 20px;
     }
-    .dropdown-item.active, .dropdown-item:active{
-        background-color: #f8f9fa;
-    }
-    .btn-header{cursor: pointer;}
 
     /*add from index.html*/
 
-        .fixed-navigation #mainPanel{
+            .fixed-navigation #mainPanel{
             margin-left: 220px;
         }
         .fixed-ribbon .content-panel{
@@ -3488,23 +3453,11 @@ label{
 .wspeerstbl hosttd {
     max-width: 300px
 }
-.notifybtn{
-        padding: 4px 8px;
-        font-size: 16px;
-    
+
+.notifybtn {
+    margin-right: 12px;
+    padding: 4px 8px;
+    font-size: 16px;
+    color: #777;
 }
-.logInMargines{
-    margin: 0 auto; 
-    margin-top: 10%;
-    width:100%;
-    height:100%;
-    align-items:center;
-    justify-content: center;
-    align-content:center;
-}
-@media (min-width: 768px) {
-    .notifybtn {
-        margin-right: 12px;
-        color: #777;
-    }
-}
+

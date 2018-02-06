@@ -26,8 +26,8 @@
     </div>
     <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
-            <button data-bind="click: clear, i18n: 'btn-clear'" class="btn btn-light"></button>
-            <input value="Request Money" type="button" class="btn btn-light" data-bind="click: generateAddress">
+            <button data-bind="click: clear, i18n: 'btn-clear'" class="btn btn-default"></button>
+            <input value="Request Money" type="button" class="btn btn-default" data-bind="click: generateAddress">
         </div>
     </div>
     </form>
@@ -56,21 +56,21 @@
 
     <!-- Address modal -->
     <div class="container container-address" data-bind="fadeVisible: addressPanel">
-        <div class="card">
-            <div class="card-header">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 Request Payment to <span class="payment-to"></span>
-                <img src="/lib/img/close-a.png" width="45" height="20" data-bind="click: closePanel" alt="close address" />            </div>
-            <div class="card-block">
+                <img src="/lib/img/close-a.png" width="45" height="20" data-bind="click: closePanel" alt="close address panel" />            </div>
+            <div class="panel-body">
                 <div id="addr-qrcode"></div>
                 <div class="address-info">
                     <p>Payment Information</p>
                     <p>URI: <span>streembit:<span class="payment-to"></span></span></p>
                     <p>Address: <span class="payment-to"></span></p>
                 </div>
-                <button data-bind="click: copyUri, i18n: 'btn-copy-uri'" class="btn btn-light"></button>
-                <button data-bind="click: copyAddress, i18n: 'btn-copy-address'" class="btn btn-light"></button>
-                <button data-bind="click: saveImg, i18n: 'btn-save-image'" class="btn btn-light"></button>
-                <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-light pull-right"></button>
+                <button data-bind="click: copyUri, i18n: 'btn-copy-uri'" class="btn btn-default"></button>
+                <button data-bind="click: copyAddress, i18n: 'btn-copy-address'" class="btn btn-default"></button>
+                <button data-bind="click: saveImg, i18n: 'btn-save-image'" class="btn btn-default"></button>
+                <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-default pull-right"></button>
             </div>
         </div>
     </div>
