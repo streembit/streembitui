@@ -2658,7 +2658,9 @@ Widgets
 
 .all-contacts-field {
     overflow-y: auto;
-    width:100%;
+    /*width:100%;*/
+    width: 100vh;
+    background: #f0f0f0;
 }
 
 .contacts-container {
@@ -3460,4 +3462,115 @@ Widgets
     font-size: 16px;
     color: #777;
 }
-
+.dropdown-design-change{
+    font-size: 12px;
+    position: absolute;
+    top: 49px;
+    z-index: 9999;
+    float: left;
+    min-width: 160px;
+    padding: 4px;
+    margin: 0;
+    list-style: none;
+    border: 5px solid #c4c4c4;
+    border-radius: 2px;
+    box-shadow: 0 1px 0px #ffffff;
+    background-clip: padding-box;
+}
+.msg-arrow-up, .ntf-arrow-up, .err-arrow-up{
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 9px solid #a0a0a2;
+    position: relative;
+    left: 5px;
+    bottom: 16px;
+}
+.ntf-arrow-up{
+    left: 55px;
+}
+.err-arrow-up{
+    left: 104px;
+}
+.error-ntf-icon{
+    position: relative;
+    top: 4px;
+}
+.error-ntf-icon-div, .notify-ntf-icon-div{
+    float: left;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    background: #a90329;
+    border-radius: 100%;
+    color: white;
+    text-align: center;
+}
+.notify-ntf-icon-div{
+    background: transparent;
+    color: orange;
+    position: relative;
+}
+.notify-ntf-icon{
+    font-size: 17px;
+    position: relative;
+    top: 5px;
+}
+.contact-bar-list-item{
+    margin: 10px 7px; 
+    cursor:pointer; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: #fff;
+    border: 2px dotted #ddd;
+}
+.contact-bar-list-item:hover{
+    background: #fefefe;
+}
+.contact-online-icon{
+    font-size: 11px;
+    background: #3dcc00;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: 25px;
+    bottom: 12px;
+    border: 2px solid white;
+}
+.contact-offline-icon{
+    font-size: 11px;
+    background: darkgrey;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: 25px;
+    bottom: 12px;
+    border: 2px solid white;   
+}
+.contact-notviewing-icon{
+    font-size: 11px;
+    background: orange;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: 25px;
+    bottom: 12px;
+    border: 2px solid white;
+}
+.notification-body > li {
+    border: 2px solid #E9E9E9;
+    position: relative;
+    margin: 8px 5px;
+    border-radius: 10px;
+}
+.notification-body > .error-bg-style {
+    background: #f2dede!important;
+    border: 2px solid #ebccd1!important;
+}
+.error-bg-style .msg-body{ 
+    color: #a94442!important;
+}
