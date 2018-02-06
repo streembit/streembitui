@@ -30,7 +30,7 @@
                         </td>
                         <td>
                             <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == $parent.username() }">
-                                <span data-bind="text: text"></span>
+                                <span data-bind="html: text"></span>
                             </div>
                         </td>
                     </tr>
@@ -38,6 +38,9 @@
             </table>
         </div>
         <div class="footer-chat-controls1">
+            <div id="chat_img" data-bind="click: chatimage">
+                <img src="/lib/img/chat-img-icon.png" width="20" height="20" alt="">
+            </div>
             <div style="width:100%">
                 <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
             </div>
