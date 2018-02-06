@@ -23,29 +23,26 @@
         <li>
             <i class="fa fa-close"></i>
             <div><span data-bind="localdate: time" class="time"></span></div>
-            <div style="float:right; width: 83%">
+            <div>
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
     </ul>
-    <div style="padding:12px 10px; background: #d5d5d5">
+    <div style="padding:12px 10px; background: #333;color: white; margin: 8px 5px;border-radius: 7px">
         Last updated on: <span data-bind="localdate: lastupdate"></span>
     </div>
 </script>
 
 <script type="text/html" id="error-activity-template">
     <ul class="notification-body" data-bind="foreach: list_of_errors">
-        <li>
+        <li class="error-bg-style">
             <div><span data-bind="localdate: time" class="time"></span></div>
-            <div class="error-ntf-icon-div">
-                <i class="fa fa-close error-ntf-icon"></i>
-            </div>
-            <div style="float:right; width: 83%">
+            <div>
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
     </ul>
-    <div style="padding:12px 10px; background: #d5d5d5">
+    <div style="padding:12px 10px; background: #333;color: white; margin: 8px 5px;border-radius: 7px">
         Last updated on: <span data-bind="localdate: lastupdate"></span>
     </div>
 </script>
@@ -54,15 +51,12 @@
     <ul class="notification-body" data-bind="foreach: list_of_notifications">
         <li>
             <div><span data-bind="localdate: time" class="time"></span></div>
-            <div class="notify-ntf-icon-div">
-                <i class="fa fa-warning text-yellow notify-ntf-icon"></i>
-            </div>
-            <div style="float:right; width: 83%">
+            <div>
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
     </ul>
-    <div style="padding:12px 10px; background: #d5d5d5">
+    <div style="padding:12px 10px; background: #333;color: white; margin: 8px 5px;border-radius: 7px">
         Last updated on: <span data-bind="localdate: lastupdate"></span>
     </div>
 </script>

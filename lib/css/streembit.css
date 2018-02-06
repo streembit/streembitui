@@ -2660,7 +2660,7 @@ Widgets
     overflow-y: auto;
     /*width:100%;*/
     width: 100vh;
-    background: #fff;
+    background: #f0f0f0;
 }
 
 .contacts-container {
@@ -3518,13 +3518,59 @@ Widgets
     top: 5px;
 }
 .contact-bar-list-item{
-    margin: 1px 0; 
+    margin: 10px 7px; 
     cursor:pointer; 
-    border:2px solid #ccc;
-    background:  #f0f0f0;
     border-radius: 5px;
     margin-bottom: 10px;
+    background: #fff;
+    border: 2px dotted #ddd;
 }
 .contact-bar-list-item:hover{
     background: #fefefe;
+}
+.contact-online-icon{
+    font-size: 11px;
+    background: #3dcc00;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: 25px;
+    bottom: 12px;
+    border: 2px solid white;
+}
+.contact-offline-icon{
+    font-size: 11px;
+    background: darkgrey;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: 25px;
+    bottom: 12px;
+    border: 2px solid white;   
+}
+.contact-notviewing-icon{
+    font-size: 11px;
+    background: orange;
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: 25px;
+    bottom: 12px;
+    border: 2px solid white;
+}
+.notification-body > li {
+    border: 2px solid #E9E9E9;
+    position: relative;
+    margin: 8px 5px;
+    border-radius: 10px;
+}
+.notification-body > .error-bg-style {
+    background: #f2dede!important;
+    border: 2px solid #ebccd1!important;
+}
+.error-bg-style .msg-body{ 
+    color: #a94442!important;
 }
