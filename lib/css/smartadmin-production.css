@@ -7594,23 +7594,23 @@ div.wijmo-wijmenu .wijmo-wijmenu-child .wijmo-wijmenu-text {
 .price-features li + li {
   margin-top: 10px;
 }
-.pricing-big .card-footer {
+.pricing-big .panel-footer {
   border-radius: 0 0 5px 5px;
 }
-.pricing-big .card-footer .btn {
+.pricing-big .panel-footer .btn {
   padding: 15px 0;
   border-radius: 3px;
   font-weight: bold;
   font-size: 14px;
 }
-.pricing-big .card-footer .btn span {
+.pricing-big .panel-footer .btn span {
   font-weight: normal;
   font-style: italic;
 }
-.pricing-big .card-footer {
+.pricing-big .panel-footer {
   background-color: #F2F2F2 !important;
 }
-.pricing-big .card-footer > div {
+.pricing-big .panel-footer > div {
   padding: 15px 0 10px;
   display: block;
   font-size: 13px;
@@ -8256,7 +8256,7 @@ textarea.clone {
 .smart-form .select i {
   position: absolute;
   top: 10px;
-  right: 1em;
+  right: 11px;
   width: 5px;
   height: 11px;
   background: white;
@@ -9763,7 +9763,7 @@ td.fc-other-month,
 .inbox-data-message > :first-child span {
   color: #111;
 }
-.inbox-data-message > :first-child label {
+.inbox-data-message > :first-child span.label {
   color: #ffffff;
 }
 .inbox-data-message > :first-child > :first-child:after {
@@ -11653,6 +11653,7 @@ nav ul ul {
   margin: 0;
   padding: 0;
   display: none;
+  background: rgba(69, 69, 69, 0.6);
 }
 nav ul ul {
   padding: 7px 0;
@@ -12673,8 +12674,8 @@ button {
   padding-left: 5px;
 }
 .show-stat-microcharts {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 .show-stat-microcharts > div {
   border-right: 1px solid #DADADA !important;
@@ -12705,19 +12706,18 @@ button {
   margin-right: 0px;
 }
 .smaller-stat li:first-child {
-  margin-top: -2px;
+  margin-top: 8px;
 }
-.smaller-stat label {
+.smaller-stat span.label {
   width: 40px;
   display: block;
   text-align: left;
   opacity: .5;
   cursor: default;
 }
-.smaller-stat label:hover {
+.smaller-stat span.label:hover {
   opacity: 1;
 }
-.open .dropdown-menu{ display: block; }
 /*
  * Login info
  */
@@ -13049,7 +13049,7 @@ img.away {
 .disabled {
   color: #ffffff;
 }
-.btn-light.disabled {
+.btn-default.disabled {
   color: #999999;
 }
 .btn {
@@ -13218,7 +13218,7 @@ img.away {
   background-color: #57889c;
   border-color: #57889c;
 }
-.card-footer > .btn-block {
+.panel-footer > .btn-block {
   border-radius: 0px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
@@ -13274,7 +13274,7 @@ img.away {
   margin-top: 10px;
   text-transform: uppercase;
 }
-.btn-metro > label {
+.btn-metro > span.label {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -13311,7 +13311,6 @@ img.away {
   background-color: rgba(77, 118, 134, 0.7);
   border-color: #3a7775;
 }
-#mainMenu .nav-item{margin-left: 1em;}
 /*
  * ANIMATION
  */
@@ -16048,7 +16047,6 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   z-index: 0;
   border-bottom-width: 10px;
 }
-  .margin-top{margin-top:5em;}
 /*
  * TABS
  */
@@ -16057,7 +16055,22 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   background-color: #303030;
   color: #fff !important;
 }
-
+.page-footer {
+    /*height: 52px;*/
+    padding: 15px 13px 0;
+    /*padding-left: 233px;*/
+    padding-left: 20px;
+    border-top: 1px solid #333;
+    background: #313030;
+    width: 100%;
+    /*position: absolute;
+  display: block;
+  bottom: 0px;*/
+}
+.fixed-page-footer .page-footer {
+  position: fixed;
+  z-index: 901;
+}
 .minified .page-footer {
   padding-left: 58px;
 }
@@ -16325,7 +16338,6 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
  */
 @media (max-width: 767px) {
   /* Profile Page */
-  .margin-top{margin-top:1em};
   .profile-pic > img {
     width: 100px;
   }
@@ -16353,7 +16365,6 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   #ribbon {
     padding-left: 5px;
     padding-right: 5px;
-    margin-top: 5em;
   }
   #header {
     padding-right: 5px;
@@ -17154,7 +17165,6 @@ body.menu-on-top.fixed-header.fixed-navigation.fixed-ribbon #ribbon {
  * GENERAL MOBILE (Applies to all resolutions below 979px)
  */
 @media (max-width: 979px) {
-  .margin-top{margin-top:2em};
   .menu-on-top #mobile-profile-img a.userdropdown img {
     width: 39px;
     margin-top: 0px;
