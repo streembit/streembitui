@@ -64,7 +64,7 @@
                                     <option value="22">Vehicle CAN interface</option>
                                     <option value="23">Drone controller</option>
                                 </select>
-                                <button class="btn btn-default pull-right" style="margin-top:6px" data-bind="click: add_feature">
+                                <button class="btn btn-light pull-right" style="margin-top:6px" data-bind="click: add_feature">
                                     <i class="fa fa-plus"></i>
                                     Add selected feature
                                 </button>
@@ -75,7 +75,7 @@
                             <div data-bind="foreach: features" style="display:flex;flex-wrap:wrap;">
                                 <div class="feature-item">
                                     <div class="pull-right" style="padding:2px 3px;">
-                                        <a href="javascript:void(0);" class="btn btn-default btn-xs" data-bind="click: function(){ $parent.delete_feature($data, $parent); } "><i class="fa fa-window-close"></i></a>
+                                        <a href="javascript:void(0);" class="btn btn-light btn-xs" data-bind="click: function(){ $parent.delete_feature($data, $parent); } "><i class="fa fa-window-close"></i></a>
                                     </div>
                                     <div style="clear:both"></div>
                                     <div class="feature-item-text "><span data-bind="text: text" style=""></span></div>
@@ -87,7 +87,7 @@
                 <div class="form-actions">
                     <div class="row" style="margin:0">
                         <div class="col-md-12">
-                            <button class="btn btn-default" data-bind="click: cancel_add">
+                            <button class="btn btn-light" data-bind="click: cancel_add">
                                 Cancel
                             </button>
                             <button class="btn btn-primary" data-bind="click: submit">
