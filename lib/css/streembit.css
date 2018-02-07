@@ -2602,6 +2602,7 @@ Widgets
     left: 30px;
 }
 .footer-chat-controls1{
+    position: relative;
     height: 120px;
     width: 100%;
     margin: 24px auto;
@@ -3462,6 +3463,7 @@ Widgets
     font-size: 16px;
     color: #777;
 }
+
 .dropdown-design-change{
     font-size: 12px;
     position: absolute;
@@ -3574,3 +3576,18 @@ Widgets
 .error-bg-style .msg-body{ 
     color: #a94442!important;
 }
+
+
+#chat_img {
+    position: absolute;
+    top: -4px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+}
+#chat_img img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
