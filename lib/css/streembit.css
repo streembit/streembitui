@@ -3463,7 +3463,6 @@ Widgets
     font-size: 16px;
     color: #777;
 }
-
 .dropdown-design-change{
     font-size: 12px;
     position: absolute;
@@ -3520,22 +3519,29 @@ Widgets
     top: 5px;
 }
 .contact-bar-list-item{
-    margin: 10px 7px; 
+    margin: 0px 7px; 
     cursor:pointer; 
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background: #fff;
-    border: 2px dotted #ddd;
+    background:#f0f0f0;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+.contact-bar-list-item:first-child{
+    margin-top: 15px;
+    border-top: 1px solid #ddd;
 }
 .contact-bar-list-item:hover{
-    background: #fefefe;
+    background: #e7e7e8;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
 }
 .contact-online-icon{
     font-size: 11px;
     background: #3dcc00;
     border-radius: 100%;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     position: relative;
     left: 25px;
     bottom: 12px;
@@ -3545,8 +3551,8 @@ Widgets
     font-size: 11px;
     background: darkgrey;
     border-radius: 100%;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     position: relative;
     left: 25px;
     bottom: 12px;
@@ -3556,8 +3562,8 @@ Widgets
     font-size: 11px;
     background: orange;
     border-radius: 100%;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     position: relative;
     left: 25px;
     bottom: 12px;
@@ -3577,7 +3583,27 @@ Widgets
     color: #a94442!important;
 }
 
-
+.list-group-item, .contact-bar-list-item{
+    padding:10px 7px!important;
+}
+.list-group-item .contact-bar-list-item{
+    height: 40px;
+}
+.avatar-picture-contact-bar{
+    border-radius: 100%; 
+    border: 1px solid #d3d3d3;
+    padding: 2px; 
+    box-sizing: content-box;
+    overflow: hidden;
+}
+.picture-contact-bar-style{
+    border-radius: 100%; 
+    border: 1px solid #d3d3d3;
+    padding: 2px; 
+    box-sizing: content-box;
+    overflow: hidden;
+    background: #fff
+}
 #chat_img {
     position: absolute;
     top: -4px;
