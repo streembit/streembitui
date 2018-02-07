@@ -3,13 +3,13 @@
     <div data-bind="foreach: contacts">
         <div class="list-group-item contact-bar-list-item" data-bind="click: $parent.itemSelect">
             <div style="float:left; height: 38px" class="media-left pos-rel">
-                <img src="/lib/img/avatar-picture2.jpg" width="35px" height="35px" class="avatar-picture-contact-bar" data-bind="visible: !avatar" />
+                <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar" data-bind="visible: !avatar" />
                 <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" class="picture-contact-bar-style" />
                 <div class="contact-online-icon" data-bind="visible: isonline"></div>
                 <div class="contact-offline-icon" data-bind="visible: isoffline"></div>
                 <div class="contact-notviewing-icon" data-bind="visible: isnotviewing"></div>
             </div>
-            <div style="float:left;margin: 9px 2px;">
+            <div style="float:left;margin: 13px 2px;">
                 <span data-bind="text: name" class="mar-no text-main" style="color: #474544;font-weight: bold;"></span>
             </div>
             <div style="float:right;font-size:16px;margin-top: 6px">

@@ -2568,6 +2568,9 @@ Widgets
 .ajax-notifications > ul {
     max-width: 100%;
     word-break: break-all;
+    height: 310px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .notification-body > li {
@@ -2591,6 +2594,7 @@ Widgets
 
 .notification-body .time {
     color: #aaa;
+/*    color:white;*/
 }
 
 .mywallet-tab-panel {
@@ -3477,6 +3481,8 @@ Widgets
     border-radius: 2px;
     box-shadow: 0 1px 0px #ffffff;
     background-clip: padding-box;
+    overflow: hidden;
+    height: 357px;
 }
 .msg-arrow-up, .ntf-arrow-up, .err-arrow-up{
     width: 0;
@@ -3521,20 +3527,18 @@ Widgets
 .contact-bar-list-item{
     margin: 0px 7px; 
     cursor:pointer; 
-    background:#f0f0f0;
-    border-top: 1px solid transparent;
+    background:#f9f9f9;
     border-bottom: 1px solid #ddd;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
 }
 .contact-bar-list-item:first-child{
-    margin-top: 15px;
+    margin-top: 10px;
     border-top: 1px solid #ddd;
 }
 .contact-bar-list-item:hover{
     background: #e7e7e8;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
+    border: 1px solid #dbdbdb;
 }
 .contact-online-icon{
     font-size: 11px;
@@ -3572,19 +3576,20 @@ Widgets
 .notification-body > li {
     border: 2px solid #E9E9E9;
     position: relative;
-    margin: 8px 5px;
-    border-radius: 10px;
+    margin: 2px 5px;
+    border-radius: 1px;
 }
 .notification-body > .error-bg-style {
-    background: #f2dede!important;
-    border: 2px solid #ebccd1!important;
+    background: darkred!important;
+    border: 2px solid darkred!important;
 }
 .error-bg-style .msg-body{ 
-    color: #a94442!important;
+    color: white!important;
 }
 
 .list-group-item, .contact-bar-list-item{
     padding:10px 7px!important;
+    margin:2px 6px;
 }
 .list-group-item .contact-bar-list-item{
     height: 40px;
@@ -3616,4 +3621,15 @@ Widgets
     height: 100%;
     cursor: pointer;
 }
-
+.last-update-notif{
+    padding:8px 10px; 
+    background: #333;
+    color: white; 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-left: -4px;
+}
+.error-bg-style .time{
+    color: #f79999;
+}
