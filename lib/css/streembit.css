@@ -3633,3 +3633,9 @@ Widgets
 .error-bg-style .time{
     color: #f79999;
 }
+.additional-information{
+    font-size: 15px;
+    margin: 10px 0;
+    font-weight: bold;
+    line-height: normal;
+}
