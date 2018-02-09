@@ -42,10 +42,14 @@
                 <img src="/lib/img/chat-img-icon.png" width="20" height="20" alt="">
             </div>
             <div style="width:100%">
-                <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                <div class="contact-is-typing-container">
+                    <span class="contact-is-typing" data-bind="text: contact_is_typing"></span>
+                </div>
             </div>
-            <div style="flex: 0 0 100%;font-size: 11px;justify-content: center;align-self: center;width: 100%;display: flex;">
-                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;margin:3px"><span data-bind="text: btncaption"></span></button>
+            <div style="flex: 0 0 100%;font-size: 11px;justify-content: space-between;align-self: center;width: 100%;display: flex;">
+                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;margin:3px auto"><span data-bind="text: btncaption"></span></button>
+
             </div>
         </div>
     </div>
