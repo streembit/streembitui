@@ -3639,3 +3639,9 @@ Widgets
     font-weight: bold;
     line-height: normal;
 }
+.contact-is-typing{
+    color: #707070;
+}
+.contact-is-typing-container{
+    height: 7px;
+}
