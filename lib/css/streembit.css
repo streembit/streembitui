@@ -3645,3 +3645,38 @@ Widgets
 .contact-is-typing-container{
     height: 7px;
 }
+
+#my-contacts-section .contact-bar-list-item{
+   /* width: 32%;
+    display: inline-block;*/
+    background:#222;
+    color:white;
+}
+#my-contacts-section .btn-circle.btn-lg{
+    width: 30px;
+    height: 30px;
+    padding: 5px 6px 10px 6px;
+    font-size: 16px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+#my-contacts-section .my-contacts-account-info-item{
+    font-weight: bold;
+    word-break: break-all;
+    max-width: 370px;
+    padding-left:20px;
+}
+#my-contacts-section .my-contacts-account-info-item{
+    font-weight: bold;
+    padding-left: 20px;
+}
+#my-contacts-section .contact-bar-list-item{
+    margin-top: 0;
+    margin-left: 6px;
+}
+#my-contacts-section .list-group-item, .contact-bar-list-item{
+    margin: 0;
+}
+#my-contacts-section{
+    margin-top: 10px;
+}
