@@ -3633,8 +3633,22 @@ body.smart-style-6 #logo-group>span#logo:before{
 .error-bg-style .time{
     color: #f79999;
 }
+
 .add-audio-call {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+}
+
+.additional-information{
+    font-size: 15px;
+    margin: 10px 0;
+    font-weight: bold;
+    line-height: normal;
+}
+.contact-is-typing{
+    color: #707070;
+}
+.contact-is-typing-container{
+    height: 7px;
 }

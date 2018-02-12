@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="col-lg-2 col-sm-6 col-12" data-bind="visible: !!window.FileReader">
-            <h6>Optional: choose avatar</h6>
+            <h5 style="font-weight: bold">Optional: choose avatar</h5>
             <div class="input-group">
                 <label class="input-group-btn">
                     <span class="btn btn-default btn-file">
@@ -19,10 +19,41 @@
                 Max size 64Kb
             </span>
         </div>
+
         <div class="ava_file" data-bind="visible: avatar().length">
             <img src="" width="42px" height="42px" data-bind="attr:{src: avatar}" />
             <button class="btn btn-warning pull-right" data-bind="click: rmAvatar">remove</button>
         </div>
+        <div class="clearfix"></div>
+        <form>
+            <h5 style="font-weight: bold;margin-left:15px">Optional Details</h5>
+                <div class="col-lg-3">
+                    <label for="exampleInputEmail1" class="additional-information">Email address</label>
+                    <input type="email" class="form-control" id="" aria-describedby="emailHelp" placeholder="Enter email" data-bind="value: email, event:{ change: processEmail}">
+                </div>
+                <div class="col-lg-3">
+                    <label for="exampleInputPhoneNum1" class="additional-information">Phone Number</label>
+                    <input type="text" class="form-control" id="" aria-describedby="phoneHelp" placeholder="Enter phone number" data-bind="value: phone, event:{ change: processPhoneNum}">
+                </div>
+                <div class="col-lg-3">
+                    <label for="exampleInputAddress1" class="additional-information">Address</label>
+                    <input type="text" class="form-control" id="" aria-describedby="addressHelp" placeholder="Enter address" data-bind="value: addressVal, event:{ change: processAddress}">
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-lg-3">
+                    <label for="exampleInputCountry1" class="additional-information">Country</label>
+                    <input type="text" class="form-control" id="" aria-describedby="countryHelp" placeholder="Enter country" data-bind="value: country, event:{ change: processCountry}">
+                </div>
+                <div class="col-lg-3">
+                    <label for="exampleInputWebsite1" class="additional-information">Website</label>
+                    <input type="text" class="form-control" id="" aria-describedby="websiteHelp" placeholder="Enter website" data-bind="value: website, event:{ change: processWebsite}">
+                </div>
+                <div class="col-lg-3">
+                    <label for="exampleInputSocial1" class="additional-information">Social media</label>
+                    <input type="text" class="form-control" id="" aria-describedby="socialHelp" placeholder="Enter social media" data-bind="value: social, event:{ change: processSocial}">
+                </div>
+          </form>
     </div>
 
     <div style="margin:40px 0 30px 0;font-size:12px">
