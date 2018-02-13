@@ -94,6 +94,34 @@
                 <td>User type:</td>
                 <td class="account-info-item"><span data-bind="text: usertype"></span></td>
             </tr>
+            <tr data-bind="visible: email">
+                <td>Email:</td>
+                <td class="account-info-item" data-bind="text: email"></td>
+            </tr>
+            <tr data-bind="visible: phone">
+                <td>Phone Number:</td>
+                <td class="account-info-item" data-bind="text: phone"></td>
+            </tr>
+            <tr data-bind="visible: addressVal">
+                <td>Address:</td>
+                <td class="account-info-item" data-bind="text: addressVal"></td>
+            </tr>
+            <tr data-bind="visible: country">
+                <td>Country:</td>
+                <td class="account-info-item" data-bind="text: country"></td>
+            </tr>
+            <tr data-bind="visible: website">
+                <td>Website:</td>
+                <td class="account-info-item">
+                    <a data-bind="attr: {href: website}, text: website" target="_blank"></a>
+                </td>
+            </tr>
+            <tr data-bind="visible: social">
+                <td>Social Media:</td>
+                <td class="account-info-item">
+                    <a data-bind="attr: {href: social}, text: social" target="_blank"></a>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
