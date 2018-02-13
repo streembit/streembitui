@@ -3654,9 +3654,6 @@ body.smart-style-6 #logo-group>span#logo:before{
 }
 
 #my-contacts-section .contact-bar-list-item{
-   /* width: 32%;
-    display: inline-block;*/
-    background:#222;
     color:white;
 }
 #my-contacts-section .btn-circle.btn-lg{
@@ -3670,7 +3667,7 @@ body.smart-style-6 #logo-group>span#logo:before{
 #my-contacts-section .my-contacts-account-info-item{
     font-weight: bold;
     word-break: break-all;
-    max-width: 370px;
+    max-width: 430px;
     padding-left:20px;
 }
 #my-contacts-section .my-contacts-account-info-item{
@@ -3681,8 +3678,11 @@ body.smart-style-6 #logo-group>span#logo:before{
     margin-top: 0;
     margin-left: 6px;
 }
-#my-contacts-section .list-group-item, .contact-bar-list-item{
+#my-contacts-section .list-group-item, #my-contacts-section .contact-bar-list-item{
     margin: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 0!important;
 }
 #my-contacts-section{
     margin-top: 10px;

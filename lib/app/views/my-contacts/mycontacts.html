@@ -1,67 +1,70 @@
 <div id="my-contacts-section">    
     <div data-bind="foreach: contacts">
         <div class="col-lg-4 list-group-item contact-bar-list-item">
-            <div style="float:left; height: 38px" class="media-left pos-rel">
-                <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar" data-bind="visible: !avatar" />
-                <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" class="picture-contact-bar-style" />
+            <div style="width:calc(100% - 10px); margin: 0 3px; background: #f8f8f8;border-radius: 3px;border:3px solid #e4e4e4;padding:6px;margin-bottom: 7px;">
+                <div style="float:left; height: 38px" class="media-left pos-rel">
+                    <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar" data-bind="visible: !avatar" />
+                    <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" class="picture-contact-bar-style" />
+                </div>
+                <div style="float:left;margin: 13px 2px;">
+                    <span data-bind="text: name" class="mar-no text-main" style="color: #222;font-weight: bold;"></span>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <table style="font-size: 12px;margin-top:5px">
+                        <tr style="background-color: #f0f0f0">
+                            <td style="vertical-align: top; padding:4px;color:#222">
+                                <span>Public key:</span>
+                            </td>
+                            <td class="my-contacts-account-info-item" style="padding-bottom: 4px;padding-top:4px;padding-right: 4px;color:#222"><span data-bind="text: public_key" style="font-size: 11px;color: #222"></span></td>
+                        </tr>
+                        <tr style="">
+                            <td style="vertical-align: top; padding:4px;color:#222">Transport:</td>
+                            <td class="account-info-item" style="color:#222">
+                                <span data-bind="text: protocol" style="font-size: 11px;"></span>://
+                                <span data-bind="text: address"></span>:
+                                <span data-bind="text: port"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">User type:</td>
+                            <td class="account-info-item"><span data-bind="text: user_type"></span></td>
+                        </tr>   
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Email:</td>
+                            <td class="account-info-item" data-bind="text: email"></td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Phone Number:</td>
+                            <td class="account-info-item" data-bind="text: phone"></td>
+                        </tr>
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Address:</td>
+                            <td class="account-info-item" data-bind="text: addressVal"></td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Country:</td>
+                            <td class="account-info-item" data-bind="text: country"></td>
+                        </tr>
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Website:</td>
+                            <td class="account-info-item">
+                                <a data-bind="attr: {href: website}, text: website" target="_blank"></a>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Social Media:</td>
+                            <td class="account-info-item">
+                                <a data-bind="attr: {href: social}, text: social" target="_blank"></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="float:right;font-size:16px;margin-right:6px;margin-top:15px" class="delete-from-my-contacts">
+                    <button type="button" class="btn btn-default" data-bind="click: $parent.remove" title="Delete contact">Delete contact</button>
+                </div>
+                <div style="clear:both"></div>
             </div>
-            <div style="float:left;margin: 13px 2px;">
-                <span data-bind="text: name" class="mar-no text-main" style="color: white;font-weight: bold;"></span>
-            </div>
-            <div style="float:right;font-size:16px" class="delete-from-my-contacts">
-                <button type="button" class="btn btn-danger btn-circle btn-lg" data-bind="click: $parent.remove" style="margin-left:8px" title="Delete contact"><i class="glyphicon glyphicon-remove"></i></button>
-            </div>
-            <div class="clearfix"></div>
-            <div>
-                <table style="font-size: 12px;position: relative;left:52px">
-                    <tr>
-                        <td>Public key:</td>
-                        <td class="my-contacts-account-info-item"><span data-bind="text: public_key" style="font-size: 11px;color: white"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Transport:</td>
-                        <td class="account-info-item">
-                            <span data-bind="text: protocol" style="font-size: 11px;"></span>://
-                            <span data-bind="text: address"></span>:
-                            <span data-bind="text: port"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>User type:</td>
-                        <td class="account-info-item"><span data-bind="text: user_type"></span></td>
-                    </tr>   
-                    <tr>
-                        <td>Email:</td>
-                        <td class="account-info-item" data-bind="text: email"></td>
-                    </tr>
-                    <tr>
-                        <td>Phone Number:</td>
-                        <td class="account-info-item" data-bind="text: phone"></td>
-                    </tr>
-                    <tr>
-                        <td>Address:</td>
-                        <td class="account-info-item" data-bind="text: addressVal"></td>
-                    </tr>
-                    <tr>
-                        <td>Country:</td>
-                        <td class="account-info-item" data-bind="text: country"></td>
-                    </tr>
-                    <tr>
-                        <td>Website:</td>
-                        <td class="account-info-item">
-                            <a data-bind="attr: {href: website}, text: website" target="_blank"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Social Media:</td>
-                        <td class="account-info-item">
-                            <a data-bind="attr: {href: social}, text: social" target="_blank"></a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-          
-            <div style="clear:both"></div>
         </div>
     </div>
 </div>
