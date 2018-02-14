@@ -3687,4 +3687,7 @@ body.smart-style-6 #logo-group>span#logo:before{
 #my-contacts-section{
     margin-top: 10px;
 }
+#call {
+    display: none;
+}
 

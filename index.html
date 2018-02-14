@@ -228,14 +228,14 @@
                 <div class="pull-right" data-bind="component: {name: 'activity'}" id='massagesBlock' style="margin-right: 10px"></div> 
 
                 <div class="btn-header pull-right" style="margin-right:10px">
-                    <span class="top-panelopen-btn">
-                        <i class="fa fa-cog" data-action="demoSettings"></i>                        
+                    <span class="top-panelopen-btn" data-action="demoSettings">
+                        <i class="fa fa-cog"></i>                        
                     </span>
                 </div>
 
                 <div class="btn-header pull-right">
-                    <span class="top-panelopen-btn">
-                        <i class="fa fa-users" data-action="contactsBar"></i>
+                    <span class="top-panelopen-btn" data-action="contactsBar">
+                        <i class="fa fa-users"></i>
                     </span>
                 </div>
 
@@ -372,8 +372,9 @@
                 <!-- END RIBBON -->
                 <!-- MAIN CONTENT -->
                 <div style="display:flex;flex-direction:row;height: 100%;">
-                    <div class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+                    <div id="main" class="content-panel" data-bind="component: { name: route().page, params: route().params }">
                     </div>
+                    <div id="call" class="content-panel" data-bind="component: { name: call().page, params: call().params }"></div>
                     <!-- layout option-->
                     <div class="demo">
                         <div class="demo_settings_layout">
