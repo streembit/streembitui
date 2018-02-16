@@ -891,6 +891,14 @@ body{
     display: flex;
     justify-content: center;
 }
+.remoteaudio_parent > div {
+    position: relative;
+}
+.remoteaudio_parent > div > img {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
 audio#remote-audio {
     width: 294px;

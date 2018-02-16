@@ -55,6 +55,7 @@ System.config({
     "filesender": "lib/app/filesender",
     "filetrans": "lib/app/filetrans",
     "font-awesome": "npm:font-awesome@4.7.0",
+    "groupcall": "lib/app/groupcall",
     "hash.js": "npm:hash.js@1.1.3",
     "hat": "npm:hat@0.0.3",
     "i18next": "npm:i18next@3.5.2",

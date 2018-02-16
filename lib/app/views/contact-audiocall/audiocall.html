@@ -40,6 +40,7 @@
             <div class="audio_ctrls_items">
                 <div class="remoteaudio_parent">
                     <div data-bind="attr: { id: contact.pkeyhash }">
+                        <img src="/lib/images/clear.png" width="14" height="14" alt="" data-bind="click: hangup_gcpart, visible: (group().length > 1)" />
                         <div style="text-align: center">
                             <canvas style="background-color: #666;height:220px;"></canvas>
                         </div>
