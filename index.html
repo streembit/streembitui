@@ -181,7 +181,7 @@
                 </div> -->   
                 <!-- collapse menu button -->
                 <div id="hide-menu" class="btn-header">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;"></i></a> </span>
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" class="shoHideMenuBtn" title="Collapse Menu"><i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;"></i></a> </span>
                 </div>
                 <!-- end collapse menu -->
 
@@ -371,10 +371,26 @@
                 </div>
                 <!-- END RIBBON -->
                 <!-- MAIN CONTENT -->
-                <div style="display:flex;flex-direction:row;height: 100%;">
-                    <div id="main" class="content-panel" data-bind="component: { name: route().page, params: route().params }">
+                <div style="display:flex;flex-direction:row;height: 100%; position: relative;">
+                    <div id="main" class="content-panel" data-bind="component: { name: route().page, params: route().params }"></div>
+
+                    <div id="call">
+                        <div style="font-weight:bold;font-size:12px;float:right;margin-top: 20px;margin-right: 20px">
+                            Call with <span data-bind="text: callData().contactName"></span>&nbsp;&nbsp;&nbsp;<span id="calltime"></span>
+                        </div>
+                        <div class="forShowChatPos">
+                            <div style="text-align: center; margin-top: 80px;">
+                                <canvas style="background-color: #666;height:220px;"></canvas>
+                            </div>
+                            <audio class="remote-audio" controls="true" autoplay = "true"></audio>
+                        </div>
                     </div>
-                    <div id="call" class="content-panel" data-bind="component: { name: call().page, params: call().params }"></div>
+                    <div id="smallScreenAudioCall1">
+                        <i class="fa fa-times-circle" style="font-size: 30px;color: #a90329;padding: 4px; cursor: pointer;margin:2px" data-bind="click: hangup" ></i>
+                        <span style="font-weight: bold;position: relative;bottom: 7px;left: 3px;">Call with 
+                            <span data-bind="text: callData().contactName"></span>
+                        </span>
+                    </div>
                     <!-- layout option-->
                     <div class="demo">
                         <div class="demo_settings_layout">
