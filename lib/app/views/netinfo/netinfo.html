@@ -68,10 +68,10 @@
             
             <!-- Modal for private key -->
             <div class="modal fade" id="protectedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="display: inline-block;">Enter your login and password</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="display: inline-block;">Enter your password</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 2px">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -80,19 +80,9 @@
                     <div role="content"> 
                         <div class="widget-body no-padding">
                             <form id="comment-form-for-prkey" class="smart-form" novalidate="novalidate">
-                                <header>
-                                    <span data-bind="i18n:'lbl-connectto-public-net'"></span>
-                                </header>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label">Account</label>
-                                            <label class="select" data-bind="css: { 'state-error': isaccount_error() == true}">                                    
-                                                <select style="min-width:220px" data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'"></select><i></i>
-                                            </label>
-                                            <em id="account-error-for-prkey" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
-                                        </section>
-                                        <section class="col col-6">
+                                        <section style="padding: 0 17px">
                                             <label class="label" data-bind="css: { 'state-error': ispwd_error() == true}">Password</label>
                                             <label class="input" >
                                                 <i class="icon-append fa fa-lock"></i>
@@ -102,9 +92,9 @@
                                             <em id="password-error-for-prkey" class="invalid error-label" data-bind="visible: ispwd_error, text: pwderrormsg">This field is required.</em>
                                         </section>
                                     </div>
-                                    <div class="modal-footer" style="padding: 10px 15px">
+                                    <div class="modal-footer" style="padding: 10px 0px">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="padding: 6px 25px;">Close</button>
-                                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
+                                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: check_user_password, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
                                     </div>
                                 </fieldset>
                             </form>
@@ -118,10 +108,10 @@
 
             <!-- Modal for mnemonic phrase -->
             <div class="modal fade" id="protectedMemPhraseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1" style="display: inline-block;">Enter your login and password</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1" style="display: inline-block;">Enter your password</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 2px">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -130,19 +120,9 @@
                     <div role="content"> 
                         <div class="widget-body no-padding">
                             <form id="comment-form-for-mnphrase" class="smart-form" novalidate="novalidate">
-                                <header>
-                                    <span data-bind="i18n:'lbl-connectto-public-net'"></span>
-                                </header>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label">Account</label>
-                                            <label class="select" data-bind="css: { 'state-error': isaccount_error() == true}">                                    
-                                                <select style="min-width:220px" data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'"></select><i></i>
-                                            </label>
-                                            <em id="account-error-for-mnphrase" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
-                                        </section>
-                                        <section class="col col-6">
+                                        <section style="padding: 0 17px">
                                             <label class="label" data-bind="css: { 'state-error': ispwd_error() == true}">Password</label>
                                             <label class="input" >
                                                 <i class="icon-append fa fa-lock"></i>
@@ -154,7 +134,7 @@
                                     </div>
                                     <div class="modal-footer" style="padding: 10px 15px">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" style="padding: 6px 25px;">Close</button>
-                                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account_for_mnemonic, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
+                                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: check_user_password_mnemonic, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
                                    </div>
                                 </fieldset>
                             </form>
