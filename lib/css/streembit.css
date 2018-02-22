@@ -473,7 +473,7 @@ body{
 .btn-circle.btn-lg {
     width: 48px;
     height: 48px;
-    padding: 10px 6px 10px 7px;
+    padding: 8px 6px 10px 7px;
     font-size: 24px;
     line-height: 1.33;
     border-radius: 25px;
@@ -614,7 +614,6 @@ body{
 
 .chat-fill-area {
     flex:1;
-    width: calc(100vw - 252px);
     background-color:#fff;
     overflow-y: auto;
     font-size: 12px;
@@ -1081,11 +1080,11 @@ span.awesomeBlue i.addbtn{
     align-content: stretch;
 }
 
-.panel-group{
+/*.panel-group{
     font-size:12px;
-}
+}*/
 
-.panel-title{
+.card-title{
     font-size:14px;
 }
 
@@ -2958,7 +2957,7 @@ nav>ul ul li::before{
     top: 34px;
     left: 220px;
 }
-.container-address .panel-body, .container-connect .panel-body {
+.container-address .card-block, .container-connect .card-block {
     background-color: #f9f9f6;
 }
 #addr-qrcode {
@@ -2967,11 +2966,11 @@ nav>ul ul li::before{
     margin: 0 auto;
 }
 .address-info, .connect-info {
-    width: 100%;
-    height: 100px;
+/*    width: 100%;
+    height: 100px;*/
     background: #fff;
     border: 1px solid #dadada;
-    padding: 4px;
+    padding: 9px;
     margin: 14px 0 6px 0;
 }
 .connect-info {
@@ -2983,11 +2982,11 @@ nav>ul ul li::before{
 .address-info p:first-child, .connect-info p:first-child {
     font-size: 14px;
 }
-.container-address .panel-heading, .container-connect .panel-heading {
+.container-address .card-header, .container-connect .card-header {
     position: relative;
     background-color: #d4d4d4;
 }
-.container-address .panel-heading img, .container-connect .panel-heading img {
+.container-address .card-header img, .container-connect .card-header img {
     position: absolute;
     top: 8px;
     right: 4px;
@@ -3006,7 +3005,7 @@ address-panel-close {
 .bootbox .modal-title{
     text-align: center!important;
 }
-#sign-message > .panel{
+#sign-message > .card{
     border: 1px solid #ccc!important;
     border-top: navajowhite!important;
 }
@@ -3079,7 +3078,7 @@ address-panel-close {
     padding-left: 0;
     margin: 0;
     position: absolute;
-    top: 20px;
+    top: 14px;
 
 }
 
@@ -3378,7 +3377,7 @@ body.smart-style-6 #logo-group>span#logo:before{
     border-radius: 50%;
     width: 1em;
     height: 1em;
-    border: 1.4rem solid rgba(255,255,255, 0.2);
+    border: 0.9rem solid rgba(255,255,255, 0.2);
     border-top-color: #fff;
     animation: spin 1s infinite linear;
 }
@@ -3464,9 +3463,11 @@ body.smart-style-6 #logo-group>span#logo:before{
 
 .notifybtn {
     margin-right: 12px;
-    padding: 4px 8px;
+    padding: 3px 8px;
     font-size: 16px;
     color: #777;
+    box-shadow: inset 0 -2px 0 transparent;
+    border: 1px solid #ccc;
 }
 .dropdown-design-change{
     font-size: 12px;
@@ -3731,4 +3732,74 @@ body.smart-style-6 #logo-group>span#logo:before{
         height: 37px!important;
         padding: 0!important;
     }
+}
+body {
+    font-size: 13px!important;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.connection-body-style-changes {
+    padding: 10px;
+}
+.header-dropdown-list .dropdown-toggle::after {
+    display: none!important;
+}
+.header-dropdown-list .dropdown-item a {
+    color: #404040;
+}
+.language-side-ch .dropdown-menu.show {
+    right: 0px!important;
+    left: auto!important;
+    top: 35px!important;
+} 
+.dropdown-menu > .active > a, .dropdown-menu > .active > a: focus, .dropdown-menu > .active > a:hover {
+    color: white;
+    outline: 0;
+} 
+.header-dropdown-list .dropdown-item a:hover, .header-dropdown-list a:hover {
+    text-decoration: none;
+}
+.header-dropdown-list .dropdown-menu>.active>a{
+    color: white;
+}
+.mywallet-view .nav-tabs .nav-link:hover, .settings-side-ch .nav-tabs .nav-link:hover, .logs-side-ch .nav-tabs .nav-link:hover, #help-style-change .nav-tabs .nav-link:hover{
+    background-color: #eee;
+    text-decoration: none;
+}
+.mywallet-view .nav-tabs .nav-item.show .nav-link, .mywallet-view .nav-tabs .nav-link.active, .settings-side-ch .nav-tabs .nav-link.active, .logs-side-ch .nav-tabs .nav-link.active, #help-style-change .nav-tabs .nav-link.active{
+    font-weight: bold;
+    border-top-left-radius: 0; 
+    border-top-right-radius: 0; 
+}
+.mywallet-view .nav-tabs > li.active > a, .settings-side-ch .nav-tabs > li.active > a, .logs-side-ch .nav-tabs > li.active > a, #help-style-change .nav-tabs > li.active > a{
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 0 transparent;
+    -webkit-box-shadow: 0 -2px 0 transparent;
+}
+.mywallet-view .nav-tabs > li > a.active, .settings-side-ch .nav-tabs > li > a.active, .logs-side-ch .nav-tabs > li > a.active{
+    border-top: 2px solid #57889c;
+}
+#help-style-change .nav-tabs > li > a.active {
+    border: 1px solid transparent;
+}
+#mainMenu .dropdown-toggle::after {
+    display: none;
+}
+#mainMenu .dropdown-menu li div, #mainMenu .dropdown-menu li span {
+    font-size: 14px;
+    color: #407990;
+}
+#mainMenu .dropdown-menu li div:hover, #mainMenu .dropdown-menu li span:hover, #mainMenu .dropdown-menu ul:hover li span {
+    color: white!important;
+}
+.forAllModalInWalletContent .modal-title, .forHelpAboutModal .modal-title {
+    position: absolute;
+}
+.well {
+    padding: 9px;
+    margin-bottom: 20px;
+}
+#mainMenu .show .dropdown-menu.show {
+    top: 35px!important;
 }

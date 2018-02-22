@@ -147,6 +147,9 @@
             background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
             background-size: cover!important;
         }
+        .smart-style-5 .dashboard .card {
+            background-color: transparent!important;
+        }
     </style>
 
 </head>
@@ -196,28 +199,28 @@
             <!-- end activity dropdown -->
 
             <!-- pulled right: nav area -->
-            <div class="pull-right">
+            <div class="float-right">
 
                
 
                 <!-- multiple lang dropdown : find all flags in the flags page -->
-                <ul class="header-dropdown-list hidden-xs">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li class="active">
+                <ul class="header-dropdown-list hidden-xs language-side-ch">
+                    <li> 
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu" style="">
+                            <li class="active dropdown-item">
                                 <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
                             </li>
-                            <li>
+                            <li class="dropdown-item">
                                 <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
                             </li>
-                            <li>
+                            <li class="dropdown-item">
                                 <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
                             </li>
-                            <li>
+                            <li class="dropdown-item">
                                 <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
                             </li>
-                            <li>
+                            <li class="dropdown-item">
                                 <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
                             </li>
                         </ul>
@@ -225,7 +228,7 @@
                 </ul>
                 <!-- end multiple lang -->
 
-                <div class="pull-right" data-bind="component: {name: 'activity'}" id='massagesBlock' style="margin-right: 10px"></div> 
+                <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock' style="margin-right: 10px"></div> 
 
                 <div class="btn-header pull-right" style="margin-right:10px">
                     <span class="top-panelopen-btn" data-action="demoSettings">
@@ -233,14 +236,14 @@
                     </span>
                 </div>
 
-                <div class="btn-header pull-right">
+                <div class="btn-header pull-right" style="margin-right:10px">
                     <span class="top-panelopen-btn" data-action="contactsBar">
                         <i class="fa fa-users"></i>
                     </span>
                 </div>
 
                 <!-- collapse menu button -->
-                <!--  <div id="hide-menu" class="btn-header pull-right">
+                <!--  <div id="hide-menu" class="btn-header float-right">
                     <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
                 </div> -->
                 <!-- end collapse menu -->               
@@ -270,7 +273,7 @@
                 <!-- end user info -->
                 <!-- NAVIGATION : This navigation is also responsive-->
                 <nav>
-                    <ul>
+                    <ul id="newvers_nav_for_ul">
                         <li class="active">
                             <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                         </li>
@@ -463,8 +466,8 @@
                         </span>
                         <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
                         <div class="MessageBoxButtonSection">
-                            <button id="btn2-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
-                            <button id="btn1-message" class="btn btn-default btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
+                            <button id="btn2-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
+                            <button id="btn1-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
                         </div>
                     </div>
                 </div>
@@ -508,11 +511,14 @@
         <!-- END SHORTCUT AREA -->
     </div>   
 
-    <script src="lib/js/libs/jquery-2.1.1.min.js"></script>
-    <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script>
+    <!-- <script src="lib/js/libs/jquery-2.1.1.min.js"></script> -->
+    <script src="lib/js/libs/jquery-3.3.1.min.js"></script>
+    <!-- <script src="lib/js/libs/jquery-ui-1.10.3.min.js"></script> -->
+    <script src="lib/js/libs/jquery-ui.min.js"></script>
 
     <script src="lib/js/app.config.js"></script>
     <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+    <script src="lib/js/bootstrap/popper.js"></script>
     <script src="lib/js/bootstrap/bootstrap.js"></script>
     <script src="lib/js/notification/SmartNotification.min.js"></script>  
     <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>

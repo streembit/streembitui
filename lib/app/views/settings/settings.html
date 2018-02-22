@@ -1,10 +1,10 @@
 
-<div>
+<div class="settings-side-ch">
     <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
-        <li role="presentation" class="active"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab">Network</a></li>
-        <li role="presentation"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab">Seeds</a></li>
-        <li role="presentation"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab">Ice resolvers</a></li>
-        <li role="presentation"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab">System</a></li>
+        <li role="presentation" class="nav-item"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">Network</a></li>
+        <li role="presentation" class="nav-item"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab" class="nav-link">Seeds</a></li>
+        <li role="presentation" class="nav-item"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab" class="nav-link">Ice resolvers</a></li>
+        <li role="presentation" class="nav-item"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab" class="nav-link">System</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -62,7 +62,7 @@
                                 <td class="hosttd"><span data-bind="text: $data.host"></span>:<span data-bind="text: $data.port"></span></td>
                                 <td class="pingtd"><span data-bind="text: $data.pingstatus"></span></td>
                                 <td class="ctrlstd">                                    
-                                    <div class="pull-right">
+                                    <div class="float-right">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true" data-bind="visible: $parent.is_edit_bootseed() == false, click: $parent.edit_bootseed"></i>
                                         <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
                                     </div>
@@ -97,7 +97,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal" style="border: 1px solid #ccc">Close</button>
                         <button type="button" class="btn btn-primary" data-bind="click: update_seed">Save changes</button>
                       </div>
                     </div>
@@ -172,7 +172,7 @@
             <div class="pull-left" data-bind="text: $data.host"></div>:<span data-bind="text: $data.port"></span>
             <div style="clear:both"></div>
         </div>
-        <div class="pull-right">
+        <div class="float-right">
             <i class="fa fa-pencil-square-o" aria-hidden="true" data-bind="visible: $parent.is_edit_bootseed() == false, click: $parent.edit_bootseed"></i>
             
             <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
@@ -186,7 +186,7 @@
         <div class="pull-left" style="padding-top:2px">
             <span data-bind="text: $data.url" style="font-size:11px;font-weight:bold;"></span>
         </div>
-        <div class="pull-right">
+        <div class="float-right">
             <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_iceresolver" title="Delete ICE resolver"></i>
         </div>
         <div style="clear:both"></div>

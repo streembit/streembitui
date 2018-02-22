@@ -37,9 +37,9 @@
                     </fieldset>
 
                     <footer>
-                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-submit'"></button>
-                        <button type="button" class="btn btn-default" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'"></button>
-                        <button type="button" class="btn btn-default"  data-bind="click: new_account">New Account</button>
+                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-submit'" style="border:1px solid #ccc"></button>
+                        <button type="button" class="btn btn-light" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" style="border:1px solid #ccc"></button>
+                        <button type="button" class="btn btn-light"  data-bind="click: new_account" style="border:1px solid #ccc">New Account</button>
                     </footer>
                 </form>
             </div>
@@ -47,8 +47,8 @@
     </div>
     <div id="restore-dialog" title="Restore account" class="hidden">
         <fieldset>
-            <button type="button" class="btn btn-default" data-bind="click: restore_account, i18n:'lbl-restore-backup'"></button>
-            <button type="button" class="btn btn-default" data-bind="click: restore_account, i18n:'ttlbtn-restore-mnemonic'"></button>
+            <button type="button" class="btn btn-light" data-bind="click: restore_account, i18n:'lbl-restore-backup'"></button>
+            <button type="button" class="btn btn-light" data-bind="click: restore_account, i18n:'ttlbtn-restore-mnemonic'"></button>
         </fieldset>
     </div>
 </div>
