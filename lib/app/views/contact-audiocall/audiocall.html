@@ -29,8 +29,10 @@
                 </div>
                 <div style="clear:both"></div>
             </div>
-            <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
-                Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span data-bind="text: calltime"></span>
+            <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px" class="calltime_parent">
+                <div data-bind="attr: { 'data-calltime': contact.pkeyhash }">
+                    Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span></span>
+                </div>
             </div>
             <div style="clear:both"></div>
         </div>
