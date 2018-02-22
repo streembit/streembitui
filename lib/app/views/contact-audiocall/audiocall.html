@@ -48,9 +48,9 @@
                         <audio class="remote-audio" controls autoplay></audio>
                     </div>
                 </div>
-                <div class="add-audio-call" data-bind="visible: groupcallInvite().length">
-                    <div data-bind="foreach: groupcallInvite">
-                        <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name"></button>
+                <div class="add-audio-call">
+                    <div data-bind="foreach: contacts">
+                        <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }"></button>
                     </div>
                 </div>
             </div>
