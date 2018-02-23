@@ -656,7 +656,7 @@ body{
 }
 
 .content-panel.active-cbar .chat-fill-area {
-    width: calc(100vw - 490px);
+    /*width: calc(100vw - 490px);*/
 }
 .content-panel.active-cbar .chat-item-msg {
     max-width: calc(100vw - 640px);

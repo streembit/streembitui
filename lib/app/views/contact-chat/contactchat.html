@@ -5,6 +5,10 @@
                 <span data-bind="text: lblheader"></span>
             </div>
             <div style="float:right" data-bind="visible: issession">
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-bind="click: savechat" style="padding:0 10px;font-size:12px">Save Chat History</button>
+                    <button class="btn btn-danger" data-bind="click: rmchat" style="padding:0 10px;font-size:12px">Delete Chat History</button>
+                </div>
                 <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
             </div>
             <div style="clear:both"></div>
