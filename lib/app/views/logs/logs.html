@@ -1,12 +1,12 @@
-<div style="width:100%;height:100%">
+<div style="width:100%;height:100%" class="logs-side-ch">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#error-tab">Error</a></li>
-        <li><a data-toggle="tab" href="#info-tab">Info</a></li>
-        <li><a data-toggle="tab" href="#debug-tab">Debug</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#error-tab" class="nav-link active">Error</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#info-tab" class="nav-link">Info</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#debug-tab" class="nav-link">Debug</a></li>
     </ul>
 
     <div class="tab-content logs-view-container">
-        <div id="error-tab" class="tab-pane fade in active">
+        <div id="error-tab" class="tab-pane active">
             <table class="logstable">
                 <tbody data-bind="foreach: errors">
                     <tr>
@@ -16,7 +16,7 @@
                 </tbody>
             </table>    
         </div>
-        <div id="info-tab" class="tab-pane fade">
+        <div id="info-tab" class="tab-pane">
             <table class="logstable">
                 <tbody data-bind="foreach: infos">
                     <tr>
@@ -26,7 +26,7 @@
                 </tbody>
             </table>            
         </div>
-        <div id="debug-tab" class="tab-pane fade">
+        <div id="debug-tab" class="tab-pane">
             <table class="logstable">
                 <tbody data-bind="foreach: debugs">
                     <tr>

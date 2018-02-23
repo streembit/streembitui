@@ -9,12 +9,12 @@
 
   <!-- Address modal -->
  <div class="container container-connect" data-bind="fadeVisible: connectInfoPanel">
-     <div class="panel panel-default">
-         <div class="panel-heading">
+     <div class="card">
+         <div class="card-header">
              <span data-bind="i18n: 'current-connection-header'"></span>
              <img src="/lib/img/close-a.png" width="45" height="20" data-bind="click: closePanel" alt="" />
          </div>
-         <div class="panel-body">
+         <div class="card-block connection-body-style-changes">
              <div class="connect-info">
                  <p><b data-bind="i18n: 'current-connection-account'"></b>: <b data-bind="text: account"></b> <span class="fa fa-user-circle acc_connected" data-bind="css: { 'txt-color-greenCustom': accountConnected }"></span></p>
                  <hr />
@@ -24,7 +24,7 @@
                  <hr />
                  <p><b data-bind="i18n: 'current-connection-pubkey'"></b>: <span data-bind="text: publickey"></span></p>
              </div>
-             <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-default pull-right"></button>
+             <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-light float-right"></button>
          </div>
      </div>
  </div>

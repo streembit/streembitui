@@ -37,7 +37,7 @@
                 <div class="remoteaudio_parent" data-bind="foreach: inChat" style="height: 262px"></div>
                 <div class="add-audio-call" data-bind="visible: groupcallInvite().length">
                     <div data-bind="foreach: groupcallInvite">
-                        <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name"></button>
+                        <button class="btn btn-light" data-bind="click: $parent.invite.bind($parent), text: name" style="border: 1px solid #ccc"></button>
                     </div>
                 </div>
             </div>

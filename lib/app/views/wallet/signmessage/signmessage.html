@@ -8,18 +8,20 @@
 	 
 		    <div class="tab-content">
 		        <div id="tab1" class="tab active">
-		            <div class="panel">
-						<div class="panel-body">
+		            <div class="card" style="border: 1px solid transparent">
+						<div class="card-block">
 							<div class="form-group">
 		    					<p data-bind="i18n: 'sign-message-text'"></p>
-		    				    <input type="text" class="col-md-10" id="recipientAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
-								<button class="col-md-1 addressBookBtn">
-									<i class="fa fa-address-book-o" aria-hidden="true"></i>
-								</button>
-								<button class="col-md-1 fileTextBtn">
-									<i class="fa fa-file-text" aria-hidden="true"></i>
-								</button>
-		    				    <em class="invalid error-label SignErrMessage hidden"></em>
+		    					<div class="d-flex flex-row">
+		    				    	<input type="text" class="col-md-10" id="recipientAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
+									<button class="col-md-1 addressBookBtn">
+										<i class="fa fa-address-book-o" aria-hidden="true"></i>
+									</button>
+									<button class="col-md-1 fileTextBtn">
+										<i class="fa fa-file-text" aria-hidden="true"></i>
+									</button>
+		    				    	<em class="invalid error-label SignErrMessage hidden"></em>
+								</div>
 							</div>
 
 							<textarea class="col-lg-12 " id="signMessageTextarea" style="height: 150px; margin-top: 10px"></textarea> 
@@ -27,10 +29,12 @@
 
 							<div class="form-group">
 								<p data-bind="i18n: 'sign-message-signature'"></p>
-								<input type="text" placeholder='Click "Sign Message" to generate signature' class="col-lg-11 generateSignature">
-								<button class="col-lg-1 copyRecAddress">
-									<i class="fa fa-window-restore" aria-hidden="true"></i>
-								</button>
+								<div class="d-flex flex-row">
+									<input type="text" placeholder='Click "Sign Message" to generate signature' class="col-lg-11 generateSignature">
+									<button class="col-lg-1 copyRecAddress">
+										<i class="fa fa-window-restore" aria-hidden="true"></i>
+									</button>
+								</div>
 							</div>
 
 							<div class="clearfix"></div>
@@ -50,14 +54,16 @@
 		        </div>
 		 
 		        <div id="tab2" class="tab">
-		           <div class="panel">
-						<div class="panel-body">
+		           <div class="card" style="border: 1px solid transparent">
+						<div class="card-block">
 							<div class="form-group">
 								<p data-bind="i18n: 'verify-message-text'"></p>
-								<input type="text" class="col-md-11" id="recAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
-								<button class="col-md-1">
-									<i class="fa fa-address-book-o" aria-hidden="true"></i>
-								</button>
+								<div class="d-flex flex-row">
+									<input type="text" class="col-md-11" id="recAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
+									<button class="col-md-1">
+										<i class="fa fa-address-book-o" aria-hidden="true"></i>
+									</button>
+								</div>
 							</div>
 							<textarea class="col-lg-12 verifyTextAr" style="height: 150px; margin-top: 10px"></textarea>
 							<textarea class="col-lg-12 verifyTextAr2" style="margin-top: 10px"></textarea>

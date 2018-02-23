@@ -6,7 +6,7 @@
             <table style="margin-top:30px;width:100%;font-size: 12px;">
                 <tr>
                     <td>Account:</td>
-                    <td class="account-info-item"><span data-bind="text: account"></span></td>
+                    <td class="account-info-item"><span data-bind="text: useraccount"></span></td>
                 </tr>
                 <tr>
                     <td>Public key:</td>
@@ -26,11 +26,27 @@
                 </tr>
                 <tr>
                     <td>Private key:</td>
-                    <td class="account-info-item"><span data-bind="text: privatekey" style="font-size: 12px;"></span></td>
+                    <td class="account-info-item">
+                        <span data-bind="text: privatekey, visible: privateVisible" style="font-size: 12px"></span>
+                        <div data-bind="visible: passProtectedVisible">
+                            <span>Password protected ...</span>
+                            <span data-bind="click: showPrivateKey" data-toggle="modal" data-target="#exampleModal" style="cursor: pointer">
+                                <i class="fa fa-eye" style="font-size: 14px"></i>
+                            </span>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Mnemonic phrase:</td>
-                    <td class="account-info-item"><span data-bind="text: mnemonic_phrase" style="font-size: 12px;"></span></td>
+                    <td class="account-info-item">
+                        <span data-bind="text: mnemonic_phrase, visible: mnemonicVisible" style="font-size: 12px;"></span>
+                        <div data-bind="visible: mnemonicPhraseVisible">
+                            <span>Password protected ...</span>
+                            <span data-bind="click: showMemPhrase" data-toggle="modal" data-target="#exampleModal1" style="cursor: pointer">
+                                <i class="fa fa-eye" style="font-size: 14px"></i>
+                            </span>
+                        </div>
+                    </td>
                 </tr>                
                 <!-- ko if: net_connected() == true && transport() == 'ws' -->
                 <tr>
@@ -49,7 +65,88 @@
                 <i class="fa fa-info-circle"></i> The account is not connected to the Streembit peer-to-peer network
             </div>
             <!-- /ko -->
+            
+            <!-- Modal for private key -->
+            <div class="modal fade" id="protectedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="display: inline-block;">Enter your password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 2px">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" style="padding-bottom: 0px">
+                    <div role="content"> 
+                        <div class="widget-body no-padding">
+                            <form id="comment-form-for-prkey" class="smart-form" novalidate="novalidate">
+                                <fieldset>
+                                    <div class="row">
+                                        <section style="padding: 0 17px" class="container-fluid">
+                                            <label class="label" data-bind="css: { 'state-error': ispwd_error() == true}">Password</label>
+                                            <label class="input" >
+                                                <i class="icon-append fa fa-lock"></i>
+                                                <input type="password" name="password" placeholder="Password" id="password-for-prkey" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}">
+                                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                                            </label>
+                                            <em id="password-error-for-prkey" class="invalid error-label" data-bind="visible: ispwd_error, text: pwderrormsg">This field is required.</em>
+                                        </section>
+                                    </div>
+                                    <div class="modal-footer" style="padding: 10px 0px">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal" style="padding: 6px 25px;border: 1px solid #ccc">Close</button>
+                                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: check_user_password, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <!-- Modal for mnemonic phrase -->
+            <div class="modal fade" id="protectedMemPhraseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1" style="display: inline-block;">Enter your password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 2px">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" style="padding-bottom: 0px">
+                    <div role="content"> 
+                        <div class="widget-body no-padding">
+                            <form id="comment-form-for-mnphrase" class="smart-form" novalidate="novalidate">
+                                <fieldset>
+                                    <div class="row">
+                                        <section style="padding: 0 17px" class="container-fluid">
+                                            <label class="label" data-bind="css: { 'state-error': ispwd_error() == true}">Password</label>
+                                            <label class="input" >
+                                                <i class="icon-append fa fa-lock"></i>
+                                                <input type="password" name="password" placeholder="Password" id="password-for-mnphrase" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyupformnemonic, blur: onPasswordChange}">
+                                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                                            </label>
+                                            <em id="password-error-for-mnphrase" class="invalid error-label" data-bind="visible: ispwd_error, text: pwderrormsg">This field is required.</em>
+                                        </section>
+                                    </div>
+                                    <div class="modal-footer" style="padding: 10px 0px">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal" style="padding: 6px 25px;border: 1px solid #ccc">Close</button>
+                                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: check_user_password_mnemonic, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
+                                   </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+    </div>
         </div>
     </div> 
 

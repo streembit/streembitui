@@ -1,13 +1,13 @@
-<div id="my-contacts-section">    
-    <div data-bind="foreach: contacts">
-        <div class="col-lg-4 list-group-item contact-bar-list-item">
+<div id="my-contacts-section" class="container-fluid">    
+    <div data-bind="foreach: contacts" class="row">
+        <div class="col-lg-4 contact-bar-list-item">
             <div style="width:calc(100% - 10px); margin: 0 3px; background: #f8f8f8;border-radius: 3px;border:3px solid #e4e4e4;padding:6px;margin-bottom: 7px;">
-                <div style="float:left; height: 38px" class="media-left pos-rel">
-                    <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar" data-bind="visible: !avatar" />
+                <div class="media">
+                    <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar d-flex mr-3" data-bind="visible: !avatar" />
                     <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" class="picture-contact-bar-style" />
-                </div>
-                <div style="float:left;margin: 13px 2px;">
-                    <span data-bind="text: name" class="mar-no text-main" style="color: #222;font-weight: bold;"></span>
+                    <div class="media-body align-self-center">
+                        <span data-bind="text: name" class="mar-no text-main mt-0" style="color: #222;font-weight: bold;"></span>
+                    </div>
                 </div>
                 <div class="clearfix"></div>
                 <div>
@@ -61,7 +61,7 @@
                     </table>
                 </div>
                 <div style="float:right;font-size:16px;margin-right:6px;margin-top:15px" class="delete-from-my-contacts">
-                    <button type="button" class="btn btn-default" data-bind="click: $parent.remove" title="Delete contact">Delete contact</button>
+                    <button type="button" class="btn btn-light" data-bind="click: $parent.remove" title="Delete contact" style="border:1px solid #ccc">Delete contact</button>
                 </div>
                 <div style="clear:both"></div>
             </div>

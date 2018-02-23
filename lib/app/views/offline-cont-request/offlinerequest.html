@@ -1,8 +1,8 @@
 <div style="margin:20px">
-    <div class="uiview-container-panel" style="min-width:500px;padding:10px;">
+    <div class="uiview-container-panel container-fluid" style="min-width:500px;padding:10px;">
         <div style="margin:20px;">
             <textarea id="contact-offer" data-bind="value: jsonstr"></textarea>
-            <button class="btn btn-default pull-right" data-bind="click: copyToClipboard">
+            <button class="btn btn-light float-right" data-bind="click: copyToClipboard">
                 Copy to clipboard
             </button>
         </div>
@@ -10,7 +10,7 @@
             <h5 style="font-weight: bold">Optional: choose avatar</h5>
             <div class="input-group">
                 <label class="input-group-btn">
-                    <span class="btn btn-default btn-file">
+                    <span class="btn btn-light btn-file" style="border:1px solid #ccc">
                         Browse… <input type="file" accept="image/*" data-bind="event: {change: processAvatar}" style="display: none;" />
                     </span>
                 </label>
@@ -22,11 +22,12 @@
 
         <div class="ava_file" data-bind="visible: avatar().length">
             <img src="" width="42px" height="42px" data-bind="attr:{src: avatar}" />
-            <button class="btn btn-warning pull-right" data-bind="click: rmAvatar">remove</button>
+            <button class="btn btn-warning float-right" data-bind="click: rmAvatar">remove</button>
         </div>
         <div class="clearfix"></div>
-        <form>
+        <form class="container-fluid">
             <h5 style="font-weight: bold;margin-left:15px">Optional Details</h5>
+            <div class="row">
                 <div class="col-lg-3">
                     <label for="exampleInputEmail1" class="additional-information">Email address</label>
                     <input type="email" class="form-control" id="" aria-describedby="emailHelp" placeholder="Enter email" data-bind="value: email, event:{ change: processEmail}">
@@ -53,6 +54,7 @@
                     <label for="exampleInputSocial1" class="additional-information">Social media</label>
                     <input type="text" class="form-control" id="" aria-describedby="socialHelp" placeholder="Enter social media" data-bind="value: social, event:{ change: processSocial}">
                 </div>
+            </div>
           </form>
     </div>
 
@@ -60,7 +62,7 @@
         Copy the full text including the "--- BEGIN STREEMBIT CONTACT OFFER ---" and "--- END STREEMBIT CONTACT OFFER ---" lines and send it to your contact to offer a connection.<br />
         What is in the encoded text? It includes your public key, account name and network connection details.
         <div style="margin-top:8px">
-            <button class="btn btn-default" data-bind="click: onshowcontent">Show the content</button>
+            <button class="btn btn-light" data-bind="click: onshowcontent" style="border:1px solid #ccc">Show the content</button>
         </div>
     </div>
 
