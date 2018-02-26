@@ -29,15 +29,30 @@
                 </div>
                 <div style="clear:both"></div>
             </div>
+
+            <div style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px" class="calltime_parent">
+                <div data-bind="attr: { 'data-calltime': contact.pkeyhash }">
+                    Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;<span></span>
+                </div>
+            </div>
             <div style="clear:both"></div>
         </div>
 
         <div class="media-call-content" style="flex-direction: column">
             <div class="audio_ctrls_items">
-                <div class="remoteaudio_parent" data-bind="foreach: inChat" style="height: 262px"></div>
-                <div class="add-audio-call" data-bind="visible: groupcallInvite().length">
-                    <div data-bind="foreach: groupcallInvite">
-                        <button class="btn btn-light" data-bind="click: $parent.invite.bind($parent), text: name" style="border: 1px solid #ccc"></button>
+                <div class="remoteaudio_parent">
+                    <div data-bind="attr: { id: contact.pkeyhash }">
+                        <h3 data-bind="text: contact.name"></h3>
+                        <img src="/lib/images/clear.png" width="14" height="14" alt="" class="rm_partee" style="cursor: pointer" />
+                        <div style="text-align: center">
+                            <canvas class="audio-viz" style="background-color: #666;height:220px;"></canvas>
+                        </div>
+                        <audio class="remote-audio" controls autoplay></audio>
+                    </div>
+                </div>
+                <div class="add-audio-call">
+                    <div data-bind="foreach: contacts">
+                        <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }"></button>
                     </div>
                 </div>
             </div>

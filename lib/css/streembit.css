@@ -656,7 +656,7 @@ body{
 }
 
 .content-panel.active-cbar .chat-fill-area {
-    width: calc(100vw - 490px);
+    /*width: calc(100vw - 490px);*/
 }
 .content-panel.active-cbar .chat-item-msg {
     max-width: calc(100vw - 640px);
@@ -890,6 +890,14 @@ body{
     margin-bottom:10px;
     display: flex;
     justify-content: center;
+}
+.remoteaudio_parent > div {
+    position: relative;
+}
+.remoteaudio_parent > div > img {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 audio#remote-audio {
