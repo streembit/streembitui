@@ -3811,3 +3811,23 @@ body {
 #mainMenu .show .dropdown-menu.show {
     top: 35px!important;
 }
+
+
+.choose-invite {
+    top: 46px;
+    right: 16px;
+    width: 180px;
+    height: auto;
+    min-height: 40px;
+    border: 2.5px solid #c4c4c4;
+    padding: 0;
+}
+.choose-invite > ul {
+    padding: 0;
+}
+.choose-invite > ul > li {
+    padding: 4px 4px 4px 10px;
+    border: 0;
+    border-bottom: 2px solid #c4c4c4;
+    cursor: pointer;
+}
