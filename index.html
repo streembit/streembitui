@@ -378,12 +378,12 @@
                     <div id="main" class="content-panel" data-bind="component: { name: route().page, params: route().params }"></div>
 
                     <div id="call">
-                        <div style="font-weight:bold;font-size:12px;float:right;margin-top: 20px;margin-right: 20px">
-                            Call with <span data-bind="text: callData().contactName"></span>&nbsp;&nbsp;&nbsp;<span id="calltime"></span>
+                        <div style="font-weight:bold;font-size:12px;float:right;margin-top: 20px;margin-right: 20px" data-bind="attr: { 'data-calltime': callData().pkeyhash }">
+                            Call with <span data-bind="text: callData().contactName"></span>&nbsp;&nbsp;&nbsp;<span></span>
                         </div>
                         <div class="forShowChatPos">
                             <div style="text-align: center; margin-top: 80px;">
-                                <canvas style="background-color: #666;height:220px;"></canvas>
+                                <canvas class="audio-viz" style="background-color: #666;height:220px;"></canvas>
                             </div>
                             <audio class="remote-audio" controls="true" autoplay = "true"></audio>
                         </div>
