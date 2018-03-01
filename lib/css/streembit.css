@@ -905,20 +905,6 @@ body{
     margin: 10px 0;
 }
 
-.add-audio-call {
-    position: absolute;
-    top: 5px;
-    left: 49%;
-}
-.btn-invite {
-    width:40px;
-    height: 40px;
-    border: 1px solid #4c4c4c;
-    border-radius: 20px;
-    font-size: 20px;
-    padding: 4px;
-}
-
 .calltime_parent {
     position: absolute;
     top: 4px;
@@ -3672,6 +3658,9 @@ body.smart-style-6 #logo-group>span#logo:before{
 }
 
 .add-audio-call {
+    position: absolute;
+    top: 405px;
+    left: 49%;
     display: flex;
     justify-content: center;
     margin: 0;
@@ -3695,6 +3684,14 @@ body.smart-style-6 #logo-group>span#logo:before{
     background: #dee8e5;
     border: 0;
     border-bottom: 2px ridge #c4c4c4;
+}
+.btn-invite {
+    width:40px;
+    height: 40px;
+    border: 1px solid #4c4c4c;
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 4px;
 }
 
 #smallScreenAudioCall1 > div > span {
