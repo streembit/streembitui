@@ -1094,7 +1094,7 @@ span.awesomeBlue i.addbtn{
 }
 
 .fill-area {
-    display: flex;
+   /* display: flex;*/
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
@@ -3866,3 +3866,4 @@ body {
 #mainMenu .show .dropdown-menu.show {
     top: 35px!important;
 }
+
