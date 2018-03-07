@@ -3778,9 +3778,12 @@ body.smart-style-6 #logo-group>span#logo:before{
     position: absolute;
     bottom: 40px;
     right: 0;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
     border-radius: 2px 0px 0px 2px;
     border: 1px solid #ccc;
+    background: black;
+    color: white;
+    border: 5px solid #333;
 }
 @media (max-width: 880px) and (min-width: 768px){
     #hide-menu > :first-child > a, .btn-header an{
@@ -3866,4 +3869,15 @@ body {
 #mainMenu .show .dropdown-menu.show {
     top: 35px!important;
 }
-
+.changestylesmall span audio {
+    position: absolute;
+    opacity: 1;
+    height: 1px;
+    bottom: 6px;
+}
+.changestylesmall span div canvas {
+    height: 160px!important;
+}
+.changestylesmall span div h3 {
+    margin: 0!important;
+}
