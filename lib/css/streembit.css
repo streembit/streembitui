@@ -3698,11 +3698,12 @@ body.smart-style-6 #logo-group>span#logo:before{
     display: block;
     float: left;
     font-weight: bold;
-    font-size: 1.2em;
-    padding: 2px 4px;
-    width: 140px;
+    font-size: 15px;
+    padding: 0px 8px;
+    width: 100%;
     height: 24px;
     overflow: hidden;
+    text-align: center;
 }
 
 .additional-information{
@@ -3784,6 +3785,8 @@ body.smart-style-6 #logo-group>span#logo:before{
     background: black;
     color: white;
     border: 5px solid #333;
+    border-radius: 5px;
+    width: 160px;
 }
 @media (max-width: 880px) and (min-width: 768px){
     #hide-menu > :first-child > a, .btn-header an{
@@ -3871,13 +3874,18 @@ body {
 }
 .changestylesmall span audio {
     position: absolute;
-    opacity: 1;
+    opacity: 0;
     height: 1px;
     bottom: 6px;
 }
 .changestylesmall span div canvas {
-    height: 160px!important;
+    height: 64px!important;
+    width: 200px!important;
 }
 .changestylesmall span div h3 {
     margin: 0!important;
+}
+.forShowChatPos>div>span{
+    font-size: 19px!important;
+    font-weight: 400!important;
 }
