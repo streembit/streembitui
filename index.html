@@ -384,8 +384,8 @@
                             </div>
                         </div>
                         <div class="forShowChatPos">
-                            <div data-bind="attr: { id: callData().pkeyhash }">
-                                <h3 data-bind="text: callData().name"></h3>
+                            <div data-bind="attr: { id: callData().pkeyhash }" style="display: block; text-align: center;margin-bottom: 10px;clear:both;">
+                                <span data-bind="text: callData().name" style="font-size: 15px"></span>
                                 <img src="/lib/images/clear.png" width="14" height="14" alt="" class="rm_partee" style="cursor: pointer" />
                                 <div style="text-align: center;">
                                     <canvas class="audio-viz" style="background-color: #666;height:220px;"></canvas>
@@ -395,8 +395,13 @@
                         </div>
                     </div>
                     <div id="smallScreenAudioCall1">
-                        <i class="fa fa-times-circle" style="font-size: 30px;color: #a90329;padding: 4px; cursor: pointer;margin:2px;float:right" data-bind="click: hangup" ></i>
-                        <span style="font-weight: bold;position: relative;top:8px;left: 3px;">Call with</span>
+                        <i class="fa fa-plus" title="Add Contact" data-bind="" style="width:27px;font-size: 19px;color: #366297;padding: 4px; cursor: pointer;margin:3px 2px;position: absolute; left: 3px"></i>
+                        <i class="fa fa-commenting" title="Chat" data-bind="click: showchat" style="width:27px;font-size: 20px;color: #366297;padding: 4px; cursor: pointer;margin:2px;position: absolute; left: 29px"></i>
+                        <i class="fa fa-file awesomeBlue" title="Send file" data-bind="click: sendfile" style="width:27px;font-size: 20px;color: #366297;padding: 4px; cursor: pointer;margin:2px;position: absolute; left: 61px"></i>
+                        <i class="fa fa-microphone fa-stack-2x awesomeEntity spallWindMuteIc" title="Mute Audio" style="width:27px;font-size: 20px;color: #366297;padding: 4px; cursor: pointer;margin:2px;position: absolute; left: 86px" data-bind="click: remove_audio">
+                        </i>
+                        <img src="../lib/images/hangup.png" title="Hangup" width="40px" style="font-size: 30px;color: #a90329;padding: 4px; cursor: pointer;margin:2px;float:right" data-bind="click: hangup" >
+                        <span style="font-weight: bold;" class="forSmScreen"></span>
                     </div>
                     <!-- layout option-->
                     <div class="demo">
@@ -516,9 +521,9 @@
     </div>   
 
 
+
     <script src="lib/js/libs/jquery-3.3.1.min.js"></script>
     <script src="lib/js/libs/jquery-ui.min.js"></script>
-
     <script src="lib/js/app.config.js"></script>
     <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <script src="lib/js/bootstrap/popper.js"></script>
@@ -566,6 +571,19 @@
     <script type="text/html" id="contacts-bar-template">
         
     </script> 
+    <script type="text/html" id="send-file-template">
+        <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
+            <div style="width:450px" data-bind="visible: isinprogress() == false">
+                <input type="file" id="fileInput" name="files" data-bind="event: { change: function() { send_file($element.files[0]) } }" />
+            </div>
+            <div style="width:450px;margin-top:10px;display:none" data-bind="visible: isinprogress">
+                <div style="font-size:12px;color:#666">Send progress: </div>
+                <div>
+                    <progress id="fileProgress" value="0" max="100" style="width:400px"></progress>
+                </div>
+            </div>
+        </div>
+    </script>
 
 </body>
 </html>
