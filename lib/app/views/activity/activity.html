@@ -19,12 +19,15 @@
 <div class="ajax-notifications custom-scroll dropdown-design-change" data-bind="template: {name: template}, visible: contentShow"></div>
 
 <script type="text/html" id="message-activity-template">
-    <ul class="notification-body" data-bind="foreach: list_of_messages">
-        <li>
-            <i class="fa fa-close"></i>
-            <div><span data-bind="localdate: time" class="time"></span></div>
-            <div>
-                <span class="msg-body" data-bind="text: msg"></span>
+    <ul class="notification-body message-activity-col" data-bind="foreach: messages">
+        <li data-bind="visible: isSendMsg">
+            <span data-bind="text: senderName" style="font-weight: bold;font-size: 14px;padding: 0px 0px 5px;border-bottom: 1px solid #ccc;"></span>
+            <div><span data-bind="localdatemsg: time" class="time"></span></div>
+            <div style="margin-top: 6px;">
+                <div class="sendMsgTime">
+                    <span data-bind="text: sendMsgTime" style="color: #aaa;"></span>
+                </div>
+                <span class="msg-body" data-bind="text: text" style="word-wrap: break-word;"></span>
             </div>
         </li>
     </ul>

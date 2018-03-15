@@ -3889,3 +3889,9 @@ body {
     font-size: 19px!important;
     font-weight: 400!important;
 }
+#chat_img_during_audio_call{
+    position: absolute;
+    right: 17px;
+    width: 20px;
+    height: 20px;
+}

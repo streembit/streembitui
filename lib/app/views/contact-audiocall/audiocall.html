@@ -42,6 +42,17 @@
                 </div>
             </div>
             <div style="clear:both"></div>
+            
+            <span class="chat-name-during-audiocall" style="display: none;font-size:12px;font-weight: bold;color:#555;position: relative;top: 13px">
+                Chat with <span data-bind="text: contact_name"></span>
+            </span>
+            <div style="display: none;text-align: right;float: right;position: relative;top:0px" class="save-rm-chat-audio">
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-bind="click: savechat" style="padding:0 10px;font-size:12px">Save Chat History</button>
+                    <button class="btn btn-danger" data-bind="click: rmchat" style="padding:0 10px;font-size:12px">Delete Chat History</button>
+                </div>
+                <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
+            </div>
         </div>
 
         <div class="media-call-content" style="flex-direction: column">
@@ -67,7 +78,7 @@
                                         </td>
                                         <td>
                                             <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == $parent.contact_name() }">
-                                                <span data-bind="text: text"></span>
+                                                <span data-bind="html: text"></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -75,6 +86,9 @@
                             </table>
                         </div>
                         <div class="footer-chat-controls">
+                            <div id="chat_img_during_audio_call" data-bind="click: chatimage">
+                                <img src="/lib/img/chat-img-icon.png" width="20" height="20" alt="">
+                            </div>
                             <div>
                                 <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
                                 <div class="contact-is-typing-container">
