@@ -1,4 +1,3 @@
-/// <reference path="lib/app/settings.js" />
 System.config({
   baseURL: "/",
   defaultJSExtensions: true,

@@ -80,7 +80,7 @@
     }
   },
   "devDependencies": {
-    "jspm": "^0.16.53",
-    "jspm-bower-endpoint": "^0.3.2"
+    "jspm": "0.16.53",
+    "jspm-bower-endpoint": "0.3.2"
   }
 }
