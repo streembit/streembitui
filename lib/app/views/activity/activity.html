@@ -21,7 +21,7 @@
 <script type="text/html" id="message-activity-template">
     <ul class="notification-body message-activity-col" data-bind="foreach: messages">
         <li data-bind="visible: isSendMsg">
-            <span data-bind="text: senderName" style="font-weight: bold;font-size: 14px;padding: 0px 0px 5px;border-bottom: 1px solid #ccc;"></span>
+            <div data-bind="text: senderName" style="font-weight: bold;font-size: 14px;padding: 0px 0px 5px;border-bottom: 1px solid #ccc;"></div>
             <div><span data-bind="localdatemsg: time" class="time"></span></div>
             <div style="margin-top: 6px;">
                 <div class="sendMsgTime">
