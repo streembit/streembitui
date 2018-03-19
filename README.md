@@ -33,5 +33,5 @@ The application can be executed as as website. Perform the following steps to ru
 Set the nwmode variable to false in the config.app.json file to run the Streembit UI as a web application. We run Streembit via the web using NGINX, but any web server should be able to serve the content. For development purpose it is the easiest to use the http-server nodejs application to run Streembit as a website.
 
 
----------------
+----------------
 
