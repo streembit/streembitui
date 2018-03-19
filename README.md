@@ -16,7 +16,7 @@ Put the following to the config.app.json
 ```json
 {
     "nwmode": true,
-	"protocol":  "https"
+    "protocol":  "https"
 }
 ```
 
