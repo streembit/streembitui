@@ -59,6 +59,7 @@ System.config({
     "hash.js": "npm:hash.js@1.1.3",
     "hat": "npm:hat@0.0.3",
     "i18next": "npm:i18next@3.5.2",
+    "iothandler": "lib/app/iothandler",
     "jqueryi18n": "github:wikimedia/jquery.i18n@1.0.4",
     "json": "github:systemjs/plugin-json@0.2.3",
     "jspm-nodelibs-assert": "npm:jspm-nodelibs-assert@0.2.1",
