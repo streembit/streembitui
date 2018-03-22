@@ -286,8 +286,8 @@
     <div class="row" style="margin:0; padding:0">
         <div class="col-sm-12 col-md-12" style="padding-left:0">
             <div style="margin-top:20px">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
+                <ul class="nav nav-tabs hub-details" role="tablist">
+                    <li role="presentation">
                         <a data-toggle="tab" href="#edithub_details" role="tab" aria-expanded="true"> <span class="hidden-mobile hidden-tablet"> Edit Hub details </span> </a>
                     </li>
                     <li role="presentation">
@@ -450,7 +450,46 @@
                     <div role="tabpanel" class="tab-pane" id="edithub_users">
                         <div>
                             <div style="padding:50px">
-                                Users ...
+                                <div class="row">
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <fieldset>
+                                            <legend>Users of the Hub</legend>
+                                        </fieldset>
+                                        <div data-bind="foreach: users" style="border: 1px dotted #ccc;padding:0;margin-top:20px;margin-bottom:30px">
+                                            <form class="form-horizontal iothub-form">
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Username</label>
+                                                    <input class="form-control" placeholder="username" type="text" data-bind="value: username" style="max-width:400px" maxlength="64">
+                                                </div>
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Public key</label>
+                                                    <input class="form-control" placeholder="Public Key" type="text" data-bind="value: publickey" style="max-width:900px" maxlength="256">
+                                                </div>
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Admin (1,0)</label>
+                                                    <input class="form-control" placeholder="1 or 0" type="text" data-bind="value: isadmin" style="max-width:40px" maxlength="1">
+                                                </div>
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Settings</label>
+                                                    <input class="form-control" placeholder="valid JSON" type="text" data-bind="value: settings" style="max-width:900px">
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row" style="margin:0">
+                                                        <div class="col-md-12">
+                                                            <button class="btn btn-light" data-bind="click: $parent.cancel_manage_users">
+                                                                Cancel
+                                                            </button>
+                                                            <button class="btn btn-primary" data-bind="click: $parent.submit_manage_users">
+                                                                <i class="fa fa-save"></i>
+                                                                Save Users
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </article>
+                                </div>
                             </div>
                             <div style="text-align:left;margin-top:30px">
                                 <button class="btn btn-light" data-bind="click: cancel_edit_hub">
