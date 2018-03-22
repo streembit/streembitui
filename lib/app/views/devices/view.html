@@ -154,6 +154,8 @@
     <div class="device-net-info" style="right:25px;top:3px" data-bind="click: toggle_shownetwork_info">
         <table>
             <tr><td>Status: </td> <td data-bind="text: authenticated() ? 'AUTHENTICATED' : 'OFFLINE'"></td></tr>
+            <tr><td>Host: </td> <td data-bind="text: host"></td></tr>
+            <tr><td>Port: </td> <td data-bind="text: port"></td></tr>
             <tr><td>Device ID: </td> <td data-bind="text: id"></td></tr>
             <tr><td>Network: </td> <td data-bind="text: networkinfo.platform"></td></tr>
             <tr><td>Manufacturer: </td> <td data-bind="text: networkinfo.manufacturername"></td></tr>
