@@ -36,7 +36,9 @@
                 </div>
             </div> -->
             <div class="add-audio-call">
-                <button class="btn btn-default btn-invite" data-bind="click: show_invite">+</button>
+                <button class="btn btn-default btn-invite inviteCont" data-bind="click: show_invite" data-action="contactsBar" style="border:1px solid #EAF5F3">
+                    <i class="fa fa-user-plus" style="color:#366297"></i>
+                </button>
                 <div data-bind="foreach: contacts, visible: showInvite">
                     <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }"></button>
                 </div>
