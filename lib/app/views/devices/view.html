@@ -154,6 +154,8 @@
     <div class="device-net-info" style="right:25px;top:3px" data-bind="click: toggle_shownetwork_info">
         <table>
             <tr><td>Status: </td> <td data-bind="text: authenticated() ? 'AUTHENTICATED' : 'OFFLINE'"></td></tr>
+            <tr><td>Host: </td> <td data-bind="text: host"></td></tr>
+            <tr><td>Port: </td> <td data-bind="text: port"></td></tr>
             <tr><td>Device ID: </td> <td data-bind="text: id"></td></tr>
             <tr><td>Network: </td> <td data-bind="text: networkinfo.platform"></td></tr>
             <tr><td>Manufacturer: </td> <td data-bind="text: networkinfo.manufacturername"></td></tr>
@@ -286,8 +288,8 @@
     <div class="row" style="margin:0; padding:0">
         <div class="col-sm-12 col-md-12" style="padding-left:0">
             <div style="margin-top:20px">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
+                <ul class="nav nav-tabs hub-details" role="tablist">
+                    <li role="presentation">
                         <a data-toggle="tab" href="#edithub_details" role="tab" aria-expanded="true"> <span class="hidden-mobile hidden-tablet"> Edit Hub details </span> </a>
                     </li>
                     <li role="presentation">
@@ -450,7 +452,60 @@
                     <div role="tabpanel" class="tab-pane" id="edithub_users">
                         <div>
                             <div style="padding:50px">
-                                Users ...
+                                <div class="row">
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <fieldset>
+                                            <legend>Users of the Hub</legend>
+                                        </fieldset>
+                                        <div data-bind="foreach: users" style="border: 1px dotted #ccc;padding:0;margin-top:20px;margin-bottom:30px">
+                                            <form class="form-horizontal iothub-form">
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Username</label>
+                                                    <input class="form-control" placeholder="username" type="text" data-bind="value: username" style="max-width:400px" maxlength="64">
+                                                    <div data-bind="visible: $parent.user_form_errors()[$index()].username">
+                                                        <em class="invalid error-label">Invalid or empty username.</em>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin-bottom:20px" data-bind="visible: !$parent.isCurrentUser()[$index()]">
+                                                    <label>Public key</label>
+                                                    <div>
+                                                        <input class="form-control" placeholder="publickey" type="text" data-bind="value: publickey" style="max-width:900px" maxlength="256">
+                                                        <div data-bind="visible: $parent.user_form_errors()[$index()].publickey">
+                                                            <em class="invalid error-label">Invalid public key.</em>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Admin (1,0)</label>
+                                                    <input class="form-control" placeholder="1 or 0" type="text" data-bind="value: isadmin" style="max-width:80px" maxlength="1">
+                                                    <div data-bind="visible: $parent.user_form_errors()[$index()].isadmin">
+                                                        <em class="invalid error-label">Isadmin either 1 or 0.</em>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin-bottom:20px">
+                                                    <label>Settings</label>
+                                                    <input class="form-control" placeholder="valid JSON" type="text" data-bind="value: settings" style="max-width:900px">
+                                                    <div data-bind="visible: $parent.user_form_errors()[$index()].settings">
+                                                        <em class="invalid error-label">Settings are in form of valid JSON.</em>
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row" style="margin:0">
+                                                        <div class="col-md-12">
+                                                            <button class="btn btn-danger" data-bind="click: $parent.submit_delete_user.bind($parent)">
+                                                                Delete User
+                                                            </button>
+                                                            <button class="btn btn-primary" data-bind="click: $parent.submit_update_user.bind($parent)">
+                                                                <i class="fa fa-save"></i>
+                                                                Update User
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </article>
+                                </div>
                             </div>
                             <div style="text-align:left;margin-top:30px">
                                 <button class="btn btn-light" data-bind="click: cancel_edit_hub">
