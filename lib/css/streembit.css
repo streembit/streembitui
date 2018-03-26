@@ -3910,35 +3910,79 @@ body {
     position: relative;
 }
 
-.oit-user-edit-container {
+.hub-details > li > a {
+    border-radius: 0px;
+    color: #f5fcff;
+    display: block;
+    width: 154px;
+    height: 22px;
+    padding: 2px 0;
+    background: #333;
+    text-align: center;
+    border-left: 1px solid #a2a2a2;
+}
+.hub-details > li > a.active {
+    background: #fc3c4a;
+}
+.nav-tabs > li:first-child > a {
+    border-left: 0;
+}
+
+.iot-user-edit-container {
     padding:0;
     margin-top:20px;
     margin-bottom:30px;
 }
 
-.oit-user-edit-container form {
+.iot-user-edit-container h3 {
+    width:50%;
+    margin: -20px 0 0 0;
+    border-bottom: 1px dotted #9b9b9b;
+}
+
+.iot-user-edit-container form {
     margin: 20px 0;
     border: 1px dotted #9b9b9b;
     background: #e6e6e6;
 }
 
-.oit-user-edit-container form label {
+.iot-user-edit-container form label {
     font-weight: bold;
     font-size: 14px;
 }
 
-.oit-user-edit-container form .form-group {
+.iot-user-edit-container form .form-group {
     margin-bottom: 10px;
     padding: 10px 0 0 0;
 }
-.oit-user-edit-container form .form-group.fg-username {
+.iot-user-edit-container form .form-group.fg-username {
     width: 66%;
     display: inline-block;
 }
-.oit-user-edit-container form .form-group.fg-username input {
+.iot-user-edit-container form .form-group.fg-username input {
     width: 100%;
 }
-.oit-user-edit-container form .form-group.fg-isadmin {
+.iot-user-edit-container form .form-group.fg-isadmin {
+    float: right;
     width: 20%;
     display: inline-block;
+}
+legend.users-hub i {
+    float: right;
+    margin-top: 2px;
+    font-size: 20px;
+    color: #07f;
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px dotted #333;
+    padding: 4px;
+    border-radius: 20px;
+    background-color: #eee;
+    cursor: pointer;
+}
+.pk-txt {
+    max-width: 460px;
+    overflow-x: auto;
+    word-wrap: break-word;
 }

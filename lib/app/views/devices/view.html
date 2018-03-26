@@ -317,20 +317,35 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Hub name</label>
+                                            <!-- ko if: isCurrentUserAdmin() -->
                                             <input class="form-control" placeholder="Hub name" type="text" data-bind="value: newname" style="max-width:450px" maxlength="64">
                                             <div data-bind="visible: is_newname_error">
                                                 <em id="id-error" class="invalid error-label">This field is required.</em>
                                             </div>
+                                            <!-- /ko -->
+                                            <!-- ko if: !isCurrentUserAdmin() -->
+                                            <div>
+                                                <span data-bind="text: newname"></span>
+                                            </div>
+                                            <!-- /ko -->
                                         </div>
                                         <div class="form-group" style="margin-bottom:20px">
                                             <label>Public key</label>
+                                            <!-- ko if: isCurrentUserAdmin() -->
                                             <input class="form-control" placeholder="BS58 encoded public key" type="text" data-bind="value: newpublickey" style="max-width:900px" maxlength="128">
                                             <div data-bind="visible: is_newid_error">
                                                 <em id="id-error" class="invalid error-label">This field is required.</em>
                                             </div>
+                                            <!-- /ko -->
+                                            <!-- ko if: !isCurrentUserAdmin() -->
+                                            <div>
+                                                <span data-bind="text: newpublickey"></span>
+                                            </div>
+                                            <!-- /ko -->
                                         </div>
                                     </div>
                                 </fieldset>
+                                <!-- ko if: isCurrentUserAdmin() -->
                                 <div class="form-actions" style="text-align:left">
                                     <div class="row" style="margin:0">
                                         <div class="col-md-12">
@@ -344,6 +359,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- /ko -->
                             </form>
                         </div>
                     </div>
@@ -396,13 +412,13 @@
                                         </td>
                                         <td style="min-width:80px">
                                             <!-- ko if: type == 2 && uipermission() == 0 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>  
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
                                             <!-- /ko -->
                                             <!-- ko if: type == 2 && uipermission() == 1 -->
                                             <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
                                             <!-- /ko -->
                                             <!-- ko if: type == 2 && uipermission() == 2 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button> 
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>
                                             <!-- /ko -->
                                         </td>
                                         <td style="min-width:80px">
@@ -418,7 +434,7 @@
                                     Cancel Edit
                                 </button>
                             </div>
-                        </div>       
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="edithub_control">
                         <div class="all_devices_edit">
@@ -454,25 +470,99 @@
                             <div style="padding:50px">
                                 <div class="row">
                                     <article class="col-sm-12 col-md-12 col-lg-12">
-                                        <fieldset>
-                                            <legend>Users of the Hub</legend>
+                                        <fieldset data-bind="visible: !user_add_active()">
+                                            <legend class="users-hub">
+                                                Users of the Hub
+                                                <i class="fa fa-user-plus" data-bind="click: toggle_adduser"></i>
+                                            </legend>
                                         </fieldset>
-                                        <div data-bind="foreach: users" class="oit-user-edit-container">
+                                        <!-- ko if: isCurrentUserAdmin() -->
+                                        <div class="iot-user-edit-container" data-bind="visible: user_add_active()">
+                                            <h3>Add User</h3>
                                             <form class="form-horizontal iothub-form">
                                                 <div class="form-group fg-username">
                                                     <label>Username</label>
+                                                    <input class="form-control" placeholder="username" type="text" maxlength="64" data-bind="value: add_username">
+                                                    <div>
+                                                        <em class="invalid error-label" data-bind="visible: adduser_form_errors()[0]">Invalid or empty username.</em>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-isadmin">
+                                                    <label>Admin (1,0)</label>
+                                                    <input class="form-control" placeholder="1 or 0" type="text" data-bind="value: add_isadmin" style="max-width:80px" maxlength="1"  data-bind="value: add_isadmin">
+                                                    <div>
+                                                        <em class="invalid error-label" data-bind="visible: adduser_form_errors()[1]">Admin either 1 or 0.</em>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Public key</label>
+                                                    <div>
+                                                        <input class="form-control" placeholder="publickey" type="text" data-bind="value: add_publickey" style="max-width:900px" maxlength="256" data-bind="value: add_publickey">
+                                                        <div data-bind="visible: adduser_form_errors()[2]">
+                                                            <em class="invalid error-label">Invalid public key.</em>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Settings</label>
+                                                    <input class="form-control" placeholder="valid JSON" type="text" data-bind="value: add_settings" style="max-width:900px">
+                                                    <div data-bind="visible: adduser_form_errors()[3]">
+                                                        <em class="invalid error-label">Settings are in form of valid JSON.</em>
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row" style="margin:0">
+                                                        <div class="col-md-12">
+                                                            <button class="btn btn-default" data-bind="click: toggle_adduser">
+                                                                Back to Edit User
+                                                            </button>
+                                                            <button class="btn btn-primary" data-bind="click: submit_add_user">
+                                                                <i class="fa fa-save"></i>
+                                                                Add User
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /ko -->
+                                        <div data-bind="foreach: users, visible: !user_add_active()" class="iot-user-edit-container">
+                                            <form class="form-horizontal iothub-form">
+                                                <div class="form-group fg-username">
+                                                    <label>Username</label>
+                                                    <!-- ko if: $parent.isCurrentUserAdmin() -->
                                                     <input class="form-control" placeholder="username" type="text" data-bind="value: username" style="max-width:400px" maxlength="64">
                                                     <div data-bind="visible: $parent.user_form_errors()[$index()].username">
                                                         <em class="invalid error-label">Invalid or empty username.</em>
                                                     </div>
+                                                    <!-- /ko -->
+                                                    <!-- ko if: !$parent.isCurrentUserAdmin() -->
+                                                    <div>
+                                                        <span data-bind="text: username"></span>
+                                                    </div>
+                                                    <!-- /ko -->
                                                 </div>
                                                 <div class="form-group fg-isadmin">
+                                                    <!-- ko if: $parent.isCurrentUserAdmin() -->
                                                     <label>Admin (1,0)</label>
                                                     <input class="form-control" placeholder="1 or 0" type="text" data-bind="value: isadmin" style="max-width:80px" maxlength="1">
                                                     <div data-bind="visible: $parent.user_form_errors()[$index()].isadmin">
                                                         <em class="invalid error-label">Isadmin either 1 or 0.</em>
                                                     </div>
+                                                    <!-- /ko -->
+                                                    <!-- ko if: !$parent.isCurrentUserAdmin() -->
+                                                    <label>is Admin </label>
+                                                    <div>
+                                                        <!-- ko if: isadmin === '1' -->
+                                                        <span>YES</span>
+                                                        <!-- /ko -->
+                                                        <!-- ko if: isadmin !== '1' -->
+                                                        <span>NO</span>
+                                                        <!-- /ko -->
+                                                    </div>
+                                                    <!-- /ko -->
                                                 </div>
+                                                <!-- ko if: $parent.isCurrentUserAdmin() -->
                                                 <div class="form-group" data-bind="visible: !$parent.isCurrentUser()[$index()]">
                                                     <label>Public key</label>
                                                     <div>
@@ -482,13 +572,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- /ko -->
+                                                <!-- ko if: !$parent.isCurrentUserAdmin() -->
+                                                <div class="form-group">
+                                                    <label>Public key</label>
+                                                    <div class="pk-txt">
+                                                        <span data-bind="text: publickey"></span>
+                                                    </div>
+                                                </div>
+                                                <!-- /ko -->
                                                 <div class="form-group">
                                                     <label>Settings</label>
+                                                    <!-- ko if: $parent.isCurrentUserAdmin() -->
                                                     <input class="form-control" placeholder="valid JSON" type="text" data-bind="value: settings" style="max-width:900px">
                                                     <div data-bind="visible: $parent.user_form_errors()[$index()].settings">
                                                         <em class="invalid error-label">Settings are in form of valid JSON.</em>
                                                     </div>
+                                                    <!-- /ko -->
+                                                    <!-- ko if: !$parent.isCurrentUserAdmin() -->
+                                                    <div>
+                                                        <span data-bind="value: settings"></span>
+                                                    </div>
+                                                    <!-- /ko -->
                                                 </div>
+                                                <!-- ko if: $parent.isCurrentUserAdmin() -->
                                                 <div class="form-actions">
                                                     <div class="row" style="margin:0">
                                                         <div class="col-md-12">
@@ -502,6 +609,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- /ko -->
                                             </form>
                                         </div>
                                     </article>
@@ -509,7 +617,7 @@
                             </div>
                             <div style="text-align:left;margin-top:30px">
                                 <button class="btn btn-light" data-bind="click: cancel_edit_hub">
-                                    Cancel Edit
+                                    Cancel Seetings
                                 </button>
                             </div>
                         </div>                        
