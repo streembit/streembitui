@@ -3897,6 +3897,7 @@ body {
 #call .forShowChatPos > div { 
     display: inline-block;
 }
+
 .showAddContBtn {
     position: absolute;
     bottom: 24px;
@@ -3907,4 +3908,37 @@ body {
 }
 .for-all-data{
     position: relative;
+}
+
+.oit-user-edit-container {
+    padding:0;
+    margin-top:20px;
+    margin-bottom:30px;
+}
+
+.oit-user-edit-container form {
+    margin: 20px 0;
+    border: 1px dotted #9b9b9b;
+    background: #e6e6e6;
+}
+
+.oit-user-edit-container form label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.oit-user-edit-container form .form-group {
+    margin-bottom: 10px;
+    padding: 10px 0 0 0;
+}
+.oit-user-edit-container form .form-group.fg-username {
+    width: 66%;
+    display: inline-block;
+}
+.oit-user-edit-container form .form-group.fg-username input {
+    width: 100%;
+}
+.oit-user-edit-container form .form-group.fg-isadmin {
+    width: 20%;
+    display: inline-block;
 }
