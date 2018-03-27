@@ -1,8 +1,8 @@
 
-<div data-bind="foreach: iothubs" class="row" style="margin:0">        
+<div data-bind="foreach: iothubs" class="row" style="margin:0">
     <div class="col-md-12 iothub">
-        <div class="iothub-header">            
-            <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>     
+        <div class="iothub-header">
+            <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>
             <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
                 <button class="btn btn-xs btn-light" data-bind="click: toggle_shownetwork_info" data-toggle="tooltip" data-placement="bottom" title="Network info">
                     <i class="fa fa-info-circle fa-lg"></i>
@@ -34,7 +34,7 @@
                 <div class="iothub-iotdevice">
                     <div class="title">
                         <div class="float-left" style="padding: 6px 5px 5px 5px;"><span data-bind="text: name"></span></div>
-                        <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">                            
+                        <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
                             <button class="btn btn-xs btn-light" data-bind="click: refresh">
                                 <i class="fa fa-refresh fa-lg"></i>
                             </button>
@@ -90,7 +90,7 @@
             </label>
         </div>
         <div style="clear:both"></div>
-    </div>  
+    </div>
 </script>
 
 <script type="text/html" id="feature-occupancy-sensing">
@@ -137,14 +137,14 @@
 </script>
 
 <script type="text/html" id="feature-template">
-    <div data-bind="template: template_name">        
-    </div>        
+    <div data-bind="template: template_name">
+    </div>
 </script>
 
 
 <script type="text/html" id="features-template">
     <div data-bind="foreach: features">
-        <div class="device-feature-item" data-bind="template: {name: 'feature-template' }">           
+        <div class="device-feature-item" data-bind="template: {name: 'feature-template' }">
         </div>
     </div>
 </script>
@@ -179,7 +179,7 @@
             <tr><td>Hardware version: </td> <td data-bind="text: networkinfo.hwversion"></td></tr>
             <tr><td>Network: </td> <td>Zigbee</td></tr>
             <tr><td>Address64: </td> <td data-bind="text: networkinfo.address64"></td></tr>
-            <tr><td>Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>            
+            <tr><td>Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>
         </table>
     </div>
 </script>
@@ -238,7 +238,7 @@
     </div>
 </script>
 
-<script type="text/html" id="onoff_switch_device">    
+<script type="text/html" id="onoff_switch_device">
     <div class="onoff_switch">
         <div style="display:flex;flex-direction: row">
             <div style="flex-grow:1">
@@ -256,14 +256,14 @@
                 </div>
             </div>
         </div>
-        
-        <div>    
+
+        <div>
             <span>Power consumption: </span> <span data-bind="text: power_consumption"></span>
         </div>
         <div>
             <span>Voltage: </span> <span data-bind="text: voltage"></span>
         </div>
-    </div>    
+    </div>
 </script>
 
 <script type="text/html" id="onoff_switch_device_settings">
@@ -286,22 +286,36 @@
 
 <script type="text/html" id="edit_hub">
     <div class="row" style="margin:0; padding:0">
-        <div class="col-sm-12 col-md-12" style="padding-left:0">
+        <div class="col-sm-12 col-md-12" style="padding-left:0;padding-right:0;">
             <div style="margin-top:20px">
-                <ul class="nav nav-tabs hub-details" role="tablist">
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_details" role="tab" class="active show"> <span class="hidden-mobile hidden-tablet"> Edit Hub details </span> </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_devices" role="tab"> <span class="hidden-mobile hidden-tablet"> Manage Hub devices </span> </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_control" role="tab"> <span class="hidden-mobile hidden-tablet"> Control Hub </span> </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_users" role="tab"> <span class="hidden-mobile hidden-tablet"> Manage Hub users </span> </a>
-                    </li>
-                </ul>
+                <header class="tabs-header">
+                    <ul class="nav nav-tabs hub-details pull-right" role="tablist">
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_details" role="tab" class="active show">
+                                <i class="fa fa-lg fa-arrow-circle-o-up"></i>
+                                <span class="hidden-mobile hidden-tablet"> Edit Hub details </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_devices" role="tab">
+                                <i class="fa fa-lg fa-arrow-circle-o-down"></i>
+                                <span class="hidden-mobile hidden-tablet"> Manage Hub devices </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_control" role="tab">
+                                <i class="fa fa-lg fa-arrow-circle-o-down"></i>
+                                <span class="hidden-mobile hidden-tablet"> Control Hub </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_users" role="tab">
+                                <i class="fa fa-lg fa-arrow-circle-o-down"></i>
+                                <span class="hidden-mobile hidden-tablet"> Manage Hub users </span>
+                            </a>
+                        </li>
+                    </ul>
+                </header>
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="edithub_details">
@@ -349,10 +363,10 @@
                                 <div class="form-actions" style="text-align:left">
                                     <div class="row" style="margin:0">
                                         <div class="col-md-12">
-                                            <button class="btn btn-light" data-bind="click: cancel_edit_hub">
-                                                Cancel Edit
+                                            <button class="btn btn-light btn-sm" data-bind="click: cancel_edit_hub">
+                                                Cancel
                                             </button>
-                                            <button class="btn btn-primary" data-bind="click: submit_edit_hub">
+                                            <button class="btn btn-primary btn-sm" data-bind="click: submit_edit_hub">
                                                 <i class="fa fa-save"></i>
                                                 Update Hub
                                             </button>
@@ -367,66 +381,66 @@
                         <div class="all_devices_edit">
                             <table>
                                 <thead>
-                                    <tr>
-                                        <td>Device ID</td>
-                                        <td>Device type</td>
-                                        <td>Device name</td>
-                                        <td>Model</td>
-                                        <td>Manufacturer</td>
-                                        <td>Hardware version</td>
-                                        <td>Permission</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                <tr>
+                                    <td>Device ID</td>
+                                    <td>Device type</td>
+                                    <td>Device name</td>
+                                    <td>Model</td>
+                                    <td>Manufacturer</td>
+                                    <td>Hardware version</td>
+                                    <td>Permission</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                                 </thead>
                                 <tbody data-bind="foreach: hubdevicelist">
-                                    <tr>
-                                        <td>
-                                            <span data-bind="text: deviceid"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: typename"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: name"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: details.modelidentifier"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: details.manufacturername"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: details.hwversion"></span>
-                                        </td>
-                                        <td style="min-width:150px">
-                                            <!-- ko if: uipermission() == 0 -->
-                                            <span>Not provisioned</span>
-                                            <!-- /ko -->
-                                            <!-- ko if: uipermission() == 1 -->
-                                            <i class="fa fa-check-circle fa-lg"style="color:#11a724"></i> <span>Allowed</span>
-                                            <!-- /ko -->
-                                            <!-- ko if: uipermission() == 2 -->
-                                            <i class="fa fa-times-circle fa-lg" style="color:#cc0101"></i> <span>Not permitted</span>
-                                            <!-- /ko -->
-                                        </td>
-                                        <td style="min-width:80px">
-                                            <!-- ko if: type == 2 && uipermission() == 0 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
-                                            <!-- /ko -->
-                                            <!-- ko if: type == 2 && uipermission() == 1 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
-                                            <!-- /ko -->
-                                            <!-- ko if: type == 2 && uipermission() == 2 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>
-                                            <!-- /ko -->
-                                        </td>
-                                        <td style="min-width:80px">
-                                            <!-- ko if: type == 2 -->
-                                            <button data-bind="click: function(){ $parent.delete_device_fromdb($data, $parent); }">Delete</button>
-                                            <!-- /ko -->
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <span data-bind="text: deviceid"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: typename"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: name"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: details.modelidentifier"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: details.manufacturername"></span>
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: details.hwversion"></span>
+                                    </td>
+                                    <td style="min-width:150px">
+                                        <!-- ko if: uipermission() == 0 -->
+                                        <span>Not provisioned</span>
+                                        <!-- /ko -->
+                                        <!-- ko if: uipermission() == 1 -->
+                                        <i class="fa fa-check-circle fa-lg"style="color:#11a724"></i> <span>Allowed</span>
+                                        <!-- /ko -->
+                                        <!-- ko if: uipermission() == 2 -->
+                                        <i class="fa fa-times-circle fa-lg" style="color:#cc0101"></i> <span>Not permitted</span>
+                                        <!-- /ko -->
+                                    </td>
+                                    <td style="min-width:80px">
+                                        <!-- ko if: type == 2 && uipermission() == 0 -->
+                                        <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
+                                        <!-- /ko -->
+                                        <!-- ko if: type == 2 && uipermission() == 1 -->
+                                        <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
+                                        <!-- /ko -->
+                                        <!-- ko if: type == 2 && uipermission() == 2 -->
+                                        <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>
+                                        <!-- /ko -->
+                                    </td>
+                                    <td style="min-width:80px">
+                                        <!-- ko if: type == 2 -->
+                                        <button data-bind="click: function(){ $parent.delete_device_fromdb($data, $parent); }">Delete</button>
+                                        <!-- /ko -->
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <div style="text-align:left;margin-top:20px;border-top:2px solid #f0f0f0;padding-top:10px">
@@ -479,22 +493,25 @@
                                         <!-- ko if: isCurrentUserAdmin() -->
                                         <div class="iot-user-edit-container" data-bind="visible: user_add_active()">
                                             <h3>Add User</h3>
-                                            <form class="form-horizontal iothub-form">
-                                                <div class="form-group fg-username">
+                                            <form class="form-horizontal iothub-form smart-form">
+                                                <section class="col col-10 fg-username">
                                                     <label>Username</label>
                                                     <input class="form-control" placeholder="username" type="text" maxlength="64" data-bind="value: add_username">
                                                     <div>
                                                         <em class="invalid error-label" data-bind="visible: adduser_form_errors()[0]">Invalid or empty username.</em>
                                                     </div>
-                                                </div>
-                                                <div class="form-group fg-isadmin">
-                                                    <label>Admin (1,0)</label>
-                                                    <input class="form-control" placeholder="1 or 0" type="text" data-bind="value: add_isadmin" style="max-width:80px" maxlength="1"  data-bind="value: add_isadmin">
+                                                </section>
+                                                <section class="col col-2 fg-isadmin">
+                                                    <label>Admin</label>
+                                                    <label class="toggle">
+                                                        <input type="checkbox"  data-bind="value: add_isadmin, checked: add_isadmin">
+                                                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
+                                                    </label>
                                                     <div>
                                                         <em class="invalid error-label" data-bind="visible: adduser_form_errors()[1]">Admin either 1 or 0.</em>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
+                                                </section>
+                                                <section>
                                                     <label>Public key</label>
                                                     <div>
                                                         <input class="form-control" placeholder="publickey" type="text" data-bind="value: add_publickey" style="max-width:900px" maxlength="256" data-bind="value: add_publickey">
@@ -502,21 +519,21 @@
                                                             <em class="invalid error-label">Invalid public key.</em>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
+                                                </section>
+                                                <section>
                                                     <label>Settings</label>
                                                     <input class="form-control" placeholder="valid JSON" type="text" data-bind="value: add_settings" style="max-width:900px">
                                                     <div data-bind="visible: adduser_form_errors()[3]">
                                                         <em class="invalid error-label">Settings are in form of valid JSON.</em>
                                                     </div>
-                                                </div>
+                                                </section>
                                                 <div class="form-actions">
                                                     <div class="row" style="margin:0">
                                                         <div class="col-md-12">
-                                                            <button class="btn btn-default" data-bind="click: toggle_adduser">
+                                                            <button class="btn btn-light btn-sm" data-bind="click: toggle_adduser">
                                                                 Back to Edit User
                                                             </button>
-                                                            <button class="btn btn-primary" data-bind="click: submit_add_user">
+                                                            <button class="btn btn-primary btn-sm" data-bind="click: submit_add_user">
                                                                 <i class="fa fa-save"></i>
                                                                 Add User
                                                             </button>
@@ -599,10 +616,11 @@
                                                 <div class="form-actions">
                                                     <div class="row" style="margin:0">
                                                         <div class="col-md-12">
-                                                            <button class="btn btn-danger" data-bind="click: $parent.submit_delete_user.bind($parent)">
+                                                            <button class="btn btn-danger btn-sm" data-bind="click: $parent.submit_delete_user.bind($parent)">
+                                                                <i class="fa fa-trash"></i>
                                                                 Delete User
                                                             </button>
-                                                            <button class="btn btn-primary" data-bind="click: $parent.submit_update_user.bind($parent)">
+                                                            <button class="btn btn-primary btn-sm" data-bind="click: $parent.submit_update_user.bind($parent)">
                                                                 <i class="fa fa-save"></i>
                                                                 Update User
                                                             </button>
@@ -620,10 +638,10 @@
                                     Cancel Seetings
                                 </button>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>
     </div>
 </script>
@@ -637,7 +655,7 @@
                     <fieldset>
                         <legend>Manage users on the Hub</legend>
                         <div class="padding: 0">
-                          
+
                         </div>
                     </fieldset>
                     <div class="form-actions">
@@ -767,7 +785,7 @@
                     </div>
                     <!-- /ko -->
                     <!-- ko if: protocol == "zwave" -->
-                        Z-wave TODO
+                    Z-wave TODO
                     <!-- /ko -->
                     <div class="permission_btns">
                         <label class="radio radio-inline" style="margin-top: 0">
@@ -791,6 +809,6 @@
                 </button>
             </div>
         </div>
-    </div>  
-    
+    </div>
+
 </script>
