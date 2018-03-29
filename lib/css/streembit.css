@@ -3899,12 +3899,137 @@ body {
 }
 .showAddContBtn {
     position: absolute;
-    bottom: 24px;
-    right: auto;
-    left: 197px;
+    bottom: 9px;
+    right: 25px;
+    left: auto;
     z-index: 999;
     cursor: pointer;
 }
 .for-all-data{
     position: relative;
+}
+#header {
+    position: fixed;
+    width: 100%;
+    z-index: 905;
+    top: 0px;
+}
+.fixed-header #main{
+    margin-top: 0;
+}
+.for-add-group-call{
+    position: relative;
+}
+.for-add-group-call > .list-group-item:hover, .for-add-group-call > .contact-bar-list-item {
+    background: #f9f9f9;
+}
+#allContent{
+    margin-top: 49px;
+}
+#addGroupModal .modal-dialog{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.add-all-contacts-field{
+    overflow-y: auto;
+    position: absolute;
+    margin-top: -269px;
+    margin-left: -195px;
+    top: 50%;
+    left: 50%;
+    border: 3px solid #e4e4e4;
+    border-radius: 3px;
+    background: #f8f8f8;
+}
+.for-add-group-call .list-group-item:first-child, .for-add-group-call .contact-bar-list-item:first-child{
+    margin: 0px -5px!important;
+}
+.add-group-header-with-closebtn{
+    background: #f8f8f8;
+    border-bottom: 1px solid #e4e4e4;
+    width: 400px;
+    margin: 0 auto;
+    overflow-y: auto;
+} 
+.close-add-group{
+    margin: 0;
+    padding:0;
+    position: relative;
+    top:3px;
+    right: 23px;
+}
+.all-contacts-part{
+    margin:0 auto; 
+    width: 400px; 
+    background: #f0f0f0;
+    padding: 5px;
+}
+.add-group-header{
+    margin: 10px auto;
+    font-size: 19px;
+    font-weight: bold;
+    text-align: center;
+}
+.adding-contact-to-groupcall{
+    cursor: default;
+    height: 40px;
+    border-radius: .25em;
+}
+.small-screen-tooltips{
+    text-align: center;
+    display: block;
+}
+.small-screen-plus-ic{
+    width: 20px;
+    font-size: 19px;
+    color: #366297;
+    padding: 4px;
+    cursor: pointer;
+}
+.small-screen-show-chat-ic{
+    width: 23px;
+    font-size: 20px;
+    color: #366297;
+    padding: 4px;
+    cursor: pointer;
+    margin: 2px;
+}
+.small-screen-send-file-ic{
+    width: 23px;
+    font-size: 20px;
+    color: #366297;
+    padding: 4px;
+    cursor: pointer;
+    margin: 2px;
+}
+.spallWindMuteIc{
+    width: 21px;
+    font-size: 20px;
+    color: #366297;
+    padding: 4px;
+    cursor: pointer;
+    margin: 2px;
+}
+.small-screen-hangup-ic{
+    font-size: 30px;
+    color: #a90329;
+    cursor: pointer;
+    position: relative;
+    bottom: 2px;
+    right: 2px;
+}
+.for-group-users{
+    display: inline-block;
+    width: 50%;
+    margin: 12px 0px;
+}
+.user-name{
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0 8px;
 }
