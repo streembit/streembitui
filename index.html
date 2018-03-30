@@ -399,9 +399,30 @@
                             </div>
                         </div>
                     </div>
-                    <div data-bind="foreach: contacts, visible: showInvite" class="smallScreenContactsList" style="position: absolute;bottom: 162px;right: 40px;width: 120px;height: auto;max-height: 200px;background: #000;border: 2px solid #c4c4c4;">
-                        <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }" style="width: 100%;height: 24px;padding: 0 0 4px;box-sizing: border-box;font-size: 1.1em;background: #dee8e5;border: 0;border-bottom: 2px ridge #c4c4c4;"></button>
+                    
+                    <div data-bind="visible: showInvite" class="smallScreenContactsList" style="position: absolute;bottom: 162px;right: 40px;width: 120px;height: auto;max-height: 200px;background: #000;">
+                        <!-- <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }" style="width: 100%;height: 24px;padding: 0 0 4px;box-sizing: border-box;font-size: 1.1em;background: #dee8e5;border: 0;border-bottom: 2px ridge #c4c4c4;"></button> -->
                     </div>
+
+                    <div class="add-all-contacts-field add-to-group-sm-in-chat" data-bind="visible: showInvite">
+                        <div class="add-group-header-with-closebtn">
+                            <div class="add-group-header">
+                                <span>Add to Group</span>
+                                <button type="button" class="close close-add-group" data-bind="click: close_add_group_sm">&times;</button>
+                            </div>
+                        </div>
+                        <div data-bind="foreach: contacts" class="all-contacts-part">
+                            <div class="for-add-group-call" style="width: 370px;margin: 4px auto">
+                                <div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
+                                    <div style="float:left;">
+                                        <span data-bind="text: name" class="mar-no text-main" style="color: #474544;font-weight: bold;"></span>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div id="smallScreenAudioCall1">
                         <span class="small-screen-tooltips">
                             <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
@@ -413,6 +434,7 @@
                         </span>
                         <span style="font-weight: bold;" class="forSmScreen"></span>
                     </div>
+
                     <!-- layout option-->
                     <div class="demo">
                         <div class="demo_settings_layout">
