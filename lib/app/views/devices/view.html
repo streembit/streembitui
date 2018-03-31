@@ -1,8 +1,8 @@
 
-<div data-bind="foreach: iothubs" class="row" style="margin:0">        
+<div data-bind="foreach: iothubs" class="row" style="margin:0">
     <div class="col-md-12 iothub">
-        <div class="iothub-header">            
-            <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>     
+        <div class="iothub-header">
+            <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>
             <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
                 <button class="btn btn-xs btn-light" data-bind="click: toggle_shownetwork_info" data-toggle="tooltip" data-placement="bottom" title="Network info">
                     <i class="fa fa-info-circle fa-lg"></i>
@@ -34,7 +34,7 @@
                 <div class="iothub-iotdevice">
                     <div class="title">
                         <div class="float-left" style="padding: 6px 5px 5px 5px;"><span data-bind="text: name"></span></div>
-                        <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">                            
+                        <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
                             <button class="btn btn-xs btn-light" data-bind="click: refresh">
                                 <i class="fa fa-refresh fa-lg"></i>
                             </button>
@@ -57,6 +57,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div style="text-align:left;" data-bind="visible: isedit_mode()">
+            <button class="btn btn-light btn-small btn-cancel-settings" data-bind="click: cancel_edit_hub">
+                Close
+            </button>
         </div>
     </div>
 </div>
@@ -90,7 +95,7 @@
             </label>
         </div>
         <div style="clear:both"></div>
-    </div>  
+    </div>
 </script>
 
 <script type="text/html" id="feature-occupancy-sensing">
@@ -137,14 +142,14 @@
 </script>
 
 <script type="text/html" id="feature-template">
-    <div data-bind="template: template_name">        
-    </div>        
+    <div data-bind="template: template_name">
+    </div>
 </script>
 
 
 <script type="text/html" id="features-template">
     <div data-bind="foreach: features">
-        <div class="device-feature-item" data-bind="template: {name: 'feature-template' }">           
+        <div class="device-feature-item" data-bind="template: {name: 'feature-template' }">
         </div>
     </div>
 </script>
@@ -179,7 +184,7 @@
             <tr><td>Hardware version: </td> <td data-bind="text: networkinfo.hwversion"></td></tr>
             <tr><td>Network: </td> <td>Zigbee</td></tr>
             <tr><td>Address64: </td> <td data-bind="text: networkinfo.address64"></td></tr>
-            <tr><td>Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>            
+            <tr><td>Address16: </td> <td data-bind="text: networkinfo.address16"></td></tr>
         </table>
     </div>
 </script>
@@ -238,7 +243,7 @@
     </div>
 </script>
 
-<script type="text/html" id="onoff_switch_device">    
+<script type="text/html" id="onoff_switch_device">
     <div class="onoff_switch">
         <div style="display:flex;flex-direction: row">
             <div style="flex-grow:1">
@@ -256,14 +261,14 @@
                 </div>
             </div>
         </div>
-        
-        <div>    
+
+        <div>
             <span>Power consumption: </span> <span data-bind="text: power_consumption"></span>
         </div>
         <div>
             <span>Voltage: </span> <span data-bind="text: voltage"></span>
         </div>
-    </div>    
+    </div>
 </script>
 
 <script type="text/html" id="onoff_switch_device_settings">
@@ -286,107 +291,155 @@
 
 <script type="text/html" id="edit_hub">
     <div class="row" style="margin:0; padding:0">
-        <div class="col-sm-12 col-md-12" style="padding-left:0">
+        <div class="col-sm-12 col-md-12" style="padding-left:0;padding-right:0;">
             <div style="margin-top:20px">
-                <ul class="nav nav-tabs hub-details" role="tablist">
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_details" role="tab" aria-expanded="true"> <span class="hidden-mobile hidden-tablet"> Edit Hub details </span> </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_devices" role="tab" aria-expanded="false"> <span class="hidden-mobile hidden-tablet"> Manage Hub devices </span> </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_control" role="tab" aria-expanded="false"> <span class="hidden-mobile hidden-tablet"> Control Hub </span> </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#edithub_users" role="tab" aria-expanded="false"> <span class="hidden-mobile hidden-tablet"> Manage Hub users </span> </a>
-                    </li>
-                </ul>
+                <header class="tabs-header">
+                    <ul class="nav nav-tabs hub-details pull-right" role="tablist">
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_details" role="tab" class="active show">
+                                <i class="fa fa-lg fa-arrow-circle-o-up"></i>
+                                <span class="hidden-mobile hidden-tablet"> Edit Hub details </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_devices" role="tab">
+                                <i class="fa fa-lg fa-arrow-circle-o-down"></i>
+                                <span class="hidden-mobile hidden-tablet"> Manage Hub devices </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_control" role="tab">
+                                <i class="fa fa-lg fa-arrow-circle-o-down"></i>
+                                <span class="hidden-mobile hidden-tablet"> Control Hub </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#edithub_users" role="tab">
+                                <i class="fa fa-lg fa-arrow-circle-o-down"></i>
+                                <span class="hidden-mobile hidden-tablet"> Manage Hub users </span>
+                            </a>
+                        </li>
+                    </ul>
+                </header>
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="edithub_details">
-                        <div style="padding-top:20px">
-                            <form class="form-horizontal iothub-form">
-                                <fieldset>
-                                    <div class="padding: 0">
-                                        <div class="form-group">
-                                            <label>Hub ID</label>
-                                            <div>
-                                                <span data-bind="text: id" style="font-weight:bold"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Hub name</label>
-                                            <input class="form-control" placeholder="Hub name" type="text" data-bind="value: newname" style="max-width:450px" maxlength="64">
-                                            <div data-bind="visible: is_newname_error">
-                                                <em id="id-error" class="invalid error-label">This field is required.</em>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="margin-bottom:20px">
-                                            <label>Public key</label>
-                                            <input class="form-control" placeholder="BS58 encoded public key" type="text" data-bind="value: newpublickey" style="max-width:900px" maxlength="128">
-                                            <div data-bind="visible: is_newid_error">
-                                                <em id="id-error" class="invalid error-label">This field is required.</em>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <div class="form-actions" style="text-align:left">
-                                    <div class="row" style="margin:0">
-                                        <div class="col-md-12">
-                                            <button class="btn btn-light" data-bind="click: cancel_edit_hub">
-                                                Cancel Edit
-                                            </button>
-                                            <button class="btn btn-primary" data-bind="click: submit_edit_hub">
-                                                <i class="fa fa-save"></i>
-                                                Update Hub
-                                            </button>
-                                        </div>
+                        <div style="margin:20px 2%;">
+                            <!-- ko if: isCurrentUserAdmin() -->
+                            <div class="jarviswidget jarviswidget-sortable" id="hub-details" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+                                <header role="heading" class="ui-sortable-handle">
+                                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                    <h2>Hud ID: <span data-bind="text: id" style="font-weight:bold"></span></h2>
+                                    <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                                </header>
+
+                                <div role="content">
+                                    <div class="widget-body no-padding">
+                                        <form action="" class="smart-form" novalidate="novalidate">
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-12">
+                                                        <label>Hub name</label>
+                                                        <label class="input"> <i class="icon-append fa fa-microchip"></i>
+                                                            <input type="text" data-bind="value: newname" placeholder="Hub name">
+                                                        </label>
+                                                        <div data-bind="visible: is_newname_error">
+                                                            <em class="invalid error-label">This field is required.</em>
+                                                        </div>
+                                                    </section>
+                                                </div>
+
+                                                <div class="row">
+                                                    <section class="col col-12">
+                                                        <label>Public key</label>
+                                                        <label class="input"> <i class="icon-append fa fa-key"></i>
+                                                            <input type="text" placeholder="BS58 encoded public key" type="text" data-bind="value: newpublickey">
+                                                        </label>
+                                                        <div data-bind="visible: is_newid_error">
+                                                            <em class="invalid error-label">This field is required.</em>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+
+                                            <footer>
+                                                <button class="btn btn-primary btn-sm" data-bind="click: submit_edit_hub">
+                                                    <i class="fa fa-save"></i>
+                                                    Update Hub
+                                                </button>
+                                            </footer>
+                                        </form>
+                                        <!-- /ko -->
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            <!-- /ko -->
+                            <!-- ko if: !isCurrentUserAdmin() -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped responsive-utilities">
+                                    <thead>
+                                    <tr>
+                                        <th>Hub ID</th>
+                                        <th>Hub Name</th>
+                                        <th>Hub Public key</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th data-bind="text: id"></th>
+                                        <td data-bind="text: newname"></td>
+                                        <td data-bind="text: newpublickey" class="wrapup"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /ko -->
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="edithub_devices">
                         <div class="all_devices_edit">
-                            <table>
-                                <thead>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped responsive-utilities">
+                                    <thead>
                                     <tr>
-                                        <td>Device ID</td>
-                                        <td>Device type</td>
-                                        <td>Device name</td>
-                                        <td>Model</td>
-                                        <td>Manufacturer</td>
-                                        <td>Hardware version</td>
-                                        <td>Permission</td>
-                                        <td></td>
-                                        <td></td>
+                                        <th style="width: 160px;">Name</th>
+                                        <th>Value</th>
                                     </tr>
-                                </thead>
-                                <tbody data-bind="foreach: hubdevicelist">
+                                    </thead>
+                                    <tbody data-bind="foreach: hubdevicelist">
                                     <tr>
+                                        <th>Device ID</th>
+                                        <td class="is-visible" data-bind="text: deviceid"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Device type</th>
+                                        <td class="is-visible" data-bind="text: typename"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Device name</th>
+                                        <td class="is-visible" data-bind="text: name"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Model</th>
+                                        <td class="is-visible" data-bind="text: details.modelidentifier"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Manufacturer</th>
+                                        <td class="is-visible" data-bind="text: details.manufacturername"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Hardware version</th>
+                                        <td class="is-visible" data-bind="text: details.manufacturername"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Permission</th>
+                                        <td class="is-visible" data-bind="text: details.hwversion"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><!-- ko if: uipermission() == 0 -->Not provisioned<!-- /ko --></th>
                                         <td>
-                                            <span data-bind="text: deviceid"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: typename"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: name"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: details.modelidentifier"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: details.manufacturername"></span>
-                                        </td>
-                                        <td>
-                                            <span data-bind="text: details.hwversion"></span>
-                                        </td>
-                                        <td style="min-width:150px">
-                                            <!-- ko if: uipermission() == 0 -->
-                                            <span>Not provisioned</span>
-                                            <!-- /ko -->
                                             <!-- ko if: uipermission() == 1 -->
                                             <i class="fa fa-check-circle fa-lg"style="color:#11a724"></i> <span>Allowed</span>
                                             <!-- /ko -->
@@ -394,114 +447,269 @@
                                             <i class="fa fa-times-circle fa-lg" style="color:#cc0101"></i> <span>Not permitted</span>
                                             <!-- /ko -->
                                         </td>
-                                        <td style="min-width:80px">
+                                    </tr>
+                                    <!-- ko if: (type == 2 && uipermission() == 0) || (type == 2 && uipermission() == 1) || (type == 2 && uipermission() == 2) -->
+                                    <tr>
+                                        <th></th>
+                                        <td>
                                             <!-- ko if: type == 2 && uipermission() == 0 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>  <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>  
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
                                             <!-- /ko -->
                                             <!-- ko if: type == 2 && uipermission() == 1 -->
                                             <button data-bind="click: function(){ $parent.set_device_permission($data, 2, $parent); }">Disable</button>
                                             <!-- /ko -->
                                             <!-- ko if: type == 2 && uipermission() == 2 -->
-                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button> 
-                                            <!-- /ko -->
-                                        </td>
-                                        <td style="min-width:80px">
-                                            <!-- ko if: type == 2 -->
-                                            <button data-bind="click: function(){ $parent.delete_device_fromdb($data, $parent); }">Delete</button>
+                                            <button data-bind="click: function(){ $parent.set_device_permission($data, 1, $parent); }">Allow</button>
                                             <!-- /ko -->
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                            <div style="text-align:left;margin-top:20px;border-top:2px solid #f0f0f0;padding-top:10px">
-                                <button class="btn btn-light" data-bind="click: cancel_edit_hub">
-                                    Cancel Edit
-                                </button>
+                                    <!-- /ko -->
+                                    <!-- ko if: type == 2 -->
+                                    <tr>
+                                        <th></th>
+                                        <td>
+                                            <button data-bind="click: function(){ $parent.delete_device_fromdb($data, $parent); }">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <!-- /ko -->
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>       
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="edithub_control">
-                        <div class="all_devices_edit">
-                            <div>
-                                <div>
-                                    <div style="font-size:14px;font-weight:bold">
-                                        Enable device join on Hub
-                                    </div>
-                                    <div>
-                                        <div>
-                                            Join interval in seconds (max 240 seconds)
-                                        </div>
-                                        <div style="margin-top:6px">
-                                            <input type="number" style="max-width:100px" max="240" min="30" data-bind="value: new_join_interval"/>&nbsp;&nbsp;<button data-bind="click: enable_gateway_join">Enable</button>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top:10px" data-bind="visible: enable_timer() > 1">
-                                        <div style="background-color:#0f0f0f;padding:5px 10px;display:inline-block;font-weight:bold;color:#fff;border-radius:3px">
-                                            Remaining join time <span data-bind="text: enable_timer"></span> seconds.
+                        <div class="jarviswidget" style="margin:20px 2%;" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-sortable="false" role="widget">
+                            <header role="heading">
+                                <h2>Enable device join on Hub</h2>
+                                <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                            </header>
+
+                            <div role="content">
+                                <div class="widget-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active">
+                                            <p>
+                                                Join interval in seconds (max 240 seconds)
+                                            </p>
+                                            <p>
+                                                <input type="number" style="max-width:100px" max="240" min="30" data-bind="value: new_join_interval"/>
+                                                &nbsp;&nbsp;<button data-bind="click: enable_gateway_join">Enable</button>
+                                            </p>
+                                            <p>
+                                                Remaining join time <span data-bind="text: enable_timer"></span> seconds.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="text-align:left;margin-top:20px;border-top:2px solid #f0f0f0;padding-top:10px">
-                                <button class="btn btn-light" data-bind="click: cancel_edit_hub">
-                                    Cancel Edit
-                                </button>
-                            </div>
                         </div>
                     </div>
+
                     <div role="tabpanel" class="tab-pane" id="edithub_users">
                         <div>
                             <div style="padding:50px">
                                 <div class="row">
                                     <article class="col-sm-12 col-md-12 col-lg-12">
-                                        <fieldset>
-                                            <legend>Users of the Hub</legend>
-                                        </fieldset>
-                                        <div data-bind="foreach: users" style="border: 1px dotted #ccc;padding:0;margin-top:20px;margin-bottom:30px">
-                                            <form class="form-horizontal iothub-form">
-                                                <div class="form-group" style="margin-bottom:20px">
-                                                    <label>Username</label>
-                                                    <input class="form-control" placeholder="username" type="text" data-bind="value: username" style="max-width:400px" maxlength="64">
-                                                </div>
-                                                <div class="form-group" style="margin-bottom:20px">
-                                                    <label>Public key</label>
-                                                    <input class="form-control" placeholder="Public Key" type="text" data-bind="value: publickey" style="max-width:900px" maxlength="256">
-                                                </div>
-                                                <div class="form-group" style="margin-bottom:20px">
-                                                    <label>Admin (1,0)</label>
-                                                    <input class="form-control" placeholder="1 or 0" type="text" data-bind="value: isadmin" style="max-width:40px" maxlength="1">
-                                                </div>
-                                                <div class="form-group" style="margin-bottom:20px">
-                                                    <label>Settings</label>
-                                                    <input class="form-control" placeholder="valid JSON" type="text" data-bind="value: settings" style="max-width:900px">
-                                                </div>
-                                                <div class="form-actions">
-                                                    <div class="row" style="margin:0">
-                                                        <div class="col-md-12">
-                                                            <button class="btn btn-light" data-bind="click: $parent.cancel_manage_users">
-                                                                Cancel
+                                        <!-- ko if: isCurrentUserAdmin() -->
+                                        <span class="fa fa-user-plus users-hub" data-bind="visible: !user_add_active(), click: toggle_adduser"></span>
+
+                                        <div class="jarviswidget jarviswidget-sortable" id="adduser" data-bind="visible: user_add_active()" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+                                            <header role="heading" class="ui-sortable-handle">
+                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                <h2>Add user</h2>
+                                                <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                                            </header>
+
+                                            <div role="content">
+                                                <div class="widget-body no-padding">
+                                                    <form action="" class="smart-form" novalidate="novalidate">
+                                                        <fieldset>
+                                                            <div class="row">
+                                                                <section class="col col-10">
+                                                                    <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                                        <input type="text" data-bind="value: add_username" placeholder="Username">
+                                                                    </label>
+                                                                    <div>
+                                                                        <em class="invalid error-label" data-bind="visible: adduser_form_errors()[0]">Invalid or empty username.</em>
+                                                                    </div>
+                                                                </section>
+                                                                <section class="col col-2">
+                                                                    <label class="select">
+                                                                        <select data-bind="value: add_isadmin">
+                                                                            <option value="nan" selected="" disabled="">Is admin</option>
+                                                                            <option value="1">YES</option>
+                                                                            <option value="0">NO</option>
+                                                                        </select> <i></i>
+                                                                    </label>
+                                                                    <div>
+                                                                        <em class="invalid error-label" data-bind="visible: adduser_form_errors()[1]">Admin either Yes or No.</em>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <section class="col col-12">
+                                                                    <label class="input"> <i class="icon-append fa fa-key"></i>
+                                                                        <input type="text" data-bind="value: add_publickey" placeholder="Public key">
+                                                                    </label>
+                                                                    <div data-bind="visible: adduser_form_errors()[2]">
+                                                                        <em class="invalid error-label">Invalid public key.</em>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <section class="col col-12">
+                                                                    <label class="input"> <i class="icon-append fa fa-cogs"></i>
+                                                                        <input type="text" data-bind="value: add_settings" placeholder="Settings">
+                                                                    </label>
+                                                                    <div data-bind="visible: adduser_form_errors()[3]">
+                                                                        <em class="invalid error-label">Settings are in form of valid JSON.</em>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                        </fieldset>
+
+                                                        <footer>
+                                                            <button class="btn btn-default btn-sm" data-bind="click: toggle_adduser">
+                                                                <i class="fa fa-undo"></i>
+                                                                Back to Edit User
                                                             </button>
-                                                            <button class="btn btn-primary" data-bind="click: $parent.submit_manage_users">
+                                                            <button class="btn btn-primary btn-sm" data-bind="click: submit_add_user">
                                                                 <i class="fa fa-save"></i>
-                                                                Save Users
+                                                                Add User
                                                             </button>
-                                                        </div>
+                                                        </footer>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /ko -->
+
+                                        <!-- ko if: isCurrentUserAdmin() -->
+                                        <div data-bind="foreach: users, visible: !user_add_active()">
+                                            <div class="jarviswidget jarviswidget-sortable edituser" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+                                                <div role="content">
+                                                    <div class="widget-body no-padding">
+                                                        <form action="" class="smart-form" novalidate="novalidate">
+                                                            <fieldset>
+                                                                <div class="row">
+                                                                    <section class="col col-9">
+                                                                        <label>Username</label>
+                                                                        <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                                            <input type="text" data-bind="value: username" placeholder="Username">
+                                                                        </label>
+                                                                        <div data-bind="visible: $parent.user_form_errors()[$index()].username">
+                                                                            <em class="invalid error-label">Invalid or empty username.</em>
+                                                                        </div>
+                                                                    </section>
+                                                                    <section class="col col-3">
+                                                                        <label>Is admin</label>
+                                                                        <label class="select">
+                                                                            <select data-bind="value: isadmin">
+                                                                                <!-- ko if: isadmin -->
+                                                                                <option value="1" selected="">Yes</option>
+                                                                                <option value="2">No</option>
+                                                                                <!-- /ko -->
+                                                                                <!-- ko if: !isadmin -->
+                                                                                <option value="1">Yes</option>
+                                                                                <option value="0" selected="">No</option>
+                                                                                <!-- /ko -->
+                                                                            </select> <i></i>
+                                                                        </label>
+                                                                        <div data-bind="visible: $parent.user_form_errors()[$index()].isadmin">
+                                                                            <em class="invalid error-label">Admin either yes or no.</em>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <section class="col col-12">
+                                                                        <label>Public key</label>
+                                                                        <label class="input"> <i class="icon-append fa fa-key"></i>
+                                                                            <input type="text" data-bind="value: publickey" placeholder="Public key">
+                                                                        </label>
+                                                                        <div data-bind="visible: $parent.user_form_errors()[$index()].publickey">
+                                                                            <em class="invalid error-label">Invalid public key.</em>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <section class="col col-12">
+                                                                        <label>Settings</label>
+                                                                        <label class="input"> <i class="icon-append fa fa-cogs"></i>
+                                                                            <input type="text" data-bind="value: settings" placeholder="Settings">
+                                                                        </label>
+                                                                        <div data-bind="visible: $parent.user_form_errors()[$index()].settings">
+                                                                            <em class="invalid error-label">Settings are in form of valid JSON.</em>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+                                                            </fieldset>
+
+                                                            <footer>
+                                                                <button class="btn btn-danger btn-sm" data-bind="click: $parent.submit_delete_user.bind($parent)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                    Delete User
+                                                                </button>
+                                                                <button class="btn btn-primary btn-sm" data-bind="click: $parent.submit_update_user.bind($parent)">
+                                                                    <i class="fa fa-save"></i>
+                                                                    Update User
+                                                                </button>
+                                                            </footer>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
+                                        <!-- /ko -->
+
+                                        <!-- ko if: !isCurrentUserAdmin() -->
+                                        <div data-bind="foreach: users" class="view-settings">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped responsive-utilities">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 120px;">Name</th>
+                                                        <th>Value</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>Username</th>
+                                                        <td class="is-visible" data-bind="text: username"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Is admin</th>
+                                                        <!-- ko if: isadmin -->
+                                                        <td class="is-visible">YES</td>
+                                                        <!-- /ko -->
+                                                        <!-- ko if: !isadmin -->
+                                                        <td class="is-visible">NO</td>
+                                                        <!-- /ko -->
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Public key</th>
+                                                        <td class="is-visible" data-bind="text: publickey"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Settings</th>
+                                                        <td class="is-visible" data-bind="text: settings"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- /ko -->
                                     </article>
                                 </div>
                             </div>
-                            <div style="text-align:left;margin-top:30px">
-                                <button class="btn btn-light" data-bind="click: cancel_edit_hub">
-                                    Cancel Edit
-                                </button>
-                            </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>
     </div>
 </script>
@@ -514,9 +722,7 @@
                 <form class="form-horizontal iothub-form">
                     <fieldset>
                         <legend>Manage users on the Hub</legend>
-                        <div class="padding: 0">
-                          
-                        </div>
+                        <div class="padding: 0"></div>
                     </fieldset>
                     <div class="form-actions">
                         <div class="row" style="margin:0">
@@ -623,15 +829,47 @@
             <div data-bind="foreach: unconfigured_devices" class="unconfigured_devices_items">
                 <div class="unconfigured_device">
                     <!-- ko if: protocol == "zigbee" -->
-                    <table>
-                        <tr><td>Protocol: </td> <td>Zigbee</td></tr>
-                        <tr><td>Device ID: </td> <td data-bind="text: deviceid"></td></tr>
-                        <tr><td>Manufacturer: </td> <td data-bind="text: manufacturername"></td></tr>
-                        <tr><td>Model: </td> <td data-bind="text: modelidentifier"></td></tr>
-                        <tr><td>Hardware version: </td> <td data-bind="text: hwversion"></td></tr>
-                        <tr><td>Address64: </td> <td data-bind="text: address64"></td></tr>
-                        <tr><td>Address16: </td> <td data-bind="text: address16"></td></tr>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped responsive-utilities">
+                            <thead>
+                            <tr>
+                                <th style="width: 120px;">Name</th>
+                                <th>Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Protocol</th>
+                                <td class="is-visible">Zigbee</td>
+                            </tr>
+                            <tr>
+                                <th>Device ID</th>
+                                <td class="is-visible" data-bind="text: deviceid"></td>
+                            </tr>
+                            <tr>
+                                <th>Manufacturer</th>
+                                <td class="is-visible" data-bind="text: manufacturername"></td>
+                            </tr>
+                            <tr>
+                                <th>Model</th>
+                                <td class="is-visible" data-bind="text: modelidentifier"></td>
+                            </tr>
+                            <tr>
+                                <th>Hardware version</th>
+                                <td class="is-visible" data-bind="text:hwversion"></td>
+                            </tr>
+                            <tr>
+                                <th>Address64</th>
+                                <td class="is-visible" data-bind="text:address64"></td>
+                            </tr>
+                            <tr>
+                                <th>Address16</th>
+                                <td class="is-visible" data-bind="text:address16"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div style="margin-top:15px;padding: 0 5px">
                         <div>Device name</div>
                         <input type="text" data-bind="value: devicename" style="min-width:200px" />
@@ -645,7 +883,7 @@
                     </div>
                     <!-- /ko -->
                     <!-- ko if: protocol == "zwave" -->
-                        Z-wave TODO
+                    Z-wave TODO
                     <!-- /ko -->
                     <div class="permission_btns">
                         <label class="radio radio-inline" style="margin-top: 0">
@@ -669,6 +907,6 @@
                 </button>
             </div>
         </div>
-    </div>  
-    
+    </div>
+
 </script>
