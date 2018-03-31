@@ -11131,7 +11131,7 @@ aside {
   background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
   background-repeat: repeat-x;
   position: relative;
-  z-index: 905;
+  z-index: 10000;
 }
 #header > div {
   display: inline-block;
