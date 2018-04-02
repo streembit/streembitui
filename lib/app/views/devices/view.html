@@ -591,11 +591,11 @@
                         <tr><td>Address64: </td> <td data-bind="text: address64"></td></tr>
                         <tr><td>Address16: </td> <td data-bind="text: address16"></td></tr>
                     </table>
-                    <div style="margin-top:15px;padding: 0 5px">
+                    <div style="margin-top:15px;padding: 0 10px 5px 10px">
                         <div>Device name</div>
                         <input type="text" data-bind="value: devicename" style="min-width:200px" />
                     </div>
-                    <div data-bind="foreach: features" class="featureslist">
+                    <div data-bind="foreach: features" class="featureslist" style="padding: 5px 10px">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" data-bind="checked: selected"><span data-bind="text: name"></span>
@@ -611,7 +611,7 @@
                             <input type="radio" class="radiobox" name="permissionGroup" value="1" data-bind="checked: permitted">
                             <span>Allow</span>
                         </label>
-                        <label class="radio radio-inline" style="margin-top: 0">
+                        <label class="radio radio-inline" style="margin-top: 0;margin-left:30px">
                             <input type="radio" class="radiobox" name="permissionGroup" value="0" data-bind="checked: permitted">
                             <span>Remove</span>
                         </label>
