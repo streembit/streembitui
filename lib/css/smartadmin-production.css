@@ -12323,16 +12323,11 @@ input[type="color"].ui-autocomplete-loading {
 .nav-tabs > li.active > a > .fa {
   opacity: 1;
 }
-.nav-tabs > li > a {
-  border-radius: 0px;
-  color: #333333;
-}
 .nav-tabs > li.active > a {
   -webkit-box-shadow: 0 -2px 0 #57889c;
   -moz-box-shadow: 0 -2px 0 #57889c;
   box-shadow: 0 -2px 0 #57889c;
   border-top-width: 0px !important;
-  margin-top: 1px !important;
   font-weight: bold;
 }
 .tabs-left .nav-tabs > li.active > a {
