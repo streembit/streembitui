@@ -29,6 +29,7 @@ System.config({
     "bip39": "npm:bip39@2.5.0",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "browserify-aes": "npm:browserify-aes@1.1.1",
+    "crypto-browserify": "npm:crypto-browserify@3.12.0",
     "bs58check": "npm:bs58check@1.3.4",
     "buffer": "github:jspm/nodelibs-buffer@0.1.1",
     "clarinet": "npm:clarinet@0.11.0",
