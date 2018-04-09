@@ -658,6 +658,9 @@ body{
 .content-panel.active-cbar .chat-fill-area {
     /*width: calc(100vw - 490px);*/
 }
+.content-panel.active-cbar .chat-fill-area.chat-video {
+    width: 100%;
+}
 .content-panel.active-cbar .chat-item-msg {
     max-width: calc(100vw - 640px);
 }
@@ -670,6 +673,9 @@ body{
 
 .content-panel.hide-menu.active-cbar .chat-fill-area {
     width: calc(100vw - 270px);
+}
+.content-panel.hide-menu.active-cbar .chat-fill-area.chat-video {
+    width: 100%;
 }
 .content-panel.hide-menu.active-cbar .chat-item-msg {
     max-width: calc(100vw - 420px);
@@ -829,17 +835,15 @@ body{
     flex:1;
     display:flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: stretch;
     align-content: stretch;
 }
 
 .video_ctrls_items{
-    flex:1;
-    display:flex;
-    justify-content: center;
-    flex-direction: column;
-    position:relative;
+    position: relative;
+    display: inline-block;
+    height: 100%;
 }
 
 .chat_items {
@@ -868,6 +872,15 @@ body{
     margin-bottom:5px;
 }
 
+.video_ctrls_items .localvid_parent {
+    margin-bottom: 0px;
+    position: absolute;
+    top: 10px;
+    left: auto;
+    right: 10px;
+    z-index: 999;
+}
+
 #localvid{
     width: 164px;
     height: 124px;
@@ -879,10 +892,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    height: 100%;
 }
 
 #remotevid{
     border: 5px solid #555;
+    max-width: 100%;
 }
 
 .forShowChatPos{
@@ -3913,7 +3928,7 @@ body {
 #header {
     position: fixed;
     width: 100%;
-    z-index: 905;
+    z-index: 1000;
     top: 0px;
 }
 .fixed-header #main{
