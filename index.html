@@ -117,7 +117,6 @@
             background: #333;
             height:100%;
         }
-
         body[data-account-load-complete=true] .content-panel {
             background: #fff;
         }
@@ -129,7 +128,12 @@
         body[data-account-load-complete=false] .demo{
             display: none;
         }
-
+        body[data-account-load-complete=false] #mainPanel{
+            margin-left: 0;
+        }
+         body[data-account-load-complete=true] #mainPanel{
+            margin-left: 220px;
+        }
         body[data-appinit=false] #load-container{
             display: none;
         }
@@ -179,7 +183,7 @@
             <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo">
+                <span id="logo" data-action="mainLogoStreembit" style="cursor: pointer;">
                     <img src="lib/images/applogo.png">
                 </span>
                 <!-- END LOGO PLACEHOLDER --> 
@@ -189,7 +193,9 @@
                 </div> -->   
                 <!-- collapse menu button -->
                 <div id="hide-menu" class="btn-header">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" class="shoHideMenuBtn" title="Collapse Menu"><i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;"></i></a> </span>
+                    <span class="left-side-header-bt" data-action="toggleMenu">
+                        <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
+                    </span>
                 </div>
                 <!-- end collapse menu -->
 
@@ -242,9 +248,12 @@
                 </div>
 
                 <div class="btn-header pull-right forAddingContact" style="margin-right:10px">
-                    <span class="top-panelopen-btn" data-action="contactsBar">
+                    <span class="top-panelopen-contactsbar" data-action="contactsBar">
                         <i class="fa fa-users"></i>
                     </span>
+                    <!-- <span class="top-panelopen-btn" data-action="contactsBar">
+                        <i class="fa fa-users"></i>
+                    </span> -->
                 </div>
 
                 <!-- collapse menu button -->
@@ -263,7 +272,8 @@
 
             <!-- Left panel : Navigation area -->
             <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" style="flex: 0 0 220px;">
+            <aside id="left-panel" style="flex: 0 0 220px;width: 220px" class="sidenav">
+            
                 <!-- User info -->
                 <div class="login-info">
                     <span>
@@ -280,10 +290,10 @@
                 <nav>
                     <ul id="newvers_nav_for_ul">
                         <li class="active">
-                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="comebackToDashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent comebackToDevice">IOT Devices</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
                                 <li role="separator" class="divider"></li>
@@ -304,7 +314,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
@@ -364,7 +374,7 @@
                         </li>
                     </ul>
                 </nav>
-
+            
             </aside>
             <!-- END NAVIGATION -->
             <!-- MAIN PANEL -->
@@ -494,7 +504,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="contacts-container hidecontacts" data-bind="component: { name: 'contacts-bar' }"></div>
+                    <div class="contacts-container hidecontacts contactSidenav" data-bind="component: { name: 'contacts-bar' }"></div>
                 </div>                
                 <!-- END MAIN CONTENT -->
             </div>
