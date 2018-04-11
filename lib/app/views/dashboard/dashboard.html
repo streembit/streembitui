@@ -2,251 +2,43 @@
 <div class="dashboard">
 
     <div class="row" style="margin:5px 0 0 0">
-        <div class="col-lg-3 col-md-6">
-            <div class="card-box widget-box-two widget-two-purple">
-                <i class="widget-two-icon fa fa-group"></i>
+        <div class="col-lg-4 col-md-3">
+            <div class="card-box widget-box-two widget-two-purple myAddressbookBg">
+                <i class="widget-two-icon fa fa-group dashboardColTileSt"></i>
                 <div class="wigdet-two-content">
-                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="Statistics">Contacts</p>
-                    <h2 class="text-white"><span data-plugin="counterup">0</span> contacts</h2>
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="Statistics" style="font-size: 17px">My Addressbook</p>
+                    <h5 class="text-white">
+                        <span data-plugin="counterup" data-bind="text: contactsCount"></span> 
+                    </h5>
                 </div>
             </div>
-            <div class="card-box-link widget-two-purple">
-                <a href="#" class="widget-two-footer">Manage, call contacts <i class="fa fa-chevron-circle-right"></i></a>
+            <div class="card-box-link widget-two-purple myAddressbookBg">
+                <a href="#" class="widget-two-footer" data-action="contactsBar">Manage, call contacts <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div><!-- end col -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card-box widget-box-two widget-two-red">
-                <i class="widget-two-icon fa fa-cogs"></i>
+        <div class="col-lg-4 col-md-3">
+            <div class="card-box widget-box-two widget-two-red iotDevicesBg">
+                <i class="widget-two-icon fa fa-cogs dashboardColTileSt"></i>
                 <div class="wigdet-two-content">
-                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="IoT devices">IoT devices</p>
-                    <h2 class="text-white"><span data-plugin="counterup" data-bind="text: device_count"></span> devices</h2>
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="IoT devices" data-bind="click: iotDevices" style="cursor:pointer;font-size: 17px">IoT devices</p>
+                    <h5 class="text-white"><span data-plugin="counterup" data-bind="text: device_count"></span> devices</h5>
                 </div>
             </div>
-            <div class="card-box-link widget-two-red">
+            <div class="card-box-link widget-two-red iotDevicesBg">
                 <a href="#" class="widget-two-footer">Manage devices <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div><!-- end col -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card-box widget-box-two widget-two-info">
-                <i class="widget-two-icon fa fa-usd"></i>
+        <div class="col-lg-4 col-md-3">
+            <div class="card-box widget-box-two widget-two-info walletDashBg">
+                <i class="widget-two-icon fa fa-usd dashboardColTileSt"></i>
                 <div class="wigdet-two-content">
-                    <p class="m-0 text-white text-uppercase font-600 font-secondary text-overflow" title="Wallett">Wallet</p>
-                    <h2 class="text-white"><span data-plugin="counterup">0</span> BTC</h2>
+                    <p class="m-0 text-white text-uppercase font-600 font-secondary text-overflow" title="Wallett" data-bind="click: walletTab" style="cursor:pointer;font-size: 17px">Wallet</p>
+                    <h5 class="text-white"><span data-plugin="counterup">0</span> BTC</h5>
                 </div>
             </div>
-            <div class="card-box-link widget-two-info">
+            <div class="card-box-link widget-two-info walletDashBg">
                 <a href="#" class="widget-two-footer">Manage wallet <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div><!-- end col -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card-box widget-box-two widget-two-success">
-                <i class="widget-two-icon fa fa-envelope"></i>
-                <div class="wigdet-two-content">
-                    <p class="m-0 text-white text-uppercase font-600 font-secondary text-overflow" title="New Downloads">Incoming messages</p>
-                    <h2 class="text-white"><span data-plugin="counterup">0</span> messages</h2>
-                </div>
-            </div>
-            <div class="card-box-link widget-two-success">
-                <a href="#" class="widget-two-footer">View messages <i class="fa fa-chevron-circle-right"></i></a>
-            </div>
-        </div><!-- end col -->
     </div>
-
-    <div class="row" style="margin:10px 0 25px 0">
-        <div class="col-xs-12 col-sm-6 col-lg-6">
-            <div class="card" style="height:100%">
-                <div class="card-header">Streembit seeds world map</div>
-                <div class="card-block">
-                    <div id="vector-map" class="vector-map"></div>
-                    <div id="heat-fill">
-                        <span class="fill-a">0</span>
-                        <span class="fill-b">5,000</span>
-                    </div>
-                </div>
-            </div>            
-        </div>
-        <div class="col-xs-12 col-sm-6 col-lg-6">
-            <div class="card">
-                <div class="card-header">Seed activity details</div>
-                <div class="card-block" style="padding-bottom: 8px;">
-                    <table class="table table-striped table-hover table-condensed" style="margin-bottom:0;">
-                        <thead>
-                            <tr>
-                                <th>Country</th>
-                                <th>Number of Seeds</th>
-                                <th>Certified</th>
-                                <th class="text-center">Streaming</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="javascript:void(0);">USA</a></td>
-                                <td>6,977</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        17,83
-                                    </div>                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">United Kingdom</a></td>
-                                <td>4,476</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        34,66
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">Germany</a></td>
-                                <td>2,476</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        34,66
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">India</a></td>
-                                <td>3,671</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        10,90
-                                    </div>                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">Russia</a></td>
-                                <td>1,476</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        75,25
-                                    </div>                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">Canada</a></td>
-                                <td>146</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        50,50
-                                    </div>                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">China</a></td>
-                                <td>146</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        32,68
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">France</a></td>
-                                <td>56</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        32,68
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="javascript:void(0);">Japan</a></td>
-                                <td>79</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                    <div class="sparkline display-inline" data-sparkline-type='pie' data-sparkline-piecolor='["#E979BB", "#57889C"]' data-sparkline-offset="90" data-sparkline-piesize="23px">
-                                        50,50
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>          
-                </div>
-            </div>              
-        </div>
-    </div>
-
-    <div class="row" style="margin:5px 0 20px 0">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">Security metrics</div>
-                <div class="card-block">
-                    <div class="show-stat-microcharts row">
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-
-                            <div class="easy-pie-chart txt-color-orangeDark" data-percent="33" data-pie-size="50">
-                                <span class="percent percent-sign">33</span>
-                            </div>
-                            <span class="easy-pie-title"> Network Load <i class="fa fa-caret-up icon-color-bad"></i> </span>
-                            <ul class="smaller-stat hidden-sm float-right">
-                                <li>
-                                    <span class="badge bg-color-greenLight text-white" style="width: 100%"><i class="fa fa-caret-up"></i> 97%</span>
-                                </li>
-                                <li>
-                                    <span class="badge bg-color-blueLight text-white" style="width: 100%"><i class="fa fa-caret-down"></i> 44%</span>
-                                </li>
-                            </ul>
-                            <div class="sparkline txt-color-greenLight hidden-sm hidden-md float-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent"><canvas width="70" height="33" style="display: inline-block; width: 70px; height: 33px; vertical-align: top;"></canvas></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                            <div class="easy-pie-chart txt-color-greenLight" data-percent="78.9" data-pie-size="50">
-                                <span class="percent percent-sign">79</span>
-                            </div>
-                            <span class="easy-pie-title"> Disk Space <i class="fa fa-caret-down icon-color-good"></i></span>
-                            <ul class="smaller-stat hidden-sm float-right">
-                                <li>
-                                    <span class="badge bg-color-blueDark text-white" style="width: 100%"><i class="fa fa-caret-up"></i> 76%</span>
-                                </li>
-                                <li>
-                                    <span class="badge bg-color-blue text-white" style="width: 100%"><i class="fa fa-caret-down"></i> 3%</span>
-                                </li>
-                            </ul>
-                            <div class="sparkline txt-color-blue hidden-sm hidden-md float-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent"><canvas width="70" height="33" style="display: inline-block; width: 70px; height: 33px; vertical-align: top;"></canvas></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                            <div class="easy-pie-chart txt-color-blue" data-percent="23" data-pie-size="50">
-                                <span class="percent percent-sign">23</span>
-                            </div>
-                            <span class="easy-pie-title"> Transfered <i class="fa fa-caret-up icon-color-good"></i></span>
-                            <ul class="smaller-stat hidden-sm float-right">
-                                <li>
-                                    <span class="badge bg-color-darken text-white" style="width: 100%">10GB</span>
-                                </li>
-                                <li>
-                                    <span class="badge bg-color-blueDark text-white" style="width: 100%"><i class="fa fa-caret-up"></i> 10%</span>
-                                </li>
-                            </ul>
-                            <div class="sparkline txt-color-darken hidden-sm hidden-md float-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent"><canvas width="70" height="33" style="display: inline-block; width: 70px; height: 33px; vertical-align: top;"></canvas></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                            <div class="easy-pie-chart txt-color-darken" data-percent="36" data-pie-size="50">
-                                <span class="percent degree-sign">36</span>
-                            </div>
-                            <span class="easy-pie-title"> Gateway CPU Temperature <i class="fa fa-caret-down icon-color-good"></i></span>
-                            <ul class="smaller-stat hidden-sm float-right">
-                                <li>
-                                    <span class="badge bg-color-red text-white" style="width: 100%"><i class="fa fa-caret-up"></i> 124</span>
-                                </li>
-                                <li>
-                                    <span class="badge bg-color-blue text-white" style="width: 100%"><i class="fa fa-caret-down"></i> 40 F</span>
-                                </li>
-                            </ul>
-                            <div class="sparkline txt-color-red hidden-sm hidden-md float-right" data-sparkline-type="line" data-sparkline-height="33px" data-sparkline-width="70px" data-fill-color="transparent"><canvas width="70" height="33" style="display: inline-block; width: 70px; height: 33px; vertical-align: top;"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>   
-
 </div>

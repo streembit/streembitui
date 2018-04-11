@@ -62,7 +62,7 @@ body{
 }
 
 .hide-left-menu {
-    display: none;
+    /*display: none;*/
 }
 
 /*#dcmain {
@@ -2705,8 +2705,9 @@ Widgets
 }
 
 .contacts-container {
-    display: none;
-    width: 240px;
+    /*display: none;*/
+    width: 0px;
+    transition: 0.5s;
     background-color: #f3f3f3;
     height: 100%;
     border-left: #ddd solid 1px;
@@ -3819,7 +3820,7 @@ body.smart-style-6 #logo-group>span#logo:before{
 body {
     font-size: 13px!important;
     overflow: hidden;
-    overflow-y: auto;
+/*    overflow-y: auto;*/
 }
 
 .connection-body-style-changes {
@@ -4142,4 +4143,199 @@ span.users-hub {
     word-wrap: break-word;
     -ms-word-break: break-all;
     word-break: break-word;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 50px;
+}
+
+.sidenav a {
+    text-decoration: none;
+    color: #c0bbb7;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+.contactSidenav{
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f3f3f3;
+    transition: 0.5s;
+    padding-top: 90px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.login-info > span {
+    border-bottom: 0;
+}
+.left-side-header-bt {
+    cursor: pointer;
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: bold;
+    height: 30px;
+    line-height: 24px;
+    min-width: 30px;
+    padding: 2px;
+    text-align: center;
+    background-color: #f8f8f8;
+    border: 1px solid #bfbfbf;
+    font-size: 17px;
+    text-decoration: none;
+    margin: 6px 0 0 0;
+}
+.top-panelopen-contactsbar{
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: bold;
+    height: 32px;
+    width: 36px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #bfbfbf;
+    color: #777;
+    margin: 8px 0 0 0;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+}
+.saveChatHistoryForTextChat {
+    padding:0 10px;
+    font-size:12px;
+    margin-right:4px;
+    border-radius: 2px;
+    border-top-right-radius: 2px!important;
+    border-bottom-right-radius: 2px!important;
+}
+.deleteChatHistoryForTextChat {
+    padding:0 10px;
+    font-size:12px;
+    border-radius: 2px;
+    border-top-left-radius: 2px!important;
+    border-bottom-left-radius: 2px!important;
+}
+#ribbon {
+    z-index: 1;
+}
+.footer-chat-controls1, .footer-chat-controls {
+    margin: 55px 0 0 0;
+}
+#chat_img {
+    right: -7px;
+    cursor:pointer;
+}
+#chat_img_during_audio_call {
+    right: 15px;
+    cursor:pointer;
+}
+.dashboard .dashboardColTileSt {
+    top:17px;
+    height: 75px;
+    width:75px;
+    font-size:35px!important;
+    line-height: 70px;
+    right:35px;
+}
+#logo {
+    margin-top:13px;
+    cursor: pointer;
+    width: 130px;
+}
+.helpHeaderIcon {
+    cursor: pointer;
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: bold;
+    height: 30px;
+    line-height: 24px;
+    min-width: 30px;
+    padding: 2px;
+    text-align: center;
+    background-color: #f8f8f8;
+    border: 1px solid #bfbfbf;
+    font-size: 17px;
+    text-decoration: none;
+    margin: 6px 0 0 0;
+}
+.helpFromTheHeader .tree ul ul {
+    padding-left: 50px;
+}
+.myAddressbookBg {
+    background-color: #DF4D22;
+    border-color: #DF4D22;
+}
+.iotDevicesBg {
+    background-color: #22B4DF;
+    border-color: #22B4DF;
+}
+.walletDashBg {
+    background-color: #05bd61;
+    border-color: #05bd61;
+}
+.smart-style-2 #left-panel {
+    padding: 50px 0 0 0;
+}
+.smart-style-2 nav>ul>li>a>i {
+    font-size: 1.33333333em!important
+}
+.smart-style-3 #hide-menu i, .smart-style-5 #hide-menu i {
+    color:#777!important;
+}
+.smart-style-3 #logo img {
+    width:110px;
+}
+.smart-style-5 .txt-color-greenCustom {
+    color: #5abf5a !important;
+}
+#app-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.fixed-ribbon .demo_settings_layout, .fixed-ribbon #demo-setting{
+    z-index: 900;
+    top: 91px;
+}
+.fixed-ribbon .content-panel {
+    padding-top: 46px;
+}
+.smart-style-5 .notification-body {
+    border-radius: 0!important;
+}
+.smart-style-5 .notification-body.notification-box-notify-list>li {
+    background-color: #fff!important;
+}
+.smart-style-5 .notification-body.notification-box-notify-list .msg-body, .smart-style-5 .notification-body.notification-box-notify-list .subject {
+    color: black!important;
+}
+.menu-on-top #main {
+    margin-top: 0px!important;
+}
+.menu-on-top .demo>span, .menu-on-top .demo_settings_layout {
+    top: 45px;
+}
+.menu-on-top .minifyme, .menu-on-top #hide-menu, .menu-on-top #logout {
+    display: block!important;
+}
+.smart-style-2 .login-info span {
+    background: transparent!important;
 }

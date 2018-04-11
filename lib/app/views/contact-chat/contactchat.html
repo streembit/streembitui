@@ -4,10 +4,10 @@
             <div style="float:left;font-size:12px;font-weight:bold;color:#555">
                 <span data-bind="text: lblheader"></span>
             </div>
-            <div style="float:right" data-bind="visible: issession">
+            <div style="float:right;position: relative;bottom: 4px" data-bind="visible: issession">
                 <div class="btn-group">
-                    <button class="btn btn-primary" data-bind="click: savechat" style="padding:0 10px;font-size:12px">Save Chat History</button>
-                    <button class="btn btn-danger" data-bind="click: rmchat" style="padding:0 10px;font-size:12px">Delete Chat History</button>
+                    <button class="btn btn-primary saveChatHistoryForTextChat" data-bind="click: savechat">Save Chat History</button>
+                    <button class="btn btn-danger deleteChatHistoryForTextChat" data-bind="click: rmchat">Delete Chat History</button>
                 </div>
                 <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
             </div>
@@ -42,8 +42,8 @@
             </table>
         </div>
         <div class="footer-chat-controls1">
-            <div id="chat_img" data-bind="click: chatimage">
-                <img src="/lib/img/chat-img-icon.png" width="20" height="20" alt="">
+            <div id="chat_img" data-bind="click: chatimage" title="Insert Image">
+                <i class="fa fa-image" style="font-size: 18px;color: #007bff;"></i>
             </div>
             <div style="width:100%">
                 <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div style="flex: 0 0 100%;font-size: 11px;justify-content: space-between;align-self: center;width: 100%;display: flex;">
-                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;margin:3px auto"><span data-bind="text: btncaption"></span></button>
+                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;margin:3px auto;position: relative;top: 8px;"><span data-bind="text: btncaption"></span></button>
 
             </div>
         </div>

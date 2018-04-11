@@ -117,7 +117,6 @@
             background: #333;
             height:100%;
         }
-
         body[data-account-load-complete=true] .content-panel {
             background: #fff;
         }
@@ -129,7 +128,12 @@
         body[data-account-load-complete=false] .demo{
             display: none;
         }
-
+        body[data-account-load-complete=false] #mainPanel{
+            margin-left: 0;
+        }
+         body[data-account-load-complete=true] #mainPanel{
+            margin-left: 220px;
+        }
         body[data-appinit=false] #load-container{
             display: none;
         }
@@ -179,7 +183,7 @@
             <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo">
+                <span id="logo" data-action="mainLogoStreembit">
                     <img src="lib/images/applogo.png">
                 </span>
                 <!-- END LOGO PLACEHOLDER --> 
@@ -187,9 +191,16 @@
                <!--  <div style="display:block;margin:0;padding:0;width:268px;height:40px;" data-bind="component: {name: 'activity'}">
 
                 </div> -->   
+
                 <!-- collapse menu button -->
                 <div id="hide-menu" class="btn-header">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" class="shoHideMenuBtn" title="Collapse Menu"><i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;"></i></a> </span>
+                    <!-- help icon in the header -->
+                    <span class="helpHeaderIcon" data-action="headerHelpIc" data-placement="bottom" data-toggle="tooltip" title="Help">
+                        <i class="fa fa-question-circle" style="margin-top: 6px;cursor: pointer;color: #6D6A69"></i>
+                    </span>
+                    <span class="left-side-header-bt" data-action="toggleMenu" style="float:right;" data-placement="bottom" data-toggle="tooltip" title="Main Menu">
+                        <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
+                    </span>
                 </div>
                 <!-- end collapse menu -->
 
@@ -236,15 +247,18 @@
                 <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock' style="margin-right: 10px"></div> 
 
                 <div class="btn-header pull-right" style="margin-right:10px">
-                    <span class="top-panelopen-btn" data-action="demoSettings">
+                    <span class="top-panelopen-btn" data-action="demoSettings" data-placement="bottom" data-toggle="tooltip" title="Layout Options">
                         <i class="fa fa-cog"></i>                        
                     </span>
                 </div>
 
-                <div class="btn-header pull-right forAddingContact" style="margin-right:10px">
-                    <span class="top-panelopen-btn" data-action="contactsBar">
+                <div class="btn-header pull-right forAddingContact" style="margin-right:10px" data-placement="bottom" data-toggle="tooltip" title="Contact list">
+                    <span class="top-panelopen-contactsbar" data-action="contactsBar">
                         <i class="fa fa-users"></i>
                     </span>
+                    <!-- <span class="top-panelopen-btn" data-action="contactsBar">
+                        <i class="fa fa-users"></i>
+                    </span> -->
                 </div>
 
                 <!-- collapse menu button -->
@@ -263,7 +277,8 @@
 
             <!-- Left panel : Navigation area -->
             <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" style="flex: 0 0 220px;">
+            <aside id="left-panel" style="flex: 0 0 220px;width: 220px" class="sidenav">
+            
                 <!-- User info -->
                 <div class="login-info">
                     <span>
@@ -280,10 +295,10 @@
                 <nav>
                     <ul id="newvers_nav_for_ul">
                         <li class="active">
-                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="comebackToDashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent">IOT Devices</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent comebackToDevice">IOT Devices</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
                                 <li role="separator" class="divider"></li>
@@ -304,19 +319,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent">Blockchain</span></a>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
                             <ul>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
                                 <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">Communicate</span></a>
-                            <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'audio-call')">Audio call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'video-call')">Video Call</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'sendfile')">Send file</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, '')">Chat</a></li>
                             </ul>
                         </li>
                         <li>
@@ -353,7 +359,7 @@
                         <li class="chat-users top-menu-invisible">
                             <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a></li>
+                                <li><a href="#" data-bind="click: nav.bind($data, 'help')" class="comebackToHelpContent">Help Content</a></li>
                                 <li role="separator" class="divider"></li>
                                 <!-- ko if: streembit.globals.nwmode == true -->
                                 <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
@@ -364,7 +370,7 @@
                         </li>
                     </ul>
                 </nav>
-
+            
             </aside>
             <!-- END NAVIGATION -->
             <!-- MAIN PANEL -->
@@ -441,14 +447,14 @@
                             <form>
                                 <legend class="no-padding margin-bottom-10" data-bind="i18n: 'layout-options'"></legend>
                                 <section>
-                                    <label>
+                                    <!-- <label>
                                         <input type="checkbox" name="subscribtion" id="smart-fixed-header" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-fixed-header'"></span>
-                                    </label>
-                                    <label>
+                                    </label> -->
+                                   <!--  <label>
                                         <input type="checkbox" name="terms" id="smart-fixed-navigation" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-fixed-navigation'"></span>
-                                    </label>
+                                    </label> -->
                                     <label>
                                         <input type="checkbox" name="terms" id="smart-fixed-ribbon" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-fixed-ribbon'"></span>
@@ -457,14 +463,14 @@
                                         <input type="checkbox" name="terms" id="smart-fixed-footer" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-fixed-footer'"></span>
                                     </label>
-                                    <label>
+                                    <!-- <label>
                                         <input type="checkbox" name="terms" id="smart-fixed-container" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-inside'"></span>
-                                    </label>
-                                    <label>
+                                    </label> -->
+                                    <!-- <label>
                                         <input type="checkbox" name="terms" id="smart-rtl" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-rtl-support'"></span>
-                                    </label>
+                                    </label> -->
                                     <label>
                                         <input type="checkbox" name="terms" id="smart-topmenu" class="checkbox style-0">
                                         <span data-bind="i18n: 'layout-menu'"></span>
@@ -487,14 +493,14 @@
                                     <a href="javascript:void(0)" id="smart-style-1" class="btn btn-block btn-xs txt-color-white" style="background:#3A4558;" data-bind="i18n: 'layout-dark-elegance'"></a>
                                     <a href="javascript:void(0)" id="smart-style-2" class="btn btn-xs btn-block txt-color-darken margin-top-5" style="background:#fff;" data-bind="i18n: 'layout-ultra-light'"></a>
                                     <a href="javascript:void(0)" id="smart-style-3" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background:#f78c40" data-bind="i18n: 'layout-google-skin'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a>
+                                <!--     <a href="javascript:void(0)" id="smart-style-4" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: #bbc0cf; border: 1px solid #59779E; color: #17273D" data-bind="i18n: 'layout-pixelSmash'"></a> -->
                                     <a href="javascript:void(0)" id="smart-style-5" class="btn btn-xs btn-block txt-color-white margin-top-5" style="background: rgba(153, 179, 204, 0.2); border: 1px solid rgba(121, 161, 221, 0.8); color: #17273D" data-bind="i18n: 'layout-glass'"></a>
-                                    <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a>
+                                    <!-- <a href="javascript:void(0)" id="smart-style-6" class="btn btn-xs btn-block txt-color-white margin-top-6" style="background: #2196F3; border: 1px solid rgba(0, 0, 0, 0.3); color: #FFF" data-bind="i18n: 'layout-MaterialDesign'"></a> -->
                                 </section>
                             </form>
                         </div>
                     </div>
-                    <div class="contacts-container hidecontacts" data-bind="component: { name: 'contacts-bar' }"></div>
+                    <div class="contacts-container hidecontacts contactSidenav" data-bind="component: { name: 'contacts-bar' }"></div>
                 </div>                
                 <!-- END MAIN CONTENT -->
             </div>
