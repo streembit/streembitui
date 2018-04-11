@@ -3820,7 +3820,7 @@ body.smart-style-6 #logo-group>span#logo:before{
 body {
     font-size: 13px!important;
     overflow: hidden;
-    overflow-y: auto;
+/*    overflow-y: auto;*/
 }
 
 .connection-body-style-changes {
@@ -4255,4 +4255,87 @@ span.users-hub {
     font-size:35px!important;
     line-height: 70px;
     right:35px;
+}
+#logo {
+    margin-top:13px;
+    cursor: pointer;
+    width: 130px;
+}
+.helpHeaderIcon {
+    cursor: pointer;
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: bold;
+    height: 30px;
+    line-height: 24px;
+    min-width: 30px;
+    padding: 2px;
+    text-align: center;
+    background-color: #f8f8f8;
+    border: 1px solid #bfbfbf;
+    font-size: 17px;
+    text-decoration: none;
+    margin: 6px 0 0 0;
+}
+.helpFromTheHeader .tree ul ul {
+    padding-left: 50px;
+}
+.myAddressbookBg {
+    background-color: #DF4D22;
+    border-color: #DF4D22;
+}
+.iotDevicesBg {
+    background-color: #22B4DF;
+    border-color: #22B4DF;
+}
+.walletDashBg {
+    background-color: #05bd61;
+    border-color: #05bd61;
+}
+.smart-style-2 #left-panel {
+    padding: 50px 0 0 0;
+}
+.smart-style-2 nav>ul>li>a>i {
+    font-size: 1.33333333em!important
+}
+.smart-style-3 #hide-menu i, .smart-style-5 #hide-menu i {
+    color:#777!important;
+}
+.smart-style-3 #logo img {
+    width:110px;
+}
+.smart-style-5 .txt-color-greenCustom {
+    color: #5abf5a !important;
+}
+#app-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.fixed-ribbon .demo_settings_layout, .fixed-ribbon #demo-setting{
+    z-index: 900;
+    top: 91px;
+}
+.fixed-ribbon .content-panel {
+    padding-top: 46px;
+}
+.smart-style-5 .notification-body {
+    border-radius: 0!important;
+}
+.smart-style-5 .notification-body.notification-box-notify-list>li {
+    background-color: #fff!important;
+}
+.smart-style-5 .notification-body.notification-box-notify-list .msg-body, .smart-style-5 .notification-body.notification-box-notify-list .subject {
+    color: black!important;
+}
+.menu-on-top #main {
+    margin-top: 0px!important;
+}
+.menu-on-top .demo>span, .menu-on-top .demo_settings_layout {
+    top: 45px;
+}
+.menu-on-top .minifyme, .menu-on-top #hide-menu, .menu-on-top #logout {
+    display: block!important;
+}
+.smart-style-2 .login-info span {
+    background: transparent!important;
 }

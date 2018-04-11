@@ -19,7 +19,7 @@
 <div class="ajax-notifications custom-scroll dropdown-design-change" data-bind="template: {name: template}, visible: contentShow"></div>
 
 <script type="text/html" id="message-activity-template">
-    <ul class="notification-body message-activity-col" data-bind="foreach: messages">
+    <ul class="notification-body message-activity-col notification-box-message-list" data-bind="foreach: messages">
         <li data-bind="visible: isSendMsg">
             <div data-bind="text: senderName" style="font-weight: bold;font-size: 14px;padding: 0px 0px 5px;border-bottom: 1px solid #ccc;"></div>
             <div><span data-bind="localdatemsg: time" class="time"></span></div>
@@ -37,7 +37,7 @@
 </script>
 
 <script type="text/html" id="error-activity-template">
-    <ul class="notification-body" data-bind="foreach: list_of_errors">
+    <ul class="notification-body notification-box-error-list" data-bind="foreach: list_of_errors">
         <li class="error-bg-style">
             <div><span data-bind="localdate: time" class="time"></span></div>
             <div>
@@ -51,7 +51,7 @@
 </script>
 
 <script type="text/html" id="notification-activity-template">
-    <ul class="notification-body" data-bind="foreach: list_of_notifications">
+    <ul class="notification-body notification-box-notify-list" data-bind="foreach: list_of_notifications">
         <li>
             <div><span data-bind="localdate: time" class="time"></span></div>
             <div>
