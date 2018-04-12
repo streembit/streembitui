@@ -4181,7 +4181,7 @@ span.users-hub {
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav a {font-size: 14px;}
 }
 .login-info > span {
     border-bottom: 0;
@@ -4338,4 +4338,19 @@ span.users-hub {
 }
 .smart-style-2 .login-info span {
     background: transparent!important;
+}
+@media (max-width: 880px) and (min-width: 768px){
+    #left-panel{
+        display: block;
+    } 
+    
+}
+@media only screen and (max-width: 479px) and (min-width: 320px){
+    #left-panel {
+        display: block;
+    }
+}
+.help-content-item img {
+    width: 100%;
+    height: auto;
 }
