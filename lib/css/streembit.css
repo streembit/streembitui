@@ -3709,7 +3709,7 @@ body.smart-style-6 #logo-group>span#logo:before{
     padding: 4px;
 }
 
-#smallScreenAudioCall1 > div > span {
+#smallScreenAudioCall1 > div > span, #smallScreenVideoCall1 > div > span {
     display: block;
     float: left;
     font-weight: bold;
@@ -3789,7 +3789,7 @@ body.smart-style-6 #logo-group>span#logo:before{
     margin-top:0!important;
 
 }
-#smallScreenAudioCall1 {
+#smallScreenAudioCall1, #smallScreenVideoCall1 {
     display: none;
     position: absolute;
     bottom: 40px;
@@ -4376,4 +4376,24 @@ span.users-hub {
 }
 .contactsCountSt{
     height: 20px;
+}
+#smallScreenVideoCall1 {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 170px;
+    z-index: 999;
+}
+
+#smallScreenVideoCall1 video {
+    width: 160px !important;
+    border-width: 0;
+}
+
+#smallScreenVideoCall1 .call-time {
+    display: none;
+}
+
+#smallScreenVideoCall1.active {
+    display: block;
 }

@@ -35,3 +35,15 @@ Set the nwmode variable to false in the config.app.json file to run the Streembi
 
 ----------------
 
+#autodeploy test
+1
+2
+3
+4
+5.2
+6
+7
+8
+9
+10
+11
