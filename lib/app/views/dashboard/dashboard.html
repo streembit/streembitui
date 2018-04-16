@@ -7,7 +7,7 @@
                 <i class="widget-two-icon fa fa-group dashboardColTileSt"></i>
                 <div class="wigdet-two-content">
                     <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="Statistics" style="font-size: 17px">My Addressbook</p>
-                    <h5 class="text-white">
+                    <h5 class="text-white contactsCountSt">
                         <span data-plugin="counterup" data-bind="text: contactsCount"></span> 
                     </h5>
                 </div>
@@ -20,11 +20,13 @@
             <div class="card-box widget-box-two widget-two-red iotDevicesBg">
                 <i class="widget-two-icon fa fa-cogs dashboardColTileSt"></i>
                 <div class="wigdet-two-content">
-                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="IoT devices" data-bind="click: iotDevices" style="cursor:pointer;font-size: 17px">IoT devices</p>
-                    <h5 class="text-white"><span data-plugin="counterup" data-bind="text: device_count"></span> devices</h5>
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="IoT devices" style="font-size: 17px">IoT devices</p>
+                    <h5 class="text-white">
+                        <span data-plugin="counterup" data-bind="text: device_count" style="cursor:pointer;"></span> 
+                    devices</h5>
                 </div>
             </div>
-            <div class="card-box-link widget-two-red iotDevicesBg">
+            <div class="card-box-link widget-two-red iotDevicesBg" data-bind="click: iotDevices">
                 <a href="#" class="widget-two-footer">Manage devices <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div><!-- end col -->
@@ -32,11 +34,11 @@
             <div class="card-box widget-box-two widget-two-info walletDashBg">
                 <i class="widget-two-icon fa fa-usd dashboardColTileSt"></i>
                 <div class="wigdet-two-content">
-                    <p class="m-0 text-white text-uppercase font-600 font-secondary text-overflow" title="Wallett" data-bind="click: walletTab" style="cursor:pointer;font-size: 17px">Wallet</p>
-                    <h5 class="text-white"><span data-plugin="counterup">0</span> BTC</h5>
+                    <p class="m-0 text-white text-uppercase font-600 font-secondary text-overflow" title="Wallett" style="font-size: 17px">Wallet</p>
+                    <h5 class="text-white"><span data-plugin="counterup">0</span> Streembit coin</h5>
                 </div>
             </div>
-            <div class="card-box-link widget-two-info walletDashBg">
+            <div class="card-box-link widget-two-info walletDashBg" data-bind="click: walletTab" style="cursor:pointer;">
                 <a href="#" class="widget-two-footer">Manage wallet <i class="fa fa-chevron-circle-right"></i></a>
             </div>
         </div><!-- end col -->

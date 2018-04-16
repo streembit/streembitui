@@ -3570,7 +3570,7 @@ body.smart-style-6 #logo-group>span#logo:before{
     border-bottom: 1px solid #ddd;
 }
 .for-all-data:first-child{
-    margin-top: 10px;
+    margin-top: 3px;
 }
 .contact-bar-list-item:hover{
     background: #e7e7e8;
@@ -4353,4 +4353,27 @@ span.users-hub {
 .help-content-item img {
     width: 100%;
     height: auto;
+}
+.header-user-name:hover {
+    color:#c0bbb7;
+}
+.add-contact-in-contactBar{
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: bold;
+    height: 32px;
+    width: 36px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #bfbfbf;
+    color: #777;
+    margin: 3px 7px 0 0;
+    cursor: pointer;
+    font-size: 16px;
+    float:right;
+}
+.contactsCountSt{
+    height: 20px;
 }

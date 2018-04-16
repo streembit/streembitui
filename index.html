@@ -128,12 +128,7 @@
         body[data-account-load-complete=false] .demo{
             display: none;
         }
-        body[data-account-load-complete=false] #mainPanel{
-            margin-left: 0;
-        }
-         body[data-account-load-complete=true] #mainPanel{
-            margin-left: 220px;
-        }
+
         body[data-appinit=false] #load-container{
             display: none;
         }
@@ -277,15 +272,14 @@
 
             <!-- Left panel : Navigation area -->
             <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" style="flex: 0 0 220px;width: 220px" class="sidenav">
+            <aside id="left-panel" style="flex: 0 0 220px;width: 0px" class="sidenav">
             
                 <!-- User info -->
                 <div class="login-info">
                     <span>
                         <!-- User image size is adjusted inside CSS, it should stay as it -->
-                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                            <span data-bind="text: user_name" style="padding-top:4px;text-transform:none"></span>
-                            <i class="fa fa-angle-down" style="padding-top:5px"></i>
+                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut" style="cursor: default;" class="header-user-name">
+                            <span data-bind="text: user_name" style="padding-top:4px;text-transform:none;cursor: default;" class="header-user-name"></span>
                         </a>
 
                     </span>
@@ -534,28 +528,7 @@
             </div>
         </div>
         <!-- END PAGE FOOTER -->
-
-        <!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag) Note: These tiles are completely responsive, you can add as many as you like  -->
-        <div id="shortcut">
-            <ul>
-                <li>
-                    <a href="calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i class="fa fa-signal fa-4x"></i> <span>IoT Devices</span> </span> </a>
-                </li>
-                <li>
-                    <a href="gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i class="fa fa-group fa-4x"></i> <span>Contacts</span> </span> </a>
-                </li>
-                <li>
-                    <a href="invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i class="fa fa-money  fa-4x"></i> <span>Wallett</span> </span> </a>
-                </li>
-                <li>
-                    <a href="inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i class="fa fa-headphones fa-4x"></i> <span>Call </span> </span> </a>
-                </li>
-                <li>
-                    <a href="profile.html" class="jarvismetro-tile big-cubes bg-color-pinkDark"> <span class="iconbox"> <i class="fa fa-cogs fa-4x"></i> <span>Settings </span> </span> </a>
-                </li>
-            </ul>
-        </div>
-        <!-- END SHORTCUT AREA -->
+      
     </div>   
 
 

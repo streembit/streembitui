@@ -1,5 +1,8 @@
 <div class="all-contacts-field">
-
+    <span class="add-contact-in-contactBar" data-bind="click: addContactFromContBar">
+        <i class="fa fa-user-plus" style="color:#366297"></i>
+    </span>
+    <div class="clearfix"></div>
     <div data-bind="foreach: contacts">
         <div class="for-all-data">
             <div class="list-group-item contact-bar-list-item" data-bind="click: $parent.itemSelect">
