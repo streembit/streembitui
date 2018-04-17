@@ -698,8 +698,7 @@ body{
 }
 
 .chat-text-items td, .chat-fill-area td{
-    padding: 0;
-    padding-bottom:10px;
+    padding: 0 0 10px 0;
 }
 
 
@@ -962,9 +961,8 @@ audio#remote-audio {
 }
 .awesomeAction {
     font-size: 120%;
-    margin: 40% 0px 0px 50%;
+    margin: 40% 15px 0px 50%;
     text-shadow: -1px 0 black, 0 1px 2px black, 1px 0 2px black, 0 -1px black;
-    margin-right:15px;
 }
 
 span.awesomeBlue, span.awesomeRed{
@@ -3574,9 +3572,9 @@ body.smart-style-6 #logo-group>span#logo:before{
 }
 .contact-bar-list-item:hover{
     background: #e7e7e8;
+    border: 1px solid #dbdbdb;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
-    border: 1px solid #dbdbdb;
 }
 .contact-online-icon{
     font-size: 11px;
@@ -3837,7 +3835,7 @@ body {
     left: auto!important;
     top: 35px!important;
 }
-.dropdown-menu > .active > a, .dropdown-menu > .active > a: focus, .dropdown-menu > .active > a:hover {
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
     color: white;
     outline: 0;
 }
