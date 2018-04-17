@@ -698,8 +698,7 @@ body{
 }
 
 .chat-text-items td, .chat-fill-area td{
-    padding: 0;
-    padding-bottom:10px;
+    padding: 0 0 10px 0;
 }
 
 
@@ -962,9 +961,8 @@ audio#remote-audio {
 }
 .awesomeAction {
     font-size: 120%;
-    margin: 40% 0px 0px 50%;
+    margin: 40% 15px 0px 50%;
     text-shadow: -1px 0 black, 0 1px 2px black, 1px 0 2px black, 0 -1px black;
-    margin-right:15px;
 }
 
 span.awesomeBlue, span.awesomeRed{
@@ -1109,7 +1107,7 @@ span.awesomeBlue i.addbtn{
 }
 
 .fill-area {
-   /* display: flex;*/
+    /* display: flex;*/
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
@@ -3003,8 +3001,8 @@ nav>ul ul li::before{
     margin: 0 auto;
 }
 .address-info, .connect-info {
-/*    width: 100%;
-    height: 100px;*/
+    /*    width: 100%;
+        height: 100px;*/
     background: #fff;
     border: 1px solid #dadada;
     padding: 9px;
@@ -3574,9 +3572,9 @@ body.smart-style-6 #logo-group>span#logo:before{
 }
 .contact-bar-list-item:hover{
     background: #e7e7e8;
+    border: 1px solid #dbdbdb;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
-    border: 1px solid #dbdbdb;
 }
 .contact-online-icon{
     font-size: 11px;
@@ -3770,9 +3768,9 @@ body.smart-style-6 #logo-group>span#logo:before{
 }
 #call {
     display: none;
-    position: absolute; 
-    background-color: transparent; 
-    text-align: center; 
+    position: absolute;
+    background-color: transparent;
+    text-align: center;
     top: 0;
     width: 100%;
 }
@@ -3820,7 +3818,7 @@ body.smart-style-6 #logo-group>span#logo:before{
 body {
     font-size: 13px!important;
     overflow: hidden;
-/*    overflow-y: auto;*/
+    /*    overflow-y: auto;*/
 }
 
 .connection-body-style-changes {
@@ -3836,11 +3834,11 @@ body {
     right: 0px!important;
     left: auto!important;
     top: 35px!important;
-} 
-.dropdown-menu > .active > a, .dropdown-menu > .active > a: focus, .dropdown-menu > .active > a:hover {
+}
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
     color: white;
     outline: 0;
-} 
+}
 .header-dropdown-list .dropdown-item a:hover, .header-dropdown-list a:hover {
     text-decoration: none;
 }
@@ -3853,8 +3851,8 @@ body {
 }
 .mywallet-view .nav-tabs .nav-item.show .nav-link, .mywallet-view .nav-tabs .nav-link.active, .settings-side-ch .nav-tabs .nav-link.active, .logs-side-ch .nav-tabs .nav-link.active, #help-style-change .nav-tabs .nav-link.active{
     font-weight: bold;
-    border-top-left-radius: 0; 
-    border-top-right-radius: 0; 
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 .mywallet-view .nav-tabs > li.active > a, .settings-side-ch .nav-tabs > li.active > a, .logs-side-ch .nav-tabs > li.active > a, #help-style-change .nav-tabs > li.active > a{
     border-top: 1px solid #ccc;
@@ -3910,7 +3908,7 @@ body {
     width: 20px;
     height: 20px;
 }
-#call .forShowChatPos > div { 
+#call .forShowChatPos > div {
     display: inline-block;
 }
 
@@ -3974,7 +3972,7 @@ body {
     width: 400px;
     margin: 0 auto;
     overflow-y: auto;
-} 
+}
 .close-add-group{
     margin: 0;
     padding:0;
@@ -3983,8 +3981,8 @@ body {
     right: 23px;
 }
 .all-contacts-part{
-    margin:0 auto; 
-    width: 400px; 
+    margin:0 auto;
+    width: 400px;
     background: #f0f0f0;
     padding: 5px;
 }
@@ -4180,8 +4178,8 @@ span.users-hub {
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 14px;}
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 14px;}
 }
 .login-info > span {
     border-bottom: 0;
@@ -4342,8 +4340,8 @@ span.users-hub {
 @media (max-width: 880px) and (min-width: 768px){
     #left-panel{
         display: block;
-    } 
-    
+    }
+
 }
 @media only screen and (max-width: 479px) and (min-width: 320px){
     #left-panel {
