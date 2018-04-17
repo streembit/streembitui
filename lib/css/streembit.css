@@ -4397,3 +4397,113 @@ span.users-hub {
 #smallScreenVideoCall1.active {
     display: block;
 }
+.smart-style-5 {
+    color: black!important;
+}
+.smart-style-5 .iothub-form {
+    background-color: #fff;
+}
+.smart-style-5 .iothub-form .addIotHabSt {
+    color: black;
+}
+.smart-style-5 .changepwdSt, .smart-style-5 .addNewIotInpSt {
+    border: 1px solid #ccc;
+    color:black;
+}
+.smart-style-5 .mywallet-view .nav-tabs .nav-link:hover {
+    color: black;
+}
+.smart-style-5 .nav>li>a:focus, .smart-style-5 .nav>li>a:hover {
+    background: #fff!important;
+    color: black;
+}
+.smart-style-5 .sendMonTextSt, .smart-style-5 .receiveMonTexSt, .smart-style-5 .transactionTexSt {
+    color: #fff;
+}
+.smart-style-5 #overview .blueLink {
+    color: black;
+}
+.smart-style-5 #mainMenu .dropdown-menu li div, .smart-style-5 #mainMenu .dropdown-menu li span {
+    color: #fff!important;
+} 
+.smart-style-5 .close {
+    color: black!important;
+}
+.smart-style-5 .transacAppTextSt {
+    color: black;
+}
+.smart-style-5  .transacAppContentSt {
+    background: #000000a6;
+}
+.smart-style-5 .stFiveChangeBg {
+    background: #fff;
+}
+.smart-style-5 .createContOffSt {
+    color: #fff;
+}
+.smart-style-5 .glassStChangeSt {
+    color: #fff;
+}
+.smart-style-5 .glassChangeSt {
+    border-bottom: 2px solid #fff;
+    color: #fff;
+}
+.smart-style-5 body[data-account-load-complete=true] .uiview-container-panel-header h4 {
+    color: #fff;
+}
+.smart-style-5 #transport {
+    border: 1px solid #ccc;
+    color: #454545;
+}
+.smart-style-5 .popover-body {
+    color: #fff;
+}
+.smart-style-5 .seedStChangeGlass, .smart-style-5 #newseedhost, .smart-style-5 #newseedport, .smart-style-5 #newice, .smart-style-5 #loglevel  {
+    border: 1px solid #ccc;
+    color: #454545;
+}
+.smart-style-5 #exampleModalLabel {
+    color: #000000a1;
+}
+.smart-style-5 #helpitem_overview_what_is_streembit, .smart-style-5 .help-content-item h4, .smart-style-5 .help-content-item, .smart-style-5 .settings-helpitem-title {
+    color: #fff!important;
+}
+.smart-style-5 .contact-details {
+    color: #fff;
+}
+.smart-style-5 .changeContDetSt {
+    color: #fff!important;
+}
+.smart-style-5 #text-chat-area, .smart-style-5 .media-call-container {
+    background-color: #fff;
+}
+.smart-style-5 .page-footer {
+    background: #0f394a!important;
+}
+.smart-style-5 .inviteCont .fa .fa-user-plus {
+    color: #fff;
+}
+.smart-style-5 .callbuttons span.awesomeBlue i {
+    color: #fff;
+}
+.smart-style-5 #header, .smart-style-5 #logo-group span#activity, .smart-style-5 #ribbon, .smart-style-5 .btn-header>:first-child>a, .smart-style-5 .header-search>input[type=text], .smart-style-5 .jvectormap-container {
+    background: rgba(0,0,0,.23)!important;
+}
+.smart-style-3 #ribbon {
+    box-shadow: 0 0.0625em 0.3125em rgba(0,0,0,.35);
+}
+.smart-style-2 #ribbon{
+    border-bottom: 1px solid #E0E0E0;
+}
+.smart-style-3 #allContent {
+    margin-top: 0;
+}
+.smart-style-3 body, body.smart-style-3 {
+    background: #333!important;
+}
+.smart-style-3 .dropdown-item.active, .dropdown-item:active {
+    background-color: #fff;
+}
+.smart-style-2 .dropdown-item.active, .dropdown-item:active {
+    color: black;
+}

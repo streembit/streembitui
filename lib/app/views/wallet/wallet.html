@@ -37,10 +37,10 @@
                         <span data-bind="i18n: 'menu-item-load-transaction'"></span>
                         <i class="fa fa-caret-right"></i>
                     </li>
-                    <li class="dropdown-content">
-                        <div data-bind="i18n: 'menu-item-from-text', click: transactionText"></div>
-                        <div data-bind="i18n: 'menu-item-from-blockchain', click: transactionBlockchain"></div>
-                        <div data-bind="i18n: 'menu-item-qr-code', click: transactionQRCode"></div>
+                    <li class="dropdown-content transacAppContentSt">
+                        <div data-bind="i18n: 'menu-item-from-text', click: transactionText" class="transacAppTextSt"></div>
+                        <div data-bind="i18n: 'menu-item-from-blockchain', click: transactionBlockchain" class="transacAppTextSt"></div>
+                        <div data-bind="i18n: 'menu-item-qr-code', click: transactionQRCode" class="transacAppTextSt"></div>
                     </li>
                 </ul>
                 <div data-bind="i18n: 'menu-item-history', click: historyItem"></div>
@@ -69,7 +69,7 @@
         </ul>
     </li>
     <li class="dropdown ml-auto">
-        <a class="dropdown-toggle nav-link">
+        <a class="dropdown-toggle nav-link stFiveChangeBg">
             <span data-bind="text: walletBalanceInfo"></span>
         </a>
     </li>

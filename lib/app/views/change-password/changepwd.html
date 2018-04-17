@@ -18,7 +18,7 @@
                     <div class="error-label" data-bind="visible: ispwd_error">
                         <span data-bind="text: pwderrormsg"></span>
                     </div>
-                    <input type="password" class="form-control" data-bind="value: private_key_pwd, event: { blur: onPasswordChange}" style="max-width:400px" />
+                    <input type="password" class="form-control changepwdSt" data-bind="value: private_key_pwd, event: { blur: onPasswordChange}" style="max-width:400px" />
                     <div style="font-size:10px;font-weight:bold">
                         NOTE: Choose your password carefully. If you forget your password, no one will be able to unlock your account for you on the permissionless and decentralised Streembit network.
                     </div>
@@ -29,7 +29,7 @@
                     <div class="error-label" data-bind="visible: isconfpwd_error">
                         <span data-bind="text: pwdconferrormsg"></span>
                     </div>
-                    <input type="password" class="form-control" data-bind="value: private_keypwd_conf, event: {blur: onPasswordConfirmChange }" style="max-width:400px" />
+                    <input type="password" class="form-control changepwdSt" data-bind="value: private_keypwd_conf, event: {blur: onPasswordConfirmChange }" style="max-width:400px" />
                 </div>
 
                 <div style="margin-top:30px">

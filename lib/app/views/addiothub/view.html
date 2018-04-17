@@ -4,13 +4,13 @@
             <div style="border: 1px dotted #ccc;margin-top:20px;">
                 <form class="form-horizontal iothub-form">
                     <fieldset>
-                        <legend>Add new IoT Hub</legend>
+                        <legend class="addIotHabSt">Add new IoT Hub</legend>
 
                         <div class="padding: 0">
 
                             <div class="form-group">
                                 <label>Hub ID</label>
-                                <input class="form-control" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: id">
+                                <input class="form-control addNewIotInpSt" placeholder="The MAC of your Zigbee/Z-wave/6LowPan device" type="text" data-bind="value: id">
                                 <div data-bind="visible: is_id_error">
                                     <em id="id-error" class="invalid error-label">The HUb ID field is required.</em>
                                 </div>
@@ -18,7 +18,7 @@
 
                             <div class="form-group">
                                 <label>Hub name</label>
-                                <input class="form-control" placeholder="Hub name" type="text" data-bind="value: name">
+                                <input class="form-control addNewIotInpSt" placeholder="Hub name" type="text" data-bind="value: name">
                                 <div data-bind="visible: is_name_error">
                                     <em id="id-error" class="invalid error-label">The Hub name field is required.</em>
                                 </div>
@@ -26,7 +26,7 @@
 
                             <div class="form-group" style="margin-bottom:20px">
                                 <label>Public key</label>
-                                <input class="form-control" placeholder="BSd8 encoded public key" type="text" data-bind="value: publickey">
+                                <input class="form-control addNewIotInpSt" placeholder="BSd8 encoded public key" type="text" data-bind="value: publickey">
                                 <div data-bind="visible: is_publickey_error">
                                     <em id="id-error" class="invalid error-label">Public key is required for a Hub device.</em>
                                 </div>
