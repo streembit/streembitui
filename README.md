@@ -28,7 +28,7 @@ Option No. 1: Run the Streembit UI as a desktop application
 
 You can download the latest NW.js framework from their repository at https://github.com/nwjs/nw.js. 
 
-To build Chromium please refer to the Chromium project web site.
+Alternatively, if you wish to build Chromium from source please refer to the Chromium project web site.
 
 [Build summary](https://www.chromium.org/nativeclient/how-tos/build-tcb)
  
@@ -36,7 +36,7 @@ To build Chromium please refer to the Chromium project web site.
  
 [Windows build instructions](https://chromium.googlesource.com/chromium/src/+/master/docs/windows_build_instructions.md)
 
-To build NW.js please refer to the NW.js [build documentation](http://docs.nwjs.io/en/latest/For%20Developers/Building%20NW.js/).
+To build NW.js from source please refer to the NW.js [build documentation](http://docs.nwjs.io/en/latest/For%20Developers/Building%20NW.js/).
 
 You must create a config.app.json configuration file in the lib folder, the same location where the config.json file is placed.
 Define the following to the config.app.json
