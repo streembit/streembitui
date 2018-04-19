@@ -38,7 +38,7 @@ Alternatively, if you wish to build Chromium from source please refer to the Chr
 
 To build NW.js from source please refer to the NW.js [build documentation](http://docs.nwjs.io/en/latest/For%20Developers/Building%20NW.js/).
 
-You must create a config.app.json configuration file in the lib folder, the same location where the config.json file is placed.
+Once NW.js is downloaded or built you must create a config.app.json configuration file in the lib folder, the same location where the config.json file is placed.
 Define the following to the config.app.json
 ```json
 {
