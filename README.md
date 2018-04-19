@@ -14,7 +14,7 @@ Install the Streembit Node.js dependencies:
 $ npm install
 ```
 
-Please refer to the [jspm.md](jspm.md) readme file which explains installing and configuring jspm.
+The Streembit UI application uses the jspm module loader. Please refer to the [jspm.md](jspm.md) readme file which explains installing and configuring jspm.
 
 Once jspm is configured enter
 ```bash
