@@ -17,12 +17,17 @@
         <li>
             <span data-bind="i18n: 'helpitem-settings-config', click: titleCollapse1" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse1">
-                <li><a href="#helpitem_settings" data-toggle="tab" data-bind="i18n: 'view-title-settings'" class="nav-link"></a></li>
-                <li><a href="#helpitem_configure_node" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-your-streembit'" class="nav-link"></a></li>
+                <!-- <li><a href="#helpitem_configure_node" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-your-streembit'" class="nav-link"></a></li> -->
                 <li><a href="#helpitem_create_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-create-account'" class="nav-link"></a></li>
+                <li><a href="#helpitem_addcontact_node" data-toggle="tab" data-bind="i18n: 'helpitem-how-add-contact'" class="nav-link"></a></li>
+                <li><a href="#helpitem_contact_offer"  data-toggle="tab" data-bind="i18n: 'helpitem-whatis-contact-offer'" class="nav-link"></a></li>
+                <li><a href="#helpitem_my_contacts" data-toggle="tab" class="nav-link">My contacts</a></li>
+                <li><a href="#helpitem_iot_devices" data-toggle="tab" data-bind="i18n: 'helpitem-iot-devices'" class="nav-link"></a></li>
+                <li><a href="#helpitem_add_and_mydevices"  data-toggle="tab" data-bind="i18n: 'helpitem-add-and-my-devices'" class="nav-link"></a></li>
                 <li><a href="#helpitem_backup_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-backup-account'" class="nav-link"></a></li>
                 <li><a href="#helpitem_restore_account" data-toggle="tab" data-bind="i18n: 'lbl-initui-restore'" class="nav-link"></a></li>
-                <li><a href="#helpitem_delete_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-delete-account'" class="nav-link"></a></li>
+                <!-- <li><a href="#helpitem_delete_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-delete-account'" class="nav-link"></a></li> -->
+                <li><a href="#helpitem_settings" data-toggle="tab" data-bind="i18n: 'view-title-settings'" class="nav-link"></a></li>
                 <li><a href="#helpitem_logfiles" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-log-files'" class="nav-link"></a></li>
             </ul>
          </li>
@@ -30,8 +35,8 @@
         <li>
             <span data-bind="i18n: 'helpitem-network', click: titleCollapse2" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse2">
-                <li><a href="#helpitem_network_connect_public" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_public'" class="nav-link"></a></li>
-                <li><a href="#helpitem_network_connect_private" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_private'" class="nav-link"></a></li>
+               <!--  <li><a href="#helpitem_network_connect_public" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_public'" class="nav-link"></a></li>
+                <li><a href="#helpitem_network_connect_private" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_private'" class="nav-link"></a></li> -->
                 <li><a href="#helpitem_network_share_keys" data-toggle="tab" data-bind="i18n: 'helpitem-network-share-keys'" class="nav-link"></a></li>
             </ul>
          </li>
@@ -53,11 +58,16 @@
             <div class="tab-pane" id="helpitem_overview_security" data-bind="component: {name: 'security_'}"></div>
             <div class="tab-pane" id="helpitem_overview_iotdevices" data-bind="component: {name: 'internetdevices_'}"></div>
             <div class="tab-pane" id="helpitem_settings" data-bind="component: {name: 'settings_'}"></div>
-            <div class="tab-pane" id="helpitem_configure_node" data-bind="component: {name: 'configure_'}"></div>
+            <div class="tab-pane" id="helpitem_addcontact_node" data-bind="component: {name: 'addcontacthp_'}"></div>
+            <div class="tab-pane" id="helpitem_contact_offer" data-bind="component: {name: 'contactoffer_'}"></div>
+            <div class="tab-pane" id="helpitem_my_contacts" data-bind="component: {name: 'mycontacts_'}"></div>
+            <div class="tab-pane" id="helpitem_iot_devices" data-bind="component: {name: 'iotdevices_'}"></div>
+            <div class="tab-pane" id="helpitem_add_and_mydevices" data-bind="component: {name: 'addandmydevices_'}"></div>
+            <!-- <div class="tab-pane" id="helpitem_configure_node" data-bind="component: {name: 'configure_'}"></div> -->
             <div class="tab-pane" id="helpitem_create_account" data-bind="component: {name: 'createaccount_'}"></div>
             <div class="tab-pane" id="helpitem_backup_account" data-bind="component: {name: 'backupaccount_'}"></div>
             <div class="tab-pane" id="helpitem_restore_account" data-bind="component: {name: 'restoreaccount_'}"></div>
-            <div class="tab-pane" id="helpitem_delete_account" data-bind="component: {name: 'deleteaccount_'}"></div>
+            <!-- <div class="tab-pane" id="helpitem_delete_account" data-bind="component: {name: 'deleteaccount_'}"></div> -->
             <div class="tab-pane" id="helpitem_logfiles" data-bind="component: {name: 'logfiles_'}"></div>
             <div class="tab-pane" id="helpitem_network_connect_public" data-bind="component: {name: 'connectpublic_'}"></div>
             <div class="tab-pane" id="helpitem_network_connect_private" data-bind="component: {name: 'connectprivate_'}"></div>

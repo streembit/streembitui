@@ -1,6 +1,7 @@
 <div id="helpitem_overview_system_architecture">
     <div class="help-content-item">
         <h4>System architecture</h4>
+        </br>
         <div>
             <p>The Streembit system forms a decentralized peer to peer network to manage connections between machines and machines or humans and machines.  The participants in the network are the peer nodes. The peer to peer network is scalable and an unlimited number of nodes can participate in the network.</p>
             <p>The system performs public private key infrastructure based authentication and access control functions to securely connect peer nodes. The application generates at least one private/public key pair on each peer node including on the Internet-of-Things devices. The actors of the system publish their public keys to the peer to peer network via a Kademlia distributed hash table (DHT). Each peer node knows the public key of the other connected peer nodes.  The system identifies peer nodes in the peer to peer network by their public key. To ensure data integrity the nodes sign the messages with their private key. The nodes sign all messages -  there are no unsigned messages circulated in the system. (The requirement for signing the messages also help to mitigate the risks of Sybil attacks and DDoS attacks).</p>
