@@ -55,7 +55,7 @@ Run Streembit:
 ```bash
 $ /path/to/nw . 
 ```
-(The node-webkit executables must be in the /nw directory if you run the above command. The package.json file must exists in the Streembit directory).
+Note, the node-webkit executables must be in the /nw directory if you run the above command. The package.json file must exists in the Streembit directory.
 
 ---------------
 
