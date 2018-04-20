@@ -4508,5 +4508,9 @@ span.users-hub {
 }
 .help-content-item .backupAccImg {
     width: auto;
+    max-width: 100%;
     height: auto;
+}
+#help-style-change .nav-link{
+    padding: 2px 8px!important;
 }

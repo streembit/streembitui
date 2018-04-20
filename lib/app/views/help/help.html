@@ -6,38 +6,45 @@
             <i data-bind="class: Icon"></i>
             <span data-bind="i18n: 'nav-overview', click: titleCollapse" class="titleCollapseOverview"></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse">
-                <li><a href="#helpitem_overview_what_is_streembit" data-toggle="tab" data-bind="i18n: 'helpitem-overview-whatstreembitui'" class="nav-link active"></a></li>
-                <li><a href="#helpitem_overview_open_source" data-toggle="tab" data-bind="i18n: 'helpitem-overview-opensource'" class="nav-link"></a></li>
-                <li><a href="#helpitem_overview_system_architecture" data-toggle="tab" data-bind="i18n: 'helpitem-overview-systemarchitecture'" class="nav-link"></a></li>
-                <li><a href="#helpitem_overview_security" data-toggle="tab" data-bind="i18n: 'menu-title-security'" class="nav-link"></a></li>
-                <li><a href="#helpitem_overview_iotdevices" data-toggle="tab" data-bind="i18n: 'helpitem-overview-internet-devices'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_overview_what_is_streembit" data-toggle="tab" data-bind="i18n: 'helpitem-overview-whatstreembitui'" class="nav-link active"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_overview_open_source" data-toggle="tab" data-bind="i18n: 'helpitem-overview-opensource'" class="nav-link"></a></li>
             </ul>
         </li>
 
         <li>
             <span data-bind="i18n: 'helpitem-settings-config', click: titleCollapse1" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse1">
-                <li><a href="#helpitem_create_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-create-account'" class="nav-link"></a></li>
-                <li><a href="#helpitem_addcontact_node" data-toggle="tab" data-bind="i18n: 'helpitem-how-add-contact'" class="nav-link"></a></li>
-                <li><a href="#helpitem_contact_offer"  data-toggle="tab" data-bind="i18n: 'helpitem-whatis-contact-offer'" class="nav-link"></a></li>
-                <li><a href="#helpitem_my_contacts" data-toggle="tab" data-bind="i18n: 'helpitm-my-contacts'" class="nav-link"></a></li>
-                <li><a href="#helpitem_iot_devices" data-toggle="tab" data-bind="i18n: 'helpitem-iot-devices'" class="nav-link"></a></li>
-                <li><a href="#helpitem_add_and_mydevices"  data-toggle="tab" data-bind="i18n: 'helpitem-add-and-my-devices'" class="nav-link"></a></li>
-                <li><a href="#helpitem_backup_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-backup-account'" class="nav-link"></a></li>
-                <li><a href="#helpitem_restore_account" data-toggle="tab" data-bind="i18n: 'lbl-initui-restore'" class="nav-link"></a></li>
-                <li><a href="#helpitem_settings" data-toggle="tab" data-bind="i18n: 'helpitem-tools-section'" class="nav-link"></a></li>
-                <li><a href="#helpitem_account_network" data-toggle="tab" data-bind="i18n: 'helpitem-account-network-info'" class="nav-link"></a></li>
-                <li><a href="#helpitem_logfiles" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-log-files'" class="nav-link"></a></li>
-                <li><a href="#helpitem_system_clear_db" data-toggle="tab" data-bind="i18n: 'helpitem-system-clear-database'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_create_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-create-account'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_addcontact_node" data-toggle="tab" data-bind="i18n: 'helpitem-how-add-contact'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_contact_offer"  data-toggle="tab" data-bind="i18n: 'helpitem-whatis-contact-offer'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_my_contacts" data-toggle="tab" data-bind="i18n: 'helpitm-my-contacts'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_iot_devices" data-toggle="tab" data-bind="i18n: 'helpitem-iot-devices'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_add_and_mydevices"  data-toggle="tab" data-bind="i18n: 'helpitem-add-and-my-devices'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_backup_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-backup-account'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_restore_account" data-toggle="tab" data-bind="i18n: 'lbl-initui-restore'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_settings" data-toggle="tab" data-bind="i18n: 'helpitem-tools-section'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_account_network" data-toggle="tab" data-bind="i18n: 'helpitem-account-network-info'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_logfiles" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-log-files'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_system_clear_db" data-toggle="tab" data-bind="i18n: 'helpitem-system-clear-database'" class="nav-link"></a></li>
             </ul>
          </li>
 
-        <li>
+
+         <li>
             <span data-bind="i18n: 'helpitem-network', click: titleCollapse2" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse2">
                <!--  <li><a href="#helpitem_network_connect_public" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_public'" class="nav-link"></a></li>
                 <li><a href="#helpitem_network_connect_private" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_private'" class="nav-link"></a></li> -->
-                <li><a href="#helpitem_network_share_keys" data-toggle="tab" data-bind="i18n: 'helpitem-network-share-keys'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_overview_system_architecture" data-toggle="tab" data-bind="i18n: 'helpitem-overview-systemarchitecture'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_overview_iotdevices" data-toggle="tab" data-bind="i18n: 'helpitem-overview-internet-devices'" class="nav-link"></a></li>
+                <li data-bind="click: scrollToTop"><a href="#helpitem_network_share_keys" data-toggle="tab" data-bind="i18n: 'helpitem-network-share-keys'" class="nav-link"></a></li>
+            </ul>
+         </li>
+
+        <li>
+            <span data-bind="click: titleCollapse2" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i>Security and Encryption</span>
+            <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse2">
+                <li data-bind="click: scrollToTop"><a href="#helpitem_overview_security" data-toggle="tab" data-bind="i18n: 'menu-title-security'" class="nav-link"></a></li>
             </ul>
          </li>
 
