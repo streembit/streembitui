@@ -29,7 +29,6 @@
             </ul>
          </li>
 
-
          <li>
             <span data-bind="i18n: 'helpitem-network', click: titleCollapse2" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse2">
@@ -42,9 +41,16 @@
          </li>
 
         <li>
-            <span data-bind="click: titleCollapse2" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i>Security and Encryption</span>
-            <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse2">
-                <li data-bind="click: scrollToTop"><a href="#helpitem_overview_security" data-toggle="tab" data-bind="i18n: 'menu-title-security'" class="nav-link"></a></li>
+            <span data-bind="i18n: 'helpitem-security-and-encryption', click: titleCollapse3" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
+            <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse3">
+                <li data-bind="click: titleCollapse4" class=""><i class="fa fa-lg fa-folder-open"></i>Security
+                    <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse4">
+                        <li data-bind="click: scrollToTop"><a href="#helpitem_security_implementation" data-toggle="tab" class="nav-link" data-bind="i18n: 'helpitem-security-implementation-and-design-summary'"></a></li>
+                        <li data-bind="click: scrollToTop"><a href="#helpitem_protected_keys_pair" data-toggle="tab" data-bind="i18n: 'helpitem-protected-keys-pair'" class="nav-link"></a></li>
+                        <li data-bind="click: scrollToTop"><a href="#helpitem_mitigate_risk_of_attacks" data-toggle="tab" data-bind="i18n: 'helpitem-mitigate-risk-attack'" class="nav-link"></a></li>
+                        <li data-bind="click: scrollToTop"><a href="#helpitem_secure_crypto" data-toggle="tab" data-bind="i18n: 'helpitem-secure-crypto'" class="nav-link"></a></li>
+                    </ul>
+                </li>
             </ul>
          </li>
 
@@ -73,7 +79,10 @@
             <div class="tab-pane" id="helpitem_network_connect_private" data-bind="component: {name: 'connectprivate_'}"></div>
             <div class="tab-pane" id="helpitem_network_share_keys" data-bind="component: {name: 'sharekeys_'}"></div>
             <div class="tab-pane" id="helpitem_system_clear_db" data-bind="component: {name: 'cleardatabase_'}"></div>
-
+            <div class="tab-pane" id="helpitem_security_implementation" data-bind="component: {name: 'securityimplementation_'}"></div>
+            <div class="tab-pane" id="helpitem_protected_keys_pair" data-bind="component: {name: 'protectedkeyspair_'}"></div>
+            <div class="tab-pane" id="helpitem_mitigate_risk_of_attacks" data-bind="component: {name: 'mitigaterisksofattacks_'}"></div>
+            <div class="tab-pane" id="helpitem_secure_crypto" data-bind="component: {name: 'howsecurecrypto_'}"></div>
         </div>
     </div>
 </div>
