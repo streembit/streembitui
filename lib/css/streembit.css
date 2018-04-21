@@ -4514,3 +4514,9 @@ span.users-hub {
 #help-style-change .nav-link{
     padding: 2px 8px!important;
 }
+#help-style-change .help-security-section:hover{
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}

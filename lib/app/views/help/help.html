@@ -12,7 +12,7 @@
         </li>
 
         <li>
-            <span data-bind="i18n: 'helpitem-settings-config', click: titleCollapse1" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
+            <span data-bind="i18n: 'helpitem-settings-config', click: titleCollapse1" class="titleCollapseOverview"></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse1">
                 <li data-bind="click: scrollToTop"><a href="#helpitem_create_account" data-toggle="tab" data-bind="i18n: 'helpitem-settings-config-create-account'" class="nav-link"></a></li>
                 <li data-bind="click: scrollToTop"><a href="#helpitem_addcontact_node" data-toggle="tab" data-bind="i18n: 'helpitem-how-add-contact'" class="nav-link"></a></li>
@@ -30,7 +30,7 @@
          </li>
 
          <li>
-            <span data-bind="i18n: 'helpitem-network', click: titleCollapse2" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
+            <span data-bind="i18n: 'helpitem-network', click: titleCollapse2" class="titleCollapseOverview"></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse2">
                <!--  <li><a href="#helpitem_network_connect_public" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_public'" class="nav-link"></a></li>
                 <li><a href="#helpitem_network_connect_private" data-toggle="tab" data-bind="i18n: 'helpitem_network_connect_private'" class="nav-link"></a></li> -->
@@ -41,9 +41,9 @@
          </li>
 
         <li>
-            <span data-bind="i18n: 'helpitem-security-and-encryption', click: titleCollapse3" class="titleCollapseOverview"><i class="fa fa-lg fa-folder-open"></i></span>
+            <span data-bind="i18n: 'helpitem-security-and-encryption', click: titleCollapse3" class="titleCollapseOverview"></span>
             <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse3">
-                <li data-bind="click: titleCollapse4" class=""><i class="fa fa-lg fa-folder-open"></i>Security
+                <li data-bind="click: titleCollapse4" class="nav nav-tabs tabs-left sideways"><span style="font-weight: bold;cursor: pointer;" class="help-security-section" data-bind="i18n: 'menu-title-security'"></span>
                     <ul class="nav nav-tabs tabs-left sideways" data-bind="visible: showIntitleCollapse4">
                         <li data-bind="click: scrollToTop"><a href="#helpitem_security_implementation" data-toggle="tab" class="nav-link" data-bind="i18n: 'helpitem-security-implementation-and-design-summary'"></a></li>
                         <li data-bind="click: scrollToTop"><a href="#helpitem_protected_keys_pair" data-toggle="tab" data-bind="i18n: 'helpitem-protected-keys-pair'" class="nav-link"></a></li>
