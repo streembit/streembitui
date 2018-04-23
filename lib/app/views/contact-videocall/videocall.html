@@ -86,9 +86,12 @@
                         </div>
                         <div class="footer-chat-controls">
                             <div>
-                                <textarea id="txtChatCtrl" data-bind="value: chatmsg" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                                <div class="contact-is-typing-container">
+                                    <span class="contact-is-typing" data-bind="text: contact_is_typing"></span>
+                                </div>
                             </div>
-                            <div style="text-align:center;margin-top:5px">
+                            <div style="text-align:center;margin-top:15px">
                                 <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px">Send Message</button>
                             </div>
                         </div>
