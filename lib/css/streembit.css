@@ -4520,3 +4520,124 @@ span.users-hub {
     font-weight: bold;
     cursor: pointer;
 }
+.initaccount-footer-style {
+    justify-content: flex-end;
+    padding: 0 15px;
+}
+.initialize-account-sel-section{
+    min-width:220px;
+}
+#Msg1 .MessageBoxMiddle .MessageBoxButtonSection {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: flex-end;
+}
+.security-child-style{
+    border-right: 1px solid #dddddd;
+    width: 215px;
+}
+#help-style-change .tabs-left > .nav-tabs, .tabs-left > .nav-pills {
+    border-right: 0;
+}
+.account-net-info-style tr{
+    word-break: break-all;
+}
+.uiview .account-net-info-style td {
+    white-space: normal;
+}
+.uiview .account-net-info-style td:last-child {
+    width: auto;
+}
+.uiview .account-net-info-style td:first-child {
+    width: 150px;
+}
+.version-public-key-style-ch {
+    margin-top:10px;
+    border-bottom:1px dotted #ddd;
+    padding-bottom:8px;
+    font-size:12px;
+}
+.change-streembit-password-st .uiview-container-panel {
+    min-width: auto;
+}
+.signMessageTextarea {
+    border: 1px solid #ccc;
+}
+.verifyTextAr2, #recAddressField, #signMessageTextarea, .generateSignature {
+    border: 1px solid #8d8c8c;
+}
+a:link, #newvers_nav_for_ul .btn, button{
+    -webkit-tap-highlight-color: rgba(152, 152, 152, 0.5)!important;
+}
+@media (max-width: 880px) and (min-width: 768px) {
+    #logo {
+        margin-right: 5px;
+    }
+    #hide-menu .helpHeaderIcon i::before{
+        content: "\f059";
+    }
+    .add-contact-offer-textarea-st {
+        max-width: 480px;
+        border: 1px solid #363535bf;
+    }
+    .version-public-key-style-ch {
+        width: auto;
+        word-break: break-all;
+    }
+}
+@media (max-width: 767px){
+    #hide-menu .helpHeaderIcon i::before{
+        content: "\f059";
+    }
+}
+@media screen and (max-width: 450px) and (max-width: 767px) {
+    .MessageBoxButtonSection button {
+        margin: 0 1px;
+        font-weight: normal;
+        padding: 0 7px;
+        float: none;
+    }
+}
+@media only screen and (max-width: 479px) and (min-width: 320px) {
+     #hide-menu .helpHeaderIcon i::before{
+        content: "\f059";
+    }
+}
+@media(max-width: 425px) {
+    .initialize-account-sel-section{
+        min-width: 125px;
+    }
+    .initialize-content-style {
+        min-width: 400px;
+    }
+    #connection_indicator {
+        position: absolute;
+        left: 230px;
+    }
+    .left-side-header-bt {
+        float: right;
+        position: absolute;
+        left: 187px;
+        top: 0;
+    }
+    .mobile-version-style {
+        position: relative;
+    }
+    .helpHeaderIcon{
+        position: absolute;
+        left: 143px;
+    }
+}
+@media(max-width: 375px) {
+    .initaccount-footer-style {
+        padding: 0 12px;
+    }
+    .initialize-account-sel-section{
+        min-width: 155px;
+    }
+    .initialize-content-style {
+        min-width: 360px;
+    }   
+}

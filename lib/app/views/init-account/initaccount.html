@@ -20,7 +20,7 @@
                             <section class="col col-6">
                                 <label class="label">Account</label>
                                 <label class="select" data-bind="css: { 'state-error': isaccount_error() == true}">                                    
-                                    <select data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'" style="min-width:220px"></select><i></i>
+                                    <select class="initialize-account-sel-section" data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'"></select><i></i>
                                 </label>
                                 <em id="account-error" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
                             </section>
@@ -37,9 +37,11 @@
                     </fieldset>
 
                     <footer>
-                        <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-submit'" style="border:1px solid #ccc"></button>
-                        <button type="button" class="btn btn-light" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" style="border:1px solid #ccc"></button>
-                        <button type="button" class="btn btn-light"  data-bind="click: new_account" style="border:1px solid #ccc">New Account</button>
+                        <div class="row initaccount-footer-style">
+                            <button type="button" class="btn btn-light"  data-bind="click: new_account" style="border:1px solid #ccc">New Account</button>
+                            <button type="button" class="btn btn-light" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" style="border:1px solid #ccc"></button>
+                            <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-submit'" style="border:1px solid #ccc"></button>
+                        </div>
                     </footer>
                 </form>
             </div>
