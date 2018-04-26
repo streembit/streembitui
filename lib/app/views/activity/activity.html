@@ -1,5 +1,5 @@
 <div style="width: 10px;height: 10px;background-color: red;" data-bind="visible: browserNotif"></div>
-<div data-toggle="buttons" style="margin-top: 8px" id="activity">
+<div data-toggle="buttons" style="" id="activity">
     <div id="showm" class="btn btn-light notifybtn" data-bind="click: show_messages">
         <i class="fa fa-envelope"></i>
         <b class="badge" data-bind="text:msgcount, css: { 'bg-color-orange': msgcount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
@@ -40,8 +40,10 @@
 <script type="text/html" id="error-activity-template">
     <ul class="notification-body notification-box-error-list" data-bind="foreach: list_of_errors">
         <li class="error-bg-style">
-            <div><span data-bind="localdate: time" class="time"></span></div>
-            <div>
+            <div style="margin-top: 6px;">
+                <span data-bind="localdate: time" class="time"></span>
+            </div>
+            <div  style="margin-top: 5px">
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>
@@ -54,8 +56,10 @@
 <script type="text/html" id="notification-activity-template">
     <ul class="notification-body notification-box-notify-list" data-bind="foreach: list_of_notifications">
         <li>
-            <div><span data-bind="localdate: time" class="time"></span></div>
-            <div>
+            <div style="line-height: normal;">
+                <span data-bind="localdate: time" class="time"></span>
+            </div>
+            <div style="margin-top: 5px">
                 <span class="msg-body" data-bind="text: msg"></span>
             </div>
         </li>

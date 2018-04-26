@@ -3203,7 +3203,7 @@ address-panel-close {
     cursor: pointer;
     position: absolute;
     top: 0;
-    left: 237px;
+    left: 188px;
 }
 #connection_indicator span {
     font-size: 16px;
@@ -4571,6 +4571,89 @@ span.users-hub {
 a:link, #newvers_nav_for_ul .btn, button{
     -webkit-tap-highlight-color: rgba(152, 152, 152, 0.5)!important;
 }
+#logo {
+    margin-top: 0;
+    margin-left: 0;
+}
+.left-side-header-bt{
+    height: 35px;
+    min-width: 35px;
+    margin: 0;
+}
+#main-header-st .navbar-brand {
+    margin-right: 0;
+}
+#connection_indicator {
+    margin: 1px 10px;
+    top: 7px;
+    left: 193px;
+}
+#main-header-st nav ul {
+    width: auto;
+}
+.notification-body .msg-body {
+    line-height: normal;
+}
+.top-panelopen-contactsbar {
+    margin: 0;
+}
+.header-dropdown-list > li > .dropdown-toggle {
+    margin-top: 0;
+}
+.language-side-ch a, .language-side-ch a:hover {
+    color: #007bff!important;
+}
+.language-side-ch a:active {
+    background: transparent!important;
+    color: #007bff!important;
+}
+#main-header-st nav ul li.show > a,#main-header-st nav ul li.show > a b {
+    color: #007bff!important;   
+}
+.language-drop-part.dropdown-menu {
+    left: auto!important;
+    right: 0!important;
+}
+#main-header-st nav ul ul li > a {
+    padding-left: 0;
+}
+#main-header-st nav ul ul li > a:hover {
+    background: transparent;
+    color: black;
+}
+#main-header-st nav ul li a {
+    color: #007bff;
+}
+#main-header-st .navbar {
+    padding: 3px 1rem;
+}
+.connect-info {
+    font-size: 13px;
+}
+.card-header {
+    font-size: 13px;
+}
+#main-header-st .dropdown-item {
+    padding: 0px 1.5rem;
+}
+#main-header-st nav ul li a:active {
+    background: transparent!important;
+}
+.change-mobile-device-st {
+    border-bottom:1px dotted #ddd;
+    padding-bottom:8px;
+}
+.contact-details-mobile-size {
+    float:left;
+    margin-left:30px;
+    padding-left:30px;
+    border-left:1px solid #ddd;
+}
+@media (max-width: 979px) and (min-width: 768px) {
+    #left-panel {
+        display: block;
+    }
+}
 @media (max-width: 880px) and (min-width: 768px) {
     #logo {
         margin-right: 5px;
@@ -4586,10 +4669,135 @@ a:link, #newvers_nav_for_ul .btn, button{
         width: auto;
         word-break: break-all;
     }
+    #logo img {
+        width: 110px!important;
+    }
+    #hide-menu i {
+        font-size: 100%;
+    }
 }
 @media (max-width: 767px){
     #hide-menu .helpHeaderIcon i::before{
         content: "\f059";
+    }
+    #logo img {
+        width: 110px!important;
+    }
+    #hide-menu i {
+        font-size: 100%;
+    }
+    #left-panel {
+        display: block;
+    }
+}
+@media only screen and (max-width: 679px) and (min-width: 0px) {
+    #ribbon {
+        background: #474544;
+    }
+    #ribbon .breadcrumb a, #ribbon .breadcrumb {
+        color: #BBB !important;
+    }
+    #header {
+        background-color: #f3f3f3;
+    }
+    #left-panel {
+        display: block;
+    }
+}
+@media(max-width: 625px) {
+    #activity {
+        position: absolute!important;
+        margin-left: 10px;
+    }
+    #activity b.badge {
+        top: -3px!important;
+    }
+    #main-header-st nav ul {
+        float: right;
+    }
+    .not-side-pos-in-mobile-version {
+        float: left;
+    }
+    #main-header-st #navbarTogglerDemo01 {
+        margin-top: 10px;
+    }
+    #main-header-st .dropdown-design-change {
+        top: 99px;
+    }
+    #main-header-st .ajax-notifications {
+        right: 290px;
+    }
+    #main-header-st .err-arrow-up {
+        left: 113px;
+        bottom: -15px;
+    }
+    #main-header-st .ntf-arrow-up  {
+        left: 65px;
+        top: 15px;
+    }
+    #main-header-st .msg-arrow-up {
+        left: 14px;
+        top: 15px;
+    }
+    .left-side-header-bt {
+        height: 29px;
+        width: 29px;
+        min-width: 29px;
+    }
+    #hide-menu i{
+        margin-top: 3px!important;
+    }
+    #connection_indicator span {
+        margin: 0;
+    }
+    .mobile-dots-bt {
+        cursor: pointer;
+        border-radius: 2px;
+        display: inline-block;
+        font-weight: bold;
+        height: 30px;
+        line-height: 24px;
+        min-width: 30px;
+        padding: 2px;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        font-size: 17px;
+        text-decoration: none;
+        margin: 6px 0 0 0;
+        width: 29px;
+        height: 29px;
+    }
+}
+@media (min-width: 625px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: -webkit-box!important;
+        display: -ms-flexbox!important;
+        display: flex!important;
+        -ms-flex-preferred-size: auto;
+        flex-basis: auto;
+    }
+    .navbar-expand-lg .navbar-toggler {
+        display: none;
+    }
+    #main-header-st #activity b.badge {
+        top: 4px;
+    }
+ 
+}
+@media(max-width: 593px) {
+    #main-header-st .ajax-notifications {
+        right: 250px;
+    }
+}
+@media(max-width: 554px) {
+    #main-header-st .ajax-notifications {
+        right: 183px;
+    }
+}
+@media(max-width: 490px) {
+    #main-header-st .ajax-notifications {
+        right: 120px;
     }
 }
 @media screen and (max-width: 450px) and (max-width: 767px) {
@@ -4614,13 +4822,10 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #connection_indicator {
         position: absolute;
-        left: 230px;
     }
     .left-side-header-bt {
         float: right;
         position: absolute;
-        left: 187px;
-        top: 0;
     }
     .mobile-version-style {
         position: relative;
@@ -4628,6 +4833,59 @@ a:link, #newvers_nav_for_ul .btn, button{
     .helpHeaderIcon{
         position: absolute;
         left: 143px;
+    }
+    #main-header-st .ajax-notifications {
+        right: 56px;
+    }
+    .container-fluid, .add-contact-for-mobile-size {
+        min-width: 100px!important;
+    }
+    .createContOffSt .account-info-item {
+        word-break: break-all;
+    }
+    .add-contact-offer-textarea-st {
+        min-width: 345px;
+        width: auto!important;
+    }
+    .for-mobile-size-style-change {
+        margin-left: 2px!important;
+    }
+    .change-mobile-device-st {
+        display: table-caption;
+    }
+    .contact-details-mobile-size {
+        margin-left: 68px;
+    }
+    .version-public-key-style-ch {
+        word-break: break-all;
+        max-width: 365px;
+    }
+    .container-connect {
+        top: 41px;
+        left: 0;
+        max-width: 420px;
+    }
+    #mainMenu .nav-link {
+        padding: .5rem 12px;
+    }
+    .mobile-size-tabs-change {
+        padding: .5rem 12px;
+    }
+    .mobile-dots-bt {
+        margin: 0;
+    }
+    .mobile-send-error-rep-st {
+        flex-wrap: unset!important;
+    }
+    .mobile-transactions-st{
+        margin: 5px 0;
+    }
+    .mobile-req-money-bt-st {
+        text-align: center;
+        margin-right: 10px;
+    }
+    .verifyTextAr {
+        border: 1px solid #ccc;
     }
 }
 @media(max-width: 375px) {
@@ -4639,5 +4897,26 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .initialize-content-style {
         min-width: 360px;
-    }   
+    }
+    #main-header-st .ajax-notifications {
+        right: 20px;
+    }
+    .container-connect {
+        max-width: 420px;
+    }
+    #mainMenu .nav-link {
+        padding: .5rem 8px;
+    }
+    .mobile-size-tabs-change {
+        padding: .5rem 7px;
+    }
+    .mobile-dots-bt {
+        margin: 0;
+    }
+    .overview-coin-mobile {
+        margin-left: 10px;
+    }
+    .for-mobile-size-style-change {
+        margin-left: -2px!important;
+    }
 }

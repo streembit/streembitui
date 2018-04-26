@@ -6,19 +6,19 @@
 <div id="view-container" style="padding-left:20px">
     <div>
         <div class="contact-details-buttons">
-            <button type="button" class="btn btn-info btn-circle btn-lg chatSmallOpen" data-bind="click: chat" title="Chat" style="padding: 7px 6px 10px 7px;"><i class="fa fa-comment"></i></button>
-            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sendfile" title="Send file"><i class="fa fa-file-text"></i></button>
-            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('audio') }" title="Audio call"><i class="fa fa-phone"></i></button>
-            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: function () { call('video') }" title="Video call"><i class="fa fa-video-camera"></i></button>
-            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: sharescreen" title="Share your screen"><i class="fa fa-share-square-o"></i></button>
-            <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-left:8px" data-bind="click: ping" title="Ping to contact"><i class="fa fa-bell"></i></button>
-            <button type="button" class="btn btn-danger btn-circle btn-lg" style="margin-left:8px" data-bind="click: remove" title="Delete contact"><i class="fa fa-times"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg chatSmallOpen for-mobile-size-style-change" data-bind="click: chat" title="Chat" style="padding: 7px 6px 10px 7px;"><i class="fa fa-comment"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg for-mobile-size-style-change" style="margin-left:8px" data-bind="click: sendfile" title="Send file"><i class="fa fa-file-text"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg for-mobile-size-style-change" style="margin-left:8px" data-bind="click: function () { call('audio') }" title="Audio call"><i class="fa fa-phone"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg for-mobile-size-style-change" style="margin-left:8px" data-bind="click: function () { call('video') }" title="Video call"><i class="fa fa-video-camera"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg for-mobile-size-style-change" style="margin-left:8px" data-bind="click: sharescreen" title="Share your screen"><i class="fa fa-share-square-o"></i></button>
+            <button type="button" class="btn btn-info btn-circle btn-lg for-mobile-size-style-change" style="margin-left:8px" data-bind="click: ping" title="Ping to contact"><i class="fa fa-bell"></i></button>
+            <button type="button" class="btn btn-danger btn-circle btn-lg for-mobile-size-style-change" style="margin-left:8px" data-bind="click: remove" title="Delete contact"><i class="fa fa-times"></i></button>
         </div>
         <div style="clear:both"></div>
     </div>
     <div class="contact-details">
         <div style="margin-bottom:25px">
-            <div style="border-bottom:1px dotted #ddd;padding-bottom:8px;">
+            <div class="change-mobile-device-st">
                 <div class="alert alert-warning" style="margin:10px 0;font-size:11px;" data-bind="visible: connection_warning().length">
                     <span data-bind="text: connection_warning"></span> <span style="font-weight:bold">MAKE SURE YOU HAVE THE LATEST CONTACT OFFER FROM YOUR CONTACT! YOU MUST HAVE THE LATEST PUBLIC KEY FROM YOUR CONTACT IN ORDER TO FIND THE CONNECTION DETAILS ON THE STREEMBIT NETWORK.</span>
                 </div>
@@ -34,13 +34,13 @@
                         <span style="font-weight:bold" data-bind="text:name"></span>
                     </div>
                 </div>
-                <div style="float:left;margin-left:30px;padding-left:30px;border-left:1px solid #ddd">
+                <div class="contact-details-mobile-size">
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777" class="changeContDetSt">Connection:</span> <br />
                         <span style="word-wrap: break-word;font-weight:bold" data-bind="text: connection_info, css: {error_color: connection_error() == true}"></span>
                     </div>
                 </div>
-                <div style="float:left;margin-left:30px;padding-left:30px;border-left:1px solid #ddd">
+                <div class="contact-details-mobile-size">
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777" class="changeContDetSt">Last ping:</span> <br />
                         <span style="word-wrap: break-word;font-weight:bold" data-bind="text: lastpingTime"></span>
