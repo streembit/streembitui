@@ -45,10 +45,10 @@
         
             <div style="clear:both"></div>
             
-            <span class="chat-name-during-audiocall" style="display: none;font-size:12px;font-weight: bold;color:#555;position: relative;top: 11px">
+            <span class="chat-name-during-audiocall chat-name-audiocall-on-mobile-size">
                 Chat with <span data-bind="text: contact_name"></span>
             </span>
-            <div style="display: none;text-align: right;float: right;position: relative;bottom: 1px" class="save-rm-chat-audio">
+            <div class="save-rm-chat-audio buttons-chat-audiocall-on-mobile-size">
                 <div class="btn-group">
                     <button class="btn btn-primary saveChatHistoryForTextChat" data-bind="click: savechat">Save Chat History</button>
                     <button class="btn btn-danger deleteChatHistoryForTextChat" data-bind="click: rmchat">Delete Chat History</button>
@@ -99,7 +99,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="chat-item-msg" data-bind="css: { myTextMessage: sender == $parent.contact_name() }">
+                                            <div class="chat-item-msg chat-item-on-mobile-size" data-bind="css: { myTextMessage: sender == $parent.contact_name() }">
                                                 <span data-bind="html: text"></span>
                                             </div>
                                         </td>

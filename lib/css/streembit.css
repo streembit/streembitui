@@ -4649,6 +4649,51 @@ a:link, #newvers_nav_for_ul .btn, button{
     padding-left:30px;
     border-left:1px solid #ddd;
 }
+.chat-on-mobile-size {
+    float:left;
+    font-size:12px;
+    font-weight:bold;
+    color:#555;
+}
+.buttons-chat-on-mobile-size {
+    float:right;
+    position: relative;
+    bottom: 4px;
+}
+.chat-name-audiocall-on-mobile-size {
+    display: none;
+    font-size:12px;
+    font-weight: bold;
+    color:#555;
+    position: relative;
+    top: 11px;
+}
+.buttons-chat-audiocall-on-mobile-size {
+    display: none;
+    text-align: right;
+    float: right;
+    position: relative;
+    bottom: 1px;
+}
+.help-content-item .backupAccImg {
+    max-height: 515px;
+}
+.changing-st--tree-on-mobile .tree ul ul li:hover {
+    background: transparent!important;
+}
+.image-size-on-responsive-versions {
+    width: auto;
+    max-width: 100%;
+    bottom: 1px;
+}
+@media (min-width: 1024px) {
+    .image-size-on-responsive-versions {
+        max-width: 470px;
+    }
+    .help-content-item .backupAccImg {
+        max-height: 455px;
+    }
+}
 @media (max-width: 979px) and (min-width: 768px) {
     #left-panel {
         display: block;
@@ -4674,6 +4719,18 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #hide-menu i {
         font-size: 100%;
+    }
+    .help-content-item .backupAccImg {
+        max-height: 400px;
+    }
+    .image-size-on-responsive-versions {
+        width: 325px!important;
+    }
+    .helpFromTheHeader .tree ul ul {
+        width: auto;
+    }
+    .security-child-style {
+        padding-left: 26px!important;
     }
 }
 @media (max-width: 767px){
@@ -4707,7 +4764,6 @@ a:link, #newvers_nav_for_ul .btn, button{
 @media(max-width: 625px) {
     #activity {
         position: absolute!important;
-        margin-left: 10px;
     }
     #activity b.badge {
         top: -3px!important;
@@ -4728,15 +4784,15 @@ a:link, #newvers_nav_for_ul .btn, button{
         right: 290px;
     }
     #main-header-st .err-arrow-up {
-        left: 113px;
+        left: 104px;
         bottom: -15px;
     }
     #main-header-st .ntf-arrow-up  {
-        left: 65px;
+        left: 54px;
         top: 15px;
     }
     #main-header-st .msg-arrow-up {
-        left: 14px;
+        left: 6px;
         top: 15px;
     }
     .left-side-header-bt {
@@ -4835,7 +4891,8 @@ a:link, #newvers_nav_for_ul .btn, button{
         left: 143px;
     }
     #main-header-st .ajax-notifications {
-        right: 56px;
+        right: 111px;
+        top: 94px;
     }
     .container-fluid, .add-contact-for-mobile-size {
         min-width: 100px!important;
@@ -4882,10 +4939,61 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .mobile-req-money-bt-st {
         text-align: center;
-        margin-right: 10px;
+        margin-right: 0px;
+        margin-left: 37px;
+    }
+    .mobile-send-money-bt-st {
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 17px;
+    }
+    .clear-btn-rec-on-mobile-size {
+        padding: 5px 22px;
     }
     .verifyTextAr {
         border: 1px solid #ccc;
+    }
+    .chat-on-mobile-size {
+        width: 100%;
+        text-align: center;
+    }
+    .buttons-chat-on-mobile-size {
+        width: 100%;
+        text-align: center;
+        margin-top: 7px;   
+    }
+    .chat-item-on-mobile-size {
+        max-width: 100%!important;
+        word-break: break-all;
+    }
+    .chat-name-audiocall-on-mobile-size {
+        top: 0;
+    }
+    .buttons-chat-audiocall-on-mobile-size {
+        width: 100%;
+        text-align: center;
+        margin-top: 4px;   
+    }
+    #view-container {
+        max-width: 410px;
+    }
+    .version-public-key-style-ch {
+        max-width: 377px;
+    }
+    .call-user-icon-on-mobile-size {
+        font-size:100px;
+    }
+    .contact-details-buttons {
+        margin-left: -5px;
+    }
+    .overview-coin-mobile {
+        margin-left: 10px;
+    }
+    .input-reclab-on-mobile-size, .input-sendlab-on-mobile-size {
+        margin-left: 15px;
+    }
+    .content-panel {
+        max-width: 415px;
     }
 }
 @media(max-width: 375px) {
@@ -4902,7 +5010,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         right: 20px;
     }
     .container-connect {
-        max-width: 420px;
+        max-width: 375px;
     }
     #mainMenu .nav-link {
         padding: .5rem 8px;
@@ -4918,5 +5026,46 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .for-mobile-size-style-change {
         margin-left: -2px!important;
+    }
+    .version-public-key-style-ch {
+        max-width: 335px;
+    }
+    #view-container {
+        max-width: 370px;
+    }
+    .call-user-icon-on-mobile-size {
+        font-size:95px!important;
+    }
+    .contact-details-buttons {
+        margin-left: -5px;
+    }
+    .mobile-send-money-bt-st {
+        text-align: center;
+        margin-right: 0;
+        margin-left: 56px;
+    }
+    .mobile-req-money-bt-st {
+        margin-left: 62px;
+    }
+    .add-contact-offer-textarea-st {
+        min-width: 315px!important;
+        border: 1px solid #ccc;
+    }
+    #recipientAddressField {
+        border: 1px solid #ccc;
+    }
+    .mobile-send-error-rep-st {
+        max-width: 330px;
+    }
+    .short-msg-on-mobile-size {
+        width: 207px;
+    }
+    .clear-btn-rec-on-mobile-size {
+        padding: 5px 13px;
+    }
+}
+@media (max-width: 360px) {
+    .mobile-size-tabs-change {
+        padding: .5rem 5px;
     }
 }
