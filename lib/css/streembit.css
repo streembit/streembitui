@@ -4339,15 +4339,15 @@ span.users-hub {
     background: transparent!important;
 }
 @media (max-width: 880px) and (min-width: 768px){
-    #left-panel{
+/*    #left-panel{
         display: block;
-    }
+    }*/
 
 }
 @media only screen and (max-width: 479px) and (min-width: 320px){
-    #left-panel {
+    /*#left-panel {
         display: block;
-    }
+    }*/
 }
 .help-content-item img {
     width: 100%;
@@ -4686,6 +4686,13 @@ a:link, #newvers_nav_for_ul .btn, button{
     max-width: 100%;
     bottom: 1px;
 }
+.sendMsgTime {
+    margin-bottom: 10px;
+}
+.sidenav {
+    flex: 0 0 220px;
+    width: 220px;
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -4743,9 +4750,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     #hide-menu i {
         font-size: 100%;
     }
-    #left-panel {
-        display: block;
-    }
 }
 @media only screen and (max-width: 679px) and (min-width: 0px) {
     #ribbon {
@@ -4756,9 +4760,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #header {
         background-color: #f3f3f3;
-    }
-    #left-panel {
-        display: block;
     }
 }
 @media(max-width: 625px) {
@@ -4824,6 +4825,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         width: 29px;
         height: 29px;
     }
+    .mobile-size-msg-box {
+        float: none!important;
+    }
 }
 @media (min-width: 625px) {
     .navbar-expand-lg .navbar-collapse {
@@ -4838,6 +4842,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #main-header-st #activity b.badge {
         top: 4px;
+    }
+    .mobile-size-msg-box {
+        float: none!important;
     }
  
 }
@@ -4995,6 +5002,41 @@ a:link, #newvers_nav_for_ul .btn, button{
     .content-panel {
         max-width: 415px;
     }
+    #smallScreenAudioCall1 {
+        width: 235px;
+    }
+    .small-screen-plus-ic {
+        width: 20px;
+        font-size: 27px;
+        padding: 4px 0px;
+        padding-right: 24px;
+    }
+    .small-screen-show-chat-ic {
+        width: 23px;
+        font-size: 27px;
+        margin: 2px;
+        padding-right: 30px;
+    }
+    .small-screen-send-file-ic {
+        width: 23px;
+        font-size: 27px;
+        margin: 2px;
+        padding-right: 28px;
+    }
+    .spallWindMuteIc {
+        width: 21px;
+        font-size: 27px;
+        padding-right: 19px;
+    }
+    .small-screen-hangup-ic {
+        font-size: 30px;
+        bottom: 4px;
+        right: -1px;
+        width: 45px;
+    }
+    .mobile-size-msg-box {
+        float: none;
+    }
 }
 @media(max-width: 375px) {
     .initaccount-footer-style {
@@ -5062,6 +5104,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .clear-btn-rec-on-mobile-size {
         padding: 5px 13px;
+    }
+    .mobile-size-msg-box {
+        float: none;
     }
 }
 @media (max-width: 360px) {

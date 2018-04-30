@@ -149,7 +149,21 @@
             margin:0;
             height: 100%;
         }
-
+        body[data-account-load-complete=false] #mainPanel{
+            margin-left: 0;
+        }
+        body[data-account-load-complete=true] #mainPanel{
+            margin-left: 220px;
+        }
+        @media(max-width: 425px) {
+            body[data-account-load-complete=true] #left-panel {
+                width: 0px;
+                display: none;
+            } 
+            body[data-account-load-complete=true] #mainPanel {
+                margin-left: 0;
+            }
+        }
         .smart-style-5, .smart-style-5 .content-panel{
             background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
             background-size: cover!important;
@@ -244,7 +258,7 @@
 
             <!-- Left panel : Navigation area -->
             <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" style="flex: 0 0 220px;width: 0px" class="sidenav">
+            <aside id="left-panel" class="sidenav mobile-left-panel">
             
                 <!-- User info -->
                 <div class="login-info">
@@ -259,36 +273,36 @@
                 <!-- end user info -->
                 <!-- NAVIGATION : This navigation is also responsive-->
                 <nav>
-                    <ul id="newvers_nav_for_ul">
-                        <li class="active">
+                    <ul id="newvers_nav_for_ul dashboard-li-on-mobile-size">
+                        <li class="active mobile-change-dash-li">
                             <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="comebackToDashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent comebackToDevice">IOT Devices</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
-                                <li><a href="#" data-bind="click:backupAccount">Backup account</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
                             </ul>
                         </li>
                         <!-- <li>
@@ -302,36 +316,36 @@
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-group"></i> <span class="menu-item-parent">Contacts</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contacts</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
-                                <li><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contacts</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
                             </ul>
                         </li>
                         <li class="chat-users top-menu-invisible">
                             <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
                             <ul>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'help')" class="comebackToHelpContent">Help Content</a></li>
-                                <li role="separator" class="divider"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'help')" class="comebackToHelpContent">Help Content</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
                                 <!-- ko if: streembit.globals.nwmode == true -->
-                                <li><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
-                                <li role="separator" class="divider"></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                                <li role="separator" class="divider mobile-change-dash-li"></li>
                                 <!-- /ko -->
-                                <li><a href="#" data-bind="click:about">About</a></li>
+                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:about">About</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -340,7 +354,7 @@
             </aside>
             <!-- END NAVIGATION -->
             <!-- MAIN PANEL -->
-            <div style="flex:1;" id="mainPanel">
+            <div style="flex:1;" id="mainPanel" class="mobile-main-panel">
 
                 <!-- RIBBON -->
                 <div id="ribbon" class="main_ribbon_header">

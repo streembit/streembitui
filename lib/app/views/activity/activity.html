@@ -20,7 +20,7 @@
 <div class="ajax-notifications custom-scroll dropdown-design-change" data-bind="template: {name: template}, visible: contentShow"></div>
 
 <script type="text/html" id="message-activity-template">
-    <ul class="notification-body message-activity-col notification-box-message-list" data-bind="foreach: messages">
+    <ul class="notification-body message-activity-col notification-box-message-list mobile-size-msg-box" data-bind="foreach: messages">
         <li data-bind="visible: isSendMsg">
             <div data-bind="text: senderName" style="font-weight: bold;font-size: 14px;padding: 0px 0px 5px;border-bottom: 1px solid #ccc;"></div>
             <div><span data-bind="localdatemsg: time" class="time"></span></div>
