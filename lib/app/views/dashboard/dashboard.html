@@ -1,46 +1,62 @@
 
 <div class="dashboard">
-
+    <h1 style="text-align: center;font-weight: bold;font-size: 45px;margin-bottom:35px;">
+        Welcome, 
+        <span data-bind="text: contactName" style="color: black"></span>
+    </h1>
     <div class="row" style="margin:5px 0 0 0">
         <div class="col-lg-4 col-md-12">
             <div class="card-box widget-box-two widget-two-purple myAddressbookBg">
-                <i class="widget-two-icon fa fa-group dashboardColTileSt"></i>
-                <div class="wigdet-two-content">
-                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="Statistics" style="font-size: 17px">My Addressbook</p>
-                    <h5 class="text-white contactsCountSt">
+                <div style="text-align: center;">
+                    <i class="fa fa-group dashboard-group-ic"></i>
+                </div>
+                <div class="wigdet-two-content" style="text-align: center;margin: 10px 0">
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow dash-address-st-change" title="Statistics" style="font-size: 17px">Contacts</p>
+                    <h5 class="text-white contactsCountSt dash-address-st-change" style="margin-top: 5px">
                         <span data-plugin="counterup" data-bind="text: contactsCount"></span> 
                     </h5>
                 </div>
-            </div>
-            <div class="card-box-link widget-two-purple myAddressbookBg">
-                <a href="#" class="widget-two-footer" data-action="contactsBar">Manage, call contacts <i class="fa fa-chevron-circle-right"></i></a>
+                <div style="text-align: center;">
+                    <button style="border-radius: 22px;background: #ec947a;border: 1px solid #ec947a;width: 160px;">
+                        <a href="#" class="widget-two-footer dashboard-btn-call-cont" data-bind="click: openAddContactView" style="background: #ec947a;color: #fff;font-weight: bold;">Add Contact</a>
+                    </button>
+                </div>
             </div>
         </div><!-- end col -->
         <div class="col-lg-4 col-md-12">
             <div class="card-box widget-box-two widget-two-red iotDevicesBg">
-                <i class="widget-two-icon fa fa-cogs dashboardColTileSt"></i>
-                <div class="wigdet-two-content">
-                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow" title="IoT devices" style="font-size: 17px">IoT devices</p>
-                    <h5 class="text-white">
-                        <span data-plugin="counterup" data-bind="text: device_count" style="cursor:pointer;"></span> 
+                <div style="text-align: center;">
+                    <i class="fa fa-cogs dashboard-cogs-ic"></i>
+                </div>
+                <div class="wigdet-two-content" style="text-align: center;margin: 10px 0">
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow dash-address-st-change" title="IoT devices" style="font-size: 17px">IoT devices</p>
+                    <h5 class="text-white contactsCountSt dash-address-st-change" style="margin-top: 5px">
+                       <span data-plugin="counterup" data-bind="text: device_count" style="cursor:pointer;"></span> 
                     devices</h5>
                 </div>
-            </div>
-            <div class="card-box-link widget-two-red iotDevicesBg" data-bind="click: iotDevices">
-                <a href="#" class="widget-two-footer">Manage devices <i class="fa fa-chevron-circle-right"></i></a>
+                <div style="text-align: center;">
+                    <button style="border-radius: 22px;background: #22B4DF;border: 1px solid #22B4DF;width: 160px;">
+                        <a href="#" class="widget-two-footer dashboard-btn-manage-devices" data-bind="click: iotDevices" style="background: #22B4DF;color: #fff;font-weight: bold;">Devices</a>
+                    </button>
+                </div>
             </div>
         </div><!-- end col -->
         <div class="col-lg-4 col-md-12">
             <div class="card-box widget-box-two widget-two-info walletDashBg">
-                <i class="widget-two-icon fa fa-usd dashboardColTileSt"></i>
-                <div class="wigdet-two-content">
-                    <p class="m-0 text-white text-uppercase font-600 font-secondary text-overflow" title="Wallett" style="font-size: 17px">Wallet</p>
-                    <h5 class="text-white"><span data-plugin="counterup">0</span> Streembit coin</h5>
+                <div style="text-align: center;">
+                    <i class="fa fa-usd dashboard-usd-ic"></i>
                 </div>
-            </div>
-            <div class="card-box-link widget-two-info walletDashBg" data-bind="click: walletTab" style="cursor:pointer;">
-                <a href="#" class="widget-two-footer">Manage wallet <i class="fa fa-chevron-circle-right"></i></a>
-            </div>
+                <div class="wigdet-two-content" style="text-align: center;margin: 10px 0">
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow dash-address-st-change" title="IoT devices" style="font-size: 17px">Wallet</p>
+                    <h5 class="text-white dash-address-st-change">
+                        <span data-plugin="counterup" data-bind="text: coin_count"></span>
+                    Streembit coin</h5>
+                </div>
+                <div style="text-align: center;">
+                    <button style="border-radius: 22px;background: #05bd61;border: 1px solid #05bd61;width: 160px;">
+                        <a href="#" class="widget-two-footer dashboard-btn-manage-wallet" data-bind="click: walletTab" style="background: #05bd61;color: #fff;font-weight: bold;">Wallet</a>
+                    </button>
+                </div>
         </div><!-- end col -->
     </div>
 </div>

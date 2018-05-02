@@ -4693,6 +4693,99 @@ a:link, #newvers_nav_for_ul .btn, button{
     flex: 0 0 220px;
     width: 220px;
 }
+.for-all-data {
+    position: relative;
+}
+.quick-call-and-chat-cont-panel {
+    position: absolute;
+    z-index: 999; 
+    bottom: 18px; 
+    right: 16px;
+}
+.call-btn-for-contact-panel {
+    right: 52px;
+    z-index: 999;
+    cursor: pointer;
+    left: auto;
+}
+.chat-btn-for-contact-panel {
+    right: 13px;
+    z-index: 999;
+    cursor: pointer;
+    left: auto;   
+}
+.dashboard-group-ic {
+    font-size: 40px !important;
+    overflow: hidden;
+    vertical-align: middle;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 50%;
+    color: #ec947a;
+    border: 4px solid #ec947a;
+}
+.dashboard-btn-call-cont:hover {
+    text-decoration: none;
+}
+.myAddressbookBg, .iotDevicesBg, .walletDashBg  {
+    background-color: #fff;
+    border-color: #fff;
+    box-shadow: none;
+}
+.dash-address-st-change {
+    color: dimgrey!important;
+}
+.dashboard-cogs-ic {
+    font-size: 40px !important;
+    overflow: hidden;
+    vertical-align: middle;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 50%;
+    color: #22B4DF;
+    border: 4px solid #22B4DF;
+}
+.dashboard-btn-manage-devices {
+    background: #22B4DF;
+    color: #fff;
+    font-weight: bold;
+}
+.dashboard-btn-manage-devices:hover, .dashboard-btn-manage-devices:hover, .dashboard-btn-manage-wallet:hover {
+    text-decoration: none;
+}
+.dashboard-usd-ic {
+    font-size: 40px !important;
+    overflow: hidden;
+    vertical-align: middle;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 50%;
+    color: #05bd61;
+    border: 4px solid #05bd61;
+}
+.dashboard {
+    position: relative;
+    top: 43%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+.existContacts {
+    width: 240px;
+    transition: 0.5s;
+}
+.forExitsContact {
+    margin-right: 240px;
+    transition: 0.5s;
+}
+.changeColorIcon {
+    color: #6abfe8;
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
