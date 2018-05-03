@@ -4786,6 +4786,16 @@ a:link, #newvers_nav_for_ul .btn, button{
 .changeColorIcon {
     color: #6abfe8;
 }
+.page-footer {
+    position: absolute;
+    bottom: 0;
+    padding: 25px;
+}
+.all-contacts-field {
+    height: 88%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -5129,6 +5139,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .mobile-size-msg-box {
         float: none;
+    }
+    .dashboard {
+        top: 47%;
     }
 }
 @media(max-width: 375px) {
