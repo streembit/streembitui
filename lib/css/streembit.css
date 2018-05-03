@@ -2320,6 +2320,9 @@ Widgets
     text-align: center;
     font-family: "Arial Black", Gadget, sans-serif;
 }
+.humidity {
+    font-size: 50px;
+}
 
 .temperature .decimal, .humidity .decimal {
     font-size: 28px;
@@ -2329,6 +2332,10 @@ Widgets
 .temperature strong, .humidity strong {
     position: absolute;
     font-size: 36px;
+}
+.humidity strong {
+    font-size: 16px;
+    top: 38px;
 }
 
 .data-notreceived-info {
