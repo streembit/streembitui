@@ -2314,19 +2314,19 @@ Widgets
 }
 
 
-.temperature {
+.temperature, .humidity {
     font-size: 56px;
     font-weight: 800;
     text-align: center;
     font-family: "Arial Black", Gadget, sans-serif;
 }
 
-.temperature .decimal {
+.temperature .decimal, .humidity .decimal {
     font-size: 28px;
     font-weight: 200;
 }
 
-.temperature strong {
+.temperature strong, .humidity strong {
     position: absolute;
     font-size: 36px;
 }
