@@ -4805,6 +4805,23 @@ a:link, #newvers_nav_for_ul .btn, button{
 .page-footer {
     z-index: 1020;
 }
+#ribbon {
+    position: absolute;
+    width: 100%
+}
+#view-container {
+    height: auto;
+}
+#main {
+    height: auto;
+    margin-top: 35px;
+}
+@media (min-width: 1024px) and (max-width: 1366) {
+    .dashboard {
+        width: 78%;
+    }
+
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -4814,6 +4831,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .dashboard {
         width: 80%;
+    }
+    .changeSizeDash {
+        width: 100%;
     }
 }
 @media (max-width: 979px) and (min-width: 768px) {
