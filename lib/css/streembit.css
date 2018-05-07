@@ -4777,10 +4777,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     border: 4px solid #05bd61;
 }
 .dashboard {
-    position: relative;
-    top: 43%;
-    transform: translateY(-50%);
-    width: 100%;
+    position: fixed;
+    top: 28%;
+    width: 90%;
 }
 .existContacts {
     width: 240px;
@@ -4803,6 +4802,26 @@ a:link, #newvers_nav_for_ul .btn, button{
     overflow-y: auto;
     overflow-x: hidden;
 }
+.page-footer {
+    z-index: 1020;
+}
+#ribbon {
+    position: absolute;
+    width: 100%
+}
+#view-container {
+    height: auto;
+}
+#main {
+    height: auto;
+    margin-top: 35px;
+}
+@media (min-width: 1024px) and (max-width: 1366) {
+    .dashboard {
+        width: 78%;
+    }
+
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -4810,11 +4829,22 @@ a:link, #newvers_nav_for_ul .btn, button{
     .help-content-item .backupAccImg {
         max-height: 455px;
     }
+    .dashboard {
+        width: 80%;
+    }
+    .changeSizeDash {
+        width: 100%;
+    }
 }
 @media (max-width: 979px) and (min-width: 768px) {
     #left-panel {
         display: block;
     }
+    .dashboard {
+        top: 14%;
+        width: 75%;
+    }
+
 }
 @media (max-width: 880px) and (min-width: 768px) {
     #logo {
@@ -4849,6 +4879,10 @@ a:link, #newvers_nav_for_ul .btn, button{
     .security-child-style {
         padding-left: 26px!important;
     }
+    .dashboard {
+        top: 14%;
+    }
+
 }
 @media (max-width: 767px){
     #hide-menu .helpHeaderIcon i::before{
@@ -5148,7 +5182,19 @@ a:link, #newvers_nav_for_ul .btn, button{
         float: none;
     }
     .dashboard {
-        top: 47%;
+        top: 12%;
+        overflow-y: auto;
+        height: 600px;
+        width: 100%;
+    }
+    .footer-chat-controls1, .footer-chat-controls {
+        margin: 0;
+    }
+    .chat-fill-area .chatitemswnd {
+        height: 360px;
+    }
+    .content-panel.hide-menu.active-cbar .chat-fill-area {
+        width: 100%;
     }
 }
 @media(max-width: 375px) {
@@ -5220,6 +5266,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .mobile-size-msg-box {
         float: none;
+    }
+    .dashboard {
+        top: 12%;
+        overflow-y: auto;
+        height: 540px;
+        width: 100%;
     }
 }
 @media (max-width: 360px) {
