@@ -4816,11 +4816,20 @@ a:link, #newvers_nav_for_ul .btn, button{
     height: auto;
     margin-top: 35px;
 }
+#call {
+    top: 100px;
+    left: 0;
+}
+#call .forShowChatPos {
+    margin-left: 200px;
+}
+#call .calltime_parent {
+    right: 0;
+}
 @media (min-width: 1024px) and (max-width: 1366) {
     .dashboard {
         width: 78%;
     }
-
 }
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
@@ -4829,10 +4838,10 @@ a:link, #newvers_nav_for_ul .btn, button{
     .help-content-item .backupAccImg {
         max-height: 455px;
     }
-    .dashboard {
+/*    .dashboard {
         width: 80%;
     }
-    .changeSizeDash {
+*/    .changeSizeDash {
         width: 100%;
     }
 }
@@ -5185,7 +5194,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         top: 12%;
         overflow-y: auto;
         height: 600px;
-        width: 100%;
+        width: 100%!important;
     }
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0;
@@ -5272,6 +5281,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         overflow-y: auto;
         height: 540px;
         width: 100%;
+    }
+    .footer-chat-controls1, .footer-chat-controls {
+        margin: 0px 5px;
     }
 }
 @media (max-width: 360px) {
