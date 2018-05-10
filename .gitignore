@@ -70,3 +70,6 @@ nw.sh
 #IDE
 ./idea
 ./idea/*
+
+# Linters
+*lintrc.json
