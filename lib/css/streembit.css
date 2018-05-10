@@ -4838,11 +4838,6 @@ a:link, #newvers_nav_for_ul .btn, button{
 #smallScreenAudioCall1 {
     bottom: 52px;
 }
-@media (min-width: 1024px) and (max-width: 1366) {
-    .dashboard {
-        width: 78%;
-    }
-}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -4850,10 +4845,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     .help-content-item .backupAccImg {
         max-height: 455px;
     }
-/*    .dashboard {
-        width: 80%;
-    }
-*/    .changeSizeDash {
+    .changeSizeDash {
         width: 100%;
     }
 }
@@ -4861,11 +4853,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     #left-panel {
         display: block;
     }
-    .dashboard {
-        top: 14%;
-        width: 75%;
-    }
-
 }
 @media (max-width: 880px) and (min-width: 768px) {
     #logo {
@@ -4899,9 +4886,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .security-child-style {
         padding-left: 26px!important;
-    }
-    .dashboard {
-        top: 14%;
     }
 
 }
@@ -5202,12 +5186,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-size-msg-box {
         float: none;
     }
-    .dashboard {
-        top: 12%;
-        overflow-y: auto;
-        height: 600px;
-        width: 100%!important;
-    }
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0;
     }
@@ -5287,12 +5265,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .mobile-size-msg-box {
         float: none;
-    }
-    .dashboard {
-        top: 12%;
-        overflow-y: auto;
-        height: 540px;
-        width: 100%;
     }
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0px 5px;
