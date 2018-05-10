@@ -63,3 +63,4 @@ build/macosx64
 *.zip
 /typings
 /lib/config.app.json
+nw.sh
