@@ -63,6 +63,8 @@ build/macosx64
 *.zip
 /typings
 /lib/config.app.json
+
+# NW startup script
 nw.sh
 
 #IDE
