@@ -1,6 +1,6 @@
 ## Streembit - decentralized, P2P communication system for humans and Internet of Things devices.
 
-http://streembit.github.io/
+https://streembit.co/
 
 What is Streembit?
 -----------------
