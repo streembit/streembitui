@@ -4284,7 +4284,6 @@ span.users-hub {
 }
 .helpFromTheHeader .tree ul ul {
     padding-left: 50px;
-    width: 213px;
 }
 .myAddressbookBg {
     background-color: #DF4D22;
@@ -4838,6 +4837,34 @@ a:link, #newvers_nav_for_ul .btn, button{
 #smallScreenAudioCall1 {
     bottom: 52px;
 }
+.helpFromTheHeader {
+    padding-bottom: 33px;
+}
+#my-contacts-section {
+    padding-bottom: 55px;
+}
+.helpFromTheHeader .tree ul ul {
+    padding-left: 55px;
+}
+.security-tabs {
+    width: 160px;
+}
+#txtChatCtrl {
+    width: 100% !important;
+    height: 75px;
+    margin: 0;
+    resize: none;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #000;
+    font-size: 12px;
+}
+.callProcessContentStyle {
+    width:540px;
+    height:240px;
+    margin-top:-130px;
+    color:#fff;
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -4847,6 +4874,15 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .changeSizeDash {
         width: 100%;
+    }
+    .helpRightSideText {
+        word-break: break-all;
+        width: 171px;     
+        transition: 0.5s;
+    }
+    .security-tabs {
+        width: 130px;
+        word-break: break-all;
     }
 }
 @media (max-width: 979px) and (min-width: 768px) {
@@ -4887,7 +4923,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     .security-child-style {
         padding-left: 26px!important;
     }
-
+    .mainHelpContent {
+        padding-left: 80px;
+    }
+    .helpFromTheHeader .tree ul ul {
+        padding-left: 20px;
+    }
 }
 @media (max-width: 767px){
     #hide-menu .helpHeaderIcon i::before{
@@ -4898,6 +4939,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #hide-menu i {
         font-size: 100%;
+    }
+    .mainHelpContent {
+        padding-left: 80px;
+    }
+    .helpFromTheHeader .tree ul ul {
+        padding-left: 20px;
     }
 }
 @media only screen and (max-width: 679px) and (min-width: 0px) {
@@ -5195,6 +5242,25 @@ a:link, #newvers_nav_for_ul .btn, button{
     .content-panel.hide-menu.active-cbar .chat-fill-area {
         width: 100%;
     }
+    .helpFromTheHeader .tree ul ul {
+        width: 190px;
+    }
+    .mainHelpContent {
+        padding-left: 0;
+    }
+    .heightForKeyboardMobile {
+        height: 130px!important;
+        transition: 0.5s;
+    }
+    .forShowChatPos {
+        margin-top: 0px;
+    }
+    #call .forShowChatPos {
+        margin-left: 0px!important;
+    }
+    .callProcessContentStyle {
+        height: 540px;
+    }
 }
 @media(max-width: 375px) {
     .initaccount-footer-style {
@@ -5268,6 +5334,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0px 5px;
+    }
+    .mainHelpContent {
+        padding-left: 0;
+    }
+    .heightforSmallScreen {
+        height: 115px;
     }
 }
 @media (max-width: 360px) {

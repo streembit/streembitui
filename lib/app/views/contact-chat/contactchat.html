@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="fill-area" style="padding:10px;flex:1">
-        <div class="chat-fill-area chatitemswnd">
+        <div class="chat-fill-area chatitemswnd" data-bind="css: { heightForKeyboardMobile: forKeyboardMobile, heightforSmallScreen: changeHeightOnMobile}">
             <table cellspacing="0" cellpadding="0">
                 <tbody data-bind="foreach: chatitems">
                     <tr>
@@ -44,7 +44,7 @@
                 <i class="fa fa-image" style="font-size: 18px;color: #007bff;"></i>
             </div>
             <div style="width:100%">
-                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing, blur: blurTextareaMobile, focus: focusTextareaMobile}"></textarea>
                 <div class="contact-is-typing-container">
                     <span class="contact-is-typing" data-bind="text: contact_is_typing"></span>
                 </div>
