@@ -26,8 +26,6 @@
                         </td>
                         <td>
                             <div class="chat-sender" style="padding-top:6px">
-                                <img width="32" height="32" data-bind="visible: $parent.isMe(sender), attr: {src: $parent.my_avatar}" />
-                                <img src="/lib/img/ava_placeholder.png" width="32" height="32" data-bind="visible: $parent.isContactNoAva(sender)" />
                                 <img width="32" height="32" data-bind="visible: $parent.isContactWithAva(sender), attr: {src: $parent.contact_avatar}" />
                                 <span class="chat-item-sender" data-bind="text: sender, css: { isContactSender: sender != $parent.username() }"></span>:
                             </div>

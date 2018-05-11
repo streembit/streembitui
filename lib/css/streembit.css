@@ -4776,11 +4776,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     color: #05bd61;
     border: 4px solid #05bd61;
 }
-.dashboard {
-    position: fixed;
-    top: 28%;
-    width: 90%;
-}
 .existContacts {
     width: 240px;
     transition: 0.5s;
@@ -4809,18 +4804,39 @@ a:link, #newvers_nav_for_ul .btn, button{
     position: absolute;
     width: 100%
 }
-#view-container {
-    height: auto;
-}
 #main {
     height: auto;
     margin-top: 35px;
 }
-@media (min-width: 1024px) and (max-width: 1366) {
-    .dashboard {
-        width: 78%;
-    }
-
+#call {
+    top: 100px;
+    left: 0;
+}
+#call .forShowChatPos {
+    margin-left: 200px;
+}
+#call .calltime_parent {
+    right: 0;
+}
+.dashboard {
+    margin-bottom: 125px;
+}
+#view-container {
+    width: 100%;
+}
+.wallet-content-style, .create-iot-hub-st, .settings-side-ch {
+    width: 100%;
+    height: 100%;
+}
+.initialize-existing-account {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#smallScreenAudioCall1 {
+    bottom: 52px;
 }
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
@@ -4828,9 +4844,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .help-content-item .backupAccImg {
         max-height: 455px;
-    }
-    .dashboard {
-        width: 80%;
     }
     .changeSizeDash {
         width: 100%;
@@ -4840,11 +4853,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     #left-panel {
         display: block;
     }
-    .dashboard {
-        top: 14%;
-        width: 75%;
-    }
-
 }
 @media (max-width: 880px) and (min-width: 768px) {
     #logo {
@@ -4878,9 +4886,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .security-child-style {
         padding-left: 26px!important;
-    }
-    .dashboard {
-        top: 14%;
     }
 
 }
@@ -5181,12 +5186,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-size-msg-box {
         float: none;
     }
-    .dashboard {
-        top: 12%;
-        overflow-y: auto;
-        height: 600px;
-        width: 100%;
-    }
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0;
     }
@@ -5267,11 +5266,8 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-size-msg-box {
         float: none;
     }
-    .dashboard {
-        top: 12%;
-        overflow-y: auto;
-        height: 540px;
-        width: 100%;
+    .footer-chat-controls1, .footer-chat-controls {
+        margin: 0px 5px;
     }
 }
 @media (max-width: 360px) {
