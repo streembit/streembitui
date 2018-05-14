@@ -4242,8 +4242,11 @@ span.users-hub {
 #ribbon {
     z-index: 1;
 }
-.footer-chat-controls1, .footer-chat-controls {
+.footer-chat-controls1 {
     margin: 55px 0 0 0;
+}
+.footer-chat-controls {
+    margin: -22px 0 0 0;
 }
 #chat_img {
     right: -7px;

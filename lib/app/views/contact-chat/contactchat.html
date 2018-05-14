@@ -6,10 +6,20 @@
             </div>
             <div class="buttons-chat-on-mobile-size" data-bind="visible: issession">
                 <div class="btn-group">
-                    <button class="btn btn-primary saveChatHistoryForTextChat" data-bind="click: savechat">Save Chat History</button>
-                    <button class="btn btn-danger deleteChatHistoryForTextChat" data-bind="click: rmchat">Delete Chat History</button>
+                    <button class="btn btn-primary saveChatHistoryForTextChat" data-bind="click: savechat">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        <span>Save Chat History</span>
+                    </button>
+                    <button class="btn btn-danger deleteChatHistoryForTextChat" data-bind="click: rmchat">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        <span>Delete Chat History</span>
+                    </button>
                 </div>
-                <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button>
+               <!--  <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">Send File</button> -->
+                <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">
+                    <i class="fa fa-paperclip" aria-hidden="true"></i>
+                    <span>Send File</span>
+                </button>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -50,7 +60,10 @@
                 </div>
             </div>
             <div style="flex: 0 0 100%;font-size: 11px;justify-content: space-between;align-self: center;width: 100%;display: flex;">
-                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;margin:3px auto;position: relative;top: 8px;"><span data-bind="text: btncaption"></span></button>
+                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;margin:3px auto;position: relative;top: 8px;">
+                    <i class="fa fa-paper-plane"></i>
+                    <span data-bind="text: btncaption"></span>
+                </button>
 
             </div>
         </div>
