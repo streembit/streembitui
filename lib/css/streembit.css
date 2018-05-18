@@ -5572,6 +5572,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .dashboard {
         margin-bottom: 0;
+        padding-bottom: 50px;
     }
     .dash-address-st-change {
         margin-bottom: 0px!important;
@@ -5648,6 +5649,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         float: right;
         margin-right: 20px;
         margin-top: 8px;
+    }
+    #mobileVersionHeaderMainMenu {
+        height: 100%;
     }
 }
 @media(max-width: 375px) {
