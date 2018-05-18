@@ -1,10 +1,10 @@
 
 <div class="dashboard col">
-    <h1 style="text-align: center;font-weight: bold;font-size: 45px;margin-bottom:35px;" class="forResponsiveSizeCols">
-        Welcome, 
-        <span data-bind="text: contactName" style="color: black"></span>
+    <h1 class="forResponsiveSizeColsHeader">
+        <span class="mobile-version-changing-welcome-style">Welcome,</span> 
+        <span class="mobile-version-changing-welcome-style" data-bind="text: contactName" style="color: black"></span>
     </h1>
-    <div class="row" style="margin:5px 0 0 0">
+    <div class="row" style="margin:-3px 0 0 0">
         <div class="col-xl-4 col-lg-4 col-md-12 forResponsiveSizeCols">
             <div class="card-box widget-box-two widget-two-purple myAddressbookBg">
                 <div style="text-align: center;">
@@ -17,7 +17,7 @@
                     </h5>
                 </div>
                 <div style="text-align: center;">
-                    <button style="border-radius: 22px;background: #ec947a;border: 1px solid #ec947a;width: 160px;">
+                    <button class="addContactFromDashboard">
                         <a href="#" class="widget-two-footer dashboard-btn-call-cont" data-bind="click: openAddContactView" style="background: #ec947a;color: #fff;font-weight: bold;">Add Contact</a>
                     </button>
                 </div>
@@ -35,7 +35,7 @@
                     devices</h5>
                 </div>
                 <div style="text-align: center;">
-                    <button style="border-radius: 22px;background: #22B4DF;border: 1px solid #22B4DF;width: 160px;">
+                    <button class="manageDevicesFromDashboard">
                         <a href="#" class="widget-two-footer dashboard-btn-manage-devices" data-bind="click: iotDevices" style="background: #22B4DF;color: #fff;font-weight: bold;">Devices</a>
                     </button>
                 </div>
@@ -53,7 +53,7 @@
                     Streembit coin</h5>
                 </div>
                 <div style="text-align: center;">
-                    <button style="border-radius: 22px;background: #05bd61;border: 1px solid #05bd61;width: 160px;">
+                    <button class="manageWalletFromDashboard">
                         <a href="#" class="widget-two-footer dashboard-btn-manage-wallet" data-bind="click: walletTab" style="background: #05bd61;color: #fff;font-weight: bold;">Wallet</a>
                     </button>
                 </div>

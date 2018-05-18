@@ -114,7 +114,7 @@
         }
         body[data-account-load-complete=true] #allContent {
             margin-top: 45px;
-        } 
+        }
         body[data-account-load-complete=false] #main {
             background: #333;
             height:100%;
@@ -163,6 +163,17 @@
             body[data-account-load-complete=true] #mainPanel {
                 margin-left: 0;
             }
+            body[data-account-load-complete=true] #allContent {
+                margin-top: 47px;
+            } 
+        }
+        @media(max-width: 375px) {
+            body[data-account-load-complete=true] .dashboard {
+                height: 100vh;
+            }
+        }
+        body[data-account-load-complete=false] #main{
+            height: 78vh!important;
         }
         .smart-style-5, .smart-style-5 .content-panel{
             background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
@@ -197,10 +208,13 @@
                         <img src="lib/images/applogo.png">
                     </span>
                     <div id="hide-menu" class="btn-header" style="float: right;">
-                        <span class="left-side-header-bt" data-action="toggleMenu" data-placement="bottom" data-toggle="tooltip" title="Main Menu">
+                        <span class="left-side-header-bt" data-action="toggleMenu" data-placement="bottom"  title="Main Menu">
                             <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
                         </span>
                     </div>
+                    <span id="mobile-header-main-manu-pan" class="btn-header" style="float: right;" data-target="#mobileVersionHeaderMainMenu" data-toggle="collapse" data-action="mobileHeaderMainMenu">
+                        <i class="fa fa-reorder" style="margin-top:5px; cursor: pointer;color: #6D6A69;"></i>
+                    </span>
                     <div data-bind="component: {name: 'connection'}"></div> 
                 </a>
                 
@@ -227,7 +241,7 @@
                         </div>
 
                     </div>
-                        <ul cclass="header-dropdown-list hidden-xs language-side-ch">
+                        <ul class="header-dropdown-list hidden-xs language-side-ch">
                             <li class="dropdown">
                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
                                 <ul class="language-drop-part dropdown-menu" role="menu">
@@ -250,10 +264,99 @@
                             </li>
                         </ul>
                 </div>
+
             </nav>
         </div>
         <!-- END HEADER -->
-        
+
+        <!-- main menu for mobile version -->
+                <div class="collapse navbar-collapse" id="mobileVersionHeaderMainMenu" style="">
+                    <ul class="navbar-nav mobile-main-manu-changing">
+                        <li class="nav-item">
+                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="nav-link">
+                                <i class="fa fa-lg fa-fw fa-home"></i> 
+                                <span class="menu-item-parent">Dashboard</span>
+                            </a>
+                        </li>
+                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navIotDevices" aria-controls="navIotDevices" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-lg fa-fw fa-signal"></i> 
+                            <span class="menu-item-parent">IOT Devices</span>
+                            <span class="caret"></span>
+                        </span>
+                        <div class="navbar-collapse collapse" id="navIotDevices" style="">
+                            <ul class="navbar-nav mobile-contact-bar-content">
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub</a>
+                            </ul>
+                        </div>
+                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navActions" aria-controls="navActions" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-lg fa-fw fa-server"></i> 
+                            <span class="menu-item-parent">Actions</span>
+                            <span class="caret"></span>
+                        </span>
+                        <div class="navbar-collapse collapse" id="navActions" style="">
+                            <ul class="navbar-nav mobile-contact-bar-content">
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:restoreAccount">Restore account</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:backupAccount">Backup account</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a>
+                            </ul>
+                        </div>
+                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navBlockchain" aria-controls="navBlockchain" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-lg fa-fw fa-money"></i> 
+                            <span class="menu-item-parent">Blockchain</span>
+                            <span class="caret"></span>
+                        </span>
+                        <div class="navbar-collapse collapse" id="navBlockchain" style="">
+                            <ul class="navbar-nav mobile-contact-bar-content">
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'wallet')">Blockchain explorer</a>
+                            </ul>
+                        </div>
+                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navContacts" aria-controls="navContacts" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-lg fa-fw fa-address-book"></i> 
+                            <span class="menu-item-parent">Contacts</span>
+                            <span class="caret"></span>
+                        </span>
+                        <div class="navbar-collapse collapse" id="navContacts" style="">
+                            <ul class="navbar-nav mobile-contact-bar-content">
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contact</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'offline-contact-request')">Create offline contact offer</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:backupContacts">Backup contacts</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:restoreContacts">Restore contacts</a>
+                            </ul>
+                        </div>
+                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navTools" aria-controls="navTools" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-lg fa-fw fa-cogs"></i> 
+                            <span class="menu-item-parent">Tools</span>
+                            <span class="caret"></span>
+                        </span>
+                        <div class="navbar-collapse collapse" id="navTools" style="">
+                            <ul class="navbar-nav mobile-contact-bar-content">
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'netinfo')">Account/network info</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:clearDatabase">Clear Database</a>
+                            </ul>
+                        </div>
+                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navHelp" aria-controls="navHelp" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-lg fa-fw fa-question-circle"></i> 
+                            <span class="menu-item-parent">Help</span>
+                            <span class="caret"></span>
+                        </span>
+                        <div class="navbar-collapse collapse" id="navHelp" style="">
+                            <ul class="navbar-nav mobile-contact-bar-content">
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a>
+                                <!-- ko if: streembit.globals.nwmode == true -->
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: checkUpdates">Check software updates</a>
+                                <!-- /ko -->
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: about">About</a>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+        <!-- end main menu for mobile version -->
+
         <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
 
             <!-- Left panel : Navigation area -->
@@ -288,14 +391,12 @@
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
                             <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'initaccount')">Initialize existing account</a></li>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupAccount">Backup account</a></li>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Create a certificate</a></li>
                             </ul>
                         </li>
                         <li>
@@ -365,7 +466,7 @@
                 </div>
                 <!-- END RIBBON -->
                 <!-- MAIN CONTENT -->
-                <div style="display:flex;flex-direction:row;height: 100%" class="for-main-content">
+                <div style="display:flex;flex-direction:row;" class="for-main-content">
                     <div id="main" class="content-panel row align-items-center" style="margin-left: 0; margin-right: 0" data-bind="component: { name: route().page, params: route().params }"></div>
 
                     <div id="call">

@@ -4820,9 +4820,6 @@ a:link, #newvers_nav_for_ul .btn, button{
 #call .calltime_parent {
     right: 0;
 }
-.dashboard {
-    margin-bottom: 125px;
-}
 #view-container {
     width: 100%;
 }
@@ -4883,6 +4880,99 @@ a:link, #newvers_nav_for_ul .btn, button{
     left: 67px;
     padding-right: 50px;
 }
+.tools-netinfo-and-account {
+    width: 100%;
+    height: 100%;
+}
+#seeds_settings {
+    height: 100%;
+    overflow-y: auto;
+}
+.contacts-add-contact {
+    margin:20px 30px;
+    width: 100%; 
+    height: 90%;
+}
+.logs-side-ch {
+    width:100%;
+    height:99%;
+}
+.navbar-nav.mobile-main-manu-changing .dropdown-menu {
+    position: static!important;
+}
+#mobile-header-main-manu-pan {
+    display: none;
+}
+.addContactFromDashboard {
+    border-radius: 22px;
+    background: #ec947a;
+    border: 1px solid #ec947a;
+    width: 160px;
+    font-size: 12px;
+}
+.forResponsiveSizeCols {
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom:35px;
+}
+.manageDevicesFromDashboard {
+    border-radius: 22px;
+    background: #22B4DF;
+    border: 1px solid #22B4DF;
+    width: 160px;
+    font-size: 12px;
+}
+.manageWalletFromDashboard {
+    border-radius: 22px;
+    background: #05bd61;
+    border: 1px solid #05bd61;
+    width: 160px;
+    font-size: 12px;
+}
+#main {
+    height: 78vh;
+}
+.forResponsiveSizeColsHeader {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 27px;
+}
+.create-account-new-account-modal {
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    align-content:center;
+}
+.contact-offer-all-views-content {
+    margin: 20px;
+}
+.offline-contact-offer-mobile-vs {
+    margin:20px;
+    height: 100%;
+}
+.optional-details-contact-offer-view {
+    font-weight: bold;
+    margin-left:15px;
+}
+.contact-offer-container-fluid {
+    min-width:500px;
+    padding:10px;
+}
+#my-contacts-section {
+    display: block;
+}
+#my-contacts-section-mobile-version {
+    display: none;
+}
+.helpFromTheHeader {
+    width: 100%;
+    height: 100%;
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -4941,9 +5031,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     .security-child-style {
         padding-left: 26px!important;
     }
- /*   .mainHelpContent {
-        padding-left: 80px;
-    }*/
     .helpFromTheHeader .tree ul ul {
         padding-left: 20px;
     }
@@ -5153,21 +5240,17 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-dots-bt {
         margin: 0;
     }
-    .mobile-send-error-rep-st {
-        flex-wrap: unset!important;
-    }
     .mobile-transactions-st{
         margin: 5px 0;
     }
     .mobile-req-money-bt-st {
-        text-align: center;
+        text-align: left;
         margin-right: 0px;
-        margin-left: 37px;
+        margin-left: 16px;
     }
     .mobile-send-money-bt-st {
-        text-align: center;
-        margin-right: 0px;
-        margin-left: 17px;
+        text-align: left;
+        margin: 15px 0;
     }
     .clear-btn-rec-on-mobile-size {
         padding: 5px 22px;
@@ -5210,9 +5293,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .overview-coin-mobile {
         margin-left: 10px;
-    }
-    .input-reclab-on-mobile-size, .input-sendlab-on-mobile-size {
-        margin-left: 15px;
     }
     .content-panel {
         max-width: 415px;
@@ -5281,8 +5361,293 @@ a:link, #newvers_nav_for_ul .btn, button{
         height: 540px;
     }
     .left-side-main-menu {
-        height: 100%;
+        height: 100vh;
         overflow-y: auto;
+    }
+    .mywallet-view {
+        width: 400px;
+    }
+    .tools-netinfo-and-account {
+        height: 100%;
+    }
+    #seeds_settings {
+        height: 100vh;
+    }
+    .settings-side-ch {
+        height: 100%;
+    }
+    .contacts-add-contact {
+        height: 90%;
+    }
+    .logs-side-ch {
+        padding-bottom: 30px;
+    }
+    #allContent, .for-main-content, #ribbon {
+        flex: 0 1 auto!important;
+    }
+    .mobile-main-panel {
+        flex: 1 1 auto!important;
+    }
+    .navbar-collapse {
+        flex-basis: auto!important;
+        flex-grow: inherit!important;
+    }
+    .initialize-existing-account {
+        margin-top: 10px;
+    }
+    .change-streembit-password-st {
+        margin-top: 20px;
+    }
+    .wallet-content-style {
+        height: 100%;
+    }
+    #mobileVersionHeaderMainMenu {
+        background-color: #f8f8f8;
+        margin-top: 47px;
+        border-top: 1px solid #e7e7e7;
+        padding-top: 10px;
+    }
+    .navbar-nav.mobile-main-manu-changing .nav-link {
+        color: #757575;
+        font-size: 16px;
+    }
+    #hide-menu {
+        display: none;
+    }
+    #mobile-header-main-manu-pan {
+        display: block;
+        cursor: pointer;
+        border-radius: 2px;
+        display: inline-block;
+        font-weight: bold;
+        min-width: 30px;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        font-size: 17px;
+        text-decoration: none;
+        width: 29px;
+        height: 29px
+    }
+    .navbar-nav.mobile-main-manu-changing li:hover {
+        background-color: #e7e7e7;
+    }
+    .navbar-nav.mobile-main-manu-changing li a:hover {
+        color: #555555;
+    }
+    .navbar-nav.mobile-main-manu-changing li a {
+        padding: 8px 15px;
+        color: #757575;
+    }
+    .navbar-nav.mobile-main-manu-changing li a.child-menu-dropdown-mobile-vs {
+        padding: 8px 45px;
+    }
+    .navbar-nav.mobile-main-manu-changing .dropdown-menu {
+        background-color: #f8f8f8;
+        border: 1px solid transparent;
+        border-radius: 0px;
+    }
+    #navbarTogglerDemo01 {
+        margin-top: 47px;
+        background: #f8f8f8;
+    }
+    .navbar-nav.mobile-header-right-side-buttons .dropdown-menu {
+        position: static!important;
+    }
+    .mobile-contact-bar-content .all-contacts-field {
+        margin-top: 0!important;
+        width: 387px;
+    }
+    .mobile-style-for-dropdowns {
+        color: #757575;
+        font-size: 16px;
+    }
+    #navIotDevices, #navActions, #navBlockchain, #navContacts, #navTools, #navHelp {
+        padding: 5px 27px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    #navIotDevices ul a, #navActions ul a, #navBlockchain ul a, #navContacts ul a, #navTools ul a, #navHelp ul a {
+        color: #676767;
+        font-size: 14px;
+    }
+    .navbar-toggler.mobile-style-for-dropdowns:hover {
+        background: #e7e7e7;
+    }
+    .navbar-nav.mobile-main-manu-changing .menu-item-parent {
+        margin-left: 5px;
+    }
+    .caret {
+        width: 0px;
+        height: 0px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #757575;
+        display: inline-block;
+        margin-bottom: 4px;
+        margin-left: 4px;
+    }
+    .mobile-style-for-dropdowns {
+        padding: 10px 13px;
+    }
+    .top-panelopen-contactsbar {
+        padding: 7px;
+    }
+    #activity {
+        position: relative!important;
+    }
+    #contactButtonMobile {
+        width: 400px;
+        height: 100vh;
+    }
+    .forResponsiveSizeCols {
+        font-size: 25px;
+        margin-bottom: 0px;
+        border-bottom: 3px dotted #ddd;
+    }
+    .forResponsiveSizeColsHeader {
+        font-size: 25px;
+        margin-bottom: 0px;
+    }
+    .dashboard-group-ic {
+        font-size: 27px !important;
+        overflow: hidden;
+        vertical-align: middle;
+        height: 62px;
+        width: 62px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+        color: #ec947a;
+        border: 4px solid #ec947a;
+    }
+    .addContactFromDashboard {
+        border-radius: 22px;
+        background: #ec947a;
+        border: 1px solid #ec947a;
+        width: 119px;
+    }
+    .dashboard-cogs-ic {
+        font-size: 27px !important;
+        overflow: hidden;
+        vertical-align: middle;
+        height: 62px;
+        width: 62px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+    }
+    .dash-address-st-change {
+        font-size: 15px!important;
+    }
+    .manageDevicesFromDashboard {
+        border-radius: 22px;
+        background: #22B4DF;
+        border: 1px solid #22B4DF;
+        width: 120px;
+        font-size: 12px;
+    }
+    .dashboard-usd-ic {
+        font-size: 27px !important;
+        overflow: hidden;
+        vertical-align: middle;
+        height: 62px;
+        width: 62px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+    }
+    .manageWalletFromDashboard {
+        border-radius: 22px;
+        background: #05bd61;
+        border: 1px solid #05bd61;
+        width: 120px;
+        font-size: 12px;
+        margin-top: 15px;
+    }
+    .mobile-version-changing-welcome-style {
+        display: none;
+    }
+    .myAddressbookBg, .iotDevicesBg, .walletDashBg {
+        padding: 10px 20px;
+    }
+    .dashboard {
+        margin-bottom: 0;
+    }
+    .dash-address-st-change {
+        margin-bottom: 0px!important;
+    }
+    .forResponsiveSizeCols {
+        border: 4px solid #eee;
+        border-radius: 5px;
+        background-color: #fafafa;
+        margin: 3px 0;
+    }
+    .iotDevicesBg .wigdet-two-content, .myAddressbookBg .wigdet-two-content  {
+        margin-bottom: 2px!important;
+    }
+    .walletDashBg .wigdet-two-content {
+        margin: 10px 0 0px 0;
+    }
+
+    .myAddressbookBg, .iotDevicesBg, .walletDashBg {
+        background-color: #fafafa;
+    }
+    #main {
+        height: auto;
+    }
+    .create-account-new-account-modal {
+        margin-top: 8px;
+    }
+    .sendMoneyTextMobileVersion, .receiveMoneyTextMobileVersion {
+        flex: 1;
+        text-align: left!important;
+        max-width: 100%;
+        padding: 3px 0px 5px 16px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .clearSendMonBtnMobileVersion {
+        width: 110px;
+        margin: 0 13px 0 0;
+    }
+    .clearRecMonMobileVersion {
+        margin: 0 10px 0 0;
+    }
+    .offline-contact-offer-mobile-vs {
+        margin: 20px 10px;
+    }
+    .contact-offer-all-views-content {
+        margin: 7px 5px;
+    }
+    .optional-details-contact-offer-view {
+        margin-left: 0px;
+    }
+    .contact-offer-container-fluid {
+        padding: 4px;
+    }
+    #my-contacts-section {
+        display: none;
+    }
+    #my-contacts-section-mobile-version {
+        display: block;
+    }
+    #my-contacts-section-mobile-version .my-contacts-account-info-item {
+        word-break: break-all;
+        font-weight: bold;
+        padding-left: 20px;
+    }
+    .caret-my-contact {
+        width: 0px;
+        height: 0px;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 5px solid #757575;
+        display: inline-block;
+        margin-bottom: 4px;
+        margin-left: 4px;
+        float: right;
+        margin-right: 20px;
+        margin-top: 8px;
     }
 }
 @media(max-width: 375px) {
@@ -5334,7 +5699,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-left: 56px;
     }
     .mobile-req-money-bt-st {
-        margin-left: 62px;
+        margin-left: 16px;
     }
     .add-contact-offer-textarea-st {
         min-width: 315px!important;
@@ -5346,9 +5711,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-send-error-rep-st {
         max-width: 330px;
     }
-    .short-msg-on-mobile-size {
+/*    .short-msg-on-mobile-size {
         width: 207px;
-    }
+    }*/
     .clear-btn-rec-on-mobile-size {
         padding: 5px 13px;
     }
@@ -5367,6 +5732,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     .left-side-main-menu {
         height: 100%;
         overflow-y: auto;
+    }
+    .dashboard {
+        height: 100vh;
+    }
+    .mobile-send-money-bt-st {
+        margin-left: 0;
     }
 }
 @media (max-width: 360px) {
