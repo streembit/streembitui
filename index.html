@@ -172,6 +172,11 @@
                 height: 100vh;
             }
         }
+        @media(max-width: 320px) {
+            body[data-account-load-complete=true] .dashboard {
+                height: 100%;
+            }
+        }
         body[data-account-load-complete=false] #main{
             height: 78vh!important;
         }
