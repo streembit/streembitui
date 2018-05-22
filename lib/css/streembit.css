@@ -5744,7 +5744,6 @@ a:link, #newvers_nav_for_ul .btn, button{
         color: white;
         bottom: 0;
         margin-left: -4px;
-        max-width: 56vh;
         margin-left: 0px;
     }
     #errorMobileVersion {
@@ -5763,7 +5762,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         border: 2px solid #c4c4c4;
     }
     .messageBoxActivityMobileVersion {
-        max-width: 54vh;
+        width: auto;
         word-break: break-all;
         height: 100%;
         overflow-y: auto;
@@ -5786,7 +5785,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         border: 2px solid #c4c4c4;
     }
     .notifyBoxActivityMobileVersion {
-        max-width: 54vh;
+        width: auto;
         word-break: break-all;
         height: 100%;
         overflow-y: auto;
@@ -5802,7 +5801,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         height: 100%;
     }
     .errorBoxActivityMobileVersion {
-        max-width: 54vh;
+        width: auto;
         word-break: break-all;
         height: 100%;
         overflow-y: auto;
