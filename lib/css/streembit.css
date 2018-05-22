@@ -4973,6 +4973,21 @@ a:link, #newvers_nav_for_ul .btn, button{
     width: 100%;
     height: 100%;
 }
+.treeBoxesOnMobileVersion {
+    display: none;
+}
+#activity {
+    display: block;
+}
+.mobileVersionContactsBar {
+    display: none;
+}
+.rightSideOnDesktopVersion {
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
+    align-items: center;
+}
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -5358,7 +5373,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-left: 0px!important;
     }
     .callProcessContentStyle {
-        height: 540px;
+        height: auto;
     }
     .left-side-main-menu {
         height: 100vh;
@@ -5371,7 +5386,8 @@ a:link, #newvers_nav_for_ul .btn, button{
         height: 100%;
     }
     #seeds_settings {
-        height: 100vh;
+        height: 79vh;
+        padding-bottom: 50px;
     }
     .settings-side-ch {
         height: 100%;
@@ -5405,7 +5421,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         background-color: #f8f8f8;
         margin-top: 47px;
         border-top: 1px solid #e7e7e7;
-        padding-top: 10px;
+        /*z-index: 1;*/
     }
     .navbar-nav.mobile-main-manu-changing .nav-link {
         color: #757575;
@@ -5490,7 +5506,22 @@ a:link, #newvers_nav_for_ul .btn, button{
         padding: 10px 13px;
     }
     .top-panelopen-contactsbar {
-        padding: 7px;
+        border-radius: 2px;
+        display: inline-block;
+        font-weight: bold;
+        height: 29px;
+        width: 32px;
+        padding: 4px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #bfbfbf;
+        color: #777;
+        position: relative;
+        cursor: pointer;
+        font-size: 15px;
+        position: relative;
+        left: 135px;
     }
     #activity {
         position: relative!important;
@@ -5650,8 +5681,144 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-right: 20px;
         margin-top: 8px;
     }
-    #mobileVersionHeaderMainMenu {
+    #mobileVersionHeaderMainMenu.navbar-collapse.show {
+        height: 100%!important;
+        transition: 0.5s;   
+    }
+    .navbar-collapse {
+        height: 0%!important;
+        transition: 0.5s;   
+    }
+    .chooseAvatarOnMobileVersion {
+        margin-top: 50px!important;
+    }
+    #logo {
+        display: none;
+    }
+    #connection_indicator {
+        left: 60px;
+    }
+    .callbuttons {
+        margin-top: 11px;
+    }
+    #navbarTogglerDemo01.navbar-collapse.show {
+        height: 100%!important;
+    }
+    .uiview.tools-netinfo-and-account,  .wallet-content-style, .create-iot-hub-st, .settings-side-ch,.offline-contact-offer-mobile-vs {
+        padding-bottom: 50px;
+        height: 87vh;
+    }
+    #my-contacts-section-mobile-version {
+        padding-bottom: 50px;
+        height: 86vh;   
+    }
+    .contacts-add-contact {
+        padding-bottom: 50px;
+        height: 84vh;
+        margin: 20px 30px 0;
+    }
+    .helpFromTheHeader {
+        height: 84vh;
+        padding-bottom: 50px;
+    }
+    #view-container {
+        padding-bottom: 50px;
+        height: 87vh;
+    }
+    #activity {
+        display: none;
+    }
+    .treeBoxesOnMobileVersion {
+        display: block;
+        margin-left: 6px;
+    }
+    .mobileVersionContactsBar {
+        display: block;
+    }
+    .rightSideOnDesktopVersion {
+        display: none;
+    }
+    .last-update-mobile-notif {
+        padding: 8px 10px;
+        background: #333;
+        color: white;
+        bottom: 0;
+        margin-left: -4px;
+        max-width: 56vh;
+        margin-left: 0px;
+    }
+    #errorMobileVersion {
+        border: 2px solid #c4c4c4;
+    }
+    #messageBoxMobileVersion {
+        margin: 7px 0;
+    }
+    .messageBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #messagePanelMobileVersion {
         height: 100%;
+        border: 2px solid #c4c4c4;
+    }
+    .messageBoxActivityMobileVersion {
+        max-width: 54vh;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .senderNameMessageBoxMobileVersion {
+        font-weight: bold;
+        font-size: 14px;
+        padding: 0px 0px 5px;
+        border-bottom: 1px solid #ccc;
+    }
+    .notifyBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #notifyMobileVersion {
+        height: 100%;
+        border: 2px solid #c4c4c4;
+    }
+    .notifyBoxActivityMobileVersion {
+        max-width: 54vh;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .errorBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #errorMobileVersion {
+        height: 100%;
+    }
+    .errorBoxActivityMobileVersion {
+        max-width: 54vh;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .mobileVersionLanguagesContent {
+        padding: 5px 30px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    .languageMobileVsDropdownItem {
+        margin-left: -4px;
+        font-size: 18px;
+    }
+    .langiagesNameMobileVs {
+        margin-left: 10px;
     }
 }
 @media(max-width: 375px) {
@@ -5739,6 +5906,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .mobile-send-money-bt-st {
         margin-left: 0;
+    }
+    .top-panelopen-contactsbar {
+        left: 117px;
+    } 
+    #navbarTogglerDemo01.navbar-collapse.show {
+        height: 100%!important;
     }
 }
 @media (max-width: 360px) {
