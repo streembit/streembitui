@@ -4988,6 +4988,14 @@ a:link, #newvers_nav_for_ul .btn, button{
     flex-grow: 1;
     align-items: center;
 }
+.contentOfCreateIotHub {
+    border: 1px dotted #ccc;
+    margin-top:20px;
+}
+#quichBackOnMobileVersion {
+    display: none;
+}
+
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -5067,6 +5075,241 @@ a:link, #newvers_nav_for_ul .btn, button{
     .helpFromTheHeader .tree ul ul {
         padding-left: 20px;
     }
+    .rightSideOnDesktopVersion {
+        display: none;
+    }
+    #left-panel {
+        display: none!important;
+    }
+    .dashboard {
+        height: 75vh;
+        padding-bottom: 50px;
+    }
+    .forResponsiveSizeColsHeader {
+        display: none;
+    }
+    .forResponsiveSizeCols {
+        margin-bottom: 0px;
+    }
+    .forResponsiveSizeCols:last-child {
+        margin-bottom: 35px;
+    }
+    #hide-menu {
+        display: none;
+    }
+    #mobile-header-main-manu-pan {
+        display: block;
+        display: block;
+        cursor: pointer;
+        border-radius: 2px;
+        display: inline-block;
+        font-weight: bold;
+        min-width: 30px;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        font-size: 17px;
+        text-decoration: none;
+        width: 29px;
+        height: 29px
+    }
+    #logo {
+        display: none;
+    }
+    #connection_indicator {
+        top: 5px;
+        left: 100px;
+    }
+    #mobileVersionHeaderMainMenu {
+        padding-bottom: 50px;
+        transition: 0.5s;
+        background-color: #f8f8f8;
+        margin-top: 47px;
+        border-top: 1px solid #e7e7e7;
+    }
+    .mobile-style-for-dropdowns {
+        color: #757575;
+        font-size: 16px;
+        padding: 8px 13px;
+    }
+    .navbar-nav.mobile-main-manu-changing .nav-link {
+        color: #757575;
+        font-size: 16px;
+        padding: 8px 15px;   
+    }
+    .menu-item-parent {
+        margin-left: 5px;
+    }
+    .caret {
+        width: 0px;
+        height: 0px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #757575;
+        display: inline-block;
+        margin-bottom: 4px;
+        margin-left: 4px;
+    }
+    #navIotDevices, #navActions, #navBlockchain, #navContacts, #navTools, #navHelp {
+        padding: 5px 27px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    #navIotDevices ul a, #navActions ul a, #navBlockchain ul a, #navContacts ul a, #navTools ul a, #navHelp ul a {
+        color: #676767;
+        font-size: 14px;
+    }
+    .mobileVersionContactsBar {
+        display: block;
+    }
+    .mobile-dots-bt {
+        display: block;
+    }
+    .all-contacts-field {
+        width: 100%;
+        padding-bottom: 17px;
+    }
+    .navbar-expand-lg .navbar-toggler {
+        display: block;
+    }
+    .treeBoxesOnMobileVersion {
+        display: block;
+    }
+    #navbarTogglerDemo01 {
+        margin-top: 47px;
+        background: #f8f8f8;
+    }
+    .messageBtnMobVersion, .notifyBtnMobVersion, .errorBtnMobVersion {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+        padding-left: 17px;
+    }
+    .last-update-mobile-notif {
+        padding: 8px 10px;
+        background: #333;
+        color: white;
+        bottom: 0;
+        margin-left: -4px;
+        margin-left: 0px;
+    }
+    .notifyBoxActivityMobileVersion, .errorBoxActivityMobileVersion, .messageBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    #notifyMobileVersion, #messagePanelMobileVersion, #errorMobileVersion {
+        border: 2px solid #c4c4c4;
+    }
+    .mobileVersionLanguagesContent {
+        padding: 5px 30px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    .messageBtnMobVersion, .notifyBtnMobVersion, .errorBtnMobVersion {
+        font-size: 18px;
+    }
+    .mobileVersionContactsBar {
+        left: 277px;
+    }
+    .contentOfCreateIotHub {
+        padding-bottom: 50px;
+    }
+    .change-streembit-password-st .uiview-plane {
+        padding-bottom: 50px;
+    }
+    .wallet-content-style .tab-content {
+        padding-bottom: 50px;
+    }
+    #my-contacts-section-mobile-version {
+        display: block;
+        padding-bottom: 50px;
+    }
+    #my-contacts-section {
+        display: none;
+    }
+    .caret-my-contact {
+        width: 0px;
+        height: 0px;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 5px solid #757575;
+        display: inline-block;
+        margin-bottom: 4px;
+        margin-left: 4px;
+        float: right;
+        margin-right: 20px;
+        margin-top: 8px;
+    }
+    .cardOnMobileVersion {
+        background: #f9f9f9;
+        border-radius: 3px;
+        border: 3px solid #e4e4e4;
+        margin-bottom: 7px;
+        margin-top: 10px;
+        padding: 10px 0;
+    }
+    .createContOffSt {
+        padding-bottom: 50px;
+    }
+    .add-contact-offer-textarea-st {
+        padding-bottom: 50px;
+        width: 665px;
+    }
+    .contacts-add-contact {
+        width: 665px;   
+    }
+    .settings-side-ch .tab-content {
+        padding-bottom: 50px;
+    }
+    .toolsContentMobileVersion {
+        padding-bottom: 50px;
+    }
+    .logs-view-container {
+        padding-bottom: 50px;
+    }
+    #quichBackOnMobileVersion {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        margin-right: 10px;
+    }
+    .quickBackIconOnDashboardMobile {
+        color: #6D6A69;
+        position: relative;
+        bottom: 3px;
+        width: 29px;
+        font-size: 20px;
+    }
+    .mobile-dots-bt {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        border-color: #bfbfbf;
+    }
+    .ellipsisIconOnMobileVersion {
+        margin-top: 1px;
+    }
+    .top-panelopen-contactsbar {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        width: 31px;
+    }
+    .userContBarOnMobileVersion {
+        position: relative;
+        bottom: 2px;
+    }
 }
 @media only screen and (max-width: 679px) and (min-width: 0px) {
     #ribbon {
@@ -5145,6 +5388,22 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-size-msg-box {
         float: none!important;
     }
+    .ellipsisIconOnMobileVersion {
+        margin-top: 2px;
+    }
+    .top-panelopen-contactsbar {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        width: 32px;
+    }
+    .userContBarOnMobileVersion {
+        position: relative;
+        bottom: 2px;
+    }
 }
 @media (min-width: 625px) {
     .navbar-expand-lg .navbar-collapse {
@@ -5154,9 +5413,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         -ms-flex-preferred-size: auto;
         flex-basis: auto;
     }
-    .navbar-expand-lg .navbar-toggler {
+/*    .navbar-expand-lg .navbar-toggler {
         display: none;
-    }
+    }*/
     #main-header-st #activity b.badge {
         top: 4px;
     }
@@ -5233,9 +5492,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .change-mobile-device-st {
         display: table-caption;
-    }
-    .contact-details-mobile-size {
-        margin-left: 68px;
+        width: 350px;
     }
     .version-public-key-style-ch {
         word-break: break-all;
@@ -5521,7 +5778,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         cursor: pointer;
         font-size: 15px;
         position: relative;
-        left: 135px;
+        left: 115px;
     }
     #activity {
         position: relative!important;
@@ -5696,7 +5953,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         display: none;
     }
     #connection_indicator {
-        left: 60px;
+        left: 95px;
     }
     .callbuttons {
         margin-top: 11px;
@@ -5818,6 +6075,60 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .langiagesNameMobileVs {
         margin-left: 10px;
+    }
+    .cardOnMobileVersion {
+        background: #f9f9f9;
+        border-radius: 3px;
+        border: 3px solid #e4e4e4;
+        margin-bottom: 7px;
+        margin-top: 10px;
+        padding: 10px;
+    }
+    #quichBackOnMobileVersion {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        margin-right: 10px;
+    }
+    .quickBackIconOnDashboardMobile {
+        color: #6D6A69;
+        position: relative;
+        bottom: 3px;
+        width: 29px;
+        font-size: 20px;
+    }
+    .mobile-dots-bt {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+    }
+    .ellipsisIconOnMobileVersion {
+        margin-top: 2px;
+    }
+    .dashboard {
+        height: 85vh;
+    }
+    .version-public-key-style-ch {
+        padding-bottom: 50px;
+    }
+    .last-ping-on-mobile-size {
+        margin-left: 72px;
+    }
+    .connection-info-on-mobile-size {
+        margin-left: 4px;
+    }
+    .account-on-mobile-size {
+        margin-left: 4px;
+    }
+    .languageMobVersonSt {
+        margin-left: 12px;
     }
 }
 @media(max-width: 375px) {

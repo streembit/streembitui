@@ -155,6 +155,11 @@
         body[data-account-load-complete=true] #mainPanel{
             margin-left: 220px;
         }
+        @media(max-width: 767px) {
+            body[data-account-load-complete=true] #mainPanel {
+                margin-left: 0px;
+            }
+        }
         @media(max-width: 425px) {
             body[data-account-load-complete=true] #left-panel {
                 width: 0px;
@@ -212,6 +217,9 @@
                     <span id="logo" data-action="mainLogoStreembit">
                         <img src="lib/images/applogo.png">
                     </span>
+                    <span id="quichBackOnMobileVersion" data-action="mainLogoStreembit">
+                        <i class="fa fa-lg fa-fw fa-home quickBackIconOnDashboardMobile"></i>
+                    </span>
                     <div id="hide-menu" class="btn-header" style="float: right;">
                         <span class="left-side-header-bt" data-action="toggleMenu" data-placement="bottom"  title="Main Menu">
                             <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
@@ -223,10 +231,10 @@
                     <div data-bind="component: {name: 'connection'}"></div> 
                 </a>
                 <span class="top-panelopen-contactsbar mobileVersionContactsBar" data-action="contactsBar">
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-users userContBarOnMobileVersion"></i>
                 </span>
                 <button class="navbar-toggler mobile-dots-bt" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" data-action="mobileDotsPart">
-                    <span class="fa fa-ellipsis-v" style="margin-top: 4px"></span>
+                    <span class="fa fa-ellipsis-v ellipsisIconOnMobileVersion"></span>
                 </button>
 
                 <!-- right side dots icon on desctop version -->
@@ -285,7 +293,7 @@
             <div style="padding-bottom: 60px;">
                 <div class="" data-bind="component: {name: 'mobileactivity'}" id='messageBoxMobileVersion'></div>
 
-                <span class="navbar-toggler" data-toggle="collapse" data-target="#mobileVersionLanguages" aria-controls="mobileVersionLanguages" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 7px">
+                <span class="navbar-toggler languageMobVersonSt" data-toggle="collapse" data-target="#mobileVersionLanguages" aria-controls="mobileVersionLanguages" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 7px">
                     <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">  
                     <span class="menu-item-parent" style="margin-left: 9px;color: #4e4d4d;">English</span>
                     <span class="caret"></span>
