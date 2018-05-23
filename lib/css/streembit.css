@@ -5322,6 +5322,11 @@ a:link, #newvers_nav_for_ul .btn, button{
         background-color: #f3f3f3;
     }
 }
+@media (max-width: 668px) {
+    .top-panelopen-contactsbar {
+        left: 242px;
+    }
+}
 @media(max-width: 625px) {
     #activity {
         position: absolute!important;
@@ -6218,7 +6223,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-left: 0;
     }
     .top-panelopen-contactsbar {
-        left: 117px;
+        left: 95px;
     } 
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
