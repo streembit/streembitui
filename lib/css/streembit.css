@@ -5210,7 +5210,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         font-size: 18px;
     }
     .mobileVersionContactsBar {
-        left: 277px;
+        left: 250px;
     }
     .contentOfCreateIotHub {
         padding-bottom: 50px;
@@ -5310,6 +5310,12 @@ a:link, #newvers_nav_for_ul .btn, button{
         position: relative;
         bottom: 2px;
     }
+
+}
+@media(max-width: 732px) {
+    .mobileVersionContactsBar {
+        left: 253px;
+    }
 }
 @media only screen and (max-width: 679px) and (min-width: 0px) {
     #ribbon {
@@ -5324,7 +5330,12 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 @media (max-width: 668px) {
     .top-panelopen-contactsbar {
-        left: 242px;
+        left: 243px;
+    }
+}
+@media (max-width: 640px) {
+    .top-panelopen-contactsbar {
+        left: 230px;
     }
 }
 @media(max-width: 625px) {
@@ -5437,6 +5448,12 @@ a:link, #newvers_nav_for_ul .btn, button{
 @media(max-width: 554px) {
     #main-header-st .ajax-notifications {
         right: 183px;
+    }
+    .top-panelopen-contactsbar {
+        left: 155px;
+    }
+    .mobile-dots-bt {
+        margin: 0;
     }
 }
 @media(max-width: 490px) {
@@ -6134,6 +6151,11 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .languageMobVersonSt {
         margin-left: 12px;
+    }
+}
+@media(max-width: 400px) {
+    .top-panelopen-contactsbar {
+        left: 108px;
     }
 }
 @media(max-width: 375px) {
