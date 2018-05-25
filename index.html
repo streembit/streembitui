@@ -155,6 +155,11 @@
         body[data-account-load-complete=true] #mainPanel{
             margin-left: 220px;
         }
+        @media(max-width: 767px) {
+            body[data-account-load-complete=true] #mainPanel {
+                margin-left: 0px;
+            }
+        }
         @media(max-width: 425px) {
             body[data-account-load-complete=true] #left-panel {
                 width: 0px;
@@ -162,6 +167,7 @@
             } 
             body[data-account-load-complete=true] #mainPanel {
                 margin-left: 0;
+                margin-bottom: 55px;
             }
             body[data-account-load-complete=true] #allContent {
                 margin-top: 47px;
@@ -212,26 +218,34 @@
                     <span id="logo" data-action="mainLogoStreembit">
                         <img src="lib/images/applogo.png">
                     </span>
+                    <span id="quichBackOnMobileVersion" data-action="mainLogoStreembit">
+                        <i class="fa fa-lg fa-fw fa-home quickBackIconOnDashboardMobile"></i>
+                    </span>
                     <div id="hide-menu" class="btn-header" style="float: right;">
                         <span class="left-side-header-bt" data-action="toggleMenu" data-placement="bottom"  title="Main Menu">
                             <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
                         </span>
                     </div>
-                    <span id="mobile-header-main-manu-pan" class="btn-header" style="float: right;" data-target="#mobileVersionHeaderMainMenu" data-toggle="collapse" data-action="mobileHeaderMainMenu">
+                    <span id="mobile-header-main-manu-pan" class="btn-header" style="float: right;height: auto;" data-target="#mobileVersionHeaderMainMenu" data-toggle="collapse" data-action="mobileHeaderMainMenu">
                         <i class="fa fa-reorder" style="margin-top:5px; cursor: pointer;color: #6D6A69;"></i>
                     </span>
                     <div data-bind="component: {name: 'connection'}"></div> 
                 </a>
-                
+                <span class="top-panelopen-contactsbar mobileVersionContactsBar" data-action="contactsBar">
+                    <i class="fa fa-users userContBarOnMobileVersion"></i>
+                </span>
                 <button class="navbar-toggler mobile-dots-bt" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" data-action="mobileDotsPart">
-                    <span class="fa fa-ellipsis-v" style="margin-top: 4px"></span>
+                    <span class="fa fa-ellipsis-v ellipsisIconOnMobileVersion"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+
+                <!-- right side dots icon on desctop version -->
+                <div class="rightSideOnDesktopVersion">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <!-- <li class="nav-item">
                             <div data-bind="component: {name: 'connection'}"></div> 
                         </li> -->
                     </ul>
+                <!-- <div> -->
                     <div class="not-side-pos-in-mobile-version" style="height: 35px">
                         
                         <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock'></div>
@@ -244,11 +258,11 @@
                                 <i class="fa fa-users"></i>
                             </span> -->
                         </div>
-
                     </div>
+
                         <ul class="header-dropdown-list hidden-xs language-side-ch">
                             <li class="dropdown">
-                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English </span> <i class="fa fa-angle-down"></i> </a>
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English</span><i class="fa fa-angle-down"></i></a>
                                 <ul class="language-drop-part dropdown-menu" role="menu">
                                     <li class="dropdown-item">
                                         <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
@@ -268,14 +282,56 @@
                                 </ul>
                             </li>
                         </ul>
+                <!-- </div> -->
                 </div>
+                <!--end right side dots icon on desktop version -->
 
             </nav>
         </div>
+
+        <!-- right side dots icon on mobile version -->
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <div style="padding-bottom: 60px;">
+                <div class="" data-bind="component: {name: 'mobileactivity'}" id='messageBoxMobileVersion'></div>
+
+                <span class="navbar-toggler languageMobVersonSt" data-toggle="collapse" data-target="#mobileVersionLanguages" aria-controls="mobileVersionLanguages" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 7px">
+                    <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">  
+                    <span class="menu-item-parent" style="margin-left: 9px;color: #4e4d4d;">English</span>
+                    <span class="caret"></span>
+                </span>
+                <div class="navbar-collapse collapse" id="mobileVersionLanguages" style="">
+                    <ul class="navbar-nav mobile-contact-bar-content mobileVersionLanguagesContent">
+                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+                            <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">
+                            <span class="langiagesNameMobileVs">English</span>
+                        </a>
+                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+                            <img src="lib/images/blank.gif" class="flag flag-fr" alt="France">
+                            <span class="langiagesNameMobileVs">Fran&ccedil;ais</span>
+                        </a>
+                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+                            <img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish">
+                            <span class="langiagesNameMobileVs">Espa&ntilde;ol</span>
+                        </a>
+                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+                            <img src="lib/images/blank.gif" class="flag flag-de" alt="German"> 
+                            <span class="langiagesNameMobileVs">Deutsch</span>
+                       </a>
+                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+                            <img src="lib/images/blank.gif" class="flag flag-it" alt="Italy">
+                            <span class="langiagesNameMobileVs">Italiano</span>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--end right side dots icon on mobile version -->
+
+
         <!-- END HEADER -->
 
         <!-- main menu for mobile version -->
-                <div class="collapse navbar-collapse" id="mobileVersionHeaderMainMenu" style="">
+                <div class="collapse navbar-collapse" id="mobileVersionHeaderMainMenu" style="height: 100%">
                     <ul class="navbar-nav mobile-main-manu-changing">
                         <li class="nav-item">
                             <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="nav-link">
@@ -351,7 +407,11 @@
                         </span>
                         <div class="navbar-collapse collapse" id="navHelp" style="">
                             <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a>
+
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
                                 <!-- ko if: streembit.globals.nwmode == true -->
                                 <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: checkUpdates">Check software updates</a>
                                 <!-- /ko -->
@@ -442,11 +502,21 @@
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
                             </ul>
                         </li>
-                        <li class="chat-users top-menu-invisible">
+                        <li class="top-menu-invisible">
                             <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
                             <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'help')" class="comebackToHelpContent">Help Content</a></li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
+                                </li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
+                                </li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
+                                </li>
                                 <!-- ko if: streembit.globals.nwmode == true -->
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>

@@ -588,6 +588,15 @@ body{
     align-content: stretch;
 }
 
+#text-chat-area .saveChatHistoryForTextChat, #text-chat-area .deleteChatHistoryForTextChat  {
+    width: 40px;
+    height: 30px;
+}
+
+#text-chat-area .fa-floppy-o , #text-chat-area .fa-trash-o {
+    font-size: 18px;
+}
+
 .chat-window {
     display:block;
     height: 100%;
@@ -1104,6 +1113,14 @@ span.awesomeBlue i.addbtn{
 .chat-win-header{
     padding-bottom:8px;
     border-bottom:3px solid #eee;
+}
+
+#text-chat-area .fill-area {
+    display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
 }
 
 .fill-area {
@@ -2648,15 +2665,72 @@ Widgets
 }
 .footer-chat-controls1{
     position: relative;
-    height: 120px;
+    height: 65px;
     width: 100%;
     margin: 24px auto;
-    /*background-color: #EFEFEF;*/
-    /*border: 1px solid #79CEF4;*/
-    border-top: 3px solid #eee;
     display: flex;
     align-content: center;
     flex-wrap: wrap;
+}
+
+.footer-chat-controls1 .send-file, .footer-chat-controls1 #chat_img, .footer-chat-controls1 .send-message {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    color: #fff;
+    top: 19px;
+    left: auto;
+    z-index: 1;
+}
+
+.footer-chat-controls1 .vertical-divider {
+    position: absolute;
+    top: 20px;
+    right: 48px;
+    display: inline-block;
+    height: 32px;
+    border: 1px dashed gray;
+    z-index: 1;
+}
+
+.footer-chat-controls1 .send-message {
+    right: 5px;
+}
+
+.footer-chat-controls1 .send-file {
+    right: 58px;
+    width: 30px;
+    height: 30px;
+    top: 22px;
+}
+
+.footer-chat-controls1 #chat_img {
+    right: 95px;
+    background: lightseagreen;
+    width: 30px;
+    height: 30px;
+    top: 22px;
+}
+
+.footer-chat-controls1 #chat_img:hover {
+        background: #20caaa;
+}
+
+.footer-chat-controls1 .fa-paperclip, .footer-chat-controls1 .fa-image, .footer-chat-controls1 .fa-paper-plane {
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+
+.footer-chat-controls1 #chat_img .fa-image {
+
 }
 
 .chat-sender img {
@@ -2686,19 +2760,10 @@ Widgets
     }
 }
 
-@media (max-height: 612px) {
-    textarea#txtChatCtrl {
-        height: 50px !important;
-    }
-}
-
 @media (min-height: 612px) and (max-height: 720px) {
     .forShowChatPos {
         margin-top: 10px;
         margin-bottom: 10px;
-    }
-    textarea#txtChatCtrl {
-        height: 60px !important;
     }
 }
 
@@ -3737,6 +3802,9 @@ body.smart-style-6 #logo-group>span#logo:before{
 }
 .contact-is-typing-container{
     height: 7px;
+    position: absolute;
+    top: -12px;
+    left: 12px;
 }
 
 #my-contacts-section .contact-bar-list-item{
@@ -4243,7 +4311,7 @@ span.users-hub {
     z-index: 1;
 }
 .footer-chat-controls1 {
-    margin: 55px 0 0 0;
+    margin: 20px 0 0 0;
 }
 .footer-chat-controls {
     margin: -22px 0 0 0;
@@ -4851,13 +4919,24 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 #txtChatCtrl {
     width: 100% !important;
-    height: 75px;
+    height: 48px;
     margin: 0;
     resize: none;
     box-sizing: border-box;
     background-color: #fff;
     color: #000;
-    font-size: 12px;
+    font-size: 14px;
+    padding: 12px 132px 12px 8px;
+    border: 0;
+    border-radius: 20px;
+    margin-top: 12px;
+    box-shadow: 2px 2px 6px 1px grey;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#txtChatCtrl:focus {
+    box-shadow: 2px 2px 6px 1px grey !important;   
 }
 .callProcessContentStyle {
     width:540px;
@@ -4866,7 +4945,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     color:#fff;
 }
 .chat-with-style {
-    margin-top: 3px;
+    margin-top: 10px;
 }
 .last-security-section:hover {
     background: transparent!important;
@@ -4973,6 +5052,29 @@ a:link, #newvers_nav_for_ul .btn, button{
     width: 100%;
     height: 100%;
 }
+.treeBoxesOnMobileVersion {
+    display: none;
+}
+#activity {
+    display: block;
+}
+.mobileVersionContactsBar {
+    display: none;
+}
+.rightSideOnDesktopVersion {
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
+    align-items: center;
+}
+.contentOfCreateIotHub {
+    border: 1px dotted #ccc;
+    margin-top:20px;
+}
+#quichBackOnMobileVersion {
+    display: none;
+}
+
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -5052,6 +5154,253 @@ a:link, #newvers_nav_for_ul .btn, button{
     .helpFromTheHeader .tree ul ul {
         padding-left: 20px;
     }
+    .rightSideOnDesktopVersion {
+        display: none;
+    }
+    #left-panel {
+        display: none!important;
+    }
+    .dashboard {
+        height: 75vh;
+        padding-bottom: 50px;
+    }
+    .forResponsiveSizeColsHeader {
+        display: none;
+    }
+    .forResponsiveSizeCols {
+        margin-bottom: 0px;
+    }
+    .forResponsiveSizeCols:last-child {
+        margin-bottom: 35px;
+    }
+    #hide-menu {
+        display: none;
+    }
+    #mobile-header-main-manu-pan {
+        display: block;
+        display: block;
+        cursor: pointer;
+        border-radius: 2px;
+        display: inline-block;
+        font-weight: bold;
+        min-width: 30px;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        font-size: 17px;
+        text-decoration: none;
+        width: 29px;
+        height: 29px
+    }
+    #logo {
+        display: none;
+    }
+    #connection_indicator {
+        top: 5px;
+        left: 100px;
+    }
+    #mobileVersionHeaderMainMenu {
+        padding-bottom: 50px;
+        transition: 0.5s;
+        background-color: #f8f8f8;
+        margin-top: 47px;
+        border-top: 1px solid #e7e7e7;
+    }
+    .mobile-style-for-dropdowns {
+        color: #757575;
+        font-size: 16px;
+        padding: 8px 13px;
+    }
+    .navbar-nav.mobile-main-manu-changing .nav-link {
+        color: #757575;
+        font-size: 16px;
+        padding: 8px 15px;   
+    }
+    .menu-item-parent {
+        margin-left: 5px;
+    }
+    .caret {
+        width: 0px;
+        height: 0px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #757575;
+        display: inline-block;
+        margin-bottom: 4px;
+        margin-left: 4px;
+    }
+    #navIotDevices, #navActions, #navBlockchain, #navContacts, #navTools, #navHelp {
+        padding: 5px 27px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    #navIotDevices ul a, #navActions ul a, #navBlockchain ul a, #navContacts ul a, #navTools ul a, #navHelp ul a {
+        color: #676767;
+        font-size: 14px;
+    }
+    .mobileVersionContactsBar {
+        display: block;
+    }
+    .mobile-dots-bt {
+        display: block;
+    }
+    .all-contacts-field {
+        width: 100%;
+        padding-bottom: 17px;
+    }
+    .navbar-expand-lg .navbar-toggler {
+        display: block;
+    }
+    .treeBoxesOnMobileVersion {
+        display: block;
+    }
+    #navbarTogglerDemo01 {
+        margin-top: 47px;
+        background: #f8f8f8;
+    }
+    .messageBtnMobVersion, .notifyBtnMobVersion, .errorBtnMobVersion {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+        padding-left: 17px;
+    }
+    .last-update-mobile-notif {
+        padding: 8px 10px;
+        background: #333;
+        color: white;
+        bottom: 0;
+        margin-left: -4px;
+        margin-left: 0px;
+    }
+    .notifyBoxActivityMobileVersion, .errorBoxActivityMobileVersion, .messageBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    #notifyMobileVersion, #messagePanelMobileVersion, #errorMobileVersion {
+        border: 2px solid #c4c4c4;
+    }
+    .mobileVersionLanguagesContent {
+        padding: 5px 30px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    .messageBtnMobVersion, .notifyBtnMobVersion, .errorBtnMobVersion {
+        font-size: 18px;
+    }
+    .mobileVersionContactsBar {
+        left: 250px;
+    }
+    .contentOfCreateIotHub {
+        padding-bottom: 50px;
+    }
+    .change-streembit-password-st .uiview-plane {
+        padding-bottom: 50px;
+    }
+    .wallet-content-style .tab-content {
+        padding-bottom: 50px;
+    }
+    #my-contacts-section-mobile-version {
+        display: block;
+        padding-bottom: 50px;
+    }
+    #my-contacts-section {
+        display: none;
+    }
+    .caret-my-contact {
+        width: 0px;
+        height: 0px;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 5px solid #757575;
+        display: inline-block;
+        margin-bottom: 4px;
+        margin-left: 4px;
+        float: right;
+        margin-right: 20px;
+        margin-top: 8px;
+    }
+    .cardOnMobileVersion {
+        background: #f9f9f9;
+        border-radius: 3px;
+        border: 3px solid #e4e4e4;
+        margin-bottom: 7px;
+        margin-top: 10px;
+        padding: 10px 0;
+    }
+    .createContOffSt {
+        padding-bottom: 50px;
+    }
+    .add-contact-offer-textarea-st {
+        padding-bottom: 50px;
+        width: 665px;
+    }
+    .contacts-add-contact {
+        width: 665px;   
+    }
+    .settings-side-ch .tab-content {
+        padding-bottom: 50px;
+    }
+    .toolsContentMobileVersion {
+        padding-bottom: 50px;
+    }
+    .logs-view-container {
+        padding-bottom: 50px;
+    }
+    #quichBackOnMobileVersion {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        margin-right: 10px;
+    }
+    .quickBackIconOnDashboardMobile {
+        color: #6D6A69;
+        position: relative;
+        bottom: 3px;
+        width: 29px;
+        font-size: 20px;
+    }
+    .mobile-dots-bt {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        border-color: #bfbfbf;
+    }
+    .ellipsisIconOnMobileVersion {
+        margin-top: 1px;
+    }
+    .top-panelopen-contactsbar {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        width: 31px;
+    }
+    .userContBarOnMobileVersion {
+        position: relative;
+        bottom: 2px;
+    }
+
+}
+#accordion .collapsed .fa.help-content-down, #accordion-opensource .collapsed .fa.help-content-down, #accordion-create-account .collapsed .fa.help-content-down, #accordion-add-contact .collapsed .fa.help-content-down, #accordion-contact-offer .collapsed .fa.help-content-down, #accordion-my-contacts .collapsed .fa.help-content-down, #accordion-iot-devices .collapsed .fa.help-content-down, #accordion-add-iot-hub-and-my-devices .collapsed .fa.help-content-down, #accordion-backup-account .collapsed .fa.help-content-down, #accordion-restore-account .collapsed .fa.help-content-down, #accordion-tools .collapsed .fa.help-content-down, #accordion-account-network-info .collapsed .fa.help-content-down, #accordion-view-logs .collapsed .fa.help-content-down, #accordion-clear-database .collapsed .fa.help-content-down,  #accordion-system-architecture .collapsed .fa.help-content-down, #accordion-internet-of-things-devices .collapsed .fa.help-content-down, #accordion-share-your-keys .collapsed .fa.help-content-down, #accordion-streembit-implementation .collapsed .fa.help-content-down, #accordion-protecting-ecc-key .collapsed .fa.help-content-down, #accordion-mitigate-risk-attacks .collapsed .fa.help-content-down, #accordion-secure-cryptography .collapsed .fa.help-content-down{
+    display: inline-block;
+}
+#accordion .fa.help-content-down, #accordion-opensource .fa.help-content-down, #accordion-create-account .fa.help-content-down, #accordion-add-contact .fa.help-content-down, #accordion-contact-offer .fa.help-content-down, #accordion-my-contacts .fa.help-content-down, #accordion-iot-devices .fa.help-content-down, #accordion-add-iot-hub-and-my-devices .fa.help-content-down, #accordion-backup-account .fa.help-content-down, #accordion-restore-account .fa.help-content-down, #accordion-tools .fa.help-content-down, #accordion-account-network-info .fa.help-content-down, #accordion-view-logs .fa.help-content-down, #accordion-clear-database .fa.help-content-down, #accordion-system-architecture .fa.help-content-down, #accordion-internet-of-things-devices .fa.help-content-down, #accordion-share-your-keys .fa.help-content-down, #accordion-streembit-implementation .fa.help-content-down, #accordion-protecting-ecc-key .fa.help-content-down, #accordion-mitigate-risk-attacks .fa.help-content-down, #accordion-secure-cryptography .fa.help-content-down{
+    display: none;
+}
+@media(max-width: 732px) {
+    .mobileVersionContactsBar {
+        left: 253px;
+    }
 }
 @media only screen and (max-width: 679px) and (min-width: 0px) {
     #ribbon {
@@ -5062,6 +5411,16 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #header {
         background-color: #f3f3f3;
+    }
+}
+@media (max-width: 668px) {
+    .top-panelopen-contactsbar {
+        left: 243px;
+    }
+}
+@media (max-width: 640px) {
+    .top-panelopen-contactsbar {
+        left: 230px;
     }
 }
 @media(max-width: 625px) {
@@ -5130,6 +5489,22 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-size-msg-box {
         float: none!important;
     }
+    .ellipsisIconOnMobileVersion {
+        margin-top: 2px;
+    }
+    .top-panelopen-contactsbar {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        width: 32px;
+    }
+    .userContBarOnMobileVersion {
+        position: relative;
+        bottom: 2px;
+    }
 }
 @media (min-width: 625px) {
     .navbar-expand-lg .navbar-collapse {
@@ -5139,9 +5514,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         -ms-flex-preferred-size: auto;
         flex-basis: auto;
     }
-    .navbar-expand-lg .navbar-toggler {
+/*    .navbar-expand-lg .navbar-toggler {
         display: none;
-    }
+    }*/
     #main-header-st #activity b.badge {
         top: 4px;
     }
@@ -5158,6 +5533,12 @@ a:link, #newvers_nav_for_ul .btn, button{
 @media(max-width: 554px) {
     #main-header-st .ajax-notifications {
         right: 183px;
+    }
+    .top-panelopen-contactsbar {
+        left: 155px;
+    }
+    .mobile-dots-bt {
+        margin: 0;
     }
 }
 @media(max-width: 490px) {
@@ -5218,9 +5599,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .change-mobile-device-st {
         display: table-caption;
-    }
-    .contact-details-mobile-size {
-        margin-left: 68px;
+        width: 350px;
     }
     .version-public-key-style-ch {
         word-break: break-all;
@@ -5259,11 +5638,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         border: 1px solid #ccc;
     }
     .chat-on-mobile-size {
-        width: 100%;
         text-align: center;
     }
     .buttons-chat-on-mobile-size {
-        width: 100%;
         text-align: center;
         margin-top: 7px;   
     }
@@ -5335,6 +5712,10 @@ a:link, #newvers_nav_for_ul .btn, button{
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0;
     }
+    .footer-chat-controls1 {
+        margin-left: -10px !important;
+        width: calc(100% + 20px);
+    }
     .chat-fill-area .chatitemswnd {
         height: 360px;
     }
@@ -5358,7 +5739,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-left: 0px!important;
     }
     .callProcessContentStyle {
-        height: 540px;
+        height: auto;
     }
     .left-side-main-menu {
         height: 100vh;
@@ -5371,7 +5752,8 @@ a:link, #newvers_nav_for_ul .btn, button{
         height: 100%;
     }
     #seeds_settings {
-        height: 100vh;
+        height: 79vh;
+        padding-bottom: 50px;
     }
     .settings-side-ch {
         height: 100%;
@@ -5383,7 +5765,10 @@ a:link, #newvers_nav_for_ul .btn, button{
         padding-bottom: 30px;
     }
     #allContent, .for-main-content, #ribbon {
-        flex: 0 1 auto!important;
+        flex: 1 1 auto!important;
+    }
+    .for-main-content {
+        height: 100%;
     }
     .mobile-main-panel {
         flex: 1 1 auto!important;
@@ -5405,7 +5790,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         background-color: #f8f8f8;
         margin-top: 47px;
         border-top: 1px solid #e7e7e7;
-        padding-top: 10px;
+        /*z-index: 1;*/
     }
     .navbar-nav.mobile-main-manu-changing .nav-link {
         color: #757575;
@@ -5490,7 +5875,22 @@ a:link, #newvers_nav_for_ul .btn, button{
         padding: 10px 13px;
     }
     .top-panelopen-contactsbar {
-        padding: 7px;
+        border-radius: 2px;
+        display: inline-block;
+        font-weight: bold;
+        height: 29px;
+        width: 32px;
+        padding: 4px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #bfbfbf;
+        color: #777;
+        position: relative;
+        cursor: pointer;
+        font-size: 15px;
+        position: relative;
+        left: 115px;
     }
     #activity {
         position: relative!important;
@@ -5650,8 +6050,208 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-right: 20px;
         margin-top: 8px;
     }
-    #mobileVersionHeaderMainMenu {
+    #mobileVersionHeaderMainMenu.navbar-collapse.show {
+        height: 100%!important;
+        transition: 0.5s;   
+    }
+    .navbar-collapse {
+        height: 0%!important;
+        transition: 0.5s;   
+    }
+    .chooseAvatarOnMobileVersion {
+        margin-top: 50px!important;
+    }
+    #logo {
+        display: none;
+    }
+    #connection_indicator {
+        left: 95px;
+    }
+    .callbuttons {
+        margin-top: 11px;
+    }
+    #navbarTogglerDemo01.navbar-collapse.show {
+        height: 100%!important;
+    }
+    .uiview.tools-netinfo-and-account,  .wallet-content-style, .create-iot-hub-st, .settings-side-ch,.offline-contact-offer-mobile-vs {
+        padding-bottom: 50px;
+        height: 87vh;
+    }
+    #my-contacts-section-mobile-version {
+        padding-bottom: 50px;
+        height: 86vh;   
+    }
+    .contacts-add-contact {
+        padding-bottom: 50px;
+        height: 84vh;
+        margin: 20px 30px 0;
+    }
+    .helpFromTheHeader {
+        height: 84vh;
+        padding-bottom: 50px;
+    }
+    #view-container {
+        padding-bottom: 50px;
+        height: 87vh;
+    }
+    #activity {
+        display: none;
+    }
+    .treeBoxesOnMobileVersion {
+        display: block;
+        margin-left: 6px;
+    }
+    .mobileVersionContactsBar {
+        display: block;
+    }
+    .rightSideOnDesktopVersion {
+        display: none;
+    }
+    .last-update-mobile-notif {
+        padding: 8px 10px;
+        background: #333;
+        color: white;
+        bottom: 0;
+        margin-left: -4px;
+        margin-left: 0px;
+    }
+    #errorMobileVersion {
+        border: 2px solid #c4c4c4;
+    }
+    #messageBoxMobileVersion {
+        margin: 7px 0;
+    }
+    .messageBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #messagePanelMobileVersion {
         height: 100%;
+        border: 2px solid #c4c4c4;
+    }
+    .messageBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .senderNameMessageBoxMobileVersion {
+        font-weight: bold;
+        font-size: 14px;
+        padding: 0px 0px 5px;
+        border-bottom: 1px solid #ccc;
+    }
+    .notifyBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #notifyMobileVersion {
+        height: 100%;
+        border: 2px solid #c4c4c4;
+    }
+    .notifyBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .errorBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #errorMobileVersion {
+        height: 100%;
+    }
+    .errorBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .mobileVersionLanguagesContent {
+        padding: 5px 30px;
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+    .languageMobileVsDropdownItem {
+        margin-left: -4px;
+        font-size: 18px;
+    }
+    .langiagesNameMobileVs {
+        margin-left: 10px;
+    }
+    .cardOnMobileVersion {
+        background: #f9f9f9;
+        border-radius: 3px;
+        border: 3px solid #e4e4e4;
+        margin-bottom: 7px;
+        margin-top: 10px;
+        padding: 10px;
+    }
+    #quichBackOnMobileVersion {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+        margin-right: 10px;
+    }
+    .quickBackIconOnDashboardMobile {
+        color: #6D6A69;
+        position: relative;
+        bottom: 3px;
+        width: 29px;
+        font-size: 20px;
+    }
+    .mobile-dots-bt {
+        text-decoration: none;
+        text-align: center;
+        background-color: #f8f8f8;
+        border: 1px solid #bfbfbf;
+        border-radius: 2px;
+        height: 29px;
+    }
+    .ellipsisIconOnMobileVersion {
+        margin-top: 2px;
+    }
+    .dashboard {
+        height: 85vh;
+    }
+    .version-public-key-style-ch {
+        padding-bottom: 50px;
+    }
+    .last-ping-on-mobile-size {
+        margin-left: 72px;
+    }
+    .connection-info-on-mobile-size {
+        margin-left: 4px;
+    }
+    .account-on-mobile-size {
+        margin-left: 4px;
+    }
+    .languageMobVersonSt {
+        margin-left: 12px;
+    }
+    .backupAccImg {
+        width: 100%;
+    }
+    .help-content-for-all {
+        padding-bottom: 50px;
+    }
+}
+@media(max-width: 400px) {
+    .top-panelopen-contactsbar {
+        left: 108px;
     }
 }
 @media(max-width: 375px) {
@@ -5739,6 +6339,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .mobile-send-money-bt-st {
         margin-left: 0;
+    }
+    .top-panelopen-contactsbar {
+        left: 95px;
+    } 
+    #navbarTogglerDemo01.navbar-collapse.show {
+        height: 100%!important;
     }
 }
 @media (max-width: 360px) {
