@@ -27,20 +27,20 @@
                         <img width="42px" height="42px" data-bind="attr: { src: avatar }" class="picture-contact-bar-style" />
                     </div>
                 </div>
-                <div style="float:left;padding-left:30px;border-left:1px solid #ddd">
+                <div style="float:left;padding-left:30px;border-left:1px solid #ddd" class="account-on-mobile-size">
 
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777" class="changeContDetSt">Account:</span> <br />
                         <span style="font-weight:bold" data-bind="text:name"></span>
                     </div>
                 </div>
-                <div class="contact-details-mobile-size">
+                <div class="contact-details-mobile-size connection-info-on-mobile-size">
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777" class="changeContDetSt">Connection:</span> <br />
                         <span style="word-wrap: break-word;font-weight:bold" data-bind="text: connection_info, css: {error_color: connection_error() == true}"></span>
                     </div>
                 </div>
-                <div class="contact-details-mobile-size">
+                <div class="contact-details-mobile-size last-ping-on-mobile-size">
                     <div style="margin-top:10px;font-size:12px">
                         <span style="color:#777" class="changeContDetSt">Last ping:</span> <br />
                         <span style="word-wrap: break-word;font-weight:bold" data-bind="text: lastpingTime"></span>

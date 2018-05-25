@@ -6150,6 +6150,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-bottom: 5px;
     }
     #notifyMobileVersion {
+<<<<<<< HEAD
         height: 100%;
         border: 2px solid #c4c4c4;
     }
@@ -6173,6 +6174,31 @@ a:link, #newvers_nav_for_ul .btn, button{
         width: auto;
         word-break: break-all;
         height: 100%;
+=======
+        height: 100%;
+        border: 2px solid #c4c4c4;
+    }
+    .notifyBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 357px;
+    }
+    .errorBtnMobVersion {
+        width: 57vh;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    #errorMobileVersion {
+        height: 100%;
+    }
+    .errorBoxActivityMobileVersion {
+        width: auto;
+        word-break: break-all;
+        height: 100%;
+>>>>>>> upstream/dev
         overflow-y: auto;
         overflow-x: hidden;
         height: 357px;

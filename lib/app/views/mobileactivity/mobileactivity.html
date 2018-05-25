@@ -1,0 +1,83 @@
+<span class="treeBoxesOnMobileVersion">
+
+    <button class="navbar-toggler messageBtnMobVersion" type="" data-toggle="collapse" data-target="#messagePanelMobileVersion" aria-controls="messagePanelMobileVersion" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-envelope" style="color: #777;margin-right: 6px;font-size: 18px"></i> 
+        <span class="menu-item-parent" style="color: #4e4d4d;">Msgs</span>
+        <span style="color: #4e4d4d;">
+            (<span data-bind="text:msgcount"></span>)
+        </span>
+        <span class="caret"></span>
+    </button>
+
+    <div class="navbar-collapse collapse" id="messagePanelMobileVersion">
+        <ul class="navbar-nav">
+            <ul class="notification-body message-activity-col notification-box-message-list mobile-size-msg-box messageBoxActivityMobileVersion" data-bind="foreach: messages">
+                <li>
+                    <div data-bind="text: senderName" class="senderNameMessageBoxMobileVersion"></div>
+                    <div><span data-bind="localdatemsg: time" class="time"></span></div>
+                    <div style="margin-top: 6px;">
+                        <div class="sendMsgTime">
+                            <span data-bind="text: sendMsgTime" style="color: #aaa;"></span>
+                        </div>
+                        <span class="msg-body" data-bind="text: text" style="word-wrap: break-word;"></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="last-update-mobile-notif">
+                <span  style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
+            </div>
+        </ul>
+    </div>
+
+    <button class="navbar-toggler notifyBtnMobVersion" data-toggle="collapse" data-target="#notifyMobileVersion" aria-controls="notifyMobileVersion" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bell" style="color: #777;margin-right: 6px;font-size: 18px"></i> 
+        <span class="menu-item-parent" style="color: #4e4d4d;">Notify</span>
+        <span style="color: #4e4d4d;">
+            (<span data-bind="text:notifycount"></span>)
+        </span>
+        <span class="caret"></span>
+    </button>
+
+    <div class="navbar-collapse collapse" id="notifyMobileVersion">
+        <ul class="navbar-nav">
+            <ul class="notification-body notification-box-notify-list notifyBoxActivityMobileVersion" data-bind="foreach: list_of_notifications">
+                <li>
+                    <div style="line-height: normal;">
+                        <span data-bind="localdate: time" class="time"></span>
+                    </div>
+                    <div style="margin-top: 5px">
+                        <span class="msg-body" data-bind="text: msg"></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="last-update-mobile-notif">
+                <span  style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
+            </div>
+        </ul>
+    </div>
+
+    <button class="navbar-toggler errorBtnMobVersion" type="" data-toggle="collapse" data-target="#errorMobileVersion" aria-controls="errorMobileVersion" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-exclamation-triangle" style="color: #777;margin-right: 6px;font-size: 18px"></i> 
+        <span class="menu-item-parent" style="color: #4e4d4d;">Errors</span>
+        <span style="color: #4e4d4d;">
+           (<span data-bind="text:errorcount"></span>)
+        </span>
+        <span class="caret"></span>
+    </button>
+
+    <div class="navbar-collapse collapse" id="errorMobileVersion">
+        <ul class="notification-body notification-box-error-list errorBoxActivityMobileVersion" data-bind="foreach: list_of_errors">
+            <li class="error-bg-style">
+                <div style="margin-top: 6px;">
+                    <span data-bind="localdate: time" class="time"></span>
+                </div>
+                <div  style="margin-top: 5px">
+                    <span class="msg-body" data-bind="text: msg"></span>
+                </div>
+            </li>
+        </ul>
+        <div class="last-update-mobile-notif">
+            <span  style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
+        </div>
+    </div>
+</span>
