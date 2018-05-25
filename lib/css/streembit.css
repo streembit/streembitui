@@ -5312,6 +5312,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
 
 }
+#accordion .collapsed .fa.help-content-down, #accordion-opensource .collapsed .fa.help-content-down, #accordion-create-account .collapsed .fa.help-content-down, #accordion-add-contact .collapsed .fa.help-content-down, #accordion-contact-offer .collapsed .fa.help-content-down, #accordion-my-contacts .collapsed .fa.help-content-down, #accordion-iot-devices .collapsed .fa.help-content-down, #accordion-add-iot-hub-and-my-devices .collapsed .fa.help-content-down, #accordion-backup-account .collapsed .fa.help-content-down, #accordion-restore-account .collapsed .fa.help-content-down, #accordion-tools .collapsed .fa.help-content-down, #accordion-account-network-info .collapsed .fa.help-content-down, #accordion-view-logs .collapsed .fa.help-content-down, #accordion-clear-database .collapsed .fa.help-content-down,  #accordion-system-architecture .collapsed .fa.help-content-down, #accordion-internet-of-things-devices .collapsed .fa.help-content-down, #accordion-share-your-keys .collapsed .fa.help-content-down, #accordion-streembit-implementation .collapsed .fa.help-content-down, #accordion-protecting-ecc-key .collapsed .fa.help-content-down, #accordion-mitigate-risk-attacks .collapsed .fa.help-content-down, #accordion-secure-cryptography .collapsed .fa.help-content-down{
+    display: inline-block;
+}
+#accordion .fa.help-content-down, #accordion-opensource .fa.help-content-down, #accordion-create-account .fa.help-content-down, #accordion-add-contact .fa.help-content-down, #accordion-contact-offer .fa.help-content-down, #accordion-my-contacts .fa.help-content-down, #accordion-iot-devices .fa.help-content-down, #accordion-add-iot-hub-and-my-devices .fa.help-content-down, #accordion-backup-account .fa.help-content-down, #accordion-restore-account .fa.help-content-down, #accordion-tools .fa.help-content-down, #accordion-account-network-info .fa.help-content-down, #accordion-view-logs .fa.help-content-down, #accordion-clear-database .fa.help-content-down, #accordion-system-architecture .fa.help-content-down, #accordion-internet-of-things-devices .fa.help-content-down, #accordion-share-your-keys .fa.help-content-down, #accordion-streembit-implementation .fa.help-content-down, #accordion-protecting-ecc-key .fa.help-content-down, #accordion-mitigate-risk-attacks .fa.help-content-down, #accordion-secure-cryptography .fa.help-content-down{
+    display: none;
+}
 @media(max-width: 732px) {
     .mobileVersionContactsBar {
         left: 253px;
@@ -6151,6 +6157,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .languageMobVersonSt {
         margin-left: 12px;
+    }
+    .backupAccImg {
+        width: 100%;
+    }
+    .help-content-for-all {
+        padding-bottom: 50px;
     }
 }
 @media(max-width: 400px) {

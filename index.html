@@ -406,7 +406,11 @@
                         </span>
                         <div class="navbar-collapse collapse" id="navHelp" style="">
                             <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help')">Help Content</a>
+
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
+                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
                                 <!-- ko if: streembit.globals.nwmode == true -->
                                 <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: checkUpdates">Check software updates</a>
                                 <!-- /ko -->
@@ -497,11 +501,21 @@
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
                             </ul>
                         </li>
-                        <li class="chat-users top-menu-invisible">
+                        <li class="top-menu-invisible">
                             <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
                             <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'help')" class="comebackToHelpContent">Help Content</a></li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
+                                </li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
+                                </li>
+                                <li class="mobile-change-dash-li">
+                                    <a href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
+                                </li>
                                 <!-- ko if: streembit.globals.nwmode == true -->
                                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
                                 <li role="separator" class="divider mobile-change-dash-li"></li>
