@@ -2,20 +2,23 @@
     <div class="uiview-container-panel container-fluid contact-offer-container-fluid">
         <div class="contact-offer-all-views-content">
             <textarea id="contact-offer" data-bind="value: jsonstr"></textarea>
-            <button class="btn btn-light float-right" data-bind="click: copyToClipboard">
-                Copy to clipboard
-            </button>
+            <div class="offline-contact-offer-mobile-vs__clibboard-btn">
+                <button class="btn btn-primary" data-bind="click: copyToClipboard">
+                    Copy to clipboard
+                </button>
+            </div>
+
         </div>
-        <div class="col-lg-2 col-sm-6 col-12" data-bind="visible: !!window.FileReader">
+        <div class="col-lg-3 col-sm-6 col-12" data-bind="visible: !!window.FileReader">
             <h5 style="font-weight: bold" class="chooseAvatarOnMobileVersion">Optional: choose avatar</h5>
             <div class="input-group">
                 <label class="input-group-btn">
-                    <span class="btn btn-light btn-file" style="border:1px solid #ccc">
+                    <span class="btn btn-file" style="border:1px solid #ccc">
                         Browse… <input type="file" accept="image/*" data-bind="event: {change: processAvatar}" style="display: none;" />
                     </span>
                 </label>
             </div>
-            <span class="help-block">
+            <span class="help-block note">
                 Max size 64Kb
             </span>
         </div>
@@ -25,32 +28,32 @@
             <button class="btn btn-warning float-right" data-bind="click: rmAvatar">remove</button>
         </div>
         <div class="clearfix"></div>
-        <form class="container-fluid">
+        <form class="container-fluid offline-contact-offer-mobile-vs__optional-details">
             <h5 class="optional-details-contact-offer-view">Optional Details</h5>
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3 offline-contact-offer-mobile-vs__feild">
                     <label for="exampleInputEmail1" class="additional-information">Email address</label>
                     <input type="email" class="form-control" id="" aria-describedby="emailHelp" placeholder="Enter email" data-bind="value: email, event:{ change: processEmail}">
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 offline-contact-offer-mobile-vs__feild">
                     <label for="exampleInputPhoneNum1" class="additional-information">Phone Number</label>
                     <input type="text" class="form-control" id="" aria-describedby="phoneHelp" placeholder="Enter phone number" data-bind="value: phone, event:{ change: processPhoneNum}">
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 offline-contact-offer-mobile-vs__feild">
                     <label for="exampleInputAddress1" class="additional-information">Address</label>
                     <input type="text" class="form-control" id="" aria-describedby="addressHelp" placeholder="Enter address" data-bind="value: addressVal, event:{ change: processAddress}">
                 </div>
                 <div class="clearfix"></div>
 
-                <div class="col-lg-3">
+                <div class="col-lg-3 offline-contact-offer-mobile-vs__feild">
                     <label for="exampleInputCountry1" class="additional-information">Country</label>
                     <input type="text" class="form-control" id="" aria-describedby="countryHelp" placeholder="Enter country" data-bind="value: country, event:{ change: processCountry}">
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 offline-contact-offer-mobile-vs__feild">
                     <label for="exampleInputWebsite1" class="additional-information">Website</label>
                     <input type="text" class="form-control" id="" aria-describedby="websiteHelp" placeholder="Enter website" data-bind="value: website, event:{ change: processWebsite}">
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 offline-contact-offer-mobile-vs__feild">
                     <label for="exampleInputSocial1" class="additional-information">Social media</label>
                     <input type="text" class="form-control" id="" aria-describedby="socialHelp" placeholder="Enter social media" data-bind="value: social, event:{ change: processSocial}">
                 </div>
@@ -58,11 +61,11 @@
           </form>
     </div>
 
-    <div style="margin:40px 0 30px 0;font-size:12px" class="createContOffSt">
+    <div class="offline-contact-offer-mobile-vs__note note createContOffSt">
         Copy the full text including the "--- BEGIN STREEMBIT CONTACT OFFER ---" and "--- END STREEMBIT CONTACT OFFER ---" lines and send it to your contact to offer a connection.<br />
         What is in the encoded text? It includes your public key, account name and network connection details.
         <div style="margin-top:8px">
-            <button class="btn btn-light" data-bind="click: onshowcontent" style="border:1px solid #ccc">Show the content</button>
+            <button class="btn btn-primary" data-bind="click: onshowcontent" style="border:1px solid #ccc">Show the content</button>
         </div>
     </div>
 
