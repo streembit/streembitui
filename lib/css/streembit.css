@@ -3495,17 +3495,6 @@ body.smart-style-6 #logo-group>span#logo:before{
     position: relative;
     width: 129px;
     overflow: hidden;
-    background-color: #3276B1;
-    opacity: .8;
-    transition: opacity .2s;
-    -o-transition: opacity .2s;
-    -ms-transition: opacity .2s;
-    -moz-transition: opacity .2s;
-    -webkit-transition: opacity .2s;
-    color: #fff;
-}
-.btn-file:hover {
-    opacity: 1;
 }
 .btn-file input[type=file] {
     position: absolute;
@@ -3522,44 +3511,6 @@ body.smart-style-6 #logo-group>span#logo:before{
     cursor: inherit;
     display: block;
 }
-
-.btn-primary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(50, 118, 177);
-    border-color: rgb(44, 105, 157);
-}
-.btn-primary:hover {
-    color: rgb(255, 255, 255);
-    background-color: rgb(39, 91, 137);
-    border-color: rgb(31, 73, 109);
-}
-
-.offline-contact-offer-mobile-vs__optional-details {
-    margin-top: 25px;
-    padding-top: 10px;
-    margin-bottom: 15px;
-}
-
-.offline-contact-offer-mobile-vs__note .btn-primary {
-    margin-top: 10px;
-}
-
-.offline-contact-offer-mobile-vs__clibboard-btn {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-}
-.offline-contact-offer-mobile-vs__feild {
-    margin-bottom: 15px;
-}
-.note {
-    margin-top: 6px;
-    padding: 0 1px;
-    font-size: 11px;
-    line-height: 15px;
-    color: #999;
-}
-
 .ava_file {
     width: 150px;
     height: 48px;
@@ -3593,7 +3544,6 @@ body.smart-style-6 #logo-group>span#logo:before{
     width: 100% !important;
     height: 200px !important;
     border: 1px solid #ededed;
-    padding: 5px;
 }
 
 .wspeerstbl {
@@ -5060,9 +5010,13 @@ a:link, #newvers_nav_for_ul .btn, button{
     width: 160px;
     font-size: 12px;
 }
+
 #main {
     height: calc(100% - 41px);
     margin-bottom: 52px;
+}
+.for-main-content {
+    height: 100%;
 }
 .forResponsiveSizeColsHeader {
     text-align: center;
@@ -5088,9 +5042,7 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 .optional-details-contact-offer-view {
     font-weight: bold;
-    padding-bottom: 20px;
-    border-bottom: 1px dashed rgba(0,0,0,.2);
-
+    margin-left:15px;
 }
 .contact-offer-container-fluid {
     min-width:500px;
@@ -5125,6 +5077,25 @@ a:link, #newvers_nav_for_ul .btn, button{
     border: 1px dotted #ccc;
     margin-top:20px;
 }
+.contentOfCreateIotHub .fa-times {
+    font-size: 16px;
+    -webkit-text-stroke: 2px #007bff;
+}
+.contentOfCreateIotHub .btn:hover .fa-times {
+    -webkit-text-stroke: 2px #0069d9;
+}
+
+.contentOfCreateIotHub .btn-success {
+    color: #fff;
+    background-color: #739e73;
+    border-color: #659265;
+}
+.contentOfCreateIotHub  .btn-success:active,  .contentOfCreateIotHub  .btn-success:hover {
+    color: #fff;
+    background-color: #5b835b;
+    border-color: #4c6e4c;
+}
+
 #quichBackOnMobileVersion {
     display: none;
 }
@@ -6301,12 +6272,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .help-content-for-all {
         padding-bottom: 50px;
-    }
-    #allContent {
-        margin-bottom: 0;
-    }
-    #main {
-        margin-bottom: 0;
     }
 }
 @media(max-width: 400px) {
