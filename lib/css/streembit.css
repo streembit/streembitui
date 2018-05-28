@@ -4016,6 +4016,7 @@ body {
 }
 #allContent{
     margin-top: 49px;
+    margin-bottom: 52px;
 }
 #addGroupModal .modal-dialog{
     width: 100%;
@@ -5009,8 +5010,13 @@ a:link, #newvers_nav_for_ul .btn, button{
     width: 160px;
     font-size: 12px;
 }
+
 #main {
-    height: 78vh;
+    height: calc(100% - 41px);
+    margin-bottom: 52px;
+}
+.for-main-content {
+    height: 100%;
 }
 .forResponsiveSizeColsHeader {
     text-align: center;
@@ -5071,6 +5077,25 @@ a:link, #newvers_nav_for_ul .btn, button{
     border: 1px dotted #ccc;
     margin-top:20px;
 }
+.contentOfCreateIotHub .fa-times {
+    font-size: 16px;
+    -webkit-text-stroke: 2px #007bff;
+}
+.contentOfCreateIotHub .btn:hover .fa-times {
+    -webkit-text-stroke: 2px #0069d9;
+}
+
+.contentOfCreateIotHub .btn-success {
+    color: #fff;
+    background-color: #739e73;
+    border-color: #659265;
+}
+.contentOfCreateIotHub  .btn-success:active,  .contentOfCreateIotHub  .btn-success:hover {
+    color: #fff;
+    background-color: #5b835b;
+    border-color: #4c6e4c;
+}
+
 #quichBackOnMobileVersion {
     display: none;
 }
@@ -6150,7 +6175,6 @@ a:link, #newvers_nav_for_ul .btn, button{
         margin-bottom: 5px;
     }
     #notifyMobileVersion {
-<<<<<<< HEAD
         height: 100%;
         border: 2px solid #c4c4c4;
     }
@@ -6174,31 +6198,6 @@ a:link, #newvers_nav_for_ul .btn, button{
         width: auto;
         word-break: break-all;
         height: 100%;
-=======
-        height: 100%;
-        border: 2px solid #c4c4c4;
-    }
-    .notifyBoxActivityMobileVersion {
-        width: auto;
-        word-break: break-all;
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: 357px;
-    }
-    .errorBtnMobVersion {
-        width: 57vh;
-        text-align: left;
-        margin-bottom: 5px;
-    }
-    #errorMobileVersion {
-        height: 100%;
-    }
-    .errorBoxActivityMobileVersion {
-        width: auto;
-        word-break: break-all;
-        height: 100%;
->>>>>>> upstream/dev
         overflow-y: auto;
         overflow-x: hidden;
         height: 357px;
