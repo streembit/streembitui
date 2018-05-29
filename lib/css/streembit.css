@@ -652,7 +652,7 @@ body{
 }
 
 .content-panel.hide-menu .chat-fill-area {
-    width: calc(100vw - 52px);
+    width: 100%;
 }
 .content-panel.hide-menu .chat-item-msg {
     max-width: calc(100vw - 208px);
@@ -3495,6 +3495,17 @@ body.smart-style-6 #logo-group>span#logo:before{
     position: relative;
     width: 129px;
     overflow: hidden;
+    background-color: #3276B1;
+    opacity: .8;
+    transition: opacity .2s;
+    -o-transition: opacity .2s;
+    -ms-transition: opacity .2s;
+    -moz-transition: opacity .2s;
+    -webkit-transition: opacity .2s;
+    color: #fff;
+}
+.btn-file:hover {
+    opacity: 1;
 }
 .btn-file input[type=file] {
     position: absolute;
@@ -3510,6 +3521,52 @@ body.smart-style-6 #logo-group>span#logo:before{
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.btn-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 118, 177);
+    border-color: rgb(44, 105, 157);
+}
+.btn-primary:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(39, 91, 137);
+    border-color: rgb(31, 73, 109);
+}
+
+.offline-contact-offer-mobile-vs__optional-details {
+    margin-top: 25px;
+    padding-top: 10px;
+    margin-bottom: 15px;
+}
+
+.offline-contact-offer-mobile-vs__note .btn-primary {
+    margin-top: 10px;
+}
+
+.offline-contact-offer-mobile-vs__clibboard-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.offline-contact-offer-mobile-vs__feild {
+    margin-bottom: 15px;
+}
+.note {
+    margin-top: 6px;
+    padding: 0 1px;
+    font-size: 11px;
+    line-height: 15px;
+    color: #999;
+}
+.line-clamp-three {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: scroll;
+}
+.contact__puplic-key {
+    min-height: 48px;
 }
 .ava_file {
     width: 150px;
@@ -3544,6 +3601,7 @@ body.smart-style-6 #logo-group>span#logo:before{
     width: 100% !important;
     height: 200px !important;
     border: 1px solid #ededed;
+    padding: 5px;
 }
 
 .wspeerstbl {
@@ -5042,7 +5100,9 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 .optional-details-contact-offer-view {
     font-weight: bold;
-    margin-left:15px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgba(0,0,0,.2);
+
 }
 .contact-offer-container-fluid {
     min-width:500px;
@@ -5619,6 +5679,12 @@ a:link, #newvers_nav_for_ul .btn, button{
         min-width: 345px;
         width: auto!important;
     }
+    .contentOfCreateIotHub {
+        border: 0;
+    }
+    .iothub-form .form-actions {
+        background: white;
+    }
     .for-mobile-size-style-change {
         margin-left: 2px!important;
     }
@@ -5997,6 +6063,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .dashboard {
         margin-bottom: 0;
+        margin-top: 25px;
         padding-bottom: 50px;
     }
     .dash-address-st-change {
@@ -6020,6 +6087,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #main {
         height: auto;
+        margin-bottom: 0;
+        margin-top: 40px;
+        overflow-y: visible;
     }
     .create-account-new-account-modal {
         margin-top: 8px;
@@ -6098,7 +6168,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
     }
-    .uiview.tools-netinfo-and-account,  .wallet-content-style, .create-iot-hub-st, .settings-side-ch,.offline-contact-offer-mobile-vs {
+    .uiview.tools-netinfo-and-account,  .wallet-content-style, .settings-side-ch,.offline-contact-offer-mobile-vs {
         padding-bottom: 50px;
         height: 87vh;
     }
@@ -6272,6 +6342,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .help-content-for-all {
         padding-bottom: 50px;
+    }
+    #allContent {
+        margin-bottom: 0;
+    }
+    #main {
+        margin-bottom: 0;
     }
 }
 @media(max-width: 400px) {
