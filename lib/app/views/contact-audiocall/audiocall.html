@@ -113,7 +113,7 @@
                             </table>
                         </div>
                         <div class="footer-chat-controls1">
-								 <button class="btn btn-primary send-message" data-bind="click: sendchat, attr: {title: btncaption }">
+								 <button class="btn btn-primary send-message" data-bind="click: sendchat" title="send">
 									<i class="fa fa-paper-plane"></i>
 								</button>
 
@@ -127,7 +127,7 @@
 									<i class="fa fa-image"></i>
 								</div>
                             <div>
-								<textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing, blur: blurTextareaMobile, focus: focusTextareaMobile}" placeholder="Send a Message"></textarea>
+								<input type="textarea" id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" placeholder="Send a Message" />
                                 <div class="contact-is-typing-container">
                                     <span class="contact-is-typing" data-bind="text: contact_is_typing"></span>
                                  </div>

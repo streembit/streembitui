@@ -4963,6 +4963,8 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 #smallScreenAudioCall1 {
     bottom: 52px;
+    cursor: move;
+    max-height: 112px;
 }
 .helpFromTheHeader {
     padding-bottom: 33px;
