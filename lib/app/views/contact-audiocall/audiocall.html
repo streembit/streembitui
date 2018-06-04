@@ -50,19 +50,17 @@
             </span>
             <div class="save-rm-chat-audio buttons-chat-audiocall-on-mobile-size">
                 <div class="btn-group">
-                    <button class="btn btn-primary saveChatHistoryForTextChat" data-bind="click: savechat">
+                    <button class="btn btn-primary saveChatHistoryForTextChat" title="Save Chat History" data-bind="click: savechat">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                        <span>Save Chat History</span>
                     </button>
-                    <button class="btn btn-danger deleteChatHistoryForTextChat" data-bind="click: rmchat">
+                    <button class="btn btn-danger deleteChatHistoryForTextChat" title="Delete Chat History" data-bind="click: rmchat">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        <span>Delete Chat History</span>
                     </button>
                 </div>
-                <button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">
+                <!--<button class="btn btn-info" data-bind="click: sendfile" style="padding:0 10px;font-size:12px">
                     <i class="fa fa-paperclip" aria-hidden="true"></i>
                     <span>Send File</span>
-                </button>
+                </button>-->
             </div>
 
                 <div class="add-all-contacts-field" data-bind="visible: show_contact_invite">
@@ -114,24 +112,25 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="footer-chat-controls">
-                            <div id="chat_img_during_audio_call" data-bind="click: chatimage" title="Insert Image">
-                                <!-- <img src="/lib/img/chat-img-icon.png" width="20" height="20" alt=""> -->
-                                 <i class="fa fa-image" style="font-size: 18px;color: #007bff;"></i>
-                            </div>
+                        <div class="footer-chat-controls1">
+								 <button class="btn btn-primary send-message" data-bind="click: sendchat" title="send">
+									<i class="fa fa-paper-plane"></i>
+								</button>
+
+								<span class="vertical-divider"></span>
+
+								<button class="btn btn-info send-file" title="Send File" data-bind="click: sendfile">
+									<i class="fa fa-paperclip" aria-hidden="true"></i>
+								</button>
+
+								<div id="chat_img" title="Insert Image" data-bind="click: chatimage" >
+									<i class="fa fa-image"></i>
+								</div>
                             <div>
-                                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+								<input type="textarea" id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" placeholder="Send a Message" />
                                 <div class="contact-is-typing-container">
                                     <span class="contact-is-typing" data-bind="text: contact_is_typing"></span>
-                                </div>
-                            </div>
-
-                            <div style="text-align:center;margin-top:5px">
-                                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px;position: relative;top: 8px;">
-                                    <i class="fa fa-paper-plane"></i>
-                                    <span>Send</span>
-                                </button>
-                            </div>
+                                 </div>
                         </div>
                     </div>
                 </div>

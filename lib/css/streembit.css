@@ -4809,7 +4809,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     text-align: right;
     float: right;
     position: relative;
-    bottom: 1px;
+    bottom: 7px;
 }
 .help-content-item .backupAccImg {
     max-height: 515px;
@@ -4963,6 +4963,8 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 #smallScreenAudioCall1 {
     bottom: 52px;
+    cursor: move;
+    max-height: 112px;
 }
 .helpFromTheHeader {
     padding-bottom: 33px;
@@ -6458,4 +6460,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         height: 100%;
         padding-bottom: 50px;
     }
+}
+.media-call-content .footer-chat-controls1 {
+    width: calc(100% - 150px);
 }
