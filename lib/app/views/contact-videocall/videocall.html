@@ -1,6 +1,6 @@
-<div id="media-call-container">
-    <div class="media-call-center">
-        <div class="media-call-header">
+<div id="media-call-container" class="video-call-container">
+    <div class="media-call-center video-call-center">
+        <div class="media-call-header video-call-header-chat">
             <div style="float:left;" class="callbuttons">
                 <div style="display:inline-block;margin:0;padding:0;float:left">
                     <div style="margin-top:10px">
@@ -57,6 +57,24 @@
 
             <div class="video_chat_items">
                 <div id="text-chat-area" style="flex:1">
+                <!-- <div style="padding:10px;text-align:left;">
+                        <div class="chat-win-header">
+                            <div class="chat-on-mobile-size chat-with-style">
+                                <span data-bind="text: lblheader">Chat with bbbbbb</span>
+                            </div>
+                            <div class="buttons-chat-on-mobile-size" data-bind="visible: issession">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary saveChatHistoryForTextChat" title="Save Chat History" data-bind="click: savechat">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn btn-danger deleteChatHistoryForTextChat" title="Delete Chat History" data-bind="click: rmchat">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="clear:both"></div>
+                        </div>
+                    </div> -->
                     <div class="fill-area" style="padding:10px;flex:1">
                         <div class="chat-fill-area chatitemswnd chat-video">
                             <table cellspacing="0" cellpadding="0">
@@ -83,16 +101,16 @@
                             </table>
                         </div>
                         <div class="footer-chat-controls">
-                            <div>
-                                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}" style="width: 100% !important;height: 75px !important;margin: 0;resize: none;box-sizing: border-box;background-color: #fff;color: #000;font-size: 12px;"></textarea>
+                            <div class="video-chat__text-container">
+                                <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}"></textarea>
                                 <div class="contact-is-typing-container">
                                     <span class="contact-is-typing" data-bind="text: contact_is_typing"></span>
                                 </div>
                             </div>
-                            <div style="text-align:center;margin-top:15px">
-                                <button class="btn btn-primary" data-bind="click: sendchat" style="padding:0 10px;font-size:12px">
+                            <span class="vertical-divider"></span>
+                            <div class="video-chat_send-btn-container">
+                                <button class="btn btn-primary video-chat_send-btn" data-bind="click: sendchat">
                                     <i class="fa fa-paper-plane"></i>
-                                    <span>Send</span>
                                 </button>
                             </div>
                         </div>

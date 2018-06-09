@@ -700,6 +700,11 @@ body{
     padding: 8px 0 0 0;
     border-top: 3px solid #eee;
     margin-top:8px;
+    position: relative;
+}
+
+.footer-chat-controls #txtChatCtrl {
+    margin: 0;
 }
 
 .chat-text-items table,.chat-fill-area table {
@@ -930,7 +935,7 @@ body{
 
 .calltime_parent {
     position: absolute;
-    top: 4px;
+    top: -5px;
     right: 20px;
     font-weight:bold;
     font-size:12px;
@@ -3861,7 +3866,7 @@ body.smart-style-6 #logo-group>span#logo:before{
 .contact-is-typing-container{
     height: 7px;
     position: absolute;
-    top: -12px;
+    top: -4px;
     left: 12px;
 }
 
@@ -3933,6 +3938,7 @@ body.smart-style-6 #logo-group>span#logo:before{
     border: 5px solid #333;
     border-radius: 5px;
     width: 160px;
+    z-index: 1;
 }
 @media (max-width: 880px) and (min-width: 768px){
     #hide-menu > :first-child > a, .btn-header an{
@@ -4372,8 +4378,35 @@ span.users-hub {
 .footer-chat-controls1 {
     margin: 20px 0 0 0;
 }
-.footer-chat-controls {
+/* .footer-chat-controls {
     margin: -22px 0 0 0;
+} */
+
+.video-chat__text-container {
+    width: 100%;
+    height: 48px;
+}
+
+.video-chat__text-container .contact-is-typing-container {
+    top: -20px;
+    left: 0;
+}
+.video-chat_send-btn {
+    border-radius: 50%;
+}
+.video-chat_send-btn-container {
+    position: absolute;
+    right: 6px;
+    top: 7px;
+}
+.footer-chat-controls .vertical-divider {
+    position: absolute;
+    top: 10px;
+    right: 53px;
+    display: inline-block;
+    height: 32px;
+    border: 1px dashed gray;
+    z-index: 1;
 }
 #chat_img {
     right: -7px;
@@ -4515,9 +4548,10 @@ span.users-hub {
 #smallScreenVideoCall1 {
     display: none;
     position: fixed;
-    bottom: 0;
+    bottom: 52px;
     width: 170px;
     z-index: 999;
+    max-height: 200px
 }
 
 #smallScreenVideoCall1 video {
@@ -4989,9 +5023,9 @@ a:link, #newvers_nav_for_ul .btn, button{
     font-size: 14px;
     padding: 12px 132px 12px 8px;
     border: 0;
-    border-radius: 20px;
+    border-radius: 2px;
     margin-top: 12px;
-    box-shadow: 2px 2px 6px 1px grey;
+    box-shadow: 1px 1px 1px 1px grey;
     position: absolute;
     top: 0;
     left: 0;
@@ -5174,7 +5208,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .helpRightSideText {
         word-break: break-all;
-        width: 171px;     
+        width: 171px;
         transition: 0.5s;
     }
     .security-tabs {
@@ -5747,7 +5781,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     .buttons-chat-audiocall-on-mobile-size {
         width: 100%;
         text-align: center;
-        margin-top: 4px;   
+        margin-top: 4px;
     }
     #view-container {
         max-width: 410px;
@@ -5768,7 +5802,12 @@ a:link, #newvers_nav_for_ul .btn, button{
         max-width: 415px;
     }
     #smallScreenAudioCall1 {
-        width: 235px;
+        width: 156px;
+        height: 100px;
+        bottom: 145px;
+    }
+    .smSpeakSt {
+        display: none;
     }
     .small-screen-plus-ic {
         width: 20px;
@@ -6167,6 +6206,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     .callbuttons {
         margin-top: 11px;
     }
+    .video-call-center .callbuttons {
+        margin-top: 0;
+    }
+    .video-call-center.media-call-center {
+        padding-bottom: 52px;
+    }
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
     }
@@ -6356,6 +6401,70 @@ a:link, #newvers_nav_for_ul .btn, button{
     .top-panelopen-contactsbar {
         left: 108px;
     }
+    .media-call-header-mobile {
+        display: flex;
+        flex-direction: column;
+        max-height: none;
+        height: auto;
+        z-index: 0;
+    }
+    .save-rm-chat-audio_mobile {
+        float: none;
+        text-align: right;
+        margin-top: 5px;
+    }
+    #media-call-container .footer-chat-controls-mobile {
+        width: 100%;
+        z-index: 0;
+    }
+    #media-call-container.media-call-container-mobile {
+        padding-bottom: 15px;
+    }
+
+    .contact-chat-mobile {
+        padding-bottom: 45px;
+    }
+
+    .media-call-content .video_ctrls_items {
+        /* display: none; */
+    }
+
+    #media-call-container.video-call-container {
+        height: 100%;
+    }
+
+    .media-call-header.video-call-header-chat {
+        display: flex;
+        flex-direction: column;
+        border-bottom: none;
+        margin-bottom: 10px;
+    }
+    .video-call-header-chat .call-with {
+        padding: 10px;
+        float: none;
+    }
+    .video-call-header-chat .callbuttons {
+        float: none !important;
+    }
+    .video_chat_items .fill-area .chat-item-msg {
+        max-width: 100%;
+    }
+    .video_chat_items {
+        background: transparent;
+    }
+
+    #text-chat-area div.footer-chat-controls1 {
+        width: 100% !important;
+    }
+
+    div#smallScreenVideoCall1 {
+        bottom: 125px;
+        z-index: 0;
+    }
+
+    .hide-content-mobile {
+        display: none !important;
+    }
 }
 @media(max-width: 375px) {
     .initaccount-footer-style {
@@ -6424,7 +6533,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     .mobile-size-msg-box {
         float: none;
     }
-    .footer-chat-controls1, .footer-chat-controls {
+    .footer-chat-controls1 {
         margin: 0px 5px;
     }
     .mainHelpContent {
@@ -6445,7 +6554,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .top-panelopen-contactsbar {
         left: 95px;
-    } 
+    }
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
     }
@@ -6463,4 +6572,8 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 .media-call-content .footer-chat-controls1 {
     width: calc(100% - 150px);
+}
+
+#text-chat-area .footer-chat-controls1 {
+    width: calc(100% - 170px);
 }
