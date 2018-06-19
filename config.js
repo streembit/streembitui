@@ -87,7 +87,7 @@ System.config({
     "util": "github:jspm/nodelibs-util@0.1.0",
     "utilities": "lib/app/utilities",
     "uuid": "npm:uuid@2.0.3",
-    "webrtc-adapter": "npm:webrtc-adapter@6.1.1",
+    "webrtc-adapter": "npm:webrtc-adapter@6.2.1",
     "webrtcaudio": "lib/app/webrtcaudio",
     "webrtccall": "lib/app/webrtccall",
     "webrtcdata": "lib/app/webrtcdata",
@@ -476,8 +476,8 @@ System.config({
       "hash-base": "npm:hash-base@2.0.2",
       "inherits": "npm:inherits@2.0.3"
     },
-    "npm:rtcpeerconnection-shim@1.2.7": {
-      "sdp": "npm:sdp@2.6.0"
+    "npm:rtcpeerconnection-shim@1.2.12": {
+      "sdp": "npm:sdp@2.7.4"
     },
     "npm:safe-buffer@5.1.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1"
@@ -537,9 +537,9 @@ System.config({
     "npm:vm-browserify@0.0.4": {
       "indexof": "npm:indexof@0.0.1"
     },
-    "npm:webrtc-adapter@6.1.1": {
-      "rtcpeerconnection-shim": "npm:rtcpeerconnection-shim@1.2.7",
-      "sdp": "npm:sdp@2.6.0"
+    "npm:webrtc-adapter@6.2.1": {
+      "rtcpeerconnection-shim": "npm:rtcpeerconnection-shim@1.2.12",
+      "sdp": "npm:sdp@2.7.4"
     }
   }
 });
