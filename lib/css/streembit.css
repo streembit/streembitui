@@ -2676,6 +2676,7 @@ Widgets
     display: flex;
     align-content: center;
     flex-wrap: wrap;
+    overflow: visible !important;
 }
 
 .footer-chat-controls1 .send-file, .footer-chat-controls1 #chat_img, .footer-chat-controls1 .send-message {
@@ -2769,6 +2770,18 @@ Widgets
     .forShowChatPos {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+}
+
+@media (max-height: 825px) {
+    #media-call-container.media-call-container-mobile {
+        padding-bottom: 15px;
+    }
+}
+
+@media (max-height: 575px) {
+    #media-call-container.media-call-container-mobile {
+        padding-bottom: 25px; 
     }
 }
 
@@ -3864,10 +3877,10 @@ body.smart-style-6 #logo-group>span#logo:before{
     color: #707070;
 }
 .contact-is-typing-container{
-    height: 7px;
+    height: 20px;
     position: absolute;
-    top: -4px;
-    left: 12px;
+    top: -11px;
+    left: 0;
 }
 
 #my-contacts-section .contact-bar-list-item{
@@ -4836,7 +4849,8 @@ a:link, #newvers_nav_for_ul .btn, button{
     font-weight: bold;
     color:#555;
     position: relative;
-    top: 11px;
+    top: 8px;
+    height: 100%;
 }
 .buttons-chat-audiocall-on-mobile-size {
     display: none;
@@ -5775,9 +5789,9 @@ a:link, #newvers_nav_for_ul .btn, button{
         max-width: 100%!important;
         word-break: break-all;
     }
-    .chat-name-audiocall-on-mobile-size {
+    /* .chat-name-audiocall-on-mobile-size {
         top: 0;
-    }
+    } */
     .buttons-chat-audiocall-on-mobile-size {
         width: 100%;
         text-align: center;
@@ -5805,6 +5819,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         width: 156px;
         height: 100px;
         bottom: 145px;
+        z-index: 0;
     }
     .smSpeakSt {
         display: none;
@@ -6188,11 +6203,12 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #mobileVersionHeaderMainMenu.navbar-collapse.show {
         height: 100%!important;
-        transition: 0.5s;   
+        transition: 0.5s;
+        z-index: 100;
     }
     .navbar-collapse {
         height: 0%!important;
-        transition: 0.5s;   
+        transition: 0.5s;
     }
     .chooseAvatarOnMobileVersion {
         margin-top: 50px!important;
@@ -6396,29 +6412,17 @@ a:link, #newvers_nav_for_ul .btn, button{
     #main {
         margin-bottom: 0;
     }
-}
-@media(max-width: 400px) {
-    .top-panelopen-contactsbar {
-        left: 108px;
-    }
     .media-call-header-mobile {
         display: flex;
-        flex-direction: column;
+        /* flex-direction: column; */
         max-height: none;
         height: auto;
         z-index: 0;
-    }
-    .save-rm-chat-audio_mobile {
-        float: none;
-        text-align: right;
-        margin-top: 5px;
+        justify-content: space-between;
     }
     #media-call-container .footer-chat-controls-mobile {
         width: 100%;
         z-index: 0;
-    }
-    #media-call-container.media-call-container-mobile {
-        padding-bottom: 15px;
     }
 
     .contact-chat-mobile {
@@ -6455,6 +6459,7 @@ a:link, #newvers_nav_for_ul .btn, button{
 
     #text-chat-area div.footer-chat-controls1 {
         width: 100% !important;
+        z-index: 0;
     }
 
     div#smallScreenVideoCall1 {
@@ -6464,6 +6469,18 @@ a:link, #newvers_nav_for_ul .btn, button{
 
     .hide-content-mobile {
         display: none !important;
+    }
+    .save-rm-chat-audio_mobile {
+        float: none;
+        text-align: right;
+        margin-top: 12px;
+        height: 100%;
+        width: auto;
+    }
+}
+@media(max-width: 400px) {
+    .top-panelopen-contactsbar {
+        left: 108px;
     }
 }
 @media(max-width: 375px) {
