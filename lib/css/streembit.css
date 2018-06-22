@@ -6118,12 +6118,12 @@ a:link, #newvers_nav_for_ul .btn, button{
         display: none;
     }
     .myAddressbookBg, .iotDevicesBg, .walletDashBg {
-        padding: 10px 20px;
+        padding: 5px 20px;
     }
     .dashboard {
         margin-bottom: 0;
         margin-top: 0;
-        padding-bottom: 50px;
+        padding-bottom: 40px;
         height: calc(100% - 25px) !important;
     }
     .dashboard.col .row {
@@ -6135,10 +6135,10 @@ a:link, #newvers_nav_for_ul .btn, button{
     .dashboard.col .row .forResponsiveSizeCols {
         flex: 1 1 33%;
         max-height: 33%;
-        min-height: 160px;
+        min-height: 128px;
     }
     .dashboard.col .row .forResponsiveSizeCols:last-child {
-        margin-bottom: 60px;
+        margin-bottom: 0;
     }
     .dashboard.col .row .forResponsiveSizeCols  > div {
         display: flex;
@@ -6155,13 +6155,13 @@ a:link, #newvers_nav_for_ul .btn, button{
         max-height: 33.3%;
     }
     .dashboard.col .row .forResponsiveSizeCols .fa {
-        font-size: 18px !important;
-        height: 45px;
-        width: 45px;
-        line-height: 45px;
+        font-size: 15px !important;
+        height: 38px;
+        width: 38px;
+        line-height: 34px;
     }
     .dashboard.col .row .forResponsiveSizeCols p.dash-address-st-change {
-        font-size: 14px !important;
+        font-size: 13px !important;
         margin-top: auto !important;
     }
     .dashboard.col .row .forResponsiveSizeCols h5.dash-address-st-change {
@@ -6528,6 +6528,35 @@ a:link, #newvers_nav_for_ul .btn, button{
         width: auto;
     }
 }
+
+@media(max-width: 425px) and (min-height: 600px) {
+    .dashboard.col .row .forResponsiveSizeCols {
+        min-height: 140px;
+    }
+}
+@media(max-width: 425px) and (min-height: 640px) {
+    .dashboard.col .row .forResponsiveSizeCols {
+        min-height: 145px;
+    }
+}
+@media(max-width: 425px) and (min-height: 700px) {
+    .dashboard.col .row .forResponsiveSizeCols {
+        min-height: 170px;
+    }
+    .dashboard.col .row .forResponsiveSizeCols .fa {
+        font-size: 18px !important;
+        height: 50px;
+        width: 50px;
+        line-height: 46px;
+    }
+    .dashboard.col .row .forResponsiveSizeCols button{
+        font-size: 13px !important;
+    }
+    .dashboard.col .row .forResponsiveSizeCols p.dash-address-st-change {
+        font-size: 15px !important;
+    }
+}
+
 @media(max-width: 400px) {
     .top-panelopen-contactsbar {
         left: 108px;
@@ -6634,7 +6663,6 @@ a:link, #newvers_nav_for_ul .btn, button{
 @media (max-width: 320px) {
     .dashboard {
         height: 100%;
-        padding-bottom: 50px;
     }
 }
 .media-call-content .footer-chat-controls1 {
