@@ -6230,6 +6230,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
+        z-index: 10;
     }
     .uiview.tools-netinfo-and-account,  .wallet-content-style, .settings-side-ch,.offline-contact-offer-mobile-vs {
         padding-bottom: 50px;
@@ -6574,6 +6575,7 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
+        z-index: 10;
     }
 }
 @media (max-width: 360px) {
