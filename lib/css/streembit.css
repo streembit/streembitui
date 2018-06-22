@@ -5210,6 +5210,10 @@ a:link, #newvers_nav_for_ul .btn, button{
     display: none;
 }
 
+.dashboard.col .row .forResponsiveSizeCols .wigdet-two-content {
+    margin: 10px 0;
+}
+
 @media (min-width: 1024px) {
     .image-size-on-responsive-versions {
         max-width: 470px;
@@ -6109,7 +6113,6 @@ a:link, #newvers_nav_for_ul .btn, button{
         border: 1px solid #05bd61;
         width: 120px;
         font-size: 12px;
-        margin-top: 15px;
     }
     .mobile-version-changing-welcome-style {
         display: none;
@@ -6119,9 +6122,56 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     .dashboard {
         margin-bottom: 0;
-        margin-top: 25px;
+        margin-top: 0;
         padding-bottom: 50px;
+        height: calc(100% - 25px) !important;
     }
+    .dashboard.col .row {
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-wrap: nowrap;
+        height: 100%;
+    }
+    .dashboard.col .row .forResponsiveSizeCols {
+        flex: 1 1 33%;
+        max-height: 33%;
+        min-height: 160px;
+    }
+    .dashboard.col .row .forResponsiveSizeCols:last-child {
+        margin-bottom: 60px;
+    }
+    .dashboard.col .row .forResponsiveSizeCols  > div {
+        display: flex;
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        height: 100%;
+    }
+    .dashboard.col .row .forResponsiveSizeCols  > div > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 33.3%;
+        max-height: 33.3%;
+    }
+    .dashboard.col .row .forResponsiveSizeCols .fa {
+        font-size: 18px !important;
+        height: 45px;
+        width: 45px;
+        line-height: 45px;
+    }
+    .dashboard.col .row .forResponsiveSizeCols p.dash-address-st-change {
+        font-size: 14px !important;
+        margin-top: auto !important;
+    }
+    .dashboard.col .row .forResponsiveSizeCols h5.dash-address-st-change {
+        margin-top: 0 !important;
+        margin-bottom: auto;
+    }
+    .dashboard.col .row .forResponsiveSizeCols .wigdet-two-content {
+        margin: 0;
+    }
+
     .dash-address-st-change {
         margin-bottom: 0px!important;
     }
@@ -6230,7 +6280,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
-        z-index: 10;
     }
     .uiview.tools-netinfo-and-account,  .wallet-content-style, .settings-side-ch,.offline-contact-offer-mobile-vs {
         padding-bottom: 50px;
@@ -6575,7 +6624,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     }
     #navbarTogglerDemo01.navbar-collapse.show {
         height: 100%!important;
-        z-index: 10;
     }
 }
 @media (max-width: 360px) {
