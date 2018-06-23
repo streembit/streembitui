@@ -21,7 +21,7 @@
             </div>  
 
             <div style="margin-top:30px">
-                <button data-bind="click: save" style="margin-right:10px">Save</button>
+                <button data-bind="click: save" class="btn btn-info" style="margin-right:10px">Save</button>
             </div>
 
         </div>
@@ -39,7 +39,7 @@
                         </fieldset>
                     </form>
                     <div style="text-align:left">
-                        <button style="font-size:12px" data-bind="click: save" title="Save">Save</button>
+                        <button style="font-size:12px"  class="btn btn-info"  data-bind="click: save" title="Save">Save</button>
                     </div>
                 </div>
 
@@ -97,15 +97,15 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal" style="border: 1px solid #ccc">Close</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: update_seed">Save changes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="border: 1px solid #ccc">Close</button>
+                        <button type="button" class="btn btn-info" data-bind="click: update_seed">Save changes</button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- end edit modal -->
                 <div style="text-align:left;margin-top:15px">
-                    <button style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
+                    <button class="btn btn-info"  style="font-size:12px" data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
                 </div>
                 <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
                     <div class="form-group" style="font-size:11px;margin-bottom:5px">
@@ -117,7 +117,8 @@
                         <input type="text" class="form-control" id="newseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
                     </div>
                     <div style="margin-top:20px">
-                        <button data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> <button data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
+                        <button class="btn btn-info"  data-bind="click: add_bootseed" style="margin-right:8px;font-size:12px">Save</button> 
+                        <button class="btn btn-danger"  data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;font-size:12px">Cancel</button>
                     </div>
                 </div>
                 
@@ -130,18 +131,20 @@
                 <div data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="margin-top:10px">
                 </div>
                 <div style="text-align:left;margin-top:15px">
-                    <button style="font-size:12px" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
+                    <button class="btn btn-info" style="font-size:12px" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
                 </div>
                 <div data-bind="visible: is_add_iceresolver" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
                     <div class="form-group" style="font-size:12px;margin-bottom:0">
                         <label for="newice" style="font-size:12px">ICE server:</label>
-                        <input type="text" class="form-control" id="newice" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_iceresolver"> &nbsp;&nbsp;<button data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
+                        <input type="text" class="form-control" id="newice" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_iceresolver"> &nbsp;&nbsp;
+                        <button class="btn btn-sm btn-info"  data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-sm btn-danger"  data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
                     </div>
                 </div>
             </div>
 
             <div style="margin-top:30px">
-                <button data-bind="click: save" style="margin-right:10px">Save</button>
+                <button class="btn btn-info" data-bind="click: save" style="margin-right:10px">Save</button>
             </div>
         </div>
 
@@ -158,7 +161,7 @@
             </div>
 
             <div style="margin-top:30px">
-                <button data-bind="click: save" style="margin-right:10px">Save</button>
+                <button class="btn btn-info"  data-bind="click: save" style="margin-right:10px">Save</button>
             </div>
         </div>
     </div>
