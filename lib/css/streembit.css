@@ -841,6 +841,7 @@ body{
     min-height: 3.6em;
     max-height: 4.6em;
     z-index: 15;
+    position: relative;
 }
 
 .media-call-content{
@@ -2735,10 +2736,6 @@ Widgets
     -o-transform: translate(-50%, -50%);
 }
 
-.footer-chat-controls1 #chat_img .fa-image {
-
-}
-
 .chat-sender img {
     border-radius: 20px;
     border: 1px solid #afafaf;
@@ -3820,8 +3817,9 @@ body.smart-style-6 #logo-group>span#logo:before{
 
 .add-audio-call {
     position: absolute;
-    top: 405px;
-    left: 49%;
+    top: 362px;
+    left: 50%;
+    transform: translate(-50%, 0);
     display: flex;
     justify-content: center;
     margin: 0;
@@ -4107,10 +4105,10 @@ body {
 .add-all-contacts-field{
     overflow-y: auto;
     position: absolute;
-    margin-top: -269px;
-    margin-left: -195px;
-    top: 50%;
+    top: 130px;
     left: 50%;
+    margin: 0  !important;
+    transform: translate(-50%, 0);
     border: 3px solid #e4e4e4;
     border-radius: 3px;
     background: #f8f8f8;
@@ -4391,9 +4389,6 @@ span.users-hub {
 .footer-chat-controls1 {
     margin: 20px 0 0 0;
 }
-/* .footer-chat-controls {
-    margin: -22px 0 0 0;
-} */
 
 .video-chat__text-container {
     width: 100%;
@@ -5189,16 +5184,19 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 .contentOfCreateIotHub .fa-times {
     font-size: 16px;
-    -webkit-text-stroke: 2px #007bff;
+    -webkit-text-stroke: 2px #dc3545;
 }
 .contentOfCreateIotHub .btn:hover .fa-times {
-    -webkit-text-stroke: 2px #0069d9;
+    -webkit-text-stroke: 2px #c82333;
 }
 
 .contentOfCreateIotHub .btn-success {
     color: #fff;
     background-color: #739e73;
     border-color: #659265;
+}
+.contentOfCreateIotHub .btn-danger {
+    margin-right: 4px;
 }
 .contentOfCreateIotHub  .btn-success:active,  .contentOfCreateIotHub  .btn-success:hover {
     color: #fff;
@@ -5863,10 +5861,6 @@ a:link, #newvers_nav_for_ul .btn, button{
     .footer-chat-controls1, .footer-chat-controls {
         margin: 0;
     }
-    .footer-chat-controls1 {
-        margin-left: -10px !important;
-        width: calc(100% + 20px);
-    }
     .chat-fill-area .chatitemswnd {
         height: 360px;
     }
@@ -6467,7 +6461,6 @@ a:link, #newvers_nav_for_ul .btn, button{
         /* flex-direction: column; */
         max-height: none;
         height: auto;
-        z-index: 0;
         justify-content: space-between;
     }
     #media-call-container .footer-chat-controls-mobile {
@@ -6630,7 +6623,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         float: none;
     }
     .footer-chat-controls1 {
-        margin: 0px 5px;
+        margin: 0;
     }
     .mainHelpContent {
         padding-left: 0;
@@ -6669,6 +6662,24 @@ a:link, #newvers_nav_for_ul .btn, button{
     width: calc(100% - 150px);
 }
 
-#text-chat-area .footer-chat-controls1 {
-    width: calc(100% - 170px);
+.clearSendMonBtnMobileVersion, .clearRecMonMobileVersion {
+    margin-right: 4px;
+}
+@media (min-width: 425px) {
+    .delete-from-my-contacts .btn-danger, .mobile-send-money-bt-st .btn, .mobile-req-money-bt-st .btn{
+        font-weight: 500;
+    }
+}
+@media (max-width: 425px) {
+    .forShowChatPos > div:last-child {
+        margin-bottom: 200px;
+    }
+    .add-audio-call {
+        top: 350px !important;
+    }
+}
+
+#call {
+    max-height: 100%;
+    overflow: auto;
 }
