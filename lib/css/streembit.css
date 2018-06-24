@@ -3538,15 +3538,28 @@ body.smart-style-6 #logo-group>span#logo:before{
     display: block;
 }
 
+/*button colors from Smart admin theme = bootstrap 3 colors*/
 .btn-primary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(50, 118, 177);
-    border-color: rgb(44, 105, 157);
+    background-color: #3276b1;
+    border-color: #2c699d;
 }
 .btn-primary:hover {
-    color: rgb(255, 255, 255);
-    background-color: rgb(39, 91, 137);
-    border-color: rgb(31, 73, 109);
+    background-color: #275b89;
+    border-color: #1f496d;
+}
+.btn-primary:focus {
+    border-color: #10263a;
+}
+.btn-danger {
+    background-color: #a90329;
+    border-color: #900323;
+}
+.btn-danger:hover {
+    background-color: #77021d;
+    border-color: #540114;
+}
+.btn-danger:focus {
+    border-color: #130005;
 }
 
 .offline-contact-offer-mobile-vs__optional-details {
@@ -4085,6 +4098,7 @@ body {
 }
 .for-add-group-call{
     position: relative;
+    max-width: 95%;
 }
 .for-add-group-call > .list-group-item:hover, .for-add-group-call > .contact-bar-list-item {
     background: #f9f9f9;
@@ -4105,7 +4119,7 @@ body {
 .add-all-contacts-field{
     overflow-y: auto;
     position: absolute;
-    top: 130px;
+    top: 105px;
     left: 50%;
     margin: 0  !important;
     transform: translate(-50%, 0);
@@ -4113,6 +4127,7 @@ body {
     border-radius: 3px;
     background: #f8f8f8;
     z-index: 999;
+    max-width: 100%;
 }
 .for-add-group-call .list-group-item:first-child, .for-add-group-call .contact-bar-list-item:first-child{
     margin: 0px -5px!important;
@@ -4136,6 +4151,9 @@ body {
     width: 400px;
     background: #f0f0f0;
     padding: 5px;
+    max-height: 192px;
+    max-width: 100%;
+    overflow: auto;
 }
 .add-group-header{
     margin: 10px auto;
@@ -4989,6 +5007,7 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 #call .calltime_parent {
     right: 0;
+    top: 0;
 }
 #view-container {
     width: 100%;
@@ -5184,10 +5203,10 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 .contentOfCreateIotHub .fa-times {
     font-size: 16px;
-    -webkit-text-stroke: 2px #dc3545;
+    -webkit-text-stroke: 2px #a90329;
 }
 .contentOfCreateIotHub .btn:hover .fa-times {
-    -webkit-text-stroke: 2px #c82333;
+    -webkit-text-stroke: 2px #77021d;
 }
 
 .contentOfCreateIotHub .btn-success {
@@ -6520,6 +6539,12 @@ a:link, #newvers_nav_for_ul .btn, button{
         height: 100%;
         width: auto;
     }
+    .for-add-group-call{
+        max-width: 95%;
+    }
+    .add-group-header-with-closebtn {
+        max-width: 100%;
+    }
 }
 
 @media(max-width: 425px) and (min-height: 600px) {
@@ -6665,11 +6690,7 @@ a:link, #newvers_nav_for_ul .btn, button{
 .clearSendMonBtnMobileVersion, .clearRecMonMobileVersion {
     margin-right: 4px;
 }
-@media (min-width: 425px) {
-    .delete-from-my-contacts .btn-danger, .mobile-send-money-bt-st .btn, .mobile-req-money-bt-st .btn{
-        font-weight: 500;
-    }
-}
+
 @media (max-width: 425px) {
     .forShowChatPos > div:last-child {
         margin-bottom: 200px;
