@@ -1,5 +1,5 @@
 
-<div style="width: 100%">
+<div class="init-account-wrap">
 <div class="initialize-existing-account">
     <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
 
@@ -38,9 +38,9 @@
 
                     <footer>
                         <div class="row initaccount-footer-style">
+                            <a class="btn btn-info restore-btn" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" ></a>
                             <button type="button" class="btn btn-info"  data-bind="click: new_account">New Account</button>
-                            <button type="button" class="btn btn-info" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" ></button>
-                            <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-submit'"></button>
+                            <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-login'"></button>
                         </div>
                     </footer>
                 </form>
