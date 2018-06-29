@@ -1235,7 +1235,7 @@ span.awesomeBlue i.addbtn{
     body[data-account-load-complete=false] #allContent {
         margin-top: 10px;
     }
-    body[data-account-load-complete=false] #allContent {
+    body[data-account-load-complete=false] #main {
         margin-top: 5px;
     }
     .init-account-wrap {
@@ -6236,7 +6236,7 @@ a:link, #newvers_nav_for_ul .btn, button{
         overflow-y: visible;
     }
     .create-account-new-account-modal {
-        margin-top: 8px;
+        margin-top: 15px;
     }
     .sendMoneyTextMobileVersion, .receiveMoneyTextMobileVersion {
         flex: 1;
