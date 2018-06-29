@@ -173,6 +173,9 @@
                 margin-top: 47px;
             } 
         }
+        body[data-account-load-complete=false] #main{
+            height: 78vh!important;
+        }
         @media(max-width: 425px) {
             body[data-account-load-complete=true] #mainPanel {
                 margin-bottom: 0;
@@ -180,10 +183,11 @@
             body[data-account-load-complete=true] .dashboard {
                 height: 100%;
             }
+            body[data-account-load-complete=false] #main{
+                height: 100% !important;
+            }
         }
-        body[data-account-load-complete=false] #main{
-            height: 78vh!important;
-        }
+        
         .smart-style-5, .smart-style-5 .content-panel{
             background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
             background-size: cover!important;
