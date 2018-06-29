@@ -1231,7 +1231,20 @@ span.awesomeBlue i.addbtn{
     font-weight:bold;
     color:#fff;
 }
-
+@media(max-width: 425px) {
+    body[data-account-load-complete=false] #allContent {
+        margin-top: 10px;
+    }
+    body[data-account-load-complete=false] #allContent {
+        margin-top: 5px;
+    }
+    .init-account-wrap {
+        margin-bottom: auto;
+    }
+}
+.init-account-wrap {
+    width: 100%;
+}
 body[data-account-load-complete=true] .uiview-container-panel {
     background: #fff;
     border-color: #EEE;
@@ -4719,6 +4732,18 @@ span.users-hub {
 .initaccount-footer-style {
     justify-content: flex-end;
     padding: 0 15px;
+}
+.initaccount-footer-style.row .btn.restore-btn {
+    background: transparent;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    font-weight: 500;
+    text-decoration: underline;
+    margin-right: auto;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 4px;
 }
 .initialize-account-sel-section{
     min-width:220px;
