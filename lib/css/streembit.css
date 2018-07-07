@@ -3943,7 +3943,6 @@ body.smart-style-6 #logo-group>span#logo:before{
     position: absolute;
     bottom: 40px;
     right: 0;
-    /*background: #f5f5f5;*/
     border-radius: 2px 0px 0px 2px;
     border: 1px solid #ccc;
     background: black;
@@ -3951,10 +3950,12 @@ body.smart-style-6 #logo-group>span#logo:before{
     border: 5px solid #333;
     border-radius: 5px;
     width: 160px;
-    z-index: 1;
+    z-index: 999999;
     margin: 5px;
     margin-left: 0;
     min-height: 112px;
+    transition: 0s !important;
+    cursor: move;
 }
 @media (max-width: 880px) and (min-width: 768px){
     #hide-menu > :first-child > a, .btn-header an{
@@ -4554,13 +4555,14 @@ span.users-hub {
     position: fixed;
     bottom: 52px;
     width: 170px;
-    z-index: 999;
-    max-height: 200px
+    max-height: 172px;
+    min-height: 172px;
 }
 
 #smallScreenVideoCall1 video {
     width: 160px !important;
     border-width: 0;
+    margin-top: 5px;
 }
 
 #smallScreenVideoCall1 .call-time {
@@ -4570,6 +4572,7 @@ span.users-hub {
 #smallScreenVideoCall1.active {
     display: block;
 }
+
 .smart-style-5 {
     color: black!important;
 }
@@ -5015,7 +5018,6 @@ a:link, #newvers_nav_for_ul .btn, button{
 }
 #smallScreenAudioCall1 {
     bottom: 52px;
-    cursor: move;
     max-height: 112px;
 }
 .helpFromTheHeader {
