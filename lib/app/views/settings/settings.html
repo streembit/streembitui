@@ -1,6 +1,6 @@
 
 <div class="settings-side-ch">
-    <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
+    <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="nav-item"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">Network</a></li>
         <li role="presentation" class="nav-item"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab" class="nav-link">Seeds</a></li>
         <li role="presentation" class="nav-item"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab" class="nav-link">Ice resolvers</a></li>
@@ -26,9 +26,9 @@
 
         </div>
 
-        <div role="tabpanel" class="tab-pane settings-tab-panel" id="seeds_settings">
+        <div role="tabpanel" class="tab-pane settings-tab-panel seeds-settings" id="seeds_settings">
             <div class="form-group form-section-panel">
-                <div class="widget-body" style="margin-top:20px;margin-bottom:20px;border-bottom: 2px solid #eee;padding-bottom: 10px;">
+                <div class="widget-body seeds-settings__body">
                     <form>
                         <fieldset>
                             <input name="authenticity_token" type="hidden">
@@ -107,14 +107,14 @@
                 <div style="text-align:left;margin-top:15px">
                     <button class="btn btn-primary"  data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
                 </div>
-                <div data-bind="visible: is_add_bootseed" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
-                    <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                        <label for="newseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
-                        <input type="text" class="form-control" id="newseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_host">
+                <div data-bind="visible: is_add_bootseed" class="seeds-settings__add-bootseed">
+                    <div class="form-group seeds-settings__host-field">
+                        <label for="newseedhost" style="">Host: </label>
+                        <input type="text" class="form-control" id="newseedhost" maxlength="40" data-bind="value: new_seed_host">
                     </div>
-                    <div class="form-group" style="font-size:11px;margin-bottom:5px">
-                        <label for="newseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
-                        <input type="text" class="form-control" id="newseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: new_seed_port">
+                    <div class="form-group seeds-settings__port-field">
+                        <label for="newseedport" style="">Port: </label>
+                        <input type="text" class="form-control" id="newseedport" maxlength="5" data-bind="value: new_seed_port">
                     </div>
                     <div style="margin-top:20px">
                         <button class="btn btn-primary"  data-bind="click: add_bootseed" style="margin-right:8px;">Save</button> 
@@ -125,22 +125,26 @@
             </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane settings-tab-panel" id="ice_settings">
+        <div role="tabpanel" class="tab-pane settings-tab-panel ice-settings" id="ice_settings">
             <div class="form-group form-section-panel">
-                <div style="font-weight:bold;display:inline-block">Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
-                <div data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="margin-top:10px">
+                <div >Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
+                <div  class="ice-settings__resolver-template" data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="">
                 </div>
                 <div style="text-align:left;margin-top:15px">
                     <button class="btn btn-primary" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
                 </div>
-                <div data-bind="visible: is_add_iceresolver" style="background-color:#eee;padding:6px 4px;border:1px solid #ccc;border-radius:3px">
+                <div data-bind="visible: is_add_iceresolver" class="ice-settings__add-iceresolver">
                     <div class="form-group" style="font-size:12px;margin-bottom:0">
+                        <div class="ice-settings__fields">
                         <label for="newice" style="font-size:12px">ICE server:</label>
-                        <input type="text" class="form-control" id="newice" maxlength="72" style="font-size:12px;width:400px;display:inline-block" data-bind="value: new_iceresolver"> &nbsp;&nbsp;
+                            <input type="text" class="form-control ice-settings__form-input" id="newice" maxlength="72" data-bind="value: new_iceresolver"> &nbsp;&nbsp;
+                        </div>
+                        <div class="ice-settings-btns">
                         <button class="btn btn-primary"  data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="btn btn-sm btn-danger"  data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
                     </div>
                 </div>
+            </div>
             </div>
 
             <div style="margin-top:30px">
@@ -195,5 +199,3 @@
         <div style="clear:both"></div>
     </div>
 </script>
-
-
