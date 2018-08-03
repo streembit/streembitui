@@ -702,6 +702,12 @@ body {
   align-content: stretch;
 }
 
+.video-call-container .media-call-content {
+  height: 100%;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
 .video_ctrls_items {
   position: relative;
   display: inline-block;
@@ -713,12 +719,16 @@ body {
   margin-bottom: 14px;
 }
 
+.media-call-content .chat_items {
+  margin-bottom: 30px;
+}
+
 .video_chat_items {
   height: 100%;
   display: none;
   border: 2px solid #888;
   margin-left: 4px;
-  background: #f3f3f3;
+  background: transparent;
   margin-bottom: 0;
   min-width: 300px;
 }
@@ -738,7 +748,7 @@ body {
   top: 10px;
   left: auto;
   right: 10px;
-  z-index: 999;
+  z-index: 989;
 }
 
 #localvid {
@@ -4068,7 +4078,7 @@ body {
   position: absolute;
   top: 105px;
   left: 50%;
-  margin: 0 !important;
+  margin: 0;
   transform: translate(-50%, 0);
   border: 3px solid #e4e4e4;
   border-radius: 3px;
@@ -4317,6 +4327,7 @@ span.users-hub {
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 99;
   background-color: #f3f3f3;
   transition: 0.5s;
   padding-top: 90px;
@@ -4379,7 +4390,7 @@ span.users-hub {
 }
 
 #ribbon {
-  z-index: 1;
+  z-index: 990;
 }
 
 .footer-chat-controls1 {
@@ -4867,6 +4878,14 @@ button {
   margin: 0;
 }
 
+#main-header-st {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+  background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
+}
+
 #main-header-st .navbar-brand {
   margin-right: 0;
 }
@@ -5120,7 +5139,7 @@ button {
 
 .page-footer {
   position: relative;
-  z-index: 1020;
+  z-index: 99;
   padding: 25px;
 }
 
@@ -5137,7 +5156,7 @@ button {
 
 #main {
   height: auto;
-  margin-top: 35px;
+  margin-top: 45px;
 }
 
 #call {
@@ -5605,6 +5624,10 @@ button {
   text-align:right;
 }
 
+.existsContacts {
+  margin-bottom: 20px;
+}
+
 /*width media queries*/
 @media (min-width: 768px) {
   .main {
@@ -5646,6 +5669,12 @@ button {
   }
   #text-chat-area {
       padding-bottom: 40px;
+  }
+  .media-call-center.video-call-center {
+    padding-bottom: 50px;
+  }
+  .video_chat_items #text-chat-area {
+      padding-bottom: 4px;
   }
   .navbar-expand-lg .navbar-toggler {
     display: none;
@@ -5725,7 +5754,6 @@ button {
     display: none!important;
   }
   .dashboard {
-    height: 75vh;
     padding-bottom: 50px;
   }
   .forResponsiveSizeColsHeader {
@@ -5826,10 +5854,6 @@ button {
   }
   .treeBoxesOnMobileVersion {
     display: block;
-  }
-  #navbarTogglerDemo01 {
-    margin-top: 47px;
-    background: #f8f8f8;
   }
   .messageBtnMobVersion,
   .notifyBtnMobVersion,
@@ -6248,6 +6272,9 @@ button {
   .callProcessContentStyle {
     height: auto;
   }
+  .media-call-content .chat_items {
+    margin-bottom: 0;
+  }
   .left-side-main-menu {
     height: 100vh;
     overflow-y: auto;
@@ -6490,7 +6517,7 @@ button {
   }
   .dashboard {
     margin-bottom: 0;
-    margin-top: 0;
+    margin-top: 8px;
     padding-bottom: 40px;
     height: calc(100% - 25px) !important;
   }
@@ -6624,9 +6651,10 @@ button {
     margin-top: 8px;
   }
   #mobileVersionHeaderMainMenu.navbar-collapse.show {
-    height: 100%!important;
+    height: 100% !important;
     transition: 0.5s;
     z-index: 100;
+    overflow: scroll;
   }
   .navbar-collapse {
     height: 0%!important;
@@ -6647,14 +6675,7 @@ button {
   .video-call-center .callbuttons {
     margin-top: 0;
   }
-  .video-call-center.media-call-center {
-    padding-bottom: 52px;
-  }
-  #navbarTogglerDemo01.navbar-collapse.show {
-    height: 100%!important;
-  }
   .uiview.tools-netinfo-and-account,
-  .wallet-content-style,
   .settings-side-ch {
     padding-bottom: 50px;
     height: 87vh;
@@ -6701,7 +6722,6 @@ button {
     margin: 7px 0;
   }
   .messageBtnMobVersion {
-    width: 57vh;
     text-align: left;
     margin-bottom: 5px;
   }
@@ -6724,7 +6744,6 @@ button {
     border-bottom: 1px solid #ccc;
   }
   .notifyBtnMobVersion {
-    width: 57vh;
     text-align: left;
     margin-bottom: 5px;
   }
@@ -6741,7 +6760,6 @@ button {
     height: 357px;
   }
   .errorBtnMobVersion {
-    width: 57vh;
     text-align: left;
     margin-bottom: 5px;
   }
@@ -6803,9 +6821,6 @@ button {
   .ellipsisIconOnMobileVersion {
     margin-top: 2px;
   }
-  .dashboard {
-    height: 85vh;
-  }
   .version-public-key-style-ch {
     padding-bottom: 50px;
   }
@@ -6842,12 +6857,6 @@ button {
     width: 100%;
     z-index: 0;
   }
-  .contact-chat-mobile {
-    /*padding-bottom: 45px;*/
-  }
-  .media-call-content .video_ctrls_items {
-    /* display: none; */
-  }
   #media-call-container.video-call-container {
     height: 100%;
   }
@@ -6866,9 +6875,6 @@ button {
   }
   .video_chat_items .fill-area .chat-item-msg {
     max-width: 100%;
-  }
-  .video_chat_items {
-    background: transparent;
   }
   #text-chat-area div.footer-chat-controls1 {
     width: 100% !important;
@@ -6963,20 +6969,21 @@ button {
     height: 100%;
     overflow-y: auto;
   }
-  .dashboard {
-    height: 100vh;
-  }
   .mobile-send-money-bt-st {
     margin-left: 0;
+    display: flex;
   }
   #navbarTogglerDemo01.navbar-collapse.show {
-    height: 100%!important;
+    position: relative;
+    overflow: scroll;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: auto;
+    min-height: 100%;
   }
   .mobile-size-tabs-change {
     padding: .5rem 5px;
-  }
-  .dashboard {
-    height: 100%;
   }
   .forShowChatPos>div:last-child {
     margin-bottom: 200px;
@@ -6985,10 +6992,14 @@ button {
     margin-bottom: 0;
   }
   .add-audio-call {
-    top: 350px !important;
+    top: 400px !important;
   }
   .jarviswidget {
       width: calc(100% - 30px);
+  }
+  .add-all-contacts-field {
+    top: 80px;
+    margin-bottom: 20px;
   }
 }
 
@@ -7038,6 +7049,7 @@ button {
 @media (max-width: 375px) {
   .jarviswidget {
     width: 100%;
+    height: 100%;
   }
   .contact-details-buttons .btn-circle.btn-lg {
     width: 40px;
@@ -7058,11 +7070,48 @@ button {
   .settings-side-ch > .nav.nav-tabs > li a {
     padding: 12px;
   }
+
+  .signmessagePopup .sign-message-tabs-mobile a {
+    font-size: 12px;
+    height: 44px;
+    line-height: 30px;
+  }
+
+  #Msg1 .MessageBoxMiddle .MessageBoxButtonSection {
+    height: auto;
+    flex-direction: column;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .MessageBoxButtonSection .btn {
+    margin-bottom: 5px;
+  }
+
+  .wallet-content-style .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .wallet-content-style .nav-item {
+    flex: 0 50%;
+  }
+
+  .wallet-content-style .dropdown:last-child {
+    margin-left: 0 !important;
+  }
 }
 
 @media (max-width: 320px ) {
   .current-connection-info {
     width: 300px
+  }
+
+  .mobile-main-panel {
+    width: 100%;
+  }
+
+  .create-account-new-account-modal .jarviswidget {
+    height: 100%;
   }
 }
 
@@ -7077,6 +7126,7 @@ button {
   }
 }
 
+
 @media (max-height: 612px) {
   body {
     min-height: initial;
@@ -7089,18 +7139,19 @@ button {
   }
 }
 
-@media (max-height: 575px) {
-  #media-call-container.media-call-container-mobile {
-    padding-bottom: 25px;
-  }
-}
-
 @media (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
   }
   .sidenav a {
     font-size: 14px;
+  }
+  .container-connect {
+    height: 265px;
+    overflow: scroll;
+  }
+  .jarviswidget {
+    height: 100%;
   }
 }
 
@@ -7138,5 +7189,18 @@ button {
   .forShowChatPos {
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+}
+
+@media(max-width: 767px) and (max-height: 400px) {
+ .add-audio-call {
+    top: 180px !important;
+  }
+  .video-call-container .media-call-content {
+    margin: 0;
+  }
+  .video_chat_items {
+    min-height: 165px;
+    margin-bottom: 12px;
   }
 }

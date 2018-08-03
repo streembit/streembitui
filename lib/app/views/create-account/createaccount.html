@@ -27,7 +27,7 @@
                                     <span data-bind="text: mnemonicerrormsg"></span>
                                 </div>
                                 <label class="textarea" data-bind="css: { 'state-error': ismnemonic_error() == true}">
-                                    <textarea class="form-control" name="mnemonic" data-bind="value: mnemonic, event: { blur: onMnemonicBlur }" style="width:540px;height:60px;padding:3px;font-size:16px;"></textarea>
+                                    <textarea class="form-control" name="mnemonic" data-bind="value: mnemonic, event: { blur: onMnemonicBlur }" style="max-width:540px;height:60px;padding:3px;font-size:16px;"></textarea>
                                 </label>
                             </section>
                         </div>
@@ -37,7 +37,7 @@
                                 <div class="error-label" data-bind="visible: isaccount_error">
                                     <span data-bind="text: accounterrormsg"></span>
                                 </div>
-                                <input type="text" class="form-control" data-bind="value: account, event: { change: ctrlchange.bind($data, 'onAccountChange'), keyup: ctrlkeyup }" style="width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
+                                <input type="text" class="form-control" data-bind="value: account, event: { change: ctrlchange.bind($data, 'onAccountChange'), keyup: ctrlkeyup }" style="max-width:300px;padding:3px;font-size:16px" id="txtAccount" maxlength="20" />
                             </section>
                         </div>
                         <div class="row">

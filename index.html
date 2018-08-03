@@ -1,650 +1,604 @@
 ﻿<!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us">
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Streembit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <script type="text/javascript">
-        var streembit = streembit || {};
-        streembit.globals = streembit.globals || {};
-        streembit.globals.appname = "Streembit";
-        streembit.globals.version = "1.1.0";
-        streembit.globals.protocol = "http";
-
-        // bc services flag
-        streembit.globals.devbcnet = true;
-
-        var gui = null;
-        try{
-            gui = require('nw.gui');
-        }
-        catch(err) {
-        }
-
-        if (gui) {
-            // Get the current window
-            var nwwin = gui.Window.get();
-            nwwin.maximize();
-
-            window.nwrequire = window.require || (function () { });
-            window.require = undefined;
-
-            streembit.globals.nwmode = true;
-
-            console.log("Running the app in nwmode = " + streembit.globals.nwmode);
-        }
-
-        streembit.api = streembit.api || {};       
-
-        streembit.notify = streembit.notify || {};
-        streembit.activity = streembit.activity || {};
-
-        streembit.ui = streembit.ui || {};
-        streembit.ui.load_container = "load-container";
-        streembit.ui.load_info = "load-info";
-
-        //  the mainapplication component loaded from the lib/views directory
-        //  change this to load another main app
-        //  the component must be registered with the lib/viewreg 
-        streembit.view = {};
-        streembit.view.mainapp = "dashboard";
-
+      var streembit = streembit || {};
+      streembit.globals = streembit.globals || {};
+      streembit.globals.appname = "Streembit";
+      streembit.globals.version = "1.1.0";
+      streembit.globals.protocol = "http";
+      // bc services flag
+      streembit.globals.devbcnet = true;
+      var gui = null;
+      try{
+          gui = require('nw.gui');
+      }
+      catch(err) {
+      }
+      if (gui) {
+          // Get the current window
+          var nwwin = gui.Window.get();
+          nwwin.maximize();
+          window.nwrequire = window.require || (function () { });
+          window.require = undefined;
+          streembit.globals.nwmode = true;
+          console.log("Running the app in nwmode = " + streembit.globals.nwmode);
+      }
+      streembit.api = streembit.api || {};
+      streembit.notify = streembit.notify || {};
+      streembit.activity = streembit.activity || {};
+      streembit.ui = streembit.ui || {};
+      streembit.ui.load_container = "load-container";
+      streembit.ui.load_info = "load-info";
+      //  the mainapplication component loaded from the lib/views directory
+      //  change this to load another main app
+      //  the component must be registered with the lib/viewreg
+      streembit.view = {};
+      streembit.view.mainapp = "dashboard";
     </script>
-
     <!-- Basic Styles -->
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css">
-
     <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production-plugins.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production.css">
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-skins.min.css">
-
     <!-- SmartAdmin RTL Support  -->
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-rtl.min.css">
-
-
     <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
-
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="lib/css/demo.min.css">-->
-
     <!-- FAVICONS -->
     <!--<link rel="shortcut icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">-->
-   <!--  <link rel="icon" href="myfavicon.ico" type="image/x-icon"> -->
+      <link rel="icon" href="lib/images/favicon/favicon.ico" type="image/x-icon">-->
+    <!--  <link rel="icon" href="myfavicon.ico" type="image/x-icon"> -->
     <!-- GOOGLE FONT -->
     <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">-->
-
-
     <link rel="apple-touch-icon" href="lib/images/splash/sptouch-icon-iphone.png">
     <link rel="apple-touch-icon" sizes="76x76" href="lib/images/splash/touch-icon-ipad.png">
     <link rel="apple-touch-icon" sizes="120x120" href="lib/images/splash/touch-icon-iphone-retina.png">
     <link rel="apple-touch-icon" sizes="152x152" href="lib/images/splash/touch-icon-ipad-retina.png">
-
     <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
     <!-- Startup image for web apps -->
     <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="lib/images/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="lib/images/splash/iphone.png" media="screen and (max-device-width: 320px)">
-
     <style>
-        body[data-appinit=true] {
-            background: #333;
-        }
-
-        body[data-account-load-complete=false] {
-            background: #333;
-        }
-
-        body[data-account-load-complete=true]{
-            background:#fff; 
-        }
-
-        body[data-appinit=false] #load-container{
-            display:none;
-        }
-        body[data-appinit=true] #load-container{
-            display:block;
-        }
-        body[data-account-load-complete=true] #allContent {
-            margin-top: 45px;
-        }
-        body[data-account-load-complete=false] #main {
-            background: #333;
-            height:100%;
-        }
-        body[data-account-load-complete=true] .content-panel {
-            background: #fff;
-        }
-
-        body[data-account-load-complete=false] #header,
-        body[data-account-load-complete=false] #main-header-st,
-        body[data-account-load-complete=false] #left-panel,
-        body[data-account-load-complete=false] #ribbon,
-        body[data-account-load-complete=false] .page-footer,
-        body[data-account-load-complete=false] .demo{
-            display: none;
-        }
-
-        body[data-appinit=false] #load-container{
-            display: none;
-        }
-        body[data-appinit=false] .for-main-content {
-            display: flex!important;
-        }
-        body[data-appinit=true] #load-container{
-            display: block;
-        }
-        
-        body[data-appinit=true] .for-main-content {
-            display: none!important;   
-        }
-        body, html {
-            margin:0;
-            height: 100%;
-        }
-        body[data-account-load-complete=false] #mainPanel{
-            margin-left: 0;
-        }
-        body[data-account-load-complete=true] #mainPanel{
-            max-width: 100%;
-            margin-left: 220px;
-        }
-        @media(max-width: 767px) {
-            body[data-account-load-complete=true] #mainPanel {
-                margin-left: 0px;
-            }
-        }
-        @media(max-width: 425px) {
-            body[data-account-load-complete=true] #left-panel {
-                width: 0px;
-                display: none;
-            } 
-            body[data-account-load-complete=true] #mainPanel {
-                margin-left: 0;
-                margin-bottom: 55px;
-            }
-            body[data-account-load-complete=true] #allContent {
-                margin-top: 47px;
-            } 
-        }
-        @media(max-width: 425px) {
-            body[data-account-load-complete=true] #mainPanel {
-                margin-bottom: 0;
-            }
-            body[data-account-load-complete=true] .dashboard {
-                height: 100%;
-            }
-            body[data-account-load-complete=false] #main{
-                height: 100% !important;
-            }
-        }
-        
-        .smart-style-5, .smart-style-5 .content-panel{
-            background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
-            background-size: cover!important;
-        }
-        .smart-style-5 .dashboard .card {
-            background-color: transparent!important;
-        }
+      body[data-appinit=true] {
+      background: #333;
+      }
+      body[data-account-load-complete=false] {
+      background: #333;
+      }
+      body[data-account-load-complete=true]{
+      background:#fff;
+      }
+      body[data-appinit=false] #load-container{
+      display:none;
+      }
+      body[data-appinit=true] #load-container{
+      display:block;
+      }
+      body[data-account-load-complete=true] #allContent {
+      margin-top: 45px;
+      }
+      body[data-account-load-complete=false] #main {
+      background: #333;
+      height:100%;
+      }
+      body[data-account-load-complete=true] .content-panel {
+      background: #fff;
+      }
+      body[data-account-load-complete=false] #header,
+      body[data-account-load-complete=false] #main-header-st,
+      body[data-account-load-complete=false] #left-panel,
+      body[data-account-load-complete=false] #ribbon,
+      body[data-account-load-complete=false] .page-footer,
+      body[data-account-load-complete=false] .demo{
+      display: none;
+      }
+      body[data-appinit=false] #load-container{
+      display: none;
+      }
+      body[data-appinit=false] .for-main-content {
+      display: flex!important;
+      }
+      body[data-appinit=true] #load-container{
+      display: block;
+      }
+      body[data-appinit=true] .for-main-content {
+      display: none!important;
+      }
+      body, html {
+      margin:0;
+      height: 100%;
+      }
+      body[data-account-load-complete=false] #mainPanel{
+      margin-left: 0;
+      }
+      body[data-account-load-complete=true] #mainPanel{
+      max-width: 100%;
+      margin-left: 220px;
+      }
+      @media(max-width: 767px) {
+      body[data-account-load-complete=true] #mainPanel {
+      margin-left: 0px;
+      }
+      }
+      @media(max-width: 425px) {
+      body[data-account-load-complete=true] #left-panel {
+      width: 0px;
+      display: none;
+      }
+      body[data-account-load-complete=true] #mainPanel {
+      margin-left: 0;
+      margin-bottom: 55px;
+      }
+      body[data-account-load-complete=true] #allContent {
+      margin-top: 47px;
+      }
+      }
+      @media(max-width: 425px) {
+      body[data-account-load-complete=true] #mainPanel {
+      margin-bottom: 0;
+      }
+      body[data-account-load-complete=true] .dashboard {
+      height: 100%;
+      }
+      body[data-account-load-complete=false] #main{
+      height: 100% !important;
+      }
+      }
+      .smart-style-5, .smart-style-5 .content-panel{
+      background: url(lib/img/glass.jpg) no-repeat center top fixed!important;
+      background-size: cover!important;
+      }
+      .smart-style-5 .dashboard .card {
+      background-color: transparent!important;
+      }
     </style>
+  </head>
 
-</head>
-
-<body data-appinit="true" data-account-load-complete="false" class="smart-style-0">
-
+  <body data-appinit="true" data-account-load-complete="false" class="smart-style-0">
     <div id="load-container">
-        <div id="load-screen">
-            <div class="load-box">
-                <div class="loading"></div>
-            </div>
-            <div id="load-info" class="load-text">
-                Loading Streembit ...
-            </div>
+      <div id="load-screen">
+        <div class="load-box">
+          <div class="loading"></div>
         </div>
+        <div id="load-info" class="load-text">
+          Loading Streembit ...
+        </div>
+      </div>
     </div>
 
+    <!-- #app-container Start -->
     <div id="app-container">
-
-        <div id="main-header-st" style="position: fixed;width: 100%;z-index: 100;top: 0; background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2)">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
-                <a class="navbar-brand" href="#">
-                    <span id="logo" data-action="mainLogoStreembit">
-                        <img src="lib/images/applogo.png">
-                    </span>
-                    <span id="quichBackOnMobileVersion" data-action="mainLogoStreembit">
-                        <i class="fa fa-lg fa-fw fa-home quickBackIconOnDashboardMobile"></i>
-                    </span>
-                    <div id="hide-menu" class="btn-header" style="float: right;">
-                        <span class="left-side-header-bt" data-action="toggleMenu" data-placement="bottom"  title="Main Menu">
-                            <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
-                        </span>
-                    </div>
-                    <span id="mobile-header-main-manu-pan" class="btn-header" style="float: right;height: auto;" data-target="#mobileVersionHeaderMainMenu" data-toggle="collapse" data-action="mobileHeaderMainMenu">
-                        <i class="fa fa-reorder" style="margin-top:5px; cursor: pointer;color: #6D6A69;"></i>
-                    </span>
-                    <div data-bind="component: {name: 'connection'}"></div> 
-                </a>
-                <span class="top-panelopen-contactsbar mobileVersionContactsBar" data-action="contactsBar">
-                    <i class="fa fa-users userContBarOnMobileVersion"></i>
+      <div id="main-header-st">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
+          <a class="navbar-brand" href="#">
+            <span id="logo" data-action="mainLogoStreembit">
+            <img src="lib/images/applogo.png">
+            </span>
+            <span id="quichBackOnMobileVersion" data-action="mainLogoStreembit">
+            <i class="fa fa-lg fa-fw fa-home quickBackIconOnDashboardMobile"></i>
+            </span>
+            <div id="hide-menu" class="btn-header" style="float: right;">
+              <span class="left-side-header-bt" data-action="toggleMenu" data-placement="bottom"  title="Main Menu">
+              <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
+              </span>
+            </div>
+            <span id="mobile-header-main-manu-pan" class="btn-header" style="float: right;height: auto;" data-target="#mobileVersionHeaderMainMenu" data-toggle="collapse" data-action="mobileHeaderMainMenu">
+            <i class="fa fa-reorder" style="margin-top:5px; cursor: pointer;color: #6D6A69;"></i>
+            </span>
+            <div data-bind="component: {name: 'connection'}"></div>
+          </a>
+          <span class="top-panelopen-contactsbar mobileVersionContactsBar" data-action="contactsBar">
+          <i class="fa fa-users userContBarOnMobileVersion"></i>
+          </span>
+          <button class="navbar-toggler mobile-dots-bt" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" data-action="mobileDotsPart">
+          <span class="fa fa-ellipsis-v ellipsisIconOnMobileVersion"></span>
+          </button>
+          <!-- right side dots icon on desctop version -->
+          <div class="rightSideOnDesktopVersion">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <!-- <li class="nav-item">
+                <div data-bind="component: {name: 'connection'}"></div>
+                </li> -->
+            </ul>
+            <div class="not-side-pos-in-mobile-version" style="height: 35px">
+              <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock'></div>
+              <div class="btn-header pull-right forAddingContact" style="margin-right:10px" data-placement="bottom" data-toggle="tooltip" title="Contact list">
+                <span class="top-panelopen-contactsbar" data-action="contactsBar">
+                <i class="fa fa-users"></i>
                 </span>
-                <button class="navbar-toggler mobile-dots-bt" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation" data-action="mobileDotsPart">
-                    <span class="fa fa-ellipsis-v ellipsisIconOnMobileVersion"></span>
-                </button>
+                <!-- <span class="top-panelopen-btn" data-action="contactsBar">
+                  <i class="fa fa-users"></i>
+                  </span> -->
+              </div>
+            </div>
+            <ul class="header-dropdown-list hidden-xs language-side-ch">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English</span><i class="fa fa-angle-down"></i></a>
+                <ul class="language-drop-part dropdown-menu" role="menu">
+                  <li class="dropdown-item">
+                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!--end right side dots icon on desktop version -->
+        </nav>
+      </div>
 
-                <!-- right side dots icon on desctop version -->
-                <div class="rightSideOnDesktopVersion">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <!-- <li class="nav-item">
-                            <div data-bind="component: {name: 'connection'}"></div> 
-                        </li> -->
-                    </ul>
-                <!-- <div> -->
-                    <div class="not-side-pos-in-mobile-version" style="height: 35px">
-                        
-                        <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock'></div>
-
-                        <div class="btn-header pull-right forAddingContact" style="margin-right:10px" data-placement="bottom" data-toggle="tooltip" title="Contact list">
-                            <span class="top-panelopen-contactsbar" data-action="contactsBar">
-                                <i class="fa fa-users"></i>
-                            </span>
-                        <!-- <span class="top-panelopen-btn" data-action="contactsBar">
-                                <i class="fa fa-users"></i>
-                            </span> -->
-                        </div>
-                    </div>
-
-                        <ul class="header-dropdown-list hidden-xs language-side-ch">
-                            <li class="dropdown">
-                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> <span> English</span><i class="fa fa-angle-down"></i></a>
-                                <ul class="language-drop-part dropdown-menu" role="menu">
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom"> English</a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-fr" alt="France"> Fran&ccedil;ais</a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish"> Espa&ntilde;ol</a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-de" alt="German"> Deutsch</a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);"><img src="lib/images/blank.gif" class="flag flag-it" alt="Italy"> Italiano</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                <!-- </div> -->
-                </div>
-                <!--end right side dots icon on desktop version -->
-
-            </nav>
+      <!-- right side dots icon on mobile version -->
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <div style="padding-bottom: 60px;">
+          <div class="" data-bind="component: {name: 'mobileactivity'}" id='messageBoxMobileVersion'></div>
+          <span class="navbar-toggler languageMobVersonSt" data-toggle="collapse" data-target="#mobileVersionLanguages" aria-controls="mobileVersionLanguages" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 7px">
+          <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">
+          <span class="menu-item-parent" style="margin-left: 9px;color: #4e4d4d;">English</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="mobileVersionLanguages" style="">
+            <ul class="navbar-nav mobile-contact-bar-content mobileVersionLanguagesContent">
+              <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+              <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">
+              <span class="langiagesNameMobileVs">English</span>
+              </a>
+              <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+              <img src="lib/images/blank.gif" class="flag flag-fr" alt="France">
+              <span class="langiagesNameMobileVs">Fran&ccedil;ais</span>
+              </a>
+              <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+              <img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish">
+              <span class="langiagesNameMobileVs">Espa&ntilde;ol</span>
+              </a>
+              <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+              <img src="lib/images/blank.gif" class="flag flag-de" alt="German">
+              <span class="langiagesNameMobileVs">Deutsch</span>
+              </a>
+              <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
+              <img src="lib/images/blank.gif" class="flag flag-it" alt="Italy">
+              <span class="langiagesNameMobileVs">Italiano</span>
+              </a>
+            </ul>
+          </div>
         </div>
+      </div>
+      <!--end right side dots icon on mobile version -->
+      <!-- END HEADER -->
 
-        <!-- right side dots icon on mobile version -->
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <div style="padding-bottom: 60px;">
-                <div class="" data-bind="component: {name: 'mobileactivity'}" id='messageBoxMobileVersion'></div>
+      <!-- main menu for mobile version -->
+      <div class="collapse navbar-collapse" id="mobileVersionHeaderMainMenu" style="height: 100%">
+        <ul class="navbar-nav mobile-main-manu-changing">
+          <li class="nav-item">
+            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="nav-link">
+            <i class="fa fa-lg fa-fw fa-home"></i>
+            <span class="menu-item-parent">Dashboard</span>
+            </a>
+          </li>
+          <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navIotDevices" aria-controls="navIotDevices" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-lg fa-fw fa-signal"></i>
+          <span class="menu-item-parent">IOT Devices</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="navIotDevices" style="">
+            <ul class="navbar-nav mobile-contact-bar-content">
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub</a>
+            </ul>
+          </div>
+          <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navActions" aria-controls="navActions" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-lg fa-fw fa-server"></i>
+          <span class="menu-item-parent">Actions</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="navActions" style="">
+            <ul class="navbar-nav mobile-contact-bar-content">
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:restoreAccount">Restore account</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:backupAccount">Backup account</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a>
+            </ul>
+          </div>
+          <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navBlockchain" aria-controls="navBlockchain" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-lg fa-fw fa-money"></i>
+          <span class="menu-item-parent">Blockchain</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="navBlockchain" style="">
+            <ul class="navbar-nav mobile-contact-bar-content">
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'wallet')">Blockchain explorer</a>
+            </ul>
+          </div>
+          <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navContacts" aria-controls="navContacts" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-lg fa-fw fa-address-book"></i>
+          <span class="menu-item-parent">Contacts</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="navContacts" style="">
+            <ul class="navbar-nav mobile-contact-bar-content">
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contact</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'offline-contact-request')">Create offline contact offer</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:backupContacts">Backup contacts</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:restoreContacts">Restore contacts</a>
+            </ul>
+          </div>
+          <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navTools" aria-controls="navTools" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-lg fa-fw fa-cogs"></i>
+          <span class="menu-item-parent">Tools</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="navTools" style="">
+            <ul class="navbar-nav mobile-contact-bar-content">
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'netinfo')">Account/network info</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:clearDatabase">Clear Database</a>
+            </ul>
+          </div>
+          <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navHelp" aria-controls="navHelp" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-lg fa-fw fa-question-circle"></i>
+          <span class="menu-item-parent">Help</span>
+          <span class="caret"></span>
+          </span>
+          <div class="navbar-collapse collapse" id="navHelp" style="">
+            <ul class="navbar-nav mobile-contact-bar-content">
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
+              <!-- ko if: streembit.globals.nwmode == true -->
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: checkUpdates">Check software updates</a>
+              <!-- /ko -->
+              <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: about">About</a>
+            </ul>
+          </div>
+        </ul>
+      </div>
+      <!-- end main menu for mobile version -->
 
-                <span class="navbar-toggler languageMobVersonSt" data-toggle="collapse" data-target="#mobileVersionLanguages" aria-controls="mobileVersionLanguages" aria-expanded="false" aria-label="Toggle navigation" style="margin-left: 7px">
-                    <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">  
-                    <span class="menu-item-parent" style="margin-left: 9px;color: #4e4d4d;">English</span>
-                    <span class="caret"></span>
-                </span>
-                <div class="navbar-collapse collapse" id="mobileVersionLanguages" style="">
-                    <ul class="navbar-nav mobile-contact-bar-content mobileVersionLanguagesContent">
-                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
-                            <img src="lib/images/blank.gif" class="flag flag-gb" alt="United Kingdom">
-                            <span class="langiagesNameMobileVs">English</span>
-                        </a>
-                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
-                            <img src="lib/images/blank.gif" class="flag flag-fr" alt="France">
-                            <span class="langiagesNameMobileVs">Fran&ccedil;ais</span>
-                        </a>
-                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
-                            <img src="lib/images/blank.gif" class="flag flag-es" alt="Spanish">
-                            <span class="langiagesNameMobileVs">Espa&ntilde;ol</span>
-                        </a>
-                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
-                            <img src="lib/images/blank.gif" class="flag flag-de" alt="German"> 
-                            <span class="langiagesNameMobileVs">Deutsch</span>
-                       </a>
-                       <a href="javascript:void(0);" class="dropdown-item languageMobileVsDropdownItem">
-                            <img src="lib/images/blank.gif" class="flag flag-it" alt="Italy">
-                            <span class="langiagesNameMobileVs">Italiano</span>
-                        </a>
-                    </ul>
-                </div>
+      <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
+        <!-- Left panel : Navigation area -->
+        <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+        <aside id="left-panel" class="sidenav mobile-left-panel">
+          <!-- User info -->
+          <div class="login-info">
+            <span>
+              <!-- User image size is adjusted inside CSS, it should stay as it -->
+              <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut" style="cursor: default;" class="header-user-name">
+              <span data-bind="text: user_name" style="padding-top:4px;text-transform:none;cursor: default;" class="header-user-name"></span>
+              </a>
+            </span>
+          </div>
+          <!-- end user info -->
+
+          <!-- NAVIGATION : This navigation is also responsive-->
+          <nav class="left-side-main-menu">
+            <ul id="newvers_nav_for_ul dashboard-li-on-mobile-size">
+              <li class="active mobile-change-dash-li">
+                <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="comebackToDashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent comebackToDevice">IOT Devices</span></a>
+                <ul>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
+                <ul>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupAccount">Backup account</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
+                <ul>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
+                </ul>
+              </li>
+              <!-- <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
+                <ul>
+                -->        <!-- here goes the application list -->
+              <!--         <li role="separator" class="divider"></li>
+                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
+                </ul>
+                </li> -->
+              <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-address-book"></i> <span class="menu-item-parent">Contacts</span></a>
+                <ul>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contacts</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
+                <ul>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
+                </ul>
+              </li>
+              <li class="top-menu-invisible">
+                <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
+                <ul>
+                  <li class="mobile-change-dash-li">
+                    <a href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <li class="mobile-change-dash-li">
+                    <a href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
+                  </li>
+                  <li class="mobile-change-dash-li">
+                    <a href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
+                  </li>
+                  <li class="mobile-change-dash-li">
+                    <a href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
+                  </li>
+                  <!-- ko if: streembit.globals.nwmode == true -->
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
+                  <li role="separator" class="divider mobile-change-dash-li"></li>
+                  <!-- /ko -->
+                  <li class="mobile-change-dash-li"><a href="#" data-bind="click:about">About</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+        <!-- END NAVIGATION -->
+
+        <!-- MAIN PANEL -->
+        <div style="flex:1;" id="mainPanel" class="mobile-main-panel">
+          <!-- RIBBON -->
+          <div id="ribbon" class="main_ribbon_header">
+            <!-- breadcrumb -->
+            <div class="breadcrumb">
             </div>
+            <!-- end breadcrumb -->
+          </div>
+          <!-- END RIBBON -->
+
+          <!-- MAIN CONTENT -->
+          <div style="display:flex;flex-direction:row;" class="for-main-content">
+            <div id="main" class="content-panel row align-items-center" style="margin-left: 0; margin-right: 0" data-bind="component: { name: route().page, params: route().params }">
+            </div>
+
+            <div id="call">
+              <div class="calltime_parent">
+                <div data-bind="attr: { 'data-calltime': callData().pkeyhash }">
+                  Call with <span data-bind="text: callData().name"></span>&nbsp;&nbsp;&nbsp;<span></span>
+                </div>
+              </div>
+              <div class="forShowChatPos">
+                <div data-bind="attr: { id: callData().pkeyhash }" style="display: inline-block; text-align: center;clear:both;">
+                  <span data-bind="text: callData().name" style="font-size: 15px" class="user-name-div"></span>
+                  <img src="/lib/images/clear.png" width="14" height="14" alt="" class="rm_partee" style="cursor: pointer" />
+                  <div style="text-align: center;">
+                    <canvas class="audio-viz" style="background-color: #666;height:220px;display: inline-block;"></canvas>
+                  </div>
+                  <audio class="remote-audio" controls autoplay></audio>
+                </div>
+              </div>
+            </div>
+
+            <div data-bind="visible: showInvite" class="smallScreenContactsList" style="position: absolute;bottom: 162px;right: 40px;width: 120px;height: auto;max-height: 200px;background: #000;">
+              <!-- <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }" style="width: 100%;height: 24px;padding: 0 0 4px;box-sizing: border-box;font-size: 1.1em;background: #dee8e5;border: 0;border-bottom: 2px ridge #c4c4c4;"></button> -->
+            </div>
+
+            <div class="add-all-contacts-field add-to-group-sm-in-chat" data-bind="visible: showInvite">
+              <div class="add-group-header-with-closebtn">
+                <div class="add-group-header">
+                  <span>Add to Group</span>
+                  <button type="button" class="close close-add-group" data-bind="click: close_add_group_sm">&times;</button>
+                </div>
+              </div>
+              <div data-bind="foreach: contacts" class="all-contacts-part">
+                <div class="for-add-group-call" style="width: 370px;margin: 4px auto">
+                  <div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
+                    <div style="float:left;">
+                      <span data-bind="text: name" class="mar-no text-main" style="color: #474544;font-weight: bold;"></span>
+                    </div>
+                    <div style="clear:both"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contacts-container hidecontacts contactSidenav" data-bind="component: { name: 'contacts-bar' }"></div>
+          </div>
+          <!-- END MAIN CONTENT -->
         </div>
-        <!--end right side dots icon on mobile version -->
+        <!-- END MAIN PANEL -->
 
-
-        <!-- END HEADER -->
-
-        <!-- main menu for mobile version -->
-                <div class="collapse navbar-collapse" id="mobileVersionHeaderMainMenu" style="height: 100%">
-                    <ul class="navbar-nav mobile-main-manu-changing">
-                        <li class="nav-item">
-                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="nav-link">
-                                <i class="fa fa-lg fa-fw fa-home"></i> 
-                                <span class="menu-item-parent">Dashboard</span>
-                            </a>
-                        </li>
-                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navIotDevices" aria-controls="navIotDevices" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-lg fa-fw fa-signal"></i> 
-                            <span class="menu-item-parent">IOT Devices</span>
-                            <span class="caret"></span>
-                        </span>
-                        <div class="navbar-collapse collapse" id="navIotDevices" style="">
-                            <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub</a>
-                            </ul>
-                        </div>
-                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navActions" aria-controls="navActions" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-lg fa-fw fa-server"></i> 
-                            <span class="menu-item-parent">Actions</span>
-                            <span class="caret"></span>
-                        </span>
-                        <div class="navbar-collapse collapse" id="navActions" style="">
-                            <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:restoreAccount">Restore account</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:backupAccount">Backup account</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a>
-                            </ul>
-                        </div>
-                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navBlockchain" aria-controls="navBlockchain" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-lg fa-fw fa-money"></i> 
-                            <span class="menu-item-parent">Blockchain</span>
-                            <span class="caret"></span>
-                        </span>
-                        <div class="navbar-collapse collapse" id="navBlockchain" style="">
-                            <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'wallet')">Blockchain explorer</a>
-                            </ul>
-                        </div>
-                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navContacts" aria-controls="navContacts" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-lg fa-fw fa-address-book"></i> 
-                            <span class="menu-item-parent">Contacts</span>
-                            <span class="caret"></span>
-                        </span>
-                        <div class="navbar-collapse collapse" id="navContacts" style="">
-                            <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contact</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'offline-contact-request')">Create offline contact offer</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:backupContacts">Backup contacts</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:restoreContacts">Restore contacts</a>
-                            </ul>
-                        </div>
-                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navTools" aria-controls="navTools" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-lg fa-fw fa-cogs"></i> 
-                            <span class="menu-item-parent">Tools</span>
-                            <span class="caret"></span>
-                        </span>
-                        <div class="navbar-collapse collapse" id="navTools" style="">
-                            <ul class="navbar-nav mobile-contact-bar-content">
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:nav.bind($data, 'netinfo')">Account/network info</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click:clearDatabase">Clear Database</a>
-                            </ul>
-                        </div>
-                        <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navHelp" aria-controls="navHelp" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-lg fa-fw fa-question-circle"></i> 
-                            <span class="menu-item-parent">Help</span>
-                            <span class="caret"></span>
-                        </span>
-                        <div class="navbar-collapse collapse" id="navHelp" style="">
-                            <ul class="navbar-nav mobile-contact-bar-content">
-
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
-                                <!-- ko if: streembit.globals.nwmode == true -->
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: checkUpdates">Check software updates</a>
-                                <!-- /ko -->
-                                <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: about">About</a>
-                            </ul>
-                        </div>
-                    </ul>
-                </div>
-        <!-- end main menu for mobile version -->
-
-        <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
-
-            <!-- Left panel : Navigation area -->
-            <!-- Note: This width of the aside area can be adjusted through LESS variables -->
-            <aside id="left-panel" class="sidenav mobile-left-panel">
-            
-                <!-- User info -->
-                <div class="login-info">
-                    <span>
-                        <!-- User image size is adjusted inside CSS, it should stay as it -->
-                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut" style="cursor: default;" class="header-user-name">
-                            <span data-bind="text: user_name" style="padding-top:4px;text-transform:none;cursor: default;" class="header-user-name"></span>
-                        </a>
-
-                    </span>
-                </div>
-                <!-- end user info -->
-                <!-- NAVIGATION : This navigation is also responsive-->
-                <nav class="left-side-main-menu">
-                    <ul id="newvers_nav_for_ul dashboard-li-on-mobile-size">
-                        <li class="active mobile-change-dash-li">
-                            <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="comebackToDashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent comebackToDevice">IOT Devices</span></a>
-                            <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'addiothub')">Create IoT Hub </a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
-                            <ul>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupAccount">Backup account</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'changepassword')">Change passphrase</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
-                            <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain explorer</a></li>
-                            </ul>
-                        </li>
-                        <!-- <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cube"></i> <span class="menu-item-parent">Decentralized Apps</span></a>
-                            <ul>
-                         -->        <!-- here goes the application list -->
-                        <!--         <li role="separator" class="divider"></li>
-                                <li><a href="#" data-bind="click: nav.bind($data, 'enrollinit')">Find an application</a></li>
-                            </ul>
-                        </li> -->
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-address-book"></i> <span class="menu-item-parent">Contacts</span></a>
-                            <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'my-contacts')">My contacts</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'offline-contact-request')">Create offline contact offer</a></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'accept-contact-request')">Add contact</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:backupContacts">Backup contacts</a></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreContacts">Restore contacts</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
-                            <ul>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'netinfo')">Account/network info</a></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'logs')">View Logs</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:clearDatabase">Clear Database</a></li>
-                            </ul>
-                        </li>
-                        <li class="top-menu-invisible">
-                            <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
-                            <ul>
-                                <li class="mobile-change-dash-li">
-                                    <a href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <li class="mobile-change-dash-li">
-                                    <a href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup and Configuration</a>
-                                </li>
-                                <li class="mobile-change-dash-li">
-                                    <a href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit network</a>
-                                </li>
-                                <li class="mobile-change-dash-li">
-                                    <a href="#" data-bind="click: nav.bind($data, 'help-security-and-encryption_')">Security and Encryption</a>
-                                </li>
-                                <!-- ko if: streembit.globals.nwmode == true -->
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:checkUpdates">Check software updates</a></li>
-                                <li role="separator" class="divider mobile-change-dash-li"></li>
-                                <!-- /ko -->
-                                <li class="mobile-change-dash-li"><a href="#" data-bind="click:about">About</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            
-            </aside>
-            <!-- END NAVIGATION -->
-            <!-- MAIN PANEL -->
-            <div style="flex:1;" id="mainPanel" class="mobile-main-panel">
-
-                <!-- RIBBON -->
-                <div id="ribbon" class="main_ribbon_header">
-                    <!-- breadcrumb -->
-                    <div class="breadcrumb">
-                    </div>
-                    <!-- end breadcrumb -->
-                </div>
-                <!-- END RIBBON -->
-                <!-- MAIN CONTENT -->
-                <div style="display:flex;flex-direction:row;" class="for-main-content">
-                    <div id="main" class="content-panel row align-items-center" style="margin-left: 0; margin-right: 0" data-bind="component: { name: route().page, params: route().params }"></div>
-
-                    <div id="call">
-                        <div class="calltime_parent">
-                            <div data-bind="attr: { 'data-calltime': callData().pkeyhash }">
-                                Call with <span data-bind="text: callData().name"></span>&nbsp;&nbsp;&nbsp;<span></span>
-                            </div>
-                        </div>
-                        <div class="forShowChatPos">
-                            <div data-bind="attr: { id: callData().pkeyhash }" style="display: inline-block; text-align: center;clear:both;">
-                                <span data-bind="text: callData().name" style="font-size: 15px" class="user-name-div"></span>
-                                <img src="/lib/images/clear.png" width="14" height="14" alt="" class="rm_partee" style="cursor: pointer" />
-                                <div style="text-align: center;">
-                                    <canvas class="audio-viz" style="background-color: #666;height:220px;display: inline-block;"></canvas>
-                                </div>
-                                <audio class="remote-audio" controls autoplay></audio>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div data-bind="visible: showInvite" class="smallScreenContactsList" style="position: absolute;bottom: 162px;right: 40px;width: 120px;height: auto;max-height: 200px;background: #000;">
-                        <!-- <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }" style="width: 100%;height: 24px;padding: 0 0 4px;box-sizing: border-box;font-size: 1.1em;background: #dee8e5;border: 0;border-bottom: 2px ridge #c4c4c4;"></button> -->
-                    </div>
-
-                    <div class="add-all-contacts-field add-to-group-sm-in-chat" data-bind="visible: showInvite">
-                        <div class="add-group-header-with-closebtn">
-                            <div class="add-group-header">
-                                <span>Add to Group</span>
-                                <button type="button" class="close close-add-group" data-bind="click: close_add_group_sm">&times;</button>
-                            </div>
-                        </div>
-                        <div data-bind="foreach: contacts" class="all-contacts-part">
-                            <div class="for-add-group-call" style="width: 370px;margin: 4px auto">
-                                <div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
-                                    <div style="float:left;">
-                                        <span data-bind="text: name" class="mar-no text-main" style="color: #474544;font-weight: bold;"></span>
-                                    </div>
-                                    <div style="clear:both"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="contacts-container hidecontacts contactSidenav" data-bind="component: { name: 'contacts-bar' }"></div>
-                </div>                
-                <!-- END MAIN CONTENT -->
+        <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
+          <div class="MessageBoxContainer animated fadeIn fast" id="message">
+            <div class="MessageBoxMiddle">
+              <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'">
+              <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
+              </span>
+              <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
+              <div class="MessageBoxButtonSection">
+                <button id="btn2-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
+                <button id="btn1-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
+              </div>
             </div>
-            <!-- END MAIN PANEL --> 
-            <div class="divMessageBox animated hidden fast" id="MsgBoxBack">
-                <div class="MessageBoxContainer animated fadeIn fast" id="message">
-                    <div class="MessageBoxMiddle">
-                        <span class="MsgTitle" data-bind="i18n: 'layout-clear-localstorage'"> 
-                            <i class="fa fa-refresh" aria-hidden="true" style="color: green"></i>
-                        </span>
-                        <p class="pText" data-bind="i18n: 'clear-localstorage-text'"></p>
-                        <div class="MessageBoxButtonSection">
-                            <button id="btn2-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-no'"></button>
-                            <button id="btn1-message" class="btn btn-light btn-sm botTempo" data-bind="i18n: 'localstorage-btn-yes'"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PAGE FOOTER -->
-        <div class="page-footer" style="flex: 0 0 52px">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 hidden-xs"></div>
-                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
-                    <div class="txt-color-white inline-block">
-                        <div id="footer-info" data-bind="component: 'tasks'">
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <!-- END PAGE FOOTER -->
-      
-    </div>   
-     <div id="smallScreenAudioCall1">
-        <span class="small-screen-tooltips">
-            <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
-            <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
-            <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
-            <i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio">
-            </i>
-            <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
-        </span>
-        <span style="font-weight: bold;" class="forSmScreen"></span>
+      </section>
+      <!-- PAGE FOOTER -->
+      <div class="page-footer" style="flex: 0 0 52px">
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 hidden-xs"></div>
+          <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+            <div class="txt-color-white inline-block">
+              <div id="footer-info" data-bind="component: 'tasks'">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END PAGE FOOTER -->
+    </div>
+    <!-- #app-container END -->
+
+    <div id="smallScreenAudioCall1">
+      <span class="small-screen-tooltips">
+      <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
+      <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
+      <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
+      <i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio">
+      </i>
+      <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
+      </span>
+      <span style="font-weight: bold;" class="forSmScreen"></span>
     </div>
 
     <div id="smallScreenVideoCall1">
-        <span class="small-screen-tooltips">
-            <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
-            <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
-            <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
-            <i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Video" data-bind="click: remove_audio">
-            </i>
-            <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
-        </span>
-        <span style="font-weight: bold;" class="forSmScreen"></span>
+      <span class="small-screen-tooltips">
+      <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
+      <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
+      <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
+      <i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Video" data-bind="click: remove_audio">
+      </i>
+      <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
+      </span>
+      <span style="font-weight: bold;" class="forSmScreen"></span>
     </div>
-
 
     <script src="lib/js/libs/jquery-3.3.1.min.js"></script>
     <script src="lib/js/libs/jquery-ui.min.js"></script>
@@ -652,7 +606,7 @@
     <script src="lib/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <script src="lib/js/bootstrap/popper.js"></script>
     <script src="lib/js/bootstrap/bootstrap.js"></script>
-    <script src="lib/js/notification/SmartNotification.min.js"></script>  
+    <script src="lib/js/notification/SmartNotification.min.js"></script>
     <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>
     <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
     <script src="lib/js/plugin/sparkline/jquery.sparkline.min.js"></script>
@@ -664,50 +618,39 @@
     <script src="lib/js/plugin/fastclick/fastclick.min.js"></script>
     <script src="lib/js/function.js"></script>
     <script src="lib/js/app.js"></script>
-    
     <script src="lib/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="lib/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-
     <script src="lib/js/plugin/bootbox/bootbox.min.js"></script>
     <script src="lib/js/plugin/blockui/jquery.blockUI.js"></script>
     <script src="lib/js/plugin/jquery-qrcode/jquery-qrcode-0.14.0.min.js"></script>
     <script src="lib/js/plugin/knockout/knockout-3.4.2.debug.js"></script>
     <script src="lib/js/plugin/knockout/knockout.mapping.js"></script>
     <script src="lib/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
-
     <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
-
     <script>
-        $(document).ready(function() {
-            pageSetUp();      
-            System.import('lib/main.js');
-            
-        });
+      $(document).ready(function() {
+          pageSetUp();
+          System.import('lib/main.js');
+      });
     </script>
-    
     <script type="text/html" id="empty-template">
-        <div class="emptydiv"></div>
-    </script>    
-
-    <script type="text/html" id="contacts-bar-template">
-        
-    </script> 
-    <script type="text/html" id="send-file-template">
-        <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
-            <div style="width:450px" data-bind="visible: isinprogress() == false">
-                <input type="file" id="fileInput" name="files" data-bind="event: { change: function() { send_file($element.files[0]) } }" />
-            </div>
-            <div style="width:450px;margin-top:10px;display:none" data-bind="visible: isinprogress">
-                <div style="font-size:12px;color:#666">Send progress: </div>
-                <div>
-                    <progress id="fileProgress" value="0" max="100" style="width:400px"></progress>
-                </div>
-            </div>
-        </div>
+      <div class="emptydiv"></div>
     </script>
-
-</body>
+    <script type="text/html" id="contacts-bar-template"></script>
+    <script type="text/html" id="send-file-template">
+      <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
+          <div style="width:450px" data-bind="visible: isinprogress() == false">
+              <input type="file" id="fileInput" name="files" data-bind="event: { change: function() { send_file($element.files[0]) } }" />
+          </div>
+          <div style="width:450px;margin-top:10px;display:none" data-bind="visible: isinprogress">
+              <div style="font-size:12px;color:#666">Send progress: </div>
+              <div>
+                  <progress id="fileProgress" value="0" max="100" style="width:400px"></progress>
+              </div>
+          </div>
+      </div>
+    </script>
+  </body>
 </html>
