@@ -492,7 +492,6 @@
             <!-- end breadcrumb -->
           </div>
           <!-- END RIBBON -->
-
           <!-- MAIN CONTENT -->
           <div style="display:flex;flex-direction:row;" class="for-main-content">
             <div id="main" class="content-panel row align-items-center" style="margin-left: 0; margin-right: 0" data-bind="component: { name: route().page, params: route().params }">
@@ -575,19 +574,11 @@
       <!-- END PAGE FOOTER -->
     </div>
     <!-- #app-container END -->
+    
+    <!-- ko component: "audio-panel" -->
+    <!-- /ko -->
 
-    <div id="smallScreenAudioCall1">
-      <span class="small-screen-tooltips">
-      <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
-      <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
-      <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
-      <i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio">
-      </i>
-      <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
-      </span>
-      <span style="font-weight: bold;" class="forSmScreen"></span>
-    </div>
-
+    <!-- 
     <div id="smallScreenVideoCall1">
       <span class="small-screen-tooltips">
       <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
@@ -598,7 +589,9 @@
       <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
       </span>
       <span style="font-weight: bold;" class="forSmScreen"></span>
-    </div>
+    </div> -->
+
+    
 
     <script src="lib/js/libs/jquery-3.3.1.min.js"></script>
     <script src="lib/js/libs/jquery-ui.min.js"></script>
@@ -625,6 +618,9 @@
     <script src="lib/js/plugin/jquery-qrcode/jquery-qrcode-0.14.0.min.js"></script>
     <script src="lib/js/plugin/knockout/knockout-3.4.2.debug.js"></script>
     <script src="lib/js/plugin/knockout/knockout.mapping.js"></script>
+    <script type="text/javascript">
+      var postbox =  new ko.subscribable();
+    </script>
     <script src="lib/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
