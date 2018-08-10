@@ -1,6 +1,6 @@
 
 <div data-bind="foreach: iothubs" class="row" style="margin:0;">
-    <div class="col-md-3 iothub">
+    <div class="col-md-12 iothub">
         <div class="iothub-header">
             <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>
             <div class="btn-group display-inline float-right text-align-left hidden-tablet" style="padding:6px 5px 5px 0">
@@ -160,7 +160,7 @@
 
 
 <script type="text/html" id="gateway-info-template">
-    <div class="device-net-info" style="right:25px;top:3px" data-bind="click: toggle_shownetwork_info">
+    <div class="device-net-info" style="right:0;top:3px" data-bind="click: toggle_shownetwork_info">
         <table>
             <tr><td>Status: </td> <td data-bind="text: authenticated() ? 'AUTHENTICATED' : 'OFFLINE'"></td></tr>
             <tr><td>Host: </td> <td data-bind="text: host"></td></tr>
