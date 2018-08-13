@@ -3881,10 +3881,12 @@ body.smart-style-6 #logo-group>span#logo:before {
 .smallWindowPos {
   margin-top: 0!important;
 }
+#smallScreenVideoCall1 {
+  display: none;
+}
 
 #smallScreenAudioCall1,
 #smallScreenVideoCall1 {
-  display: none;
   position: absolute;
   bottom: 40px;
   right: 0;
@@ -5344,7 +5346,6 @@ button {
 }
 
 #main {
-  display: block;
   height: 100%;
   margin: 45px 0 0 0;
 }
