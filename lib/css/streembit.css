@@ -1098,8 +1098,8 @@ a.flex-btnitem i {
 }
 
 .uiview-container-view-info {
-  width: auto;
-  margin: 10% 0;
+  width: 80% !important;
+  margin: 10% auto;
 }
 
 .uiview-container-panel-text-lg {

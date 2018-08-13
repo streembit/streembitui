@@ -1,12 +1,14 @@
-<div id="uiview-container" class="uiview-container-view-info">
+<div id="uiview-container" class="uiview-container-view-info" data-bind="visible: !iothubs().length">
     <div class="uiview-plane">
-        <div class="uiview-container-panel">
+        <div class="uiview-container-panel container-fluid">
 
             <div class="uiview-container-panel-header">
-                <h4>You don't have a configured IoT gateway.</h4>
+                <h4>Please configure an Streembit IOT gateway</h4>
             </div>
 
-            <p class="uiview-container-panel-text-lg">Create here your Streembit controller IoT gateway!</p>
+            <p class="uiview-container-panel-text-lg">
+                Create here your Streembit controlled IoT gateway!
+            </p>
 
             <button data-bind="click: create">Create Hub</button>
         </div>
