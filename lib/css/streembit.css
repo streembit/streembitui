@@ -1097,6 +1097,16 @@ a.flex-btnitem i {
   color: #fff;
 }
 
+.uiview-container-view-info {
+  width: 80% !important;
+  margin: 10% auto;
+}
+
+.uiview-container-panel-text-lg {
+  font-size: 1rem;
+  margin: 20px 0;
+}
+
 .init-account-wrap {
   width: 100%;
 }
@@ -1894,6 +1904,7 @@ Widgets
   border: 1px solid #ddd;
   margin-bottom: 20px;
   padding: 0;
+  min-width: 680px;
 }
 
 .iothub-header {
@@ -5335,8 +5346,9 @@ button {
 }
 
 #main {
+  display: block;
   height: 100%;
-  margin-bottom: 0;
+  margin: 45px 0 0 0;
 }
 
 .for-main-content {

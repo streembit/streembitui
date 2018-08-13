@@ -1,5 +1,21 @@
+<div id="uiview-container" class="uiview-container-view-info" data-bind="visible: !iothubs().length">
+    <div class="uiview-plane">
+        <div class="uiview-container-panel container-fluid">
 
-<div data-bind="foreach: iothubs" class="row" style="margin:0;">
+            <div class="uiview-container-panel-header">
+                <h4>Please configure an Streembit IOT gateway</h4>
+            </div>
+
+            <p class="uiview-container-panel-text-lg">
+                Create here your Streembit controlled IoT gateway!
+            </p>
+
+            <button data-bind="click: create">Create Hub</button>
+        </div>
+    </div>
+</div>
+
+<div data-bind="visible: iothubs().length, foreach: iothubs" class="row" style="margin:0;">
     <div class="col-md-12 iothub">
         <div class="iothub-header">
             <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>
@@ -160,7 +176,7 @@
 
 
 <script type="text/html" id="gateway-info-template">
-    <div class="device-net-info" style="right:25px;top:3px" data-bind="click: toggle_shownetwork_info">
+    <div class="device-net-info" style="right:0;top:3px" data-bind="click: toggle_shownetwork_info">
         <table>
             <tr><td>Status: </td> <td data-bind="text: authenticated() ? 'AUTHENTICATED' : 'OFFLINE'"></td></tr>
             <tr><td>Host: </td> <td data-bind="text: host"></td></tr>
