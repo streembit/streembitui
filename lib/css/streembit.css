@@ -1097,6 +1097,16 @@ a.flex-btnitem i {
   color: #fff;
 }
 
+.uiview-container-view-info {
+  width: auto;
+  margin: 10% 0;
+}
+
+.uiview-container-panel-text-lg {
+  font-size: 1rem;
+  margin: 20px 0;
+}
+
 .init-account-wrap {
   width: 100%;
 }

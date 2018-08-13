@@ -1,5 +1,19 @@
+<div id="uiview-container" class="uiview-container-view-info">
+    <div class="uiview-plane">
+        <div class="uiview-container-panel">
 
-<div data-bind="foreach: iothubs" class="row" style="margin:0;">
+            <div class="uiview-container-panel-header">
+                <h4>You don't have a configured IoT gateway.</h4>
+            </div>
+
+            <p class="uiview-container-panel-text-lg">Create here your Streembit controller IoT gateway!</p>
+
+            <button data-bind="click: create">Create Hub</button>
+        </div>
+    </div>
+</div>
+
+<div data-bind="visible: iothubs().length, foreach: iothubs" class="row" style="margin:0;">
     <div class="col-md-12 iothub">
         <div class="iothub-header">
             <div class="float-left" style="padding:5px 0 0 8px;"><span data-bind="text:name"></span></div>
