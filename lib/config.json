@@ -6,6 +6,7 @@
         "seedmode": 0,
         "wspeerlisturl": "https://raw.githubusercontent.com/streembit/streembit-peers/master/sslpeers.json",
         "http_wspeerlisturl": "https://raw.githubusercontent.com/streembit/streembit-peers/master/peers.json",
+        "kadence_peerlist": "https://raw.githubusercontent.com/streembit/streembit-peers/master/kadence-peers.json",
         "bootseeds": [
             { "host": "seed.streembit.uk" },
             { "host": "seed.streembit.eu" },
