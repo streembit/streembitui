@@ -23,19 +23,19 @@
     "start": "nw ."
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.6.1",
     "bigi": "^1.4.2",
-    "clarinet": "^0.11.0",
-    "collections": "^1.2.4",
+    "clarinet": "^0.12.1",
+    "collections": "^5.1.5",
     "hat": "0.0.3",
     "ip": "^1.1.5",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.11",
     "merge": "^1.2.0",
-    "ms": "^0.7.1",
+    "ms": "^2.1.1",
     "request": "^2.69.0",
     "secure-random": "^1.1.1",
-    "uuid": "^2.0.1",
-    "xml2js": "^0.1.14"
+    "uuid": "^3.3.2",
+    "xml2js": "^0.4.19"
   },
   "jspm": {
     "dependencies": {
@@ -71,7 +71,7 @@
       "text": "github:systemjs/plugin-text@^0.0.11",
       "util": "github:jspm/nodelibs-util@^0.1.0",
       "uuid": "npm:uuid@^2.0.3",
-      "webrtc-adapter": "npm:webrtc-adapter@^6.1.1"
+      "webrtc-adapter": "npm:webrtc-adapter@^6.4.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
