@@ -1,49 +1,51 @@
 
 <div class="init-account-wrap">
 <div class="initialize-existing-account">
-    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+    <div data-bind="ifnot: initialization_progress">
+        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
 
-        <header role="heading">
-            <span class="widget-icon"><i class="fa fa-user"></i> </span>
-            <h2>Initialize</h2>
-            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
-        </header>
+            <header role="heading">
+                <span class="widget-icon"><i class="fa fa-user"></i> </span>
+                <h2>Initialize</h2>
+                <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+            </header>
 
-        <div role="content"> 
-            <div class="widget-body no-padding">
-                <form id="comment-form" class="smart-form" novalidate="novalidate">
-                    <header>
-                        <span data-bind="i18n:'lbl-connectto-public-net'"></span>
-                    </header>
-                    <fieldset>
-                        <div class="row">
-                            <section class="col col-6">
-                                <label class="label">Account</label>
-                                <label class="select" data-bind="css: { 'state-error': isaccount_error() == true}">                                    
-                                    <select class="initialize-account-sel-section" data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'"></select><i></i>
-                                </label>
-                                <em id="account-error" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
-                            </section>
-                            <section class="col col-6">
-                                <label class="label">Password</label>
-                                <label class="input" data-bind="css: { 'state-error': ispwd_error() == true}">
-                                    <i class="icon-append fa fa-lock"></i>
-                                    <input type="password" name="password" placeholder="Password" id="password" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}">
-                                    <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
-                                </label>
-                                <em id="password-error" class="invalid error-label" data-bind="visible: ispwd_error, text: pwderrormsg">This field is required.</em>
-                            </section>
-                        </div>
-                    </fieldset>
+            <div role="content">
+                <div class="widget-body no-padding">
+                    <form id="comment-form" class="smart-form" novalidate="novalidate">
+                        <header>
+                            <span data-bind="i18n:'lbl-connectto-public-net'"></span>
+                        </header>
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-6">
+                                    <label class="label">Account</label>
+                                    <label class="select" data-bind="css: { 'state-error': isaccount_error() == true}">
+                                        <select class="initialize-account-sel-section" data-bind="options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'"></select><i></i>
+                                    </label>
+                                    <em id="account-error" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
+                                </section>
+                                <section class="col col-6">
+                                    <label class="label">Password</label>
+                                    <label class="input" data-bind="css: { 'state-error': ispwd_error() == true}">
+                                        <i class="icon-append fa fa-lock"></i>
+                                        <input type="password" name="password" placeholder="Password" id="password" data-bind="value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}">
+                                        <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                                    </label>
+                                    <em id="password-error" class="invalid error-label" data-bind="visible: ispwd_error, text: pwderrormsg">This field is required.</em>
+                                </section>
+                            </div>
+                        </fieldset>
 
-                    <footer>
-                        <div class="row initaccount-footer-style">
-                            <a class="btn btn-info restore-btn" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" ></a>
-                            <button type="button" class="btn btn-info"  data-bind="click: new_account">New Account</button>
-                            <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-login'"></button>
-                        </div>
-                    </footer>
-                </form>
+                        <footer>
+                            <div class="row initaccount-footer-style">
+                                <a class="btn btn-info restore-btn" data-bind="click: restore_dialog, i18n:'sbm-restore-mnemonic'" ></a>
+                                <button type="button" class="btn btn-info"  data-bind="click: new_account">New Account</button>
+                                <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-login'"></button>
+                            </div>
+                        </footer>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
