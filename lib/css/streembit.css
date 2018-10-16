@@ -3749,11 +3749,17 @@ body.smart-style-6 #logo-group>span#logo:before {
 .add-audio-call {
   position: absolute;
   top: 362px;
-  left: 50%;
+  left: 50% !important;
   transform: translate(-50%, 0);
   display: flex;
   justify-content: center;
   margin: 0;
+  transition: all 0.5s ease 0s;
+}
+
+.hide-menu .add-audio-call {
+    margin-left: 110px;
+    transition: all 0.5s ease 0s;
 }
 
 .add-audio-call>div {
@@ -4098,6 +4104,12 @@ body {
   background: #f8f8f8;
   z-index: 999;
   max-width: 100%;
+  transition: all 0.5s ease 0s;
+}
+
+.hide-menu .add-all-contacts-field {
+    margin-left: 110px !important;
+    transition: all 0.5s ease 0s;
 }
 
 .for-add-group-call .list-group-item:first-child,
@@ -5177,12 +5189,7 @@ button {
   left: 0;
 }
 
-#call .forShowChatPos {
-  margin-left: 200px;
-}
-
 #call .calltime_parent {
-  right: 0;
   top: 0;
 }
 
