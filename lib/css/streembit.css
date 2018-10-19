@@ -5729,6 +5729,48 @@ button {
   body[data-account-load-complete=false] #main {
     margin-top: 5px;
   }
+
+  #call {
+    height: 100%;
+  }
+
+  #call .forShowChatPos {
+    margin-left: 0px !important;
+    margin-top: 0px;
+    position: absolute;
+    top: 92px;
+    left: 0;
+    right: 0;
+    max-height: 68vh;
+    overflow: auto;
+  }
+
+  #call .forShowChatPos > div {
+    margin: 10px 0 0 0;
+    width: 100%;
+  }
+
+  #call .forShowChatPos > div:last-of-type {
+    margin-bottom: 36px;
+  }
+
+  #call .forShowChatPos .canvas-wrap {
+    text-align: center;
+    width: 94%;
+    margin: 0 3% 3px 3%;
+  }
+  #call .forShowChatPos .canvas-wrap .audio-viz {
+    width: 100% !important;
+    height: 106px !important;
+    border-radius: 20px;
+  }
+  #call .remote-audio {
+    width: 94% !important;
+    margin: 0 3%;
+  }
+  .forShowChatPos>div>img {
+    right: 3%;
+  }
   .init-account-wrap {
     margin-bottom: auto;
   }
@@ -6228,9 +6270,7 @@ button {
     bottom: 145px;
     z-index: 0;
   }
-  .smSpeakSt {
-    display: none;
-  }
+
   .small-screen-plus-ic {
     width: 20px;
     font-size: 27px;
@@ -6282,12 +6322,6 @@ button {
   .heightForKeyboardMobile {
     height: 130px!important;
     transition: 0.5s;
-  }
-  .forShowChatPos {
-    margin-top: 0px;
-  }
-  #call .forShowChatPos {
-    margin-left: 0px!important;
   }
   .callProcessContentStyle {
     height: auto;
@@ -7005,14 +7039,12 @@ button {
   .mobile-size-tabs-change {
     padding: .5rem 5px;
   }
-  .forShowChatPos>div:last-child {
-    margin-bottom: 200px;
-  }
   .media-call-content .footer-chat-controls1 {
     margin-bottom: 0;
   }
   .add-audio-call {
-    top: 400px !important;
+    position: fixed;
+    top: 160px !important;
   }
   .jarviswidget {
       width: calc(100% - 30px);
@@ -7172,6 +7204,14 @@ button {
   }
   .jarviswidget {
     height: 100%;
+  }
+}
+@media(max-width: 767px) and (min-height: 420px) {
+  .add-audio-call {
+    top: 150px !important;
+  }
+  #call .forShowChatPos {
+    max-height: 40vh;
   }
 }
 
