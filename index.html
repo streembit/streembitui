@@ -87,10 +87,6 @@
       body[data-account-load-complete=true] #allContent {
       margin-top: 45px;
       }
-      body[data-account-load-complete=false] #main {
-      background: #333;
-      height:100%;
-      }
       body[data-account-load-complete=true] .content-panel {
       background: #fff;
       }
@@ -377,7 +373,7 @@
       </div>
       <!-- end main menu for mobile version -->
 
-      <section style="flex: 1 0 auto;display: flex;flex-direction: row" id="allContent">
+      <section style="flex: 1 1 auto;display: flex;flex-direction: row" id="allContent">
         <!-- Left panel : Navigation area -->
         <!-- Note: This width of the aside area can be adjusted through LESS variables -->
         <aside id="left-panel" class="sidenav mobile-left-panel">
@@ -494,10 +490,20 @@
           <!-- END RIBBON -->
           <!-- MAIN CONTENT -->
           <div style="display:flex;flex-direction:row;" class="for-main-content">
-            <div id="main" class="content-panel row align-items-center" data-bind="component: { name: route().page, params: route().params }">
-            </div>
+            <div id="main" class="content-panel align-items-center">
+              <div class="container">
+                <div class="row view-content" data-bind="component: { name: route().page, params: route().params }, css: route().page">
+                </div>
+                <div class="row small-panels-row">
+                  <!-- ko component: "audio-panel" -->
+                  <!-- /ko -->
 
-            <div id="call">
+                  <!-- ko component: "video-panel" -->
+                  <!-- /ko -->
+                </div>
+              </div>
+            </div>
+            <!-- <div id="call">
               <div class="calltime_parent">
                 <div data-bind="attr: { 'data-calltime': callData().pkeyhash }">
                   Call with <span data-bind="text: callData().name"></span>&nbsp;&nbsp;&nbsp;<span></span>
@@ -507,13 +513,13 @@
                 <div data-bind="attr: { id: callData().pkeyhash }" style="display: inline-block; text-align: center;clear:both;">
                   <span data-bind="text: callData().name" style="font-size: 15px" class="user-name-div"></span>
                   <img src="/lib/images/clear.png" width="14" height="14" alt="" class="rm_partee" style="cursor: pointer" />
-                  <div style="text-align: center;">
+                  <div class="canvas-wrap">
                     <canvas class="audio-viz" style="background-color: #666;height:220px;display: inline-block;"></canvas>
                   </div>
                   <audio class="remote-audio" controls autoplay></audio>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div data-bind="visible: showInvite" class="smallScreenContactsList" style="position: absolute;bottom: 162px;right: 40px;width: 120px;height: auto;max-height: 200px;background: #000;">
               <!-- <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }" style="width: 100%;height: 24px;padding: 0 0 4px;box-sizing: border-box;font-size: 1.1em;background: #dee8e5;border: 0;border-bottom: 2px ridge #c4c4c4;"></button> -->
@@ -560,7 +566,7 @@
         </div>
       </section>
       <!-- PAGE FOOTER -->
-      <div class="page-footer" style="flex: 0 0 52px">
+      <div class="page-footer" style="flex: 0 0 auto">
         <div class="row">
           <div class="col-xs-6 col-sm-6 hidden-xs"></div>
           <div class="col-xs-6 col-sm-6 text-right hidden-xs">
@@ -574,12 +580,6 @@
       <!-- END PAGE FOOTER -->
     </div>
     <!-- #app-container END -->
-    
-    <!-- ko component: "audio-panel" -->
-    <!-- /ko -->
-
-    <!-- ko component: "video-panel" -->
-    <!-- /ko -->
 
     <script src="lib/js/libs/jquery-3.3.1.min.js"></script>
     <script src="lib/js/libs/jquery-ui.min.js"></script>

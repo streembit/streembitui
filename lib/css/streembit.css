@@ -9,6 +9,7 @@ html {}
 
 body {
   min-height: 670px;
+  overflow: hidden;
 }
 
 .loading-pulse {
@@ -53,10 +54,52 @@ body {
   flex-direction: column;
 }
 
+body[data-account-load-complete=false] #main {
+  background: #333;
+  height:100%;
+  margin: 0;
+}
+
 .content-panel {
   width: 100%;
   height: 100%;
   padding: 5px;
+}
+
+.content-panel .container {
+  max-width: initial;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.small-panels-row {
+  justify-content: flex-end;
+  padding: 0 16px;
+  flex: 0 0 auto;
+}
+
+.content-panel .view-content {
+  flex: 1 1 auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+}
+
+.content-panel .view-content.dashboard,
+.content-panel .view-content.initaccount {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.content-panel .view-content.audio-call {
+  
 }
 
 .emptydiv {
@@ -3773,6 +3816,13 @@ body.smart-style-6 #logo-group>span#logo:before {
   border: 2px solid #c4c4c4;
 }
 
+.audio-viz {
+  background-color: #666;
+  height:220px;
+  width:308px;
+  display:inline-block;
+}
+
 .add-audio-call>div>button {
   width: 100%;
   height: 24px;
@@ -3794,7 +3844,7 @@ body.smart-style-6 #logo-group>span#logo:before {
 }
 
 #smallScreenAudioCall1>div>span,
-#smallScreenVideoCall1>div>span {
+#smallScreenAudioCall1>div>span {
   display: block;
   float: left;
   font-weight: bold;
@@ -3893,9 +3943,6 @@ body.smart-style-6 #logo-group>span#logo:before {
 
 #smallScreenAudioCall1,
 #smallScreenVideoCall1 {
-  position: absolute;
-  bottom: 40px;
-  right: 0;
   border-radius: 2px 0px 0px 2px;
   border: 1px solid #ccc;
   background: black;
@@ -3903,18 +3950,12 @@ body.smart-style-6 #logo-group>span#logo:before {
   border: 5px solid #333;
   border-radius: 5px;
   width: 160px;
-  z-index: 999999;
-  margin: 5px;
-  margin-left: 0;
-  min-height: 112px;
-  transition: 0s !important;
-  cursor: move;
+  margin: 4px 16px 0 16px;
+  height: 116px;
 }
 
 body {
   font-size: 13px!important;
-  overflow: hidden;
-  /*    overflow-y: auto;*/
 }
 
 .connection-body-style-changes {
@@ -4079,7 +4120,7 @@ body {
 
 #allContent {
   margin-top: 49px;
-  margin-bottom: 0;
+  margin-bottom: 52px;
 }
 
 #addGroupModal .modal-dialog {
@@ -4522,11 +4563,6 @@ span.users-hub {
 
 .smart-style-5 .txt-color-greenCustom {
   color: #5abf5a !important;
-}
-
-#app-container {
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .fixed-ribbon .demo_settings_layout,
@@ -5165,7 +5201,8 @@ button {
 .page-footer {
   position: relative;
   z-index: 99;
-  padding: 25px;
+  height: 52px;
+  padding: 0;
 }
 
 .all-contacts-field {
@@ -5215,10 +5252,6 @@ button {
   justify-content: center;
 }
 
-#smallScreenAudioCall1 {
-  bottom: 52px;
-  max-height: 112px;
-}
 
 .helpFromTheHeader {
   padding-bottom: 33px;
@@ -6225,8 +6258,6 @@ button {
   #smallScreenAudioCall1 {
     width: 156px;
     height: 100px;
-    bottom: 145px;
-    z-index: 0;
   }
   .smSpeakSt {
     display: none;
