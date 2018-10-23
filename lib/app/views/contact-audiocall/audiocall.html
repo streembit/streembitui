@@ -3,7 +3,7 @@
 
       <div class="media-call-header media-call-header-mobile">
 
-         <div class="call-icons">
+         <div class="call-icons" data-bind="visible: isChatDisplay() == false">
             <div style="float:left;" class="callbuttons">
                <div style="display:inline-block;margin:0;padding:0;float:left">
                   <div>
@@ -33,14 +33,14 @@
                <div style="clear:both"></div>
             </div>
 
-            <div class="calltime_parent">
+            <div class="calltime_parent" >
                <div data-bind="attr: { 'data-calltime': contact.pkeyhash }">
                   Call with <span data-bind="text: contact.name"></span>&nbsp;&nbsp;&nbsp;<span></span>
                </div>
             </div>
          </div>
 
-         <div class="chat-icons">
+         <div class="chat-icons" data-bind="visible: isChatDisplay">
             <span class="chat-name-during-audiocall chat-name-audiocall-on-mobile-size">
             Chat with <span data-bind="text: contact_name"></span>
             </span>
@@ -79,7 +79,7 @@
       </div>
 
       <div class="media-call-content" style="flex-direction: column">
-         <div class="forShowChatPos">
+         <div class="forShowChatPos" data-bind="visible: isChatDisplay() == false">
             <div data-bind="attr: { id: contact.pkeyhash }" style="display: inline-block; text-align: center;clear:both;">
                <span data-bind="text: contact.name" style="font-size: 15px" class="user-name-div"></span>
                <img src="/lib/images/clear.png" width="14" height="14" alt="" class="rm_partee" style="cursor: pointer" />
@@ -144,7 +144,7 @@
             </div>
          </div>
       </div>
-      
+
       <script type="text/html" id="send-file-template">
          <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
              <div style="width:450px" data-bind="visible: isinprogress() == false">

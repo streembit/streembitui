@@ -99,7 +99,7 @@ body[data-account-load-complete=false] #main {
 }
 
 .content-panel .view-content.audio-call {
-  
+  height: 100%;
 }
 
 .emptydiv {
@@ -760,6 +760,14 @@ body[data-account-load-complete=false] #main {
 .chat_items {
   display: none;
   margin-bottom: 14px;
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.smSpeakSt {
+  text-align: center;
+  display: inline-block;
+  width: 50%;
 }
 
 .media-call-content .chat_items {
@@ -775,8 +783,6 @@ body[data-account-load-complete=false] #main {
   margin-bottom: 0;
   min-width: 300px;
 }
-
-.video_ctrls_parent {}
 
 .localvid_parent {
   display: flex;
@@ -857,8 +863,6 @@ audio#remote-audio {
   text-align: left;
   overflow-y: auto;
 }
-
-.callbuttons {}
 
 .callbuttons span {
   margin-right: 15px;
