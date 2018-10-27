@@ -758,6 +758,12 @@ body[data-account-load-complete="false"] #main {
   height: 14px;
 }
 
+.forShowChatPos .user-name-div {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
 .forShowChatPos .audio-viz {
   background-color: #666;
   height: 220px;
@@ -791,10 +797,22 @@ body[data-account-load-complete="false"] #main {
   flex: 1 1 auto;
 }
 
-.smSpeakSt {
-  text-align: center;
-  display: inline-block;
-  width: 50%;
+.smSpeakSt .fa-volume-up {
+  font-size:45px;
+  color:#6893c7;
+}
+
+.smSpeakSt .fa-volume-off {
+  font-size:45px;
+  color: rgb(153, 153, 153);
+}
+
+.spallWindMuteIc {
+	color: #366297;
+}
+
+.spallWindMuteIc.muted {
+	color: #a90329;
 }
 
 .video_chat_items {
@@ -865,6 +883,9 @@ body[data-account-load-complete="false"] #main {
 .calltime_parent {
   font-weight: bold;
   font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+  margin-top: 4px;
 }
 
 audio#remote-audio {
@@ -3837,6 +3858,23 @@ body.smart-style-6 #logo-group > span#logo:before {
   padding: 4px;
 }
 
+#smallScreenVideoCall1 {
+  display: none;
+}
+
+#smallScreenAudioCall1,
+#smallScreenVideoCall1 {
+  border-radius: 2px 0px 0px 2px;
+  border: 1px solid #ccc;
+  background: black;
+  color: white;
+  border: 5px solid #333;
+  border-radius: 5px;
+  min-width: 168px;
+  min-height: 116px;
+  margin: 4px 16px 0 16px;
+}
+
 #smallScreenAudioCall1 > div > span,
 #smallScreenAudioCall1 > div > span {
   display: block;
@@ -3848,6 +3886,25 @@ body.smart-style-6 #logo-group > span#logo:before {
   height: 24px;
   overflow: hidden;
   text-align: center;
+}
+
+#smallScreenAudioCall1 .sm-audio-container {
+  display: inline-block;
+  padding-left: 8px;
+  vertical-align: top;
+  margin-top: 12px;
+}
+
+.smSpeakSt {
+  float: right;
+  padding-right: 12px;
+  width: auto;
+}
+
+#smallScreenAudioCall1 .rm_partee,
+#smallScreenAudioCall1 .canvas-wrap,
+#smallScreenAudioCall1 .remote-audio {
+	display: none;
 }
 
 .additional-information {
@@ -3921,22 +3978,6 @@ body.smart-style-6 #logo-group > span#logo:before {
 
 .smallWindowPos {
   margin-top: 0 !important;
-}
-#smallScreenVideoCall1 {
-  display: none;
-}
-
-#smallScreenAudioCall1,
-#smallScreenVideoCall1 {
-  border-radius: 2px 0px 0px 2px;
-  border: 1px solid #ccc;
-  background: black;
-  color: white;
-  border: 5px solid #333;
-  border-radius: 5px;
-  width: 160px;
-  margin: 4px 16px 0 16px;
-  height: 116px;
 }
 
 body {
@@ -5944,9 +5985,7 @@ button {
     margin-top: 10px;
     padding: 10px 0;
   }
-  /* .createContOffSt {
-    padding-bottom: 50px;
-  } */
+
   .add-contact-offer-textarea-st {
     padding-bottom: 50px;
   }
@@ -6216,9 +6255,6 @@ button {
   #smallScreenAudioCall1 {
     width: 156px;
     height: 100px;
-  }
-  .smSpeakSt {
-    display: none;
   }
   .small-screen-plus-ic {
     width: 20px;
