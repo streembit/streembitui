@@ -3,7 +3,7 @@
 		<i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
 		<i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
 		<i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
-		<i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio">
+		<i class="fa awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio, css: { 'muted fa-microphone-slash': isMuted(), 'fa-microphone': isMuted() == false} ">
 		</i>
 		<img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
 	</span>
@@ -11,5 +11,5 @@
 	<div class="sm-audio-container">
 		
 	</div>
-	<div class="smSpeakSt"><i class="fa fa-volume-up"></i></div>
+	<div class="smSpeakSt"><i class="fa fa-volume-off"></i></div>
 </div>

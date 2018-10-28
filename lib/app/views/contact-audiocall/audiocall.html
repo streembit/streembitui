@@ -81,7 +81,7 @@
 
          <div class="forShowChatPos" data-bind="visible: isChatDisplay() == false">
 
-            <div id="contacts-audio" data-bind="foreach: group">
+            <div id="contacts-audio" data-bind="foreach: group, css: {'group-call': group().length > 1}">
                <div class="audio-container" data-bind="attr: { id: pkeyhash }">
                   <span data-bind="text: name" class="user-name-div"></span>
                   <img src="/lib/images/clear.png" alt="" class="rm_partee" />

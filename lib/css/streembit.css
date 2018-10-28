@@ -749,13 +749,19 @@ body[data-account-load-complete="false"] #main {
 }
 
 .forShowChatPos .audio-container span {
-  font-size: 15px;
+  font-size: 16px;
 }
 
-.forShowChatPos img {
+.forShowChatPos img.rm_partee {
   cursor: pointer;
   width: 14px;
   height: 14px;
+  float: right;
+  display: none;
+}
+
+.forShowChatPos .group-call img.rm_partee {
+  display: inline;
 }
 
 .forShowChatPos .user-name-div {
@@ -3890,15 +3896,18 @@ body.smart-style-6 #logo-group > span#logo:before {
 
 #smallScreenAudioCall1 .sm-audio-container {
   display: inline-block;
-  padding-left: 8px;
   vertical-align: top;
-  margin-top: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+#smallScreenAudioCall1 .sm-audio-container .user-name-div {
+  font-size: 15px;
 }
 
 .smSpeakSt {
-  float: right;
-  padding-right: 12px;
-  width: auto;
+  width: 100%;
+  text-align: center;
 }
 
 #smallScreenAudioCall1 .rm_partee,
