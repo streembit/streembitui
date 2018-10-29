@@ -85,6 +85,14 @@ body[data-account-load-complete="false"] #main {
   align-items: start;
 }
 
+.row.view-content.contact-chat {
+  height: 100%;
+}
+
+.row.view-content.contact-chat #text-chat-area {
+  padding-bottom: 10px;
+}
+
 .content-panel .view-content.dashboard,
 .content-panel .view-content.initaccount {
   -webkit-box-align: center;
