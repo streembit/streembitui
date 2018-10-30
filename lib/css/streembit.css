@@ -3984,15 +3984,6 @@ body.smart-style-6 #logo-group > span#logo:before {
   margin-top: 10px;
 }
 
-.activeSmallWind canvas,
-.activeSmallWind audio {
-  width: 301px !important;
-}
-
-.activeSmallWind {
-  right: 0;
-}
-
 .smallWindowPos {
   margin-top: 0 !important;
 }
