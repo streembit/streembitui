@@ -34,7 +34,8 @@
 
             <div class="calltime_parent" >
                <div data-bind="attr: { 'data-calltime': contact.pkeyhash }">
-                  Call with <span data-bind="text: contact.name"></span>&nbsp;&nbsp;&nbsp;<span></span>
+                  Call with <span data-bind="text: contact.name"></span>
+                  <span class="call-time"></span>
                </div>
             </div>
          </div>
@@ -65,13 +66,16 @@
                </div>
             </div>
             <div data-bind="foreach: contacts" class="all-contacts-part">
-               <div class="for-add-group-call" style="width: 370px;margin: 4px auto">
-                  <div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
-                     <div style="float:left;">
-                        <span data-bind="text: name" class="mar-no text-main" style="color: #474544;font-weight: bold;"></span>
-                     </div>
-                     <div style="clear:both"></div>
-                  </div>
+               <div class="for-add-group-call">
+                    <div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
+                        <span data-bind="text: name" class="mar-no text-main"></span>
+                    </div>
+
+                    <div data-bind="if: $parent.groupNames().indexOf(name) == -1">
+                        <span data-bind="click: $parent.inviteContact.bind($parent)" class="showAddContBtn">
+                            <i class="fa fa-user-plus addUserIcon"></i>
+                        </span>
+                    </div>
                </div>
             </div>
          </div>
@@ -84,7 +88,7 @@
             <div id="contacts-audio" data-bind="foreach: group, css: {'group-call': group().length > 1}">
                <div class="audio-container" data-bind="attr: { id: pkeyhash }">
                   <span data-bind="text: name" class="user-name-div"></span>
-                  <img src="/lib/images/clear.png" alt="" class="rm_partee" />
+                  <img src="/lib/images/clear.png" alt="" class="rm_partee" data-bind="click: $parent.hangup_gcpart.bind(pkeyhash)"/>
                   <div class="canvas-wrap">
                     <canvas class="audio-viz"></canvas>
                   </div>
@@ -96,9 +100,6 @@
                <button class="btn btn-default btn-invite inviteCont" data-bind="click: show_invite">
                <i class="fa fa-user-plus"></i>
                </button>
-               <div data-bind="foreach: contacts, visible: showInvite">
-                  <button class="btn btn-default" data-bind="click: $parent.invite.bind($parent), text: name, attr: { 'data-invite': pkeyhash }"></button>
-               </div>
             </div>
          </div>
 

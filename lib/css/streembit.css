@@ -4141,6 +4141,17 @@ body {
 .for-add-group-call {
   position: relative;
   max-width: 95%;
+  margin: 4px auto;
+}
+
+.for-add-group-call  .addUserIcon {
+  color: #366297;
+  font-size: 16px;
+}
+
+.for-add-group-call .mar-no.text-main {
+  color: #474544;
+  font-weight: bold;
 }
 
 .for-add-group-call > .list-group-item:hover,
