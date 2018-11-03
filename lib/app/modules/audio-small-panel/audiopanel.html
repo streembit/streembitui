@@ -8,8 +8,18 @@
 		<img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
 	</span>
 
-	<div class="sm-audio-container">
-
+	<div class="sm-audio-container" data-bind="foreach: smGroup">
+		<div class="audio-container" data-bind="attr: { id: pkeyhash }">
+			<span data-bind="text: name" class="user-name-div"></span>
+			<div class="remote-audio-wrapper" data-bind="attr: { 'data-key': pkeyhash }">
+				<div data-bind="attr: { 'data-key': pkeyhash }">
+					<div class="canvas-wrap">
+						<canvas class="audio-viz"></canvas>
+					</div>
+					<audio class="remote-audio" controls autoplay></audio>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="smSpeakSt"><i class="fa" data-bind="css: { 'fa-volume-off': isLow(), 'fa-volume-up': isLow() == false} "></i></div>
 </div>

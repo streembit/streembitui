@@ -32,9 +32,9 @@
                </div>
             </div>
 
-            <div class="calltime_parent" >
-               <div data-bind="attr: { 'data-calltime': contact.pkeyhash }">
-                  Call with <span data-bind="text: contact.name"></span>
+            <div class="calltime_parent"  data-bind="foreach: group">
+               <div data-bind="attr: { 'data-calltime': pkeyhash }">
+                  Call with <span data-bind="text: name"></span>
                   <span class="call-time"></span>
                </div>
             </div>
@@ -87,12 +87,16 @@
 
             <div id="contacts-audio" data-bind="foreach: group, css: {'group-call': group().length > 1}">
                <div class="audio-container" data-bind="attr: { id: pkeyhash }">
-                  <span data-bind="text: name" class="user-name-div"></span>
-                  <img src="/lib/images/clear.png" alt="" class="rm_partee" data-bind="click: $parent.hangup_gcpart.bind(pkeyhash)"/>
-                  <div class="canvas-wrap">
-                    <canvas class="audio-viz"></canvas>
-                  </div>
-                  <audio class="remote-audio" controls autoplay></audio>
+                    <span data-bind="text: name" class="user-name-div"></span>
+                    <img src="/lib/images/clear.png" alt="" class="rm_partee" data-bind="click: $parent.hangup_gcpart.bind(pkeyhash)"/>
+                    <div class="remote-audio-wrapper" data-bind="attr: { 'data-key': pkeyhash }">
+                        <div data-bind="attr: { 'data-key': pkeyhash }">
+                            <div class="canvas-wrap">
+                                <canvas class="audio-viz"></canvas>
+                            </div>
+                            <audio class="remote-audio" controls autoplay></audio>
+                        </div>
+                    </div>
                </div>
             </div>
 
