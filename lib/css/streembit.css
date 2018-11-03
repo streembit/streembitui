@@ -85,7 +85,7 @@ body[data-account-load-complete="false"] #main {
   align-items: start;
 }
 
-.row.view-content.contact-chat {
+.row.view-content.contact-chat, .row.view-content.video-call {
   height: 100%;
 }
 
@@ -796,6 +796,8 @@ body[data-account-load-complete="false"] #main {
   height: 100%;
   margin-bottom: 20px;
   margin-top: 15px;
+  align-items: center;
+  align-content: center;
 }
 
 .video_ctrls_items {
@@ -869,7 +871,7 @@ body[data-account-load-complete="false"] #main {
   height: 100%;
 }
 
-#remotevid {
+.remotevid {
   border: 5px solid #555;
   max-width: 100%;
 }
@@ -3872,9 +3874,6 @@ body.smart-style-6 #logo-group > span#logo:before {
   padding: 4px;
 }
 
-#smallScreenVideoCall1 {
-  display: none;
-}
 
 #smallScreenAudioCall1,
 #smallScreenVideoCall1 {
@@ -3887,6 +3886,10 @@ body.smart-style-6 #logo-group > span#logo:before {
   min-width: 168px;
   min-height: 116px;
   margin: 4px 16px 0 16px;
+}
+
+#smallScreenVideoCall1 {
+  min-width: 145px;
 }
 
 #smallScreenAudioCall1 > div > span,
@@ -4679,19 +4682,16 @@ span.users-hub {
   height: 20px;
 }
 
-#smallScreenVideoCall1 {
-  display: none;
-  position: fixed;
-  bottom: 52px;
-  width: 170px;
-  max-height: 172px;
-  min-height: 172px;
+#smallScreenVideoCall1 video {
+  width: 124px !important;
+  border-width: 0;
+  margin-bottom: 5px;
 }
 
-#smallScreenVideoCall1 video {
-  width: 160px !important;
-  border-width: 0;
-  margin-top: 5px;
+#smallScreenVideoCall1 .sm-video-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #smallScreenVideoCall1 .call-time {
@@ -5739,9 +5739,6 @@ button {
   }
   #text-chat-area {
     padding-bottom: 40px;
-  }
-  .media-call-center.video-call-center {
-    padding-bottom: 50px;
   }
   .video_chat_items #text-chat-area {
     padding-bottom: 4px;
@@ -6909,7 +6906,6 @@ button {
   }
   .media-call-header-mobile {
     display: flex;
-    /* flex-direction: column; */
     max-height: none;
     height: auto;
     justify-content: space-between;
