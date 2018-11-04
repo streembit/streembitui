@@ -42,7 +42,8 @@
             </div>
         </div>
 
-        <div class="media-call-content">
+        <div class="media-call-content" data-bind="css: {'video-chat': ischatdisplay}">
+
             <div class="video_ctrls_items" id="videoCall">
                 <div class="localvid_parent" data-bind="visible: isvideo">
                     <video id="localvid" autoplay muted></video>
@@ -52,8 +53,8 @@
                 </div>
             </div>
 
-            <div class="video_chat_items">
-                <div id="text-chat-area" style="flex:1">
+            <div class="video_chat_items" data-bind="visible: ischatdisplay">
+                <div id="text-chat-area">
                     <div class="fill-area">
                         <div class="chat-fill-area chatitemswnd chat-video">
                             <table cellspacing="0" cellpadding="0">

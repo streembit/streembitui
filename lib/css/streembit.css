@@ -833,12 +833,22 @@ body[data-account-load-complete="false"] #main {
 
 .video_chat_items {
   height: 100%;
-  display: none;
   border: 2px solid #888;
-  margin-left: 4px;
   background: transparent;
   margin-bottom: 0;
   min-width: 300px;
+  width: 58%;
+  margin-left: 16px;
+}
+
+
+.video_chat_items #text-chat-area {
+  height: 100%;
+}
+
+.video-call-container .media-call-content.video-chat {
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .localvid_parent {
