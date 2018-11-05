@@ -729,7 +729,10 @@ body[data-account-load-complete="false"] #main {
 }
 
 .call-icons {
-  display: flex; 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .callbuttons {
@@ -750,10 +753,18 @@ body[data-account-load-complete="false"] #main {
   align-content: stretch;
 }
 
+.forShowChatPos #contacts-audio {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .forShowChatPos .audio-container {
   display: inline-block;
   text-align: center;
   clear: both;
+  margin: 4px 8px;
 }
 
 .forShowChatPos .audio-container span {
@@ -891,8 +902,8 @@ body[data-account-load-complete="false"] #main {
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .forShowChatPos > div > img {
@@ -911,7 +922,6 @@ body[data-account-load-complete="false"] #main {
   font-size: 12px;
   line-height: 20px;
   height: 20px;
-  margin-top: 4px;
 }
 
 audio#remote-audio {
@@ -3841,7 +3851,6 @@ body.smart-style-6 #logo-group > span#logo:before {
 }
 
 .add-audio-call {
-  flex: 1 1 auto;
   width: 40px;
   margin-top: 16px;
 }
@@ -6278,10 +6287,11 @@ button {
   .overview-coin-mobile {
     margin-left: 10px;
   }
+
   #smallScreenAudioCall1 {
-    width: 156px;
-    height: 100px;
+    padding: 3px 6px;
   }
+
   .small-screen-plus-ic {
     width: 20px;
     font-size: 27px;
@@ -6333,9 +6343,6 @@ button {
   .heightForKeyboardMobile {
     height: 130px !important;
     transition: 0.5s;
-  }
-  .forShowChatPos {
-    margin-top: 0px;
   }
   .callProcessContentStyle {
     height: auto;
@@ -6737,9 +6744,7 @@ button {
   #connection_indicator {
     left: 95px;
   }
-  .callbuttons {
-    margin-top: 11px;
-  }
+
   .video-call-center .callbuttons {
     margin-top: 0;
   }
@@ -6929,13 +6934,7 @@ button {
   }
   .media-call-header.video-call-header-chat {
     display: flex;
-    flex-direction: column;
-    border-bottom: none;
     margin-bottom: 10px;
-  }
-  .video-call-header-chat .call-with {
-    padding: 10px;
-    float: none;
   }
   .video-call-header-chat .callbuttons {
     float: none !important;
@@ -6947,10 +6946,7 @@ button {
     width: 100% !important;
     z-index: 0;
   }
-  div#smallScreenVideoCall1 {
-    bottom: 125px;
-    z-index: 0;
-  }
+
   .hide-content-mobile {
     display: none !important;
   }
@@ -7052,18 +7048,60 @@ button {
   .mobile-size-tabs-change {
     padding: 0.5rem 5px;
   }
-  .forShowChatPos > div:last-child {
-    margin-bottom: 200px;
-  }
   .media-call-content .footer-chat-controls1 {
     margin-bottom: 0;
   }
+
   .jarviswidget {
-    width: calc(100% - 30px);
+    width: 100%;
+    margin-top: 24px;
   }
+
   .add-all-contacts-field {
     top: 80px;
     margin-bottom: 20px;
+  }
+
+  .media-call-header {
+    width: 100%;
+    padding: 0 8px;
+  }
+
+  #media-call-container {
+    padding: 0;
+  }
+
+  .forShowChatPos {
+    margin-top: 0px;
+    width: 100%;
+  }
+
+  .forShowChatPos #contacts-audio {
+    overflow: auto;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .forShowChatPos .audio-viz {
+    height: 96px;
+    border-radius: 16px;
+  }
+
+  .forShowChatPos audio.remote-audio {
+    margin-top: 6px;
+  }
+
+  .forShowChatPos .audio-container {
+    display: block;
+  }
+
+  .video-chat #videoCall {
+    display: none;
+  }
+
+  .video-chat .video_chat_items {
+    width: 96%;
+    margin-left: 0;
   }
 }
 
@@ -7245,13 +7283,6 @@ button {
   }
   .dashboard.col .row .forResponsiveSizeCols p.dash-address-st-change {
     font-size: 15px !important;
-  }
-}
-
-@media (min-height: 612px) and (max-height: 720px) {
-  .forShowChatPos {
-    margin-top: 10px;
-    margin-bottom: 10px;
   }
 }
 
