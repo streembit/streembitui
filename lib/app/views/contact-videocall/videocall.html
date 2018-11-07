@@ -1,11 +1,11 @@
 <div id="media-call-container" class="video-call-container">
     <div class="media-call-center video-call-center">
         <div class="media-call-header video-call-header-chat">
-            <div style="float:left;" class="callbuttons">
-                <div style="display:inline-block;margin:0;padding:0;float:left">
-                    <div style="margin-top:10px">
+            <div class="call-icons">
+                <div class="callbuttons">
+                    <div>
                         <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
-                            <img src="../lib/images/hangup.png" width="40px" style="color: #a90329;cursor: pointer;">
+                            <img src="../lib/images/hangup.png" width="40px">
                         </span>
                         <span class="fa-stack awesomeBlue" title="Send file" data-bind="click: sendfile">
                             <i class="fa fa-file fa-stack-2x awesomeEntity" />
@@ -14,9 +14,8 @@
                             <i class="fa fa-commenting fa-stack-2x awesomeEntity" />
                         </span>
                     </div>
-                </div>
-                <div style="display:inline-block;margin:0;padding:0;float:left">
-                    <div style="margin-top:10px">
+
+                    <div>
                         <span class="fa-stack awesomeBlue" title="Remove video" data-bind="click: remove_video, visible: isvideo">
                             <i class="fa fa-video-camera fa-stack-2x awesomeEntity" />
                             <i class="fa fa-minus-circle fa-stack-1x awesomeAction removebtn" />
@@ -35,16 +34,15 @@
                         </span>
                     </div>
                 </div>
-                <div style="clear:both"></div>
+
+                <div class="call-with calltime_parent">
+                    Call with <span data-bind="text: contact_name"></span>
+                    <span data-bind="text: calltime" class="call-time"></span>
+                </div>
             </div>
-            <div class="call-with" style="float:right;font-weight:bold;font-size:12px;padding-right:20px;padding-top:14px">
-                Call with <span data-bind="text: contact_name"></span>&nbsp;&nbsp;&nbsp;
-                <span data-bind="text: calltime" class="call-time"></span>
-            </div>
-            <div style="clear:both"></div>
         </div>
 
-        <div class="media-call-content">
+        <div class="media-call-content" data-bind="css: {'video-chat': ischatdisplay}">
 
             <div class="video_ctrls_items" id="videoCall">
                 <div class="localvid_parent" data-bind="visible: isvideo">
@@ -55,26 +53,8 @@
                 </div>
             </div>
 
-            <div class="video_chat_items">
-                <div id="text-chat-area" style="flex:1">
-                <!-- <div style="padding:10px;text-align:left;">
-                        <div class="chat-win-header">
-                            <div class="chat-on-mobile-size chat-with-style">
-                                <span data-bind="text: lblheader">Chat with bbbbbb</span>
-                            </div>
-                            <div class="buttons-chat-on-mobile-size" data-bind="visible: issession">
-                                <div class="btn-group">
-                                    <button class="btn btn-primary saveChatHistoryForTextChat" title="Save Chat History" data-bind="click: savechat">
-                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                                    </button>
-                                    <button class="btn btn-danger deleteChatHistoryForTextChat" title="Delete Chat History" data-bind="click: rmchat">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div style="clear:both"></div>
-                        </div>
-                    </div> -->
+            <div class="video_chat_items" data-bind="visible: ischatdisplay">
+                <div id="text-chat-area">
                     <div class="fill-area">
                         <div class="chat-fill-area chatitemswnd chat-video">
                             <table cellspacing="0" cellpadding="0">
@@ -100,6 +80,7 @@
                                 </tbody>
                             </table>
                         </div>
+
                         <div class="footer-chat-controls">
                             <div class="video-chat__text-container">
                                 <textarea id="txtChatCtrl" data-bind="value: chatmsg, event: {input: typing}"></textarea>
@@ -119,6 +100,7 @@
             </div>
         </div>
     </div>
+
     <script type="text/html" id="send-file-template">
         <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
             <div style="width:450px" data-bind="visible: isinprogress() == false">

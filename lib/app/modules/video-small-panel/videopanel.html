@@ -1,11 +1,13 @@
-<div id="smallScreenVideoCall1">
+<div id="smallScreenVideoCall1" data-bind="visible: videoPanelShow">
       <span class="small-screen-tooltips">
-      <!-- <i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i> -->
-      <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
-      <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
-      <i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Video" data-bind="click: remove_audio">
-      </i>
-      <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
+            <i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
+            <i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
+            <i class="fa awesomeEntity spallWindMuteIc" title="Mute Video" data-bind="click: remove_audio, css: { 'muted fa-microphone-slash': isMuted(), 'fa-microphone': isMuted() == false} ">
+            </i>
+            <img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
       </span>
-      <span style="font-weight: bold;" class="forSmScreen"></span>
+
+      <div class="sm-video-container">
+
+      </div>
 </div>

@@ -1,11 +1,48 @@
 <div id="smallScreenAudioCall1" data-bind="visible: audioPanelShow">
 	<span class="small-screen-tooltips">
-	<i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
-	<i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
-	<i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
-	<i class="fa fa-microphone awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio">
-	</i>
-	<img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
+		<i class="fa fa-plus small-screen-plus-ic" title="Add Contact"  data-bind="click: show_invite"></i>
+		<i class="fa fa-commenting small-screen-show-chat-ic" title="Chat" data-bind="click: showchat"></i>
+		<i class="fa fa-file awesomeBlue small-screen-send-file-ic" title="Send file" data-bind="click: sendfile"></i>
+		<i class="fa awesomeEntity spallWindMuteIc" title="Mute Audio" data-bind="click: remove_audio, css: { 'muted fa-microphone-slash': isMuted(), 'fa-microphone': isMuted() == false} ">
+		</i>
+		<img src="../lib/images/hangup.png" title="Hangup" class="small-screen-hangup-ic" width="30px" data-bind="click: hangup" >
 	</span>
-	<span style="font-weight: bold;" class="forSmScreen"></span>
+
+	<div class="sm-audio-container" data-bind="foreach: smGroup">
+		<div class="audio-container" data-bind="attr: { id: pkeyhash }">
+			<span data-bind="text: name" class="user-name-div"></span>
+			<div class="remote-audio-wrapper" data-bind="attr: { 'data-key': pkeyhash }">
+				<div data-bind="attr: { 'data-key': pkeyhash }">
+					<div class="canvas-wrap">
+						<canvas class="audio-viz"></canvas>
+					</div>
+					<audio class="remote-audio" controls autoplay></audio>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="smSpeakSt"><i class="fa" data-bind="css: { 'fa-volume-off': isLow(), 'fa-volume-up': isLow() == false} "></i></div>
+</div>
+
+<!-- add contacts popup -->
+<div class="add-all-contacts-field add-to-group-sm-in-chat" data-bind="visible: showInvite">
+	<div class="add-group-header-with-closebtn">
+		<div class="add-group-header">
+		<span>Add to Group</span>
+		<button type="button" class="close close-add-group" data-bind="click: close_add_group_sm">&times;</button>
+		</div>
+	</div>
+	<div data-bind="foreach: contacts" class="all-contacts-part">
+		<div class="for-add-group-call">
+			<div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
+				<span data-bind="text: name" class="mar-no text-main"></span>
+			</div>
+
+			<div data-bind="if: $parent.groupNames().indexOf(name) == -1">
+				<span data-bind="click: $parent.inviteContactSm.bind($parent)" class="showAddContBtn">
+					<i class="fa fa-user-plus addUserIcon"></i>
+				</span>
+			</div>
+		</div>
+	</div>
 </div>
