@@ -67,6 +67,7 @@ body[data-account-load-complete="false"] #main {
   flex-direction: column;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .small-panels-row {
@@ -724,8 +725,6 @@ body[data-account-load-complete="false"] #main {
   border-bottom: 3px solid #eee;
   min-height: 3.6em;
   max-height: 4.6em;
-  z-index: 15;
-  position: relative;
 }
 
 .call-icons {
@@ -4199,10 +4198,10 @@ body {
 .add-all-contacts-field {
   overflow-y: auto;
   position: absolute;
-  top: 105px;
+  top: 50%;
   left: 50%;
   margin: 0;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%);
   border: 3px solid #e4e4e4;
   border-radius: 3px;
   background: #f8f8f8;
@@ -4211,10 +4210,11 @@ body {
   transition: all 0.5s ease 0s;
 }
 
-.hide-menu .add-all-contacts-field {
-  margin-left: 110px !important;
-  transition: all 0.5s ease 0s;
+.add-all-contacts-field {
+  top: 105px;
+  transform: translate(-50%, 0);
 }
+
 
 .for-add-group-call .list-group-item:first-child,
 .for-add-group-call .contact-bar-list-item:first-child {
@@ -4715,10 +4715,6 @@ span.users-hub {
 
 #smallScreenVideoCall1 .call-time {
   display: none;
-}
-
-#smallScreenVideoCall1.active {
-  display: block;
 }
 
 .smart-style-5 {
