@@ -1,11 +1,19 @@
 <div id="text-chat-area" class="contact-chat-mobile" style="width:100%; height:100%">
-    <div style="padding:10px;text-align:left;">
+    <div>
         <div class="chat-win-header">
             <div class="chat-on-mobile-size chat-with-style">
-                <span data-bind="text: lblheader"></span>
+                <div class="chat-participants">
+                    <span data-bind="text: lblheader"></span>
+                </div>
+
+                <div class="add-to-chat">
+                    <button class="btn btn-default btn-invite inviteCont" data-bind="click: show_invite">
+                        <i class="fa fa-user-plus"></i>
+                    </button>
+                </div>
             </div>
-            <div class="buttons-chat-on-mobile-size" data-bind="visible: issession">
-                <div class="btn-group">
+            <div class="buttons-chat-on-mobile-size">
+                <div class="btn-group" data-bind="visible: issession">
                     <button class="btn btn-primary saveChatHistoryForTextChat" title="Save Chat History" data-bind="click: savechat">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i>
                     </button>
@@ -14,7 +22,6 @@
                     </button>
                 </div>
             </div>
-            <div style="clear:both"></div>
         </div>
     </div>
     <div class="fill-area">
@@ -60,6 +67,31 @@
                 </div>
         </div>
     </div>
+
+    <!-- add contacts popup -->
+    <div class="add-all-contacts-field" data-bind="visible: show_contact_invite">
+        <div class="add-group-header-with-closebtn">
+            <div class="add-group-header">
+                <span>Add to Group</span>
+                <button type="button" class="close close-add-group" data-bind="click: close_add_group">&times;</button>
+            </div>
+        </div>
+
+        <div data-bind="foreach: contacts" class="all-contacts-part">
+            <div class="for-add-group-call">
+                <div class="list-group-item contact-bar-list-item adding-contact-to-groupcall">
+                    <span data-bind="text: name" class="mar-no text-main"></span>
+                </div>
+
+                <div >
+                    <span data-bind="click: $parent.inviteContact.bind($parent)" class="showAddContBtn">
+                        <i class="fa fa-user-plus addUserIcon"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/html" id="send-file-template">
         <div id="filesend-dlg-container" style="width:450px;padding-bottom:5px;margin:0 auto 10px auto;text-align:left">
             <div style="width:450px" data-bind="visible: isinprogress() == false">

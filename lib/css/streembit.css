@@ -94,6 +94,15 @@ body[data-account-load-complete="false"] #main {
   padding-bottom: 10px;
 }
 
+.contact-chat .chat-win-header {
+  padding: 8px;
+  border-bottom: 3px solid #eee;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
 .content-panel .view-content.dashboard,
 .content-panel .view-content.initaccount {
   -webkit-box-align: center;
@@ -794,11 +803,20 @@ body[data-account-load-complete="false"] #main {
   display: inline-block;
 }
 
-.add-audio-call .btn-invite {
+.add-audio-call, .add-to-chat {
+  width: 40px;
+  margin-top: 16px;
+}
+
+.add-to-chat {
+  margin-top: 0;
+}
+
+.add-audio-call .btn-invite, .add-to-chat .btn-invite{
   border: 1px solid #eaf5f3;
 }
 
-.add-audio-call .fa-user-plus {
+.add-audio-call .fa-user-plus, .add-to-chat .fa-user-plus{
   color: #366297;
 }
 
@@ -1093,11 +1111,6 @@ span.awesomeBlue i.addbtn {
 
 .closedlg:hover {
   background: #00d9ff;
-}
-
-.chat-win-header {
-  padding-bottom: 8px;
-  border-bottom: 3px solid #eee;
 }
 
 #text-chat-area .fill-area {
@@ -3849,38 +3862,11 @@ body.smart-style-6 #logo-group > span#logo:before {
   color: #f79999;
 }
 
-.add-audio-call {
-  width: 40px;
-  margin-top: 16px;
-}
-
-.add-audio-call > div {
-  position: absolute;
-  top: 46px;
-  left: 0;
-  width: 120px;
-  height: auto;
-  max-height: 200px;
-  background: #000;
-  border: 2px solid #c4c4c4;
-}
-
 .audio-viz {
   background-color: #666;
   height: 220px;
   width: 308px;
   display: inline-block;
-}
-
-.add-audio-call > div > button {
-  width: 100%;
-  height: 24px;
-  padding: 0 0 4px;
-  box-sizing: border-box;
-  font-size: 1.1em;
-  background: #dee8e5;
-  border: 0;
-  border-bottom: 2px ridge #c4c4c4;
 }
 
 .btn-invite {
@@ -3891,7 +3877,6 @@ body.smart-style-6 #logo-group > span#logo:before {
   font-size: 20px;
   padding: 4px;
 }
-
 
 #smallScreenAudioCall1,
 #smallScreenVideoCall1 {
@@ -4210,11 +4195,10 @@ body {
   transition: all 0.5s ease 0s;
 }
 
-.add-all-contacts-field {
+.media-call-header .add-all-contacts-field {
   top: 105px;
   transform: translate(-50%, 0);
 }
-
 
 .for-add-group-call .list-group-item:first-child,
 .for-add-group-call .contact-bar-list-item:first-child {
@@ -5098,16 +5082,11 @@ button {
 }
 
 .chat-on-mobile-size {
-  float: left;
   font-size: 12px;
   font-weight: bold;
   color: #555;
-}
-
-.buttons-chat-on-mobile-size {
-  float: right;
-  position: relative;
-  bottom: 1px;
+  display: flex;
+  align-items: center;
 }
 
 .chat-name-audiocall-on-mobile-size {
@@ -5340,10 +5319,6 @@ button {
   height: 240px;
   margin-top: -130px;
   color: #fff;
-}
-
-.chat-with-style {
-  margin-top: 10px;
 }
 
 .last-security-section:hover {
