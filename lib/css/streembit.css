@@ -577,6 +577,10 @@ body[data-account-load-complete="false"] #main {
   word-wrap: break-word;
 }
 
+.chat-item-msg span {
+  word-break: break-word;
+}
+
 .content-panel.hide-menu .chat-fill-area {
   width: 100%;
 }
