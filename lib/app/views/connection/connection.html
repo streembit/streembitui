@@ -1,0 +1,30 @@
+ <span id="connection_indicator">
+     <span class="fa fa-signal" aria-hidden="true"
+           data-bind="
+           css: { 'txt-color-greenCustom': connect() === true },
+           toolTip: { title: txtConnectStatus },
+           click: showConnectionDetails">
+     </span>
+ </span>
+
+  <!-- Address modal -->
+ <div class="container container-connect" data-bind="fadeVisible: connectInfoPanel">
+     <div class="card current-connection-info">
+         <div class="card-header">
+             <span data-bind="i18n: 'current-connection-header'"></span>
+             <img src="/lib/img/close-a.png" width="45" height="20" data-bind="click: closePanel" alt="" />
+         </div>
+         <div class="card-block connection-body-style-changes">
+             <div class="connect-info">
+                 <p><b data-bind="i18n: 'current-connection-account'"></b>: <b data-bind="text: account"></b> <span class="fa fa-user-circle acc_connected" data-bind="css: { 'txt-color-greenCustom': accountConnected }"></span></p>
+                 <hr />
+                 <p><b data-bind="i18n: 'current-connection-transport'"></b>: <span data-bind="text: transport"></span></p>
+                 <p><b data-bind="i18n: 'current-connection-host'"></b>: <span data-bind="text: host"></span></p>
+                 <p><b data-bind="i18n: 'current-connection-port'"></b>: <span data-bind="text: port"></span></p>
+                 <hr />
+                 <p><b data-bind="i18n: 'current-connection-pubkey'"></b>: <span data-bind="text: publickey"></span></p>
+             </div>
+             <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-sm btn-danger float-right"></button>
+         </div>
+     </div>
+ </div>

@@ -1,0 +1,40 @@
+<div class="logs-side-ch">
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a data-toggle="tab" href="#error-tab" class="nav-link active">Error</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#info-tab" class="nav-link">Info</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#debug-tab" class="nav-link">Debug</a></li>
+    </ul>
+
+    <div class="tab-content logs-view-container">
+        <div id="error-tab" class="tab-pane active">
+            <table class="logstable">
+                <tbody data-bind="foreach: errors">
+                    <tr>
+                        <td data-bind="isodate: time" style="width:180px"></td>
+                        <td data-bind="text: message" style="width:auto;word-break:  break-all;"></td>
+                    </tr>
+                </tbody>
+            </table>    
+        </div>
+        <div id="info-tab" class="tab-pane">
+            <table class="logstable">
+                <tbody data-bind="foreach: infos">
+                    <tr>
+                        <td data-bind="isodate: time" style="width:180px"></td>
+                        <td data-bind="text: message" style="width:auto;word-break:  break-all;"></td>
+                    </tr>
+                </tbody>
+            </table>            
+        </div>
+        <div id="debug-tab" class="tab-pane">
+            <table class="logstable">
+                <tbody data-bind="foreach: debugs">
+                    <tr>
+                        <td data-bind="isodate: time" style="width:180px"></td>
+                        <td data-bind="text: message" style="width:auto;word-break:  break-all;"></td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>

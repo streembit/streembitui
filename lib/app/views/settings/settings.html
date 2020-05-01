@@ -1,0 +1,201 @@
+
+<div class="settings-side-ch">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item"><a href="#network_settings" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">Network</a></li>
+        <li role="presentation" class="nav-item"><a href="#seeds_settings" aria-controls="seeds_settings" role="tab" data-toggle="tab" class="nav-link">Seeds</a></li>
+        <li role="presentation" class="nav-item"><a href="#ice_settings" aria-controls="ice_settings" role="tab" data-toggle="tab" class="nav-link">Ice resolvers</a></li>
+        <li role="presentation" class="nav-item"><a href="#system_settings" aria-controls="system_settings" role="tab" data-toggle="tab" class="nav-link">System</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active settings-tab-panel" id="network_settings">
+            <div class="form-group form-section-panel">
+                <label for="transport">Transport:</label><br />
+                <select type="select" class="form-control" id="transport" maxlength="5" style="width:200px;display:inline-block" data-bind="value: selected_transport" disabled>
+                    <option value="0">Choose ...</option>
+                    <!--<option value="tcp">TCP</option>-->
+                    <option value="ws">WebSocket</option>
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational." />
+            </div>  
+
+            <div style="margin-top:30px">
+                <button data-bind="click: save" class="btn btn-primary" style="margin-right:10px">Save</button>
+            </div>
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel seeds-settings" id="seeds_settings">
+            <div class="form-group form-section-panel">
+                <div class="widget-body seeds-settings__body">
+                    <form>
+                        <fieldset>
+                            <input name="authenticity_token" type="hidden">
+                            <div class="form-group">
+                                <label>WS Peers URL</label>
+                                <input class="form-control seedStChangeGlass" placeholder="URL" type="text" data-bind="value: peers_remote_url" style="max-width: 800px;">
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div style="text-align:left">
+                        <button  class="btn btn-primary"  data-bind="click: save" title="Save">Save</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit WebSocket peer nodes. The WS peer nodes assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your own WS peers to implement your own private Streembit network." />
+                </div>                
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover wspeerstbl">
+                        <thead>
+                            <tr>
+                                <th>Peer</th>
+                                <th>Ping time</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: bootseeds">
+                            <tr>
+                                <td class="hosttd"><span data-bind="text: $data.host"></span>:<span data-bind="text: $data.port"></span></td>
+                                <td class="pingtd"><span data-bind="text: $data.pingstatus"></span></td>
+                                <td class="ctrlstd">                                    
+                                    <div class="float-right">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true" data-bind="visible: $parent.is_edit_bootseed() == false, click: $parent.edit_bootseed"></i>
+                                        <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--<div data-bind="template: { name: 'bootseed-item-template', foreach: bootseeds }" style="margin-top:10px">
+                </div>-->
+               
+                <!-- Edit Modal -->
+                <div class="modal fade" id="editSeedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Seed</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                        <div class="modal-body">
+                            <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                            <label for="editseedhost" style="font-size:11px;width:80px;text-align:right">Host: </label>
+                            <input type="text" class="form-control" id="editseedhost" maxlength="40" style="font-size:11px;width:200px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: edit_seed_host">
+                        </div>
+                        <div class="form-group" style="font-size:11px;margin-bottom:5px">
+                            <label for="editseedport" style="font-size:11px;width:80px;text-align:right">Port: </label>
+                            <input type="text" class="form-control" id="editseedport" maxlength="5" style="font-size:11px;width:50px;padding:2px 4px;height:24px;display:inline-block" data-bind="value: edit_seed_port">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: update_seed">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end edit modal -->
+                <div style="text-align:left;margin-top:15px">
+                    <button class="btn btn-primary"  data-bind="visible: is_add_bootseed() == false, click: function() {is_add_bootseed(true);new_seed_host('');new_seed_port('');new_seed_publickey('');}" title="Add boot seed">Add seed</button>
+                </div>
+                <div data-bind="visible: is_add_bootseed" class="seeds-settings__add-bootseed">
+                    <div class="form-group seeds-settings__host-field">
+                        <label for="newseedhost" style="">Host: </label>
+                        <input type="text" class="form-control" id="newseedhost" maxlength="40" data-bind="value: new_seed_host">
+                    </div>
+                    <div class="form-group seeds-settings__port-field">
+                        <label for="newseedport" style="">Port: </label>
+                        <input type="text" class="form-control" id="newseedport" maxlength="5" data-bind="value: new_seed_port">
+                    </div>
+                    <div style="margin-top:20px">
+                        <button class="btn btn-primary"  data-bind="click: add_bootseed" style="margin-right:8px;">Save</button> 
+                        <button class="btn btn-danger"  data-bind="click:function() {is_add_bootseed(false);new_seed_host('');new_seed_port('');new_seed_publickey('');}" style="margin-right:8px;">Cancel</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel ice-settings" id="ice_settings">
+            <div class="form-group form-section-panel">
+                <div >Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
+                <div  class="ice-settings__resolver-template" data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="">
+                </div>
+                <div style="text-align:left;margin-top:15px">
+                    <button class="btn btn-primary" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
+                </div>
+                <div data-bind="visible: is_add_iceresolver" class="ice-settings__add-iceresolver">
+                    <div class="form-group" style="font-size:12px;margin-bottom:0">
+                        <div class="ice-settings__fields">
+                        <label for="newice" style="font-size:12px">ICE server:</label>
+                            <input type="text" class="form-control ice-settings__form-input" id="newice" maxlength="72" data-bind="value: new_iceresolver"> &nbsp;&nbsp;
+                        </div>
+                        <div class="ice-settings-btns">
+                        <button class="btn btn-primary"  data-bind="click:add_iceresolver">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-sm btn-danger"  data-bind="click:function() {is_add_iceresolver(false);new_iceresolver('');}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div style="margin-top:30px">
+                <button class="btn btn-primary" data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane settings-tab-panel" id="system_settings">
+
+            <div class="form-group form-section-panel">
+                <label for="loglevel">Log level:</label><br />
+                <select type="select" class="form-control" id="loglevel" maxlength="5" style="width:170px;display:inline-block" data-bind="value: selected_loglevel">
+                    <option value="0">Choose ...</option>
+                    <option value="debug">Debug</option>
+                    <option value="info">Info</option>
+                    <option value="error">Error</option>
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
+            </div>
+
+            <div style="margin-top:30px">
+                <button class="btn btn-primary"  data-bind="click: save" style="margin-right:10px">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<script type="text/html" id="bootseed-item-template">
+    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:620px">
+        <div class="pull-left" style="padding-top:4px;font-size:11px;font-weight:bold;">
+            <div class="pull-left" style="color:#777;width:80px;text-align:right;margin-right:8px">Host:</div>
+            <div class="pull-left" data-bind="text: $data.host"></div>:<span data-bind="text: $data.port"></span>
+            <div style="clear:both"></div>
+        </div>
+        <div class="float-right">
+            <i class="fa fa-pencil-square-o" aria-hidden="true" data-bind="visible: $parent.is_edit_bootseed() == false, click: $parent.edit_bootseed"></i>
+            
+            <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_bootseed" title="Delete seed"></i>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</script>-->
+
+<script type="text/html" id="iceresolver-item-template">
+    <div style="background-color:#fafafa;border-radius:3px;border:1px solid #eee;padding:3px 8px;margin-bottom:4px;max-width:400px">
+        <div class="pull-left" style="padding-top:2px">
+            <span data-bind="text: $data.url" style="font-size:11px;font-weight:bold;"></span>
+        </div>
+        <div class="float-right">
+            <i class="fa fa-remove" style="color:#cc4a4a" data-bind="click: $parent.delete_iceresolver" title="Delete ICE resolver"></i>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</script>

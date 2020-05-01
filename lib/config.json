@@ -1,0 +1,28 @@
+﻿{
+    "appconfig": {
+        "loglevel": "debug",
+        "transport": "ws",
+        "tcpport": 8905,
+        "seedmode": 0,
+        "wspeerlisturl": "https://raw.githubusercontent.com/streembit/streembit-peers/master/sslpeers.json",
+        "http_wspeerlisturl": "https://raw.githubusercontent.com/streembit/streembit-peers/master/peers.json",
+        "bootseeds": [
+            { "host": "seed.streembit.uk" },
+            { "host": "seed.streembit.eu" },
+            { "host": "seed.streembit.co" },
+            { "host": "seed.streembit.biz" },
+            { "host": "seed.streembit.org" },
+            { "host": "seed.streembit.net" },
+            { "host": "176.31.122.115" }
+        ],
+        "lastseed": {
+            "host": 0,
+            "port": 0
+        },
+        "ice_resolvers": [
+            { "urls": ["stun:stun.l.google.com:19302"] },
+            { "urls": ["stun:stun1.l.google.com:19302"] },
+            { "urls": ["stun:stun2.l.google.com:19302"] }
+        ]
+    }
+}

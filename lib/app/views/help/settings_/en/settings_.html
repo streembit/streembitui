@@ -1,0 +1,54 @@
+<div id="helpitem_settings">
+    <div class="help-content-item">
+        <h4>Streembit settings</h4>
+        </br>
+        <div>
+            <p>Click on the Tools/Settings menu item to open the Settings screen.</p>
+
+            <div class="settings-helpitem-title">Network tab</div>
+            <div>
+                <span style="font-weight:bold">TCP port:</span>
+                <span>Use this TCP port to communicate on the Streembit network. Port forwarding or the UPNP settings of your router must grant access to this port in order to send and receive data. If the transport is WebSocket (WS) then this settings is not used by the application.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">WebSocket port:</span> 
+                <span>If the TCP port is not available then the connect to the WebSocket listener must listen on this port.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Transport</span> 
+                <span>Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the WebSocket transport then make sure the WebSocket listener seed node is operational.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Use WebSocket fallback:</span> 
+                <span>Many firewalls and home network routers block incoming TCP communication and this is a fallback solution for users who are unable to use the TCP protocol. By enabling this configuration option the system will try to communicate on the WebSocket protocol when the generic TCP communication is blocked. Please note, WebSocket listeners run by community peers and the availability of WebSocket listeners is limited on the network. Try to run your own seed to support the network and Streembit community, and ensure the WebSocket listeners is available! Also, make sure the WebSocket listener is enabled in the seed nodes if you run a private Streembit network!</span>
+            </div>
+
+            <div class="settings-helpitem-title">Seeds tab</div>
+            <div>
+                <span style="font-weight:bold">List of seed nodes:</span> 
+                <span>The seed nodes assist in user and device discovery, and stores the users’ public key data in their distributed hash table (DHT) storage. Also, you can define here your seed nodes if you run a private Streembit network.</span>
+            </div>
+
+            <div class="settings-helpitem-title">Ice resolvers tab</div>
+            <div>
+                <span>Complete decentralization is not possible in Internet communication. All decentralized systems like Bitcoin or Telehash must use some internet services for certain tasks. For instance, decentralized systems use DNS servers and services to resolve domain names. WebRTC video and audio chats clients use ICE servers to get information about their own IP address.</span>
+            </div>
+
+            <div class="settings-helpitem-title">Private network tab</div>
+            <div>
+                <span style="font-weight:bold">Seed account, Seed port, Seed IP/domain name:</span> 
+                <span>If the Seed account, Seed port and IP/domain name are defined then the software operates in private network mode. Please note, the seed node must be configured to run as a private network node as well. Remove these configuration settings if you want to connect to the public Streembit network.</span>
+            </div>
+
+            <div class="settings-helpitem-title">System tab</div>
+            <div>
+                <span style="font-weight:bold">Log level:</span> 
+                <span>Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged.</span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Developer mode:</span> 
+                <span>Software developers should select this option to resolve directories and develop the software from IDE such as Visual Studio.</span>
+            </div>
+        </div>
+    </div>
+</div>

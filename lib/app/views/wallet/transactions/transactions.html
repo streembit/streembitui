@@ -1,0 +1,27 @@
+<form class="form-horizontal container-fluid">
+<div class="form-group row col-sm-12">
+    <div class="col-md-3 col-sm-2 mobile-transactions-st">
+        <select class="form-control" data-bind="options: date, optionsText: 'name'"></select>
+    </div>
+    <div class="col-md-3 col-sm-2 mobile-transactions-st">
+        <input type="text" class="form-control" placeholder="Min Amount">                        
+    </div>
+    <div class="col-md-3 col-sm-3 mobile-transactions-st">
+        <select class="form-control" data-bind="options: opTransactions, optionsText: 'name'"></select>
+    </div>
+    <div class="col-md-3 col-sm-5 mobile-transactions-st">
+        <input type="text" class="form-control" placeholder="Enter address or label to search">         
+    </div>
+</div>
+</form>
+<div class="container-fluid">
+<table class="table table-responsive table-bordered">
+    <tr>
+        <th data-bind="i18n: 'tb-header-text-date'" class="transactionTexSt"></th>
+        <th data-bind="i18n: 'tb-header-test-label'" class="transactionTexSt"></th>
+        <th data-bind="i18n: 'tb-header-amount-tranc'" class="transactionTexSt"></th>
+        <th data-bind="i18n: 'tb-header-type'" class="transactionTexSt"></th>
+        <th data-bind="i18n: 'tb-header-balance'" class="transactionTexSt"></th>
+    </tr>
+</table>
+</div>

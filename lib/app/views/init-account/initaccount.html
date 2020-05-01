@@ -1,0 +1,94 @@
+<div class="init-account-wrap card px-0 rounded-plus bg-faded col-11 col-md-6 col-lg-4">
+<div class="initialize-existing-account">
+    <div class="w-100" data-bind="ifnot: initialization_progress">
+        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+
+            <header role="heading" class="d-flex align-items-center panel-hdr">
+                <span class="widget-icon mr-2"><i class="fa fa-user"></i> </span>
+                <h2 class="mb-0">Initialize
+                    <div class="jarviswidget-loader spinner-border spinner-border-sm text-primary ml-1" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </h2>
+                
+            </header>
+
+            <div role="content" class="px-4 pb-4">
+                <div class="widget-body no-padding">
+                    <form id="comment-form" class="smart-form" novalidate="novalidate">
+                        <header class="h4 py-3 border-bottom">
+                            <span data-bind="i18n:'lbl-connectto-public-net'"></span>
+                        </header>
+                        <fieldset class="mt-5">
+                            <div class="row">
+                                <section class="col col-6 d-flex flex-column">
+                                    <label class="form-label">Account</label>
+                                    <label class="select">
+                                        <select class="initialize-account-sel-section custom-select is-invalid" data-bind="css: { 'is-invalid': isaccount_error() == true},options: accounts, optionsText: 'account', value: account, optionsCaption: 'Choose...'"></select><i></i>
+                                    </label>
+                                    <em id="account-error" class="invalid error-label" data-bind="visible: isaccount_error, text: accounterrormsg">This field is required.</em>
+                                </section>
+                                <section class="col col-6 d-flex flex-column">
+                                    <label class="form-label">Password</label>
+                                    <label class="input input-group">
+                                        <input type="password" class="form-control" name="password" placeholder="Password" id="password" data-bind="css: { 'is-invalid': isaccount_error() == true}, value: private_key_pwd, event: { keyup: ctrlkeyup, blur: onPasswordChange}">
+                                        <div class="input-group-append" data-toggle="tooltip" data-placement="top" title="" data-original-title="Don't forget your password">
+                                            <span class="input-group-text"><i class="icon-append fa fa-lock"></i></span>
+                                        <!-- <b class="tooltip tooltip-bottom-right"></b> -->
+                                        </div>
+                                    </label>
+                                    <em id="password-error" class="invalid error-label" data-bind="visible: ispwd_error, text: pwderrormsg">This field is required.</em>
+                                </section>
+                                
+                            </div>
+                        </fieldset>
+
+                        <footer class="mt-4">
+                            <div class="row initaccount-footer-style d-flex justify-content-between px-3">
+                                <a class="btn btn-outline-dark" data-toggle="modal" data-target="#restore-window-modal" data-bind="i18n:'sbm-restore-mnemonic'" ></a>
+                                <span>
+                                    <button type="button" class="btn btn-secondary"  data-bind="click: new_account">New Account</button>
+                                    <button type="submit" name="submit" class="btn btn-primary" data-bind="click: initialize_account, i18n:'lbl-login'"></button>
+                                </span>
+                                
+                            </div>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="restore-dialog" title="Restore account" class="hidden">
+        <fieldset>
+            <button type="button" class="btn btn-light" data-bind="click: restore_account, i18n:'lbl-restore-backup'"></button>
+            <button type="button" class="btn btn-light" data-bind="click: restore_account, i18n:'ttlbtn-restore-mnemonic'"></button>
+        </fieldset>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="restore-window-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h4 class="modal-title">
+                    Choose restore type
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You can restore either from backup, or from mnemonic
+            </div>
+            <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <div class="restore-type">
+                    <button type="button" data-bind="click: restore_dialog" value="mnemonic" class="btn btn-dark">Restore from mnemonic</button>
+                    <button type="button" data-bind="click: restore_dialog" value="backup" class="btn btn-dark">Restore from backup</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

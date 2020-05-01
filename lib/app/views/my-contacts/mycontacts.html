@@ -1,0 +1,163 @@
+<div id="uiview-container" class="uiview-container-view-info" data-bind="visible: !contacts().length">
+    <div class="uiview-plane">
+        <div class="uiview-container-panel container-fluid">
+
+            <div class="uiview-container-panel-header">
+                <h4>Please note there are no contacts set up on this account</h4>
+            </div>
+
+            <p class="uiview-container-panel-text-lg">
+                To add a new contact please create an offline contact offer and exchange this with your new contact!
+            </p>
+
+            <button data-bind="click: create">Create Contact</button>
+        </div>
+    </div>
+</div>
+
+<div id="my-contacts-section" class="container-fluid" data-bind="visible: contacts().length">
+    <div data-bind="foreach: contacts" class="row">
+        <div class="col-lg-4 col-md-6 contact-bar-list-item">
+            <div style="width:calc(100% - 10px); margin: 0 3px; background: #f8f8f8;border-radius: 3px;border:3px solid #e4e4e4;padding:6px;margin-bottom: 7px;">
+                <div class="media">
+                    <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar d-flex mr-3" data-bind="visible: !avatar" />
+                    <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" class="picture-contact-bar-style" />
+                    <div class="media-body align-self-center">
+                        <span data-bind="text: name" class="mar-no text-main mt-0" style="color: #222;font-weight: bold;"></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <table style="font-size: 12px;margin-top:5px">
+                        <tr style="background-color: #f0f0f0">
+                            <td style="vertical-align: top; padding:4px;color:#222">
+                                <span>Public key:</span>
+                            </td>
+                            <td class="my-contacts-account-info-item" style="padding-bottom: 4px;padding-top:4px;padding-right: 4px;color:#222">
+                                <span data-bind="text: public_key" class="line-clamp-three contact__puplic-key" style="font-size: 11px;color: #222"></span>
+                            </td>
+                        </tr>
+                        <tr style="">
+                            <td style="vertical-align: top; padding:4px;color:#222">Transport:</td>
+                            <td class="account-info-item" style="color:#222">
+                                <span data-bind="text: protocol" style="font-size: 11px;"></span>://
+                                <span data-bind="text: address"></span>:
+                                <span data-bind="text: port"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">User type:</td>
+                            <td class="account-info-item"><span data-bind="text: user_type"></span></td>
+                        </tr>   
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Email:</td>
+                            <td class="account-info-item" data-bind="text: email"></td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Phone Number:</td>
+                            <td class="account-info-item" data-bind="text: phone"></td>
+                        </tr>
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Address:</td>
+                            <td class="account-info-item" data-bind="text: addressVal"></td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Country:</td>
+                            <td class="account-info-item" data-bind="text: country"></td>
+                        </tr>
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Website:</td>
+                            <td class="account-info-item">
+                                <a data-bind="attr: {href: website}, text: website" target="_blank"></a>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Social Media:</td>
+                            <td class="account-info-item">
+                                <a data-bind="attr: {href: social}, text: social" target="_blank"></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="float:right;font-size:16px;margin-right:6px;margin-top:15px" class="delete-from-my-contacts">
+                    <button type="button" class="btn btn-danger" data-bind="click: $parent.removeMyContact" title="Delete contact">Delete contact</button>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="my-contacts-section-mobile-version" class="container-fluid">
+    <div id="mobileContacts" data-bind="foreach: contacts">
+        <div class="card cardOnMobileVersion">
+            
+            <div class="media" style="margin-left: 5px">
+                <img src="/lib/img/avatar3.png" width="35px" height="35px" class="avatar-picture-contact-bar d-flex mr-3" data-bind="visible: !avatar" />
+                <img src="" width="35px" height="35px" data-bind="visible: avatar, attr:{src: avatar}" class="picture-contact-bar-style" />
+                <div class="media-body align-self-center">
+                    <span data-bind="text: name" style="font-weight: bold"></span>
+                    <a data-bind="attr: { href: '#' + name}" href="#contactDetailsMobileVersion" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" style="color: #222;text-decoration: none;font-weight: bold;"><span class="caret-my-contact"></span></a>
+                    
+                </div>
+            </div>
+        <div class="">
+            <div data-bind="attr: { id: name}" class="collapse">
+                <div class="contact-bar-list-item" style="border-bottom: 1px solid transparent;padding: 10px 0!important">
+                    <table style="font-size: 12px;margin-top:5px">
+                        <tr style="background-color: #f0f0f0">
+                            <td style="vertical-align: top; padding:4px;color:#222">
+                                <span>Public key:</span>
+                            </td>
+                            <td class="my-contacts-account-info-item" style="padding-bottom: 4px;padding-top:4px;padding-right: 4px;color:#222"><span data-bind="text: public_key" style="font-size: 11px;color: #222"></span></td>
+                        </tr>
+                        <tr style="">
+                            <td style="vertical-align: top; padding:4px;color:#222">Transport:</td>
+                            <td class="account-info-item" style="color:#222">
+                                <span data-bind="text: protocol" style="font-size: 11px;"></span>://
+                                <span data-bind="text: address"></span>:
+                                <span data-bind="text: port"></span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">User type:</td>
+                            <td class="account-info-item"><span data-bind="text: user_type"></span></td>
+                        </tr>   
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Email:</td>
+                            <td class="account-info-item" data-bind="text: email"></td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Phone Number:</td>
+                            <td class="account-info-item" data-bind="text: phone"></td>
+                        </tr>
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Address:</td>
+                            <td class="account-info-item" data-bind="text: addressVal"></td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Country:</td>
+                            <td class="account-info-item" data-bind="text: country"></td>
+                        </tr>
+                        <tr style="color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Website:</td>
+                            <td class="account-info-item">
+                                <a data-bind="attr: {href: website}, text: website" target="_blank"></a>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0;color:#222">
+                            <td style="vertical-align: top; padding:4px;color:#222">Social Media:</td>
+                            <td class="account-info-item">
+                                <a data-bind="attr: {href: social}, text: social" target="_blank"></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="float:right;font-size:16px;margin: 7px 7px 0px 0;" class="delete-from-my-contacts">
+                    <button type="button" class="btn btn-danger" data-bind="click: $parent.removeMyContact" title="Delete contact">Delete contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

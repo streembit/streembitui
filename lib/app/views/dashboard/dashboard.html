@@ -1,0 +1,62 @@
+
+<div class="dashboard col">
+    <h1 class="forResponsiveSizeColsHeader">
+        <span class="mobile-version-changing-welcome-style">Welcome,</span> 
+        <span class="mobile-version-changing-welcome-style" data-bind="text: contactName" style="color: black"></span>
+    </h1>
+    <div class="row" style="margin:-3px 0 0 0">
+        <div class="col-xl-4 col-lg-4 col-md-12 forResponsiveSizeCols">
+            <div class="card-box widget-box-two widget-two-purple myAddressbookBg">
+                <div style="text-align: center;">
+                    <i class="fa fa-group dashboard-group-ic"></i>
+                </div>
+                <div class="wigdet-two-content" style="text-align: center;">
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow dash-address-st-change" title="Statistics" style="font-size: 17px">Contacts</p>
+                    <h5 class="text-white contactsCountSt dash-address-st-change" style="margin-top: 5px">
+                        <span data-plugin="counterup" data-bind="text: contactsCount"></span> 
+                    </h5>
+                </div>
+                <div style="text-align: center;">
+                    <button class="addContactFromDashboard">
+                        <a href="#" class="widget-two-footer dashboard-btn-call-cont" data-bind="click: openAddContactView" style="background: #ec947a;color: #fff;font-weight: bold;">Add Contact</a>
+                    </button>
+                </div>
+            </div>
+        </div><!-- end col -->
+        <div class="col-xl-4 col-lg-4 col-md-12 forResponsiveSizeCols">
+            <div class="card-box widget-box-two widget-two-red iotDevicesBg">
+                <div style="text-align: center;">
+                    <i class="fa fa-cogs dashboard-cogs-ic"></i>
+                </div>
+                <div class="wigdet-two-content" style="text-align: center;">
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow dash-address-st-change" title="IoT devices" style="font-size: 17px">IoT devices</p>
+                    <h5 class="text-white contactsCountSt dash-address-st-change" style="margin-top: 5px">
+                       <span data-plugin="counterup" data-bind="text: device_count" style="cursor:pointer;"></span> 
+                    devices</h5>
+                </div>
+                <div style="text-align: center;">
+                    <button class="manageDevicesFromDashboard">
+                        <a href="#" class="widget-two-footer dashboard-btn-manage-devices" data-bind="click: iotDevices" style="background: #22B4DF;color: #fff;font-weight: bold;">Devices</a>
+                    </button>
+                </div>
+            </div>
+        </div><!-- end col -->
+        <div class="col-xl-4 col-lg-4 col-md-12 forResponsiveSizeCols">
+            <div class="card-box widget-box-two widget-two-info walletDashBg">
+                <div style="text-align: center;">
+                    <i class="fa fa-usd dashboard-usd-ic"></i>
+                </div>
+                <div class="wigdet-two-content" style="text-align: center;">
+                    <p class="m-0 text-uppercase text-white font-600 font-secondary text-overflow dash-address-st-change" title="IoT devices" style="font-size: 17px">Wallet</p>
+                    <h5 class="text-white dash-address-st-change contactsCountSt text-overflow" style="margin-top: 5px">
+                    <span data-plugin="counterup" data-bind="text: coin_count"></span>
+                    Streembit coin</h5>
+                </div>
+                <div style="text-align: center;">
+                    <button class="manageWalletFromDashboard">
+                        <a href="#" class="widget-two-footer dashboard-btn-manage-wallet" data-bind="click: walletTab" style="background: #05bd61;color: #fff;font-weight: bold;">Wallet</a>
+                    </button>
+                </div>
+        </div><!-- end col -->
+    </div>
+</div>

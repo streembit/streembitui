@@ -1,0 +1,71 @@
+<div style="width: 10px;height: 10px;background-color: red;" data-bind="visible: browserNotif"></div>
+<div data-toggle="buttons" style="" id="activity">
+    <div id="showm" class="btn btn-light notifybtn" data-bind="click: show_messages">
+        <i class="fa fa-envelope"></i>
+        <b class="badge" data-bind="text:msgcountPanel, css: { 'bg-color-orange': msgcountPanel() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
+    </div>
+    <div id="notifym" class="btn btn-light notifybtn" data-bind="click: show_notifications">
+        <i class="fa fa-bell"></i>
+        <b class="badge" data-bind="text:notifycount, css: { 'bg-color-blue': notifycount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
+    </div>
+    <div id="errorm" class="btn btn-light notifybtn" data-bind="click: show_errors">
+        <i class="fa fa-exclamation-triangle"></i>
+        <b class="badge" data-bind="text:errorcount, css: { 'bg-color-red': errorcount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
+    </div>
+</div>
+<span class="msg-arrow-up hideArroyUp" data-bind="visible: msgTriangle"></span>
+<span class="ntf-arrow-up hideArroyUp" data-bind="visible: ntfTriangle"></span>
+<span class="err-arrow-up hideArroyUp" data-bind="visible: errTriangle"></span>
+<!-- notification content -->
+<div class="ajax-notifications custom-scroll dropdown-design-change" data-bind="template: {name: template}, visible: contentShow"></div>
+
+<script type="text/html" id="message-activity-template">
+    <ul class="notification-body message-activity-col notification-box-message-list mobile-size-msg-box" data-bind="foreach: messages">
+        <li data-bind="visible: isSendMsg">
+            <div data-bind="text: senderName" style="font-weight: bold;font-size: 14px;padding: 0px 0px 5px;border-bottom: 1px solid #ccc;"></div>
+            <div><span data-bind="localdatemsg: time" class="time"></span></div>
+            <div style="margin-top: 6px;">
+                <div class="sendMsgTime">
+                    <span data-bind="text: sendMsgTime" style="color: #aaa;"></span>
+                </div>
+                <span class="msg-body" data-bind="text: text" style="word-wrap: break-word;"></span>
+            </div>
+        </li>
+    </ul>
+    <div class="last-update-notif">
+        <span style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
+    </div>
+</script>
+
+<script type="text/html" id="error-activity-template">
+    <ul class="notification-body notification-box-error-list" data-bind="foreach: list_of_errors">
+        <li class="error-bg-style">
+            <div style="margin-top: 6px;">
+                <span data-bind="localdate: time" class="time"></span>
+            </div>
+            <div  style="margin-top: 5px">
+                <span class="msg-body" data-bind="text: msg"></span>
+            </div>
+        </li>
+    </ul>
+    <div class="last-update-notif">
+        <span  style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
+    </div>
+</script>
+
+<script type="text/html" id="notification-activity-template">
+    <ul class="notification-body notification-box-notify-list" data-bind="foreach: list_of_notifications">
+        <li>
+            <div style="line-height: normal;">
+                <span data-bind="localdate: time" class="time"></span>
+            </div>
+            <div style="margin-top: 5px">
+                <span class="msg-body" data-bind="text: msg"></span>
+            </div>
+        </li>
+    </ul>
+    <div class="last-update-notif">
+        <span style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
+    </div>
+</script>
+

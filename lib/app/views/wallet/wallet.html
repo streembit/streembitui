@@ -1,0 +1,118 @@
+
+<div class="wallet-content-style">
+    <ul class="nav nav-pills menuitems" id="mainMenu">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                <span data-bind="i18n: 'mainMenuFile'"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                   <div data-bind="i18n: 'menu-item-restore-wallet',click: restore"></div>                
+                   <div data-bind="i18n: 'menu-item-backup-wallet', click: backupItem" class="dividerLine"></div>
+                   <div data-bind="i18n: 'menu-item-delete-wallet', click: deleteItem"></div>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                <span data-bind="i18n: 'menu-title-security'"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                   <div data-bind="i18n: 'menu-item-password', click: passwordItem"></div> 
+                   <div data-bind="i18n: 'menu-item-seed', click: seedItem"></div>
+                   <div data-bind="i18n: 'menu-item-private-keys', click: privateKeysItem"></div>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                <span data-bind="i18n: 'menu-title-actions'"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div data-bind="i18n: 'menu-item-contract', click: contactItem" class="dividerLine"></div> 
+                    <div data-bind="i18n: 'menu-item-sign-message', click: signMessageItem" class="dividerLine"></div>    
+                    <ul class="dropdown transaction-dropdown">
+                        <li class="dropbtn">
+                            <span data-bind="i18n: 'menu-item-load-transaction'"></span>
+                            <i class="fa fa-caret-right"></i>
+                        </li>
+                        <li class="dropdown-content transacAppContentSt">
+                            <div data-bind="i18n: 'menu-item-from-text', click: transactionText" class="transacAppTextSt"></div>
+                            <div data-bind="i18n: 'menu-item-from-blockchain', click: transactionBlockchain" class="transacAppTextSt"></div>
+                            <div data-bind="i18n: 'menu-item-qr-code', click: transactionQRCode" class="transacAppTextSt"></div>
+                        </li>
+                    </ul>
+                    <div data-bind="i18n: 'menu-item-history', click: historyItem"></div>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                <span data-bind="i18n: 'menu-title-settings'"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div data-bind="i18n: 'menu-item-preferences', click: preferencesItem"></div>
+                    <div data-bind="i18n: 'menu-item-network', click: networkItem"></div>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                <span data-bind="i18n: 'view-title-help'"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div data-bind="i18n: 'menu-item-documentation', click: helpDocItem"></div>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown ml-auto">
+            <a class="dropdown-toggle nav-link stFiveChangeBg">
+                <span data-bind="text: walletBalanceInfo"></span>
+            </a>
+        </li>
+    </ul>
+    <div class="mywallet-view">
+        <ul class="nav nav-tabs" role="tablist" style="margin-top:20px">
+            <li role="presentation" class="nav-item">
+                <a href="#mywallet_overview" aria-controls="home" role="tab" data-toggle="tab" data-bind="i18n: 'nav-overview'" class="nav-link active mobile-size-tabs-change"></a>
+            </li>        
+            <li role="presentation" class="nav-item">
+                <a href="#mywallet-sendmoney" aria-controls="seeds_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-send-money'" class="nav-link mobile-size-tabs-change"></a>
+            </li>
+            <li role="presentation" class="nav-item">
+                <a href="#mywallet-receivemoney" aria-controls="ice_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-receive-money'" class="nav-link mobile-size-tabs-change"></a>
+            </li>
+            <li role="presentation" class="nav-item">
+                <a href="#mywallet-transactions" aria-controls="privatenet_settings" role="tab" data-toggle="tab" data-bind="i18n: 'nav-transactions'" class="nav-link mobile-size-tabs-change"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active mywallet-tab-panel" id="mywallet_overview" data-bind="component: {name: 'overview'}"></div>
+        <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-transactions" data-bind="component: {name: 'transactions'}"></div>
+        <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-sendmoney" data-bind="component: {name: 'sendmoney'}"></div>
+        <div role="tabpanel" class="tab-pane mywallet-tab-panel" id="mywallet-receivemoney" data-bind="component: {name: 'receivemoney'}"></div>
+    </div>
+    <div class="hidden">
+        <div data-bind="component: {name: 'restore'}"></div>
+        <div data-bind="component: {name: 'delete'}"></div>
+        <div data-bind="component: {name: 'backup'}"></div>
+        <div data-bind="component: {name: 'password'}"></div>
+        <div data-bind="component: {name: 'seed'}"></div>
+        <div data-bind="component: {name: 'privateKey'}"></div>
+        <div data-bind="component: {name: 'history'}"></div>
+        <div data-bind="component: {name: 'createcontract'}"></div>
+        <div data-bind="component: {name: 'preferences'}"></div>
+        <div data-bind="component: {name: 'network'}"></div>
+        <div data-bind="component: {name: 'signmessage'}"></div>
+        <div data-bind="component: {name: 'encrypt'}"></div>
+        <div data-bind="component: {name: 'transfromtext'}"></div>
+        <div data-bind="component: {name: 'transblockchain'}"></div>
+        <div data-bind="component: {name: 'transcode'}"></div>
+        <div data-bind="component: {name: 'helpdoc'}"></div>
+    </div>
+</div>

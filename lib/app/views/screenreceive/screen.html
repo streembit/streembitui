@@ -1,0 +1,28 @@
+﻿<div id="screensharercp-container">
+    <div class="media-call-center">
+        <div class="media-call-header">
+            <div style="float:left;font-weight:bold;font-size:12px;padding:4px 0 0 20px">
+                <audio id="contactaudio" controls autoplay></audio>
+            </div>
+            <div style="float:left;font-weight:bold;font-size:12px;padding-left:30px;padding-top:18px">
+                Screen share from <span data-bind="text: contact_name"></span>
+            </div>
+            <div style="float:right;" class="callbuttons">
+                <div style="display:inline-block;margin:0;padding:0;text-align:right">
+                    <div style="margin-top:10px">
+                        <span class="fa-stack awesomeRed" title="Hang Up" data-bind="click: hangup">
+                            <i class="fa fa-times-circle fa-stack-2x awesomeEntity" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+
+        <div style="margin-top:5px">
+            <video id="screenvideo" class="video" autoplay style="min-height:100%;min-width:100%"></video>
+        </div>
+    </div>
+</div>
+
+

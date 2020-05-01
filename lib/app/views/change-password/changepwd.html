@@ -1,0 +1,43 @@
+
+<div id="uiview-container" class="change-streembit-password-st">
+    <div class="uiview-plane">
+        <div class="uiview-container-panel">
+
+            <div class="uiview-container-panel-header">
+                <h4 data-bind="i18n:'lbl-changepwd-title'"></h4>
+            </div>
+
+            <div style="background-color:#fff;padding:0 20px 40px 20px;border-radius:4px;border:1px solid #ddd;margin-top:20px">
+
+                <div class="form-group" style="max-width:600px;margin-top:20px;border-bottom:1px solid #ddd;padding-bottom:5px">
+                    <div>Account: <span data-bind="text: accountname" style="font-weight:bold"></span></div>
+                </div>
+                
+                <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': ispwd_error() == true}">
+                    <label data-bind="i18n:'lbl-privkeypassword'"></label>
+                    <div class="error-label" data-bind="visible: ispwd_error">
+                        <span data-bind="text: pwderrormsg"></span>
+                    </div>
+                    <input type="password" class="form-control changepwdSt" data-bind="value: private_key_pwd, event: { blur: onPasswordChange}" style="max-width:400px" />
+                    <div style="font-size:10px;font-weight:bold">
+                        NOTE: Choose your password carefully. If you forget your password, no one will be able to unlock your account for you on the permissionless and decentralised Streembit network.
+                    </div>
+                </div>
+
+                <div class="form-group" style="max-width:600px;margin-top:20px" data-bind="css: { 'has-error': isconfpwd_error() == true}">
+                    <label for="text" data-bind="i18n:'lbl-confirmpassword'"></label>
+                    <div class="error-label" data-bind="visible: isconfpwd_error">
+                        <span data-bind="text: pwdconferrormsg"></span>
+                    </div>
+                    <input type="password" class="form-control changepwdSt" data-bind="value: private_keypwd_conf, event: {blur: onPasswordConfirmChange }" style="max-width:400px" />
+                </div>
+
+                <div style="margin-top:30px">
+                    <button data-bind="click: submit, i18n:'lbl-changepwd-change'"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

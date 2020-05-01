@@ -1,0 +1,18 @@
+<div id="app-init-screen">
+    <div class="app-select-screen">
+        <div class="flex-btncontainer">
+            <a href="#" data-bind="click: $root.nav.bind($data, 'initaccount')" class="flex-btnitem" style="background-color:#F9BF3B;padding-top:16px;">
+                <i class="fa fa-group" style="font-size:100px"></i>
+                <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-connect'"></div>
+            </a>
+            <a href="#" data-bind="click: $root.nav.bind($data, 'createaccount')" id="btnCreateUser" class="flex-btnitem" style="background-color:#4190c6">
+                <i class="fa fa-user-plus"></i>
+                <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-newaccount'"></div>
+            </a>
+            <a href="#" data-bind="click: $root.restoreAccount"  id="btnRestoreUser" class="flex-btnitem" style="background-color:#68C3A3;padding-top:18px;">
+                <i class="fa fa-sign-in"></i>
+                <div class="flex-btnitem-text" data-bind="i18n:'lbl-initui-restore'"></div>
+            </a>
+        </div>
+    </div>
+</div>

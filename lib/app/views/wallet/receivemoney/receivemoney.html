@@ -1,0 +1,80 @@
+<div class="receive-payment-container">
+    <form class="form-horizontal container-fluid">
+    <div class="form-group row col-lg-12 col-md-12 mobile-send-error-rep-st">
+        <label class="col-2 col-form-label text-right receiveMonTexSt receiveMoneyTextMobileVersion" data-bind="i18n: 'tab-message'"></label>
+        <div class="col-lg-8 col-md-10 col-sm-8 input-reclab-on-mobile-size">
+            <input type="text" class="form-control short-msg-on-mobile-size" data-bind="value: message, css: { 'inp-error': errMessage() == true }" id="message" placeholder="Enter a short message">
+            <em class="invalid error-label" data-bind="visible: errMessage, text: errTxtMessage"></em>
+        </div>
+    </div>
+    <div class="form-group row col-lg-12 col-md-12 mobile-send-error-rep-st">
+        <label class="col-2 col-form-label text-right receiveMonTexSt receiveMoneyTextMobileVersion" data-bind="i18n: 'tab-amount'"></label>
+        <div class="col-lg-4 col-md-8 col-sm-4 input-reclab-on-mobile-size">
+            <div class="input-group short-msg-on-mobile-size">
+                <input type="text" class="form-control" data-bind="value: amount, css: { 'inp-error': errAmount() == true }" placeholder="0.000">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" data-bind="i18n: 'coin-name'"></div>
+                </div>
+            </div>
+            <em class="invalid error-label" data-bind="visible: errAmount, text: errTxtAmount"></em>
+        </div>
+    </div>
+    <div class="form-group row col-lg-12 col-md-12 mobile-send-error-rep-st">
+        <label class="col-2 col-form-label text-right receiveMonTexSt receiveMoneyTextMobileVersion" data-bind="i18n: 'tab-label'"></label>
+        <div class="col-lg-8 col-md-10 col-sm-8 input-reclab-on-mobile-size">
+            <input type="text" class="form-control short-msg-on-mobile-size" data-bind="value: label, css: { 'inp-error': errLabel() == true }" placeholder="Enter a label for this address to add to your addressbook">
+            <em class="invalid error-label" data-bind="visible: errLabel, text: errTxtLabel"></em>
+        </div>
+    </div>
+    <div class="form-group row mobile-send-error-rep-st">
+        <div class="col-sm-10 offset-sm-2 mobile-req-money-bt-st">
+            <button data-bind="click: clear, i18n: 'btn-clear'" class="btn btn-danger clear-btn-rec-on-mobile-size clearRecMonMobileVersion"></button>
+            <input value="Request Money" type="button" class="btn btn-primary" data-bind="click: generateAddress">
+        </div>
+    </div>
+    </form>
+
+    <hr />
+
+    <h5 class="col-md-12 receiveMonTexSt" data-bind="i18n: 'tab-request-payment-history'"></h5>
+    <table class="table table-bordered">
+        <tr>
+            <th data-bind="i18n: 'tb-header-text-date'" class="receiveMonTexSt"></th>
+            <th data-bind="i18n: 'tb-header-text-address'" class="receiveMonTexSt"></th>
+            <th data-bind="i18n: 'tb-header-amount-req'" class="receiveMonTexSt"></th>
+            <th data-bind="i18n: 'tb-header-test-label'" class="receiveMonTexSt"></th>
+            <th data-bind="i18n: 'tab-message'" class="receiveMonTexSt"></th>
+        </tr>
+        <!-- ko foreach: transactions -->
+        <tr>
+            <td data-bind="text: (new Date(time)).toString().replace(/ GMT.*/, '')"></td>
+            <td data-bind="text: key"></td>
+            <td data-bind="text: amount"></td>
+            <td data-bind="text: label"></td>
+            <td data-bind="text: message"></td>
+        </tr>
+        <!-- /ko -->
+    </table>
+
+    <!-- Address modal -->
+    <div class="container container-address" data-bind="fadeVisible: addressPanel">
+        <div class="card">
+            <div class="card-header">
+                Request Payment to <span class="payment-to"></span>
+                <img src="/lib/img/close-a.png" width="45" height="20" data-bind="click: closePanel" alt="close address panel" /> 
+            </div>
+            <div class="card-block">
+                <div id="addr-qrcode"></div>
+                <div class="address-info">
+                    <p>Payment Information</p>
+                    <p>URI: <span>streembit:<span class="payment-to"></span></span></p>
+                    <p>Address: <span class="payment-to"></span></p>
+                </div>
+                <button data-bind="click: copyUri, i18n: 'btn-copy-uri'" class="btn btn-light"></button>
+                <button data-bind="click: copyAddress, i18n: 'btn-copy-address'" class="btn btn-light"></button>
+                <button data-bind="click: saveImg, i18n: 'btn-save-image'" class="btn btn-light"></button>
+                <button data-bind="click: closePanel, i18n: 'btn-close'" class="btn btn-light float-right"></button>
+            </div>
+        </div>
+    </div>
+</div>
