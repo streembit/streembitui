@@ -2938,17 +2938,6 @@ nav > ul > li > ul::before {
   border-left: 1px solid #7a7a7a;
 }
 
-nav > ul ul li::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 8px;
-  left: 23px;
-  top: 16px;
-  border-top: 1px solid #7a7a7a;
-  z-index: 1;
-}
-
 .chooseFileWallet {
   display: inline-block !important;
   margin-left: 30px;
@@ -7459,4 +7448,7 @@ body:not(.mod-pace-custom) .pace .pace-progress {
 /* DAHSBOARD */
 aside#left-panel {
   top: 55px;
+}
+aside#left-panel a, aside#left-panel i {
+  color: #fff;
 }
