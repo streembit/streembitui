@@ -4990,7 +4990,14 @@ button {
   left: 193px;
 }
 
+.lang-menu {
+  position: relative;
+}
+
 #main-header-st nav ul {
+  right: 15px;
+  z-index: 1;
+  left: auto;
   width: auto;
 }
 
@@ -5051,9 +5058,6 @@ button {
   font-size: 13px;
 }
 
-#main-header-st .dropdown-item {
-  padding: 0px 1.5rem;
-}
 
 #main-header-st nav ul li a:active {
   background: transparent !important;
