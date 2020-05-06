@@ -15,7 +15,9 @@
   animation: pulse 750ms infinite;
   animation-delay: 250ms;
 }
-
+.cursor-pointer {
+  cursor: pointer!important;
+}
 .loading-pulse:before,
 .loading-pulse:after {
   content: "";
@@ -93,7 +95,7 @@ body[data-account-load-complete="false"] #main {
   padding-bottom: 10px;
 }
 
-.content-panel .view-content.dashboard,
+
 .content-panel .view-content.initaccount {
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -3210,18 +3212,14 @@ address-panel-close {
   display: inline-block;
   margin: 4px 10px;
   width: 20px;
-  height: 40px;
   cursor: pointer;
-  position: absolute;
-  top: 0;
-  left: 188px;
+  position: relative;
 }
 
 #connection_indicator span {
   font-size: 16px;
   width: 20px;
   height: 20px;
-  margin: 12px 0 0;
   color: #808080;
 }
 
@@ -3628,9 +3626,9 @@ body.smart-style-6 #logo-group > span#logo:before {
   margin-right: 12px;
   padding: 3px 8px;
   font-size: 16px;
-  color: #777;
+  color: #5b5b5b;
   box-shadow: inset 0 -2px 0 transparent;
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
 }
 
 .dropdown-design-change {
@@ -4455,9 +4453,7 @@ span.users-hub {
   padding: 5px;
   text-align: center;
   text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #bfbfbf;
-  color: #777;
+  color: #5b5b5b;
   margin: 8px 0 0 0;
   position: relative;
   cursor: pointer;
@@ -4641,7 +4637,14 @@ span.users-hub {
 .header-user-name:hover {
   color: #c0bbb7;
 }
-
+.user-name-sidebar {
+    display: block;
+    padding: 0.8125rem 1rem;
+    border-bottom: 1px solid #fff;
+}
+span.header-user-name {
+  font-size: 1.5rem;
+}
 .add-contact-in-contactBar {
   border-radius: 2px;
   display: inline-block;
@@ -4973,12 +4976,6 @@ button {
   margin-right: 0;
 }
 
-#connection_indicator {
-  margin: 1px 10px;
-  top: 7px;
-  left: 193px;
-}
-
 .lang-menu {
   position: relative;
 }
@@ -4996,6 +4993,8 @@ button {
 
 .top-panelopen-contactsbar {
   margin: 0;
+  margin-right: 12px;
+  padding: 3px 8px;
 }
 
 .header-dropdown-list > li > .dropdown-toggle {
@@ -5175,8 +5174,8 @@ button {
   text-align: center;
   line-height: 79px;
   border-radius: 50%;
-  color: #22b4df;
-  border: 4px solid #22b4df;
+  color: #2196F3 ;
+  border: 4px solid #2196F3;
 }
 
 .dashboard-btn-manage-devices {
@@ -5200,8 +5199,8 @@ button {
   text-align: center;
   line-height: 77px;
   border-radius: 50%;
-  color: #05bd61;
-  border: 4px solid #05bd61;
+  color: #1dc9b7;
+  border: 4px solid #1dc9b7;
 }
 
 .existContacts {
@@ -5381,16 +5380,16 @@ button {
 
 .manageDevicesFromDashboard {
   border-radius: 22px;
-  background: #22b4df;
-  border: 1px solid #22b4df;
+  background: #2196F3;
+  border: 1px solid #2196F3;
   width: 160px;
   font-size: 12px;
 }
 
 .manageWalletFromDashboard {
   border-radius: 22px;
-  background: #05bd61;
-  border: 1px solid #05bd61;
+  background: #1dc9b7;
+  border: 1px solid #1dc9b7;
   width: 160px;
   font-size: 12px;
 }
@@ -7451,4 +7450,44 @@ aside#left-panel {
 }
 aside#left-panel a, aside#left-panel i {
   color: #fff;
+}
+.dropdown-icon-menu > ul > li .btn:hover, .header-btn:hover {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: #5b5b5b;
+  background: #5b5b5b;
+  color: #fff;
+}
+.badge.badge-icon-warning, .badge.badge-icon-info, .badge.badge-icon-danger {
+    position: absolute;
+    display: inline-block;
+    color: #fff;
+    -webkit-box-shadow: 0 0 0 1px #fff;
+    box-shadow: 0 0 0 1px #fff;
+    cursor: default;
+    border: 1px solid transparent;
+    font-size: 0.625rem;
+    min-width: 1rem;
+    max-width: 1.6875rem;
+    padding: 0 3px;
+    border-radius: 1.25rem;
+    font-weight: 500;
+    line-height: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.badge.badge-icon-info {
+  background-color: #2196F3;
+}
+.badge.badge-icon-warning {
+  background-color: #FF9A13;
+}
+.badge.badge-icon-danger {
+  background-color: #d4370d;
+}
+.not-side-pos-in-mobile-version {
+  display: flex;
+  flex-direction: row;
 }

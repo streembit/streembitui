@@ -44,7 +44,7 @@
   <link rel="stylesheet" media="screen, print" href="lib/css/vendors.bundle.css">
   <link rel="stylesheet" media="screen, print" href="lib/css/app.bundle.css">
   <!-- <link rel="stylesheet" type="text/css" media="screen" href="lib/css/bootstrap.min.css"> -->
-  <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" type="text/css" media="screen" href="lib/css/font-awesome.min.css"> -->
   <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
   <!-- <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production-plugins.min.css">
   <link rel="stylesheet" type="text/css" media="screen" href="lib/css/smartadmin-production.css">
@@ -54,7 +54,8 @@
 
   <!-- NOTIFICATIONS PLUGIN -->
   <!-- <link href="/lib/css/notifications/toastr/toastr.css" rel="stylesheet"/> -->
-
+  <link rel="stylesheet" type="text/css" media="screen" href="lib/css/fa-solid.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="lib/css/fa-regular.css">
   <link rel="stylesheet" media="screen, print" href="lib/css/theme-custom.css">
   <link rel="stylesheet" type="text/css" media="screen" href="lib/css/streembit.css">
   <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
@@ -96,7 +97,7 @@
       display:block;
       }
       body[data-account-load-complete=true] #allContent {
-      margin-top: 45px;
+      margin-top: 55px;
       }
       body[data-account-load-complete=true] .content-panel {
       background: #fff;
@@ -189,21 +190,21 @@
   <div id="app-container">
     <div id="main-header-st">
       <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
-        <a class="navbar-brand" href="#">
-          <span id="logo" data-action="mainLogoStreembit">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <span id="logo" data-action="mainLogoStreembit" class="mr-3">
             <img src="lib/images/applogo.png">
           </span>
           <span id="quichBackOnMobileVersion" data-action="mainLogoStreembit">
             <i class="fa fa-lg fa-fw fa-home quickBackIconOnDashboardMobile"></i>
           </span>
-          <div id="hide-menu" class="btn-header sidebar-toggler" style="float: right;">
-            <span class="left-side-header-bt">
-              <i class="fa fa-reorder" style="margin-top:6px; cursor: pointer;color: #6D6A69;"></i>
+          <div id="hide-menu" class="btn-header sidebar-toggler">
+            <span class="header-btn btn mx-0 cursor-pointer">
+              <i class="ni ni-menu" style="margin-top:6px; cursor: pointer;"></i>
             </span>
           </div>
           <span id="mobile-header-main-manu-pan" class="btn-header sidebar-toggler" style="float: right;height: auto;" data-target="#mobileVersionHeaderMainMenu"
             data-toggle="collapse" data-action="mobileHeaderMainMenu">
-            <i class="fa fa-reorder" style="margin-top:5px; cursor: pointer;color: #6D6A69;"></i>
+            <i class="ni ni-menu" style="margin-top:5px; cursor: pointer;"></i>
           </span>
           <div data-bind="component: {name: 'connection'}"></div>
         </a>
@@ -222,9 +223,10 @@
                 </li> -->
           </ul>
           <div class="not-side-pos-in-mobile-version" style="height: 35px">
-            <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock'></div>
             <div class="btn-header pull-right forAddingContact" style="margin-right:10px" data-placement="bottom"
               data-toggle="tooltip" title="Contact list">
+            <div class="float-right" data-bind="component: {name: 'activity'}" id='massagesBlock'></div>
+            
               <span class="top-panelopen-contactsbar" data-action="contactsBar">
                 <i class="fa fa-users"></i>
               </span>
@@ -343,7 +345,7 @@
         </div>
         <span class="navbar-toggler mobile-style-for-dropdowns" data-toggle="collapse" data-target="#navBlockchain"
           aria-controls="navBlockchain" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fa fa-lg fa-fw fa-money"></i>
+          <i class="far fa-money-bill-alt"></i>
           <span class="menu-item-parent">Blockchain</span>
           <span class="caret"></span>
         </span>
@@ -426,8 +428,9 @@
           <span>
             <!-- User image size is adjusted inside CSS, it should stay as it -->
             <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut" style="cursor: default;"
-              class="header-user-name">
-              <span data-bind="text: user_name" style="padding-top:4px;text-transform:none;cursor: default;" class="header-user-name"></span>
+              class="header-user-name user-name-sidebar">
+              <i class="fa fa-user-circle fa-2x mr-2"></i> 
+              <span data-bind="text: user_name" style="text-transform:none;cursor: default;" class="header-user-name"></span>
             </a>
           </span>
         </div>
@@ -463,7 +466,7 @@
               </ul>
             </li>
             <li>
-              <a href="#"><i class="fa fa-lg fa-fw fa-money"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
+              <a href="#"><i class="far fa-money-bill-alt"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
               <ul>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain

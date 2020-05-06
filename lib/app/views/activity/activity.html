@@ -2,15 +2,15 @@
 <div data-toggle="buttons" style="" id="activity">
     <div id="showm" class="btn btn-light notifybtn" data-bind="click: show_messages">
         <i class="fa fa-envelope"></i>
-        <b class="badge" data-bind="text:msgcountPanel, css: { 'bg-color-orange': msgcountPanel() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
+        <span class="badge badge-icon-warning" data-bind="text:msgcountPanel, css: { 'bg-color-orange': msgcountPanel() >= 0 }" style="top:4px; right:auto;width: 18px"></span>
     </div>
     <div id="notifym" class="btn btn-light notifybtn" data-bind="click: show_notifications">
         <i class="fa fa-bell"></i>
-        <b class="badge" data-bind="text:notifycount, css: { 'bg-color-blue': notifycount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
+        <span class="badge badge-icon-info" data-bind="text:notifycount, css: { 'bg-color-blue': notifycount() >= 0 }" style="top:4px; right:auto;width: 18px"></span>
     </div>
     <div id="errorm" class="btn btn-light notifybtn" data-bind="click: show_errors">
         <i class="fa fa-exclamation-triangle"></i>
-        <b class="badge" data-bind="text:errorcount, css: { 'bg-color-red': errorcount() >= 0 }" style="top:4px; right:auto;width: 18px"></b>
+        <span class="badge badge-icon-danger" data-bind="text:errorcount, css: { 'bg-color-red': errorcount() >= 0 }" style="top:4px; right:auto;width: 18px"></span>
     </div>
 </div>
 <span class="msg-arrow-up hideArroyUp" data-bind="visible: msgTriangle"></span>
