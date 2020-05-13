@@ -17,7 +17,7 @@
 <span class="ntf-arrow-up hideArroyUp" data-bind="visible: ntfTriangle"></span>
 <span class="err-arrow-up hideArroyUp" data-bind="visible: errTriangle"></span>
 <!-- notification content -->
-<div class="ajax-notifications custom-scroll dropdown-design-change" data-bind="template: {name: template}, visible: contentShow"></div>
+<div class="ajax-notifications custom-scroll dropdown-design-change rounded-top" data-bind="template: {name: template}, visible: contentShow"></div>
 
 <script type="text/html" id="message-activity-template">
     <ul class="notification-body message-activity-col notification-box-message-list mobile-size-msg-box" data-bind="foreach: messages">
@@ -32,7 +32,7 @@
             </div>
         </li>
     </ul>
-    <div class="last-update-notif">
+    <div class="last-update-notif dropdown-header bg-trans-gradient d-flex  align-items-center">
         <span style="font-size: 10px">Last updated on: <span data-bind="localdate: lastupdate"></span></span>
     </div>
 </script>
