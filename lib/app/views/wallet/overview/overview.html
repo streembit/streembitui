@@ -1,11 +1,12 @@
-<div id="overview">
+<div id="overview" class="col-12 col-lg-8">
  <div id="accordion" style="margin-bottom: 18px">
     <div class="card">
       <div class="card-header">
         <h4 class="card-title" style="color: #3276b1">
             <a href="#balance" role="button" class="blueLink" data-toggle="collapse" aria-expanded="true" aria-controls="collapseExample" data-bind="i18n: 'col-balance'"></a><br>
         </h4>
-        <div id="balance">
+        </div>
+        <div id="balance" class="collapse show">
             <div class="modal-body ">
                 <div class="container-fluid">
                 <div class="row">
@@ -15,7 +16,6 @@
                 </div>
             </div>  
         </div>
-        </div>
     </div>
 </div>
  <div class="" id="accordionNew">
@@ -24,45 +24,45 @@
         <h4 class="card-title" style="color: #3276b1">
             <a href="#transactions" role="button" class="blueLink" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-bind="i18n: 'col-recent-transactions'"></a><br>
         </h4>
-            <div id="transactions" class="collapse">
-                <div class="modal-body">
-                  <div class="container-fluid">
-                    <div class="form-group row">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
-                                <div data-bind="i18n:'wal-change-address'"></div>
-                            </label>
-                        </div>
+        </div>
+        <div id="transactions" class="collapse">
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="form-group row">
+                    <div class="form-check custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="use-change-address">
+                        <label class="form-check-label custom-control-label" for="use-change-address">
+                            <div data-bind="i18n:'wal-change-address'"></div>
+                        </label>
                     </div>
-                    <div class="form-group  row">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
+                </div>
+                <div class="form-group mb-1 row">
+                    <div class="form-check custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="mtl-change-address">
+                            <label class="form-check-label custom-control-label" for="mtl-change-address">
                                 <div data-bind="i18n:'wal-multiple-change-address'"></div>
                             </label>
-                        </div>
                     </div>
-                    <div class="form-group  row">
-                        <div class="col-md-4" style="padding: 10px 0">
-                            <div data-bind="i18n:'wal-coin-section'" style="float: left;"></div>
-                            <select style="padding: 5px 0" class="offset-md-1 overview-coin-mobile">
-                                <option>Priority</option>
-                                <option>Privacy</option>
-                            </select>
-                        </div> 
+                </div>
+                <div class="form-group  row">
+                    <div class="col-md-4" style="padding: 10px 0">
+                        <div data-bind="i18n:'wal-coin-section'" class="form-label"></div>
+                        <select style="padding: 5px 0" class="overview-coin-mobile form-control">
+                            <option>Priority</option>
+                            <option>Privacy</option>
+                        </select>
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="form-check custom-control custom-switch">
+                            <input type="checkbox" class="form-check-input custom-control-input" id="spend-conf-coins">
+                        <label class="form-check-label custom-control-label" for="spend-conf-coins">
+                            <div data-bind="i18n:'wal-confirmed-coins'"></div>
+                        </label>
                     </div>
-                    <div class="form-group row">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
-                                <div data-bind="i18n:'wal-confirmed-coins'"></div>
-                            </label>
-                        </div>
-                    </div>  
-                  </div>
                 </div>  
-            </div>
+              </div>
+            </div>  
         </div>
     </div>
 </div>
