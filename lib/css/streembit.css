@@ -2937,12 +2937,6 @@ nav > ul > li > ul::before {
   border-left: 1px solid #7a7a7a;
 }
 
-.chooseFileWallet {
-  display: inline-block !important;
-  margin-left: 30px;
-  width: 90px;
-}
-
 .inp-error {
   border: 1px solid #8f2129;
   background: #fdc;
