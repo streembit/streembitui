@@ -548,6 +548,14 @@
 /*------------------------
     Usage
 
+  $color-white: hexToRGBString(#fff) => "255,255,255"
+  $color-white: hexToRGBString(rgb(255,255,255)) => "255,255,255"
+  $color-white: hexToRGBString(rgba(#fff,1)) => "255,255,255"
+  
+------------------------*/
+/*------------------------
+    Usage
+
     h1 {
       font-size: rem(32);
     }
@@ -576,6 +584,10 @@ Color brightness is determined by the following formula:
 ------------------------*/
 /*------------------------
  color factory 
+  eg: contrast-ink($contrastvalue)
+------------------------*/
+/*------------------------
+ color factory 
   eg: @include paint($blue-grey-50, bg-blue-grey-50);
 ------------------------*/
 /* backface visibility */
@@ -585,6 +597,7 @@ Color brightness is determined by the following formula:
 /*  THEME COLORs
 ========================================================================== */
 /* Looks good on chrome default color profile */
+/* We will manually convert these primary colors to rgb for the dark mode option of the theme */
 /* looks good in sRGB but washed up on chrome default 
 $color-primary:						#826bb0;
 $color-success:						#31cb55;
@@ -623,7 +636,7 @@ $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%);
 /* not part of bootstrap variable */
 /* custom checkbox */
 /* custom range */
-/* select */
+/* custom file */
 /* badge */
 /* cards */
 /*border radius*/
@@ -747,7 +760,10 @@ aside.page-sidebar ($nav-width, $nav-background)
 ========================================================================== */
 /* main navigation */
 /* left panel */
+/* nav footer */
 /* nav parent level-0 */
+/* nav link level-1 */
+/* nav level-1 bg */
 /* nav icon sizes */
 /* badge default */
 /* all child */

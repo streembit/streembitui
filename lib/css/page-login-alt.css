@@ -11,6 +11,14 @@
 /*------------------------
     Usage
 
+  $color-white: hexToRGBString(#fff) => "255,255,255"
+  $color-white: hexToRGBString(rgb(255,255,255)) => "255,255,255"
+  $color-white: hexToRGBString(rgba(#fff,1)) => "255,255,255"
+  
+------------------------*/
+/*------------------------
+    Usage
+
     h1 {
       font-size: rem(32);
     }
@@ -39,6 +47,10 @@ Color brightness is determined by the following formula:
 ------------------------*/
 /*------------------------
  color factory 
+  eg: contrast-ink($contrastvalue)
+------------------------*/
+/*------------------------
+ color factory 
   eg: @include paint($blue-grey-50, bg-blue-grey-50);
 ------------------------*/
 /* backface visibility */
@@ -48,6 +60,7 @@ Color brightness is determined by the following formula:
 /*  THEME COLORs
 ========================================================================== */
 /* Looks good on chrome default color profile */
+/* We will manually convert these primary colors to rgb for the dark mode option of the theme */
 /* looks good in sRGB but washed up on chrome default 
 $color-primary:						#826bb0;
 $color-success:						#31cb55;
@@ -86,7 +99,7 @@ $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%);
 /* not part of bootstrap variable */
 /* custom checkbox */
 /* custom range */
-/* select */
+/* custom file */
 /* badge */
 /* cards */
 /*border radius*/
@@ -210,7 +223,10 @@ aside.page-sidebar ($nav-width, $nav-background)
 ========================================================================== */
 /* main navigation */
 /* left panel */
+/* nav footer */
 /* nav parent level-0 */
+/* nav link level-1 */
+/* nav level-1 bg */
 /* nav icon sizes */
 /* badge default */
 /* all child */
@@ -378,19 +394,33 @@ RESULT:
 /* patterns */
 /* Page Layout Starts below...
 ========================================================================== */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; }
+
 html body {
-  background: #ebf6fd;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100%;
+  background: url("../img/clouds.png") no-repeat;
   /* NEW*/ }
   html body .blankpage-logo {
     padding: 20px 0 30px; }
   html body .blankpage-form-field {
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    width: 320px;
-    height: auto;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%); }
+    width: 320px; }
     html body .blankpage-form-field .card {
       margin: 0;
       padding: 13.5px 20px 15.5px;
@@ -406,8 +436,13 @@ html body {
     font-size: 0.75rem;
     color: #1282d8; }
   html body .login-footer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 0.6875rem; }
+    font-size: 0.6875rem;
+    text-align: center; }
   html body video {
     position: fixed;
     top: 50%;

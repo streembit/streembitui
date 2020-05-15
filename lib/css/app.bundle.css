@@ -12,6 +12,14 @@
 /*------------------------
     Usage
 
+  $color-white: hexToRGBString(#fff) => "255,255,255"
+  $color-white: hexToRGBString(rgb(255,255,255)) => "255,255,255"
+  $color-white: hexToRGBString(rgba(#fff,1)) => "255,255,255"
+  
+------------------------*/
+/*------------------------
+    Usage
+
     h1 {
       font-size: rem(32);
     }
@@ -40,6 +48,10 @@ Color brightness is determined by the following formula:
 ------------------------*/
 /*------------------------
  color factory 
+  eg: contrast-ink($contrastvalue)
+------------------------*/
+/*------------------------
+ color factory 
   eg: @include paint($blue-grey-50, bg-blue-grey-50);
 ------------------------*/
 /* backface visibility */
@@ -49,6 +61,7 @@ Color brightness is determined by the following formula:
 /*  THEME COLORs
 ========================================================================== */
 /* Looks good on chrome default color profile */
+/* We will manually convert these primary colors to rgb for the dark mode option of the theme */
 /* looks good in sRGB but washed up on chrome default 
 $color-primary:						#826bb0;
 $color-success:						#31cb55;
@@ -87,7 +100,7 @@ $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%);
 /* not part of bootstrap variable */
 /* custom checkbox */
 /* custom range */
-/* select */
+/* custom file */
 /* badge */
 /* cards */
 /*border radius*/
@@ -211,7 +224,10 @@ aside.page-sidebar ($nav-width, $nav-background)
 ========================================================================== */
 /* main navigation */
 /* left panel */
+/* nav footer */
 /* nav parent level-0 */
+/* nav link level-1 */
+/* nav level-1 bg */
 /* nav icon sizes */
 /* badge default */
 /* all child */
@@ -398,7 +414,7 @@ RESULT:
   .custom-scrollbar::-webkit-scrollbar-thumb:vertical {
     background-color: #666; }
 
-.page-logo, body:not(.header-function-fixed) .page-logo, .header-function-fixed:not(.nav-function-top) .page-header, #msgr_listfilter_input, .msgr-list, .msgr-list + .msgr:before {
+.page-logo, body:not(.header-function-fixed) .page-logo, .header-function-fixed:not(.nav-function-top) .page-header, .footer-function-fixed .page-footer, #msgr_listfilter_input, .msgr-list, .msgr-list + .msgr:before {
   -webkit-transition: all 470ms cubic-bezier(0.34, 1.25, 0.3, 1);
   transition: all 470ms cubic-bezier(0.34, 1.25, 0.3, 1); }
 
@@ -415,20 +431,20 @@ RESULT:
   -webkit-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out; }
 
-.header-function-fixed .btn-switch[data-class="header-function-fixed"], .nav-function-fixed .btn-switch[data-class="nav-function-fixed"], .nav-function-minify .btn-switch[data-class="nav-function-minify"], .nav-function-hidden .btn-switch[data-class="nav-function-hidden"], .nav-function-top .btn-switch[data-class="nav-function-top"], .nav-mobile-push .btn-switch[data-class="nav-mobile-push"], .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"], .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"], .mod-main-boxed .btn-switch[data-class="mod-main-boxed"], .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"], .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"], .mod-pace-custom .btn-switch[data-class="mod-pace-custom"], .mod-bigger-font .btn-switch[data-class="mod-bigger-font"], .mod-high-contrast .btn-switch[data-class="mod-high-contrast"], .mod-color-blind .btn-switch[data-class="mod-color-blind"], .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"], .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"], .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"], .mod-disable-animation .btn-switch[data-class="mod-disable-animation"], .mod-nav-link .btn-switch[data-class="mod-nav-link"], .mod-app-rtl .btn-switch[data-class="mod-app-rtl"], .mod-panel-icon .btn-switch[data-class="mod-panel-icon"] {
+.header-function-fixed .btn-switch[data-class="header-function-fixed"], .nav-function-fixed .btn-switch[data-class="nav-function-fixed"], .nav-function-minify .btn-switch[data-class="nav-function-minify"], .nav-function-hidden .btn-switch[data-class="nav-function-hidden"], .nav-function-top .btn-switch[data-class="nav-function-top"], .footer-function-fixed .btn-switch[data-class="footer-function-fixed"], .nav-mobile-push .btn-switch[data-class="nav-mobile-push"], .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"], .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"], .mod-main-boxed .btn-switch[data-class="mod-main-boxed"], .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"], .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"], .mod-pace-custom .btn-switch[data-class="mod-pace-custom"], .mod-bigger-font .btn-switch[data-class="mod-bigger-font"], .mod-high-contrast .btn-switch[data-class="mod-high-contrast"], .mod-color-blind .btn-switch[data-class="mod-color-blind"], .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"], .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"], .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"], .mod-disable-animation .btn-switch[data-class="mod-disable-animation"], .mod-nav-link .btn-switch[data-class="mod-nav-link"], .mod-nav-dark .btn-switch[data-class="mod-nav-dark"], .mod-panel-icon .btn-switch[data-class="mod-panel-icon"] {
   color: #fff;
   background: #2198F3 !important; }
-  .header-function-fixed .btn-switch[data-class="header-function-fixed"]:before, .nav-function-fixed .btn-switch[data-class="nav-function-fixed"]:before, .nav-function-minify .btn-switch[data-class="nav-function-minify"]:before, .nav-function-hidden .btn-switch[data-class="nav-function-hidden"]:before, .nav-function-top .btn-switch[data-class="nav-function-top"]:before, .nav-mobile-push .btn-switch[data-class="nav-mobile-push"]:before, .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"]:before, .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"]:before, .mod-main-boxed .btn-switch[data-class="mod-main-boxed"]:before, .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"]:before, .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"]:before, .mod-pace-custom .btn-switch[data-class="mod-pace-custom"]:before, .mod-bigger-font .btn-switch[data-class="mod-bigger-font"]:before, .mod-high-contrast .btn-switch[data-class="mod-high-contrast"]:before, .mod-color-blind .btn-switch[data-class="mod-color-blind"]:before, .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"]:before, .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"]:before, .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"]:before, .mod-disable-animation .btn-switch[data-class="mod-disable-animation"]:before, .mod-nav-link .btn-switch[data-class="mod-nav-link"]:before, .mod-app-rtl .btn-switch[data-class="mod-app-rtl"]:before, .mod-panel-icon .btn-switch[data-class="mod-panel-icon"]:before {
+  .header-function-fixed .btn-switch[data-class="header-function-fixed"]:before, .nav-function-fixed .btn-switch[data-class="nav-function-fixed"]:before, .nav-function-minify .btn-switch[data-class="nav-function-minify"]:before, .nav-function-hidden .btn-switch[data-class="nav-function-hidden"]:before, .nav-function-top .btn-switch[data-class="nav-function-top"]:before, .footer-function-fixed .btn-switch[data-class="footer-function-fixed"]:before, .nav-mobile-push .btn-switch[data-class="nav-mobile-push"]:before, .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"]:before, .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"]:before, .mod-main-boxed .btn-switch[data-class="mod-main-boxed"]:before, .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"]:before, .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"]:before, .mod-pace-custom .btn-switch[data-class="mod-pace-custom"]:before, .mod-bigger-font .btn-switch[data-class="mod-bigger-font"]:before, .mod-high-contrast .btn-switch[data-class="mod-high-contrast"]:before, .mod-color-blind .btn-switch[data-class="mod-color-blind"]:before, .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"]:before, .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"]:before, .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"]:before, .mod-disable-animation .btn-switch[data-class="mod-disable-animation"]:before, .mod-nav-link .btn-switch[data-class="mod-nav-link"]:before, .mod-nav-dark .btn-switch[data-class="mod-nav-dark"]:before, .mod-panel-icon .btn-switch[data-class="mod-panel-icon"]:before {
     content: "ON" !important;
     left: 7px !important;
     right: auto !important; }
-  .header-function-fixed .btn-switch[data-class="header-function-fixed"]:after, .nav-function-fixed .btn-switch[data-class="nav-function-fixed"]:after, .nav-function-minify .btn-switch[data-class="nav-function-minify"]:after, .nav-function-hidden .btn-switch[data-class="nav-function-hidden"]:after, .nav-function-top .btn-switch[data-class="nav-function-top"]:after, .nav-mobile-push .btn-switch[data-class="nav-mobile-push"]:after, .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"]:after, .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"]:after, .mod-main-boxed .btn-switch[data-class="mod-main-boxed"]:after, .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"]:after, .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"]:after, .mod-pace-custom .btn-switch[data-class="mod-pace-custom"]:after, .mod-bigger-font .btn-switch[data-class="mod-bigger-font"]:after, .mod-high-contrast .btn-switch[data-class="mod-high-contrast"]:after, .mod-color-blind .btn-switch[data-class="mod-color-blind"]:after, .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"]:after, .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"]:after, .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"]:after, .mod-disable-animation .btn-switch[data-class="mod-disable-animation"]:after, .mod-nav-link .btn-switch[data-class="mod-nav-link"]:after, .mod-app-rtl .btn-switch[data-class="mod-app-rtl"]:after, .mod-panel-icon .btn-switch[data-class="mod-panel-icon"]:after {
+  .header-function-fixed .btn-switch[data-class="header-function-fixed"]:after, .nav-function-fixed .btn-switch[data-class="nav-function-fixed"]:after, .nav-function-minify .btn-switch[data-class="nav-function-minify"]:after, .nav-function-hidden .btn-switch[data-class="nav-function-hidden"]:after, .nav-function-top .btn-switch[data-class="nav-function-top"]:after, .footer-function-fixed .btn-switch[data-class="footer-function-fixed"]:after, .nav-mobile-push .btn-switch[data-class="nav-mobile-push"]:after, .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"]:after, .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"]:after, .mod-main-boxed .btn-switch[data-class="mod-main-boxed"]:after, .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"]:after, .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"]:after, .mod-pace-custom .btn-switch[data-class="mod-pace-custom"]:after, .mod-bigger-font .btn-switch[data-class="mod-bigger-font"]:after, .mod-high-contrast .btn-switch[data-class="mod-high-contrast"]:after, .mod-color-blind .btn-switch[data-class="mod-color-blind"]:after, .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"]:after, .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"]:after, .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"]:after, .mod-disable-animation .btn-switch[data-class="mod-disable-animation"]:after, .mod-nav-link .btn-switch[data-class="mod-nav-link"]:after, .mod-nav-dark .btn-switch[data-class="mod-nav-dark"]:after, .mod-panel-icon .btn-switch[data-class="mod-panel-icon"]:after {
     content: " " !important;
     right: 0 !important;
     left: auto !important;
     background: #fff !important;
     color: #2198F3 !important; }
-  .header-function-fixed .btn-switch[data-class="header-function-fixed"] + .onoffswitch-title, .nav-function-fixed .btn-switch[data-class="nav-function-fixed"] + .onoffswitch-title, .nav-function-minify .btn-switch[data-class="nav-function-minify"] + .onoffswitch-title, .nav-function-hidden .btn-switch[data-class="nav-function-hidden"] + .onoffswitch-title, .nav-function-top .btn-switch[data-class="nav-function-top"] + .onoffswitch-title, .nav-mobile-push .btn-switch[data-class="nav-mobile-push"] + .onoffswitch-title, .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"] + .onoffswitch-title, .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"] + .onoffswitch-title, .mod-main-boxed .btn-switch[data-class="mod-main-boxed"] + .onoffswitch-title, .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"] + .onoffswitch-title, .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"] + .onoffswitch-title, .mod-pace-custom .btn-switch[data-class="mod-pace-custom"] + .onoffswitch-title, .mod-bigger-font .btn-switch[data-class="mod-bigger-font"] + .onoffswitch-title, .mod-high-contrast .btn-switch[data-class="mod-high-contrast"] + .onoffswitch-title, .mod-color-blind .btn-switch[data-class="mod-color-blind"] + .onoffswitch-title, .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"] + .onoffswitch-title, .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"] + .onoffswitch-title, .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"] + .onoffswitch-title, .mod-disable-animation .btn-switch[data-class="mod-disable-animation"] + .onoffswitch-title, .mod-nav-link .btn-switch[data-class="mod-nav-link"] + .onoffswitch-title, .mod-app-rtl .btn-switch[data-class="mod-app-rtl"] + .onoffswitch-title, .mod-panel-icon .btn-switch[data-class="mod-panel-icon"] + .onoffswitch-title {
+  .header-function-fixed .btn-switch[data-class="header-function-fixed"] + .onoffswitch-title, .nav-function-fixed .btn-switch[data-class="nav-function-fixed"] + .onoffswitch-title, .nav-function-minify .btn-switch[data-class="nav-function-minify"] + .onoffswitch-title, .nav-function-hidden .btn-switch[data-class="nav-function-hidden"] + .onoffswitch-title, .nav-function-top .btn-switch[data-class="nav-function-top"] + .onoffswitch-title, .footer-function-fixed .btn-switch[data-class="footer-function-fixed"] + .onoffswitch-title, .nav-mobile-push .btn-switch[data-class="nav-mobile-push"] + .onoffswitch-title, .nav-mobile-no-overlay .btn-switch[data-class="nav-mobile-no-overlay"] + .onoffswitch-title, .nav-mobile-slide-out .btn-switch[data-class="nav-mobile-slide-out"] + .onoffswitch-title, .mod-main-boxed .btn-switch[data-class="mod-main-boxed"] + .onoffswitch-title, .mod-fixed-bg .btn-switch[data-class="mod-fixed-bg"] + .onoffswitch-title, .mod-clean-page-bg .btn-switch[data-class="mod-clean-page-bg"] + .onoffswitch-title, .mod-pace-custom .btn-switch[data-class="mod-pace-custom"] + .onoffswitch-title, .mod-bigger-font .btn-switch[data-class="mod-bigger-font"] + .onoffswitch-title, .mod-high-contrast .btn-switch[data-class="mod-high-contrast"] + .onoffswitch-title, .mod-color-blind .btn-switch[data-class="mod-color-blind"] + .onoffswitch-title, .mod-hide-nav-icons .btn-switch[data-class="mod-hide-nav-icons"] + .onoffswitch-title, .mod-hide-info-card .btn-switch[data-class="mod-hide-info-card"] + .onoffswitch-title, .mod-lean-subheader .btn-switch[data-class="mod-lean-subheader"] + .onoffswitch-title, .mod-disable-animation .btn-switch[data-class="mod-disable-animation"] + .onoffswitch-title, .mod-nav-link .btn-switch[data-class="mod-nav-link"] + .onoffswitch-title, .mod-nav-dark .btn-switch[data-class="mod-nav-dark"] + .onoffswitch-title, .mod-panel-icon .btn-switch[data-class="mod-panel-icon"] + .onoffswitch-title {
     font-weight: 500;
     color: #2198F3; }
 
@@ -438,17 +454,23 @@ RESULT:
 .nav-mobile-slide-out #nmp,
 .nav-mobile-slide-out #nmno, .nav-function-top #mnl,
 .nav-function-minify #mnl,
-.mod-hide-nav-icons #mnl, .nav-function-top #nfh, .nav-function-top #mhni,
+.mod-hide-nav-icons #mnl, .mod-skin-dark #mhc,
+.mod-skin-dark #mcbg,
+.mod-skin-dark #mdn, .nav-function-top #nfh, .nav-function-top #mhni,
 .nav-function-minify #mhni {
   position: relative; }
-  .nav-mobile-slide-out #nmp .onoffswitch-title, .nav-mobile-slide-out #nmno .onoffswitch-title, .nav-function-top #mnl .onoffswitch-title, .nav-function-minify #mnl .onoffswitch-title, .mod-hide-nav-icons #mnl .onoffswitch-title, .nav-function-top #nfh .onoffswitch-title, .nav-function-top #mhni .onoffswitch-title, .nav-function-minify #mhni .onoffswitch-title {
+  .nav-mobile-slide-out #nmp .onoffswitch-title, .nav-mobile-slide-out #nmno .onoffswitch-title, .nav-function-top #mnl .onoffswitch-title, .nav-function-minify #mnl .onoffswitch-title, .mod-hide-nav-icons #mnl .onoffswitch-title, .mod-skin-dark #mhc .onoffswitch-title, .mod-skin-dark #mcbg .onoffswitch-title, .mod-skin-dark #mdn .onoffswitch-title, .nav-function-top #nfh .onoffswitch-title, .nav-function-top #mhni .onoffswitch-title, .nav-function-minify #mhni .onoffswitch-title {
+    color: #da9400;
     color: var(--theme-warning-900) !important; }
-  .nav-mobile-slide-out #nmp .onoffswitch-title-desc, .nav-mobile-slide-out #nmno .onoffswitch-title-desc, .nav-function-top #mnl .onoffswitch-title-desc, .nav-function-minify #mnl .onoffswitch-title-desc, .mod-hide-nav-icons #mnl .onoffswitch-title-desc, .nav-function-top #nfh .onoffswitch-title-desc, .nav-function-top #mhni .onoffswitch-title-desc, .nav-function-minify #mhni .onoffswitch-title-desc {
+  .nav-mobile-slide-out #nmp .onoffswitch-title-desc, .nav-mobile-slide-out #nmno .onoffswitch-title-desc, .nav-function-top #mnl .onoffswitch-title-desc, .nav-function-minify #mnl .onoffswitch-title-desc, .mod-hide-nav-icons #mnl .onoffswitch-title-desc, .mod-skin-dark #mhc .onoffswitch-title-desc, .mod-skin-dark #mcbg .onoffswitch-title-desc, .mod-skin-dark #mdn .onoffswitch-title-desc, .nav-function-top #nfh .onoffswitch-title-desc, .nav-function-top #mhni .onoffswitch-title-desc, .nav-function-minify #mhni .onoffswitch-title-desc {
+    color: #da9400;
     color: var(--theme-warning-900) !important; }
   .nav-mobile-slide-out #nmp:after,
   .nav-mobile-slide-out #nmno:after, .nav-function-top #mnl:after,
   .nav-function-minify #mnl:after,
-  .mod-hide-nav-icons #mnl:after, .nav-function-top #nfh:after, .nav-function-top #mhni:after,
+  .mod-hide-nav-icons #mnl:after, .mod-skin-dark #mhc:after,
+  .mod-skin-dark #mcbg:after,
+  .mod-skin-dark #mdn:after, .nav-function-top #nfh:after, .nav-function-top #mhni:after,
   .nav-function-minify #mhni:after {
     content: "DISABLED"; }
 
@@ -532,10 +554,13 @@ RESULT:
 .nav-mobile-slide-out #nmp:after,
 .nav-mobile-slide-out #nmno:after, .nav-function-top #mnl:after,
 .nav-function-minify #mnl:after,
-.mod-hide-nav-icons #mnl:after, .nav-function-top #nfh:after, .nav-function-top #mhni:after,
+.mod-hide-nav-icons #mnl:after, .mod-skin-dark #mhc:after,
+.mod-skin-dark #mcbg:after,
+.mod-skin-dark #mdn:after, .nav-function-top #nfh:after, .nav-function-top #mhni:after,
 .nav-function-minify #mhni:after {
   display: block;
   position: absolute;
+  background: #FF9A13;
   background: var(--theme-warning-50);
   font-size: 10px;
   width: 65px;
@@ -617,6 +642,12 @@ RESULT:
   --theme-danger: #d4370d;
   --theme-light: #fff;
   --theme-dark: #434a51;
+  --theme-rgb-primary: 33,152,243;
+  --theme-rgb-success: 29,201,183;
+  --theme-rgb-info: 33,150,243;
+  --theme-rgb-warning: 255,154,19;
+  --theme-rgb-danger: 212,55,13;
+  --theme-rgb-fusion: 67.01538,74.00885,81.48462;
   --theme-primary-50: #9ad0fa;
   --theme-primary-100: #82c5f8;
   --theme-primary-200: #6abaf7;
@@ -705,6 +736,13 @@ html {
     direction: ltr;
     text-rendering: optimizeLegibility;
     background-color: #fff; }
+    html body a {
+      color: #2198F3;
+      text-decoration: none;
+      background-color: transparent; }
+      html body a:hover {
+        color: #39a3f4;
+        text-decoration: underline; }
 
 /* app header */
 .header-icon {
@@ -847,8 +885,8 @@ html {
   min-height: 1px;
   padding: 0 2rem; }
   .page-logo img {
-    width: auto;
-    height: auto; }
+    width: 28px;
+    height: 28px; }
   .page-logo .page-logo-link {
     -webkit-box-flex: 1;
         -ms-flex: 1 0 auto;
@@ -1013,7 +1051,11 @@ html {
   height: 22.5rem !important;
   font-size: 0;
   padding: 0.5rem 1rem;
-  text-align: center; }
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
   .app-list > li {
     display: inline-block;
     text-align: center;
@@ -1030,7 +1072,7 @@ html {
   outline: none;
   border-radius: 3px;
   padding-top: 8px;
-  border-radius: 100%;
+  border-radius: 4px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -1045,7 +1087,6 @@ html {
     font-size: 3.125rem;
     margin-top: 4px; }
   .app-list-item:hover {
-    border: 1px solid #e3e3e3;
     padding-top: 7px; }
     .app-list-item:hover > .icon-stack {
       font-size: 3.1875rem; }
@@ -1645,13 +1686,16 @@ html {
     .nav-function-top:not(.header-function-fixed) #nff {
       position: relative; }
       .nav-function-top:not(.header-function-fixed) #nff .onoffswitch-title {
+        color: #da9400;
         color: var(--theme-warning-900); }
       .nav-function-top:not(.header-function-fixed) #nff .onoffswitch-title-desc {
+        color: #da9400;
         color: var(--theme-warning-900); }
       .nav-function-top:not(.header-function-fixed) #nff:after {
         content: "DISABLED";
         display: block;
         position: absolute;
+        background: #FF9A13;
         background: var(--theme-warning-50);
         font-size: 10px;
         width: 65px;
@@ -2386,7 +2430,7 @@ html {
   min-height: 1px; }
 
 /* app content heading */
-.subheader {
+.subheader:not(:empty) {
   margin-bottom: calc(1.5rem + 0.625rem);
   position: relative;
   display: -webkit-box;
@@ -2474,6 +2518,47 @@ html {
   -webkit-box-ordinal-group: 5;
       -ms-flex-order: 4;
           order: 4; }
+
+/* app footer stays fixed */
+.footer-function-fixed .page-footer {
+  position: fixed;
+  right: 0;
+  left: 16.875rem;
+  bottom: 0;
+  z-index: 1000;
+  border-top: 1px solid rgba(0, 0, 0, 0.08); }
+
+.footer-function-fixed .page-content {
+  padding-bottom: 4.8125rem !important; }
+
+.footer-function-fixed.nav-function-minify .page-footer {
+  left: 4.6875rem; }
+
+.footer-function-fixed.nav-function-top .page-footer {
+  left: 0; }
+
+.footer-function-fixed.nav-function-hidden .page-footer {
+  left: 0.625rem; }
+
+.footer-function-fixed.mod-main-boxed .page-footer {
+  width: 100%;
+  max-width: 1397px;
+  margin: 0 auto !important;
+  padding-left: 18.875rem;
+  left: 0; }
+
+.footer-function-fixed.mod-main-boxed.nav-function-top .page-footer {
+  padding-left: 2rem; }
+
+.footer-function-fixed.mod-main-boxed.nav-function-minify .page-footer {
+  padding-left: 6.6875rem; }
+
+.footer-function-fixed.mod-main-boxed.nav-function-hidden .page-footer {
+  padding-left: 2.625rem; }
+
+@media only screen and (max-width: 992px) {
+  .footer-function-fixed .page-footer {
+    left: 0; } }
 
 /* app error page */
 .alt {
@@ -2664,7 +2749,8 @@ html {
   max-width: 130px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden; }
+  overflow: hidden;
+  display: block; }
   .breadcrumb > li.breadcrumb-item:hover {
     max-width: 200px !important;
     cursor: default; }
@@ -5560,8 +5646,12 @@ body:not(.mobile-view-activated).mod-main-boxed.modal-open {
     background: transparent; }
   .nav-function-minify:not(.nav-function-top) .primary-nav .nav-menu > li > a + ul:before {
     left: -0.25rem !important; }
+  .nav-function-top .page-sidebar .primary-nav .nav-menu > li > ul:before {
+    top: -1.5rem; }
   .ie-only {
     display: inline-block !important; }
+  .ie-d-none {
+    display: none !important; }
   /* table hover */
   .table-hover tbody tr:hover {
     -webkit-box-shadow: none;
@@ -5691,13 +5781,11 @@ $grid-breakpoints: (
         margin-bottom: 1.5rem; }
         .page-wrapper .page-content .subheader .subheader-title {
           line-height: 32px;
-          font-weight: 300;
-          color: #22282d; }
+          font-weight: 300; }
           .page-wrapper .page-content .subheader .subheader-title small {
             font-size: 68%;
             letter-spacing: normal;
             margin-top: 0px;
-            color: #181c21;
             overflow: hidden;
             width: calc(100% - 30px);
             font-weight: 300; }
@@ -5889,6 +5977,11 @@ $grid-breakpoints: (
   .page-content {
     padding-left: 1rem !important;
     padding-right: 1rem !important; }
+  .card[class*='p-'] .card-header,
+  .card[class*='p-'] .card-body {
+    padding: 0 !important; }
+  .subheader-block {
+    display: none; }
   .primary-nav .nav-menu li a > .badge {
     font-size: 10px !important; }
   .card .card-header,
@@ -6070,12 +6163,14 @@ input[type="checkbox"]:checked + .custom-control-label {
     .mobile-view-activated #nfh .onoffswitch-title,
     .mobile-view-activated #nft .onoffswitch-title,
     .mobile-view-activated #mmb .onoffswitch-title {
+      color: #da9400;
       color: var(--theme-warning-900) !important; }
     .mobile-view-activated #nff .onoffswitch-title-desc,
     .mobile-view-activated #nfm .onoffswitch-title-desc,
     .mobile-view-activated #nfh .onoffswitch-title-desc,
     .mobile-view-activated #nft .onoffswitch-title-desc,
     .mobile-view-activated #mmb .onoffswitch-title-desc {
+      color: #da9400;
       color: var(--theme-warning-900) !important; }
     .mobile-view-activated #nff:after,
     .mobile-view-activated #nfm:after,
@@ -6085,6 +6180,7 @@ input[type="checkbox"]:checked + .custom-control-label {
       content: "DISABLED";
       font-size: 10px;
       position: absolute;
+      background: #FF9A13;
       background: var(--theme-warning-50);
       width: 65px;
       text-align: center;
@@ -6147,9 +6243,9 @@ input[type="checkbox"]:checked + .custom-control-label {
   .settings-panel .expanded.theme-colors #myapp-13 {
     background: #55ce5f; }
   .settings-panel .expanded.theme-colors #myapp-14 {
-    background: #5c4581; }
+    background: #fbe231; }
   .settings-panel .expanded.theme-colors #myapp-15 {
-    background: #5c4581; }
+    background: #627ca0; }
 
 .settings-panel:first-child h5 {
   margin-top: 0;
@@ -6733,7 +6829,8 @@ body:not(.no-slimscroll) .custom-scroll {
   .mod-main-boxed.mod-bg-1 [data-class="mod-bg-1"]:before,
   .mod-main-boxed.mod-bg-2 [data-class="mod-bg-2"]:before,
   .mod-main-boxed.mod-bg-3 [data-class="mod-bg-3"]:before,
-  .mod-main-boxed.mod-bg-4 [data-class="mod-bg-4"]:before {
+  .mod-main-boxed.mod-bg-4 [data-class="mod-bg-4"]:before,
+  .mod-main-boxed.mod-bg-none [data-class="mod-bg-none"]:before {
     content: " ";
     display: block;
     border-radius: 50%;
@@ -6748,7 +6845,8 @@ body:not(.no-slimscroll) .custom-scroll {
   .mod-main-boxed.mod-bg-1 [data-class="mod-bg-1"]:after,
   .mod-main-boxed.mod-bg-2 [data-class="mod-bg-2"]:after,
   .mod-main-boxed.mod-bg-3 [data-class="mod-bg-3"]:after,
-  .mod-main-boxed.mod-bg-4 [data-class="mod-bg-4"]:after {
+  .mod-main-boxed.mod-bg-4 [data-class="mod-bg-4"]:after,
+  .mod-main-boxed.mod-bg-none [data-class="mod-bg-none"]:after {
     content: " ";
     height: inherit;
     width: inherit;
@@ -6784,10 +6882,10 @@ body:not(.no-slimscroll) .custom-scroll {
   .mod-main-boxed.mod-fixed-bg {
     background-attachment: fixed; } }
 
-.mod-clean-page-bg .page-content-wrapper {
+.mod-clean-page-bg:not(.mod-skin-dark) .page-content-wrapper {
   background: #fff !important; }
 
-.mod-clean-page-bg .page-header {
+.mod-clean-page-bg:not(.mod-skin-dark) .page-header {
   border-bottom-color: rgba(57, 163, 244, 0.13); }
 
 .mod-color-blind .page-wrapper {
@@ -6835,47 +6933,47 @@ body:not(.no-slimscroll) .custom-scroll {
   .mod-hide-nav-icons:not(.nav-function-top):not(.nav-function-minify) .page-sidebar .primary-nav .nav-menu li > ul > li > a + ul > li > a {
     padding-left: 4.1875rem; }
 
-.mod-high-contrast .nav-menu li a,
-.mod-high-contrast .nav-title,
-.mod-high-contrast .nav-menu li a [class*='fa-'],
-.mod-high-contrast .nav-menu li a .ni,
-.mod-high-contrast .dl-ref,
-.mod-high-contrast .btn {
+.mod-high-contrast:not(.mod-skin-dark) .nav-menu li a,
+.mod-high-contrast:not(.mod-skin-dark) .nav-title,
+.mod-high-contrast:not(.mod-skin-dark) .nav-menu li a [class*='fa-'],
+.mod-high-contrast:not(.mod-skin-dark) .nav-menu li a .ni,
+.mod-high-contrast:not(.mod-skin-dark) .dl-ref,
+.mod-high-contrast:not(.mod-skin-dark) .btn {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   color: #fff !important;
   font-weight: 500 !important; }
 
-.mod-high-contrast .subheader-title,
-.mod-high-contrast h1,
-.mod-high-contrast h2,
-.mod-high-contrast h3,
-.mod-high-contrast h4,
-.mod-high-contrast h5,
-.mod-high-contrast .settings-panel-title a,
-.mod-high-contrast .panel-header,
-.mod-high-contrast .badge-detached,
-.mod-high-contrast .btn-secondary,
-.mod-high-contrast .btn-default,
-.mod-high-contrast .page-header .btn,
-.mod-high-contrast [class*="btn-outline-"] {
+.mod-high-contrast:not(.mod-skin-dark) .subheader-title,
+.mod-high-contrast:not(.mod-skin-dark) h1,
+.mod-high-contrast:not(.mod-skin-dark) h2,
+.mod-high-contrast:not(.mod-skin-dark) h3,
+.mod-high-contrast:not(.mod-skin-dark) h4,
+.mod-high-contrast:not(.mod-skin-dark) h5,
+.mod-high-contrast:not(.mod-skin-dark) .settings-panel-title a,
+.mod-high-contrast:not(.mod-skin-dark) .panel-header,
+.mod-high-contrast:not(.mod-skin-dark) .badge-detached,
+.mod-high-contrast:not(.mod-skin-dark) .btn-secondary,
+.mod-high-contrast:not(.mod-skin-dark) .btn-default,
+.mod-high-contrast:not(.mod-skin-dark) .page-header .btn,
+.mod-high-contrast:not(.mod-skin-dark) [class*="btn-outline-"] {
   text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
   color: #000 !important;
   font-weight: 500; }
 
-.mod-high-contrast .subheader-title small,
-.mod-high-contrast .breadcrumb > li > a,
-.mod-high-contrast .page-content,
-.mod-high-contrast h1 small,
-.mod-high-contrast h2 small,
-.mod-high-contrast h3 small,
-.mod-high-contrast h4 small,
-.mod-high-contrast h5,
-.mod-high-contrast h6,
-.mod-high-contrast p,
-.mod-high-contrast .btn-switch + .onoffswitch-title,
-.mod-high-contrast .onoffswitch-title + .onoffswitch-title-desc,
-.mod-high-contrast .panel-container,
-.mod-high-contrast .panel-header .btn {
+.mod-high-contrast:not(.mod-skin-dark) .subheader-title small,
+.mod-high-contrast:not(.mod-skin-dark) .breadcrumb > li > a,
+.mod-high-contrast:not(.mod-skin-dark) .page-content,
+.mod-high-contrast:not(.mod-skin-dark) h1 small,
+.mod-high-contrast:not(.mod-skin-dark) h2 small,
+.mod-high-contrast:not(.mod-skin-dark) h3 small,
+.mod-high-contrast:not(.mod-skin-dark) h4 small,
+.mod-high-contrast:not(.mod-skin-dark) h5,
+.mod-high-contrast:not(.mod-skin-dark) h6,
+.mod-high-contrast:not(.mod-skin-dark) p,
+.mod-high-contrast:not(.mod-skin-dark) .btn-switch + .onoffswitch-title,
+.mod-high-contrast:not(.mod-skin-dark) .onoffswitch-title + .onoffswitch-title-desc,
+.mod-high-contrast:not(.mod-skin-dark) .panel-container,
+.mod-high-contrast:not(.mod-skin-dark) .panel-header .btn {
   text-shadow: none;
   color: #000 !important;
   font-weight: normal !important; }
@@ -6923,13 +7021,16 @@ body:not(.no-slimscroll) .custom-scroll {
     .mod-main-boxed:not(.nav-function-top) #nff {
       position: relative; }
       .mod-main-boxed:not(.nav-function-top) #nff .onoffswitch-title {
+        color: #da9400;
         color: var(--theme-warning-900); }
       .mod-main-boxed:not(.nav-function-top) #nff .onoffswitch-title-desc {
+        color: #da9400;
         color: var(--theme-warning-900); }
       .mod-main-boxed:not(.nav-function-top) #nff:after {
         content: "DISABLED";
         display: block;
         position: absolute;
+        background: #FF9A13;
         background: var(--theme-warning-50);
         font-size: 0.625rem;
         width: 65px;
@@ -6951,7 +7052,8 @@ body:not(.no-slimscroll) .custom-scroll {
       bottom: 0; }
     .mod-main-boxed.header-function-fixed:not(.nav-function-top):not(.nav-function-hidden):not(.nav-function-minify) .page-wrapper .page-header {
       padding-left: 18.875rem; }
-    .mod-main-boxed.header-function-fixed:not(.nav-function-top):not(.nav-function-hidden):not(.nav-function-minify):not(.nav-function-fixed) .page-content {
+    .mod-main-boxed.header-function-fixed:not(.nav-function-top):not(.nav-function-hidden):not(.nav-function-minify):not(.nav-function-fixed) .page-content,
+    .mod-main-boxed.header-function-fixed:not(.nav-function-top):not(.nav-function-hidden):not(.nav-function-minify):not(.nav-function-fixed) .page-footer {
       margin-left: 16.875rem; }
     .mod-main-boxed.header-function-fixed.nav-function-minify:not(.nav-function-top):not(.nav-function-hidden) .page-wrapper .page-header {
       padding-left: 6.6875rem; }
@@ -6984,7 +7086,7 @@ body:not(.no-slimscroll) .custom-scroll {
               box-shadow: 5px 0 20px 0px rgba(0, 0, 0, 0.1), -5px 0 20px 0px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       position: relative; }
-    .mod-main-boxed:not(.header-function-fixed):not(.nav-function-top):not(.modal-open):not(.panel-fullscreen) .page-wrapper {
+    .mod-main-boxed:not(.header-function-fixed):not(.nav-function-top):not(.modal-open):not(.panel-fullscreen):not(.footer-function-fixed) .page-wrapper {
       -webkit-transform: translateX(0) !important;
               transform: translateX(0) !important; } }
 
@@ -7022,6 +7124,15 @@ body:not(.no-slimscroll) .custom-scroll {
     display: none; }
   .mod-nav-link:not(.nav-function-top):not(.nav-function-minify):not(.mod-hide-nav-icons) ul.nav-menu:not(.nav-menu-compact) > li > ul li a i {
     margin-left: 0 !important; }
+
+.mod-nav-dark:not(.mod-skin-dark) .page-sidebar {
+  background-color: #15171a; }
+
+.mod-nav-dark:not(.mod-skin-dark).nav-function-top .page-sidebar .primary-nav .nav-menu > li a:not(:hover):not(focus) {
+  color: #82c2f3; }
+
+.mod-nav-dark:not(.mod-skin-dark).mod-skin-dark:not(.mod-skin-light) .page-logo {
+  border-bottom: inherit; }
 
 /* mod smartpanel icons */
 .mod-panel-icon [role="widget"] .btn-panel {

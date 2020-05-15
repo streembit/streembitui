@@ -3025,8 +3025,6 @@ nav > ul > li > ul::before {
   white-space: normal;
 }
 
-span.payment-to {
-}
 
 address-panel-close {
   position: absolute;
@@ -3039,14 +3037,6 @@ address-panel-close {
 #sign-message > .card {
   border: 1px solid #ccc !important;
   border-top: navajowhite !important;
-}
-
-/*----- Tabs -----*/
-
-.signmessagePopup .tabs {
-  width: 100%;
-  display: inline-block;
-  margin-top: 40px;
 }
 
 /*----- Tab Links -----*/
@@ -3113,8 +3103,6 @@ address-panel-close {
 .signmessagePopup .tab-links {
   padding-left: 0;
   margin: 0;
-  position: absolute;
-  top: 14px;
 }
 
 .titleCollapseOverview {

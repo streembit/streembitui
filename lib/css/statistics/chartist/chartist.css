@@ -1,6 +1,7 @@
 /*  THEME COLORs
 ========================================================================== */
 /* Looks good on chrome default color profile */
+/* We will manually convert these primary colors to rgb for the dark mode option of the theme */
 /* looks good in sRGB but washed up on chrome default 
 $color-primary:						#826bb0;
 $color-success:						#31cb55;
@@ -39,7 +40,7 @@ $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%);
 /* not part of bootstrap variable */
 /* custom checkbox */
 /* custom range */
-/* select */
+/* custom file */
 /* badge */
 /* cards */
 /*border radius*/
@@ -163,7 +164,10 @@ aside.page-sidebar ($nav-width, $nav-background)
 ========================================================================== */
 /* main navigation */
 /* left panel */
+/* nav footer */
 /* nav parent level-0 */
+/* nav link level-1 */
+/* nav level-1 bg */
 /* nav icon sizes */
 /* badge default */
 /* all child */
