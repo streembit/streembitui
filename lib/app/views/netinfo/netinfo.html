@@ -61,7 +61,7 @@
             </table>
             
             <!-- ko if: net_connected() == false -->
-            <div style="color:#e40a40;margin-top:30px;font-size:14px;font-weight:bold;border:1px solid #ccc;padding:5px 10px;background:#f7dce2">
+            <div class="panel-tag panel-tag-danger mt-3">
                 <i class="fa fa-info-circle"></i> The account is not connected to the Streembit peer-to-peer network
             </div>
             <!-- /ko -->
@@ -93,7 +93,7 @@
                                         </section>
                                     </div>
                                     <div class="modal-footer" style="padding: 10px 0px">
-                                        <button type="button" class="btn btn-light" data-dismiss="modal" style="padding: 6px 25px;border: 1px solid #ccc">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="padding: 6px 25px;border: 1px solid #ccc">Close</button>
                                         <button type="submit" name="submit" class="btn btn-primary" data-bind="click: check_user_password, i18n:'lbl-submit'" style="padding: 6px 25px;"></button>
                                     </div>
                                 </fieldset>

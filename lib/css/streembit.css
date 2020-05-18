@@ -3055,42 +3055,27 @@ address-panel-close {
   list-style: none;
 }
 
-.signmessagePopup .tab-links a {
-  padding: 9px 15px;
-  display: inline-block;
-  border-radius: 5px 5px 0px 0px;
-  background: rgba(204, 204, 204, 0.54);
-  font-size: 16px;
-  font-weight: 600;
-  color: #4c4c4c;
-  transition: all linear 0.15s;
+.signmessagePopup .tab-links li.active a {
+  background-color: #fff;
+  border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) #fff;
 }
 
-.signmessagePopup .tab-links a:hover {
-  background: #fff;
-  text-decoration: none;
-  border-radius: 5px 5px 0 0;
-  border: 1px solid #ccc;
-  border-bottom: 0;
-}
 
 .signmessagePopup li.active a,
 .signmessagePopup li.active a:hover {
   background: #fff;
   color: #4c4c4c;
-  border: 1px solid #ccc;
-  border-bottom: 0;
 }
 
 /*----- Content of Tabs -----*/
 
-.signmessagePopup .tab-content {
+/* .signmessagePopup .tab-content {
   padding: 15px;
-  /*border-radius:3px;
-    box-shadow:-1px 1px 1px rgba(0,0,0,0.15);*/
+  border-radius:3px;
+    box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
   background: #fff;
   border: 1px solid #ccc;
-}
+} */
 
 .signmessagePopup .tab {
   display: none;
@@ -3472,21 +3457,11 @@ body.smart-style-6 #logo-group > span#logo:before {
 
 /*button colors from Smart admin theme = bootstrap 3 colors*/
 
-.btn-primary {
-  background-color: #3276b1;
-  border-color: #2c699d;
-}
 
-.btn-primary:hover {
-  background-color: #275b89;
-  border-color: #1f496d;
-}
 
-.btn-primary:focus {
-  border-color: #10263a;
-}
 
-.btn-danger {
+
+/* .btn-danger {
   background-color: #a90329;
   border-color: #900323;
 }
@@ -3498,7 +3473,7 @@ body.smart-style-6 #logo-group > span#logo:before {
 
 .btn-danger:focus {
   border-color: #130005;
-}
+} */
 
 .offline-contact-offer-mobile-vs__optional-details {
   margin-top: 25px;
@@ -3997,7 +3972,6 @@ body {
 
 
 
-.mywallet-view .nav-tabs > li.active > a,
 .settings-side-ch .nav-tabs > li.active > a,
 .logs-side-ch .nav-tabs > li.active > a,
 #help-style-change .nav-tabs > li.active > a {
@@ -4288,10 +4262,6 @@ body {
 
 .hub-details > li > a.active > i {
   opacity: 1;
-}
-
-.nav-tabs > li:first-child > a {
-  border-left: 0;
 }
 
 #edithub_users form footer,
@@ -4903,16 +4873,6 @@ body.smart-style-3 {
   min-width: auto;
 }
 
-.signMessageTextarea {
-  border: 1px solid #ccc;
-}
-
-.verifyTextAr2,
-#recAddressField,
-#signMessageTextarea,
-.generateSignature {
-  border: 1px solid #8d8c8c;
-}
 
 a:link,
 #newvers_nav_for_ul .btn,
@@ -7456,4 +7416,7 @@ aside#left-panel a, aside#left-panel i {
 /* OTHER PAGES */
 .panel-tag.panel-tag-primary {
   border-color: #275b89;
+}
+.panel-tag.panel-tag-danger {
+  border-color: #d4370d;
 }

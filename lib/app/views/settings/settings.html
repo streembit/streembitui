@@ -17,7 +17,7 @@
                     <option value="0">Choose ...</option>
                     <!--<option value="tcp">TCP</option>-->
                     <option value="ws">WebSocket</option>
-                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational." />
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Transport protocol. The default is TCP. Select the WebSocket transport if the incoming TCP traffic is blocked by your router or firewall. If the transport is WebSocket then make sure your WebSocket service is operational."></i>
             </div>  
 
             <div style="margin-top:30px">
@@ -38,13 +38,13 @@
                             </div>
                         </fieldset>
                     </form>
-                    <div style="text-align:left">
+                    <div style="text-align:left" class="mt-3">
                         <button  class="btn btn-primary"  data-bind="click: save" title="Save">Save</button>
                     </div>
                 </div>
 
                 <div>
-                    <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit WebSocket peer nodes. The WS peer nodes assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your own WS peers to implement your own private Streembit network." />
+                    <div style="font-weight:bold;display:inline-block">Bootstrap seeds </div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="List of Streembit WebSocket peer nodes. The WS peer nodes assist in user and device discovery, and store the public key data in their distributed hash table (DHT) storage. You can define here your own WS peers to implement your own private Streembit network."></i>
                 </div>                
 
                 <div class="table-responsive">
@@ -124,14 +124,14 @@
                 
             </div>
         </div>
-
+  
         <div role="tabpanel" class="tab-pane settings-tab-panel ice-settings" id="ice_settings">
             <div class="form-group form-section-panel">
-                <div >Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address." />
+                <div >Ice resolvers</div>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="WebRTC video and audio chats clients use ICE servers to get information about their own IP address."> </i>
                 <div  class="ice-settings__resolver-template" data-bind="template: { name: 'iceresolver-item-template', foreach: iceresolvers }" style="">
                 </div>
                 <div style="text-align:left;margin-top:15px">
-                    <button class="btn btn-primary" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
+                    <button class="btn btn-secondary" data-bind="visible: is_add_iceresolver() == false, click: function() {is_add_iceresolver(true);new_iceresolver('');}" title="Add ICE resolver">Add ICE resolver</button>
                 </div>
                 <div data-bind="visible: is_add_iceresolver" class="ice-settings__add-iceresolver">
                     <div class="form-group" style="font-size:12px;margin-bottom:0">
@@ -161,7 +161,7 @@
                     <option value="debug">Debug</option>
                     <option value="info">Info</option>
                     <option value="error">Error</option>
-                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. " />
+                </select>&nbsp;&nbsp;<i class="fa fa-question-circle" data-rel="popover" data-content="Defines the log level. Debug: most detailed logging. Info: only important system events logged. Error: only application errors logged. "></i>
             </div>
 
             <div style="margin-top:30px">

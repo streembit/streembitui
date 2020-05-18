@@ -1,36 +1,36 @@
 <div id="signmessage-item-template">
 	<div class="signmessagePopup">
 		<div class="tabs">
-		    <ul class="tab-links sign-message-tabs-mobile">
-		        <li class="active"><a href="#tab1" data-bind="i18n: 'nav-sing-message'" role="tab"></a></li>
-		        <li><a href="#tab2" data-bind="i18n: 'nav-verify-message'" role="tab"></a></li>
+		    <ul class="tab-links sign-message-tabs-mobile nav nav-tabs" role="tablist">
+		        <li class="active nav-item"><a href="#tab1" class="nav-link" data-bind="i18n: 'nav-sing-message'" role="tab"></a></li>
+		        <li class="nav-item"><a href="#tab2" class="nav-link" data-bind="i18n: 'nav-verify-message'" role="tab"></a></li>
 			</ul>
 
 		    <div class="tab-content">
 		        <div id="tab1" class="tab active">
-		            <div class="card" style="border: 1px solid transparent">
+		            <div class="card p-3" style="border: 1px solid transparent">
 						<div class="card-block">
 							<div class="form-group">
 		    					<p data-bind="i18n: 'sign-message-text'"></p>
 		    					<div class="d-flex flex-row">
-		    				    	<input type="text" class="col-lg-10 col-md-8 col-sm-8" id="recipientAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
+		    				    	<input type="text" class="col-lg-10 col-md-8 col-sm-8 form-control" id="recipientAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
 									<button class="col-lg-1 col-md-2 addressBookBtn">
-										<i class="fa fa-address-book-o" aria-hidden="true"></i>
+										<i class="fas fa-address-book"></i>
 									</button>
 									<button class="col-lg-1 col-md-2 fileTextBtn">
-										<i class="fa fa-file-text" aria-hidden="true"></i>
+										<i class="fas fa-file-alt"></i>
 									</button>
 		    				    	<em class="invalid error-label SignErrMessage hidden"></em>
 								</div>
 							</div>
 
-							<textarea class="col-lg-12 " id="signMessageTextarea" style="height: 150px; margin-top: 10px"></textarea> 
+							<textarea class="col-lg-12 form-control" id="signMessageTextarea" style="height: 150px; margin-top: 10px"></textarea> 
 							<div class="clearfix"></div>
 
 							<div class="form-group">
 								<p data-bind="i18n: 'sign-message-signature'"></p>
 								<div class="d-flex flex-row">
-									<input type="text" placeholder='Click "Sign Message" to generate signature' class="col-lg-11 col-sm-10 generateSignature">
+									<input type="text" placeholder='Click "Sign Message" to generate signature' class="col-lg-11 col-sm-10 generateSignature form-control">
 									<button class="col-lg-1 col-md-2 copyRecAddress">
 										<i class="fa fa-window-restore" aria-hidden="true"></i>
 									</button>
@@ -39,13 +39,13 @@
 
 							<div class="clearfix"></div>
 							<div class="form-group" style="margin: 15px 0">
+								<button class="signClearBtn btn btn-sm btn-secondary">
+									<span><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+									<span data-bind="i18n: 'message-clear'"></span>
+								</button>
 								<button class="signMsgBtn btn btn-sm btn-primary">
 									<span><i class="fa fa-pencil" aria-hidden="true"></i></span>
 									<span data-bind="i18n: 'nav-sing-message'"></span>
-								</button>
-								<button class="signClearBtn btn btn-sm btn-danger">
-									<span><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
-									<span data-bind="i18n: 'message-clear'"></span>
 								</button>
 							</div>
 							
@@ -54,30 +54,29 @@
 		        </div>
 		 
 		        <div id="tab2" class="tab">
-		           <div class="card" style="border: 1px solid transparent">
+		           <div class="card p-3" style="border: 1px solid transparent">
 						<div class="card-block">
 							<div class="form-group">
 								<p data-bind="i18n: 'verify-message-text'"></p>
 								<div class="d-flex flex-row">
-									<input type="text" class="col-lg-11 col-md-10 col-sm-10" id="recAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
+									<input type="text" class="col-lg-11 col-md-10 col-sm-10 form-control" id="recAddressField" placeholder="Enter a recipient address (e.g. 1SN2KZ2tkyLWQk83FX7hVagtt3HXojR4TN)">
 									<button class="col-lg-1 col-md-2">
-										<i class="fa fa-address-book-o" aria-hidden="true"></i>
+										<i class="fas fa-address-book"></i>
 									</button>
 								</div>
 							</div>
-							<textarea class="col-lg-12 verifyTextAr" style="height: 150px; margin-top: 10px"></textarea>
-							<textarea class="col-lg-12 verifyTextAr2" style="margin-top: 10px"></textarea>
+							<textarea class="col-lg-12 verifyTextAr form-control" style="height: 150px; margin-top: 10px"></textarea>
+							<textarea class="col-lg-12 verifyTextAr2 form-control" style="margin-top: 10px"></textarea>
 
 							<div class="clearfix"></div>
 
 							<div class="form-group" style="margin-top: 10px">
-								<button class="verifyMsgBtn btn btn-sm btn-primary">
-									<span><i class="fa fa-question" aria-hidden="true"></i></span>
-									<span data-bind="i18n: 'nav-verify-message'"></span>
-								</button>
-								<button class="verifyClearBtn btn btn-sm btn-danger">
+								<button class="verifyClearBtn btn btn-sm btn-secondary">
 									<span><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
 									<span data-bind="i18n: 'message-clear'"></span>
+								</button>
+								<button class="verifyMsgBtn btn btn-sm btn-primary">
+									<span data-bind="i18n: 'nav-verify-message'"></span>
 								</button>
 							</div>
 						</div>

@@ -1,4 +1,4 @@
-<div id="uiview-container" class="uiview-container-view-info" data-bind="visible: !contacts().length">
+<div id="uiview-container" data-bind="visible: !contacts().length">
     <div class="uiview-plane">
         <div class="uiview-container-panel container-fluid">
 
@@ -10,7 +10,7 @@
                 To add a new contact please create an offline contact offer and exchange this with your new contact!
             </p>
 
-            <button data-bind="click: create">Create Contact</button>
+            <button class="btn btn-primary" data-bind="click: create">Create Contact</button>
         </div>
     </div>
 </div>
