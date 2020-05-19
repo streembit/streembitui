@@ -154,7 +154,7 @@
       margin-bottom: 55px;
       } */
       body[data-account-load-complete=true] #allContent {
-      margin-top: 47px;
+      margin-top: 58px;
       }
       }
       @media(max-width: 425px) {
@@ -179,6 +179,70 @@
 </head>
 
 <body data-appinit="true" data-account-load-complete="false" class="mod-bg-1 mod-nav-link">
+  <script>
+    /**
+     *	This script should be placed right after the body tag for fast execution 
+     *	Note: the script is written in pure javascript and does not depend on thirdparty library
+     **/
+    'use strict';
+
+    var classHolder = document.getElementsByTagName("BODY")[0],
+        /** 
+         * Load from localstorage
+         **/
+        themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
+        {},
+        themeURL = themeSettings.themeURL || '',
+        themeOptions = themeSettings.themeOptions || '';
+    /** 
+     * Load theme options
+     **/
+    if (themeSettings.themeOptions)
+    {
+        classHolder.className = themeSettings.themeOptions;
+        console.log("%c✔ Theme settings loaded", "color: #148f32");
+    }
+    else
+    {
+        console.log("%c✔ Heads up! Theme settings is empty or does not exist, loading default settings...", "color: #ed1c24");
+    }
+    if (themeSettings.themeURL && !document.getElementById('mytheme'))
+    {
+        var cssfile = document.createElement('link');
+        cssfile.id = 'mytheme';
+        cssfile.rel = 'stylesheet';
+        cssfile.href = themeURL;
+        document.getElementsByTagName('head')[0].appendChild(cssfile);
+
+    }
+    else if (themeSettings.themeURL && document.getElementById('mytheme'))
+    {
+        document.getElementById('mytheme').href = themeSettings.themeURL;
+    }
+    /** 
+     * Save to localstorage 
+     **/
+    var saveSettings = function()
+    {
+        themeSettings.themeOptions = String(classHolder.className).split(/[^\w-]+/).filter(function(item)
+        {
+            return /^(nav|header|footer|mod|display)-/i.test(item);
+        }).join(' ');
+        if (document.getElementById('mytheme'))
+        {
+            themeSettings.themeURL = document.getElementById('mytheme').getAttribute("href");
+        };
+        localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+    }
+    /** 
+     * Reset settings
+     **/
+    var resetSettings = function()
+    {
+        localStorage.setItem("themeSettings", "");
+    }
+
+</script>
   <div id="load-container">
     <div id="load-screen">
       <div class="load-box">
@@ -190,10 +254,15 @@
     </div>
   </div>
   <!-- #app-container Start -->
-  <div id="app-container">
+  <div id="app-container" class="page-wrapper">
+    <div class="page-inner">
     <div id="main-header-st">
       <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+
+        <a href="#" class="header-btn btn btn-secondary d-block d-lg-none my-2" data-action="toggle" data-class="mobile-nav-on">
+          <i class="ni ni-menu"></i>
+      </a>
+        <a class="navbar-brand d-none d-lg-flex align-items-center" href="#">
           <span id="logo" data-action="mainLogoStreembit" class="mr-3">
             <img src="lib/images/applogo.png">
           </span>
@@ -209,6 +278,7 @@
             data-toggle="collapse" data-action="mobileHeaderMainMenu">
             <i class="ni ni-menu" style="margin-top:5px; cursor: pointer;"></i>
           </span>
+          
           <div data-bind="component: {name: 'connection'}"></div>
         </a>
         <span class="top-panelopen-contactsbar mobileVersionContactsBar" data-action="contactsBar">
@@ -404,7 +474,7 @@
         </span>
         <div class="navbar-collapse collapse" id="navHelp" style="">
           <ul class="navbar-nav mobile-contact-bar-content">
-            <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
+            <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview1</a>
             <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-setup-configuration_')">Setup
               and Configuration</a>
             <a class="dropdown-item child-menu-dropdown-mobile-vs" href="#" data-bind="click: nav.bind($data, 'help-streembit-network_')">Streembit
@@ -419,9 +489,10 @@
           </ul>
         </div>
       </ul>
+      
     </div>
     <!-- end main menu for mobile version -->
-
+    <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
     <section style="flex: 1 1 auto;display: flex;flex-direction: row" id="allContent">
       <!-- Left panel : Navigation area -->
       <!-- Note: This width of the aside area can be adjusted through LESS variables -->
@@ -441,13 +512,13 @@
 
         <!-- NAVIGATION : This navigation is also responsive-->
         <nav class="primary-nav js-list-filter" id="js-primary-nav" role="navigation">
-          <ul id="newvers_nav_for_ul dashboard-li-on-mobile-size" class="nav-menu js-nav-built">
+          <ul id="js-nav-menu" class="nav-menu">
             <li class="active mobile-change-dash-li">
               <a href="#" title="Dashboard" data-bind="click: nav.bind($data, 'dashboard')" class="comebackToDashboard"><i
                   class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent comebackToDevice">IOT
+              <a href="#" aria-expanded="true"><i class="fa fa-lg fa-fw fa-signal"></i> <span class="menu-item-parent nav-link-text comebackToDevice">IOT
                   Devices</span></a>
               <ul>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'devices')">My devices</a></li>
@@ -457,7 +528,7 @@
               </ul>
             </li>
             <li>
-              <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent">Actions</span></a>
+              <a href="#"><i class="fa fa-lg fa-fw fa-server"></i> <span class="menu-item-parent nav-link-text">Actions</span></a>
               <ul>
                 <li role="separator" class="divider mobile-change-dash-li"></li>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click:restoreAccount">Restore account</a></li>
@@ -469,7 +540,7 @@
               </ul>
             </li>
             <li>
-              <a href="#"><i class="far fa-money-bill-alt"></i> <span class="menu-item-parent comebackToBlockchain">Blockchain</span></a>
+              <a href="#"><i class="far fa-money-bill-alt"></i> <span class="menu-item-parent comebackToBlockchain nav-link-text">Blockchain</span></a>
               <ul>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Wallet</a></li>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'wallet')">Blockchain
@@ -486,7 +557,7 @@
                 </ul>
                 </li> -->
             <li>
-              <a href="#"><i class="fa fa-lg fa-fw fa-address-book"></i> <span class="menu-item-parent">Contacts</span></a>
+              <a href="#"><i class="fa fa-lg fa-fw fa-address-book"></i> <span class="menu-item-parent nav-link-text">Contacts</span></a>
               <ul>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'my-contacts')">My
                     contacts</a></li>
@@ -501,7 +572,7 @@
               </ul>
             </li>
             <li>
-              <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Tools</span></a>
+              <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent nav-link-text">Tools</span></a>
               <ul>
                 <li class="mobile-change-dash-li"><a href="#" data-bind="click: nav.bind($data, 'settings')">Settings</a></li>
                 <li role="separator" class="divider mobile-change-dash-li"></li>
@@ -513,7 +584,7 @@
               </ul>
             </li>
             <li class="top-menu-invisible">
-              <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Help</span></a>
+              <a href="#"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent nav-link-text">Help</span></a>
               <ul>
                 <li class="mobile-change-dash-li">
                   <a href="#" data-bind="click: nav.bind($data, 'help-overview_')">Overview</a>
@@ -600,7 +671,9 @@
       </div>
     </div>
     <!-- END PAGE FOOTER -->
+  
   </div>
+</div>
   <!-- #app-container END -->
 
   <script src="lib/js/libs/jquery-3.3.1.min.js"></script>
@@ -611,8 +684,6 @@
   <!-- NOTIFICATIONS PLUGIN -->
   <script src="lib/js/notifications/toastr/toastr.js"></script>
 
-  <script src="lib/js/vendors.bundle.js"></script>
-  <script src="lib/js/app.bundle.js"></script>
   <script src="lib/js/smartwidgets/jarvis.widget.min.js"></script>
   <script src="lib/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
   <script src="lib/js/plugin/sparkline/jquery.sparkline.min.js"></script>
@@ -622,7 +693,8 @@
   <script src="lib/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
   <script src="lib/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
   <script src="lib/js/plugin/fastclick/fastclick.min.js"></script>
-  <script src="lib/js/app.js"></script>
+  <script src="lib/js/vendors.bundle.js"></script>
+  <script src="lib/js/app.bundle.js"></script>
   <script src="lib/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
   <script src="lib/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="lib/js/plugin/blockui/jquery.blockUI.js"></script>
@@ -636,9 +708,11 @@
   <script src="jspm_packages/system.js"></script>
   <script src="config.js"></script>
   <audio id="ringsound1" src="lib/assets/sounds/ringsound.ogg" preload="auto" type="audio/ogg" muted loop></audio>
+  
+
   <script>
     $(document).ready(function () {
-      pageSetUp();
+      // pageSetUp();
       System.import('lib/main.js');
     });
     $(document).ready(function () {

@@ -5721,7 +5721,7 @@ button {
     display: none;
   }
   #left-panel {
-    display: none !important;
+    transform: translate3d(-16.875rem,0,0);
   }
   .dashboard {
     padding-bottom: 50px;
@@ -5968,7 +5968,9 @@ button {
   }
   #ribbon .breadcrumb a,
   #ribbon .breadcrumb {
-    color: #bbb !important;
+    color: #333 !important;
+    margin-bottom: 0;
+    border-radius: 0;
   }
   #header {
     background-color: #f3f3f3;
@@ -6269,9 +6271,6 @@ button {
     flex-basis: auto !important;
     flex-grow: inherit !important;
   }
-  .initialize-existing-account {
-    margin-top: 10px;
-  }
   .change-streembit-password-st {
     margin-top: 20px;
   }
@@ -6411,61 +6410,19 @@ button {
     font-size: 25px;
     margin-bottom: 0px;
   }
-  .dashboard-group-ic {
-    font-size: 27px !important;
-    overflow: hidden;
-    vertical-align: middle;
-    height: 62px;
-    width: 62px;
-    text-align: center;
-    line-height: 60px;
-    border-radius: 50%;
-    color: #ec947a;
-    border: 4px solid #ec947a;
-  }
-  .addContactFromDashboard {
-    border-radius: 22px;
-    background: #ec947a;
-    border: 1px solid #ec947a;
-    width: 119px;
-  }
-  .dashboard-cogs-ic {
-    font-size: 27px !important;
-    overflow: hidden;
-    vertical-align: middle;
-    height: 62px;
-    width: 62px;
-    text-align: center;
-    line-height: 60px;
-    border-radius: 50%;
-  }
+
+ 
+
   .dash-address-st-change {
     font-size: 15px !important;
   }
-  .manageDevicesFromDashboard {
-    border-radius: 22px;
-    background: #22b4df;
-    border: 1px solid #22b4df;
-    width: 120px;
-    font-size: 12px;
-  }
-  .dashboard-usd-ic {
-    font-size: 27px !important;
-    overflow: hidden;
-    vertical-align: middle;
-    height: 62px;
-    width: 62px;
-    text-align: center;
-    line-height: 60px;
-    border-radius: 50%;
-  }
-  .manageWalletFromDashboard {
-    border-radius: 22px;
-    background: #05bd61;
-    border: 1px solid #05bd61;
-    width: 120px;
-    font-size: 12px;
-  }
+
+  .dashboard-usd-ic, .dashboard-group-ic {
+    font-size: 18px !important;
+    height: 50px;
+    width: 50px;
+    line-height: 46px;
+}
   .mobile-version-changing-welcome-style {
     display: none;
   }
@@ -6936,11 +6893,6 @@ button {
     margin-bottom: 0;
   }
 
-  .jarviswidget {
-    width: 100%;
-    margin-top: 24px;
-  }
-
   .add-all-contacts-field {
     top: 80px;
     margin-bottom: 20px;
@@ -7032,6 +6984,22 @@ button {
 }
 
 /*for small devices portrate */
+@media (max-width: 992px) {
+  .page-wrapper {
+    background: inherit;
+  }
+  .header-btn[data-class='mobile-nav-on'] {
+    background-color: #868e96;
+    border-color: #868e96;
+    background-image: none;
+}
+aside#left-panel {
+  top: 0!important;
+}
+.page-footer {
+  display: none;
+}
+}
 @media (max-width: 375px) {
   .jarviswidget {
     width: 100%;
