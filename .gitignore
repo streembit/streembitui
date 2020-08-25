@@ -52,6 +52,9 @@ build/macosx64
 *.nw
 /.vs/config/applicationhost.config
 /data
+.vs
+/.vs
+
 
 # Optional npm cache directory
 .npm
