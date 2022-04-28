@@ -23,7 +23,7 @@
     "start": "nw ."
   },
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.4",
     "bigi": "^1.4.2",
     "clarinet": "^0.12.1",
     "collections": "^5.1.5",
