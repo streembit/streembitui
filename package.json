@@ -80,7 +80,7 @@
     }
   },
   "devDependencies": {
-    "jspm": "0.16.53",
+    "jspm": "2.0.0-beta.7",
     "jspm-bower-endpoint": "0.3.2"
   }
 }
